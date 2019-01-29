@@ -1,0 +1,243 @@
+<!-- Main wrapper  -->
+<div id="main-wrapper">
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
+    <!-- Bread crumb -->
+    <div class="row page-titles">
+      <div class="col-md-5 align-self-center">
+        <h3 class="text-primary">Exit popup(s)</h3> </div>
+      <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+          <li class="breadcrumb-item active">Exit popup(s)</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Bread crumb -->
+    <!-- Start Page Body Main Container -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-title">
+              <h4>Exit popup(s)</h4>
+              <div *ngIf="this.errFlg" class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="closeDiv();">&times;</a>
+                {{this.errString}}
+              </div>
+              <button type="button" class="btn btn-success btn-xs m-b-10 m-l-5" id="add-exit-pop-up" (click)="addExitPopUpFunc()">
+                <i class="fa fa-{{addExitPopUp == true ? 'minus': 'plus'}}"></i>
+              </button>
+              <input type="text" class="form-control input-sm" id="search-box" [(ngModel)]="term" placeholder="Search..">
+            </div>
+            <div class="container-fluid" *ngIf="addExitPopUp">
+              <div class="row">
+                <div class="col">
+                  <div class="panel panel-default">
+                  <div class="panel-heading">Create Exit Pop Up</div>
+                  <div class="panel-body">
+                    <!--create or edit form start-->
+                    <form [formGroup]="saveExitPopUp" (ngSubmit)="onSubmit()">
+                      <div class="form-group">
+                        <label for="name">Exit Pop Up Name</label>
+                        <input type="text" class="form-control" formControlName="name" placeholder="Name of your exit pop up" id="name" [class.has-error-custom]="saveExitPopUp.controls.name.invalid && saveExitPopUp.controls.name.touched">
+                        <div *ngIf="saveExitPopUp.controls.name.invalid && saveExitPopUp.controls.name.touched" class="error-alert">
+                          Exit Pop Up name is required!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="header_text">Header Text</label>
+                        <input type="text" class="form-control" formControlName="header_text" placeholder="Text shown up in your exit pop up's header" id="header_text" [class.has-error-custom]="saveExitPopUp.controls.header_text.invalid && saveExitPopUp.controls.header_text.touched">
+                        <div *ngIf="saveExitPopUp.controls.header_text.invalid && saveExitPopUp.controls.header_text.touched" class="error-alert">
+                          Exit Pop Up Header is required!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="header_text_color">Header Text Color</label>
+                        <input type="color" formControlName="header_text_color" id="header_text_color" [class.has-error-custom]="saveExitPopUp.controls.header_text_color.invalid && saveExitPopUp.controls.header_text_color.touched">
+                        <div *ngIf="saveExitPopUp.controls.header_text_color.invalid && saveExitPopUp.controls.header_text_color.touched" class="error-alert">
+                          Exit Pop Up Header Text Color is required!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="header_background_color">Header Background Color</label>
+                        <input type="color" formControlName="header_background_color" id="header_background_color" [class.has-error-custom]="saveExitPopUp.controls.header_text_color.invalid && saveExitPopUp.controls.header_text_color.touched">
+                        <div *ngIf="saveExitPopUp.controls.header_text_color.invalid && saveExitPopUp.controls.header_text_color.touched" class="error-alert">
+                          Exit Pop Up Header Text Color is required!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="semi_header_text">Semi Header Text</label>
+                        <input type="text" class="form-control" formControlName="semi_header_text" placeholder="Input your semi header text, this will show up underneath your header." id="semi_header_text" [class.has-error-custom]="saveExitPopUp.controls.semi_header_text.invalid && saveExitPopUp.controls.semi_header_text.touched">
+                        <div *ngIf="saveExitPopUp.controls.semi_header_text.invalid && saveExitPopUp.controls.semi_header_text.touched" class="error-alert">
+                          Please input a correct semi header text!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="semi_header_text_color">Semi Header Text Color</label>
+                        <input type="color" formControlName="semi_header_text_color" id="semi_header_text_color" [class.has-error-custom]="saveExitPopUp.controls.semi_header_text_color.invalid && saveExitPopUp.controls.semi_header_text_color.touched">
+                        <div *ngIf="saveExitPopUp.controls.semi_header_text_color.invalid && saveExitPopUp.controls.semi_header_text_color.touched" class="error-alert">
+                          Please define semi header text color!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="body_background_color">Body Background Color</label>
+                        <input type="color" formControlName="body_background_color" id="body_background_color" [class.has-error-custom]="saveExitPopUp.controls.body_background_color.invalid && saveExitPopUp.controls.body_background_color.touched">
+                        <div *ngIf="saveExitPopUp.controls.body_background_color.invalid && saveExitPopUp.controls.body_background_color.touched" class="error-alert">
+                          Body background Color is required!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="select_sticky_reviews">Select Sticky Reviews</label>
+                        <mat-form-field>
+                          <mat-select placeholder="Sticky Reviews" formControlName="select_sticky_reviews" multiple id="select_sticky_reviews" [(ngModel)]="preSelectedStickyReviews">
+                            <mat-option *ngFor="let stickyReview of myStickyReviews" [value]="stickyReview.id">
+                              <span *ngIf="!stickyReview.tags">{{stickyReview.name}}</span>
+                              <span *ngIf="stickyReview.tags">{{stickyReview.name}} <span class="label label-success arrowed"> {{ stickyReview.tags }}</span></span>
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group">
+                        <label for="select_active_campaign">Select Campaign</label>
+                        <mat-form-field>
+                          <mat-select placeholder="Campaigns" formControlName="select_active_campaign" id="select_active_campaign" [(ngModel)]="preSelectedCampaign">
+                            <mat-option *ngFor="let campaign of myCampaigns" [value]="campaign.id"> {{ campaign.campaign_name }} </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group">
+                        <label for="btn_color">Color of your CTA button</label>
+                        <input type="color" formControlName="btn_color" id="btn_color" [class.has-error-custom]="saveExitPopUp.controls.btn_color.invalid && saveExitPopUp.controls.btn_color.touched">
+                        <div *ngIf="saveExitPopUp.controls.btn_color.invalid && saveExitPopUp.controls.btn_color.touched" class="error-alert">
+                          Invalid Input!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="btn_text_color">Text color of CTA button</label>
+                        <input type="color" formControlName="btn_text_color" id="btn_text_color" [class.has-error-custom]="saveExitPopUp.controls.btn_text_color.invalid && saveExitPopUp.controls.btn_text_color.touched">
+                        <div *ngIf="saveExitPopUp.controls.btn_text_color.invalid && saveExitPopUp.controls.btn_text_color.touched" class="error-alert">
+                          Invalid input!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="cta_link_url">CTA Link</label>
+                        <input type="text" class="form-control" formControlName="cta_link_url" id="cta_link_url" placeholder="On your this button click page will redirect to this link which you will paste here" [class.has-error-custom]="saveExitPopUp.controls.cta_link_url.invalid && saveExitPopUp.controls.cta_link_url.touched">
+                        <div *ngIf="saveExitPopUp.controls.cta_link_url.invalid && saveExitPopUp.controls.cta_link_url.touched" class="error-alert">
+                          Invalid Link!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="btn_size">Select CTA Button Size</label>
+                        <select id="btn_size" class="form-control" formControlName="btn_size" [class.has-error-custom]="saveExitPopUp.controls.btn_size.invalid && saveExitPopUp.controls.btn_size.touched">
+                          <option value="">Select button size</option>
+                          <option value="L">Large</option>
+                          <option value="S">Small</option>
+                        </select>
+                        <div *ngIf="saveExitPopUp.controls.btn_size.invalid && saveExitPopUp.controls.btn_size.touched" class="error-alert">
+                          Invalid Input!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="btn_text">CTA Button Text</label>
+                        <input type="text" class="form-control" formControlName="btn_text" id="btn_text" placeholder="This will be shown inside button i.e. if you write click here button will show as click" [class.has-error-custom]="saveExitPopUp.controls.btn_text.invalid && saveExitPopUp.controls.btn_text.touched">
+                        <div *ngIf="saveExitPopUp.controls.btn_text.invalid && saveExitPopUp.controls.btn_text.touched" class="error-alert">
+                          Invalid Input!
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary btn-block" [disabled]="!saveExitPopUp.valid">
+                        <span *ngIf="savingData"><i class="fa fa-circle-o-notch fa-spin"></i> Processing....</span>
+                        <span *ngIf="!savingData">Save</span>
+                      </button>
+                    </form>
+                    <!--create or edit form end-->
+                  </div>
+                </div>
+                </div>
+                <!--<div class="col">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">Preview of {{ saveExitPopUp.value.name }}</div>
+                    <div class="panel-body output">
+                      <div class="my-header" [style.background]="saveExitPopUp.value.header_background_color">
+                        <p class="defined-header" [style.color]="saveExitPopUp.value.header_text_color">{{ saveExitPopUp.value.header_text }}</p>
+                        <p [style.color]="saveExitPopUp.value.semi_header_text_color">{{ saveExitPopUp.value.semi_header_text }}</p>
+                        <hr>
+                      </div>
+                      <div class="my-caraousel" [style.background]="saveExitPopUp.value.body_background_color">
+                        this is my body
+                      </div>
+                    </div>
+                  </div>
+                </div>-->
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Header Text</th>
+                    <th>Header Background Color</th>
+                    <th>Header Text Color</th>
+                    <th>Semi Header Text</th>
+                    <th>Semi Header Text Color</th>
+                    <th>Body Background Color</th>
+                    <th>CTA Link</th>
+                    <th>Created</th>
+                    <th>Action(s)</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let exitPopUp of myExitPopUps| filter: term | paginate: { itemsPerPage: paginate, currentPage: p }; let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{ exitPopUp.name }}</td>
+                    <td>{{ exitPopUp.header_text }}</td>
+                    <td>
+                      <div class="show-exit-pop-up-bg" [style.background-color]="exitPopUp.header_background_color"></div>
+                      <hr>
+                      <p class="bg-color-code">Color Code: {{ exitPopUp.header_background_color }}</p>
+                    </td>
+                    <td style="text-align: center;">
+                      <p [style.color]="exitPopUp.header_text_color" [style.background-color]="exitPopUp.header_background_color">{{ exitPopUp.header_text }}</p>
+                      <hr>
+                      <p class="bg-color-code">Color Code: {{ exitPopUp.header_text_color }}</p>
+                    </td>
+                    <td>
+                      <div *ngIf="exitPopUp.semi_header_text">{{ exitPopUp.semi_header_text }}</div>
+                      <div *ngIf="!exitPopUp.semi_header_text">Not Available</div>
+                    </td>
+                    <td style="text-align: center;">
+                      <div *ngIf="exitPopUp.semi_header_text">
+                        <p [style.color]="exitPopUp.semi_header_text_color" [style.background-color]="exitPopUp.header_background_color">{{ exitPopUp.semi_header_text }}</p>
+                        <hr>
+                        <p class="bg-color-code">Color Code: {{ exitPopUp.semi_header_text_color }}</p>
+                      </div>
+                      <div *ngIf="!exitPopUp.semi_header_text">Not Available</div>
+                    </td>
+                    <td>
+                      <div class="show-exit-pop-up-bg" [style.background-color]="exitPopUp.body_background_color"></div>
+                      <hr>
+                      <p class="bg-color-code">Color Code: {{ exitPopUp.body_background_color }}</p>
+                    </td>
+                    <td>{{ exitPopUp.cta_link_url !== null ? exitPopUp.cta_link_url : 'Not Available' }}</td>
+                    <td>{{ exitPopUp.created_at | date: 'MMM d, y, h:mm:ss a'}}</td>
+                    <td>
+                      <button class="btn btn-warning btn-xs m-b-10 m-l-5"  tooltip="Edit" (click)="editExitPopUp(exitPopUp)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                      <button class="btn btn-danger btn-xs m-b-10 m-l-5" tooltip="Delete" (click)="deleteExitPopUp(exitPopUp)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </td>
+                  </tr>
+                  </tbody>
+                  <pagination-controls (pageChange)="p = $event" class="globalPagination"></pagination-controls>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

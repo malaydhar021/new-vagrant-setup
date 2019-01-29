@@ -1,0 +1,23 @@
+#add-branding {
+  float: right;
+}
+#search-box {
+  width: 20%;
+  float: right;
+  margin: 2px 0px 0px 4px;
+}
+/*.branding-form {*/
+  /*border: 1px solid #ccc;*/
+  /*height: auto;*/
+  /*padding: 6px 10px 10px 10px;*/
+  /*border-radius: 4px;*/
+/*}*/
+.error-alert {
+  color: red;
+  margin: 1px 0px 2px 2px;
+  height: auto;
+  width: auto;
+}
+.has-error-custom {
+  border: 1px solid red;
+}

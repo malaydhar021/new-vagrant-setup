@@ -1,0 +1,7 @@
+<div class="main-wrapper">
+  <app-step-one [reviewLinkData]="reviewLinkData" [imageBaseURL]="imageBaseURL" *ngIf="stepOneFlg" (stepOneAns)="stepOneAns($event)"></app-step-one>
+  <app-step-two [reviewLinkData]="reviewLinkData" [stepOneQuesAns]="stepOneQuesAnswer" [imageBaseURL]="imageBaseURL" *ngIf="stepTwoFlg" (stepTwoAns)="stepTwoAns($event)"></app-step-two>
+  <app-step-three [reviewLinkData]="reviewLinkData" [imageBaseURL]="imageBaseURL" [stepOneQuesAns]="stepOneQuesAnswer" *ngIf="stepThreeFlg" (stepThreeAns)="stepThreeAns($event)"></app-step-three>
+  <app-upload-image [reviewLinkData]="reviewLinkData" [imageBaseURL]="imageBaseURL" *ngIf="upldImgFlg" (upldImgAns)="upldImgAns($event)"></app-upload-image>
+  <app-thankyou [reviewLinkData]="reviewLinkData" [imageBaseURL]="imageBaseURL" [stepOneData]="stepOneQuesAnswer" *ngIf="thankyouFlg"></app-thankyou>
+</div>

@@ -1,0 +1,332 @@
+<!-- Main wrapper  -->
+<div id="main-wrapper">
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  <div class="page-wrapper">
+    <!-- Bread crumb -->
+    <div class="row page-titles">
+      <div class="col-md-5 align-self-center">
+        <h3 class="text-primary">Settings</h3> </div>
+      <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+          <li class="breadcrumb-item active">Settings</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Bread crumb -->
+    <!-- Start Page Body Main Container -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title"></h4>
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#change_password" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Change Password</span></a> </li>
+                <li class="nav-item" *ngIf="userObj.is_super === '1'"> <a class="nav-link" data-toggle="tab" href="#api_key" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">API Key</span></a> </li>
+                <li class="nav-item" *ngIf="userObj.is_super === '1'"> <a class="nav-link" data-toggle="tab" href="#api_doc" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">API Endpoints</span></a> </li>
+              </ul>
+              <!-- Tab panes -->
+              <div class="tab-content tabcontent-border">
+                <!--change password start-->
+                <div class="tab-pane active" id="change_password" role="tabpanel">
+                  <div class="p-20">
+                    <div *ngIf="this.errFlg" class="alert alert-danger alert-dismissable">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="closeDiv();">&times;</a>
+                      {{this.errString}}
+                    </div>
+                    <div *ngIf="this.successFlg" class="alert alert-success alert-dismissable">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="closeDiv();">&times;</a>
+                      {{this.successString}}
+                    </div>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col">
+                          <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()" class="change-password-form">
+                            <div class="form-group">
+                              <input type="password" class="form-control" formControlName="current_password" placeholder="Your current password" id="current_password" [class.has-error-custom]="changePasswordForm.controls.current_password.invalid && changePasswordForm.controls.current_password.touched">
+                            </div>
+                            <div *ngIf="changePasswordForm.controls.current_password.invalid && changePasswordForm.controls.current_password.touched" class="error-alert">
+                              Current Password is Required!
+                            </div>
+                            <div class="form-group">
+                              <input type="password" class="form-control" formControlName="new_password" placeholder="new password" id="new_password" [class.has-error-custom]="changePasswordForm.controls.new_password.invalid && changePasswordForm.controls.new_password.touched">
+                            </div>
+                            <div *ngIf="changePasswordForm.controls.new_password.invalid && changePasswordForm.controls.new_password.touched" class="error-alert">
+                              New Password is Required!
+                            </div>
+                            <div class="form-group">
+                              <input type="password" class="form-control" formControlName="confirm_new_password" placeholder="Retype the new password" id="confirm_new_password" [class.has-error-custom]="changePasswordForm.controls.confirm_new_password.invalid && changePasswordForm.controls.confirm_new_password.touched">
+                            </div>
+                            <div *ngIf="changePasswordForm.controls.confirm_new_password.invalid && changePasswordForm.controls.confirm_new_password.touched" class="error-alert">
+                              Confirm password is required and should be same with new password!
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" [disabled]="!changePasswordForm.valid">
+                              <span *ngIf="savingData"><i class="fa fa-circle-o-notch fa-spin"></i> Processing....</span>
+                              <span *ngIf="!savingData">Save</span>
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--change password end-->
+                <!--api key start-->
+                <div class="tab-pane p-20" id="api_key" *ngIf="userObj.is_super === '1'" role="tabpanel">
+                  <div class="row">
+                    <div class="col">
+                      <div class="card bg-default">
+                        <div class="card-body">
+                          <div class="weather-widget">
+                            <div class="weather-one">
+                              <p class="alert alert-danger">If the portion below shows nothing or blank, please login back to continue.</p>
+                              <p><code>{{ myApiKey }}</code> <button type="button" tooltip="copy" class="btn btn-primary btn-xs" ngxClipboard [cbContent]="myApiKey">copy</button></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--api key end-->
+                <!--api doc start-->
+                <div class="tab-pane  p-20" id="api_doc" *ngIf="userObj.is_super === '1'" role="tabpanel">
+                  <div class="row">
+                    <div class="col">
+                      <!--add user card #1 start-->
+                      <div class="card bg-default">
+                        <div class="card-body">
+                          <div class="weather-widget">
+                            <div id="weather-one" class="weather-one">
+                              <h4>Add User (@adds one user to database)</h4>
+                              <hr>
+                              <h5><p>Request</p></h5>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Method</th>
+                                  <th>URL</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>{{ addUserEndPoint }}</code></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Type</th>
+                                  <th>Params</th>
+                                  <th>Values</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>name</code></td>
+                                  <td><code>string</code></td>
+                                </tr>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>email</code></td>
+                                  <td><code>string</code></td>
+                                </tr>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>stripe_plan_id</code></td>
+                                  <td><code>string</code></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <h5><p>Response</p></h5>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Status</th>
+                                  <th>Response</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td><code>200</code></td>
+                                  <td><code>{{ successResponseTemplate }}</code></td>
+                                </tr>
+                                <tr>
+                                  <td><code>400</code></td>
+                                  <td><code>{{ badRequestResponseTemplate }}</code></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--add user card #1 end-->
+                      <!--delete user card #2 start-->
+                      <div class="card bg-default">
+                        <div class="card-body">
+                          <div class="weather-widget">
+                            <div id="weather-two" class="weather-one">
+                              <h4>Delete User (@delets the user from database)</h4>
+                              <hr>
+                              <h5><p>Request</p></h5>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Method</th>
+                                  <th>URL</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>{{ deleteUserEndPoint }}</code></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Type</th>
+                                  <th>Params</th>
+                                  <th>Values</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>email</code></td>
+                                  <td><code>string</code></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <h5><p>Response</p></h5>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Status</th>
+                                  <th>Response</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td><code>200</code></td>
+                                    <td><code>{{ deleteUserResponses[0] }}</code></td>
+                                  </tr>
+                                  <tr>
+                                    <td><code>400</code></td>
+                                    <td><code>{{ deleteUserResponses[2] }}</code></td>
+                                  </tr>
+                                  <tr>
+                                    <td><code>403</code></td>
+                                    <td><code>{{ deleteUserResponses[3] }}</code></td>
+                                  </tr>
+                                  <tr>
+                                    <td><code>500</code></td>
+                                    <td><code>{{ deleteUserResponses[1] }}</code></td>
+                                  </tr>
+                                  <tr>
+                                    <td><code>404</code></td>
+                                    <td><code>{{ deleteUserResponses[4] }}</code></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--delete user card #2 end-->
+                      <!--update user status card #3 start-->
+                      <div class="card bg-default">
+                        <div class="card-body">
+                          <div class="weather-widget">
+                            <div id="weather-three" class="weather-one">
+                              <h4>Update User status (@updates the user status in database)</h4>
+                              <hr>
+                              <h5><p>Request</p></h5>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Method</th>
+                                  <th>URL</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>{{ updateUserStatusEndPoint }}</code></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Type</th>
+                                  <th>Params</th>
+                                  <th>Values</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>alter_flg [1-> to block the user, 0-> to unblock the user]</code></td>
+                                  <td><code>string</code></td>
+                                </tr>
+                                <tr>
+                                  <td>POST</td>
+                                  <td><code>email</code></td>
+                                  <td><code>string</code></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <h5><p>Response</p></h5>
+                              <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                  <th>Status</th>
+                                  <th>Response</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td><code>200</code></td>
+                                  <td><code>{{ updateUserStatusResponses[0] }}</code></td>
+                                </tr>
+                                <tr>
+                                  <td><code>400</code></td>
+                                  <td><code>{{ updateUserStatusResponses[2] }}</code></td>
+                                </tr>
+                                <tr>
+                                  <td><code>403</code></td>
+                                  <td><code>{{ updateUserStatusResponses[3] }}</code></td>
+                                </tr>
+                                <tr>
+                                  <td><code>500</code></td>
+                                  <td><code>{{ updateUserStatusResponses[1] }}</code></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--update user status card #3 end-->
+                    </div>
+                  </div>
+                </div>
+                <!--api doc end-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </div>
+</div>

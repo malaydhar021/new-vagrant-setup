@@ -1,0 +1,9 @@
+<div class="row" *ngIf="showNotice">
+  <div class="col">
+    <p class="maintenance-notice animated slideInDown">
+      <i class="fa fa-exclamation-triangle"></i> We pushed review link section to watch and test the new features which will be available soon. DO NOT USE REVIEW LINK SECTION FOR NOW AS IT IS UNDER DEVELOPMENT -
+      <a href="https://tier5.us" target="_blank"><u>Tier5</u></a>
+      <button type="button" class="btn btn-link" (click)="showNotice = false;"><i class="fa fa-close" aria-hidden="true"></i></button>
+    </p>
+  </div>
+</div>

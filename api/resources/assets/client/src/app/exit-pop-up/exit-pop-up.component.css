@@ -1,0 +1,74 @@
+#add-exit-pop-up {
+  float: right;
+}
+#search-box {
+  width: 20%;
+  float: right;
+  margin: 2px 0px 0px 4px;
+}
+.campaign-form {
+  border: 1px solid #ccc;
+  height: auto;
+  padding: 6px 10px 10px 10px;
+  border-radius: 4px;
+}
+.error-alert {
+  color: red;
+  margin: 1px 0px 2px 2px;
+  height: auto;
+  width: auto;
+}
+.has-error-custom {
+  border: 1px solid red;
+}
+.output {
+  text-align: center !important;
+}
+.defined-header {
+  font-size: 30px;
+}
+.label.arrowed, .label.arrowed-in {
+  position: relative;
+  margin-left: 9px;
+}
+.label-success {
+  background-color: #d15b47;
+}
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+.label-success, .badge-success {
+  background-color: #d15b47!important;
+}
+.label-success.arrowed:before {
+  border-right-color: #d15b47;
+}
+.label.arrowed:before, .label.arrowed-in:before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 0;
+  border: 9px solid transparent;
+  border-width: 9px 7px;
+  border-right-color: #d15b47;
+}
+.show-exit-pop-up-bg {
+  height: 40px;
+  width: 40px;
+  border-radius: 25px;
+  margin: auto;
+}
+.bg-color-code {
+  text-align: center; font-weight: bold;
+}

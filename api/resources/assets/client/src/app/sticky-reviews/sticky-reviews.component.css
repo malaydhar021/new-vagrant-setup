@@ -1,0 +1,74 @@
+#add-sticky-reviews {
+  float: right;
+}
+#search-box {
+  width: 20%;
+  float: right;
+  margin: 2px 0px 0px 4px;
+}
+.rounded-circle {
+  height: 92px !important;
+  width: 92px !important;
+}
+.error-alert {
+  color: red;
+  margin: 1px 0px 2px 2px;
+  height: auto;
+  width: auto;
+}
+.has-error-custom {
+  border: 1px solid red;
+}
+.label.arrowed, .label.arrowed-in {
+  position: relative;
+  margin-left: 9px;
+}
+.label-success {
+  background-color: #d15b47;
+}
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+.label-success, .badge-success {
+  background-color: #d15b47!important;
+}
+.label-success.arrowed:before {
+  border-right-color: #d15b47;
+}
+.label.arrowed:before, .label.arrowed-in:before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 0;
+  border: 9px solid transparent;
+  border-width: 9px 7px;
+  border-right-color: #d15b47;
+}
+:before, :after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.notifiable {
+  background: red;
+  color: #fff;
+  font-weight: bold;
+  padding: 3px 4px 4px 4px;
+  border-radius: 12px;
+  height: 8px;
+  width: 1px;
+  display: inline-block;
+  float: right;
+  margin: -4px 0px 0px 10px;
+}

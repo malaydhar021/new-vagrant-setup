@@ -1,0 +1,176 @@
+<!-- Main wrapper  -->
+<div id="main-wrapper">
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
+    <!-- Bread crumb -->
+    <div class="row page-titles">
+      <div class="col-md-5 align-self-center">
+        <h3 class="text-primary">Review link(s)</h3> </div>
+      <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+          <li class="breadcrumb-item active">Review link(s)</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Bread crumb -->
+    <!-- Start Page Body Main Container -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-title">
+              <h4>Review links(s)</h4>
+              <div *ngIf="this.errFlg" class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="closeDiv();">&times;</a>
+                {{this.errString}}
+              </div>
+              <button type="button" class="btn btn-success btn-xs m-b-10 m-l-5" id="add-review-link" (click)="showAddForm()">
+                <i class="fa fa-{{addReviewLink === true ? 'minus': 'plus'}}" aria-hidden="true"></i>
+              </button>
+              <input type="text" class="form-control input-sm" id="search-box" [(ngModel)]="term" placeholder="Search...">
+            </div>
+            <div class="container-fluid" *ngIf="addReviewLink">
+              <div class="panel panel-default">
+                <div class="panel-heading">Add Review Link</div>
+                <div class="panel-body">
+                  <form [formGroup]="saveReviewLinkForm" (ngSubmit)="onSubmit()" class="campaign-form">
+                    <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="text" class="form-control" formControlName="name" id="name" placeholder="Give a nice name" [class.has-error-custom]="saveReviewLinkForm.controls.name.invalid && saveReviewLinkForm.controls.name.touched">
+                      <div *ngIf="saveReviewLinkForm.controls.name.invalid && saveReviewLinkForm.controls.name.touched" class="error-alert">Name is required!</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="url_slug">URL Slug</label>
+                      <input type="text" class="form-control" formControlName="url_slug" placeholder="Url slug (this will be shown in url while your customer will open the link to review you eg. your-domain.com/url-slug)" id="url_slug" (blur)="
+checkDuplicacy($event.target.value)" [class.has-error-custom]="saveReviewLinkForm.controls.url_slug.invalid && saveReviewLinkForm.controls.url_slug.touched || checkDuplicacyOrBlankBool">
+                      <div *ngIf="saveReviewLinkForm.controls.url_slug.invalid && saveReviewLinkForm.controls.url_slug.touched" class="error-alert">URL slug is required!</div>
+                      <div *ngIf="checkDuplicacyOrBlankBool" class="error-alert">
+                        <i class="fa fa-warning" aria-hidden="true"></i> This url slug has already been taken try to use something else.
+                      </div>
+                      <div *ngIf="!checkDuplicacyOrBlankBool" class="success-alert">
+                        <i class="fa fa-check" aria-hidden="true"></i> This URL slug is available
+                      </div>
+                    </div>
+                    <div class="form-group" *ngIf="isEdit">
+                      <label>Preview</label>
+                      <img [src]="previewImageLink"  class="rounded-circle" alt="Review Link image" id="image_preview">
+                    </div>
+                    <div class="form-group">
+                      <label for="logo">Logo</label>
+                      <input type="file" class="form-control" formControlName="myLogo" id="logo" (change)="handleImageUpload($event)" [class.has-error-custom]="saveReviewLinkForm.controls.myLogo.invalid && saveReviewLinkForm.controls.myLogo.touched">
+                      <div *ngIf="saveReviewLinkForm.controls.myLogo.invalid && saveReviewLinkForm.controls.myLogo.touched && !isInvalidImage" class="error-alert">Logo is required!</div>
+                      <div *ngIf="isInvalidImage" class="error-alert">
+                        Please select an image of any of these types 'png', 'jpg'/'jpeg', 'gif', 'tiff', 'ico', 'bmp', 'webp'.
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <textarea id="description" cols="2" rows="2" placeholder="Give a nice description for what your review link is for.." class="form-control" formControlName="description" [class.has-error-custom]="saveReviewLinkForm.controls.description.invalid && saveReviewLinkForm.controls.description.touched"></textarea>
+                      <div *ngIf="saveReviewLinkForm.controls.description.invalid && saveReviewLinkForm.controls.description.touched" class="error-alert">Description is required!</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="auto_approve">Auto approve <button type="button" class="btn btn-default btn-suggestion" title="Make sure you select it wisely. If you select this option as yes, reviews from your customers will directly shows up in your website, where widget is installed!"><i class="fa fa-question-circle"></i></button></label>
+                      <mat-radio-group formControlName="auto_approve" id="auto_approve" [(ngModel)]="auto_approve_value">
+                        <mat-radio-button [value]="1"> Yes</mat-radio-button>
+                        <mat-radio-button [value]="0"> No</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div class="form-group" *ngIf="auto_approve_value === 1">
+                      <label for="min_rating">Define rating: </label>
+                      <bar-rating [(rate)]="ratingInput" [max]="5" [theme]="'default'" formControlName="min_rating" id="min_rating"></bar-rating>
+                      <div *ngIf="saveReviewLinkForm.controls.min_rating.invalid && saveReviewLinkForm.controls.min_rating.touched" class="error-alert">Please define a minimum rating!</div>
+                    </div>
+                    <div class="form-group">
+                      <mat-form-field>
+                        <mat-select placeholder="Select Campaigns" formControlName="campaign_id">
+                          <mat-option *ngFor="let campaign of allCampaigns" [value]="campaign.id">{{campaign.campaign_name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                      <label for="negative_info_review_msg_1">Negative Info Message #1</label>
+                      <textarea id="negative_info_review_msg_1" cols="5" rows="5" placeholder="When client will give you a negative review this is what they see first." class="form-control" formControlName="negative_info_review_msg_1" [class.has-error-custom]="saveReviewLinkForm.controls.negative_info_review_msg_1.invalid && saveReviewLinkForm.controls.negative_info_review_msg_1.touched"></textarea>
+                      <div *ngIf="saveReviewLinkForm.controls.negative_info_review_msg_1.invalid && saveReviewLinkForm.controls.negative_info_review_msg_1.touched" class="error-alert">Negative info message #1 is required!</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="negative_info_review_msg_2">Negative info Message #2</label>
+                      <textarea id="negative_info_review_msg_2" cols="5" rows="5" placeholder="When client will give you a negative review this is what they see in the second place.." class="form-control" formControlName="negative_info_review_msg_2" [class.has-error-custom]="saveReviewLinkForm.controls.negative_info_review_msg_2.invalid && saveReviewLinkForm.controls.negative_info_review_msg_2.touched"></textarea>
+                      <div *ngIf="saveReviewLinkForm.controls.negative_info_review_msg_2.invalid && saveReviewLinkForm.controls.negative_info_review_msg_2.touched" class="error-alert">Negative info message #2 is required!</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="positive_review_msg">Positive review message</label>
+                      <textarea id="positive_review_msg" cols="5" rows="5" placeholder="This is what your client will see when they give you a positive feedback" class="form-control" formControlName="positive_review_msg" [class.has-error-custom]="saveReviewLinkForm.controls.positive_review_msg.invalid && saveReviewLinkForm.controls.positive_review_msg.touched"></textarea>
+                      <div *ngIf="saveReviewLinkForm.controls.positive_review_msg.invalid && saveReviewLinkForm.controls.positive_review_msg.touched" class="error-alert">Description is required!</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" [disabled]="!this.saveReviewLinkForm.valid">
+                      <span *ngIf="savingData"><i class="fa fa-circle-o-notch fa-spin"></i> Processing....</span>
+                      <span *ngIf="!savingData">Save</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Logo</th>
+                    <th>URL slug</th>
+                    <th>Campaign</th>
+                    <th>Auto approve</th>
+                    <th>Min Rating</th>
+                    <th>Negative info message #1</th>
+                    <th>Negative info message #2</th>
+                    <th>Positive Review message</th>
+                    <th>Created At</th>
+                    <th>Action(s)</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let reviewLink of myReviewLinks | filter: term | paginate: { itemsPerPage: paginate, currentPage: p }; let i = index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ reviewLink.name }}</td>
+                    <td>{{ reviewLink.description }}</td>
+                    <td><img src="{{ imageBaseURL }}{{ reviewLink.logo }}" class="rounded-circle" alt="Sticky Review image"></td>
+                    <td>{{ reviewLink.url_slug }}</td>
+                    <td *ngIf="reviewLink.campaign"><a routerLink="/campaigns/{{ reviewLink.campaign.id }}">{{ reviewLink.campaign.campaign_name }}</a></td>
+                    <td *ngIf="!reviewLink.campaign">Not Assigned</td>
+                    <td>{{ reviewLink.auto_approve === 1 ? 'Yes' : 'No' }}</td>
+                    <td *ngIf="reviewLink.auto_approve === 1">
+                      <bar-rating [(rate)]="reviewLink.min_rating" [max]="5" [theme]="'default'" [readOnly]="true"></bar-rating>
+                    </td>
+                    <td *ngIf="reviewLink.auto_approve === 0">
+                      No Minimum Rating defined (Auto approve off)
+                    </td>
+                    <td>{{ reviewLink.negative_info_review_msg_1 }}</td>
+                    <td>{{ reviewLink.negative_info_review_msg_2 }}</td>
+                    <td>{{ reviewLink.positive_review_msg }}</td>
+                    <td>{{ reviewLink.created_at | date: 'MMM d, y, h:mm:ss a' }}</td>
+                    <td>
+                      <button type="button" class="btn btn-warning btn-xs m-b-10 m-l-5" tooltip="Edit" (click)="editReviewLink(reviewLink)"><i class="fa fa-edit"></i></button>
+                      <button type="button" class="btn btn-primary btn-xs m-b-10 m-l-5" tooltip="Copy" ngxClipboard [cbContent]="myDomain + '/user-review/'+ reviewLink.url_slug"><i class="fa fa-copy"></i></button>
+                      <button type="button" class="btn btn-danger btn-xs m-b-10 m-l-5" tooltip="Delete" (click)="deleteReviewLink(reviewLink)"><i class="fa fa-trash"></i></button>
+                    </td>
+                  </tr>
+                  </tbody>
+                  <pagination-controls (pageChange)="p = $event" class="globalPagination"></pagination-controls>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Page Body Main Container -->
+    <app-footer></app-footer>
+  </div>
+  <!-- End Page wrapper  -->
+</div>
+<!-- End Wrapper -->
