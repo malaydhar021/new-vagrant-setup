@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    document.body.className = "loginPage";
+  }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy(){
+    document.body.className="loginPage";
   }
 
 }
