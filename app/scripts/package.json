@@ -21,6 +21,7 @@
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
     "ngx-bar-rating": "^1.1.0",
+    "ngx-mask": "^7.3.6",
     "ngx-scrollbar": "^4.1.1",
     "ngx-smart-modal": "^7.1.1",
     "rxjs": "~6.3.3",

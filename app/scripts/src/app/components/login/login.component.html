@@ -1,7 +1,7 @@
 <div class="loginContainer">
   <div class="leftPanel">
       <div class="leftLogo">
-          <img src="../../../assets/images/Sticky_Reviews_logo_text.png" alt="">
+          <a [routerLink]="['']"><img src="../../../assets/images/Sticky_Reviews_logo_text.png" alt=""></a>
       </div>
   </div>
   <div class="rightPanel">
@@ -31,7 +31,7 @@
               </div>
               <div class="formRow2">
                   <p class="registerLink">
-                      Don't have any account? <a href="">Register Here</a>
+                    Don't have any account? <a [routerLink]="['/sign-up']">Register Here</a>
                   </p>
               </div>
           </form>

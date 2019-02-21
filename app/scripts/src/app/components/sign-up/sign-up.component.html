@@ -1,0 +1,110 @@
+<div class="signupContainer">
+  <div class="signupLeft">
+    <div class="leftHeader">
+      <div class="logo">
+        <a [routerLink]="['']">
+          <img src="../../../assets/images/logo.png" alt="">
+        </a>
+      </div>
+    </div>
+
+    <div class="formArea">
+      <div class="formContainer" #formContainer [ngClass]="{'secondStep' : secondStepeFlag}">
+        <div class="formStep">
+          <h2>Register for Sticky Reviews</h2>
+          <div class="formRow">
+            <label>Full Name</label>
+            <input type="text" class="formCtrl">
+          </div>
+          <div class="formRow">
+            <label>Email Address</label>
+            <input type="text" class="formCtrl">
+          </div>
+          <div class="formRow">
+            <label>Password</label>
+            <input type="password" class="formCtrl">
+          </div>
+          <div class="formRow">
+            <button type="button" class="redBtn" (click)="nextStep()">NEXT</button>
+          </div>
+        </div>
+        <div class="formStep">
+          <button type="button" class="goBack" (click)="goBack()">GO BACK</button>
+          <h2>Credit Card Information</h2>
+          <div class="formRow">
+            <div class="formCol6">
+              <label>Credit Card Number</label>
+              <input type="text" class="formCtrl card" ngModel mask="0000 0000 0000 0000">
+            </div>
+            <div class="formCol4">
+              <label>CVC Number</label>
+              <input type="password" class="formCtrl" ngModel maxlength="3">
+            </div>
+          </div>
+          <div class="formRow">
+            <div class="formCol5">
+              <label>Expiry Month</label>
+              <select class="formCtrl">
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+            <div class="formCol5">
+              <label>Expiry Year</label>
+              <select class="formCtrl">
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+              </select>
+            </div>
+          </div>
+          <div class="formRow">
+            <button type="button" class="redBtn trial">Start my 14 day FREE trial<span>You pay nothing today!</span></button>
+          </div>
+          
+        </div>
+      </div>
+      <div class="loginLink">
+          Already have an account? <a [routerLink]="['/login']">Login Now!</a>
+        </div>
+    </div>
+  </div>
+
+
+  <div class="signupRight">
+    <div class="rightMain">
+      <h2>Here's What You'll Get:</h2>
+      <ul>
+        <li>14 Day Free Trial</li>
+        <li>Amazing Sticky Reviews Account</li>
+        <li>Ability To Easily Increase Conversions</li>
+        <li>No Sticky Reviews Branding Ever</li>
+        <li>Very Easy To Use Software</li>
+        <li>Install On 2 Domains Minimum</li>
+        <li>Review Links To Easily Collect Reviews</li>
+        <li>Automate Reviews Added To Your Site</li>
+        <li>Fast Friendly Support</li>
+        <li>Full 30 Day Money Back Guarantee</li>
+      </ul>
+      <div class="rightFooter">
+        <span><img src="../../../assets/images/s_badge03.png" alt=""></span>
+        <span><img src="../../../assets/images/s_badge01.png" alt=""></span>
+        <span><img src="../../../assets/images/s_badge02.png" alt=""></span>
+      </div>
+    </div>
+  </div>
+</div>
