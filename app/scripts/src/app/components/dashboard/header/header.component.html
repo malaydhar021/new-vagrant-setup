@@ -1,0 +1,29 @@
+<header class="rightPanHeader">
+  <div class="headerLeft" [ngClass]="tglFlag ? 'active' : ''">
+    <a class="gear" (click)="tglSetting()"></a>
+
+    <div class="settingDrop">
+      <div class="topSec">
+        <h2>
+          <span>Your current</span>
+          membership plan
+        </h2>
+        <div class="planName">
+          STARTER
+        </div>
+        <a [routerLink]="['/dashboard/plans']" class="upgrade">Upgrade Now</a>
+      </div>
+      <div class="bottomSec">
+        <ul>
+          <li><a href="">Edit Profile</a></li>
+          <li><a href="">Update Payment Info</a></li>
+          <li><a href="">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="headerRight">
+    <img src="../../../../assets/images/pp.png" alt="">
+  </div>
+</header>

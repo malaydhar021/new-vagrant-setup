@@ -6,6 +6,7 @@ import { StickyReviewsComponent } from './sticky-reviews/sticky-reviews.componen
 import { CampaignComponent } from './campaign/campaign.component';
 import { ReviewLinkComponent } from './review-link/review-link.component';
 import { ExitPopupComponent } from './exit-popup/exit-popup.component';
+import { PlansComponent } from './plans/plans.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "home"},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: "campaign", component: CampaignComponent},
   {path: "review-link", component: ReviewLinkComponent},
   {path: "exit-popup", component: ExitPopupComponent},
+  {path: "plans", component: PlansComponent},
 ];
 
 @NgModule({

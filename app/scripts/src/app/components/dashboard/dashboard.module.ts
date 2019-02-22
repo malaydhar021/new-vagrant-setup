@@ -13,6 +13,8 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { ReviewLinkComponent } from './review-link/review-link.component';
 import { ExitPopupComponent } from './exit-popup/exit-popup.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { HeaderComponent } from './header/header.component';
+import { PlansComponent } from './plans/plans.component';
 
 
 @NgModule({
@@ -23,7 +25,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     StickyReviewsComponent, 
     CampaignComponent, 
     ReviewLinkComponent, 
-    ExitPopupComponent
+    ExitPopupComponent, HeaderComponent, PlansComponent
   ],
   
   imports: [

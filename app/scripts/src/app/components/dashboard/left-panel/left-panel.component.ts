@@ -14,7 +14,7 @@ export class LeftPanelComponent implements OnInit {
       'campaign' : ['/dashboard/campaign'],
       'sticky-reviews' : ['/dashboard/sticky-reviews'],
       'review-link' : ['/dashboard/review-link'],
-      'exit-popup' : ['/dashboard/exit-popup']
+      'exit-popup' : ['/dashboard/exit-popup'],
     }
 
    }
