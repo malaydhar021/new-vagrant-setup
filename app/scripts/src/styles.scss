@@ -1995,9 +1995,8 @@ body.loginPage {
 /* -------------------------- Sign Up Page CSS --------------------------- */
 
 body.sign-upPage {
-    background: #0CE3BE url(#{$imgUrl}/graphic_exit_popup.png) no-repeat right 10% bottom;
-    background-size: 500px;
-
+    background: url(#{$imgUrl}/graphic_exit_popup.png) no-repeat right 10% bottom/500px , url(#{$imgUrl}/pop_graphic.png) no-repeat top right/451px;
+    background-color: #0CE3BE;
     .signupContainer {
         float: left;
 
@@ -2104,8 +2103,9 @@ body.sign-upPage {
                                 box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05)
                             }
                             &.card {
-                                padding-left: 60px;
-                                // background: url(#{$imgUrl}/cards.png) no-repeat left 10px top 10px;
+                                padding-left: 68px;
+                                background: #F3F2FF url(#{$imgUrl}/cards.png) no-repeat left 10px top 12px;
+                                background-size: 40px auto;
                             }
                         }
                         .redBtn {
