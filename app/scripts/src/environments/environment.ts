@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+    development: false,
+    staging: false,
+    production: false,
+    APP_BASE_URL: 'http://stickyreviews.local/',
+    API_BASE_URL: 'http://api.usestickyreviews.local/v1',
+    maintenance: false, // true to show the maintenance label, false to hide
 };
 
 /*
