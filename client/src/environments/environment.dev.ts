@@ -1,8 +1,7 @@
 export const environment = {
-    development: false,
-    staging: false,
-    production: true,
-    APP_BASE_URL: 'https://app.usestickyreviews.com/',
+    production: false,
+    APP_BASE_URL: 'https://dashboard.usestickyreviews.com/',
     API_BASE_URL: 'https://api.usestickyreviews.com/v1',
-    maintenance: false,
+    WIDGET_BASE_URL: 'https://lib.usestickyreviews.com',
+    maintenance: false
 };

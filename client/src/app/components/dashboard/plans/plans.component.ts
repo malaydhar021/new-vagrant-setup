@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./plans.component.scss']
 })
 export class PlansComponent implements OnInit {
+    scrollTrigger:any = false;
+    constructor() { }
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+    ngOnInit() {
+    
+    }
 
 }

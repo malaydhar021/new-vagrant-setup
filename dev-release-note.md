@@ -9,3 +9,7 @@ Environments V0.1
 
 Configuaration V1.0 stable
 	Changed directory structure for the entire application
+
+Configuaration V1.1 stable
+	Modified environmnets configurations
+	Added scripts for prod, stage and dev build
