@@ -7,6 +7,7 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { ReviewLinkComponent } from './review-link/review-link.component';
 import { ExitPopupComponent } from './exit-popup/exit-popup.component';
 import { PlansComponent } from './plans/plans.component';
+import { UpdatePaymentInfoComponent } from './update-payment-info/update-payment-info.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "home"},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: "review-link", component: ReviewLinkComponent},
   {path: "exit-popup", component: ExitPopupComponent},
   {path: "plans", component: PlansComponent},
+  {path: "update-payment-info", component: UpdatePaymentInfoComponent}
 ];
 
 @NgModule({

@@ -15,6 +15,7 @@ import { ExitPopupComponent } from './exit-popup/exit-popup.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { HeaderComponent } from './header/header.component';
 import { PlansComponent } from './plans/plans.component';
+import { UpdatePaymentInfoComponent } from './update-payment-info/update-payment-info.component';
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import { PlansComponent } from './plans/plans.component';
     StickyReviewsComponent, 
     CampaignComponent, 
     ReviewLinkComponent, 
-    ExitPopupComponent, HeaderComponent, PlansComponent
+    ExitPopupComponent, HeaderComponent, PlansComponent, UpdatePaymentInfoComponent
   ],
   
   imports: [

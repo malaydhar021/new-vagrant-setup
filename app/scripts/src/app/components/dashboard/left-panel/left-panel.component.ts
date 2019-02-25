@@ -15,6 +15,7 @@ export class LeftPanelComponent implements OnInit {
       'sticky-reviews' : ['/dashboard/sticky-reviews'],
       'review-link' : ['/dashboard/review-link'],
       'exit-popup' : ['/dashboard/exit-popup'],
+      'update-payment-info' : ['/dashboard/update-payment-info'],
     }
 
    }
