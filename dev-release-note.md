@@ -7,9 +7,12 @@ Environments V0.1
 	Added environments for production, staging, development and local
 	Added README.md file for setup instruction and other necessary information
 
-Configuaration V1.0 stable
+Configuration V1.0 stable
 	Changed directory structure for the entire application
 
-Configuaration V1.1 stable
+Configuration V1.1 stable
 	Modified environmnets configurations
 	Added scripts for prod, stage and dev build
+
+Configuration V1.2 stable
+	Removed api prefix from all api routes
