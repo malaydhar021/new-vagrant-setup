@@ -16,6 +16,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { HeaderComponent } from './header/header.component';
 import { PlansComponent } from './plans/plans.component';
 import { UpdatePaymentInfoComponent } from './update-payment-info/update-payment-info.component';
+import {NgxMaskModule} from 'ngx-mask';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { UpdatePaymentInfoComponent } from './update-payment-info/update-payment
     NgScrollbarModule,
     BarRatingModule,
     NgxSmartModalModule.forRoot(),
+    NgxMaskModule.forRoot(),
   ]
 })
 export class DashboardModule { }

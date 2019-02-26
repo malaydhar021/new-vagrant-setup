@@ -2250,100 +2250,6 @@ body.sign-upPage {
                             padding-right: 0;
                         }
                     }
-
-                    h2 {
-                        color: #878787;
-                        font-size: 20px;
-                        font-weight: 400;
-                        margin-bottom: 40px;
-                    }
-                    .formRow {
-                        margin-bottom: 24px;
-                        display: inline-block;
-                        width: 100%;
-
-                        .formCol4, .formCol5, .formCol6 {
-                            float: left;
-                            box-sizing: border-box;
-                            padding-right: 20px;
-                        }
-                        .formCol4:last-child, .formCol5:last-child, .formCol6:last-child {
-                            padding-right: 0;
-                        }
-                        .formCol4 {
-                            width: 40%;
-                        }
-                        .formCol5 {
-                            width: 50%;
-                        }
-                        .formCol6 {
-                            width: 60%;
-                        }
-
-                        label {
-                            color: #BBB9D1;
-                            font-size: 14px;
-                            font-weight: 600;
-                            display: block;
-                            margin-bottom: 14px;
-                        }
-                        .formCtrl {
-                            background: #F3F2FF;
-                            display: inline-block;
-                            width: 100%;
-                            height: 50px;
-                            box-sizing: border-box;
-                            border: none;
-                            border-radius: 5px;
-                            outline: none;
-                            color: #7E7B9B;
-                            padding: 10px;
-                            font-size: 14px;
-                            font-family: 'Segoe UI Web (West European)';
-                            font-weight: 600;
-                            transition: all 0.3s ease 0s;
-    
-                            &:focus {
-                                box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05)
-                            }
-                            &.card {
-                                padding-left: 68px;
-                                background: #F3F2FF url(#{$imgUrl}/cards.png) no-repeat left 10px top 12px;
-                                background-size: 40px auto;
-                            }
-                        }
-                        .redBtn {
-                            background: color(sr-red);
-                            font-family: 'Segoe UI Web (West European)';
-                            color: #fff;
-                            font-size: 18px;
-                            font-weight: 600;
-                            display: inline-block;
-                            width: 100%;
-                            height: 60px;
-                            border-radius: 5px;
-                            border: none;
-                            outline: none;
-                            cursor: pointer;
-                            margin-top: 22px;
-                            box-shadow: 0 0 0 #7E7B9B;
-                            transition: all 0.5s ease-out 0s;
-    
-                            &:hover {
-                                box-shadow: 0 0 30px #7E7B9B;
-                            }
-
-                            &.trial {
-                                font-size: 17px;
-
-                                span {
-                                    font-size: 11px;
-                                    display: block;
-                                    padding-top: 5px;
-                                }
-                            }
-                        }
-                    }
     
                     .goBack {
                         width: 150px;
@@ -2420,11 +2326,174 @@ body.sign-upPage {
     }
 }
 
+.cardForm {
+    h2 {
+        color: #878787;
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 40px;
+    }
+    .formRow {
+        margin-bottom: 24px;
+        display: inline-block;
+        width: 100%;
+
+        .formCol4, .formCol5, .formCol6 {
+            float: left;
+            box-sizing: border-box;
+            padding-right: 20px;
+        }
+        .formCol4:last-child, .formCol5:last-child, .formCol6:last-child {
+            padding-right: 0;
+        }
+        .formCol4 {
+            width: 40%;
+        }
+        .formCol5 {
+            width: 50%;
+        }
+        .formCol6 {
+            width: 60%;
+        }
+
+        label {
+            color: #BBB9D1;
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 14px;
+        }
+        .formCtrl {
+            background: #F3F2FF;
+            display: inline-block;
+            width: 100%;
+            height: 50px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            color: #7E7B9B;
+            padding: 10px;
+            font-size: 14px;
+            font-family: 'Segoe UI Web (West European)';
+            font-weight: 600;
+            transition: all 0.3s ease 0s;
+
+            &:focus {
+                box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05)
+            }
+            &.card {
+                padding-left: 68px;
+                background: #F3F2FF url(#{$imgUrl}/cards.png) no-repeat left 10px top 12px;
+                background-size: 40px auto;
+            }
+        }
+        .redBtn {
+            background: color(sr-red);
+            font-family: 'Segoe UI Web (West European)';
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            margin-top: 22px;
+            box-shadow: 0 0 0 #7E7B9B;
+            transition: all 0.5s ease-out 0s;
+
+            &:hover {
+                box-shadow: 0 0 30px #7E7B9B;
+            }
+
+            &.trial {
+                font-size: 17px;
+
+                span {
+                    font-size: 11px;
+                    display: block;
+                    padding-top: 5px;
+                }
+            }
+        }
+    }
+}
 
 
+/* ------------------------- Update-payment-info page css --------------------- */
 
+.updatePaymentInfo {
+    h1 {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 400;
+        color: #404040;
+        margin-top: 80px;
 
+        span {
+            display: block;
+            color: #A8A8A8;
+            font-size: 14px;
+            margin-top: 14px;
 
+            &.cardIcon {
+                margin-top: 0;
+                margin-bottom: 26px;
+            }
+        }
+    }
+
+    .cards {
+        width: 484px;
+        margin: 60px auto 0;
+
+        ul {
+            li {
+                border: 2px solid color(sr-blue);
+                box-sizing: border-box;
+                border-radius: 5px;
+                padding: 12px 12px 12px 96px;
+                width: 100%;
+                height: 62px;
+                background: #fff url(#{$imgUrl}/icon_bullet.png) no-repeat left 32px center;
+                margin-bottom: 18px;
+
+                .cardNumber {
+                    float: left;
+                }
+                .expDate {
+                    float: left;
+                    margin-left: 90px;
+                }
+
+                span {
+                    color: #A5A5A5;
+                    font-size: 10px;
+                    display: block;
+                    font-weight: 600;
+                }
+                p {
+                    color: #000;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+.UpdateCardBtn {
+    @extend %common-red-btn;
+    padding: 16px 40px;
+    margin-top: 20px;
+}
+
+.updateCardModal {
+    padding: 0 32px;
+}
 
 
 
