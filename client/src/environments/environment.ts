@@ -7,7 +7,7 @@ export const environment = {
     APP_BASE_URL: 'http://stickyreviews.local/',
     API_BASE_URL: 'http://api.stickyreviews.local/v1',
     WIDGET_BASE_URL: 'http://lib.stickyreviews.local',
-    maintenance: false, // true to show the maintenance label, false to hide
+    maintenance: false // true to show the maintenance label, false to hide
 };
 
 /*

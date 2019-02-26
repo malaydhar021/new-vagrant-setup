@@ -16,3 +16,6 @@ Configuration V1.1 stable
 
 Configuration V1.2 stable
 	Removed api prefix from all api routes
+
+Configuration V1.3 stable
+	Added .gitignore to api root directory
