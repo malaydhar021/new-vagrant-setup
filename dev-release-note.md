@@ -3,7 +3,7 @@ UI
 -- Plan V0.8
 -- Signup V0.6
 
-Environments V0.1 
+Configuration V0.5 
 	Added environments for production, staging, development and local
 	Added README.md file for setup instruction and other necessary information
 
@@ -19,3 +19,6 @@ Configuration V1.2 stable
 
 Configuration V1.3 stable
 	Added .gitignore to api root directory
+
+Configuration V1.4 stable
+	Modified app, api and widget urls from dev and stage environments files
