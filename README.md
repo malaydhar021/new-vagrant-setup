@@ -1,3 +1,3 @@
-Sticky Reviews
+# Sticky Reviews
 
 Setup instruction is coming soon...

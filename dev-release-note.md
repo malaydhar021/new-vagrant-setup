@@ -1,24 +1,39 @@
-UI 
--- Login V0.9
--- Plan V0.8
--- Signup V0.6
+# Release Notes
 
-Configuration V0.5 
-	Added environments for production, staging, development and local
-	Added README.md file for setup instruction and other necessary information
+## UI
 
-Configuration V1.0 stable
-	Changed directory structure for the entire application
+- Login V0.9
+- Plan V0.8
+- Signup V0.6
 
-Configuration V1.1 stable
-	Modified environmnets configurations
-	Added scripts for prod, stage and dev build
+## Configuration
 
-Configuration V1.2 stable
-	Removed api prefix from all api routes
+### V0.5
 
-Configuration V1.3 stable
-	Added .gitignore to api root directory
+1. Added environments for production, staging, development and local
+2. Added README.md file for setup instruction and other necessary information
 
-Configuration V1.4 stable
-	Modified app, api and widget urls from dev and stage environments files
+### V1.0 stable
+
+1. Changed directory structure for the entire application
+
+### V1.1 stable
+
+1. Modified environmnets configurations
+2. Added scripts for prod, stage and dev build
+
+### V1.2 stable
+
+1. Removed api prefix from all api routes
+
+### V1.3 stable
+
+1. Added .gitignore to api root directory
+
+### V1.4 stable
+
+1. Modified app, api and widget urls from dev and stage environments files
+
+### V1.5 stable
+
+1. Remove `node_modules/` from git to track for **client** and **widget**
