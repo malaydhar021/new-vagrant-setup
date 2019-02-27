@@ -4,9 +4,9 @@
 
 export const environment = {
     production: false,
-    APP_BASE_URL: 'http://stickyreviews.local/',
-    API_BASE_URL: 'http://api.stickyreviews.local/v1',
-    WIDGET_BASE_URL: 'http://lib.stickyreviews.local',
+    APP_BASE_URL: 'http://app.local.stickyreviews.com',
+    API_BASE_URL: 'http://api.local.stickyreviews.com/v1',
+    WIDGET_BASE_URL: 'http://lib.local.stickyreviews.com',
     maintenance: false // true to show the maintenance label, false to hide
 };
 

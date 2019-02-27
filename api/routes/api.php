@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,13 +10,14 @@ use Intervention\Image\Facades\Image;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('test', function(){
-    echo '{apiroute: "test", status : "success"}';
-});
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/', function() {
+    return response()->json([
+        'status' => true,
+        'message' => "OK",
+    ]);
+})->name('index');
+
 // Api version 1.0 routes
 Route::prefix('v1')->middleware('cors')->group(function () {
     Route::post('authenticate', 'Apiv1Controller@index')->name('postAuthenticateUser');
@@ -44,8 +42,8 @@ Route::prefix('v1')->middleware('cors')->group(function () {
     Route::get('/forget-storage-path', function () {
         return response()->json([
             'status'    => true,
-            'response'  => // 'https://s3.amazonaws.com/'.config('constants.amazons3.AWS_BUCKET').'/'
-                           url('/') . '/uploads/sticky-review-images/'
+            'response'  => url('/') . '/uploads/sticky-review-images/',
+            // 'response'  => 'https://s3.amazonaws.com/'.config('constants.amazons3.AWS_BUCKET').'/',
         ]);
     });
     Route::post('/delete-sticky-review', 'Apiv1Controller@postDeleteStickyReview')->name('postDeleteStickyReview');

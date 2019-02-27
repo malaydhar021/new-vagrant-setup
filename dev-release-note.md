@@ -37,3 +37,8 @@
 ### V1.5 stable
 
 1. Remove `node_modules/` from git to track for **client** and **widget**
+
+### V1.6 stable
+
+1. Added new Vue project, Update Angular packages, Update Laravel routes
+2. Added Vagrant support, SETUP.md and Update .gitignore

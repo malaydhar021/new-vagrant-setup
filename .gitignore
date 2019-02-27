@@ -4,9 +4,14 @@
 /dist
 /tmp
 /out-tsc
+/app
+/lib
 
 # dependencies
+.vagrant/
 node_modules/
+sql/
+vendor/
 
 # IDEs and editors
 /.idea
@@ -16,9 +21,8 @@ node_modules/
 *.launch
 .settings/
 *.sublime-workspace
-
-# IDE - VSCode
 .vscode/
+nbproject/
 
 # misc
 /.sass-cache
@@ -27,12 +31,12 @@ node_modules/
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
+bootstrap.log
 testem.log
+ubuntu*.log
 /typings
+
 
 # System Files
 .DS_Store
 Thumbs.db
-/nbproject
-/app
-/lib

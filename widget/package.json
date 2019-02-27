@@ -1,40 +1,35 @@
 {
-  "name": "stickyreview-widget",
-  "description": "Stickyreview widget powered by Vue",
+  "name": "stickyreviews-widget",
   "version": "1.0.0",
-  "author": "Tier5 LLC<work@tier5.us>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit",
+    "build:dev": "npm run build --mode development",
+    "build:stage": "npm run build --mode staging",
+    "build:prod": "npm run build --mode production"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "dotenv-webpack": "^1.5.7",
-    "i": "^0.3.6",
-    "lodash": "^4.17.11",
-    "moment-timezone": "^0.5.23",
-    "npm": "^6.4.0",
-    "vue": "^2.5.11",
-    "vue-js-modal": "^1.3.26",
-    "vue-moment": "^4.0.0"
+    "vue": "^2.6.6"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-3": "^6.24.1",
-    "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
-    "file-loader": "^1.1.4",
-    "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-plugin-unit-jest": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.21"
   }
 }
