@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_check_update = true
 	config.vm.hostname = "stickyreviews"
 	config.vm.define "stickyreviews"
-  config.vm.network "private_network", ip: "192.168.15.10"
+  config.vm.network "private_network", ip: "192.168.15.68"
   config.vm.provider "virtualbox" do |vb|
     vb.name = "stickyreviews"
     vb.memory = "2048"

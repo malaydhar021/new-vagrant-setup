@@ -42,3 +42,9 @@
 
 1. Added new Vue project, Update Angular packages, Update Laravel routes
 2. Added Vagrant support, SETUP.md and Update .gitignore
+
+### V1.7 stable
+
+1. Change Vagrant Private Network.
+2. Created remote user for Vagrant MySQL to access from host.
+3. Update host-configurer.sh and SETUP.md to reflect changes.

@@ -8,6 +8,9 @@ sudo service mysql restart
 echo -e -n "\nCreating database, please re-enter your MySQL root password: "
 read db_pwd
 echo "CREATE DATABASE stickyreviews DEFAULT COLLATE utf8_unicode_ci DEFAULT CHARACTER SET utf8" | mysql -u root -p$db_pwd
+echo "GRANT ALL PRIVILEGES ON stickyreviews.* TO 'root'@'%' WITH GRANT OPTION;" | mysql -u root -p$db_pwd
+echo "CREATE USER 'root'@'%' IDENTIFIED BY '${db_pwd}'" | mysql -u root -p$db_pwd
+echo "FLUSH PRIVILEGES;" | mysql -u root -p$db_pwd
 
 echo -e "\nRe-wiring PHP 7.3 Fast CGI Processor for ${USER}\n"
 sudo cp /etc/php/7.3/fpm/pool.d/www.conf /etc/php/7.3/fpm/pool.d/www.conf.bak
