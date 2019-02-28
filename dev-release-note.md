@@ -47,4 +47,10 @@
 
 1. Change Vagrant Private Network.
 2. Created remote user for Vagrant MySQL to access from host.
-3. Update host-configurer.sh and SETUP.md to reflect changes.
+3. Updated host-configurer.sh and SETUP.md to reflect changes.
+
+### V1.8 stable
+
+1. Updated client/src/environment.ts to "https"
+2. Updated webroot in SETUP.md.
+3. Secured api and lib root URLIs.

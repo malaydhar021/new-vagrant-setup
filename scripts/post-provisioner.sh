@@ -37,7 +37,8 @@ sudo chmod a+w -R bootstrap/cache storage
 composer install
 sudo cp -f .env.example .env
 sed -i -e 's/APP_NAME=Laravel/APP_NAME="Sticky Reveiws"/g' .env
-sed -i -e 's/APP_URL=http:\/\/localhost/APP_URL=https:\/\/api.local.usestickyreviews.com/g' .env
+sed -i -e 's/APP_URL=http:\/\/localhost\/api/APP_URL=https:\/\/api.local.usestickyreviews.com/g' .env
+sed -i -e 's/REDIRECT_URL=http://localhost/REDIRECT_URL=https:\/\/app.local.usestickyreviews.com/g' .env
 sed -i -e 's/DB_DATABASE=homestead/DB_DATABASE=stickyreviews/g' .env
 sed -i -e 's/DB_USERNAME=homestead/DB_USERNAME=root/g' .env
 sed -i -e 's/DB_PASSWORD=secret/DB_PASSWORD='$db_pwd'/g' .env

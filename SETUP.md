@@ -29,7 +29,7 @@ To set up this project please follow the procedures below.
 3. Run post-provision script in guest
 
     ```bash
-    cd /var/www/vagrant
+    cd /vagrant
     scripts/post-provisioner.sh
     ```
 
@@ -56,8 +56,8 @@ To set up this project please follow the procedures below.
 
 __P.S.__ You can access guest MySQL from your host MySQL (see below command) or MySQL Workbench
 
-    ```bash
-    mysql -h 192.168.15.68 -u root -p
-    ```
+```bash
+mysql -h 192.168.15.68 -u root -p
+```
 
 Happy coding! :metal:

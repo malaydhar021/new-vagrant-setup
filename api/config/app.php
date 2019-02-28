@@ -52,7 +52,21 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost/api'),
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Redirection URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used when someone want to access the Application root URL.
+    | This application serves as an API service and by redirecting to
+    | Redirection URL prevents access to unwanted visit on API host.
+    |
+    */
+
+    'redirect_url' => env( 'REDIRECT_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
