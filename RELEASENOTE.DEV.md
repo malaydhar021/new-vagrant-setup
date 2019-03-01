@@ -54,3 +54,7 @@
 1. Updated client/src/environment.ts to "https"
 2. Updated webroot in SETUP.md.
 3. Secured api and lib root URLIs.
+
+### V1.9 stable
+
+1. Renamed dev-release-note.md file to RELEASENOTE.DEV.md
