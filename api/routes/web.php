@@ -12,9 +12,8 @@
 */
 
 /**
- * Globally intercept each web routes and pass to `index.html` for
- * Frontend frameworks error handling except the API routes
+ * Redirect API root route to the `redirect_url` i.e. landing page URI
  */
 Route::get('/', function () {
-    return redirect(config('app.redirect_url'));
+    return redirect(config('app.redirect_url', 'https://usestickyreviews.com'));
 })->name('index');

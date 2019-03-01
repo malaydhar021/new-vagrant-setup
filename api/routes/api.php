@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/test', function() {
+Route::get('/test', function () {
     $allowedIps = [
         '192.168.15.1', // local
         env('TIER5_IP', '127.0.0.1')

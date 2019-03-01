@@ -43,8 +43,6 @@ class Apiv1Controller extends Controller
     {
         // set stripe api key
         $this->myStripeKey = config('constants.stripe.private_key');
-        // initiate stripe instance
-        $this->stripe = Stripe::make($this->myStripeKey);
     }
 
     /**
@@ -113,51 +111,26 @@ class Apiv1Controller extends Controller
     {
         try {
             // create stripe customer along with source ps payment
-            $customer = $this->stripe->customers()->create([
+            User::create([
+                'name' => $request->name,
                 'email' => $request->email,
-                'card' => [
-                    'number' => $request->card_no,
-                    'exp_month' => $request->month,
-                    'cvc' => $request->cvc,
-                    'exp_year' => $request->year,
-                ]
+                'password' => bcrypt($request->password),
+                'api_token' => md5(uniqid(rand(), true)),
             ]);
-            if (array_key_exists('id', $customer)) {
-                // create stripe subscription
-                $subscription = $this->stripe->subscriptions()->create($customer['id'], [
-                    'plan' => $request->stripe_plan
-                ]);
-                User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => bcrypt($request->password),
-                    'customer_id' => $customer['id'],
-                    'subscription_id' => $subscription['id'],
-                    'card_brand' => $customer['sources']['data'][0]['brand'],
-                    'last_four' => $customer['sources']['data'][0]['last4'],
-                    'expiry_date' => (strlen($customer['sources']['data'][0]['exp_month']) == 1 ? '0' . $customer['sources']['data'][0]['exp_month'] : $customer['sources']['data'][0]['exp_month']) . '/' . $customer['sources']['data'][0]['exp_year'],
-                    'api_token' => md5(uniqid(rand(), true))
-                ]);
-                $token = JWTAuth::attempt([
-                    'email' => $request->email,
-                    'password' => $request->password
-                ]);
-                if ($token) {
-                    return response()->json([
-                        'status' => true,
-                        'response' => 'Successfully signed up!',
-                        'token' => $token
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'status' => false,
-                        'response' => 'Failed during sign up. Please try again later!'
-                    ], 500);
-                }
+            $token = JWTAuth::attempt([
+                'email' => $request->email,
+                'password' => $request->password
+            ]);
+            if ($token) {
+                return response()->json([
+                    'status' => true,
+                    'response' => 'Successfully signed up!',
+                    'token' => $token
+                ], 200);
             } else {
                 return response()->json([
                     'status' => false,
-                    'response' => 'Failed to create customer for stripe subscribe'
+                    'response' => 'Failed during sign up. Please try again later!'
                 ], 500);
             }
         } catch (\Exception $e) {
@@ -660,7 +633,7 @@ class Apiv1Controller extends Controller
     public function getStripePlans()
     {
         try {
-            $plans_arr = $this->stripe->plans()->all();
+            $plans_arr = [];
             if ($plans_arr) {
                 return response()->json([
                     'status' => true,

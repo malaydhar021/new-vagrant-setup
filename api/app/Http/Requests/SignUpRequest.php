@@ -28,13 +28,13 @@ class SignUpRequest extends FormRequest
             'email'                 => 'required|string|email|max:255|unique:users',
             'password'              => 'required|string',
             'password_confirmation' => 'required|string|same:password',
-            'stripe_plan'           => 'required|string',
             'card_no'               => 'required',
             'month'                 => 'required|max:2',
             'year'                  => 'required|max:4',
             'cvc'                   => 'required'
         ];
     }
+
     /**
      * Get the error messages for the defined validation rules.
      *

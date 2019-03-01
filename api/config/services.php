@@ -31,8 +31,12 @@ return [
 
     'stripe' => [
         'model' => App\User::class,
-        'key' => env('STRIPE_KEY'),
-        'secret' => env('STRIPE_SECRET'),
+        'journal' => App\StripeJournal::class,
+        'key' => env('STRIPE_' . strtoupper(env('STRIPE_MODE')) . '_KEY'),
+        'secret' => env('STRIPE_' . strtoupper(env('STRIPE_MODE')) . '_SECRET'),
+        'webhook' => [
+            'secret' => env('STRIPE_' . strtoupper(env('STRIPE_MODE')) . '_WEBHOOK_SECRET'),
+        ],
     ],
 
 ];
