@@ -900,16 +900,23 @@ class Apiv1Controller extends Controller
         if (is_integer($this->isAuthenticated())) {
             if ($request->has('id')) {
                 try {
-                    $datetime = \DateTime::createFromFormat('D M d Y H:i:s e+', $request->myDateString);
-                    $search_sticky_review = StickyReview::where('id', $request->id)
-                        ->update([
-                            'name'        => $request->name,
-                            'description' => $request->description,
-                            'rating'      => $request->rating,
-                            'tags'        => strlen($request->tags) ? $request->tags: NULL,
-                            'created_at'  => $datetime->format('Y-m-d H:i:s'),
-                            'updated_at'  => $datetime->format('Y-m-d H:i:s')
-                        ]);
+                    $search_sticky_review = StickyReview::where('id', $request->id)->first();
+                    if (strlen($request->myDateString)) {
+                        $datetime = \DateTime::createFromFormat('D M d Y H:i:s e+', $request->myDateString);
+                        $createdAt = $datetime->format('Y-m-d H:i:s');
+                        $updatedAt = $datetime->format('Y-m-d H:i:s');
+                    } else {
+                        $createdAt = $search_sticky_review->created_at;
+                        $updatedAt = $search_sticky_review->updated_at;
+                    }
+                    $search_sticky_review->update([
+                        'name'        => $request->name,
+                        'description' => $request->description,
+                        'rating'      => $request->rating,
+                        'tags'        => strlen($request->tags) ? $request->tags: null,
+                         'created_at'  => $createdAt,
+                        'updated_at'  => $updatedAt
+                    ]);
                     if ($search_sticky_review) {
                         if ($request->hasFile('image')) {
                             /* get the extension */
@@ -956,7 +963,7 @@ class Apiv1Controller extends Controller
                         'status' => false,
                         'response' => "Oops! Something went wrong in server. Please try again later.",
                         'error' => $e->getMessage()
-                    ],$e->getCode());
+                    ], 500);
                 }
             } else {
                 return response()->json([

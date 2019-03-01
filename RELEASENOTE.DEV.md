@@ -6,6 +6,12 @@
 - Plan V0.8
 - Signup V0.6
 
+## API
+
+### V0.1
+
+1. Fix Sticky Reviews update from application
+
 ## Configuration
 
 ### V0.5
