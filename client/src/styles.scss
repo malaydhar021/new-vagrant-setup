@@ -35,6 +35,7 @@
 
 @import "../node_modules/ngx-bar-rating/themes/br-default-theme.css";
 @import "~ngx-smart-modal/ngx-smart-modal";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 // @import "app/app.component";
 
 
@@ -2496,4 +2497,236 @@ body.sign-upPage {
 }
 
 
+/* ---------------------- Date Time Picker Style ---------------------- */
+.owl-dt-popup-container {
+    box-shadow: 0 0 30px rgba(12, 227, 190, 0.6);
+}
+.cdk-overlay-container {
+    z-index: 9999;
+}
+.owl-dt-popup-container .owl-dt-calendar {
+    background: color(sr-green);
+}
+.owl-dt-popup-container .owl-dt-calendar * {
+    color: #fff;
+}
+.owl-dt-calendar-table .owl-dt-calendar-header .owl-dt-weekdays th {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.owl-dt-calendar-table .owl-dt-calendar-cell-content {
+    border: none;
+    font-weight: 600;
+}
+.owl-dt-calendar-table .owl-dt-calendar-cell-selected.owl-dt-calendar-cell-today {
+    box-shadow: none;
+}
+// .owl-dt-calendar-table .owl-dt-calendar-cell-active:focus>.owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-selected), .owl-dt-calendar-table :not(.owl-dt-calendar-cell-disabled):hover>.owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-selected) {
+//     background-color: rgba(255, 255, 255, 0.3);
+// }
+.owl-dt-calendar-cell-today {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+}
+.owl-dt-calendar-table .owl-dt-calendar-cell-out {
+    opacity: 0.5;
+}
+.owl-dt-popup-container .owl-dt-timer {
+    background-color: color(sr-blue);
+    border-bottom: 0;
+}
+.owl-dt-control-period-button .owl-dt-control-button-arrow {
+    filter: invert(1);
+}
+.owl-dt-timer-content .owl-dt-timer-input {
+    background: none;
+    border: 0;
+    color: #b3a9e8;
+    border-bottom: 2px solid #5E51A7;
+    border-radius: 0;
+}
+.owl-dt-timer-divider:after, .owl-dt-timer-divider:before {
+    background-color: #5746bb; 
+}
+.owl-dt-popup-container .owl-dt-timer .owl-dt-control-arrow-button svg {
+    fill: #604fc2; 
+}
+.owl-dt-popup-container .owl-dt-timer .owl-dt-control-arrow-button svg:hover {
+    fill: #b3a9e8; 
+}
+.sr-modal .sr-modal-container .sr-modal-body .sr-form .sr-form-row .sr-form-cell-small .sr-form-field .sr-form-ctrl.dateTime {
+    background: #F3F2FF url(#{$imgUrl}/icon_date_calendar.png) no-repeat right 14px center;  
+}
+.sr-modal .sr-modal-container .sr-modal-body .sr-form .sr-form-row .sr-form-cell .sr-form-field .sr-form-ctrl.inputFile {
+    height: 120px;
+    position: relative;
+}
+.sr-modal .sr-modal-container .sr-modal-body .sr-form .sr-form-row .sr-form-cell .sr-form-field .sr-form-ctrl.inputFile input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.choseFileArea {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
+}
+.choseFileArea .fileImg {
+    float: left;
+}
+.choseFileArea p {
+    float: left;
+    font-size: 12px;
+    color: #BBB9D1;
+    padding-left: 25px;
+}
+.choseFileArea p span {
+    display: block;
+    color: color(sr-green);
+    text-decoration: underline;
+    padding-bottom: 4px;
+}
+.owl-dt-container-buttons {
+    float: left;
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: color(sr-blue);
+    box-sizing: border-box;
+    padding: 10px 20px 20px;
+}
+.owl-dt-container-control-button:first-child {
+    background: #9390B4;
+    color: #fff;
+    width: 80px;
+    height: 40px;
+    border-radius: 40px 40px 40px 0;
+    cursor: pointer;
+    float: left;
+    font-size: 14px;
+    font-weight: 600;
+}
+.owl-dt-container-control-button:last-child {
+    background: color(sr-red);
+    color: #fff;
+    width: 52px;
+    height: 40px;
+    border-radius: 40px 40px 0 40px;
+    cursor: pointer;
+    float: right;
+    font-size: 14px;
+    font-weight: 600;
+}
+.owl-dt-container-control-button:hover .owl-dt-control-button-content {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
 
+
+
+
+
+/* -------------------- Loader Styke -------------------- */
+
+.loaderOuter {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background: rgba(255, 255, 255, 0.8);
+
+    .loaderContainer {
+        width: 60px;
+        height: 120px;
+        margin: 0 auto;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border-radius: 20px 20px 0 20px;
+            background: color(sr-red);
+            position: relative;
+            z-index: 10;
+            animation: loading 4s infinite;
+        }
+        .loaderShadow {
+            width: 57px;
+            height: 8px;
+            border-radius: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            filter: blur(1px);
+            margin: -4px auto 0;
+            animation: loadingShadow 1s infinite;
+            transform: translateX(3px);
+        }
+    }
+}
+
+@keyframes loading {
+    0% {
+        border-radius: 20px 20px 0 20px;
+        background: color(sr-red);
+        bottom: 0;
+    }
+    12.5% {
+        border-radius: 20px 20px 0 20px;
+        background: color(sr-red);
+        bottom: 60px;
+    }
+    25% {
+        border-radius: 20px 0 20px 20px;
+        background: color(sr-blue);
+        bottom: 0px;
+        transform: rotate(90deg);
+    }
+    37.5% {
+        border-radius: 20px 0 20px 20px;
+        background: color(sr-blue);
+        bottom: 60px;
+    }
+    50% {
+        border-radius: 0 20px 20px 20px;
+        background: #f65b15;
+        bottom: 0px;
+        transform: rotate(180deg);
+    }
+    62.5% {
+        border-radius: 0 20px 20px 20px;
+        background: #f65b15;
+        bottom: 60px;
+    }
+    75% {
+        border-radius: 20px 20px 20px 0;
+        background: color(sr-green);
+        bottom: 0px;
+        transform: rotate(270deg);
+    }
+    87.5% {
+        border-radius: 20px 20px 20px 0;
+        background: color(sr-green);
+        bottom: 60px;
+    }
+    100% {
+        border-radius: 20px 20px 0 20px;
+        background: color(sr-red);
+        bottom: 0px;
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loadingShadow {
+    0% {
+        width: 57px;
+    }
+    50% {
+        width: 35px;
+        filter: blur(2px);
+    }
+    100% {
+        width: 57px;
+    }
+}

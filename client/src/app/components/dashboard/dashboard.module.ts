@@ -16,7 +16,8 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { HeaderComponent } from './header/header.component';
 import { PlansComponent } from './plans/plans.component';
 import { UpdatePaymentInfoComponent } from './update-payment-info/update-payment-info.component';
-import {NgxMaskModule} from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -37,6 +38,8 @@ import {NgxMaskModule} from 'ngx-mask';
     BarRatingModule,
     NgxSmartModalModule.forRoot(),
     NgxMaskModule.forRoot(),
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
   ]
 })
 export class DashboardModule { }

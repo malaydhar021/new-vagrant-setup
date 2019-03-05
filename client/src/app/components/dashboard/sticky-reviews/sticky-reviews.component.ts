@@ -24,4 +24,12 @@ export class StickyReviewsComponent implements OnInit {
   ngOnInit() {
   }
 
+  choseFileCtrl: any = "Browse from your computer";
+  fileName: any = "or drag & drop your image here";
+
+  file_Name(fileInput: Event) {
+    this.fileName = event.target.files[0].name;
+    this.choseFileCtrl = "Change file"
+  };
+
 }

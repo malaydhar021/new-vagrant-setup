@@ -212,6 +212,31 @@
                 <label>Rate your review</label>
                 <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'"></bar-rating>
               </div>
+              <div class="sr-form-cell-small">
+                <label>Select Date and Time (Optional)</label>
+                <div class="sr-form-field">
+                  <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" class="sr-form-ctrl dateTime">
+                </div>
+                <owl-date-time #dt1></owl-date-time>
+              </div>
+            </div>
+            <div class="sr-form-row">
+              <div class="sr-form-cell">
+                <label>Rate your review</label>
+                <div class="sr-form-field">
+                  <div class="sr-form-ctrl inputFile">
+                    <input type="file" (change)="file_Name($event)">
+                    <div class="choseFileArea">
+                      <div class="fileImg">
+                        <img src="../../../../assets/images/icon_upload_photo.png" alt="">
+                      </div>
+                      <p>
+                        <span>{{choseFileCtrl}}</span>{{fileName}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </ng-scrollbar>
         </div>
@@ -228,3 +253,19 @@
   </div>
   <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>
+
+
+
+
+
+
+
+
+<div class="loaderOuter" style="display: none;">
+  <div class="loaderContainer">
+    <div class="loader">
+    </div>
+    <div class="loaderShadow"></div>
+  </div>
+</div>
+
