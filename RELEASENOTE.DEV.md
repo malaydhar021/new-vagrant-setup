@@ -8,9 +8,13 @@
 
 ## API
 
-### V0.1
+### V1.0
 
-1. Fix Sticky Reviews update from application
+1. Fixed Sticky Reviews update from application
+
+### v1.1
+
+1. Added API V2 Routes and Controller
 
 ## Configuration
 
