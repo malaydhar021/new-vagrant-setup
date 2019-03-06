@@ -2622,7 +2622,9 @@ body.sign-upPage {
 .owl-dt-container-control-button:hover .owl-dt-control-button-content {
     background-color: rgba(0, 0, 0, 0) !important;
 }
-
+.owl-dt-calendar-table .owl-dt-calendar-cell-selected {
+    background-color: color(sr-blue);
+}
 
 
 
@@ -2649,9 +2651,18 @@ body.sign-upPage {
             height: 60px;
             border-radius: 20px 20px 0 20px;
             background: color(sr-red);
+            text-align: center;
             position: relative;
             z-index: 10;
             animation: loading 4s infinite;
+
+            img {
+                width: 33px;
+                position: absolute;
+                top: 12px;
+                left: 14px;
+                animation: loadingFace 4s infinite;
+            }
         }
         .loaderShadow {
             width: 57px;
@@ -2661,72 +2672,94 @@ body.sign-upPage {
             filter: blur(1px);
             margin: -4px auto 0;
             animation: loadingShadow 1s infinite;
-            transform: translateX(3px);
+            transform: translateX(-3px);
         }
     }
 }
 
 @keyframes loading {
     0% {
-        border-radius: 20px 20px 0 20px;
+        border-radius: 20px 20px 20px 0;
         background: color(sr-red);
         bottom: 0;
     }
     12.5% {
-        border-radius: 20px 20px 0 20px;
+        border-radius: 30px;
         background: color(sr-red);
         bottom: 60px;
     }
     25% {
-        border-radius: 20px 0 20px 20px;
+        border-radius: 20px 20px 0 20px;
         background: color(sr-blue);
         bottom: 0px;
         transform: rotate(90deg);
     }
     37.5% {
-        border-radius: 20px 0 20px 20px;
+        border-radius: 30px;
         background: color(sr-blue);
         bottom: 60px;
     }
     50% {
-        border-radius: 0 20px 20px 20px;
-        background: #f65b15;
+        border-radius: 20px 0 20px 20px;
+        background: #3ea5ff;
         bottom: 0px;
         transform: rotate(180deg);
     }
     62.5% {
-        border-radius: 0 20px 20px 20px;
-        background: #f65b15;
+        border-radius: 30px;
+        background: #3ea5ff;
         bottom: 60px;
     }
     75% {
-        border-radius: 20px 20px 20px 0;
+        border-radius: 0 20px 20px 20px;
         background: color(sr-green);
         bottom: 0px;
         transform: rotate(270deg);
     }
     87.5% {
-        border-radius: 20px 20px 20px 0;
+        border-radius: 30px;
         background: color(sr-green);
         bottom: 60px;
     }
     100% {
-        border-radius: 20px 20px 0 20px;
+        border-radius: 20px 20px 20px 0;
         background: color(sr-red);
         bottom: 0px;
         transform: rotate(360deg);
     }
 }
 
+@keyframes loadingFace {
+    0% {
+        transform: rotate(0);
+        
+    }
+    25% {
+        transform: rotate(-90deg);
+    }
+    50% {
+        transform: rotate(-180deg);
+    }
+    75% {
+        transform: rotate(-270deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
 @keyframes loadingShadow {
     0% {
         width: 57px;
+        transform: translateX(-3px);
     }
     50% {
         width: 35px;
         filter: blur(2px);
+        transform: translateX(0);
     }
     100% {
         width: 57px;
+        transform: translateX(-3px);
     }
 }
