@@ -24,7 +24,6 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\traits\AuthTrait;
 use App\User;
-use Cartalyst\Stripe\Stripe;
 use Validator;
 use Intervention\Image\Facades\Image;
 

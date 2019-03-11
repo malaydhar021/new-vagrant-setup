@@ -20,8 +20,8 @@ return [
     'plans' => [
 
         'lowest' => [
-            'id' => "starter-monthly",          // stripe-plan-id
-            'name' => "Starter Monthly",        // stripe-plan-name
+            'id' => "starter-monthly",          // Stripe plan ID
+            'name' => "Starter Monthly",        // Stripe plan name
             'alias' => "Starter",               // Defined by you to show in fronetend
             'amount' => 10.00,
             'trial' => 14,                      // Trial periods in days
@@ -70,5 +70,7 @@ return [
             ],
         ],
     ],
+
+    'pre_auth_amount' => 1,                     // 1 unit price e.g. $1
 
 ];

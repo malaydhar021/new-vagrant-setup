@@ -18,6 +18,7 @@ class UpdateUsersTableAddClomunsNewStripe extends Migration
             $table->string('card_brand')->nullable()->after('stripe_id');
             $table->string('card_last_four', 4)->nullable()->after('card_brand');
             $table->timestamp('trial_ends_at')->nullable()->after('card_last_four');
+            $table->string('pricing_plan')->nullable()->after('trial_ends_at');
         });
     }
 
@@ -34,6 +35,7 @@ class UpdateUsersTableAddClomunsNewStripe extends Migration
                 'card_brand',
                 'card_last_four',
                 'trial_ends_at',
+                'pricing_plan',
             ]);
         });
     }

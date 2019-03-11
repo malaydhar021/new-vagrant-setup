@@ -2,13 +2,17 @@
 
 namespace App;
 
+use App\Traits\Subscription;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
+use Laravel\Passport\HasApiTokens;
 use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use Billable, Notifiable;
+    use Billable, HasApiTokens, Notifiable, Subscription;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +20,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'customer_id', 'subscription_id', 'card_brand', 'last_four', 'expiry_date', 'is_third_party', 'api_token', 'stripe_plan_id'
+        'name',
+        'email',
+        'password',
+        'stripe_id',
+        'card_brand',
+        'card_last_four',
+        'trial_ends_at',
+        'is_third_party',
     ];
 
     /**
@@ -25,6 +36,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'api_token',
     ];
+
+    /**
+     * Set the user's password.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

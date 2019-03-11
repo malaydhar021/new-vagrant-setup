@@ -7,6 +7,29 @@ use Illuminate\Foundation\Http\FormRequest;
 class SignUpRequest extends FormRequest
 {
     /**
+     * The current year
+     *
+     * @var int
+     */
+    private $currentYear;
+
+    /**
+     * Year after a decade later
+     *
+     * @var int
+     */
+    private $twoDecadeLater;
+
+    /**
+     * SignUpRequest constructor
+     */
+    public function __construct()
+    {
+        $this->currentYear = date('Y');
+        $this->twoDecadesLater = $this->currentYear + 19;
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -24,14 +47,15 @@ class SignUpRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                  => 'required|string|max:255',
-            'email'                 => 'required|string|email|max:255|unique:users',
-            'password'              => 'required|string',
-            'password_confirmation' => 'required|string|same:password',
-            'card_no'               => 'required',
-            'month'                 => 'required|max:2',
-            'year'                  => 'required|max:4',
-            'cvc'                   => 'required'
+            'name' => "required|string",
+            'email' => "required|string|email|unique:users",
+            'password' => "required|string|min:8"
+                . "|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/",
+            'card_number'  => "required|integer|digits_between:14,16",
+            'cvc_number' => "required|integer|digits_between:3,5",
+            'expiry_month' => "required|integer|min:01|max:12",
+            'expiry_year' => "required|integer|min:{$this->currentYear}|max:{$this->twoDecadesLater}",
+            'affiliate_id' => 'nullable|numeric|min:3',
         ];
     }
 
@@ -43,21 +67,39 @@ class SignUpRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'                  => 'Name is required.',
-            'email.required'                 => 'Email is required.',
-            'email.email'                    => 'Email should be type of email ex. example@domainname.com.',
-            'email.unique'                   => 'Email already exists! Click on forget password to recover.',
-            'password.required'              => 'Password is required.',
-            'password_confirmation.required' => 'Confirm password could not be empty.',
-            'password_confirmation.same'     => 'Password and confirm password did not match.',
-            'stripe_plan.required'           => 'You need to subscribe to a stripe plan.',
-            'card_no.required'               => 'Credit card number is required.',
-            'card_no.number'                 => 'Wrong credit card number!',
-            'month.required'                 => 'Expiry month is required',
-            'month.max'                      => 'Month should be maximum of 2 digits.',
-            'year.required'                  => 'Expiry year is required.',
-            'year.max'                       => 'Year should be maximum of 4 digits',
-            'cvc'                            => 'Cvc is required.'
+            'name.required' => "Name is required.",
+            'email.required' => "Email is required.",
+            'email.email' => "Email should be type of email. Example: jon@tier5.us",
+            'email.unique' => "Email already exists, please click on forget password to recover.",
+            'password.required' => "Password is required.",
+            'password.min' => "Password should be at least 8 characters long",
+            'password.regex' => [
+                'message' => "Password should contains at least one of the followings",
+                'requirements' => [
+                    "English uppercase characters (A–Z)",
+                    "English lowercase characters (a–z)",
+                    "Numeric value (0–9)",
+                    "Special characters (!, $, #, or %)",
+                ],
+            ],
+            'card_number.required' => "Card number is required.",
+            'card_number.integer' => "Card number should be numeric value.",
+            'card_number.digits_between' => "Card number should be between 14 to 16 digits long.",
+            'cvc_number.required' => "CVC number is required.",
+            'cvc_number.integer' => "CVC number should br numeric value.",
+            'cvc_number.digits_between' => "CVC number should be between 3 to 5 digits long.",
+            'expiry_month.required' => "Expiry month is required",
+            'expiry_month.integer' => "Expiry month should br numeric value.",
+            'expiry_month.min' => "Expiry month should be between 01 to 12.",
+            'expiry_month.max' => "Expiry month should be between 01 to 12.",
+            'expiry_month.size' => "Expiry month should be exactly of 2 digits.",
+            'expiry_year.required' => "Expiry year is required.",
+            'expiry_year.integer' => "Expiry year should br numeric value.",
+            'expiry_year.min' => "Expiry year should be between {$this->currentYear} to {$this->twoDecadesLater}.",
+            'expiry_year.max' => "Expiry year should be between {$this->currentYear} to {$this->twoDecadesLater}.",
+            'expiry_year.size' => "Expiry year should be exactly of 4 digits.",
+            'affiliate_id.numeric' => "Affiliate ID should be numeric value.",
+            'affiliate_id.min' => "Affiliate ID should be minimum 3 digits numeric value.",
         ];
     }
 }
