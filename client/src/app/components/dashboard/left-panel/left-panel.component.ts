@@ -9,7 +9,7 @@ export class LeftPanelComponent implements OnInit {
   allRoute : any = {}
   constructor() {
     this.allRoute = {
-      'home' : ['/dashboard/home'],
+      '' : ['/dashboard'],
       'branding' : ['/dashboard/branding'],
       'campaign' : ['/dashboard/campaign'],
       'sticky-reviews' : ['/dashboard/sticky-reviews'],

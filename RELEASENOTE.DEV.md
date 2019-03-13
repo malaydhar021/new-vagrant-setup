@@ -1,5 +1,15 @@
 # Release Notes
 
+## Authentication
+
+## V1.0
+1. Implemented user authentication using user email and password using api
+2. Implemented authentication guard to prevent protected routes
+3. Implemented http request interceptor to add some header to each and every request to server
+4. Enhanced loging form UI for better user experience
+5. Created services, helpers for further application development
+6. Stored and retreved token into localstorage to work with authentication
+
 ## UI
 
 - Login V0.9

@@ -1,41 +1,42 @@
 <div class="loginContainer">
-  <div class="leftPanel">
-      <div class="leftLogo">
-          <a [routerLink]="['']"><img src="../../../assets/images/Sticky_Reviews_logo_text.png" alt=""></a>
-      </div>
-  </div>
-  <div class="rightPanel">
-      <h1>
-          Welcome back
-          <span>Login to continue using Sticky Reviews</span>
-      </h1>
-      <div class="formArea">
-          <form action="">
-              <div class="formRow">
-                  <input type="text" class="formCtrl" id="email">
-                  <label>Email</label>
-              </div>
-              <div class="formRow">
-                  <input type="password" class="formCtrl" id="password">
-                  <label>Password</label>
-              </div>
-              <div class="formRow2">
-                  <div class="rememberMe">
-                      <input type="checkbox"> Remember me
-                  </div>
-                  <a href="" class="forgotPass">Forgot your Password?</a>
-                  <div class="clear"></div>
-              </div>
-              <div class="formRow2">
-                  <button type="button" class="loginBtn">LOGIN</button>
-              </div>
-              <div class="formRow2">
-                  <p class="registerLink">
-                    Don't have any account? <a [routerLink]="['/sign-up']">Register Here</a>
-                  </p>
-              </div>
-          </form>
-      </div>
-  </div>
+    <div class="leftPanel">
+        <div class="leftLogo">
+            <a [routerLink]="['']"><img src="../../../assets/images/Sticky_Reviews_logo_text.png" alt=""></a>
+        </div>
+    </div>
+    <div class="rightPanel">
+        <h1>
+            Welcome back
+            <span>Login to continue using Sticky Reviews</span>
+        </h1>
+        <div class="formArea">
+            <span *ngIf="error !== null">{{ error }}</span>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="formRow" [ngClass]="{active : emailFieldFocused}">
+                    <input type="text" class="formCtrl" id="email" formControlName="email" (focus)="onFocus('email', $event)" (blur)="onFocusOut('email', $event)" autocomplete="off">
+                    <label>Email</label>
+                </div>
+                <div class="formRow" [ngClass]="{active : passwordFieldFocused}">
+                    <input type="password" class="formCtrl" id="password" formControlName="password" (focus)="onFocus('password', $event)" (blur)="onFocusOut('password', $event)">
+                    <label>Password</label>
+                </div>
+                <div class="formRow2">
+                    <div class="rememberMe">
+                        <input type="checkbox" formControlName="rememberMe"> Remember me
+                    </div>
+                    <a href="" class="forgotPass">Forgot your Password?</a>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow2">
+                    <button type="submit" class="loginBtn">LOGIN</button>
+                </div>
+                <div class="formRow2">
+                    <p class="registerLink">
+                        Don't have any account? <a [routerLink]="['/sign-up']">Register Here</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 

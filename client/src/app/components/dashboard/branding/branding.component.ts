@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { BrandingService } from '../../../services/branding.service';
+import { Log } from '../../../helpers/app.helper';
 
 @Component({
   selector: 'app-branding',
@@ -8,7 +10,7 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 })
 export class BrandingComponent implements OnInit {
 
-  constructor(public ngxSmartModalService: NgxSmartModalService) { }
+  constructor(public ngxSmartModalService: NgxSmartModalService, private brandingService : BrandingService) { }
 
   ngAfterViewInit() {
     // const obj: Object = {
@@ -22,6 +24,14 @@ export class BrandingComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.brandingService.getAllBrandings().subscribe(
+        (response : any) => {
+            Log.success(response);
+        },
+        (error : any) => {
+            Log.error(error);
+        }
+      );
   }
 
 }
