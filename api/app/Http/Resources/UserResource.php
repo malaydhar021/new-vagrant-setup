@@ -2,11 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\SubscriptionResource;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Vinkla\Hashids\Facades\Hashids;
-use Carbon\Carbon;
 
-class User extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,7 +21,7 @@ class User extends JsonResource
             'id' => Hashids::encode($this->id),
             'name' => $this->name,
             'email' => $this->email,
-            'privileges' => config("pricing.plans.{$this->pricing_plan}.privileges"),
+            'subscription' => new SubscriptionResource($this),
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
         ];

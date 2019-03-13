@@ -29,10 +29,10 @@ return [
             'interval' => 30,                   // No of days if type is recurring
             'privileges' => [
                 'brands' => 5,
-                'campaign' => 10,
+                'campaigns' => 10,
                 'sticky-reviews' => 50,
                 'review-links' => 5,
-                'exit-popup' => 0,              // No exit pop-ups
+                'exit-popups' => 0,              // No exit pop-ups
             ],
         ],
 
@@ -46,10 +46,10 @@ return [
             'interval' => 30,
             'privileges' => [
                 'brands' => 10,
-                'campaign' => 50,
+                'campaigns' => 50,
                 'sticky-reviews' => 500,
                 'review-links' => 100,
-                'exit-popup' => 50,
+                'exit-popups' => 50,
             ],
         ],
 
@@ -63,10 +63,10 @@ return [
             'interval' => 30,
             'privileges' => [
                 'brands' => -1,                 // Unlimited
-                'campaign' => -1,
+                'campaigns' => -1,
                 'sticky-reviews' => -1,
                 'review-links' => -1,
-                'exit-popup' => -1,
+                'exit-popups' => -1,
             ],
         ],
     ],

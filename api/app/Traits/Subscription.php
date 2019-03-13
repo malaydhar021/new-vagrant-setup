@@ -3,8 +3,7 @@
 namespace App\Traits;
 
 use App\Exceptions\SubscriptionException;
-
-use Illuminate\Support\Facades\Log;
+use App\CancelledSubscription;
 
 use Laravel\Cashier\Cashier;
 
@@ -89,7 +88,7 @@ trait Subscription
 
     /**
      * Pre-authorizes a card in Stripe for it's validity. Charges unit price without holding the amoutn for 7 days.
-     * After 7 days the amount gets automatically refunded to user's bank account.
+     * After 7 days the amount gets automatically refunded to this's bank account.
      *
      * @param  string  $stripeToken Not required if the whole card detials is provided
      * @param  array   $cardDetails Card details is not required if the stripe token is provided
@@ -144,9 +143,96 @@ trait Subscription
             }
         }
 
-        $this->newSubscription('lowest', config('pricing.plans.lowest.id'))
+        $this->newSubscription('main', config('pricing.plans.lowest.id'))
             ->trialDays(config('pricing.plans.lowest.trial'))
             ->create($stripeToken);
+
+        $this->update([
+            'subscription_status' => 'ACTIVE',
+            'pricing_plan' => 'lowest',
+        ]);
+    }
+
+    /**
+     * Subscribes an user to a requested plan. Also pre-authorizes if required
+     *
+     * @param  string   $planType     Pricing plan type to subscribe
+     * @param  string   $stripeToken  Not required if the whole card detials is provided
+     * @param  array    $cardDetails  Card details is not required if the card token is provided
+     * @param  boolean  $preAuth      Pre-authorizes a card before starting free trail. Doesn't pre-authorize by default
+     * @return null
+     */
+    public function subscribeToPlan($planType, $stripeToken = null, $cardDetails = [], $preAuth = false)
+    {
+        if (!strlen($stripeToken)) {
+            if (empty($cardDetails)) {
+                throw new SubscriptionException("\$cardDetails is required if \$stripeToken is not provided.");
+            } else {
+                $this->createCardToken($cardDetails);
+                $stripeToken = $this->stripeToken;
+
+                if ($preAuth) {
+                    $this->preAuthorizeCard(null, $cardDetails);
+                }
+            }
+        }
+
+        $this->newSubscription('main', config('pricing.plans.' . $planType . '.id'))->create($stripeToken);
+
+        $this->update([
+            'subscription_status' => 'ACTIVE',
+            'pricing_plan' => $planType
+        ]);
+    }
+
+    /**
+     * Change the current subscription plan
+     *
+     * @param  string  $newPlanType The new pricing plan type to subscribe
+     * @return void
+     */
+    public function changeSubscriptionPlan($newPlanType)
+    {
+        $newPlanId = config("pricing.plans.${newPlanType}.id");
+
+        if ($this->onTrial()) {
+            $this->subscription('main')
+                ->skipTrial()
+                ->swap($newPlanId);
+        } else {
+            $this->subscription('main')
+                ->swap($newPlanId);
+        }
+
+        $this->update([
+            'subscription_status' => 'ACTIVE',
+            'pricing_plan' => $newPlanType
+        ]);
+    }
+
+    /**
+     * Cancel the subscription
+     *
+     * @param  string  $reason       The reason to cancel the subcription
+     * @param  string  $description  Description of cancellation in details
+     * @return void
+     */
+    public function cancelSubscription($reason, $description = null)
+    {
+        $cancelledSubscription = new CancelledSubscription([
+            'user_id' => $this->id,
+            'subscription_id' => $this->subscription('main')->id,
+            'reason' => $reason,
+            'description' => $description,
+        ]);
+        $cancelledSubscription->save();
+
+        $this->subscription('main')->cancelNow();
+
+        $this->update([
+            'subscription_status' => 'CANCELLED',
+            'pricing_plan' => null,
+        ]);
     }
 
     /**

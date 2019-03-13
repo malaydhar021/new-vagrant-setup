@@ -12,18 +12,35 @@
 */
 
 Route::middleware('cors')->group(function () {
+
     Route::prefix('auth')->namespace('Auth')->group(function () {
         Route::get('email-registration-status', 'AuthController@checkEmail')->name('auth.email.check');
         Route::post('register', 'AuthController@register')->name('auth.register');
         Route::post('login', 'AuthController@login')->name('auth.login');
-        Route::middleware('auth:api')->post('logout', 'AuthController@logout')->name('auth.logout');
+        Route::post('logout', 'AuthController@logout')->name('auth.logout')->middleware('auth:api');
     });
-    Route::middleware('auth:api')->prefix('user')->group(function () {
+
+    Route::prefix('user')->middleware('auth:api')->group(function () {
+
         Route::get('/', 'UserController@index')->name('user.index');
-        Route::get('card', 'UserController@getCard')->name('user.card.index');
-        Route::put('card', 'UserController@updateCard')->name('user.card.update');
+
+        Route::prefix('card')->group(function () {
+            Route::get('/', 'CardController@index')->name('user.card.index');
+            Route::put('/', 'CardController@update')->name('user.card.update');
+        });
+
+        Route::prefix('subscription')->group(function () {
+            Route::get('/', 'SubscriptionController@index')->name('user.subscription.index');
+            Route::post('/', 'SubscriptionController@store')->name('user.subscription.store');
+            Route::put('/', 'SubscriptionController@update')->name('user.subscription.update');
+            Route::delete('/', 'SubscriptionController@destroy')->name('user.subscription.destroy');
+        });
     });
+
+    Route::get('pricing-plans', 'PricingPlansController@index')->name('pricing-plans.index');
+
     Route::middleware('auth:api')->group(function () {
+
         Route::get('/authenticated-user-details', 'ApiV2Controller@show')->name('getAuthenticatedUser');
         Route::post('/add-campaign', 'ApiV2Controller@postAddCampaign')->name('postAddCampaign');
         Route::post('/get-all-campaigns', 'ApiV2Controller@getAllCampaigns')->name('getAllCampaigns');
@@ -60,6 +77,7 @@ Route::middleware('cors')->group(function () {
         Route::post('/delete-exit-popup', 'ApiV2Controller@postDeleteExitPopUp')->name('postDeleteExitPopUp');
         Route::post('/update-exit-pop-up', 'ApiV2Controller@postUpdateExitPopUp')->name('postUpdateExitPopUp');
     });
+
     Route::post('/signup-user', 'ApiV2Controller@postSignUpUserThirdParty')->name('postSignUpUserThirdParty');
     Route::post('/delete-user', 'ApiV2Controller@postDeleteUser')->name('postDeleteUser');
     Route::post('/alter-user-state', 'ApiV2Controller@postAlterState')->name('postAlterState');

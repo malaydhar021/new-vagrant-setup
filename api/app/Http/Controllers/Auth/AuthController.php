@@ -90,18 +90,16 @@ class AuthController extends Controller
                 'error' => "Login failed! Credentials does not match our records."
             ], 401);
 
-        $user = $request->user();
+        $tokenResult = Auth::user()->createToken('Login Access Token');
 
-        $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
+        $token->expires_at = $request->remember_me ? Carbon::now()->addWeeks(1) : Carbon::now()->addDays(1);
 
         $token->save();
 
         return response()->json([
             'status' => true,
+            'message' => "Welcome! You have logged in successfully.",
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
@@ -113,7 +111,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout(Request $request)
+    public function logout()
     {
         if (Auth::check()) {
             Auth::user()->token()->revoke();
@@ -121,7 +119,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => "You have logged out successfully."
+            'message' => "Bye! You have logged out successfully."
         ]);
     }
 }

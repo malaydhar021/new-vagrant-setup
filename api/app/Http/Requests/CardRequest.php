@@ -8,6 +8,29 @@ use Illuminate\Support\Facades\Auth;
 class CardRequest extends FormRequest
 {
     /**
+     * The current year
+     *
+     * @var int
+     */
+    private $currentYear;
+
+    /**
+     * Year after a decade later
+     *
+     * @var int
+     */
+    private $twoDecadesLater;
+
+    /**
+     * SignUpRequest constructor
+     */
+    public function __construct()
+    {
+        $this->currentYear = date('Y');
+        $this->twoDecadesLater = $this->currentYear + 19;
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -54,7 +77,7 @@ class CardRequest extends FormRequest
             'expiry_month.max' => "Expiry month should be between 01 to 12.",
             'expiry_month.size' => "Expiry month should be exactly of 2 digits.",
             'expiry_year.required' => "Expiry year is required.",
-            'expiry_year.integer' => "Expiry year should br numeric value.",
+            'expiry_year.integer' => "Expiry year should be numeric value.",
             'expiry_year.min' => "Expiry year should be between {$this->currentYear} to {$this->twoDecadesLater}.",
             'expiry_year.max' => "Expiry year should be between {$this->currentYear} to {$this->twoDecadesLater}.",
             'expiry_year.size' => "Expiry year should be exactly of 4 digits.",
