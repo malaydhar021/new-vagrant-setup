@@ -77,6 +77,10 @@ trait Subscription
             ]);
             $this->stripeToken = $stripeToken->id;
 
+            $this->card_exp_month = $stripeToken->card->exp_month;
+            $this->card_exp_year = $stripeToken->card->exp_year;
+            $this->save();
+
             return $stripeToken;
         } catch (Exception $exception) {
             throw new SubscriptionException($exception->getMessage());
@@ -123,7 +127,7 @@ trait Subscription
      * @param  string   $stripeToken  Not required if the whole card detials is provided
      * @param  array    $cardDetails  Card details is not required if the card token is provided
      * @param  boolean  $preAuth      Pre-authorizes a card before starting free trail. Doesn't pre-authorize by default
-     * @return \Stripe\ApiResource
+     * @return null
      */
     public function subscribeToFreeTrial($stripeToken = null, $cardDetails = [], $preAuth = false)
     {
@@ -136,7 +140,6 @@ trait Subscription
 
                 if ($preAuth) {
                     $this->preAuthorizeCard(null, $cardDetails);
-                    Log::debug('Pre authorized');
                 }
             }
         }
@@ -144,5 +147,36 @@ trait Subscription
         $this->newSubscription('lowest', config('pricing.plans.lowest.id'))
             ->trialDays(config('pricing.plans.lowest.trial'))
             ->create($stripeToken);
+    }
+
+    /**
+     * Update card info, if required make as default
+     *
+     * @param  string   $stripeToken  Not required if the whole card detials is provided
+     * @param  array    $cardDetails  Card details is not required if the card token is provided
+     * @param  boolean  $preAuth      Pre-authorizes a card before starting free trail. Doesn't pre-authorize by default
+     * @param  boolean  $makeDefault  Make this card as default in Stripe
+     * @return null
+     */
+    public function updateCardInfo($stripeToken = null, $cardDetails = [], $preAuth = false, $makeDefault = false)
+    {
+        if (!strlen($stripeToken)) {
+            if (empty($cardDetails)) {
+                throw new SubscriptionException("\$cardDetails is required if \$stripeToken is not provided.");
+            } else {
+                $this->createCardToken($cardDetails);
+                $stripeToken = $this->stripeToken;
+
+                if ($preAuth) {
+                    $this->preAuthorizeCard(null, $cardDetails);
+                }
+            }
+        }
+
+        $this->updateCard($stripeToken);
+
+        if ($makeDefault) {
+            $this->updateCardFromStripe();
+        }
     }
 }

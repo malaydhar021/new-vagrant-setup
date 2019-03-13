@@ -13,14 +13,15 @@
 
 Route::middleware('cors')->group(function () {
     Route::prefix('auth')->namespace('Auth')->group(function () {
-        Route::get('check-email-exists', 'AuthController@checkEmailExists')->name('auth.checkEmailExists');
+        Route::get('email-registration-status', 'AuthController@checkEmail')->name('auth.email.check');
         Route::post('register', 'AuthController@register')->name('auth.register');
         Route::post('login', 'AuthController@login')->name('auth.login');
-
-        Route::middleware('auth:api')->group(function () {
-            Route::post('logout', 'AuthController@logout')->name('auth.logout');
-            Route::get('user', 'AuthController@user')->name('auth.user');
-        });
+        Route::middleware('auth:api')->post('logout', 'AuthController@logout')->name('auth.logout');
+    });
+    Route::middleware('auth:api')->prefix('user')->group(function () {
+        Route::get('/', 'UserController@index')->name('user.index');
+        Route::get('card', 'UserController@getCard')->name('user.card.index');
+        Route::put('card', 'UserController@updateCard')->name('user.card.update');
     });
     Route::middleware('auth:api')->group(function () {
         Route::get('/authenticated-user-details', 'ApiV2Controller@show')->name('getAuthenticatedUser');

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
-use App\Http\Resources\User as UserResource;
 use App\Traits\Subscription;
 use App\User;
 
@@ -24,7 +23,7 @@ class AuthController extends Controller
      * @param  Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function checkEmailExists(Request $request)
+    public function checkEmail(Request $request)
     {
         $exists = User::whereEmail("{$request->input('email')}")->first();
 
@@ -123,19 +122,6 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'message' => "You have logged out successfully."
-        ]);
-    }
-
-    /**
-     * Get the authenticated User
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function user()
-    {
-        return response()->json([
-            'status' => true,
-            'user' => new UserResource(Auth::user()),
         ]);
     }
 }
