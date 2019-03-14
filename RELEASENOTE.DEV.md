@@ -1,6 +1,6 @@
 # Release Notes
 
-## Authentication
+## Login
 
 ## V1.0
 1. Implemented user authentication using user email and password using api
@@ -9,6 +9,10 @@
 4. Enhanced loging form UI for better user experience
 5. Created services, helpers for further application development
 6. Stored and retreved token into localstorage to work with authentication
+
+## V1.1
+1. Fixed issues with CORS while making calls to backend apis adding proper headers
+2. Fixed issues with stickyreviews component adding packages to dashboard module
 
 ## UI
 

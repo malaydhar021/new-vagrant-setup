@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { NgxMaskModule } from 'ngx-mask';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import { DashboardRoutingModule } from './routes/dashboard.route.module';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
@@ -17,10 +17,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { HeaderComponent } from '../components/dashboard/header/header.component';
 import { PlansComponent } from '../components/dashboard/plans/plans.component';
 import { UpdatePaymentInfoComponent } from '../components/dashboard/update-payment-info/update-payment-info.component';
-import { NgxMaskModule } from 'ngx-mask';
 import { BrandingService } from '../services/branding.service';
-import { RequestInterceptor } from '../services/interceptors/request.interceptor.service';
-
 
 @NgModule({
   declarations: [
@@ -43,6 +40,8 @@ import { RequestInterceptor } from '../services/interceptors/request.interceptor
     BarRatingModule,
     NgxSmartModalModule.forRoot(),
     NgxMaskModule.forRoot(),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   providers: [
     BrandingService

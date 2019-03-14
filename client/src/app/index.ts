@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './modules/routes/app.route.module';
 import { LoginComponent } from './components/login/login.component';
@@ -32,6 +33,7 @@ export class AppComponent {}
     FormsModule,
     HttpClientModule,
     NgxMaskModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     Title, 

@@ -20,11 +20,14 @@ export class RequestInterceptor implements HttpInterceptor {
     intercept(request : HttpRequest<any>, next : HttpHandler) : Observable<HttpEvent<any>>
     {
         let authRequest = request;
+        authRequest = request.clone({
+            headers: request.headers.set('Access-Control-Allow-Origin', '*')
+        });
         let token = this.authService.getToken;
         Log.info(token, 'print the token');
         if(token){
-            authRequest = request.clone({
-                headers: request.headers.set("Authorization", "Bearer "  + token)
+            authRequest = authRequest.clone({
+                headers: authRequest.headers.set("Authorization", "Bearer "  + token)
             });
             Log.info(authRequest, 'before making the api call');
         }
