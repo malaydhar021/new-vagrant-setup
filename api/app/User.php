@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Notifications\PasswordResetRequest;
+use App\Notifications\PasswordResetSuccess;
 use App\Traits\Subscription;
 
 use Illuminate\Notifications\Notifiable;
@@ -66,6 +68,27 @@ class User extends Authenticatable
     public function getSubscriptionAttribute()
     {
         return $this->subscription('main');
+    }
+
+    /**
+     * Send password reset request notification with greetings
+     *
+     * @param string $token
+     * @return void
+     */
+    public function sendPasswordResetRequestNotification($token)
+    {
+        return $this->notify(new PasswordResetRequest($token, $this->name));
+    }
+
+    /**
+     * Send password reset success notification with greetings
+     *
+     * @return void
+     */
+    public function sendPasswordResetSuccessNotification()
+    {
+        return $this->notify(new PasswordResetSuccess($this->name));
     }
 
     /**

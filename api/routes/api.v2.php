@@ -18,6 +18,14 @@ Route::middleware('cors')->group(function () {
         Route::post('register', 'AuthController@register')->name('auth.register');
         Route::post('login', 'AuthController@login')->name('auth.login');
         Route::post('logout', 'AuthController@logout')->name('auth.logout')->middleware('auth:api');
+
+        Route::prefix('password')->group(function () {
+            Route::prefix('token')->group(function () {
+                Route::post('/', 'PasswordResetTokenController@store')->name('auth.password.token.store');
+                Route::get('{token}', 'PasswordResetTokenController@show')->name('auth.password.token.show');
+            });
+            Route::put('/', 'PasswordResetController@update')->name('auth.password.update');
+        });
     });
 
     Route::prefix('user')->middleware('auth:api')->group(function () {
