@@ -2,15 +2,23 @@
 
 namespace App;
 
+use App\Notifications\CardExpiring;
+use App\Notifications\CardUpdated;
 use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
+use App\Notifications\SubscriptionCreated;
+use App\Notifications\SubscriptionDeleted;
+use App\Notifications\SubscriptionTrialWillEnd;
+use App\Notifications\SubscriptionUpdated;
 use App\Traits\Subscription;
+use App\Subscription as LocalSubscription;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Laravel\Passport\HasApiTokens;
 use Laravel\Cashier\Billable;
+use App\Notifications\SubscriptionTerminated;
 
 class User extends Authenticatable
 {
@@ -25,10 +33,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'affiliate_id',
+        'stripe_id',
+        'card_brand',
+        'card_last_four',
+        'card_exp_month',
+        'card_exp_year',
         'subscription_status',
+        'trial_ends_at',
         'pricing_plan',
+        'affiliate_id',
         'is_third_party',
+        'is_active',
     ];
 
     /**
@@ -61,6 +76,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all the subscription of an user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function localSubscriptions()
+    {
+        return $this->hasMany(LocalSubscription::class);
+    }
+
+    /**
      * Get the subscription object of an user
      *
      * @return \Laravel\Cashier\Subscription
@@ -78,7 +103,7 @@ class User extends Authenticatable
      */
     public function sendPasswordResetRequestNotification($token)
     {
-        return $this->notify(new PasswordResetRequest($token, $this->name));
+        $this->notify(new PasswordResetRequest($token, $this->name));
     }
 
     /**
@@ -88,7 +113,78 @@ class User extends Authenticatable
      */
     public function sendPasswordResetSuccessNotification()
     {
-        return $this->notify(new PasswordResetSuccess($this->name));
+        $this->notify(new PasswordResetSuccess($this->name));
+    }
+
+    /**
+     * Send subscription created notification with greetings
+     *
+     * @param boolean $isTrailing
+     * @return void
+     */
+    public function sendSubscriptionCreatedNotification($isTrailing = false)
+    {
+        $this->notify(new SubscriptionCreated($this->name, $this->pricing_plan, $isTrailing));
+    }
+
+    /**
+     * Send subscription deleted notification with greetings
+     *
+     * @return void
+     */
+    public function sendSubscriptionUpdatedNotification()
+    {
+        $this->notify(new SubscriptionUpdated($this->name, $this->pricing_plan));
+    }
+
+    /**
+     * Send subscription deleted notification with greetings
+     *
+     * @return void
+     */
+    public function sendSubscriptionDeletedNotification()
+    {
+        $this->notify(new SubscriptionDeleted($this->name));
+    }
+
+    /**
+     * Send subscription trial will end notification with greetings
+     *
+     * @return void
+     */
+    public function sendSubscriptionTrialWillEndNotification()
+    {
+        $this->notify(new SubscriptionTrialWillEnd($this->name));
+    }
+
+    /**
+     * Send card expiring notification with greetings
+     *
+     * @return void
+     */
+    public function sendCardExpiringNotification()
+    {
+        $this->notify(new CardExpiring($this->name));
+    }
+
+    /**
+     * Send card expiring notification with greetings
+     *
+     * @return void
+     */
+    public function sendCardUpdatedNotification()
+    {
+        $this->notify(new CardUpdated($this->name));
+    }
+
+    /**
+     * Send subscription terminated notification with greetings
+     *
+     * @return void
+     */
+    public function sendSubscriptionTerminatedNotification()
+    {
+        $this->notify(new SubscriptionTerminated($this->name));
     }
 
     /**

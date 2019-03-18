@@ -47,12 +47,14 @@ class PasswordResetSuccess extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        $warningMessage = "If you did change password, no further action is required. If you did not please protect "
+            . "your account now.";
+
+            return (new MailMessage)
             ->subject('Password Reset Successful')
             ->greeting("Hello again {$this->name},")
-            ->line("You have changed your password succefully.")
-            ->line("If you did change password, no further action is required.")
-            ->line("If you did not change password, please protect your account now.");
+            ->line("You have changed your password successfully.")
+            ->line($warningMessage);
     }
 
     /**

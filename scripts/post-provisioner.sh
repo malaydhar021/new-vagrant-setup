@@ -26,6 +26,7 @@ sudo ln -sf /vagrant/config/nginx/api.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/config/nginx/app.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/config/nginx/lib.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/config/nginx/www.conf /etc/nginx/sites-enabled/
+sudo ln -sf /vagrant/config/nginx/ngrok.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/ /var/www/
 sudo usermod -a -G www-data $USER
 sudo chown -R $USER:www-data /var/www/vagrant/

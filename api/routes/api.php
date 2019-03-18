@@ -11,29 +11,6 @@
 |
 */
 
-Route::get('/test', function () {
-    $allowedIps = [
-        '192.168.15.1', // local
-        env('TIER5_IP', '127.0.0.1')
-    ];
-    $visitorIp = request()->ip();
-
-    if (in_array($visitorIp, $allowedIps)) {
-        $status = "Authorized";
-        $code = 200;
-    } else {
-        $status = "Unauthorized";
-        $code = 401;
-    }
-
-    return response()->json([
-        'ip' => $visitorIp,
-        'status' => $status,
-        'url' => config('app.redirect_url'),
-        'message' => "Use Sticky Reviews, it is awesome.",
-    ], $code);
-})->name('test');
-
 // Api version 1.0 routes
 Route::prefix('v1')->middleware('cors')->group(function () {
     Route::post('authenticate', 'Apiv1Controller@index')->name('postAuthenticateUser');

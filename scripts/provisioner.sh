@@ -45,3 +45,8 @@ sudo npm install --global npm
 sudo npm install --global n
 sudo n lts
 sudo ln -sf /usr/local/bin/node /usr/bin/nodejs
+
+cat >> /etc/bash.bashrc <<- "EOF"
+# Add project binraies in executable path
+export PATH=$PATH:/vagrant/bin
+EOF

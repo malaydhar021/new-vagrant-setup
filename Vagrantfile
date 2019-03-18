@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.name = "stickyreviews"
     vb.memory = "2048"
+    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
   end
   config.vm.provision :shell, path: 'scripts/provisioner.sh', run: 'initial'
 	config.vm.provision :shell, path: 'scripts/bootstrap.sh', run: 'always'

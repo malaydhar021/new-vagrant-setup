@@ -14,7 +14,7 @@ class UpdateUsersTableAddColumnSubscriptionStatus extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->enum('subscription_status', ['NA', 'ACTIVE', 'CANCELLED'])->default('NA')->after('card_exp_year');
+            $table->enum('subscription_status', ['NA', 'ACTIVE', 'CANCELLED', 'TERMINATED'])->default('NA')->after('card_exp_year');
         });
     }
 

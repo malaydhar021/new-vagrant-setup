@@ -217,7 +217,7 @@ trait Subscription
      * @param  string  $description  Description of cancellation in details
      * @return void
      */
-    public function cancelSubscription($reason, $description = null)
+    public function cancelSubscription($reason, $description = null, $isTerminated = false)
     {
         $cancelledSubscription = new CancelledSubscription([
             'user_id' => $this->id,
@@ -229,9 +229,11 @@ trait Subscription
 
         $this->subscription('main')->cancelNow();
 
+        $subscriptionStatus = $isTerminated ? 'TERMINATED' : 'CANCELLED';
         $this->update([
-            'subscription_status' => 'CANCELLED',
+            'subscription_status' => $subscriptionStatus,
             'pricing_plan' => null,
+            'is_active' => 1,
         ]);
     }
 

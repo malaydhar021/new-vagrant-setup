@@ -1,0 +1,12 @@
+authtoken: 5zQtTVRxRYULvvWNj6sF_5KidSQb95FhiB4RbGwVhB
+console_ui: true
+console_ui_color: transparent
+log_level: debug
+log_format: json
+log: /vagrant/config/ngrok2/ngrok.log
+tunnels:
+  stickyreviews:
+    addr: 80
+    proto: http
+    subdomain: stickyreviews
+    host_header: stickyreviews.ngrok.io
