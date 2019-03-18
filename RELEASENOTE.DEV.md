@@ -3,6 +3,7 @@
 ## Login
 
 ## V1.0
+
 1. Implemented user authentication using user email and password using api
 2. Implemented authentication guard to prevent protected routes
 3. Implemented http request interceptor to add some header to each and every request to server
@@ -11,6 +12,7 @@
 6. Stored and retreved token into localstorage to work with authentication
 
 ## V1.1
+
 1. Fixed issues with CORS while making calls to backend apis adding proper headers
 2. Fixed issues with stickyreviews component adding packages to dashboard module
 
@@ -22,13 +24,27 @@
 
 ## API
 
-### V1.0
+### V2.0.0
 
 1. Fixed Sticky Reviews update from application
 
-### v1.1
+### v2.0.1
 
 1. Added API V2 Routes and Controller
+
+### v2.1.0
+
+1. Added new authetication features with Laravel Passport
+2. Added Subscription support to registration API
+
+### v2.2.0
+
+1. Added new API's to upgrade/downgrade/cancel/create subscription
+2. Added new API to change the default card.
+
+### v2.3.0
+
+1. Added API to reset password upon forget
 
 ## Configuration
 
