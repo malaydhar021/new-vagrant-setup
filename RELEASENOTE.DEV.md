@@ -46,6 +46,10 @@
 
 1. Added API to reset password upon forget
 
+### v2.4.0
+
+1. Added Webhook to listen Stripe events
+
 ## Configuration
 
 ### V0.5
