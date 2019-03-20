@@ -86,9 +86,9 @@ Route::middleware('cors')->group(function () {
         Route::post('/update-exit-pop-up', 'ApiV2Controller@postUpdateExitPopUp')->name('postUpdateExitPopUp');
     });
 
-    Route::post('/signup-user', 'ApiV2Controller@postSignUpUserThirdParty')->name('postSignUpUserThirdParty');
-    Route::post('/delete-user', 'ApiV2Controller@postDeleteUser')->name('postDeleteUser');
-    Route::post('/alter-user-state', 'ApiV2Controller@postAlterState')->name('postAlterState');
+    // Route::post('/signup-user', 'ApiV2Controller@postSignUpUserThirdParty')->name('postSignUpUserThirdParty');
+    // Route::post('/delete-user', 'ApiV2Controller@postDeleteUser')->name('postDeleteUser');
+    // Route::post('/alter-user-state', 'ApiV2Controller@postAlterState')->name('postAlterState');
     Route::post('/change-password', 'ApiV2Controller@postChangePassword')->name('postChangePassword');
     Route::post('/save-user-review', 'ApiV2Controller@postSaveUserReview')->name('postSaveUserReview');
     Route::get('/campaign-details/{uid}', 'ApiV2Controller@getParticularCampaign')->name('getParticularCampaign');

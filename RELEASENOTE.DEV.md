@@ -50,6 +50,10 @@
 
 1. Added Webhook to listen Stripe events
 
+### v2.4.1
+
+1. Change Partner/Affiliates Webhooks Routes & Response
+
 ## Configuration
 
 ### V0.5

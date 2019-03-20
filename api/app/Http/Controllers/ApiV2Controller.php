@@ -1073,33 +1073,56 @@ class ApiV2Controller extends Controller
         // for cross origin requests
         if ($request->has('name') && $request->has('email')) {
             try {
-                $userCreate = User::create([
-                    'name'              => $request->name,
-                    'email'             => $request->email,
-                    'password'          => bcrypt(123456),
-                    'stripe_plan_id'    => $request->stripe_plan_id != null ? $request->stripe_plan_id : null,
-                    'is_third_party'    => 1,
-                    'api_token'           => md5(uniqid(rand(), true))
-                ]);
-                if ($userCreate) {
+                $user = User::whereEmail(trim($request->email))->first();
+
+                if ($user) {
                     return response()->json([
-                        'status' => true,
-                        'response' => 'Successfully created the user! By default password has been set to 123456, '
-                                       . 'do change it after you login'
-                    ],200);
+                        'data' => [
+                            'http_code' => 200,
+                            'status' => false,
+                            'message' => 'This email already registered with us.',
+                        ],
+                    ], 200);
+                } else {
+                    $userCreate = User::create([
+                        'name'              => $request->name,
+                        'email'             => $request->email,
+                        'password'          => bcrypt(123456),
+                        'stripe_plan_id'    => $request->stripe_plan_id != null ? $request->stripe_plan_id : null,
+                        'is_third_party'    => 1,
+                        'api_token'         => md5(uniqid(rand(999999999, 9999999999), true)),
+                    ]);
+                    if ($userCreate) {
+                        return response()->json([
+                            'data' => [
+                                'http_code' => 200,
+                                'status' => true,
+                                'message' => 'Successfully created the user! By default password has been set to 123456, '
+                                    . 'do change it after you login',
+                            ],
+                        ], 200);
+                    }
                 }
             } catch (\Exception $e) {
                 return response()->json([
-                    'status' => false,
-                    'response' => "Oops! Something went wrong in server. Please try again later.",
-                    'error' => array_key_exists(2, $e->errorInfo) ? $e->errorInfo[2] : $e->getMessage()
+                    'data' => [
+                        'http_code' => 200,
+                        'status' => false,
+                        'message' => "Oops! Something went wrong in server. Please try again later.",
+                        'payload' => [
+                            'error' => array_key_exists(2, $e->errorInfo) ? $e->errorInfo[2] : $e->getMessage(),
+                        ],
+                    ],
                 ], 200);
             }
         } else {
             return response()->json([
-                'status' => false,
-                'response' => 'Missing expected param!'
-            ],200);
+                'data' => [
+                    'http_code' => 200,
+                    'status' => false,
+                    'message' => 'Missing expected param!'
+                ]
+            ], 200);
         }
     }
 
@@ -1116,33 +1139,50 @@ class ApiV2Controller extends Controller
                 if ($trash_user) {
                     if ($trash_user->delete()) {
                         return response()->json([
-                            'status' => true,
-                            'response' => 'Successfully deleted the user!'
-                        ],200);
+                            'data' => [
+                                'http_code' => 200,
+                                'status' => true,
+                                'message' => 'Successfully deleted the user!'
+                            ],
+                        ], 200);
                     } else {
                         return response()->json([
-                            'status' => false,
-                            'response' => 'Something went wrong while deleting the record!'
-                        ],200); // for zapier its 200 the error code. Dont change in future then it will break the system
+                            'data' => [
+                                'http_code' => 200,
+                                'status' => false,
+                                'message' => 'Something went wrong while deleting the record!'
+                            ],
+                        ], 200); // for zapier its 200 the error code. Dont change in future then it will break the system
                     }
                 } else {
                     return response()->json([
-                        'status' => false,
-                        'response' => 'No Records found with the email '.$request->email
-                    ],200);
+                        'data' => [
+                            'http_code' => 200,
+                            'status' => false,
+                            'message' => 'No Records found with the email '. $request->email
+                        ],
+                    ], 200);
                 }
             } catch (\Exception $e) {
                 return response()->json([
-                    'status' => false,
-                    'response' => "Oops! Something went wrong in server. Please try again later.",
-                    'error' => $e->getMessage()
+                    'data' => [
+                        'http_code' => 200,
+                        'status' => false,
+                        'message' => "Oops! Something went wrong in server. Please try again later.",
+                        'payload' => [
+                            'error' => $e->getMessage(),
+                        ],
+                    ]
                 ], 200);
             }
         } else {
             return response()->json([
-                'status' => false,
-                'response' => 'Missing expected param!'
-            ],200);
+                'data' => [
+                    'http_code' => 200,
+                    'status' => false,
+                    'message' => 'Missing expected param!',
+                ]
+            ], 200);
         }
     }
 
@@ -1158,27 +1198,41 @@ class ApiV2Controller extends Controller
                 $find_user = User::where('email', $request->email)->update(['is_active' => $request->alter_flg]);
                 if ($find_user) {
                     return response()->json([
-                        'status' => true,
-                        'response' => 'Successfully updated the user!'
-                    ],200);
+                        'data' => [
+                            'http_code' => 200,
+                            'status' => true,
+                            'message' => 'Successfully updated the user!',
+                        ]
+                    ], 200);
                 } else {
                     return response()->json([
-                        'status' => false,
-                        'response' => 'Something went wrong while updating the record!'
-                    ],200);
+                        'data' => [
+                            'http_code' => 200,
+                            'status' => false,
+                            'message' => 'Something went wrong while updating the record!',
+                        ],
+                    ], 200);
                 }
             } catch (\Exception $e) {
                 return response()->json([
-                    'status' => true,
-                    'response' => "Oops! Something went wrong in server. Please try again later.",
-                    'error' => $e->getMessage()
+                    'data' => [
+                        'http_code' => 200,
+                        'status' => true,
+                        'message' => "Oops! Something went wrong in server. Please try again later.",
+                        'payload' => [
+                            'error' => $e->getMessage(),
+                        ],
+                    ],
                 ], 200);
             }
         } else {
             return response()->json([
-                'status' => false,
-                'response' => 'Missing expected param!'
-            ],200);
+                'data' => [
+                    'http_code' => 200,
+                    'status' => false,
+                    'message' => 'Missing expected param!',
+                ]
+            ], 200);
         }
     }
 
