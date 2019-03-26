@@ -23,146 +23,11 @@
           <div class="tbody">
             <ng-scrollbar [compact]="true">
             <ul>
-              <li class="row">
+              <li class="row" *ngFor="let brand of brands">
                 <div class="rowContainer">
                   <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                <div class="tcol">
-                  <h2>Sticky Reviews</h2>
-                  <p>https://www.usestickyreviews.com</p>
-                </div>
-                <div class="tcol">
-                  <p>Dec 3, 2018, 5:39:18 PM</p>
-                </div>
-                <div class="tcol">
-                  <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                  <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>Sticky Reviews</h2>
-                    <p>https://www.usestickyreviews.com</p>
+                    <h2>{{ brand.brand_name }}</h2>
+                    <p>{{ brand.url }}</p>
                   </div>
                   <div class="tcol">
                     <p>Dec 3, 2018, 5:39:18 PM</p>
@@ -181,14 +46,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
 
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
   <div class="sr-modal-container">
@@ -222,11 +79,11 @@
           </div>
         </div>
         <div class="sr-form-row">
-          <div class="sr-form-cell">
-            <button class="button-submit">
-              <img src="../../../../assets/images/addIcon.png" alt=""> Save Brand
-            </button>
-          </div>
+            <div class="sr-form-cell">
+                <button class="button-submit">
+                    <img src="../../../../assets/images/addIcon.png" alt=""> Save Brand
+                </button>
+            </div>
         </div>
       </div>
     </div>
@@ -234,3 +91,12 @@
   <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>
 
+<!-- Loader -->
+<div class="loaderOuter" *ngIf="loader">
+    <div class="loaderContainer">
+        <div class="loader">
+            <img src="../../../../assets/images/face_icon.png" alt="">
+        </div>
+        <div class="loaderShadow"></div>
+    </div>
+</div>

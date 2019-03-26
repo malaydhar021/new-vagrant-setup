@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Log } from '../../helpers/app.helper';
-import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,11 +8,10 @@ import { GlobalService } from '../../services/global.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private title : Title, private globalSevice : GlobalService) {}
+    constructor(private title : Title) {}
 
-  ngOnInit() {
-    this.title.setTitle('Stickyreviews :: Dashboard');
-    Log.info(this.globalSevice.canAccessDashboard);
-  }
+    ngOnInit() {
+        this.title.setTitle('Stickyreviews :: Dashboard');
+    }
 
 }

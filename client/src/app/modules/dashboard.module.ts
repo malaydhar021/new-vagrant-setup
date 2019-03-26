@@ -32,7 +32,6 @@ import { BrandingService } from '../services/branding.service';
     PlansComponent, 
     UpdatePaymentInfoComponent
   ],
-  
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -41,7 +40,7 @@ import { BrandingService } from '../services/branding.service';
     NgxSmartModalModule.forRoot(),
     NgxMaskModule.forRoot(),
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
   ],
   providers: [
     BrandingService

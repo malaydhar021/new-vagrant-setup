@@ -1,3 +1,12 @@
+<div class="loaderOuter" *ngIf="loader">
+  <div class="loaderContainer">
+      <div class="loader">
+          <img src="../../../../assets/images/face_icon.png" alt="">
+      </div>
+      <div class="loaderShadow"></div>
+  </div>
+</div>
+
 <header class="rightPanHeader">
   <div class="headerLeft" [ngClass]="tglFlag ? 'active' : ''">
     <a class="gear" (click)="tglSetting()"></a>
@@ -15,9 +24,9 @@
       </div>
       <div class="bottomSec">
         <ul>
-          <li><a >Edit Profile</a></li>
+          <li><a>Edit Profile</a></li>
           <li><a [routerLink]="['/dashboard/update-payment-info']" routerLinkActive="active">Update Payment Info</a></li>
-          <li><a href="">Logout</a></li>
+          <li><a (click)="onLogout()">Logout</a></li>
         </ul>
       </div>
     </div>

@@ -13,6 +13,8 @@ export class ApiEndPoint {
 
     /**
      * Function to generate api endpoint for user authentication
+     * 
+     * @since 1.0.0
      * @returns string
      */
     public static get authenticateUser() : string 
@@ -22,6 +24,8 @@ export class ApiEndPoint {
     
     /**
      * Function to generate api endpoint to validate a token
+     * 
+     * @since 1.0.0
      * @returns string
      */
     public static get validateToken() : string
@@ -30,7 +34,21 @@ export class ApiEndPoint {
     }
 
     /**
+     * Function to destroy user sessoin and logout
+     * 
+     * @since 1.0.0
+     * @returns string
+     */
+    public static get logout() : string
+    {
+        return this.apiBaseUrl + '/signout';
+    }
+
+    /**
      * Function to generate api endpoint to get all brandings
+     * 
+     * @since 1.0.0
+     * @returns string
      */
     public static get brandings() : string
     {

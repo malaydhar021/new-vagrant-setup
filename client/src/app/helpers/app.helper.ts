@@ -2,7 +2,7 @@
  * This file will have all helper classes and can be imported into desired components or other places to serve the requirements.
  * 
  * @package App Helper
- * @version 1.0.0
+ * @version 1.0.2
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -35,7 +35,7 @@ import { environment } from '../../environments/environment';
  * 
  * @subpackage Log
  * @author Tier5 LLC `<work@tier5.us>`
- * @since 1.0.1
+ * @since 1.0.0
  */
 export class Log {
     constructor(data : any, mode : string, prelog : string = null){
@@ -126,11 +126,29 @@ export class Log {
             alert(log + " : " + data);
         }
     }
+
+    /**
+     * Function for warning log
+     * @since 1.0.2
+     * @param data any
+     * @param prelog string
+     * @returns void
+     */
+    public static warning(data : any, prelog : string = null){
+        if(environment.debug){
+            let log = prelog === null ? 'Warning' : prelog;
+            console.log(log + " : ", data);
+        }
+    }
 }
 
 /**
- * Constant of some global variables and their default value so that they can be accessed throughout app
- * 
+ * Constant of some global variables and their default value so that they can be accessed throughout app.
+ * ### This is not in use so far. May be this will be used in future
+
+ * @var GlobalVars
+ * @version 1.0.0
+ * @todo This is not in use so far. May be this will be required in future
  */
 export var GlobalVars = Object.freeze(
     {

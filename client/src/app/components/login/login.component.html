@@ -1,7 +1,7 @@
 <div class="loginContainer">
     <div class="leftPanel">
         <div class="leftLogo">
-            <a [routerLink]="['']"><img src="../../../assets/images/Sticky_Reviews_logo_text.png" alt=""></a>
+            <a [routerLink]="['/']"><img src="../../../assets/images/Sticky_Reviews_logo_text.png" alt=""></a>
         </div>
     </div>
     <div class="rightPanel">
@@ -10,13 +10,16 @@
             <span>Login to continue using Sticky Reviews</span>
         </h1>
         <div class="formArea">
-            <span *ngIf="error !== null">{{ error }}</span>
+            <div *ngIf="error !== null">
+                <span>{{ error }}</span>
+            </div>
+
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="formRow" [ngClass]="{active : emailFieldFocused}">
+                <div class="formRow" [ngClass]="{active : emailFieldFocused, error : isSubmitted && loginFormControls.email.errors}">
                     <input type="text" class="formCtrl" id="email" formControlName="email" (focus)="onFocus('email', $event)" (blur)="onFocusOut('email', $event)" autocomplete="off">
                     <label>Email</label>
                 </div>
-                <div class="formRow" [ngClass]="{active : passwordFieldFocused}">
+                <div class="formRow" [ngClass]="{active : passwordFieldFocused, error : isSubmitted && loginFormControls.password.errors}">
                     <input type="password" class="formCtrl" id="password" formControlName="password" (focus)="onFocus('password', $event)" (blur)="onFocusOut('password', $event)">
                     <label>Password</label>
                 </div>
@@ -39,4 +42,12 @@
         </div>
     </div>
 </div>
-
+<!-- Loader -->
+<div class="loaderOuter" *ngIf="loader">
+    <div class="loaderContainer">
+        <div class="loader">
+            <img src="../../../assets/images/face_icon.png" alt="">
+        </div>
+        <div class="loaderShadow"></div>
+    </div>
+</div>
