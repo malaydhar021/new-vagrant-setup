@@ -32,7 +32,7 @@ class PasswordResetController extends Controller
         if (!$passwordReset) {
             return response()->json([
                 'status' => false,
-                'error' => "This password reset token is invalid.",
+                'message' => "This password reset token is invalid.",
             ], 404);
         }
 
@@ -41,7 +41,7 @@ class PasswordResetController extends Controller
         if (!$user) {
             return response()->json([
                 'status' => false,
-                'error' => "We can not find a user with that e-mail address.",
+                'message' => "We can not find a user with that e-mail address.",
             ], 404);
         }
 

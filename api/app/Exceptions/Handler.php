@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
             if ($exception instanceof NotFoundHttpException) {
                 return response()->json([
                     'status' => false,
-                    'error' => "Requested API endpoint not found."
+                    'message' => "Requested API endpoint not found."
                 ], 404);
             }
 
@@ -68,7 +68,7 @@ class Handler extends ExceptionHandler
                 $exception instanceof MethodNotAllowedException) {
                  return response()->json([
                     'status' => false,
-                    'error' => $exception->getMessage() ? $exception->getMessage() :
+                    'message' => $exception->getMessage() ? $exception->getMessage() :
                         $request->method() . " method is not allowed on requested API endpoint."
                 ], 405);
             }
@@ -77,7 +77,7 @@ class Handler extends ExceptionHandler
             if ($exception instanceof AuthenticationException) {
                 return response()->json([
                     'status' => false,
-                    'error' => "You are not authenticated to access this resource. Please sign in first."
+                    'message' => "You are not authenticated to access this resource. Please sign in first."
                 ], 401);
             }
 
@@ -85,7 +85,7 @@ class Handler extends ExceptionHandler
             if ($exception instanceof AuthorizationException) {
                 return response()->json([
                     'status' => false,
-                    'error' => $exception->getMessage()
+                    'message' => $exception->getMessage()
                 ], 401);
             }
 
@@ -98,7 +98,7 @@ class Handler extends ExceptionHandler
 
                 return response()->json([
                     'status' => false,
-                    'error' => "Please make sure your request matches all the following conditions.",
+                    'message' => "Please make sure your request matches all the following conditions.",
                     'conditions' => $errors,
                 ], 400);
             }
@@ -107,7 +107,7 @@ class Handler extends ExceptionHandler
             if ($exception instanceof HttpBadRequestException) {
                 return response()->json([
                     'status' => false,
-                    'error' => $exception->getMessage()
+                    'message' => $exception->getMessage()
                 ], 400);
             }
 
@@ -115,7 +115,7 @@ class Handler extends ExceptionHandler
             if ($exception instanceof SubscriptionException) {
                 return response()->json([
                     'status' => false,
-                    'error' => $exception->getMessage(),
+                    'message' => $exception->getMessage(),
                 ], 422);
             }
 
@@ -123,13 +123,13 @@ class Handler extends ExceptionHandler
             if (config('app.debug')) {
                 $response = [
                     'status' => false,
-                    'error' => "Whoops, looks like something went wrong.",
+                    'message' => "Whoops, looks like something went wrong.",
                     'error_trace' => $exception->getTrace()
                 ];
             } else {
                 $response = [
                     'status' => false,
-                    'error' => "Whoops! looks like something went wrong.",
+                    'message' => "Whoops! looks like something went wrong.",
                     'error_message' => $exception->getMessage()
                 ];
             }

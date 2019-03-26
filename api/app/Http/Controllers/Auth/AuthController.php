@@ -30,7 +30,7 @@ class AuthController extends Controller
         if ($exists) {
             return response()->json([
                 'status' => false,
-                'error' => "Email already exists, please click on forget password to recover.",
+                'message' => "Email already exists, please click on forget password to recover.",
             ]);
         } else {
             return response()->json([
@@ -87,7 +87,7 @@ class AuthController extends Controller
         if (!Auth::attempt($credentials))
             return response()->json([
                 'status' => false,
-                'error' => "Login failed! Credentials does not match our records."
+                'message' => "Login failed! Credentials does not match our records."
             ], 401);
 
         $tokenResult = Auth::user()->createToken('Login Access Token');
