@@ -129,15 +129,15 @@ return [
 
     'custom' => [
         'email' => [
-            'required' => "Email is required.",
-            'email' => "Email should be type of email. Example: jon@tier5.us",
+            'required' => ["message" => "Email is required."],
+            'email' => ["message" => "Email should be type of email. Example: jon@tier5.us"],
         ],
         'password' => [
-            'required' => "Password is required.",
-            'min' => "Password should be at least 8 characters long",
+            'required' => ["message" => "Password is required"],
+            'min' => ["message" => "Password should be at least 8 characters long"],
             'regex' => [
                 'message' => "Password should contains at least one of the followings",
-                'requirements' => [
+                'rules' => [
                     "English uppercase characters (A–Z)",
                     "English lowercase characters (a–z)",
                     "Numeric value (0–9)",
@@ -146,8 +146,8 @@ return [
             ],
         ],
         'token' => [
-            'required' => "Token is required.",
-            'size' => "Token should be exactly 64 characters long.",
+            'required' => ["message" => "Token is required."],
+            'size' => ["message" => "Token should be exactly 64 characters long."],
         ],
     ],
 

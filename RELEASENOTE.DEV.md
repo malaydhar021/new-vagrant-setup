@@ -2,7 +2,26 @@
 
 ## Login
 
-## V1.0
+## V1.3.0
+
+1. Implemented forgot password accepting the user email
+2. Implemented reset password
+3. Handled server side validations and displayed the error messages to template
+4. Implemented client side form validation to minimize the http requests call
+
+## V1.2.0
+
+1. Implemented login and logout feature.
+2. Implemented error handling centrally for http error responses from http interceptor.
+3. Introduced a shared service for to update the error messages asynchronously and display it into respective template.
+4. Implemented loader to handle the delay of api responses.
+
+## V1.0.1
+
+1. Fixed issues with CORS while making calls to backend apis adding proper headers
+2. Fixed issues with stickyreviews component adding packages to dashboard module
+
+## V1.0.0
 
 1. Implemented user authentication using user email and password using api
 2. Implemented authentication guard to prevent protected routes
@@ -11,17 +30,6 @@
 5. Created services, helpers for further application development
 6. Stored and retreved token into localstorage to work with authentication
 
-## V1.0.1
-
-1. Fixed issues with CORS while making calls to backend apis adding proper headers
-2. Fixed issues with stickyreviews component adding packages to dashboard module
-
-## V1.2
-
-1. Implemented login and logout feature.
-2. Implemented error handling centrally for http error responses from http interceptor.
-3. Introduced a shared service for to update the error messages asynchronously and display it into respective template.
-4. Implemented loader to handle the delay of api responses.
 
 ## UI
 

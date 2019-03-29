@@ -22,15 +22,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use App\traits\AuthTrait;
 use App\User;
 use Validator;
 use Intervention\Image\Facades\Image;
+use Auth;
 
 class ApiV2Controller extends Controller
 {
-    use AuthTrait;
-
     protected $myStripeKey;
     protected $stripe;
 
@@ -42,6 +40,19 @@ class ApiV2Controller extends Controller
     {
         // set stripe api key
         $this->myStripeKey = config('constants.stripe.private_key');
+    }
+    
+    /**
+     * this function returns authenticated user id if authenticated
+     * @return bool|integer
+     */
+    public function isAuthenticated()
+    {
+        if (Auth::check()) {
+            return Auth::user()->id;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -705,7 +716,8 @@ class ApiV2Controller extends Controller
                 if ($brands) {
                     return response()->json([
                         'status' => true,
-                        'message' => $brands
+                        'data' => $brands,
+                        'message' => 'Brands fetched successfully'
                     ], 200);
                 } else {
                     return response()->json([

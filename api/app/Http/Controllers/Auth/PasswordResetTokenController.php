@@ -27,7 +27,7 @@ class PasswordResetTokenController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => "We can't find an user with that e-mail address.",
-            ], 404);
+            ], 200);
         }
 
         $passwordReset = PasswordReset::updateOrCreate([
@@ -59,7 +59,7 @@ class PasswordResetTokenController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => "This password reset token is invalid.",
-            ], 404);
+            ], 401);
         }
 
         if (Carbon::parse($passwordReset->updated_at)->addMinutes(60)->isPast()) { // Token is valid for 1 hour only
@@ -68,13 +68,13 @@ class PasswordResetTokenController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => "This password reset token is invalid.",
-            ], 404);
+            ], 401);
         }
 
         return response()->json([
             'status' => true,
             'message' => "Password reset token is valid",
-            'token' => $passwordReset,
+            'data' => $passwordReset,
         ]);
     }
 }

@@ -8,7 +8,7 @@ import { DashboardComponent } from '../components/dashboard/dashboard.component'
 import { BrandingComponent } from '../components/dashboard/branding/branding.component';
 import { LeftPanelComponent } from '../components/dashboard/left-panel/left-panel.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { BarRatingModule } from "ngx-bar-rating";
+import { BarRatingModule } from 'ngx-bar-rating';
 import { StickyReviewsComponent } from '../components/dashboard/sticky-reviews/sticky-reviews.component';
 import { CampaignComponent } from '../components/dashboard/campaign/campaign.component';
 import { ReviewLinkComponent } from '../components/dashboard/review-link/review-link.component';
@@ -21,15 +21,15 @@ import { BrandingService } from '../services/branding.service';
 
 @NgModule({
   declarations: [
-    DashboardComponent, 
-    BrandingComponent, 
-    LeftPanelComponent, 
-    StickyReviewsComponent, 
-    CampaignComponent, 
-    ReviewLinkComponent, 
-    ExitPopupComponent, 
-    HeaderComponent, 
-    PlansComponent, 
+    DashboardComponent,
+    BrandingComponent,
+    LeftPanelComponent,
+    StickyReviewsComponent,
+    CampaignComponent,
+    ReviewLinkComponent,
+    ExitPopupComponent,
+    HeaderComponent,
+    PlansComponent,
     UpdatePaymentInfoComponent
   ],
   imports: [

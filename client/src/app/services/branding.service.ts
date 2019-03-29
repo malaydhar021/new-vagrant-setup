@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { ApiEndPoint } from '../helpers/api.helper';
+import { BrandingApiEndpoints } from '../helpers/api.helper';
 import { Router } from '@angular/router';
 import { Log } from '../helpers/app.helper';
-import { tap } from "rxjs/operators";
+import { tap } from 'rxjs/operators';
 
 /**
  * Service for all branding related operations
@@ -14,17 +14,14 @@ import { tap } from "rxjs/operators";
  */
 
  @Injectable()
+ export class BrandingService {
+    constructor(private httpClient: HttpClient, private router: Router) {}
 
- export class BrandingService
- {
-    constructor(private httpClient : HttpClient, private router : Router){}
-    
     /**
      * Function to return all brandings using api endpoint
      * @returns Observable<Object>
      */
-    public getAllBrandings()
-    {
-        return this.httpClient.get(ApiEndPoint.brandings);
+    public getAllBrandings() {
+        return this.httpClient.get(BrandingApiEndpoints.brandings);
     }
  }

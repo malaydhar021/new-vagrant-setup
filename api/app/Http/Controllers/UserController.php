@@ -17,7 +17,7 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => "User's info fetched successfully.",
-            'user' => new UserResource(Auth::user()),
+            'data' => new UserResource(Auth::user()),
         ]);
     }
 }

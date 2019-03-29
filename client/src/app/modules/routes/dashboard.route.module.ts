@@ -10,14 +10,14 @@ import { PlansComponent } from '../../components/dashboard/plans/plans.component
 import { UpdatePaymentInfoComponent } from '../../components/dashboard/update-payment-info/update-payment-info.component';
 
 const routes: Routes = [
-  {path: "", component: DashboardComponent},
-  {path: "branding", component: BrandingComponent},
-  {path: "sticky-reviews", component: StickyReviewsComponent},
-  {path: "campaign", component: CampaignComponent},
-  {path: "review-link", component: ReviewLinkComponent},
-  {path: "exit-popup", component: ExitPopupComponent},
-  {path: "plans", component: PlansComponent},
-  {path: "update-payment-info", component: UpdatePaymentInfoComponent}
+  {path: '', component: DashboardComponent},
+  {path: 'branding', component: BrandingComponent},
+  {path: 'sticky-reviews', component: StickyReviewsComponent},
+  {path: 'campaign', component: CampaignComponent},
+  {path: 'review-link', component: ReviewLinkComponent},
+  {path: 'exit-popup', component: ExitPopupComponent},
+  {path: 'plans', component: PlansComponent},
+  {path: 'update-payment-info', component: UpdatePaymentInfoComponent}
 ];
 
 @NgModule({

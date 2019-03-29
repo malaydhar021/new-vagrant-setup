@@ -10,6 +10,12 @@ export class CampaignComponent implements OnInit {
 
   constructor(public ngxSmartModalService: NgxSmartModalService) { }
 
+  public windowHeight: any;
+  public scrollTrigger = false;
+  viewHeight: number;
+
+  @ViewChild('mainScreen') elementView: ElementRef;
+
   ngAfterViewInit() {
     // const obj: Object = {
     //   prop1: 'test',
@@ -21,32 +27,26 @@ export class CampaignComponent implements OnInit {
     // this.ngxSmartModalService.setModalData(obj, 'myModal');
   }
 
-  public windowHeight: any;
-  public scrollTrigger: boolean = false;
-  viewHeight: number;
-
   ngOnInit() {
-    this.windowHeight = window.innerHeight -280;
+    this.windowHeight = window.innerHeight - 280;
   }
 
   @HostListener('window:resize', ['$event'])
     onResize(event) {
     this.viewHeight = this.elementView.nativeElement.offsetHeight;
-    this.windowHeight = window.innerHeight -280;
+    this.windowHeight = window.innerHeight - 280;
     console.log(this.windowHeight);
 
-    if(this.viewHeight > this.windowHeight){
+    if (this.viewHeight > this.windowHeight) {
       this.scrollTrigger = true;
     } else {
       this.scrollTrigger = false;
     }
   }
-
-  @ViewChild('mainScreen') elementView: ElementRef;
-    clickMe(){
+    clickMe() {
       this.viewHeight = this.elementView.nativeElement.offsetHeight;
 
-      if(this.viewHeight > this.windowHeight){
+      if (this.viewHeight > this.windowHeight) {
         this.scrollTrigger = true;
       } else {
         this.scrollTrigger = false;

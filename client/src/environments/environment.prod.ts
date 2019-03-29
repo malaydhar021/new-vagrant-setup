@@ -3,6 +3,6 @@ export const environment = {
     maintenance: false,
     debug : false,
     APP_BASE_URL: 'https://app.usestickyreviews.com',
-    API_BASE_URL: 'https://api.usestickyreviews.com/v1',
+    API_BASE_URL: 'https://api.usestickyreviews.com/v2',
     WIDGET_BASE_URL: 'https://lib.usestickyreviews.com'
 };

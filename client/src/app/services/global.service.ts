@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 /**
  * Service to declare some global variables and update it as required and use it throughout the app. Any variable which will be used to globally those
  * will be declared here.
- * 
+ *
  * ### *DEPRECATED*
- * 
+ *
  * @package GlobalService
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
@@ -14,9 +14,8 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 
-export class GlobalService 
-{
-    canAccessDashboard : boolean = false;
-    isSessionExpired : boolean = false;
-    errorMessage : string = null;
+export class GlobalService {
+    canAccessDashboard = false;
+    isSessionExpired = false;
+    errorMessage: string = null;
 }

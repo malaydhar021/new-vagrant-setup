@@ -1,53 +1,57 @@
 <div class="loginContainer">
-    <div class="leftPanel">
-        <div class="leftLogo">
-            <a [routerLink]="['/']"><img src="../../../assets/images/Sticky_Reviews_logo_text.png" alt=""></a>
-        </div>
+  <div class="leftPanel">
+    <div class="leftLogo">
+      <a [routerLink]="['/']"><img src="../../../assets/images/Sticky_Reviews_logo_text.png" alt=""></a>
     </div>
-    <div class="rightPanel">
-        <h1>
-            Welcome back
-            <span>Login to continue using Sticky Reviews</span>
-        </h1>
-        <div class="formArea">
-            <div *ngIf="error !== null">
-                <span>{{ error }}</span>
-            </div>
+  </div>
+  <div class="rightPanel">
+    <h1>
+      Welcome back
+      <span>Login to continue using Sticky Reviews</span>
+    </h1>
+    <div class="formArea">
+      <div *ngIf="error !== null">
+        <span>{{ error }}</span>
+      </div>
 
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="formRow" [ngClass]="{active : emailFieldFocused, error : isSubmitted && loginFormControls.email.errors}">
-                    <input type="text" class="formCtrl" id="email" formControlName="email" (focus)="onFocus('email', $event)" (blur)="onFocusOut('email', $event)" autocomplete="off">
-                    <label>Email</label>
-                </div>
-                <div class="formRow" [ngClass]="{active : passwordFieldFocused, error : isSubmitted && loginFormControls.password.errors}">
-                    <input type="password" class="formCtrl" id="password" formControlName="password" (focus)="onFocus('password', $event)" (blur)="onFocusOut('password', $event)">
-                    <label>Password</label>
-                </div>
-                <div class="formRow2">
-                    <div class="rememberMe">
-                        <input type="checkbox" formControlName="rememberMe"> Remember me
-                    </div>
-                    <a href="" class="forgotPass">Forgot your Password?</a>
-                    <div class="clear"></div>
-                </div>
-                <div class="formRow2">
-                    <button type="submit" class="loginBtn">LOGIN</button>
-                </div>
-                <div class="formRow2">
-                    <p class="registerLink">
-                        Don't have any account? <a [routerLink]="['/sign-up']">Register Here</a>
-                    </p>
-                </div>
-            </form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="formRow"
+          [ngClass]="{active : emailFieldFocused, error : isSubmitted && loginFormControls.email.errors}">
+          <input type="text" class="formCtrl" id="email" formControlName="email" (focus)="onFocus('email', $event)"
+            (blur)="onFocusOut('email', $event)" autocomplete="off">
+          <label>Email</label>
         </div>
+        <div class="formRow"
+          [ngClass]="{active : passwordFieldFocused, error : isSubmitted && loginFormControls.password.errors}">
+          <input type="password" class="formCtrl" id="password" formControlName="password"
+            (focus)="onFocus('password', $event)" (blur)="onFocusOut('password', $event)">
+          <label>Password</label>
+        </div>
+        <div class="formRow2">
+          <div class="rememberMe">
+            <input type="checkbox" formControlName="rememberMe"> Remember me
+          </div>
+          <a [routerLink]="['/forgot-password']" class="forgotPass">Forgot your Password?</a>
+          <div class="clear"></div>
+        </div>
+        <div class="formRow2">
+          <button type="submit" class="loginBtn">LOGIN</button>
+        </div>
+        <div class="formRow2">
+          <p class="registerLink">
+            Don't have any account? <a [routerLink]="['/sign-up']">Register Here</a>
+          </p>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 <!-- Loader -->
 <div class="loaderOuter" *ngIf="loader">
-    <div class="loaderContainer">
-        <div class="loader">
-            <img src="../../../assets/images/face_icon.png" alt="">
-        </div>
-        <div class="loaderShadow"></div>
+  <div class="loaderContainer">
+    <div class="loader">
+      <img src="../../../assets/images/face_icon.png" alt="">
     </div>
+    <div class="loaderShadow"></div>
+  </div>
 </div>

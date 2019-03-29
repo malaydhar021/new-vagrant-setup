@@ -7,25 +7,25 @@ import { Component, OnInit, ElementRef, ViewChild, HostListener, } from '@angula
 })
 export class SignUpComponent implements OnInit {
 
-  constructor() { 
-    document.body.className = "sign-upPage";
+  constructor() {
+    document.body.className = 'sign-upPage';
    }
+
+  public secondStepeFlag = false;
+  cradnumber: number;
 
   ngOnInit() {
   }
 
-  ngOnDestroy(){
-    document.body.className="sign-upPage";
+  ngOnDestroy() {
+    document.body.className = 'sign-upPage';
   }
 
-  public secondStepeFlag: boolean = false;
-  cradnumber: number;
-
-  nextStep(){
+  nextStep() {
     this.secondStepeFlag = true;
   }
-  goBack(){
+  goBack() {
     this.secondStepeFlag = false;
   }
-  
+
 }

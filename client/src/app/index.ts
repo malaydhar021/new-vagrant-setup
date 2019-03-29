@@ -10,6 +10,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './modules/routes/app.route.module';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/forgot-password/reset-password/reset-password.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/guards/auth.guard.service';
@@ -17,18 +19,41 @@ import { GlobalService } from './services/global.service';
 import { RequestInterceptor } from './services/interceptors/request.interceptor.service';
 import { ErrorsService } from './services/errors.service';
 
+/**
+ * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
+ * In this componentt only the ```<router-outlet></router-outlet>``` angular routing hook whchi is
+ * responsible for displaying html content based on the url route, is persent. It is recommemnded
+ *
+ * @package AppComponent
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 
 @Component({
-  selector: 'app-root',
-  template: '<router-outlet></router-outlet>'
+    selector: 'app-root',
+    template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {}
+
+/**
+ * This module is entry point to this application. AppComponent is the first component when the application
+ * is getting bootstraped. This module will only load all the public pages components and services. Dashboard module
+ * (under modules directory) will be loaded lazyly once the user is authenticated.
+ *
+ * @package AppModule
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 
 @NgModule({
   declarations: [
       AppComponent,
       LoginComponent,
       SignUpComponent,
+      ForgotPasswordComponent,
+      ResetPasswordComponent,
       NotFoundComponent,
   ],
   imports: [
@@ -41,8 +66,8 @@ export class AppComponent {}
       BrowserAnimationsModule,
   ],
   providers: [
-      Title, 
-      AuthService,  
+      Title,
+      AuthService,
       AuthGuard,
       GlobalService,
       CookieService,

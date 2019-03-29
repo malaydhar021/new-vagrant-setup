@@ -53,7 +53,7 @@ class PasswordResetController extends Controller
         return response()->json([
             'status' => true,
             'message' => "You have successfully reset your password.",
-            'user' => new UserResource($user),
+            'data' => new UserResource($user),
         ]);
     }
 }

@@ -7,7 +7,7 @@ import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * AuthGuard service will prevent access to protected routes for unauthenticated users
- * 
+ *
  * @package AuthGuard
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
@@ -17,10 +17,10 @@ import { Log } from 'src/app/helpers/app.helper';
 @Injectable()
 
 export class AuthGuard implements CanLoad {
-    constructor(private router : Router, private authService : AuthService){}
+    constructor(private router: Router, private authService: AuthService) {}
 
-    canLoad(route : Route): Observable<boolean> | Promise<boolean> | boolean {
-        if(!this.authService.isAuthenticated){
+    canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
+        if (!this.authService.isAuthenticated) {
             this.router.navigate(['/login']);
             return false;
         }
@@ -28,7 +28,7 @@ export class AuthGuard implements CanLoad {
 
         /**
         * DO NOT REMOVE THE BELOW COMMENTED OUT CODE
-         
+
         this.authService.isAuthenticated.subscribe(
             (authenticated : any) => {
                 if(authenticated){
@@ -43,7 +43,7 @@ export class AuthGuard implements CanLoad {
             }
         );
         return false;
-        
+
         * DO NOT REMOVE THE ABOVE COMMENTED OUT CODE
         */
     }

@@ -4,11 +4,11 @@ import { LoaderService } from '../../services/loader.service';
 
 /**
  * LoaderComponent is responsible for show / hide a loader.
- * 
+ *
  * DO NOT DELETE / REMOVE THIS FILE
- * 
+ *
  * ### *DEPRECATED* ###
- * 
+ *
  * @package LoaderComponent
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
@@ -24,19 +24,18 @@ import { LoaderService } from '../../services/loader.service';
 
 export class LoaderComponent implements OnInit, OnDestroy {
 
-    loader : boolean = false;
+    loader = false;
     loaderSubscription: Subscription;
 
-    constructor(private loaderService : LoaderService) { }
+    constructor(private loaderService: LoaderService) { }
 
     /**
      * Subscription for loaderSubcription to assign the value asynchronously
-     * 
+     *
      * @since 1.0.0
      * @returns Observable<Boolean>
      */
-    ngOnInit() 
-    {
+    ngOnInit() {
         this.loaderSubscription = this.loaderService.loaderStatus.subscribe((value) => {
             this.loader = value;
         });
@@ -44,12 +43,11 @@ export class LoaderComponent implements OnInit, OnDestroy {
 
     /**
      * Destroy the loaderSubscription subscription
-     * 
+     *
      * @since 1.0.0
      * @returns void
      */
-    ngOnDestroy()
-    {
+    ngOnDestroy() {
         this.loaderSubscription.unsubscribe();
     }
 

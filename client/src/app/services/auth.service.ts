@@ -3,14 +3,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthModel } from '../models/auth.model';
-import { AuthResponse } from '../interfaces/auth.interface';
-import { ApiEndPoint } from '../helpers/api.helper';
+import { ForgotPasswordModel } from '../models/forgot-password.model';
+import { AuthApiEndPoints } from '../helpers/api.helper';
 import { Log } from '../helpers/app.helper';
 import { Observable, of } from 'rxjs';
+import { ResetPasswordModel } from '../models/reset-password.model';
 
 /**
  * This service will handle all operations related to user login and authentication
- * 
+ *
  * @package AuthService
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
@@ -18,86 +19,122 @@ import { Observable, of } from 'rxjs';
  */
 
 @Injectable()
+export class AuthService {
+  constructor(private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
 
-export class AuthService 
-{
+  /**
+   * This method will make an api request and authenticate a user
+   *
+   * @since 1.0.0
+   * @param auth authModel<Object>
+   * @returns Observable<Object>
+   */
+  public doLogin(auth: AuthModel) {
+    return this.httpClient.post(AuthApiEndPoints.authenticateUser, auth);
+  }
 
-    constructor(private httpClient : HttpClient, private router : Router, private cookieService : CookieService){}
+  /**
+   * Function to determine whether a user is loggedIn or not
+   *
+   * @since 1.0.0
+   * @returns boolean
+   */
+  public get isAuthenticated() {
+    // return this.validateToken(this.getToken);
+    // return of(false);
+    return (this.getToken) ? true : false;
+  }
 
-    /**
-     * This method will make an api request and authenticate a user
-     * 
-     * @since 1.0.0
-     * @param auth authModel<Object>
-     * @returns Observable<Object>
-     */
-    public doLogin(auth : AuthModel)
-    {
-        return this.httpClient.post<AuthResponse>(ApiEndPoint.authenticateUser, auth);
+  /**
+   * Function to get the token from localstorage
+   *
+   * @since 1.0.0
+   * @returns boolean
+   */
+  public get getToken() {
+    let data = null;
+    switch (this.cookieService.get('_rm')) {
+      case 'on':
+        data = localStorage.getItem('_sr') ? JSON.parse(localStorage.getItem('_sr')) : null;
+        break;
+      case 'off':
+        data = sessionStorage.getItem('_sr') ? JSON.parse(sessionStorage.getItem('_sr')) : null;
+        break;
+      default:
+        data = localStorage.getItem('_sr') ? JSON.parse(localStorage.getItem('_sr')) : null;
+        break;
     }
 
-    /**
-     * Function to determine whether a user is loggedIn or not
-     * 
-     * @since 1.0.0
-     * @returns boolean
-     */
-    public get isAuthenticated()
-    {
-        // return this.validateToken(this.getToken);
-        // return of(false);
-        return (this.getToken) ? true : false;
+    if (data !== null && data.token !== '' && data.token !== null && typeof data.token !== 'undefined') {
+      return data.token;
+    } else {
+      return false;
     }
+  }
 
-    /**
-     * Function to get the token from localstorage
-     * 
-     * @since 1.0.0
-     * @returns boolean
-     */
-    public get getToken()
-    {
-        let data = null;
-        switch(this.cookieService.get('_rm')){
-            case "on" :
-                data = localStorage.getItem('_sr') ? JSON.parse(localStorage.getItem('_sr')) : null;
-                break;
-            case "off" : 
-                data = sessionStorage.getItem('_sr') ? JSON.parse(sessionStorage.getItem('_sr')) : null;    
-                break;
-            default:
-                data = localStorage.getItem('_sr') ? JSON.parse(localStorage.getItem('_sr')) : null;
-                break;
-        }
+  /**
+   * Function that returns the api endpoing with query string to validate a token
+   *
+   * @since 1.0.0
+   * @param token string
+   * @returns Observable<Object>
+   */
+  public validateToken(token: string) {
+    return this.httpClient.get(AuthApiEndPoints.validateToken, { params: new HttpParams().set('token', token) });
+  }
 
-        if(data !== null && data.token !== '' && data.token !== null && typeof data.token !== 'undefined') {
-            return data.token;
-        } else {
-            return false;
-        }
-    }
+  /**
+   * Function to make a post request to logout the user
+   * @method doLogout
+   * @since versoin 1.0.0
+   * @param token string
+   * @returns Observable<Object>
+   */
+  public get doLogout() {
+    return this.httpClient.post(AuthApiEndPoints.logout, null);
+  }
 
-    /**
-     * Function that returns the api endpoing with query string to validate a token
-     * 
-     * @since 1.0.0
-     * @param token string
-     * @returns Observable<Object>
-     */
-    public validateToken(token : string) 
-    {
-        return this.httpClient.get(ApiEndPoint.validateToken, { params : new HttpParams().set('token', token) });
-    }
+  /**
+   * Method to remove sessionStorage/localStorage data from browser
+   * @method removeStorageData
+   * @since version 1.0.0
+   * @returns void
+   */
+  public removeStorageData() {
+    localStorage.removeItem('_sr');
+    sessionStorage.removeItem('_sr');
+    this.cookieService.delete('_rm');
+  }
 
-    /**
-     * Function to make a post request to logout the user
-     * 
-     * @since 1.0.0
-     * @param token string
-     * @returns void
-     */
-    public doLogout(token : string)
-    {
-        return this.httpClient.post(ApiEndPoint.logout, null, { params : new HttpParams().set('token', token) });        
-    }
+  /**
+   * This method will post the email to forgot password api
+   * @method forgotPassword
+   * @since 1.0.0
+   * @returns Observable<Object>
+   */
+  public forgotPassword(data: ForgotPasswordModel) {
+    return this.httpClient.post(AuthApiEndPoints.forgotPassword, data);
+  }
+
+  /**
+   * This method accept the token which needs to be verified and make an api call to api route
+   * @method resetPasswordValidateToken
+   * @since version 1.0.0
+   * @param token (string) The token to verify
+   * @returns Observable<Object>
+   */
+  public resetPasswordValidateToken(token : string) {
+    return this.httpClient.get(AuthApiEndPoints.resetPasswordVerifyToken.concat(token));
+  }
+
+  /**
+   * This method accept the token which needs to be verified and make an api call to api route
+   * @method resetPasswordValidateToken
+   * @since version 1.0.0
+   * @param token (string) The token to verify
+   * @returns Observable<Object>
+   */
+  public resetPassword(data : ResetPasswordModel) {
+    return this.httpClient.put(AuthApiEndPoints.resetPassword, data);
+  }
 }

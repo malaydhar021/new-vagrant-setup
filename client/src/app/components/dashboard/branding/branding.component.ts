@@ -10,13 +10,12 @@ import { Log } from '../../../helpers/app.helper';
 })
 
 export class BrandingComponent implements OnInit {
-    loader : boolean = false;
-    brands : [] = [];
+    loader = false;
+    brands: [] = [];
 
-    constructor(public ngxSmartModalService: NgxSmartModalService, private brandingService : BrandingService) {}
+    constructor(public ngxSmartModalService: NgxSmartModalService, private brandingService: BrandingService) {}
 
-    ngAfterViewInit() 
-    {
+    ngAfterViewInit() {
       // const obj: Object = {
       //   prop1: 'test',
       //   prop2: true,
@@ -30,16 +29,12 @@ export class BrandingComponent implements OnInit {
     ngOnInit() {
         this.loader = true;
         this.brandingService.getAllBrandings().subscribe(
-            (data : any) => {
-                Log.success(data);
-                if(data.status){
-                    this.brands = data.response;
+            (response: any) => {
+                Log.success(response);
+                if (response.status) {
+                    this.brands = response.data;
                 }
                 this.loader = false;
-            },
-            (error : any) => {
-                this.loader = false;
-                Log.error(error, 'Error from branding component');
             }
         );
     }

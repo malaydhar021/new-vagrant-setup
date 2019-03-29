@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./left-panel.component.scss']
 })
 export class LeftPanelComponent implements OnInit {
-  allRoute : any = {}
+  allRoute: any = {};
   constructor() {
     this.allRoute = {
       '' : ['/dashboard'],
@@ -16,7 +16,7 @@ export class LeftPanelComponent implements OnInit {
       'review-link' : ['/dashboard/review-link'],
       'exit-popup' : ['/dashboard/exit-popup'],
       'update-payment-info' : ['/dashboard/update-payment-info'],
-    }
+    };
 
    }
 

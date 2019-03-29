@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class DashboardComponent implements OnInit {
 
-    constructor(private title : Title) {}
+    constructor(private title: Title) {}
 
     ngOnInit() {
         this.title.setTitle('Stickyreviews :: Dashboard');

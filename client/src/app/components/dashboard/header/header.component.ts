@@ -9,7 +9,7 @@ import { ErrorsService } from '../../../services/errors.service';
 /**
  * This component is responsible for handling all sort of operations in application header
  * after user is logged in
- * 
+ *
  * @package HeaderComponent
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
@@ -21,19 +21,19 @@ import { ErrorsService } from '../../../services/errors.service';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-    
-    loader : boolean = false;
-    tglFlag : boolean = false;
-    subscription : Subscription;
-    error : string = null;
-    
+
+    loader = false;
+    tglFlag = false;
+    subscription: Subscription;
+    error: string = null;
+
     constructor(
-        private router : Router, 
-        private cookieService : CookieService, 
-        private authService : AuthService,
-        private errorService : ErrorsService
-    ) 
-    {
+        private router: Router,
+        private cookieService: CookieService,
+        private authService: AuthService,
+        private errorService: ErrorsService
+    ) {
+        // subscription to upate the error property to disaply in template
         this.subscription = this.errorService.error$.subscribe(
             errMsg => {
                 this.loader = false;
@@ -44,33 +44,30 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {}
 
-    
+
     tglSetting() {
         this.tglFlag = !this.tglFlag;
     }
 
     /**
      * Function to logout the user from the application by removing logcalStorage and sessionStorage data and redirect user to login page
-     * 
+     *
      * @since 1.0.0
      * @returns void
      */
-    onLogout()
-    {
+    onLogout() {
         this.loader = true;
-        Log.info("I am in onLogout method");
-        this.authService.doLogout(this.authService.getToken).subscribe(
-            (response : any) => {
-                localStorage.removeItem('_sr');
-                sessionStorage.removeItem('_sr');
-                this.cookieService.delete('_rm');
+        Log.info('I am in onLogout method');
+        this.authService.doLogout.subscribe(
+            (response: any) => {
+                this.authService.removeStorageData();
                 this.loader = false;
-                this.errorService.updateMessage("You are successfully logged out !");
+                this.errorService.updateMessage(response.message);
                 this.router.navigate(['/login']);
             },
-            (err : any) => {
+            (err: any) => {
                 this.loader = false;
-                Log.error(err, "Some error occured");
+                Log.error(err, 'Some error occured');
             }
         );
     }

@@ -98,8 +98,8 @@ class Handler extends ExceptionHandler
 
                 return response()->json([
                     'status' => false,
-                    'message' => "Please make sure your request matches all the following conditions.",
-                    'conditions' => $errors,
+                    'message' => "Please make sure your input matches all the following conditions",
+                    'errors' => $errors,
                 ], 400);
             }
 
@@ -107,7 +107,8 @@ class Handler extends ExceptionHandler
             if ($exception instanceof HttpBadRequestException) {
                 return response()->json([
                     'status' => false,
-                    'message' => $exception->getMessage()
+                    'message' => "Bad request ! Please send a valid request",
+                    'errors' => $exception->getMessage()
                 ], 400);
             }
 
