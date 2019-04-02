@@ -1,5 +1,23 @@
 # Development Release Notes
 
+## Branding
+
+## V1.0.0
+
+1. Implemented CRUD operation of branding feature
+2. Implemented client side validation for adding / editing a branding
+
+## Signup
+
+## V1.0.0
+
+1. Implemented signup feature with two step process
+2. Implemented error handling block for client and server side validations
+3. Added validation for Credit Card and CVC in client side as well to make less http requests
+4. Added stripe api to make preauth to validate card and it can be charged. On successful of preauth
+operation the user is assigned to basic plan.
+5. Added guard which will not allow to access signup page if the user is already logged in.
+
 ## Login
 
 ## V1.3.0
@@ -29,7 +47,6 @@
 4. Enhanced loging form UI for better user experience
 5. Created services, helpers for further application development
 6. Stored and retreved token into localstorage to work with authentication
-
 
 ## UI
 

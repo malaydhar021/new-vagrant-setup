@@ -1,12 +1,12 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { NgModule, Component, ErrorHandler } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
-
+// Custom imports
 import { AppRoutingModule } from './modules/routes/app.route.module';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -18,6 +18,7 @@ import { AuthGuard } from './services/guards/auth.guard.service';
 import { GlobalService } from './services/global.service';
 import { RequestInterceptor } from './services/interceptors/request.interceptor.service';
 import { ErrorsService } from './services/errors.service';
+import { SignupService } from './services/signup.service';
 
 /**
  * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
@@ -72,6 +73,7 @@ export class AppComponent {}
       GlobalService,
       CookieService,
       ErrorsService,
+      SignupService,
       { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

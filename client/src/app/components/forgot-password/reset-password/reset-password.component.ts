@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { ErrorsService } from '../../../services/errors.service';
 import { Log } from '../../../helpers/app.helper';
-import { MustMatch, MinLength } from '../../../helpers/form.helper';
+import * as ValidationEngine from '../../../helpers/form.helper';
 
 /**
  * This component will handle all sort of operations related to reset password
@@ -40,6 +40,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     private title: Title,
     private route: ActivatedRoute
   ) {
+    // if user is already logged in then redirect the user to dashboard
     if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
     this.subscription = this.errorService.error$.subscribe(
       errMsg => {
@@ -63,7 +64,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
    * @returns void
    */
   public ngOnInit() {
-    Log.info("I am on ngOnInit of ResetPassword component");
     // check if the user is logged in or not. if logged in then redirect to dashboard
     if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
     // set the page title
@@ -82,13 +82,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     );
 
     // initialize formBuilder with client side validation
-    this.form = this.formBuilder.group(
-      {
+    this.form = this.formBuilder.group({
         password: [null, [Validators.required, Validators.minLength(8)]],
         confirmPassword: [null, [Validators.required]]
-      },
-      {
-        validator: MustMatch('password', 'confirmPassword') // custom validator to match the with password and confirm password
+      }, {
+        validator: ValidationEngine.MustMatch('password', 'confirmPassword') // custom validator to match the with password and confirm password
       }
     );
   }

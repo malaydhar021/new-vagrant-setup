@@ -1,5 +1,12 @@
 import { environment } from '../../environments/environment';
 
+/**
+ * apiBaseUrl constant holds the api base url based on the environment
+ * @constant apiBaseUrl
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 export const apiBaseUrl: string = environment.API_BASE_URL;
 
 /**
@@ -7,14 +14,13 @@ export const apiBaseUrl: string = environment.API_BASE_URL;
  * @class AuthApiEndPoints
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
- * @license Proprietery
+ * @license Proprietary
  */
-
 export class AuthApiEndPoints {
   /**
-   * Function to generate api endpoint for user authentication
-   *
-   * @since 1.0.0
+   * Method to generate api endpoint for user authentication
+   * @method authenticateUser
+   * @since version 1.0.0
    * @returns string
    */
   public static get authenticateUser(): string {
@@ -73,6 +79,51 @@ export class AuthApiEndPoints {
 
 
 /**
+ * SignupApiEndpoints class responsible all the api routes which is responsible for user signup.
+ * It got few static methods which returns respective api route endpoints
+ * @class SignupApiEndpoints
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export class SignupApiEndpoints {
+
+  /**
+   * checkEmailIfExists returns the api route endpoind for check an email if exists.
+   * For signup instead of checkEmailIfExists method, valdiateEmailPassword method
+   * has been used.
+   * @method checkEmailIfExists
+   * @since version 1.0.0
+   * @returns string
+   */
+  public static get checkEmailIfExists() : string {
+    return apiBaseUrl.concat('/auth/email-registration-status');
+  }
+
+  /**
+   * valdiateEmailPassword returns the api route endpoind for check an email if exists.
+   * This api also do the server side validation for email and password
+   * @method valdiateEmailPassword
+   * @since version 1.0.0
+   * @returns string
+   */
+  public static get valdiateEmailPassword() : string {
+    return apiBaseUrl.concat('/auth/validate-email-password');
+  }
+
+  /**
+   * signup returns the api route endpoind for register an user
+   * @method checkEmailIfExists
+   * @since version 1.0.0
+   * @returns string
+   */
+  public static get signup() : string {
+    return apiBaseUrl.concat('/auth/register');
+  }
+}
+
+
+/**
  * BrandingApiEndpoints helper class is holding all static methods for branding api endpoints based on the environment
  * @class BrandingApiEndpoints
  * @author Tier5 LLC `<work@tier5.us>`
@@ -81,12 +132,42 @@ export class AuthApiEndPoints {
  */
 export class BrandingApiEndpoints {
   /**
-   * Function to generate api endpoint to get all brandings
-   *
-   * @since 1.0.0
-   * @returns string
+   * Method to generate api endpoint to get all brandings
+   * @method brands
+   * @since Version 1.0.0
+   * @returns String
    */
-  public static get brandings(): string {
+  public static get brands(): string {
     return apiBaseUrl.concat('/get-all-branding');
+  }
+
+  /**
+   * addBrand to generate api endpoint to add a brand
+   * @method addBrand
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get addBrand(): string {
+    return apiBaseUrl.concat('/post-add-branding');
+  }
+
+  /**
+   * updateBrand to generate api endpoint to update a brand
+   * @method updateBrand
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get updateBrand() : string {
+    return apiBaseUrl.concat('/update-branding');
+  }
+
+  /**
+   * deleteBrand to generate api endpoint to delete a brand
+   * @method deleteBrand
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get deleteBrand() : string {
+    return apiBaseUrl.concat('/delete-branding');
   }
 }

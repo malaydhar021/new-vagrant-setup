@@ -7,83 +7,220 @@
         </a>
       </div>
     </div>
-
+    
     <div class="formArea cardForm">
-      <div class="formContainer" #formContainer [ngClass]="{'secondStep' : secondStepeFlag}">
-        <div class="formStep">
-          <h2>Register for Sticky Reviews</h2>
-          <div class="formRow">
-            <label>Full Name</label>
-            <input type="text" class="formCtrl">
-          </div>
-          <div class="formRow">
-            <label>Email Address</label>
-            <input type="text" class="formCtrl">
-          </div>
-          <div class="formRow">
-            <label>Password</label>
-            <input type="password" class="formCtrl">
-          </div>
-          <div class="formRow">
-            <button type="button" class="redBtn" (click)="nextStep()">NEXT</button>
-          </div>
+      <!-- ERROR BLOCK -->
+      <div *ngIf="errorMessage !== null">
+        <span>{{ errorMessage }}</span>
+      </div>
+      <!-- Displaying server side validation errors -->
+      <div *ngIf="validationErrors !== null">
+        <!-- Name validation errors -->
+        <div *ngIf="validationErrors.name !== undefined">
+          <span *ngIf="validationErrors.name.message !== undefined">{{ validationErrors.name.message }}</span>
         </div>
-        <div class="formStep">
-          <button type="button" class="goBack" (click)="goBack()">GO BACK</button>
-          <h2>Credit Card Information</h2>
-          <div class="formRow">
-            <div class="formCol6">
-              <label>Credit Card Number</label>
-              <input type="text" class="formCtrl card" ngModel mask="0000 0000 0000 0000">
-            </div>
-            <div class="formCol4">
-              <label>CVC Number</label>
-              <input type="password" class="formCtrl" ngModel maxlength="3">
-            </div>
-          </div>
-          <div class="formRow">
-            <div class="formCol5">
-              <label>Expiry Month</label>
-              <select class="formCtrl">
-                <option value="01">01</option>
-                <option value="02">02</option>
-                <option value="03">03</option>
-                <option value="04">04</option>
-                <option value="05">05</option>
-                <option value="06">06</option>
-                <option value="07">07</option>
-                <option value="08">08</option>
-                <option value="09">09</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-            </div>
-            <div class="formCol5">
-              <label>Expiry Year</label>
-              <select class="formCtrl">
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-              </select>
-            </div>
-          </div>
-          <div class="formRow">
-            <button type="button" class="redBtn trial">Start my 14 day FREE trial<span>You pay nothing today!</span></button>
-          </div>
-          
+        <!-- Email validation errors -->
+        <div *ngIf="validationErrors.email !== undefined">
+          <span *ngIf="validationErrors.email.message !== undefined">{{ validationErrors.email.message }}</span>
         </div>
+        <!-- Password validation errors-->
+        <div *ngIf="validationErrors.password !== undefined">
+          <span *ngIf="validationErrors.password.message !== undefined">{{ validationErrors.password.message }}</span>
+          <ul *ngIf="validationErrors.password.rules !== undefined && validationErrors.password.rules.length > 0">
+              <li *ngFor="let rule of validationErrors.password.rules">{{ rule }}</li>
+          </ul>
+        </div>
+        <!-- Credit card number validation errors -->
+        <div *ngIf="validationErrors.card_number !== undefined">
+          <span *ngIf="validationErrors.card_number.message !== undefined">{{ validationErrors.card_number.message }}</span>
+        </div>
+        <!-- CVC number validation errors -->
+        <div *ngIf="validationErrors.cvc_number !== undefined">
+          <span *ngIf="validationErrors.cvc_number.message !== undefined">{{ validationErrors.cvc_number.message }}</span>
+        </div>
+        <!-- Expiry month validation errors -->
+        <div *ngIf="validationErrors.expiry_month !== undefined">
+          <span *ngIf="validationErrors.expiry_month.message !== undefined">{{ validationErrors.expiry_month.message }}</span>
+        </div>
+        <!-- Expiry year validation errors -->
+        <div *ngIf="validationErrors.expiry_year !== undefined">
+          <span *ngIf="validationErrors.expiry_year.message !== undefined">{{ validationErrors.expiry_year.message }}</span>
+        </div>
+      </div>
+      
+      <!-- Client side errors for sign up form step 1 -->
+      <div *ngIf="(
+        isSubmittedStep1 
+        && signupFormStep1FormControls.name.errors !== null 
+        && signupFormStep1FormControls.name.errors.required)">
+        Full name is required
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep1 
+        && signupFormStep1FormControls.email.errors !== null 
+        && signupFormStep1FormControls.email.errors.required)">
+        Email Address is required
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep1 
+        && signupFormStep1FormControls.email.errors !== null 
+        && signupFormStep1FormControls.email.errors.email)">
+        Please provide a valid emaill
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep1 
+        && signupFormStep1FormControls.password.errors !== null 
+        && signupFormStep1FormControls.password.errors.required)">
+        Password is required
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep1 
+        && signupFormStep1FormControls.password.errors !== null 
+        && signupFormStep1FormControls.password.errors.minlength)">
+        Password should be at least 8 characters long
+      </div>
+      <!-- End -->
+
+      <!-- Client side errors for sign up form step 2 -->
+      <div *ngIf="(
+        isSubmittedStep2 
+        && signupFormStep2FormControls.card.errors !== null 
+        && signupFormStep2FormControls.card.errors.required)">
+        Credit card number is required
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep2 
+        && signupFormStep2FormControls.card.errors !== null 
+        && signupFormStep2FormControls.card.errors.invalidNumber)">
+        Credit card number is not a valid number
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep2 
+        && signupFormStep2FormControls.card.errors !== null 
+        && signupFormStep2FormControls.card.errors.invalidLength)">
+        Credit card number should be in betweeen 14 to 16 digits depending on provider
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep2 
+        && signupFormStep2FormControls.cvc.errors !== null 
+        && signupFormStep2FormControls.cvc.errors.required)">
+        CVC number is required
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep2 
+        && signupFormStep2FormControls.cvc.errors !== null 
+        && signupFormStep2FormControls.cvc.errors.invalidNumber)">
+        CVC number is not a valid number
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep2 
+        && signupFormStep2FormControls.cvc.errors !== null 
+        && signupFormStep2FormControls.cvc.errors.invalidLength)">
+        CVC number should be in betweeen 3 to 5 digits depending on provider
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep2 
+        && signupFormStep2FormControls.expMonth.errors !== null 
+        && signupFormStep2FormControls.expMonth.errors.required)">
+        Expiry month is required
+      </div>
+
+      <div *ngIf="(
+        isSubmittedStep2 
+        && signupFormStep2FormControls.expYear.errors !== null 
+        && signupFormStep2FormControls.expYear.errors.required)">
+        Expiry year is required
+      </div>
+      <!-- End -->
+
+      <!-- End of ERROR BLOCK -->
+      <div class="formContainer" #formContainer [ngClass]="{secondStep : isStep2}">
+        <form [formGroup]="signupFormStep1" (ngSubmit)="onSubmitStep1()">
+          <div class="formStep">
+            <h2>Register for Sticky Reviews</h2>
+            <div class="formRow">
+              <label>Full Name</label>
+              <input type="text" class="formCtrl" formControlName="name">
+            </div>
+            <div class="formRow">
+              <label>Email Address</label>
+              <input type="text" class="formCtrl" formControlName="email">
+            </div>
+            <div class="formRow">
+              <label>Password</label>
+              <input type="password" class="formCtrl" formControlName="password">
+            </div>
+            <div class="formRow">
+              <button type="submit" class="redBtn">NEXT</button>
+            </div>
+          </div>
+        </form>
+        <form [formGroup]="signupFormStep2" (ngSubmit)="onSubmitStep2()">
+          <div class="formStep">
+            <button type="button" class="goBack" (click)="goBack()">GO BACK</button>
+            <h2>Credit Card Information</h2>
+            <div class="formRow">
+              <div class="formCol6">
+                <label>Credit Card Number</label>
+                <input type="text" class="formCtrl card" mask="0000 0000 0000 0000" formControlName="card">
+              </div>
+              <div class="formCol4">
+                <label>CVC Number</label>
+                <input type="password" class="formCtrl" formControlName="cvc">
+              </div>
+            </div>
+            <div class="formRow">
+              <div class="formCol5">
+                <label>Expiry Month</label>
+                <select class="formCtrl" formControlName="expMonth">
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+              </div>
+              <div class="formCol5">
+                <label>Expiry Year</label>
+                <select class="formCtrl" formControlName="expYear">
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+              </div>
+            </div>
+            <div class="formRow">
+              <button type="submit" class="redBtn trial">Start my 14 day FREE trial<span>You pay nothing today!</span></button>
+            </div>
+          </div>
+        </form>
       </div>
       <div class="loginLink">
           Already have an account? <a [routerLink]="['/login']">Login Now!</a>
         </div>
     </div>
   </div>
-
 
   <div class="signupRight">
     <div class="rightMain">
@@ -106,5 +243,14 @@
         <span><img src="../../../assets/images/s_badge02.png" alt=""></span>
       </div>
     </div>
+  </div>
+</div>
+<!-- Loader -->
+<div class="loaderOuter" *ngIf="loader">
+  <div class="loaderContainer">
+    <div class="loader">
+      <img src="../../../assets/images/face_icon.png" alt="">
+    </div>
+    <div class="loaderShadow"></div>
   </div>
 </div>

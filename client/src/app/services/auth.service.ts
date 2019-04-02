@@ -11,8 +11,7 @@ import { ResetPasswordModel } from '../models/reset-password.model';
 
 /**
  * This service will handle all operations related to user login and authentication
- *
- * @package AuthService
+ * @class AuthService
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
  * @license Proprietary

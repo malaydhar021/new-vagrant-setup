@@ -167,7 +167,7 @@ export class RequestInterceptor implements HttpInterceptor {
     if (error instanceof HttpErrorResponse && error.error.hasOwnProperty('errors')) {
       // this.errorService.updateMessage(error.error.message);
       // errMsg = error.error.message;
-      Log.debug(error.error.errors, "Catch 404 validation messgaes");
+      Log.debug(error.error.errors, "Catch 400 validation messgaes");
       this.errorService.updateValidationMessage(error.error.errors);
     } else {
       this.errorService.updateMessage(this.defaultErrorMessage);

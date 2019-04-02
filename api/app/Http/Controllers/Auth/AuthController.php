@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Traits\Subscription;
+use App\Http\Resources\UserResource;
 use App\User;
 
 use Illuminate\Http\Request;
@@ -30,12 +31,41 @@ class AuthController extends Controller
         if ($exists) {
             return response()->json([
                 'status' => false,
-                'message' => "Email already exists, please click on forget password to recover.",
+                'message' => "Email already exists. Please try with another email",
             ]);
         } else {
             return response()->json([
                 'status' => true,
                 'message' => "No one have registered with email, go ahead and register.",
+            ]);
+        }
+    }
+    
+    
+    /**
+     * Checks if an email is registered or not
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function validateEmailPassword(Request $request)
+    {
+        $request->validate([
+            'email' => "required|string|email",
+            'password' => "required|string|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/"
+        ]);
+        
+        $exists = User::whereEmail("{$request->input('email')}")->first();
+
+        if ($exists) {
+            return response()->json([
+                'status' => false,
+                'message' => "Email already exists. Please try with another email",
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => "Email and password are valid",
             ]);
         }
     }
@@ -70,7 +100,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'message' => "Successfully registered user.",
-        ], 201);
+        ]);
     }
 
     /**
@@ -96,10 +126,11 @@ class AuthController extends Controller
         $token->expires_at = $request->remember_me ? Carbon::now()->addWeeks(1) : Carbon::now()->addDays(1);
 
         $token->save();
-
+        $user = User::find(Auth::user()->id);
         return response()->json([
             'status' => true,
             'message' => "Welcome! You have logged in successfully.",
+            'data' => new UserResource($user),
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()

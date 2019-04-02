@@ -15,6 +15,7 @@ Route::middleware('cors')->group(function () {
 
     Route::prefix('auth')->namespace('Auth')->group(function () {
         Route::get('email-registration-status', 'AuthController@checkEmail')->name('auth.email.check');
+        Route::post('validate-email-password', 'AuthController@validateEmailPassword')->name('validate.email.password');
         Route::post('register', 'AuthController@register')->name('auth.register');
         Route::post('login', 'AuthController@login')->name('auth.login');
         Route::post('logout', 'AuthController@logout')->name('auth.logout')->middleware('auth:api');

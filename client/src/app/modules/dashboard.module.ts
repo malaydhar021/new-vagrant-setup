@@ -1,24 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-
-import { DashboardRoutingModule } from './routes/dashboard.route.module';
-import { DashboardComponent } from '../components/dashboard/dashboard.component';
-import { BrandingComponent } from '../components/dashboard/branding/branding.component';
-import { LeftPanelComponent } from '../components/dashboard/left-panel/left-panel.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { BarRatingModule } from 'ngx-bar-rating';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+/** custom imports */
+import { DashboardRoutingModule } from './routes/dashboard.route.module'; // dashobaord routing module
+// importing components
+import { DashboardComponent } from '../components/dashboard/dashboard.component';
+import { BrandingComponent } from '../components/dashboard/branding/branding.component';
+import { LeftPanelComponent } from '../components/dashboard/shared/left-panel/left-panel.component';
 import { StickyReviewsComponent } from '../components/dashboard/sticky-reviews/sticky-reviews.component';
 import { CampaignComponent } from '../components/dashboard/campaign/campaign.component';
 import { ReviewLinkComponent } from '../components/dashboard/review-link/review-link.component';
 import { ExitPopupComponent } from '../components/dashboard/exit-popup/exit-popup.component';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
-import { HeaderComponent } from '../components/dashboard/header/header.component';
+import { HeaderComponent } from '../components/dashboard/shared/header/header.component';
 import { PlansComponent } from '../components/dashboard/plans/plans.component';
 import { UpdatePaymentInfoComponent } from '../components/dashboard/update-payment-info/update-payment-info.component';
-import { BrandingService } from '../services/branding.service';
+// importing services
+import { BrandingService } from '../services/branding.service'; // services for branding
 
+/**
+ * DashboardModule is loading all components and services along with few angular modules once the user is logged in.
+ * @class DashboardModule
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -34,6 +44,8 @@ import { BrandingService } from '../services/branding.service';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     DashboardRoutingModule,
     NgScrollbarModule,
     BarRatingModule,

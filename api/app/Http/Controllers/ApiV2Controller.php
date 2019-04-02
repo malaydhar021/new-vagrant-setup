@@ -672,16 +672,16 @@ class ApiV2Controller extends Controller
     public function postAddBranding(Request $request)
     {
         if (is_integer($this->isAuthenticated())) {
-            if ($request->has('brand_name') && $request->has('url') && $request->has('user_id')) {
+            if ($request->has('brand_name') && $request->has('url')) {
                 try {
                     Branding::create([
                         'brand_name' => $request->brand_name,
                         'url' => $request->url,
-                        'user_id' => $request->user_id
+                        'user_id' => $this->isAuthenticated()
                     ]);
                     return response()->json([
                         'status' => true,
-                        'message' => 'Successfully added branding.'
+                        'message' => 'Brand has been successfully added'
                     ], 200);
                 } catch (\Exception $e) {
                     return response()->json([
@@ -700,7 +700,7 @@ class ApiV2Controller extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
+            ], 401);
         }
     }
 
@@ -723,7 +723,7 @@ class ApiV2Controller extends Controller
                     return response()->json([
                         'status' => true,
                         'message' => 'Sorry no records found!'
-                    ], 404);
+                    ], 200);
                 }
             } catch (\Exception $e) {
                 return response()->json([
@@ -797,7 +797,7 @@ class ApiV2Controller extends Controller
                         ->update([
                             'brand_name' => $request->brand_name,
                             'url' => $request->url,
-                            'user_id' => $request->user_id
+                            'user_id' => $this->isAuthenticated()
                         ]);
                     if ($search_branding) {
                         return response()->json([

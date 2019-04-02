@@ -145,7 +145,6 @@ export class Log {
 /**
  * Constant of some global variables and their default value so that they can be accessed throughout app.
  * ### This is not in use so far. May be this will be used in future
-
  * @var GlobalVars
  * @version 1.0.0
  * @todo This is not in use so far. May be this will be required in future

@@ -44,9 +44,8 @@ export class LoginComponent implements OnInit {
         private cookieService: CookieService,
         private errorService: ErrorsService
     ) {
-        if (this.authService.isAuthenticated) { 
-            this.router.navigate(['/dashboard']); 
-        }
+        // if user is already logged in then redirect the user to dashboard
+        if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']);}
         this.renderer.addClass(document.body, 'loginPage');
         this.subscription = this.errorService.error$.subscribe(
             errMsg => {
@@ -57,10 +56,10 @@ export class LoginComponent implements OnInit {
     }
 
     /**
-     * Function to initialize angular reactive form object.
-     *
-     * @since 1.0.0
-     * @returns void
+     * ngOnInit method initialize angular reactive form object. Also it set the title of the page.
+     * @method ngOnInit
+     * @since Version 1.0.0
+     * @returns Void
      */
     public ngOnInit() {
         // check if the user is logged in or not. if logged in then redirect to dashboard
@@ -79,9 +78,9 @@ export class LoginComponent implements OnInit {
      * Function to execute when this component is going to destroy by the browser.
      * This will unsubscribe the subscription and also remove the loginPage class from body when
      * this component will be destroyed.
-     *
-     * @since 1.0.0
-     * @returns void
+     * @method ngOnDestroy
+     * @since Version 1.0.0
+     * @returns Void
      */
     public ngOnDestroy() {
         this.renderer.removeClass(document.body, 'loginPage');
@@ -90,7 +89,7 @@ export class LoginComponent implements OnInit {
 
     /**
      * Function to do the user loging and handle api response
-     * @since 1.0.0
+     * @since Version 1.0.0
      * @todo Implemented redirected to addons route instead of statically routed to dashboard each and every time
      * @returns void
      */
