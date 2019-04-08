@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+
 
 @Component({
   selector: 'app-review-link',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReviewLinkComponent implements OnInit {
 
-  constructor() { }
+  constructor(public ngxSmartModalService: NgxSmartModalService) { }
 
   ngOnInit() {
+  }
+
+  onAddReviewLink(){
+
   }
 
 }

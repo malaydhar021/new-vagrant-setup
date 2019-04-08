@@ -1,4 +1,3 @@
-
 <div class="container">
   <app-left-panel></app-left-panel>
 
@@ -8,7 +7,8 @@
     <div class="mainBox">
       <header class="mainBoxHeader">
         <div class="mainBoxHeaderLeft">
-          <button type="button" class="addReview"><img src="../../../../assets/images/addIcon.png" alt=""> Add an Exit pop-up</button>
+          <button type="button" class="addReview" (click)="ngxSmartModalService.getModal('modal1').open()">
+            <img src="../../../../assets/images/addIcon.png" alt=""> Add an Exit pop-up</button>
         </div>
         <div class="mainBoxHeaderRight">
           <input type="text" placeholder="Search ...">
@@ -16,72 +16,72 @@
       </header>
       <div class="dataTableArea">
         <div class="popupListContainer">
-            <ng-scrollbar [compact]="true">
-              <ul class="popupList">
-                <li>
-                  <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup1').open()">
-                    <img src="../../../../assets/images/thumb1.png" alt="">
+          <ng-scrollbar [compact]="true">
+            <ul class="popupList">
+              <li>
+                <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup1').open()">
+                  <img src="../../../../assets/images/thumb1.png" alt="">
+                </div>
+                <div class="popupCtrl">
+                  <p>Exit Pop 1</p>
+                  <div class="crtlRight">
+                    <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                    <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
                   </div>
-                  <div class="popupCtrl">
-                    <p>Exit Pop 1</p>
-                    <div class="crtlRight">
-                      <a ><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                      <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-                    </div>
+                </div>
+              </li>
+              <li>
+                <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup2').open()">
+                  <img src="../../../../assets/images/thumb2.png" alt="">
+                </div>
+                <div class="popupCtrl">
+                  <p>Exit Pop 2</p>
+                  <div class="crtlRight">
+                    <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                    <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
                   </div>
-                </li>
-                <li>
-                  <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup2').open()">
-                    <img src="../../../../assets/images/thumb2.png" alt="">
+                </div>
+              </li>
+              <li>
+                <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup3').open()">
+                  <img src="../../../../assets/images/thumb3.png" alt="">
+                </div>
+                <div class="popupCtrl">
+                  <p>Exit Pop 3</p>
+                  <div class="crtlRight">
+                    <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                    <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
                   </div>
-                  <div class="popupCtrl">
-                    <p>Exit Pop 2</p>
-                    <div class="crtlRight">
-                      <a ><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                      <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-                    </div>
+                </div>
+              </li>
+              <li>
+                <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup4').open()">
+                  <img src="../../../../assets/images/thumb4.png" alt="">
+                </div>
+                <div class="popupCtrl">
+                  <p>Exit Pop 4</p>
+                  <div class="crtlRight">
+                    <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                    <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
                   </div>
-                </li>
-                <li>
-                  <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup3').open()">
-                    <img src="../../../../assets/images/thumb3.png" alt="">
+                </div>
+              </li>
+              <li>
+                <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">
+                  <img src="../../../../assets/images/thumb5.png" alt="">
+                </div>
+                <div class="popupCtrl">
+                  <p>Exit Pop 5</p>
+                  <div class="crtlRight">
+                    <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                    <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
                   </div>
-                  <div class="popupCtrl">
-                    <p>Exit Pop 3</p>
-                    <div class="crtlRight">
-                      <a ><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                      <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup4').open()">
-                    <img src="../../../../assets/images/thumb4.png" alt="">
-                  </div>
-                  <div class="popupCtrl">
-                    <p>Exit Pop 4</p>
-                    <div class="crtlRight">
-                      <a ><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                      <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">
-                    <img src="../../../../assets/images/thumb5.png" alt="">
-                  </div>
-                  <div class="popupCtrl">
-                    <p>Exit Pop 5</p>
-                    <div class="crtlRight">
-                      <a ><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                      <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </ng-scrollbar>
+                </div>
+              </li>
+            </ul>
+          </ng-scrollbar>
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -174,7 +174,8 @@
   <div class="topSec">
     <h2>Take a break, take a look</h2>
     <p>
-      Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia. Aliquam eros magna, ullamcorper.
+      Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia. Aliquam eros
+      magna, ullamcorper.
     </p>
   </div>
   <div class="btmSec">
@@ -182,6 +183,148 @@
       <input type="text" placeholder="Enter your email">
       <input type="button" value="Subcribe">
     </form>
+  </div>
+  <!-- <button (click)="myModal.close()">Close</button> -->
+</ngx-smart-modal>
+
+<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalCreateExit">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+        Create Exit popup
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+
+      <form>
+        <div class="sr-form">
+          <div class="sr-form-row">
+            <div class="sr-form-cell-small">
+              <label>Exit Popup Name</label>
+              <div class="sr-form-field">
+                <input type="text" class="sr-form-ctrl">
+              </div>
+            </div>
+            <div class="sr-form-cell-small">
+              <label>Choose Visual Appearance</label>
+              <div class="sr-form-field">
+                <select class="sr-form-ctrl">
+                  <option>Double layered purple ninja</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="sr-form-row">
+            <div class="sr-form-cell-small">
+              <div class="headerInForm">
+                <span>HEADER</span>
+              </div>
+
+              <label>Header Text</label>
+              <div class="sr-form-field">
+                <input type="text" class="sr-form-ctrl">
+              </div>
+
+              <div class="inlineRow clearfix">
+                <label>Header Text Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#FFFFFF;">
+                </div>
+              </div>
+
+              <div class="inlineRow clearfix">
+                <label>Header Background Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#3A2A98;">
+                </div>
+              </div>
+
+              <div class="headerInForm">
+                <span>BODY TEXT</span>
+              </div>
+
+              <label>Paragraph Text</label>
+              <div class="sr-form-field">
+                <input type="text" class="sr-form-ctrl">
+              </div>
+
+              <div class="inlineRow clearfix">
+                <label>Paragraph Text Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#7D6CE2;">
+                </div>
+              </div>
+
+              <div class="headerInForm">
+                <span>CTA BUTTON</span>
+              </div>
+
+              <label>Button Text</label>
+              <div class="sr-form-field">
+                <input type="text" class="sr-form-ctrl">
+              </div>
+
+              <div class="inlineRow clearfix">
+                <label>Button Text Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#FFFFFF;">
+                </div>
+              </div>
+
+              <div class="inlineRow clearfix">
+                <label>Body Background Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#E30C5D;">
+                </div>
+              </div>
+            </div>
+
+            <div class="sr-form-cell-small">
+              <div class="previewpopup exitPopup theme5" style="background-color: #facc00;">
+                <div class="previewComp">
+                  <div class="topSec">
+                    <h2>Take a break, take a look</h2>
+                    <p>
+                      Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
+                      Aliquam eros magna, ullamcorper.
+                    </p>
+                  </div>
+                  <div class="btmSec">
+                    <form action="">
+                      <input type="text" placeholder="Enter your email">
+                      <input type="button" value="Subcribe">
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="inlineRow clearfix bgColor">
+                <label>Body Background Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#FFCC00;">
+                </div>
+              </div>
+
+              <label>Attach a Campaign</label>
+              <div class="sr-form-field">
+                <select class="sr-form-ctrl">
+                  <option>$1 a day - demo</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="sr-form-row">
+            <div class="sr-form-cell-small offset-1">
+              <button class="button-submit" type="">
+                <img src="../../../../assets/images/addIcon.png" alt=""> Save Popup
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
   <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>
