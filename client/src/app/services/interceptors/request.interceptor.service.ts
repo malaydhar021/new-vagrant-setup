@@ -43,7 +43,7 @@ export class RequestInterceptor implements HttpInterceptor {
         headers: authRequest.headers.set('Authorization', 'Bearer ' + token)
       });
     }
-
+    
     return next.handle(authRequest).pipe(delay(1000), catchError((error, caught) => {
       // intercept the http response error
       this.handleHttpError(error);

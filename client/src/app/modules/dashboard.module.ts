@@ -19,8 +19,12 @@ import { ExitPopupComponent } from '../components/dashboard/exit-popup/exit-popu
 import { HeaderComponent } from '../components/dashboard/shared/header/header.component';
 import { PlansComponent } from '../components/dashboard/plans/plans.component';
 import { UpdatePaymentInfoComponent } from '../components/dashboard/update-payment-info/update-payment-info.component';
+
+import { MessageModule} from '../components/shared/message/message.module'
 // importing services
 import { BrandingService } from '../services/branding.service'; // services for branding
+
+
 
 /**
  * DashboardModule is loading all components and services along with few angular modules once the user is logged in.
@@ -53,6 +57,7 @@ import { BrandingService } from '../services/branding.service'; // services for 
     NgxMaskModule.forRoot(),
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    MessageModule
   ],
   providers: [
     BrandingService

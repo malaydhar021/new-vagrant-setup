@@ -21,31 +21,8 @@ import { Subject } from 'rxjs';
 export class LoaderService {
     private _loader = false;
     loaderStatus: Subject<any> = new Subject();
-    loaderState = this.loaderStatus.asObservable();
 
     constructor() {}
-
-    /**
-     * Loader getter method to return the current loader value
-     *
-     * @since 1.0.0
-     * @returns boolean
-     */
-    public get loader(): boolean {
-        return this._loader;
-    }
-
-    /**
-     * Loader setter method to set the loader value
-     *
-     * @since 1.0.0
-     * @param value boolean
-     * @returns void
-     */
-    public set loader(value: boolean) {
-        this._loader = value;
-        this.loaderStatus.next(value);
-    }
 
     /**
      * Function to showloader. loader setter method used to set the _loader value.
@@ -54,7 +31,7 @@ export class LoaderService {
      * @returns void
      */
     public enableLoader() {
-        this.loader = true;
+        this.loaderStatus.next(true)
     }
 
     /**
@@ -64,7 +41,18 @@ export class LoaderService {
      * @returns void
      */
     public disableLoader() {
-        this.loader = false;
+        this.loaderStatus.next(false)
     }
+
+    /**
+     * Function to get loader status.
+     *
+     * @since 1.0.0
+     * @returns void
+     */
+    public getLoaderStatus() {
+        return this.loaderStatus.asObservable();
+    }
+
 
 }

@@ -25,7 +25,7 @@
           <div class="tbody">
             <ng-scrollbar [compact]="true">
             <ul>
-              <li class="row">
+              <li class="row" *ngFor="let review of reviews; index as i;">
                 <a class="rowMoreInfo"><img src="../../../../assets/images/down_double_arrow.png" alt=""> More Options</a>
                 <div class="rowContainer">
                   <div class="tcol">
@@ -33,10 +33,9 @@
                       <img src="../../../../assets/images/User_profile_icon_small.png" alt="">
                     </div>
                     <div class="userReview">
-                      <h2>Just awesome <span class="greenTag">$1 a day</span></h2>
+                      <h2>{{review.name}}<span class="greenTag">$1 a day</span></h2>
                       <p>
-                        I really can't express how big of the value this is. Wow.
-                        That's all I can say. WOW
+                        {{review.description}}
                       </p>
                       <div class="reviewLinkinfo">
                         <div class="minRating">
@@ -60,198 +59,14 @@
                     <p>Sticky Reviews<br>Landing Page</p>
                   </div>
                   <div class="tcol">
-                    <p>rate-our-service</p>
+                    <p>{{review.url_slug}}</p>
                   </div>
                   <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
+                    <p>{{review.created_at | date:'medium' }}</p>
                   </div>
                   <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <a class="rowMoreInfo"><img src="../../../../assets/images/down_double_arrow.png" alt=""> More Options</a>
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="userImg">
-                      <img src="../../../../assets/images/User_profile_icon_small.png" alt="">
-                    </div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="greenTag">$1 a day</span></h2>
-                      <p>
-                        I really can't express how big of the value this is. Wow.
-                        That's all I can say. WOW
-                      </p>
-                      <div class="reviewLinkinfo">
-                        <div class="minRating">
-                          <p>Min. Rating: </p>
-                          <div class="stars">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                          </div>
-                        </div>
-                        <div class="approve">
-                          <p>Auto Approve:</p>
-                          <input type="checkbox" class="tglBtn">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <p>Sticky Reviews<br>Landing Page</p>
-                  </div>
-                  <div class="tcol">
-                    <p>rate-our-service</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <a class="rowMoreInfo"><img src="../../../../assets/images/down_double_arrow.png" alt=""> More Options</a>
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="userImg">
-                      <img src="../../../../assets/images/User_profile_icon_small.png" alt="">
-                    </div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="greenTag">$1 a day</span></h2>
-                      <p>
-                        I really can't express how big of the value this is. Wow.
-                        That's all I can say. WOW
-                      </p>
-                      <div class="reviewLinkinfo">
-                        <div class="minRating">
-                          <p>Min. Rating: </p>
-                          <div class="stars">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                          </div>
-                        </div>
-                        <div class="approve">
-                          <p>Auto Approve:</p>
-                          <input type="checkbox" class="tglBtn">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <p>Sticky Reviews<br>Landing Page</p>
-                  </div>
-                  <div class="tcol">
-                    <p>rate-our-service</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <a class="rowMoreInfo"><img src="../../../../assets/images/down_double_arrow.png" alt=""> More Options</a>
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="userImg">
-                      <img src="../../../../assets/images/User_profile_icon_small.png" alt="">
-                    </div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="greenTag">$1 a day</span></h2>
-                      <p>
-                        I really can't express how big of the value this is. Wow.
-                        That's all I can say. WOW
-                      </p>
-                      <div class="reviewLinkinfo">
-                        <div class="minRating">
-                          <p>Min. Rating: </p>
-                          <div class="stars">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                          </div>
-                        </div>
-                        <div class="approve">
-                          <p>Auto Approve:</p>
-                          <input type="checkbox" class="tglBtn">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <p>Sticky Reviews<br>Landing Page</p>
-                  </div>
-                  <div class="tcol">
-                    <p>rate-our-service</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-              <li class="row">
-                <a class="rowMoreInfo"><img src="../../../../assets/images/down_double_arrow.png" alt=""> More Options</a>
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="userImg">
-                      <img src="../../../../assets/images/User_profile_icon_small.png" alt="">
-                    </div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="greenTag">$1 a day</span></h2>
-                      <p>
-                        I really can't express how big of the value this is. Wow.
-                        That's all I can say. WOW
-                      </p>
-                      <div class="reviewLinkinfo">
-                        <div class="minRating">
-                          <p>Min. Rating: </p>
-                          <div class="stars">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                            <img src="../../../../assets/images/star_active.png" alt="">
-                          </div>
-                        </div>
-                        <div class="approve">
-                          <p>Auto Approve:</p>
-                          <input type="checkbox" class="tglBtn">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <p>Sticky Reviews<br>Landing Page</p>
-                  </div>
-                  <div class="tcol">
-                    <p>rate-our-service</p>
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                    <a class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                    <a class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
                   </div>
                 </div>
               </li>

@@ -1423,7 +1423,8 @@ class ApiV2Controller extends Controller
                     if ($review_links) {
                         return response()->json([
                             'status' => true,
-                            'message' => $review_links
+                            'message' => 'Fetched all review links',
+                            'data'  =>  $review_links
                         ], 200);
                     } else {
                         return response()->json([
