@@ -1,5 +1,13 @@
 # Development Release Notes
 
+## Sticky Review
+
+## V1.0.0
+
+1. Implemented CRUD operation of sticky review feature
+2. Implemented client side validation for adding / editing a review
+3. Implemented client side validation for sticky review image with file size and file type checking
+
 ## Branding
 
 ## V1.0.0

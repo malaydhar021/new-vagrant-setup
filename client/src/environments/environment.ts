@@ -4,5 +4,6 @@ export const environment = {
     debug : true,
     APP_BASE_URL: 'https://app.local.usestickyreviews.com',
     API_BASE_URL: 'https://api.local.usestickyreviews.com/v2',
-    WIDGET_BASE_URL: 'https://lib.local.usestickyreviews.com'
+    WIDGET_BASE_URL: 'https://lib.local.usestickyreviews.com',
+    UPLOAD_BASE_URL: 'https://api.local.usestickyreviews.com/uploads'
 };

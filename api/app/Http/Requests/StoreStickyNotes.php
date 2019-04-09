@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
-use App\traits\AuthTrait;
+use Auth;
 
 class StoreStickyNotes extends FormRequest
 {
-    use AuthTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,7 +13,12 @@ class StoreStickyNotes extends FormRequest
      */
     public function authorize()
     {
-        if (is_integer($this->isAuthenticated())) {
+//        if (is_integer($this->isAuthenticated())) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        if (Auth::check()) {
             return true;
         } else {
             return false;
@@ -29,10 +33,9 @@ class StoreStickyNotes extends FormRequest
     public function rules()
     {
         return [
-            'created_by' => 'required|numeric',
             'name' => 'required',
             'description' => 'required',
-            'image' => 'required|image'
+            // 'image' => 'required|image'
         ];
     }
 
@@ -44,8 +47,6 @@ class StoreStickyNotes extends FormRequest
     public function messages()
     {
         return [
-            'created_by.required' => 'Please login to continue. Hint: creator Id missing!',
-            'created_by.numeric' => 'Id should be numeric',
             'name.required' => 'Sticky review name is required!',
             'description.required' => 'Sticky review description is required!',
             'image.required' => 'Sticky review image is required!',

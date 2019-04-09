@@ -9,7 +9,7 @@
 import { environment } from '../../environments/environment';
 
 /**
- * Log class is reponsible for showing console log (mainly used during development bt the developers) with deferent set of data. But this log will be shown based on current environments configuration.
+ * Log class is responsible for showing console log (mainly used during development bt the developers) with deferent set of data. But this log will be shown based on current environments configuration.
  * If debug property is set to be true in current environment setting then only logs will be displayed. Below are some example of how to call log methods.
  * Import this helper class into component or any other places where it's required.
  * ```
@@ -17,7 +17,7 @@ import { environment } from '../../environments/environment';
  * ```
  * ```
  * // data (required) => the data that will be printed
- * // prelog (optional) => optional prelog is if anything needs to be printed befor data got printed
+ * // prelog (optional) => optional prelog is if anything needs to be printed before data got printed
  *
  * Log.debug(data, prelog); | Log.info(data, prelog); | Log.alert(data, prelog); | Log.notice(data, prelog); | Log.error(data, prelog);
  *
@@ -28,12 +28,13 @@ import { environment } from '../../environments/environment';
  * ```
  * // data (required) => the data that will be printed
  * // logType (required) => the type of log that will be printed. logtype can be any of info | debug | alert | notice | error
- * // prelog (optional) => optional prelog is if anything needs to be printed befor data got printed
+ * // prelog (optional) => optional prelog is if anything needs to be printed before data got printed
  *
  * new Log(data, logType, prelog);
  * ```
  *
- * @subpackage Log
+ * @class Log
+ * @version 1.0.2
  * @author Tier5 LLC `<work@tier5.us>`
  * @since 1.0.0
  */
@@ -143,14 +144,74 @@ export class Log {
 }
 
 /**
- * Constant of some global variables and their default value so that they can be accessed throughout app.
- * ### This is not in use so far. May be this will be used in future
- * @var GlobalVars
+ * Utilities class will hold all utility methods. All utility methods are self explanatory.
+ * @class Utilities
  * @version 1.0.0
- * @todo This is not in use so far. May be this will be required in future
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
  */
-export let GlobalVars = Object.freeze(
-    {
-        canAccessDashboard : false
+export class Utilities {
+
+    /**
+     * Method to convert any file size in bytes to Megabytes or Kilobytes or Gigabytes.
+     * For any invalid parameter this method will return `0`.
+     * @method bytesToAny
+     * @param bytes File size in bytes
+     * @param unit Unit to convert. Accepted values `KB` | `MB` | `GB`
+     * @returns Size in specified unit
+     */
+    public static bytesToAny(bytes : number, unit: string = 'MB', decimal: number = 1) {
+        // checking if byte is not zero and it's a number
+        if(bytes == 0 && isNaN(bytes) === false) return 0;
+        // checking decimal is also a number
+        if(isNaN(decimal) === true) return 0;
+        // set default to the power to 2 for unit MB
+        let power = 2;
+        // determine power based on unit param
+        switch(unit) {
+            case 'KB': // byte to kilobyte
+                power = 1;
+                break;
+            case 'MB': // byte to megabyte
+                power = 2;
+                break;
+            case 'GB': // byte to gigabyte
+                power = 3;
+                break;
+            default: // default is set to byte to megabyte
+                power = 2;
+                break;
+        }
+        // if a file size is 11160 bytes and it will be converted into KB then
+        // for example : (11160 / 1000^1) = 11.160 and rounded up to 1 decimal 
+        // i.e 11.2 KB
+        return +(bytes / Math.pow(1000, power)).toFixed(decimal);
     }
-);
+
+    /**
+     * Method to return the value of a number after a certain user defined decimal points
+     * with rounded value. **This method has not been used anywhere**.
+     * @method roundTo
+     * @since Version 1.0.0
+     * @param num Number to make round
+     * @param digits No digits after decimal point
+     * @returns Number rounded up to two decimal point
+     */
+    public static roundTo(num: any, digits: number = 2) {
+        var negative = false;
+        if (digits === undefined) {
+            digits = 0;
+        }
+        if( num < 0) {
+            negative = true;
+            num = num * -1;
+        }
+        var multiplicator = Math.pow(10, digits);
+        num = parseFloat((num * multiplicator).toFixed(11));
+        num = (Math.round(num) / multiplicator).toFixed(2);
+        if( negative ) {    
+            num = (num * -1).toFixed(2);
+        }
+        return num;
+    }
+}

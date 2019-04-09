@@ -23,6 +23,7 @@ class StickyReview extends Model
      */
     protected $fillable = ['created_by', 'name', 'description', 'image', 'rating'];
 
+    protected $appends = ['image_url'];
     /**
      * this functions defines many to many relationship  to Campaign model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -97,5 +98,14 @@ class StickyReview extends Model
             \Log::info('sticky review save error'.$e->getMessage());
             return false;
         }
+    }
+    
+    /**
+     * Function to create another attribute in stickyreviews data object
+     * @return string Image url
+     */
+    public function getImageUrlAttribute()
+    {
+        return config('app.url') . "/uploads/sticky-review-images/{$this->image}";
     }
 }

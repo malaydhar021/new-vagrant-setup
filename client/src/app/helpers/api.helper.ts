@@ -171,3 +171,131 @@ export class BrandingApiEndpoints {
     return apiBaseUrl.concat('/delete-branding');
   }
 }
+
+/**
+ * CampaignApiEndpoints helper class is holding all static methods for campaign related api endpoints based on the environment
+ * @class CampaignApiEndpoints
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export class CampaignApiEndpoints {
+  /**
+   * Method to generate api endpoint to get all campaigns
+   * @method campaigns
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get campaigns() : string {
+    return apiBaseUrl.concat('/get-all-campaigns');
+  }
+
+  /**
+   * Method to generate api endpoint to add a campaign
+   * @method addCampaign
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get addCampaign() : string {
+    return apiBaseUrl.concat('/add-campaign');
+  }
+
+  /**
+   * Method to generate api endpoint to update a campaign
+   * @method updateCampaign
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get updateCampaign() : string {
+    return apiBaseUrl.concat('/update-campaign-details');
+  }
+
+  /**
+   * Method to generate api endpoint to delete a campaign
+   * @method deleteCampaign
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get deleteCampaign() : string {
+    return apiBaseUrl.concat('/delete-campaign');
+  }
+
+  /**
+   * Method to generate api endpoint to generate campaign script id
+   * @method getCampaignSctiptId
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get getCampaignSctiptId() : string {
+    return apiBaseUrl.concat('/generate-campaign-random-js-id');
+  }
+
+  /**
+   * Method to generate api endpoint to update status of a campaign
+   * @method updateCampaignStatus
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get updateCampaignStatus() : string {
+    return apiBaseUrl.concat('/toggle-campaign-status');
+  }
+}
+
+/**
+ * StickyReviewsApiEndpoints helper class is holding all static methods for sitiky reviews api endpoints based on the environment
+ * @class StickyReviewsApiEndpoints
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export class StickyReviewsApiEndpoints {
+  /**
+   * Method to generate api endpoint to get all sticky reviews
+   * @method stickyReviews
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get stickyReviews() : string {
+    return apiBaseUrl.concat('/get-all-sticky-reviews');
+  }
+
+  /**
+   * Method to generate api endpoint to add a sticky review
+   * @method addStickyReview
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get addStickyReview() : string {
+    return apiBaseUrl.concat('/save-sticky-review');
+  }
+
+  /**
+   * Method to generate api endpoint to update a sticky review
+   * @method updateStickyReview
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get updateStickyReview() : string {
+    return apiBaseUrl.concat('/update-sticky-review');
+  }
+
+  /**
+   * Method to generate api endpoint to delete a sticky review
+   * @method deleteStickyReview
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get deleteStickyReview() : string {
+    return apiBaseUrl.concat('/delete-sticky-review');
+  }
+
+  /**
+   * Method to generate api endpoint to assign a campaign to a sticky review
+   * @method assignCampaignToStickyReview
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get assignCampaignToStickyReview() : string {
+    return apiBaseUrl.concat('/assign-campaign-to-sticky-review');
+  }
+}

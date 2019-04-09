@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/api'),
+    'url' => env('APP_URL', 'https://api.usestickyreviews.com'),
 
 
     /*
@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'redirect_url' => env( 'REDIRECT_URL', 'http://localhost'),
+    'redirect_url' => env( 'REDIRECT_URL', 'https://app.usestickyreviews.com'),
 
     /*
     |--------------------------------------------------------------------------

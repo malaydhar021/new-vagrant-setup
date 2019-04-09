@@ -125,13 +125,13 @@ class Handler extends ExceptionHandler
                 $response = [
                     'status' => false,
                     'message' => "Whoops, looks like something went wrong.",
-                    'error_trace' => $exception->getTrace()
+                    'errors' => $exception->getTrace()
                 ];
             } else {
                 $response = [
                     'status' => false,
                     'message' => "Whoops! looks like something went wrong.",
-                    'error_message' => $exception->getMessage()
+                    'errors' => $exception->getMessage()
                 ];
             }
             return response()->json($response, 500);

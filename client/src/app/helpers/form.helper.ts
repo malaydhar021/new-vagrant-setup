@@ -1,5 +1,5 @@
 import { FormGroup } from '@angular/forms';
-import { Log } from './app.helper';
+import { Log, Utilities } from './app.helper';
 
 /**
  * MustMatch constant is a custom validator which will be checking with if the 2nd argument is match with the 1st argument or not.
@@ -33,7 +33,7 @@ export const MustMatch = (controlName: string, matchingControlName: string) => {
 }
 
 /**
- * MinLength constant to check the minimun length of a string.
+ * MinLength constant to check the minimum length of a string.
  * This is not in use for now.
  * @constant MinLength
  * @version 1.0.0
@@ -61,7 +61,7 @@ export const MinLength = (controlName: string) => {
 /**
  * IsNumeric constant as the name itself saying it will check whether the value is
  * numeric or not. This constant accepts formControl field name and check the value
- * wheter the value is interger or not. It set a custom error object named `invalidNumber`
+ * whether the value is integer or not. It set a custom error object named `invalidNumber`
  * which will be true if validation fails else there will be no error object like `invalidNumber`.
  * @constant IsNumeric
  * @version 1.0.0
@@ -89,7 +89,7 @@ export const IsNumeric = (controlName: string) => {
 
 /**
  * InRange constant is going to check if the value of a field is in between
- * provided max and min mumbers. It accepts formControl field name and min and max digits
+ * provided max and min numbers. It accepts formControl field name and min and max digits
  * which is going to be allowed. It set one custom error object called `invalidLength`
  * which will be true if the validation fails else there will be no errors.
  * @constant InRange
@@ -114,6 +114,72 @@ export const InRange = (controlName: string, min: number, max: number) => {
       Log.debug('is it coming here?');
       control.setErrors({ invalidLength: true });
     } else {
+      control.setErrors(null);
+    }
+  }
+}
+/**
+ * Constant to check filetype of a file. This constant is incomplete.
+ * @constant FileType
+ * @todo Need to implement the core logic to 
+ * @param controlName FormControlName
+ * @param file The file for checking the filetype
+ * @returns ValidationErrors
+ */
+export const FileType = (controlName: string, file: File, allowedFileTypes: string[]): any => {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+    if(control.errors && !control.errors.invalidFileType) {
+      // return if another validator has already found an error on the control
+      return;
+    }
+    // checking if there is any file or not
+    if(file === null) {
+      // checking if there is any file or not
+      return;
+    }
+    if(allowedFileTypes.indexOf(file.type) === -1) {
+      // set error on control if validation fails
+      control.setErrors({invalidFileType: true});
+    } else {
+      // there is no errors i.e data has passed the validation
+      control.setErrors(null);
+    }
+    
+  }
+}
+
+/**
+ * Constant to check file size of a file.
+ * @constant FileSize
+ * @param controlName FormControlName
+ * @param file The file to check the size
+ * @returns ValidationErrors
+ */
+export const FileSize = (controlName: string, file: File, maxSize: number, unit: string = 'KB'): any => {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+    if(control.errors && !control.errors.invalidFileSize) {
+      // return if another validator has already found an error on the control
+      return;
+    }
+    // checking if there is any file or not
+    if(file === null) {
+      // return if there is no file
+      return;
+    }
+    // log the file data
+    Log.debug(file, 'Log the file');
+    // logging file size
+    Log.debug(file.size, 'checking the size of the file');
+    // logging file size in KB
+    Log.debug(Utilities.bytesToAny(file.size, unit), "check file in kb");
+    // checking if file size matches the condition
+    if(Utilities.bytesToAny(file.size, unit) > maxSize) {
+      // set error on control if validation fails
+      control.setErrors({invalidFileSize: true});
+    } else {
+      // there is no errors i.e data has passed the validation
       control.setErrors(null);
     }
   }

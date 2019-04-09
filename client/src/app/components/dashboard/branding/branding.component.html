@@ -26,25 +26,36 @@
             <li>ACTION(S)</li>
           </ul>
           <div class="tbody">
-            <ng-scrollbar [compact]="true">
-            <ul>
-              <li class="row" *ngFor="let brand of brands">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <h2>{{ brand.brand_name }}</h2>
-                    <p>{{ brand.url }}</p>
+            <ng-scrollbar [compact]="true" *ngIf="brands.length > 0; else noRecords">
+              <ul>
+                <li class="row" *ngFor="let brand of brands">
+                  <div class="rowContainer">
+                    <div class="tcol">
+                      <h2>{{ brand.brand_name }}</h2>
+                      <p>{{ brand.url }}</p>
+                    </div>
+                    <div class="tcol">
+                      <p>{{brand.created_at | date : 'medium'}}</p>
+                    </div>
+                    <div class="tcol">
+                      <a (click)="onEditBrand(brand)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                      <a (click)="onDeleteBrand(brand.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                    </div>
                   </div>
-                  <div class="tcol">
-                    <p>{{brand.created_at | date : 'medium'}}</p>
-                  </div>
-                  <div class="tcol">
-                    <a (click)="onEditBrand(brand)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a (click)="onDeleteBrand(brand.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </ng-scrollbar>
+                </li>
+              </ul>
+            </ng-scrollbar>
+            <ng-template #noRecords>
+                <ul>
+                  <li class="row">
+                    <div class="rowContainer">
+                      <div class="tcol">
+                        <p>Sorry no brands found</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+            </ng-template>
           </div>
         </div>
       </div>

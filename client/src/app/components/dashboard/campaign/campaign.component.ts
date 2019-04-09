@@ -1,5 +1,10 @@
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { ErrorsService } from 'src/app/services/errors.service';
+import { BrandingService } from 'src/app/services/branding.service';
 
 @Component({
   selector: 'app-campaign',
@@ -8,7 +13,16 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 })
 export class CampaignComponent implements OnInit {
 
-  constructor(public ngxSmartModalService: NgxSmartModalService) { }
+  constructor(
+    public ngxSmartModalService: NgxSmartModalService,
+    private title: Title,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private errorService: ErrorsService,
+    private brandingService: BrandingService,
+  ) {
+
+  }
 
   public windowHeight: any;
   public scrollTrigger = false;
@@ -32,7 +46,7 @@ export class CampaignComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-    onResize(event) {
+  onResize(event) {
     this.viewHeight = this.elementView.nativeElement.offsetHeight;
     this.windowHeight = window.innerHeight - 280;
     console.log(this.windowHeight);
@@ -43,13 +57,14 @@ export class CampaignComponent implements OnInit {
       this.scrollTrigger = false;
     }
   }
-    clickMe() {
-      this.viewHeight = this.elementView.nativeElement.offsetHeight;
 
-      if (this.viewHeight > this.windowHeight) {
-        this.scrollTrigger = true;
-      } else {
-        this.scrollTrigger = false;
-      }
+  clickMe() {
+    this.viewHeight = this.elementView.nativeElement.offsetHeight;
+
+    if (this.viewHeight > this.windowHeight) {
+      this.scrollTrigger = true;
+    } else {
+      this.scrollTrigger = false;
     }
+  }
 }

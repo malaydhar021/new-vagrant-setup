@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NgxSmartModalService } from 'ngx-smart-modal';
@@ -10,7 +9,7 @@ import { BrandingModel } from '../../../models/branding.model';
 import { Log } from '../../../helpers/app.helper';
 
 /**
- * BrandingComponent is reponsible for showing, adding, updating and deleting brands
+ * BrandingComponent is responsible for showing, adding, updating and deleting brands
  * @class BrandingComponent
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
@@ -25,29 +24,32 @@ export class BrandingComponent implements OnInit, OnDestroy {
   // declaring class properties
   form: FormGroup; // for add or edit brand form in modal
   loader: boolean = false; // for loader
-  brands: [] = []; // holds all brands
+  brands: [] = []; // holds all brands as an array
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
   successMessage: string = null; // to show success messages
-  validationErrors: any = null; // for showing validation messgaes
+  validationErrors: any = null; // for showing validation messages
   subscription: Subscription; // to get the current value updated from error interceptor
   isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
-  isEditing: boolean = false; // flag to set true if user is perfoming some edit operation
-  isDeleting: boolean = false; // flag to set true if user is perfoming some delete operation
+  isEditing: boolean = false; // flag to set true if user is performing some edit operation
+  isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   brandId: number = null; // property to hold the brand id
 
   /**
-   * 
+   * Constructor to inject required service. It also subscribe to a observable which emits the current
+   * value of defined variable. 
+   * @constructor constructor
+   * @since Version 1.0.0
    * @param ngxSmartModalService 
    * @param title 
    * @param router 
    * @param formBuilder 
    * @param errorService 
    * @param brandingService 
+   * @returns Void
    */
   constructor(
     private ngxSmartModalService: NgxSmartModalService,
     private title: Title,
-    private router: Router,
     private formBuilder: FormBuilder,
     private errorService: ErrorsService,
     private brandingService: BrandingService,
@@ -59,7 +61,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
         this.errorMessage = errMsg;
       }
     );
-    // update validationErrors if anything caught by our error interceptor
+    // update validationErrors if anything has been caught by our error interceptor
     this.subscription = this.errorService.validationErrors$.subscribe(
       validationErrMsg => {
         Log.info(validationErrMsg, 'validation errors');
@@ -70,10 +72,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * ngOnInit method initialize angular reactive form object for sign up form step 1 and step 2. 
-   * Also it set the title of the page. It has some guard checking at the very top if the user is
-   * logged in then redirect user to dashboard page. Also it handles some sort of custom validations
-   * specially for signup form step 2.
+   * ngOnInit method initialize angular reactive form object for add / edit form of a brand. 
+   * Also it set the title of the page. Also it defines client side validations.
    * @method ngOnInit
    * @since Version 1.0.0
    * @returns Void
@@ -106,7 +106,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
    * Function to execute when this component is going to destroy by the browser.
    * This will unsubscribe the subscription when this component will be destroyed.
    * @method ngOnDestroy
-   * @since Versoin 1.0.0
+   * @since Version 1.0.0
    * @returns Void
    */
   public ngOnDestroy() {
@@ -147,13 +147,15 @@ export class BrandingComponent implements OnInit, OnDestroy {
 
   /**
    * Method to open the modal when `Add Brand` will be clicked.
-   * This also `isEditing` to `false` if someone eiditted a brand
+   * This also `isEditing` to `false` if someone edited a brand
    * and then trying to add a brand.
    * @method onAddBrand
    * @since Version 1.0.0
    * @returns Void
    */
   public onAddBrand() {
+    // reset the form if someone click on edit and close the modal and decide to add one
+    this.resetForm;
     // set the id to null again
     this.brandId = null;
     // setting false if someone after doing the edit click on add brand
@@ -166,9 +168,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
 
   /**
    * onSubmit method as the name suggests it will handle all sort of operations
-   * once the add a brand form is submitted. It checkes the client side as well as server
-   * side validation and display erros to user. On successful submission it will create a brand
-   * using create brand api endpoing and update the listing of all brands with newly added brand.
+   * once the add a brand form is submitted. It checks the client side as well as server
+   * side validation and display errors to user. On successful submission it will create a brand
+   * using create brand api endpoint and update the listing of all brands with newly added brand.
    * @method onSubmit
    * @since Version 1.0.0
    * @returns Void
@@ -183,7 +185,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
     }
     // show the loader
     this.loader = true;
-    // preare the data as request body
+    // prepare the data as request body
     const data = {
       brand_name: this.form.value.brandName,
       url: this.form.value.brandUrl
@@ -222,7 +224,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings(); 
         } else {
-          // show the error message to user in case there is any error from api respose
+          // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
           // hide the loader
           this.loader = false;

@@ -51,40 +51,50 @@ Route::middleware('cors')->group(function () {
     Route::middleware('auth:api')->group(function () {
 
         Route::get('/authenticated-user-details', 'ApiV2Controller@show')->name('getAuthenticatedUser');
-        Route::post('/add-campaign', 'ApiV2Controller@postAddCampaign')->name('postAddCampaign');
+        // campaigns api routes
         Route::post('/get-all-campaigns', 'ApiV2Controller@getAllCampaigns')->name('getAllCampaigns');
-        Route::post('/toggle-campaign-status', 'ApiV2Controller@postToggleStatus')->name('postToggleStatus');
+        Route::post('/add-campaign', 'ApiV2Controller@postAddCampaign')->name('postAddCampaign');
         Route::post('/update-campaign-details', 'ApiV2Controller@postUpdateCampaign')->name('postUpdateCampaign');
         Route::post('/delete-campaign', 'ApiV2Controller@postDeleteCampaign')->name('postDeleteCampaign');
-        Route::post('/save-sticky-review', 'ApiV2Controller@postSaveStickyReview')->name('postSaveStickyReview');
+        Route::post('/toggle-campaign-status', 'ApiV2Controller@postToggleStatus')->name('postToggleStatus');
+        Route::get('/generate-campaign-random-js-id', function () {
+            return uniqid('emv_'.get_current_user()).time();
+        });
+        // sticky reviews api routes
         Route::get('/get-all-sticky-reviews/{review_type?}', 'ApiV2Controller@getStickyReviews')->name('getStickyReviews');
+        Route::post('/save-sticky-review', 'ApiV2Controller@postSaveStickyReview')->name('postSaveStickyReview');
+        Route::post('/update-sticky-review', 'ApiV2Controller@postUpdateStickyReview')->name('postUpdateStickyReview');
+        Route::post('/delete-sticky-review', 'ApiV2Controller@postDeleteStickyReview')->name('postDeleteStickyReview');
         Route::post('/assign-campaign-to-sticky-review', 'ApiV2Controller@postAssignCampaignStickyReviews')->name('postAssignCampaignStickyReviews');
+        // stripr plan api routes
         Route::get('/get-all-plans', 'ApiV2Controller@getStripePlans')->name('getAllStripePlans');
-        Route::post('/post-add-branding', 'ApiV2Controller@postAddBranding')->name('postAddBranding');
+        // branding api routes
         Route::get('/get-all-branding', 'ApiV2Controller@getAllBranding')->name('getAllBranding');
-        Route::post('/delete-branding', 'ApiV2Controller@postDeleteBranding')->name('postDeleteBranding');
+        Route::post('/post-add-branding', 'ApiV2Controller@postAddBranding')->name('postAddBranding');
         Route::post('/update-branding', 'ApiV2Controller@postUpdateBranding')->name('postUpdateBranding');
+        Route::post('/delete-branding', 'ApiV2Controller@postDeleteBranding')->name('postDeleteBranding');
+        // forget storage path api route
         Route::get('/forget-storage-path', function () {
             return response()->json([
                 'status' => true,
                 'response' => url('/') . '/uploads/sticky-review-images/',
             ]);
         });
-        Route::post('/delete-sticky-review', 'ApiV2Controller@postDeleteStickyReview')->name('postDeleteStickyReview');
-        Route::post('/update-sticky-review', 'ApiV2Controller@postUpdateStickyReview')->name('postUpdateStickyReview');
+        /**
+         * @todo Not sure what this is for
+         */
         Route::post('/assignment-pivot', 'ApiV2Controller@postAssignmentPivot')->name('postAssignmentPivot');
-        Route::get('/generate-campaign-random-js-id', function () {
-            return uniqid('emv_'.get_current_user()).time();
-        });
-        Route::post('/create-review-link', 'ApiV2Controller@postCreateReviewLink')->name('postCreateReviewLink');
+        // review link api routes
         Route::get('/get-all-review-link/{id?}', 'ApiV2Controller@getAllReviewLinks')->name('getAllCampaigns');
-        Route::post('/check-duplicate-review-link', 'ApiV2Controller@postCheckDuplicateReviewLink')->name('postCheckDuplicateReviewLink');
-        Route::post('/save-exit-pop-up', 'ApiV2Controller@postSaveExitPopUp')->name('postSaveExitPopUp');
-        Route::get('/get-all-exit-pop-ups', 'ApiV2Controller@getAllExitPopUps')->name('getAllExitPopUps');
-        Route::post('/delete-review-link', 'ApiV2Controller@postDeleteReviewLink')->name('postDeleteReviewLink');
+        Route::post('/create-review-link', 'ApiV2Controller@postCreateReviewLink')->name('postCreateReviewLink');
         Route::post('/update-review-link', 'ApiV2Controller@postUpdateReviewLink')->name('postUpdateReviewLink');
-        Route::post('/delete-exit-popup', 'ApiV2Controller@postDeleteExitPopUp')->name('postDeleteExitPopUp');
+        Route::post('/delete-review-link', 'ApiV2Controller@postDeleteReviewLink')->name('postDeleteReviewLink');
+        Route::post('/check-duplicate-review-link', 'ApiV2Controller@postCheckDuplicateReviewLink')->name('postCheckDuplicateReviewLink');
+        // exit popup api routes
+        Route::get('/get-all-exit-pop-ups', 'ApiV2Controller@getAllExitPopUps')->name('getAllExitPopUps');
+        Route::post('/save-exit-pop-up', 'ApiV2Controller@postSaveExitPopUp')->name('postSaveExitPopUp');
         Route::post('/update-exit-pop-up', 'ApiV2Controller@postUpdateExitPopUp')->name('postUpdateExitPopUp');
+        Route::post('/delete-exit-popup', 'ApiV2Controller@postDeleteExitPopUp')->name('postDeleteExitPopUp');
     });
 
     // Route::post('/signup-user', 'ApiV2Controller@postSignUpUserThirdParty')->name('postSignUpUserThirdParty');

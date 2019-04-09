@@ -71,4 +71,13 @@ class ReviewLink extends Model
             return false;
         }
     }
+    
+    /**
+     * Function to create another attribute in stickyreviews data object
+     * @return string Image url
+     */
+    public function getImageUrlAttribute()
+    {
+        return config('app.url'). "/uploads/sticky-review-images/{$this->image}";
+    }
 }

@@ -21,6 +21,8 @@ import { PlansComponent } from '../components/dashboard/plans/plans.component';
 import { UpdatePaymentInfoComponent } from '../components/dashboard/update-payment-info/update-payment-info.component';
 // importing services
 import { BrandingService } from '../services/branding.service'; // services for branding
+import { CampaignService } from '../services/campaign.service';
+import { StickyReviewService } from '../services/sticky-review.service';
 
 /**
  * DashboardModule is loading all components and services along with few angular modules once the user is logged in.
@@ -55,7 +57,9 @@ import { BrandingService } from '../services/branding.service'; // services for 
     OwlNativeDateTimeModule,
   ],
   providers: [
-    BrandingService
+    BrandingService,
+    CampaignService,
+    StickyReviewService,
   ]
 })
 export class DashboardModule { }

@@ -406,7 +406,7 @@ class ApiV2Controller extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
+            ], 401);
         }
     }
 
@@ -417,52 +417,60 @@ class ApiV2Controller extends Controller
      */
     public function postSaveStickyReview(StoreStickyNotes $request)
     {
-        try {
-            /* get the extension */
-            $extension = $request->file('image')->getClientOriginalExtension();
-            /* rename the file to store in db */
-            $fileNameToStore = 'emv_' . time() . '.' . $extension;
-            // $isStored = Storage::disk('s3')->put($fileNameToStore, fopen($request->file('image'), 'r+'), 'public');
-            $img = Image::make($request->file('image'))->resize(64, 64)->save('uploads/sticky-review-images/'.$fileNameToStore);
-            if ($img) {
-                $saveStickyReview = new StickyReview();
-                $saveStickyReview->created_by = $request->created_by;
-                $saveStickyReview->name = $request->name;
-                $saveStickyReview->description = $request->description;
-                $saveStickyReview->image = $fileNameToStore;
-                if (strlen($request->tags)) {
-                    $saveStickyReview->tags = trim($request->tags);
-                }
-                $saveStickyReview->rating = $request->has('rating') ? $request->rating: 0;
-                if ($request->has('myDateString') && strlen(trim($request->myDateString))) {
-                    $datetime = \DateTime::createFromFormat('D M d Y H:i:s e+', $request->myDateString);
-                    $saveStickyReview->created_at = $datetime->format('Y-m-d H:i:s');
-                    $saveStickyReview->updated_at = $datetime->format('Y-m-d H:i:s');
-                }
-                if ($saveStickyReview->save()) {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Successfully stored record!'
-                    ], 200);
+        if (is_integer($this->isAuthenticated())) {
+            try {
+                /* get the extension */
+                $extension = $request->file('image')->getClientOriginalExtension();
+                /* rename the file to store in db */
+                $fileNameToStore = 'emv_' . time() . '.' . $extension;
+                // $isStored = Storage::disk('s3')->put($fileNameToStore, fopen($request->file('image'), 'r+'), 'public');
+                $img = Image::make($request->file('image'))->resize(64, 64)->save('uploads/sticky-review-images/'.$fileNameToStore);
+                if ($img) {
+                    $saveStickyReview = new StickyReview();
+                    $saveStickyReview->created_by = $this->isAuthenticated();
+                    $saveStickyReview->name = $request->name;
+                    $saveStickyReview->description = $request->description;
+                    $saveStickyReview->image = $fileNameToStore;
+                    if (strlen($request->tags)) {
+                        $saveStickyReview->tags = trim($request->tags);
+                    }
+                    $saveStickyReview->rating = $request->has('rating') ? $request->rating: 0;
+                    if ($request->has('myDateString') && strlen(trim($request->myDateString))) {
+                        $datetime = \DateTime::createFromFormat('D M d Y H:i:s e+', $request->myDateString);
+                        $saveStickyReview->created_at = $datetime->format('Y-m-d H:i:s');
+                        $saveStickyReview->updated_at = $datetime->format('Y-m-d H:i:s');
+                    }
+                    if ($saveStickyReview->save()) {
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'Sticky review has been created successfully !'
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Something went wrong while saving the data. Please try again later!'
+                        ], 500);
+                    }
                 } else {
                     return response()->json([
                         'status' => false,
-                        'message' => 'Something went wrong while saving the data. Please try again later!'
+                        'message' => 'Failed to save image. Please try again later!'
                     ], 500);
                 }
-            } else {
+            } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Failed to save image. Please try again later!'
+                    'message' => "Oops! Something went wrong in server. Please try again later.",
+                    'errors' => $e->getMessage()
                 ], 500);
             }
-        } catch (\Exception $e) {
+        } else {
             return response()->json([
                 'status' => false,
-                'message' => "Oops! Something went wrong in server. Please try again later.",
-                'message' => $e->getMessage()
-            ], 500);
+                'message' => 'Failed to authenticate. Please login again to continue!'
+            ], 401);
         }
+        
     }
 
     /**
@@ -523,26 +531,27 @@ class ApiV2Controller extends Controller
                 if ($sticky_reviews) {
                     return response()->json([
                         'status' => true,
-                        'message' => $sticky_reviews
+                        'message' => 'Successfully fetched sticky reviews',
+                        'data' => $sticky_reviews
                     ], 200);
                 } else {
                     return response()->json([
                         'status' => true,
                         'message' => 'Sorry no records found!'
-                    ], 404);
+                    ], 200);
                 }
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
                     'message' => "Oops! Something went wrong in server. Please try again later.",
-                    'message' => $e->getMessage()
+                    'errors' => $e->getMessage()
                 ], 500);
             }
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
+            ], 401);
         }
     }
 
@@ -898,7 +907,7 @@ class ApiV2Controller extends Controller
                         'description' => $request->description,
                         'rating'      => $request->rating,
                         'tags'        => strlen($request->tags) ? $request->tags: null,
-                         'created_at'  => $createdAt,
+                        'created_at'  => $createdAt,
                         'updated_at'  => $updatedAt
                     ]);
                     if ($search_sticky_review) {
@@ -913,7 +922,7 @@ class ApiV2Controller extends Controller
                                 if ($search_sticky_review_image) {
                                     return response()->json([
                                         'status' => true,
-                                        'message' => 'Successfully updated the record!'
+                                        'message' => 'Sticky review has been updated successfully'
                                     ],200);
                                 } else {
                                     if (file_exists('uploads/sticky-review-images/'.$fileNameToStore)) {
@@ -933,7 +942,7 @@ class ApiV2Controller extends Controller
                         } else {
                             return response()->json([
                                 'status' => true,
-                                'message' => 'Successfully updated the record!'
+                                'message' => 'Sticky review has been updated successfully'
                             ],200);
                         }
                     } else {
