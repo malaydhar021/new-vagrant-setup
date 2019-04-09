@@ -19,6 +19,11 @@ import { GlobalService } from './services/global.service';
 import { RequestInterceptor } from './services/interceptors/request.interceptor.service';
 import { ErrorsService } from './services/errors.service';
 import { SignupService } from './services/signup.service';
+import { ReviewLinkService } from './services/review-link.service';
+import { LoaderService } from './services/loader.service';
+
+import { MessageModule } from './components/shared/message/message.module';
+import { LoaderModule } from './components/shared/loader/loader.module';
 
 /**
  * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
@@ -33,7 +38,10 @@ import { SignupService } from './services/signup.service';
 
 @Component({
     selector: 'app-root',
-    template: '<router-outlet></router-outlet>'
+    template: `
+    <app-loader></app-loader>
+    <router-outlet></router-outlet>
+    `
 })
 export class AppComponent {}
 
@@ -65,6 +73,8 @@ export class AppComponent {}
       HttpClientModule,
       NgxMaskModule.forRoot(),
       BrowserAnimationsModule,
+      MessageModule,
+      LoaderModule
   ],
   providers: [
       Title,
@@ -74,6 +84,8 @@ export class AppComponent {}
       CookieService,
       ErrorsService,
       SignupService,
+      ReviewLinkService,
+      LoaderService,
       { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

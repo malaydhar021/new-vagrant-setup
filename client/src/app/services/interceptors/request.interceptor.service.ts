@@ -43,7 +43,7 @@ export class RequestInterceptor implements HttpInterceptor {
         headers: authRequest.headers.set('Authorization', 'Bearer ' + token)
       });
     }
-
+    
     return next.handle(authRequest).pipe(delay(1000), catchError((error, caught) => {
       // intercept the http response error
       this.handleHttpError(error);
@@ -95,7 +95,7 @@ export class RequestInterceptor implements HttpInterceptor {
         // update the error messaged based on message object in http response
         const errorMessage404 = this.updateErrorMessage(error);
         // redirect user to loging page
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
         // return observable as string
         return of(errorMessage404);
 
