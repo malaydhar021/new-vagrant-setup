@@ -5,6 +5,7 @@ import { SignUpComponent } from '../../components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from '../../components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '../../components/forgot-password/reset-password/reset-password.component';
 import { DashboardModule } from '../dashboard.module';
+import { NotFoundComponent } from '../../components/not-found/not-found.component';
 import { AuthGuard } from '../../services/guards/auth.guard.service';
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'reset-password/:token', component: ResetPasswordComponent },
     { path: 'dashboard', canLoad: [AuthGuard], loadChildren: () => DashboardModule },
+    { path: 'not-found', component: NotFoundComponent },
 ];
 
 @NgModule({
