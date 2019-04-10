@@ -172,6 +172,7 @@ export class BrandingApiEndpoints {
   }
 }
 
+<<<<<<< HEAD
 /**
  * CampaignApiEndpoints helper class is holding all static methods for campaign related api endpoints based on the environment
  * @class CampaignApiEndpoints
@@ -299,6 +300,8 @@ export class StickyReviewsApiEndpoints {
     return apiBaseUrl.concat('/assign-campaign-to-sticky-review');
   }
 }
+=======
+>>>>>>> adbb90e72d4e8f287797be7eccef985a90669c15
 
 /**
  * ReviewLinkApiEndpoints helper class is holding all static methods for review links api endpoints based on the environment
