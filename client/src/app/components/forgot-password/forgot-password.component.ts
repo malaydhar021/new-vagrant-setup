@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -34,8 +34,10 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private errorService: ErrorsService,
     private router: Router,
     private title: Title,
+    private renderer: Renderer2
   ) {
     if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+    this.renderer.addClass(document.body, 'loginPage');
     this.subscription = this.errorService.error$.subscribe(
       errMsg => {
         this.loader = false;
@@ -70,6 +72,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.renderer.removeClass(document.body, 'loginPage');
   }
 
   /**

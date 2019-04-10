@@ -2644,7 +2644,9 @@ body.sign-upPage {
 
         .formContainer {
           display: inline-block;
-          width: 220%;
+          // reduced width to correct cut-off of form
+          // width: 220%;
+          width: 200%;
           margin-left: 0;
           -webkit-transition: all 0.5s ease-out 0s;
           transition: all 0.5s ease-out 0s;
@@ -3496,6 +3498,7 @@ body.sign-upPage {
     }
   }
 }
+
 // Sign up form css added move label up on load
 
 // Login/Register status msg row
@@ -3906,6 +3909,79 @@ body.sign-upPage {
 
 // Sign up form UI changes
 
+// Forgot/Reset Password 
+.text-right {
+  text-align: right;
+}
+
+.d-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.resetForget {
+  min-height: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.forgotPass_pg {
+  width: 100%;
+
+  form {
+    .formRow {
+      input {
+        font-size: 20px;
+        outline: none;
+        border: none;
+        border-bottom: 2px solid #F3F2FF;
+        background: #fff;
+        display: inline-block;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        height: 44px;
+        width: 100%;
+        padding-bottom: 15px;
+        -webkit-transition: all 0.5s ease 0s;
+        transition: all 0.5s ease 0s;
+        margin-top: 27px;
+      }
+
+      label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 14px;
+        color: #BBB9D1;
+        font-weight: 600;
+        -webkit-transition: all 0.5s ease 0s;
+        transition: all 0.5s ease 0s;
+        pointer-events: none;
+      }
+    }
+
+    &.ng-valid {
+      input {
+        border-color: #0CE3BE;
+      }
+    }
+  }
+
+  @media (max-height: 640px) {
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+    @include mt(50px);
+    @include mb(50px);
+  }
+}
+
+// Forgot/Reset Password 
 
 /* -------------------- Loader Styke -------------------- */
 
