@@ -10,11 +10,9 @@
     
     <div class="formArea cardForm">
       <!-- ERROR BLOCK -->
-      <div *ngIf="errorMessage !== null">
-        <span>{{ errorMessage }}</span>
-      </div>
+      <div class="errorMsgSign" *ngIf="errorMessage !== null"><span><div class="log-stat_msg log_Failed">{{ errorMessage }}</div></span></div>
       <!-- Displaying server side validation errors -->
-      <div *ngIf="validationErrors !== null">
+      <div class="formValidationTips" *ngIf="validationErrors !== null">
         <!-- Name validation errors -->
         <div *ngIf="validationErrors.name !== undefined">
           <span *ngIf="validationErrors.name.message !== undefined">{{ validationErrors.name.message }}</span>
@@ -49,35 +47,35 @@
       </div>
       
       <!-- Client side errors for sign up form step 1 -->
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep1 
         && signupFormStep1FormControls.name.errors !== null 
         && signupFormStep1FormControls.name.errors.required)">
         Full name is required
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep1 
         && signupFormStep1FormControls.email.errors !== null 
         && signupFormStep1FormControls.email.errors.required)">
         Email Address is required
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep1 
         && signupFormStep1FormControls.email.errors !== null 
         && signupFormStep1FormControls.email.errors.email)">
         Please provide a valid emaill
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep1 
         && signupFormStep1FormControls.password.errors !== null 
         && signupFormStep1FormControls.password.errors.required)">
         Password is required
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep1 
         && signupFormStep1FormControls.password.errors !== null 
         && signupFormStep1FormControls.password.errors.minlength)">
@@ -86,56 +84,56 @@
       <!-- End -->
 
       <!-- Client side errors for sign up form step 2 -->
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep2 
         && signupFormStep2FormControls.card.errors !== null 
         && signupFormStep2FormControls.card.errors.required)">
         Credit card number is required
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep2 
         && signupFormStep2FormControls.card.errors !== null 
         && signupFormStep2FormControls.card.errors.invalidNumber)">
         Credit card number is not a valid number
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep2 
         && signupFormStep2FormControls.card.errors !== null 
         && signupFormStep2FormControls.card.errors.invalidLength)">
         Credit card number should be in betweeen 14 to 16 digits depending on provider
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep2 
         && signupFormStep2FormControls.cvc.errors !== null 
         && signupFormStep2FormControls.cvc.errors.required)">
         CVC number is required
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep2 
         && signupFormStep2FormControls.cvc.errors !== null 
         && signupFormStep2FormControls.cvc.errors.invalidNumber)">
         CVC number is not a valid number
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep2 
         && signupFormStep2FormControls.cvc.errors !== null 
         && signupFormStep2FormControls.cvc.errors.invalidLength)">
         CVC number should be in betweeen 3 to 5 digits depending on provider
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep2 
         && signupFormStep2FormControls.expMonth.errors !== null 
         && signupFormStep2FormControls.expMonth.errors.required)">
         Expiry month is required
       </div>
 
-      <div *ngIf="(
+      <div class="formValidationTips" *ngIf="(
         isSubmittedStep2 
         && signupFormStep2FormControls.expYear.errors !== null 
         && signupFormStep2FormControls.expYear.errors.required)">

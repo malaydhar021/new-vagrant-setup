@@ -3194,8 +3194,8 @@ body.sign-upPage {
               p {
                 float: none;
               }
-              
-              p{
+
+              p {
                 padding: 0;
               }
 
@@ -3452,7 +3452,9 @@ body.sign-upPage {
   line-height: 28px;
   padding: 9px 14px;
   @include border-radius(5px);
-  @include mb(16px);
+  // @include mb(16px);
+  @include mt(16px);
+  display: block;
 
   &.log_Failed {
     background-color: #FFD8D8;
@@ -3480,7 +3482,21 @@ body.sign-upPage {
       color: #ec6b0a;
     }
   }
+
+  &:empty {
+    display: none;
+  }
 }
+
+// Sign up form css added move label up on load
+.formArea {
+  form.ng-untouched {
+    input+label {
+      top: 0;
+    }
+  }
+}
+// Sign up form css added move label up on load
 
 // Login/Register status msg row
 
@@ -3834,6 +3850,61 @@ body.sign-upPage {
 }
 
 // Membership cancellation
+
+// Sign up form UI changes
+.formValidationTips {
+  @include mb(10px);
+  @include ml(11.2%);
+  background-image: url(#{$imgUrl}/icon_delete_red.png);
+  background-position: 0 5px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  padding-left: 20px;
+  font-weight: 600;
+
+  span {
+    color: #343434;
+    font-size: 15px;
+    display: block;
+    font-weight: 600;
+    font-weight: normal;
+  }
+
+  ul {
+    border: 2px solid rgba(12, 227, 191, 0.507);
+    background-color: rgb(17, 185, 157);
+    @include mt(5px);
+    @include border-radius(3px);
+    padding: 5px 0;
+
+    li {
+      position: relative;
+      padding: 0 0 0 25px;
+      line-height: 24px;
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 5px;
+      background: url(#{$imgUrl}/tick_type_2.png) no-repeat 5px 5px;
+      background-size: 15px;
+      font-weight: normal;
+
+      &:last-child {
+        @include mb(0);
+      }
+    }
+  }
+}
+
+.errorMsgSign {
+  padding-left: 11.2%;
+  @include mb(8px);
+
+  .log-stat_msg {
+    @include mt(0);
+  }
+}
+
+// Sign up form UI changes
 
 
 /* -------------------- Loader Styke -------------------- */
