@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ReviewLinkService } from '../../../services/review-link.service';
 import { ReviewLinkModel } from '../../../models/review-link.model';
 import { Log } from '../../../helpers/app.helper';
 import {LoaderService} from '../../../services/loader.service';
 
+/**
+ * ReviewLinkComponent is responsible for showing, adding, updating and deleting review links
+ * @class ReviewLinkComponent
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 @Component({
   selector: 'app-review-link',
   templateUrl: './review-link.component.html',
@@ -14,12 +21,24 @@ import {LoaderService} from '../../../services/loader.service';
 })
 export class ReviewLinkComponent implements OnInit {
 
-  reviews:Array<ReviewLinkModel> = []
+  reviewLinks:Array<ReviewLinkModel> = [] // An array of review links
+  reviewLinkForm: FormGroup;
 
+  /**
+   * Constructor to inject required service. It also subscribe to a observable which emits the current
+   * value of defined variable. 
+   * @constructor constructor
+   * @since Version 1.0.0
+   * @param ngxSmartModalService
+   * @param loaderService 
+   * @param reviewLinkService
+   * @returns Void
+   */
   constructor(
     private reviewLinkService : ReviewLinkService,
     private loaderService: LoaderService,
-    public ngxSmartModalService: NgxSmartModalService
+    public ngxSmartModalService: NgxSmartModalService,
+    private fornBuilder: FormBuilder
   ) { }
   
   /**
@@ -38,11 +57,11 @@ export class ReviewLinkComponent implements OnInit {
         this.loaderService.disableLoader()
         if (response.data.length) {
 
-          this.reviews = response.data
+          this.reviewLinks = response.data
 
         } else {
 
-          this.reviews = []
+          this.reviewLinks = []
         }
       },
       (error: any) => {
@@ -51,9 +70,29 @@ export class ReviewLinkComponent implements OnInit {
         // Log the error message
         Log.error(error, error.message);
         // Reset the reviews array
-        this.reviews = []
+        this.reviewLinks = []
       }
     )
+  }
+
+
+  /**
+   * create the reactive form for adding review link
+   */
+  createReviewLinkForm() {
+    this.reviewLinkForm = this.fornBuilder.group({
+      id: [null],
+      myLogo: ['', [Validators.required]],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      url_slug: [Math.random().toString(36).substr(2, 9), Validators.required],
+      campaign_id: [''],
+      auto_approve: [''],
+      min_rating: [''],
+      negative_info_review_msg_1: ['', Validators.required],
+      negative_info_review_msg_2: ['', Validators.required],
+      positive_review_msg: ['', Validators.required]
+    });
   }
 
    /**
@@ -66,10 +105,15 @@ export class ReviewLinkComponent implements OnInit {
   ngOnInit() {
     // Initialy Load all the review links
     this.getAllReviewLinks();
+
+    this.createReviewLinkForm();
   }
 
   onAddReviewLink(){
 
   }
 
+  onSubmit(){
+    console.log("jahsgd")
+  }
 }
