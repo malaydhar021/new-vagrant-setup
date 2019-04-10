@@ -323,11 +323,16 @@
             <div class="sr-form-cell-small imageUp">
               <label>Upload an image</label>
 
-              <div class="sr-form-ctrl inputFile">
-                <input type="file" (change)="uploadFile($event)">
-                <div class="choseFileArea">
-                  <div class="fileImg">
-                    <!-- <img src="../../../../assets/images/icon_upload_photo.png" alt=""> -->
+              <div class="sr-form-field">
+                <div class="sr-form-ctrl inputFile">
+                  <input type="file" (change)="uploadFile($event)">
+                  <div class="choseFileArea">
+                    <div class="fileImg">
+                      <img src="../../../../assets/images/icon_upload_photo.png" alt="">
+                    </div>
+                    <p>
+                      <span>{{choseFileCtrl}}</span>{{fileName}}
+                    </p>
                   </div>
                 </div>
               </div>
