@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\Hashids;
 use Carbon\Carbon;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Vinkla\Hashids\Facades\Hashids;
 
-class SubscriptionResource extends JsonResource
+class SubscriptionResource extends Resource
 {
     /**
      * Transform the resource into an array.

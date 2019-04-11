@@ -126,11 +126,10 @@ class AuthController extends Controller
         $token->expires_at = $request->remember_me ? Carbon::now()->addWeeks(1) : Carbon::now()->addDays(1);
 
         $token->save();
-        $user = User::find(Auth::user()->id);
+
         return response()->json([
             'status' => true,
             'message' => "Welcome! You have logged in successfully.",
-            'data' => new UserResource($user),
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()

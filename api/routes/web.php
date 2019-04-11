@@ -11,36 +11,9 @@
 |
 */
 
-/**
- * Redirect API root route to the `redirect_url` i.e. landing page URI
- */
-Route::get('/', function () {
-    return redirect(config('app.redirect_url', 'https://usestickyreviews.com'));
-})->name('index');
-
-/**
- * Test route to determine API codebase is working properly
- */
-Route::get('/test', function () {
-    $allowedIps = [
-        '127.0.0.1',                    // localhost
-        '192.168.15.1',                 // local private ip
-        env('TIER5_IP', '127.0.0.1')
-    ];
-    $visitorIp = request()->ip();
-
-    if (in_array($visitorIp, $allowedIps)) {
-        $status = "Authorized";
-        $code = 200;
-    } else {
-        $status = "Unauthorized";
-        $code = 401;
-    }
-
-    return response()->json([
-        'ip' => $visitorIp,
-        'status' => $status,
-        'url' => config('app.redirect_url'),
-        'message' => "Use Sticky Reviews, it is awesome.",
-    ], $code);
-})->name('test');
+Route::domain('{pre}.' . config('app.host'))->group(function () {
+    /** Redirect root route to the `redirect_url` i.e. landing page URI */
+    Route::get('/', 'RouteHandlingController@index')->name('index');
+    /** Test route to determine codebase is working properly */
+    Route::get('/test', 'RouteHandlingController@test')->name('test');
+});

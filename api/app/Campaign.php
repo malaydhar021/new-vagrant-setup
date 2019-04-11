@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Campaign extends Model
 {
     use SoftDeletes;
@@ -14,30 +15,43 @@ class Campaign extends Model
      */
     protected $fillable = [
         'unique_script_id',
-        'created_by', 
-        'campaign_name', 
-        'domain_name', 
-        'styles', 
+        'created_by',
+        'campaign_name',
+        'domain_name',
+        'styles',
         'delay',
         'delay_before_start',
         'loop',
         'exit_pop_up',
         'exit_pop_up_id',
-        'branding', 
-        'branding_id', 
+        'branding',
+        'branding_id',
         'is_active'
     ];
+
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'styles',
+        'deleted_at',
+    ];
+
     /**
      * this functions defines many to many relationship  to StickyReview model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function stickyReviews() {
+    public function stickyReviews()
+    {
         return $this->belongsToMany('App\StickyReview')->orderBy('created_at','desc');
     }
 
@@ -45,7 +59,8 @@ class Campaign extends Model
      * this function returns the data of related branding
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function brandingDetails() {
+    public function brandingDetails()
+    {
         return $this->hasOne('App\Branding', 'id', 'branding_id');
     }
 
@@ -53,7 +68,18 @@ class Campaign extends Model
      * Exit pop up one to one relation
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function exitPopUp() {
+    public function exitPopUp()
+    {
         return $this->hasOne('App\ExitPopUp', 'id', 'exit_pop_up_id');
     }
- }
+
+    public function campaignStyle()
+    {
+        return $this->belongsTo(CampaignStyle::class, 'style_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+}

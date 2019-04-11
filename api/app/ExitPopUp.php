@@ -14,6 +14,7 @@ class ExitPopUp extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -37,10 +38,22 @@ class ExitPopUp extends Model
     ];
 
     /**
-     * defines many to many relationship with sticky reviews
+     * The campaign, the exit pop-up has attached to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class);
+    }
+
+    /**
+     * The sticky reviews attached to the exit pop-up
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function stickyReviews() {
+    public function stickyReviews()
+    {
         return $this->belongsToMany('App\StickyReview');
     }
 }

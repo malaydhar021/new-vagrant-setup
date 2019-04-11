@@ -15,11 +15,23 @@ class ReviewLink extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * relation with campaign
+     * The campaign uses the review link to get reviwes
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function campaign() {
+    public function campaign()
+    {
         return $this->hasOne('App\Campaign', 'id', 'campaign_id');
+    }
+
+    /**
+     * The sticky reviews has been genereted from the review link
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stickyReviews()
+    {
+        return $this->hasMany(StickyReview::class);
     }
 
     /**

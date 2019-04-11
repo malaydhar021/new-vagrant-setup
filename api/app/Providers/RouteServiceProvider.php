@@ -17,13 +17,24 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'App\Http\Controllers';
 
     /**
+     * This namespace is applied to your controller routes.
+     *
+     * In addition, it is set as the URL generator's root domain.
+     *
+     * @var string
+     */
+    protected $domain;
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
     public function boot()
     {
-        //
+        $this->domain = config('app.host');
+
+        Route::pattern('domain', "(hook.{$this->domain})|(api.{$this->domain})");
 
         parent::boot();
     }
@@ -35,9 +46,9 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
-        $this->mapApiRoutes();
+        // $this->mapApiV1Routes();
         $this->mapApiV2Routes();
-        $this->mapWebhooksRoutes();
+        $this->mapHookV1Routes();
     }
 
     /**
@@ -51,6 +62,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->namespace)
+            ->name('web.')
             ->group(base_path('routes/web.php'));
     }
 
@@ -61,11 +73,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapApiV1Routes()
     {
         Route::middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->prefix('v1')
+            ->domain("api.{$this->domain}")
+            ->namespace($this->namespace)
+            ->name('api.v1.')
+            ->group(base_path('routes/api.v1.php'));
     }
 
     /**
@@ -79,22 +94,25 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('api')
             ->prefix('v2')
+            ->domain("api.{$this->domain}")
             ->namespace($this->namespace)
+            ->name('api.v2.')
             ->group(base_path('routes/api.v2.php'));
     }
 
     /**
-     * Define the "webhooks" routes for the application.
+     * Define the "hook-v1" routes for the application.
      *
      * These routes are typically stateless.
      *
      * @return void
      */
-    protected function mapWebhooksRoutes()
+    protected function mapHookV1Routes()
     {
-        Route::middleware('api')
-            ->prefix('webhooks')
+        Route::prefix('v1')
+            ->domain("hook.{$this->domain}")
             ->namespace($this->namespace)
-            ->group(base_path('routes/webhooks.php'));
+            ->name('hook.v1.')
+            ->group(base_path('routes/hook.v1.php'));
     }
 }

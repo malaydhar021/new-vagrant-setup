@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\traits\AuthTrait;
+use App\Traits\AuthTrait;
 
 class SaveExitPopUp extends FormRequest
 {

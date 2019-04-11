@@ -3,12 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\traits\AuthTrait;
+use Illuminate\Support\Facades\Auth;
 
 class CampaignRequest extends FormRequest
 {
-    use AuthTrait;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,11 +14,9 @@ class CampaignRequest extends FormRequest
      */
     public function authorize()
     {
-        if (is_integer($this->isAuthenticated())) {
-            return true;
-        } else {
-            return false;
-        }
+        if (Auth::check()) return true;
+
+        return false;
     }
 
     /**
@@ -31,16 +27,15 @@ class CampaignRequest extends FormRequest
     public function rules()
     {
         return [
-            'created_by'            => 'required|numeric',
             'campaign_name'         => 'required',
             'domain_name'           => 'required',
-            'styles'                => 'required|string',
+            'style_id'              => 'required|string',
             'delay'                 => 'required|numeric',
             'branding'              => 'required|boolean',
             'branding_id'           => 'required_if:branding, 1',
             'exit_pop_up'           => 'required|boolean',
-            'exit_pop_up_ids_arr'   => 'required_if:exit_pop_up, 1',
-            'is_active'             => 'required|string'
+            'exit_pop_up_id'        => 'required_if:exit_pop_up, 1',
+            'is_active'             => 'nullable|boolean',
         ];
     }
 
@@ -52,17 +47,15 @@ class CampaignRequest extends FormRequest
     public function messages()
     {
         return [
-            'created_by.required'     => 'User ID who created this campaign is required!',
-            'created_by.numeric'      => 'User ID should be a numeric digit',
-            'campaign_name.required'  => 'Campaign Name is a required field.',
+            'campaign_name.required'  => 'Campaign name is a required field.',
             'domain_name.required'    => 'Domain name is a required field.',
-            'styles.required'         => 'Please define a style.',
+            'styles.required'         => 'Please choose a style.',
             'delay.required'          => 'Time Delay is required.',
             'delay.numeric'           => 'Time Delay should be numeric.',
             'branding.required'       => 'Branding is required.',
             'branding.boolean'        => 'Branding needs to be on or off!',
             'branding_id.required_if' => 'Branding id required',
-            'is_active'               => 'You have to specify the campaign is active or not!'
+            'is_active.boolean'       => 'Is active shoulde be boolean type',
         ];
     }
 }

@@ -24,6 +24,7 @@ class StickyReview extends Model
     protected $fillable = ['created_by', 'name', 'description', 'image', 'rating'];
 
     protected $appends = ['image_url'];
+
     /**
      * this functions defines many to many relationship  to Campaign model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -41,6 +42,27 @@ class StickyReview extends Model
     {
         return $this->belongsTo('App\NegativeReview', 'id', 'sticky_review_id');
     }
+
+    /**
+     * The user owns the sticky review
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    /**
+     * The review link accepts the sticky review
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function reviewLink()
+    {
+        return $this->belongsTo(ReviewLink::class);
+    }
+
     /**
      * store record in sticky reviews coming from user review store procedure
      * @param null $created_by

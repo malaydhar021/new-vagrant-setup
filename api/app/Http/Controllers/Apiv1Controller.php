@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use App\traits\AuthTrait;
+use App\Traits\AuthTrait;
 use App\User;
 use Cartalyst\Stripe\Stripe;
 use Validator;

@@ -3,12 +3,12 @@
 namespace App\Http\Resources;
 
 use App\Helpers\Hashids;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
-class UserResource extends Resource
+class CampaignStyleResource extends Resource
 {
     /**
-     * Transform the resource into an array.
+     * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
@@ -19,14 +19,11 @@ class UserResource extends Resource
             return [
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
-                'email' => $this->email,
             ];
         } else {
             return [
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
-                'email' => $this->email,
-                'subscription' => new SubscriptionResource($this),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
             ];

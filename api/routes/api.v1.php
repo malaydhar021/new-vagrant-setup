@@ -11,8 +11,7 @@
 |
 */
 
-// Api version 1.0 routes
-Route::prefix('v1')->middleware('cors')->group(function () {
+Route::middleware('cors')->group(function () {
     Route::post('authenticate', 'Apiv1Controller@index')->name('postAuthenticateUser');
     Route::post('/signup', 'Apiv1Controller@signup')->name('postsignup');
     Route::post('/signout', 'Apiv1Controller@signOut')->name('signOut');

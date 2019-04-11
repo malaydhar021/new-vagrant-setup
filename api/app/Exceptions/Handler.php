@@ -120,21 +120,25 @@ class Handler extends ExceptionHandler
                 ], 422);
             }
 
-            /** API Generic Exception Response */
-            if (config('app.debug')) {
-                $response = [
+            /** Model Not Found Exception Response */
+            if ($exception instanceof ModelNotFoundException) {
+                $explodedErrorMessage = array_reverse(preg_split("/[\s\\\[\]]/", $exception->getMessage()));
+                $model = strtolower($explodedErrorMessage[1]);
+                return response()->json([
                     'status' => false,
-                    'message' => "Whoops, looks like something went wrong.",
-                    'errors' => $exception->getTrace()
-                ];
-            } else {
-                $response = [
-                    'status' => false,
-                    'message' => "Whoops! looks like something went wrong.",
-                    'errors' => $exception->getMessage()
-                ];
+                    'message' => "The ${model}'s details you are looking for is not found. Please try again later.",
+                ], 200);
             }
-            return response()->json($response, 500);
+
+            /** API Generic Exception Response */
+            return response()->json([
+                'status' => false,
+                'message' => "Whoops! looks like something went wrong. Please try again later.",
+                'errors' => [
+                    'error_message' => $exception->getMessage(),
+                    'error_trace' => config('app.debug') ? $exception->getTrace() : null,
+                ],
+            ], 500);
         }
 
         return parent::render($request, $exception);
