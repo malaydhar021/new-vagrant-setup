@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { ErrorsService } from '../errors.service';
 import { Log } from '../../helpers/app.helper';
+import { LoaderService } from '../loader.service';
 
 /**
  * RequestInterceptor is going to add Access-Control-Allow-Origin and Authorization to the headers to each and every request.
@@ -24,7 +25,7 @@ export class RequestInterceptor implements HttpInterceptor {
   loader = false;
   defaultErrorMessage = 'Something went wrong. Please try again after successfully login.';
 
-  constructor(private authService: AuthService, private router: Router, private errorService: ErrorsService) { }
+  constructor(private authService: AuthService, private router: Router, private errorService: ErrorsService, private loaderService: LoaderService) { }
 
   /**
    * This is the implementation of intercept interface and added headers to each request when some api has been called 
@@ -43,7 +44,7 @@ export class RequestInterceptor implements HttpInterceptor {
         headers: authRequest.headers.set('Authorization', 'Bearer ' + token)
       });
     }
-
+    
     return next.handle(authRequest).pipe(delay(1000), catchError((error, caught) => {
       // intercept the http response error
       this.handleHttpError(error);
@@ -59,6 +60,8 @@ export class RequestInterceptor implements HttpInterceptor {
    * @returns Observable<String>
    */
   private handleHttpError(error: HttpErrorResponse): Observable<any> {
+
+    //this.loaderService.disableLoader();
 
     // handle your auth error or rethrow
     switch (error.status) {
@@ -95,7 +98,7 @@ export class RequestInterceptor implements HttpInterceptor {
         // update the error messaged based on message object in http response
         const errorMessage404 = this.updateErrorMessage(error);
         // redirect user to loging page
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
         // return observable as string
         return of(errorMessage404);
 

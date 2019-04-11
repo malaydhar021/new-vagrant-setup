@@ -172,6 +172,7 @@ export class BrandingApiEndpoints {
   }
 }
 
+<<<<<<< HEAD
 /**
  * CampaignApiEndpoints helper class is holding all static methods for campaign related api endpoints based on the environment
  * @class CampaignApiEndpoints
@@ -297,5 +298,56 @@ export class StickyReviewsApiEndpoints {
    */
   public static get assignCampaignToStickyReview() : string {
     return apiBaseUrl.concat('/assign-campaign-to-sticky-review');
+  }
+}
+=======
+>>>>>>> adbb90e72d4e8f287797be7eccef985a90669c15
+
+/**
+ * ReviewLinkApiEndpoints helper class is holding all static methods for review links api endpoints based on the environment
+ * @class ReviewLinkApiEndpoints
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @version 1.0.0
+ * @license Proprietery
+ */
+export class ReviewLinkApiEndpoints {
+  /**
+   * Method to generate api endpoint to get all review links
+   * @method reviewLinks
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get reviewLinks(): string {
+    return apiBaseUrl.concat('/get-all-review-link');
+  }
+
+  /**
+   * addReviewLinks to generate api endpoint to add a review link
+   * @method addReviewLinks
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get addReviewLinks(): string {
+    return apiBaseUrl.concat('/create-review-link');
+  }
+
+  /**
+   * updateReviewLinks to generate api endpoint to update a review link
+   * @method updateReviewLinks
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get updateReviewLinks() : string {
+    return apiBaseUrl.concat('/update-review-link');
+  }
+
+  /**
+   * deleteReviewLinks to generate api endpoint to delete a review link
+   * @method deleteReviewLinks
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get deleteReviewLinks() : string {
+    return apiBaseUrl.concat('/delete-review-link');
   }
 }

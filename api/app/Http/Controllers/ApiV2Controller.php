@@ -1410,19 +1410,21 @@ class ApiV2Controller extends Controller
                 if ($review_links) {
                     return response()->json([
                         'status' => true,
-                        'message' => $review_links
+                        'message' => 'Fetched all review links',
+                        'data' => $review_links
                     ], 200);
                 } else {
                     return response()->json([
-                        'status' => true,
-                        'message' => 'Sorry no records found!'
-                    ], 404);
+                        'status' =>false,
+                        'message' => 'Sorry no records found!',
+                        'data'=> []
+                    ], 200);
                 }
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
                     'message' => "Oops! Something went wrong in server. Please try again later.",
-                    'message' => $e->getMessage()
+                    'errors' => [$e->getMessage()]
                 ], 500);
             }
         } else {
@@ -1432,7 +1434,8 @@ class ApiV2Controller extends Controller
                     if ($review_links) {
                         return response()->json([
                             'status' => true,
-                            'message' => $review_links
+                            'message' => 'Fetched all review links',
+                            'data'  =>  $review_links
                         ], 200);
                     } else {
                         return response()->json([
