@@ -1,0 +1,67 @@
+.stickyMain {
+	.dataTableArea {
+		.table.table-col-4 {
+			.tbody {
+				li {
+					&.row {
+						.rowContainer {
+							.tcol:first-child {
+								@media (max-width: 991px) {
+							    	flex: 0 0 48%;
+								}
+								@media (max-width: 420px) {
+									flex: 0 0 100%;
+									margin-bottom:10px;
+								}								
+							}
+							.tcol:nth-child(2){
+								@media (max-width: 420px) {
+									order:0;
+									margin-top:5px;
+									margin-bottom:8px;
+								}	
+							}
+							.tcol:nth-child(3) {
+								p {
+									@media (max-width: 420px) {
+										padding-top:5px;
+									}
+								}
+
+								@media (max-width: 991px) {
+							    	width:35%!important;
+								}
+								@media (max-width: 420px) {
+									width:78%!important;
+								}	
+							}
+							.tcol:last-child a {
+								@media (max-width: 991px) {
+							    	margin-top:0;
+							    	width:24px;
+							    	height:24px;
+								}
+							}
+							.tcol:last-child {
+								@media (max-width: 991px) {
+									flex: 0 0 17%;
+								}
+								@media (max-width: 420px) {
+									flex: 0 0 22%;
+								}
+							}
+							.tcol {
+								.userReview {
+									@media (max-width: 480px) {
+										width: calc(100% - 20px)!important;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
