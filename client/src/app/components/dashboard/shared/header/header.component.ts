@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '../../../../services/auth.service';
 import { ErrorsService } from '../../../../services/errors.service';
+import { MenuService } from '../../../../services/menu.service';
 import { Log } from '../../../../helpers/app.helper';
 
 /**
@@ -19,18 +20,24 @@ import { Log } from '../../../../helpers/app.helper';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   loader = false;
   tglFlag = false;
-  subscription: Subscription;
+  tglProfile = false;
+  tglSide = false;
+  isActive = false;
+  subscription: Subscription;  
+  menuSubscription: Subscription; 
   error: string = null;
 
+  
   constructor(
     private router: Router,
     private cookieService: CookieService,
     private authService: AuthService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private menuService: MenuService
   ) {
     // subscription to upate the error property to disaply in template
     this.subscription = this.errorService.error$.subscribe(
@@ -39,6 +46,13 @@ export class HeaderComponent implements OnInit {
         this.error = errMsg;
       }
     );
+      /*
+    this.menuSubscription = this.menuService.activeMenu$.subscribe(
+      status => {
+        this.isActive = status;
+      }
+    );
+    */
   }
 
   /**
@@ -46,11 +60,24 @@ export class HeaderComponent implements OnInit {
    */
   public ngOnInit() { }
 
+  public ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.menuSubscription.unsubscribe();
+  }
+
   /**
    * 
    */
   public tglSetting() {
     this.tglFlag = !this.tglFlag;
+  }
+  public tglProfileMenu() {
+    this.tglProfile = !this.tglProfile;
+  }
+  public tglSideMenu() {
+    // this.isActive = !this.isActive;
+    this.menuService.updateStatus(!this.isActive);
+    this.tglSide = !this.tglSide;
   }
 
   /**

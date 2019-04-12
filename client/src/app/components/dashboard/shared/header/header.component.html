@@ -24,15 +24,25 @@
       </div>
       <div class="bottomSec">
         <ul>
-          <li><a>Edit Profile</a></li>
           <li><a [routerLink]="['/dashboard/update-payment-info']" routerLinkActive="active">Update Payment Info</a></li>
-          <li><a (click)="onLogout()">Logout</a></li>
         </ul>
       </div>
     </div>
 
   </div>
-  <div class="headerRight">
-    <img src="../../../../assets/images/pp.png" alt="">
+  <div class="headerRight" [ngClass]="tglProfile ? 'active' : ''">
+      <a class="hdrProfile" (click)="tglProfileMenu()" style="background-image:url(../../../../assets/images/pp.png)"></a>
+      <div class="settingDrop">
+        <ul>
+          <li><a>Edit Profile</a></li>
+          <li><a (click)="onLogout()">Logout</a></li>
+        </ul>
+      </div>
   </div>
+
+  <a href="javascript:void(0)" (click)="tglSideMenu()" [ngClass]="tglSide ? 'active' : ''" class="toggleSideMenu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </a>
 </header>

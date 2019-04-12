@@ -25,6 +25,7 @@ import { MessageModule} from '../components/shared/message/message.module'
 import { BrandingService } from '../services/branding.service'; // services for branding
 import { CampaignService } from '../services/campaign.service';
 import { StickyReviewService } from '../services/sticky-review.service';
+import { MenuService } from '../services/menu.service';
 
 
 
@@ -67,6 +68,7 @@ import { StickyReviewService } from '../services/sticky-review.service';
     BrandingService,
     CampaignService,
     StickyReviewService,
+    MenuService
   ]
 })
 export class DashboardModule { }
