@@ -12,10 +12,15 @@ class CampaignStyle extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
         'name',
+        'type',
     ];
 
+    /**
+     * Campaigns uses the style
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function campaigns()
     {
         $this->hasMany(Campaign::class, 'style_id', 'id');

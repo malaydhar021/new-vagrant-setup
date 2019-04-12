@@ -70,7 +70,7 @@ class CampaignsController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Sorry, no campaigns have found!'
-            ], 404);
+            ], 200);
         }
     }
 
@@ -87,6 +87,7 @@ class CampaignsController extends Controller
         $campaign->campaign_name = $request->input('campaign_name');
         $campaign->domain_name = $request->input('domain_name');
         $campaign->style_id = Hashids::decode($request->input('style_id'));
+        $campaign->styles = null;
         $campaign->delay = $request->input('delay');
         $campaign->delay_before_start = $request->input('delay_before_start');
         $campaign->loop = $request->input('loop');
@@ -97,6 +98,8 @@ class CampaignsController extends Controller
         $campaign->created_by = Auth::user()->id;
         $campaign->is_active = (string) ((int) $request->input('is_active'));
         $campaign->save();
+
+        $campaign->load('campaignStyle', 'brandingDetails', 'exitPopUp');
 
         return response()->json([
             'status' => true,
@@ -201,5 +204,36 @@ class CampaignsController extends Controller
             'message' => 'Successfully ' . ($campaign->is_active ? 'dectivated' : 'activated' ) . ' the campaign.',
             'data' => new CampaignsResource($campaign),
         ], 201);
+    }
+
+    /**
+     * Sync sticky reviews with a specific campaign
+     *
+     * @param  Request  $request
+     * @param  string  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function syncStickyReviews(Request $request, $id)
+    {
+        $request->validate([
+            'sticky_reviews' => "required|array",
+            'sticky_reviews.*'  => "required|string|distinct",
+        ]);
+        
+        $stickyReviews = $request->input('sticky_reviews');
+        $deocdedStickyReviews = [];
+        array_walk($stickyReviews, function (&$value) use (&$deocdedStickyReviews) {
+            $deocdedStickyReviews[] = Hashids::decode($value);
+        });
+
+        $campaign = $this->queryBuilder->whereId($id)->firstOrFail();
+        $campaign->stickyReviews()->sync($deocdedStickyReviews);
+        $campaign->load('stickyReviews');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sticky reviews synced with the campaign successfully.',
+            'data' => new CampaignsResource($campaign),
+        ]);
     }
 }

@@ -136,7 +136,9 @@ return [
             'required' => ["message" => "Password is required"],
             'min' => ["message" => "Password should be at least 8 characters long"],
             'regex' => [
-                'message' => "Password should contains at least one of the followings",
+                'message' => "Password should contains one english uppercase characters (A–Z), " .
+                            "one english lowercase characters (a–z), " .
+                            "one numeric value (0–9) and one special characters (!, $, #, or %)",
                 'rules' => [
                     "English uppercase characters (A–Z)",
                     "English lowercase characters (a–z)",
@@ -146,8 +148,17 @@ return [
             ],
         ],
         'token' => [
-            'required' => ["message" => "Token is required."],
-            'size' => ["message" => "Token should be exactly 64 characters long."],
+            'required' => ['message' => "Token is required."],
+            'size' => ['message' => "Token should be exactly 64 characters long."],
+        ],
+        'sticky_reviews' => [
+            'required' => ['message' => "Sticky reviews are required."],
+            'array' => ['message' => "Sticky reviews should be an array."],
+        ],
+        'sticky_reviews.*' => [
+            'required' => ['message' => "At least one sticky review item is required inside the array."],
+            'string' => ['message' => "Sticky review item should be an string."],
+            'distinct' => ['message' => "Sticky review item should be distinct, no repetead item is allowed."],
         ],
     ],
 

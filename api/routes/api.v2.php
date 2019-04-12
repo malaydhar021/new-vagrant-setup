@@ -61,6 +61,7 @@ Route::middleware('auth:api')->group(function () {
         Route::patch('/{id}', 'CampaignsController@update')->name('update');
         Route::delete('/{id}', 'CampaignsController@destroy')->name('delete');
         Route::patch('/{id}/status', 'CampaignsController@toggleStatus')->name('status.toggle');
+        Route::patch('/{id}/sticky-reviews', 'CampaignsController@syncStickyReviews')->name('sticky-reviews.sync');
     });
 
     // sticky reviews api routes
@@ -77,7 +78,7 @@ Route::middleware('auth:api')->group(function () {
     /**
      * @todo Not sure what this is for
      */
-    Route::post('/assignment-pivot', 'ApiV2Controller@postAssignmentPivot')->name('postAssignmentPivot');
+    // Route::post('/assignment-pivot', 'ApiV2Controller@postAssignmentPivot')->name('postAssignmentPivot');
     // review link api routes
     Route::get('/get-all-review-link/{id?}', 'ApiV2Controller@getAllReviewLinks')->name('getAllCampaigns');
     Route::post('/create-review-link', 'ApiV2Controller@postCreateReviewLink')->name('postCreateReviewLink');
