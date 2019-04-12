@@ -46,13 +46,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.error = errMsg;
       }
     );
-      /*
+    
     this.menuSubscription = this.menuService.activeMenu$.subscribe(
       status => {
         this.isActive = status;
       }
     );
-    */
+    
   }
 
   /**

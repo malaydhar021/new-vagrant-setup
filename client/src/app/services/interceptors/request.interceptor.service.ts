@@ -35,7 +35,11 @@ export class RequestInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authRequest = request;
     authRequest = request.clone({
-      headers: request.headers.set('Access-Control-Allow-Origin', '*')
+      headers: request.headers.set('Access-Control-Allow-Origin', '*'),
+    });
+
+    authRequest = request.clone({
+      headers: request.headers.set('Accept', 'application/json'),
     });
 
     const token = this.authService.getToken;

@@ -24,6 +24,7 @@ import { LoaderService } from './services/loader.service';
 
 import { MessageModule } from './components/shared/message/message.module';
 import { LoaderModule } from './components/shared/loader/loader.module';
+import { MenuService } from './services/menu.service';
 
 /**
  * AppComponent is the first component which loads when the applicatoin is getting bootstraped.

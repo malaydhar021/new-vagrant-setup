@@ -7,7 +7,7 @@
     <div class="mainBox campaignMain">
       <header class="mainBoxHeader">
         <div class="mainBoxHeaderLeft">
-          <button type="button" class="addReview" (click)="ngxSmartModalService.getModal('modal1').open();"><img src="../../../../assets/images/addIcon.png" alt=""> Add Campaign</button>
+          <button type="button" class="addReview" (click)="onAddCampaign()"><img src="../../../../assets/images/addIcon.png" alt=""> Add Campaign</button>
         </div>
         <div class="mainBoxHeaderRight">
           <input type="text" placeholder="Search ...">
@@ -23,10 +23,10 @@
             <li>ACTION(S)</li>
           </ul>
           <div class="tbody">
-            <ng-scrollbar [compact]="true">
+            <ng-scrollbar [compact]="true" *ngIf="campaigns.length > 0; else noRecords">
             <ul>
               <li class="row">
-                <div class="rowContainer ratePop">
+                <div class="rowContainer" [ngClass]="{ratePop: isSelectingReview}">
                   <div class="tcol">
                     <div class="loopedTag">LOOPED</div>
                     <div class="userReview">
@@ -47,9 +47,9 @@
                     <p>Dec 3, 2018, 5:39:18 PM</p>
                   </div>
                   <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="assignTask"><img src="../../../../assets/images/icon_assign_task.png" class="assignTaskImg" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
+                    <a (click)="onEditCampaign(campaign)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                    <a (click)="onClickStickyReviews()" class="assignTask"><img src="../../../../assets/images/icon_assign_task.png" class="assignTaskImg" alt=""></a>
+                    <a (click)="onDeleteCampaign(campaign.id)" class="delete"><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
 
                       <div class="taskBox">
                         <div class="review-box">
@@ -239,7 +239,14 @@
                 </div>
               </li>
             </ul>
-          </ng-scrollbar>
+            </ng-scrollbar>
+            <ng-template #noRecords>
+                <ul>
+                    <li class="row">
+                      <p class="no-records">Sorry no campaigns found !</p>
+                    </li>
+                </ul>
+            </ng-template>
           </div>
         </div>
       </div>

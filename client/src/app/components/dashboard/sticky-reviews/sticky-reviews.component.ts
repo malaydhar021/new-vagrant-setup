@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -52,8 +52,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     private title: Title,
     private formBuilder: FormBuilder,
     private errorService: ErrorsService,
-    private stickyReviewService: StickyReviewService,
-    private cd: ChangeDetectorRef
+    private stickyReviewService: StickyReviewService
   ) { 
     // update errorMessage if anything caught by our error interceptor
     this.subscription = this.errorService.error$.subscribe(
@@ -389,10 +388,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         if(response.status) {
           // show the success message to user in review listing page
           this.successMessage = response.message;
-          // making an api call to get all reviews along with the newly added branding
+          // making an api call to get all reviews along with the newly added sticky review
           this.getStickyReviews(); 
         } else {
-          // show the error message to user in case there is any error from api respose
+          // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
           // hide the loader
           this.loader = false;
