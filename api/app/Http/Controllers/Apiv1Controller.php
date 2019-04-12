@@ -5,26 +5,21 @@ namespace App\Http\Controllers;
 use App\Branding;
 use App\ExitPopUp;
 use App\Http\Requests\CampaignRequest;
-use App\Http\Requests\PostReviewLink;
-use App\Http\Requests\SaveExitPopUp;
-use App\Http\Requests\SaveReviewLink;
+use App\Http\Requests\ExitPopUpRequest;
+use App\Http\Requests\ReviewLinkRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Campaign;
 use App\NegativeReview;
 use App\ReviewLink;
 use App\StickyReview;
-use Carbon\Carbon;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreStickyNotes;
+use App\Http\Requests\StickyReviewRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Traits\AuthTrait;
 use App\User;
-use Cartalyst\Stripe\Stripe;
 use Validator;
 use Intervention\Image\Facades\Image;
 
@@ -402,10 +397,10 @@ class Apiv1Controller extends Controller
 
     /**
      * this function save sticky reviews in database
-     * @param StoreStickyNotes $request
+     * @param StickyReviewRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postSaveStickyReview(StoreStickyNotes $request)
+    public function postSaveStickyReview(StickyReviewRequest $request)
     {
         try {
             /* get the extension */
@@ -1245,7 +1240,7 @@ class Apiv1Controller extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postCreateReviewLink(SaveReviewLink $request)
+    public function postCreateReviewLink(ReviewLinkRequest $request)
     {
         try {
             /* get the extension */
@@ -1532,10 +1527,10 @@ class Apiv1Controller extends Controller
     /**
      * This function stores exit pop up in db
      *
-     * @param SaveExitPopUp $request
+     * @param ExitPopUpRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postSaveExitPopUp(SaveExitPopUp $request)
+    public function postExitPopUpRequest(ExitPopUpRequest $request)
     {
         try {
             DB::beginTransaction();

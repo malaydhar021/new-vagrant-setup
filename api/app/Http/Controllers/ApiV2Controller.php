@@ -5,30 +5,22 @@ namespace App\Http\Controllers;
 use App\Branding;
 use App\ExitPopUp;
 use App\Http\Requests\CampaignRequest;
-use App\Http\Requests\PostReviewLink;
-use App\Http\Requests\SaveExitPopUp;
-use App\Http\Requests\SaveReviewLink;
+use App\Http\Requests\ExitPopUpRequest;
+use App\Http\Requests\ReviewLinkRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Campaign;
 use App\NegativeReview;
 use App\ReviewLink;
 use App\StickyReview;
-use Carbon\Carbon;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreStickyNotes;
+use App\Http\Requests\StickyReviewRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
-use Validator;
 use Intervention\Image\Facades\Image;
 use Auth;
-use App\CampaignStyle;
-use App\Http\Resources\CampaignStyleResource;
-use App\Http\Resources\CampaignsResource;
 
 class ApiV2Controller extends Controller
 {
@@ -416,10 +408,10 @@ class ApiV2Controller extends Controller
 
     /**
      * this function save sticky reviews in database
-     * @param StoreStickyNotes $request
+     * @param  StickyReviewRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postSaveStickyReview(StoreStickyNotes $request)
+    public function postSaveStickyReview(StickyReviewRequest $request)
     {
         if (is_integer($this->isAuthenticated())) {
             try {
@@ -888,10 +880,10 @@ class ApiV2Controller extends Controller
 
     /**
      * this function updates sticky reviews in database
-     * @param Request $request
+     * @param  StickyReviewRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postUpdateStickyReview(Request $request)
+    public function postUpdateStickyReview(StickyReviewRequest $request)
     {
         if (is_integer($this->isAuthenticated())) {
             if ($request->has('id')) {
@@ -906,10 +898,10 @@ class ApiV2Controller extends Controller
                         $updatedAt = $search_sticky_review->updated_at;
                     }
                     $search_sticky_review->update([
-                        'name'        => $request->name,
-                        'description' => $request->description,
-                        'rating'      => $request->rating,
-                        'tags'        => strlen($request->tags) ? $request->tags: null,
+                        'name'        => $request->input('name') ? $request->input('name') : $search_sticky_review->name,
+                        'description' => $request->input('description') ? $request->input('description') : $search_sticky_review->description,
+                        'rating'      => $request->input('rating') ? $request->input('rating') : $search_sticky_review->rating,
+                        'tags'        => $request->input('tags') ? $request->input('tags') : $search_sticky_review->tags,
                         'created_at'  => $createdAt,
                         'updated_at'  => $updatedAt
                     ]);
@@ -1207,12 +1199,13 @@ class ApiV2Controller extends Controller
             ],403);
         }
     }
+
     /**
      * this function creates a review link for the users
-     * @param Request $request
+     * @param  ReviewLinkRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postCreateReviewLink(SaveReviewLink $request)
+    public function postCreateReviewLink(ReviewLinkRequest $request)
     {
         try {
             /* get the extension */
@@ -1502,10 +1495,10 @@ class ApiV2Controller extends Controller
     /**
      * This function stores exit pop up in db
      *
-     * @param SaveExitPopUp $request
+     * @param ExitPopUpRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postSaveExitPopUp(SaveExitPopUp $request)
+    public function postExitPopUpRequest(ExitPopUpRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -1653,10 +1646,10 @@ class ApiV2Controller extends Controller
     /**
      * This function helps to update the review link in db
      *
-     * @param Request $request
+     * @param  ReviewLinkRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postUpdateReviewLink(Request $request)
+    public function postUpdateReviewLink(ReviewLinkRequest $request)
     {
         if (is_integer($this->isAuthenticated())) {
             if ($request->has('id')) {

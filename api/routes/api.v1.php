@@ -52,7 +52,7 @@ Route::middleware('cors')->group(function () {
     Route::get('/get-all-review-link/{id?}', 'Apiv1Controller@getAllReviewLinks')->name('getAllCampaigns');
     Route::post('/check-duplicate-review-link', 'Apiv1Controller@postCheckDuplicateReviewLink')->name('postCheckDuplicateReviewLink');
     Route::post('/save-user-review', 'Apiv1Controller@postSaveUserReview')->name('postSaveUserReview');
-    Route::post('/save-exit-pop-up', 'Apiv1Controller@postSaveExitPopUp')->name('postSaveExitPopUp');
+    Route::post('/save-exit-pop-up', 'Apiv1Controller@postExitPopUpRequest')->name('postExitPopUpRequest');
     Route::get('/get-all-exit-pop-ups', 'Apiv1Controller@getAllExitPopUps')->name('getAllExitPopUps');
     Route::post('/delete-review-link', 'Apiv1Controller@postDeleteReviewLink')->name('postDeleteReviewLink');
     Route::post('/update-review-link', 'Apiv1Controller@postUpdateReviewLink')->name('postUpdateReviewLink');

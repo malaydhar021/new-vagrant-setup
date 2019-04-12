@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Traits\Subscription;
-use App\Http\Resources\UserResource;
 use App\User;
 
 use Illuminate\Http\Request;
@@ -26,7 +25,7 @@ class AuthController extends Controller
      */
     public function checkEmail(Request $request)
     {
-        $exists = User::whereEmail("{$request->input('email')}")->first();
+        $exists = User::whereEmail($request->input('email'))->first();
 
         if ($exists) {
             return response()->json([
@@ -43,7 +42,7 @@ class AuthController extends Controller
     
     
     /**
-     * Checks if an email is registered or not
+     * Validates email registration status and passwords strength
      *
      * @param  Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -52,10 +51,11 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => "required|string|email",
-            'password' => "required|string|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/"
+            'password' => "required|string|min:8|" .
+                "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/"
         ]);
-        
-        $exists = User::whereEmail("{$request->input('email')}")->first();
+
+        $exists = User::whereEmail($request->input('email'))->first();
 
         if ($exists) {
             return response()->json([
@@ -65,7 +65,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'status' => true,
-                'message' => "Email and password are valid",
+                'message' => "Email and password are valid, go ahead and register.",
             ]);
         }
     }
