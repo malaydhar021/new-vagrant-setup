@@ -24,7 +24,7 @@ class BrandResource extends Resource
         } else {
             return [
                 'id' => Hashids::encode($this->id),
-                'brand_name' => $this->brand_name,
+                'name' => $this->name,
                 'url' => $this->url,
                 'created_by' => (new UserResource($this->user))->briefOnly(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),

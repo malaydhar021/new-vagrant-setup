@@ -47,6 +47,20 @@ class Campaign extends Model
     ];
 
     /**
+     * Set the campaign's domain name
+     *
+     * @param  strong  $value
+     * @return void
+     */
+    public function setDomainNameAttribute($value)
+    {
+        $segements = null;
+        preg_match('/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)/', $value, $segements);
+
+        $this->attributes['domain_name'] = $segements[1];
+    }
+
+    /**
      * this functions defines many to many relationship  to StickyReview model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

@@ -22,8 +22,31 @@ class Branding extends Model
      * @var array
      */
     protected $fillable = [
-        'brand_name', 'url', 'user_id'
+        'name',
+        'url',
+        'user_id'
     ];
+
+    /**
+     * Set the brand's name
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['brand_name'] = $value;
+    }
+
+    /**
+     * Get the brand's name
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return $this->brand_name;
+    }
 
     /**
      * The user owns the branding

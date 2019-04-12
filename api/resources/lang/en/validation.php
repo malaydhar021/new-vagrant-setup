@@ -160,6 +160,11 @@ return [
             'string' => ['message' => "Sticky review item should be an string."],
             'distinct' => ['message' => "Sticky review item should be distinct, no repetead item is allowed."],
         ],
+        'campaigns.*' => [
+            'required' => ['message' => "At least one campaign item is required inside the array."],
+            'string' => ['message' => "Campaign item should be an string."],
+            'distinct' => ['message' => "Campaign item should be distinct, no repetead item is allowed."],
+        ],
     ],
 
     /*

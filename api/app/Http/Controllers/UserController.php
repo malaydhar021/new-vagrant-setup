@@ -37,7 +37,7 @@ class UserController extends Controller
         $user->name = $request->has('name') ? $request->input('name') : $user->name;
         $user->email = $request->has('email') ? $request->input('email') : $user->email;
         if ($request->has('image')) {
-            $user->image_url = $request->file('image');
+            $user->image = $request->file('image');
         }
         $user->update();
 

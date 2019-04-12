@@ -2,12 +2,21 @@
 
 namespace App;
 
+use App\Traits\FileStorage;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StickyReview extends Model
 {
-    use SoftDeletes;
+    use FileStorage, SoftDeletes;
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * The attributes that should be mutated to dates.
@@ -21,26 +30,170 @@ class StickyReview extends Model
      *
      * @var array
      */
-    protected $fillable = ['created_by', 'name', 'description', 'image', 'rating'];
-
-    protected $appends = ['image_url'];
+    protected $fillable = [
+        'name',
+        'description',
+        'image',
+        'rating',
+        'created_by',
+    ];
 
     /**
-     * this functions defines many to many relationship  to Campaign model
+     * Set the sticky review's review text
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setReviewTextAttribute($value)
+    {
+        $this->attributes['description'] = $value;
+    }
+
+    /**
+     * Get the sticky review's review text
+     *
+     * @return string
+     */
+    public function getReviewTextAttribute()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the sticky review's review audio
+     *
+     * @param  \Illuminate\Http\UploadedFile  $value
+     * @return void
+     */
+    public function setReviewAudioAttribute($value)
+    {
+        if ($this->image) {
+            $this->deleteImageFile($this->image);
+        }
+
+        $this->attributes['description'] = $this->saveAudioFile($value);
+    }
+
+    /**
+     * Get the sticky review's review video
+     *
+     * @return string
+     */
+    public function getReviewAudioAttribute()
+    {
+        return $this->getAudioFileURI($this->description);
+    }
+
+    /**
+     * Set the sticky review's review audio
+     *
+     * @param  \Illuminate\Http\UploadedFile  $value
+     * @return void
+     */
+    public function setReviewVideoAttribute($value)
+    {
+        if ($this->image) {
+            $this->deleteVideoFile($this->image);
+        }
+
+        $this->attributes['description'] = $this->saveVideoFile($value);
+    }
+
+    /**
+     * Get the sticky review's review video
+     *
+     * @return string
+     */
+    public function getReviewVideoAttribute()
+    {
+        return $this->getVideoFileURI($this->description);
+    }
+
+    /**
+     * Set the sticky review's image
+     *
+     * @param  \Illuminate\Http\UploadedFile  $value
+     * @return void
+     */
+    public function setImageAttribute($value)
+    {
+        if ($this->image) {
+            $this->deleteImageFile($this->image);
+        }
+
+        $this->attributes['image'] = $this->saveImageFile($value);
+    }
+
+    /**
+     * Get the sticky review's image URL
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->getImageFileURI($this->image);
+    }
+
+    /**
+     * Get the sticky review's review type
+     *
+     * @param string $value
+     * @return int
+     */
+    public function getReviewTypeAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    /**
+     * Get the sticky review's type
+     *
+     * @param string $value
+     * @return int
+     */
+    public function getTypeAttribute($value)
+    {
+        switch ($value) {
+            case "textual":
+                return 1;
+            case "audio":
+                return 2;
+            case "video":
+                return 3;
+            default:
+                return (int) $value;
+        };
+    }
+
+    /**
+     * Get the sticky review's rating
+     *
+     * @param string $value
+     * @return int
+     */
+    public function getRatingAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    /**
+     * Campaigns has attached the sticky review
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function campaigns()
     {
-        return $this->belongsToMany('App\Campaign');
+        return $this->belongsToMany(Campaign::class);
     }
 
     /**
-     * relation to negative reviews
+     * Sticky reviews owns by negative reviews
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function negativeReviews()
     {
-        return $this->belongsTo('App\NegativeReview', 'id', 'sticky_review_id');
+        return $this->belongsTo(NegativeReview::class, 'id', 'sticky_review_id');
     }
 
     /**
@@ -61,73 +214,5 @@ class StickyReview extends Model
     public function reviewLink()
     {
         return $this->belongsTo(ReviewLink::class);
-    }
-
-    /**
-     * store record in sticky reviews coming from user review store procedure
-     * @param null $created_by
-     * @param null $name
-     * @param null $description
-     * @param null $image
-     * @param null $rating
-     * @param null $review_type
-     * @param null $review_link_id
-     * @return bool
-     */
-    public static function storeStickyReview(
-        $created_by = null,
-        $name = null,
-        $description = null,
-        $image = null,
-        $rating = null,
-        $review_type = null,
-        $review_link_id = null
-    ) {
-        try {
-            $sticky_review                  = new StickyReview();
-            $sticky_review->created_by      = $created_by;
-            $sticky_review->name            = $name;
-            $sticky_review->description     = $description;
-            $sticky_review->image           = $image;
-            $sticky_review->rating          = $rating;
-            if ($review_type === 3) {
-                $findReview = ReviewLink::where('url_slug', $review_link_id)->first();
-                if ($findReview) {
-                    if ($findReview->auto_approve === 1 && $findReview->min_rating <= $rating) {
-                        $sticky_review->review_type     = $review_type;
-                    } else {
-                        $sticky_review->review_type     = 2;
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                $sticky_review->review_type     = $review_type;
-            }
-            $sticky_review->review_link_id  = ReviewLink::urlSlugToReviewLinkId($review_link_id);
-            if ($sticky_review->save()) {
-                // to auto assign
-                ReviewLink::autoAssignToCampaign($review_link_id, $sticky_review->id, $review_type, $rating);
-                if ($review_type == 4) {
-                    return $sticky_review->id;
-                } else {
-                    return true;
-                }
-            } else {
-                return false;
-            }
-        } catch (\Exception $e) {
-            \Log::info('sticky review save error'.$e->getMessage());
-            return false;
-        }
-    }
-    
-    /**
-     * Function to create another attribute in stickyreviews data object
-     * @return string Image url
-     */
-    public function getImageUrlAttribute()
-    {
-        return config('app.url') . "/uploads/sticky-review-images/{$this->image}";
     }
 }

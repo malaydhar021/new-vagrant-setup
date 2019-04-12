@@ -23,8 +23,6 @@ class CampaignsController extends Controller
 
     /**
      * Create a new constructor instance
-     *
-     * @param  \Illuminate\Http\Request  $request
      */
     public function __construct()
     {
@@ -99,7 +97,7 @@ class CampaignsController extends Controller
         $campaign->is_active = (string) ((int) $request->input('is_active'));
         $campaign->save();
 
-        $campaign->load('campaignStyle', 'brandingDetails', 'exitPopUp');
+        $campaign->load('campaignStyle', 'brandingDetails', 'exitPopUp', 'user');
 
         return response()->json([
             'status' => true,
@@ -209,7 +207,7 @@ class CampaignsController extends Controller
     /**
      * Sync sticky reviews with a specific campaign
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */

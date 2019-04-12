@@ -15,27 +15,52 @@ class StickyReviewResource extends Resource
      */
     public function toArray($request)
     {
+        $type = $this->type;
+
+        switch ($this->type) {
+            case 1:
+                // $type = "textual";
+                $review = $this->review_text;
+                break;
+            case 2:
+                // $type = "audio";
+                $review = $this->review_audio;
+                break;
+            case 3:
+                // $type = "video";
+                $review = $this->review_video;
+                break;
+            default:
+                // $type = "textual";
+                $review = $this->description;
+        }
+
         if ($this->isBrief) {
             return [
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
-                'review_text' => $this->description,
+                'rating' => $this->rating,
+                'type' => $type,
+                'review' => $review,
                 'image_url' => $this->image_url,
                 'tags' => $this->tags,
-                'rating' => $this->rating,
                 'review_type' => $this->review_type,
+                'reviewd_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             ];
         } else {
             return [
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
-                'review_text' => $this->description,
+                'rating' => $this->rating,
+                'type' => $type,
+                'review' => $review,
                 'image_url' => $this->image_url,
                 'tags' => $this->tags,
-                'rating' => $this->rating,
                 'review_type' => $this->review_type,
                 'review_link' => (new ReviewLinkResource($this->review_link))->briefOnly(),
+                'campaigns' => (CampaignsResource::collection($this->whenLoaded('campaigns')))->briefOnly(),
                 'created_by' => (new UserResource($this->user))->briefOnly(),
+                'reviewd_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
             ];

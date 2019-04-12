@@ -21,6 +21,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
 use Intervention\Image\Facades\Image;
 use Auth;
+use App\Http\Requests\BrandRequest;
 
 class ApiV2Controller extends Controller
 {
@@ -670,42 +671,23 @@ class ApiV2Controller extends Controller
 
     /**
      * this function adds one branding in database
-     * @param Request $request
+     *
+     * @param BrandRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postAddBranding(Request $request)
+    public function postAddBranding(BrandRequest $request)
     {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('brand_name') && $request->has('url')) {
-                try {
-                    Branding::create([
-                        'brand_name' => $request->brand_name,
-                        'url' => $request->url,
-                        'user_id' => $this->isAuthenticated()
-                    ]);
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Brand has been successfully added'
-                    ], 200);
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Oops! Something went wrong in server. Please try again later',
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected Params. Bad Request!'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 401);
-        }
+        $brand = Branding::create([
+            'brand_name' => $request->input('brand_name'),
+            'url' => $request->input('url'),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Brand has been successfully added',
+            'data' => $brand,
+        ], 200);
     }
 
     /**
@@ -714,124 +696,70 @@ class ApiV2Controller extends Controller
      */
     public function getAllBranding()
     {
-        if (is_integer($this->isAuthenticated())) {
-            try {
-                $brands = Branding::where('user_id', $this->isAuthenticated())->orderBy('created_at', 'desc')->get();
-                if ($brands) {
-                    return response()->json([
-                        'status' => true,
-                        'data' => $brands,
-                        'message' => 'Brands fetched successfully'
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Sorry no records found!'
-                    ], 200);
-                }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Oops! Something went wrong in server. Please try again later.",
-                    'message' => $e->getMessage()
-                ], 500);
-            }
+        $brands = Branding::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+
+        if ($brands) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Brands fetched successfully',
+                'data' => $brands,
+            ], 200);
         } else {
             return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
+                'status' => true,
+                'message' => 'Sorry no records found!'
+            ], 200);
         }
     }
 
     /**
      * this function soft deletes a particular branding
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function postDeleteBranding(Request $request)
     {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('branding_id')) {
-                try {
-                    $brand = Branding::destroy($request->branding_id);
-                    if ($brand === 1) {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Successfully deleted branding!'
-                        ], 200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Something went wrong, can not delete the record try again later!'
-                        ], 400);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected Params. Bad Request!'
-                ], 400);
-            }
+        if ($request->has('branding_id')) {
+            $brand = Branding::where('user_id', Auth::user()->id)->where('id', $request->branding_id)->firstOrFail();
+            $brand->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Successfully deleted branding!'
+            ], 200);
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
+                'message' => 'Missing expected Params. Hint: `branding_id`'
+            ], 400);
         }
     }
 
     /**
      * update branding in database
-     * @param Request $request
+     * @param BrandRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postUpdateBranding(Request $request)
+    public function postUpdateBranding(BrandRequest $request)
     {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('branding_id')) {
-                try {
-                    $search_branding = Branding::where('id', $request->branding_id)
-                        ->update([
-                            'brand_name' => $request->brand_name,
-                            'url' => $request->url,
-                            'user_id' => $this->isAuthenticated()
-                        ]);
-                    if ($search_branding) {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Successfully updated branding!'
-                        ], 200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Failed to update branding!'
-                        ], 500);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected param! Hint: `branding_id`'
-                ], 400);
-            }
+        if ($request->has('branding_id')) {
+            $branding = Branding::where('user_id', Auth::user()->id)->where('id', $request->branding_id)->firstOrFail();
+            $branding->update([
+                'brand_name' => $request->has('brand_name') ? $request->input('brand_name') : $branding->brand_name,
+                'url' => $request->has('url') ? $request->input('url') : $branding->url,
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Successfully updated branding!',
+                'data' => $branding,
+            ], 200);
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
+                'message' => 'Missing expected param! Hint: `branding_id`'
+            ], 400);
         }
     }
 

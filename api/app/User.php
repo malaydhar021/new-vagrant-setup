@@ -79,21 +79,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Set the user's profile image URL
+     * Set the user's image.
      *
      * @param  \Illumiate\Http\UploadedFile  $file
      * @return void
      */
-    public function setImageUrlAttribute($file)
+    public function setImageAttribute($file)
     {
         if ($this->image) {
             $this->deleteImageFile($this->image);
         }
 
-        $filename = $this->saveImageFile($file);
-        $this->image = $filename;
-
-        return $filename;
+        $this->attributes['image'] = $this->saveImageFile($file);
     }
 
     /**
