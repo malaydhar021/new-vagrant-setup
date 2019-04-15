@@ -29,10 +29,10 @@
 								}
 
 								@media (max-width: 991px) {
-							    	width:35%!important;
+							    	width:33.5%!important;
 								}
 								@media (max-width: 420px) {
-									width:78%!important;
+									width:76%!important;
 								}	
 							}
 							.tcol:last-child a {
@@ -64,4 +64,27 @@
 		}
 	}
 
+}
+.br-default {
+	.br-unit.br-active {
+		@media (max-width: 575px) {
+			width:18px;
+			height:18px;
+			background-size:cover!important;
+		}
+	}	
+	.br-unit.br-selected {
+		@media (max-width: 575px) {
+			width:18px;
+			height:18px;
+			background-size:cover!important;
+		}
+	}
+	.br-unit {
+		@media (max-width: 575px) {
+			width:18px!important;
+			height:18px!important;
+			background-size:cover!important;
+		}
+	}
 }
