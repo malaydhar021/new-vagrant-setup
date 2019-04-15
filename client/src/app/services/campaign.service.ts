@@ -28,7 +28,7 @@ export class CampaignService {
    * @returns Observable<Object>
    */
   public getAllCampaigns() {
-    return this.httpClient.post(CampaignApiEndpoints.campaigns, null);
+    return this.httpClient.get(CampaignApiEndpoints.campaigns);
   }
 
   /**

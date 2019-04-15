@@ -2,6 +2,10 @@
 
 ## Campaign
 
+## V0.0.2
+
+1. Modified campaign api endpoints
+
 ## V0.0.1
 
 1. Implemented services for campaign

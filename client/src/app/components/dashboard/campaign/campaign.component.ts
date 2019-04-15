@@ -205,6 +205,13 @@ export class CampaignComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * @method onCopySnippet
+   */
+  public onCopySnippet() {
+    Log.debug('click on copy snippet');
+  }
+
+  /**
    * Method to toggle selecting sticky reviews popup on the same button click
    * @method onClickStickyReviews
    * @since Version 1.0.0

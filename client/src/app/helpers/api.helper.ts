@@ -187,7 +187,7 @@ export class CampaignApiEndpoints {
    * @returns String
    */
   public static get campaigns() : string {
-    return apiBaseUrl.concat('/get-all-campaigns');
+    return apiBaseUrl.concat('/campaigns');
   }
 
   /**
@@ -197,7 +197,7 @@ export class CampaignApiEndpoints {
    * @returns String
    */
   public static get addCampaign() : string {
-    return apiBaseUrl.concat('/add-campaign');
+    return apiBaseUrl.concat('/campaigns');
   }
 
   /**
@@ -207,7 +207,7 @@ export class CampaignApiEndpoints {
    * @returns String
    */
   public static get updateCampaign() : string {
-    return apiBaseUrl.concat('/update-campaign-details');
+    return apiBaseUrl.concat('/campaigns');
   }
 
   /**
@@ -217,7 +217,7 @@ export class CampaignApiEndpoints {
    * @returns String
    */
   public static get deleteCampaign() : string {
-    return apiBaseUrl.concat('/delete-campaign');
+    return apiBaseUrl.concat('/campaigns');
   }
 
   /**
