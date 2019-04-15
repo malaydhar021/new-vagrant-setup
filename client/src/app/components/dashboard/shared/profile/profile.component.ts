@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 @Component({
   selector: 'user-profile',
   templateUrl: './profile.component.html',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private ngxSmartModalService: NgxSmartModalService,
+  ) { }
 
   ngOnInit() {
   }

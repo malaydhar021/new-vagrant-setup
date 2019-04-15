@@ -54,3 +54,61 @@
     </div>
   </div>
 </div>
+
+<ngx-smart-modal #modal2 identifier="modal2" class="sr-modal">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+          Make Profile Changes
+      </h2>
+    </div>
+    <div class="sr-modal-body profileImg">
+        <form>
+            <div class="sr-form">
+              <div class="sr-form-row">
+                <div class="sr-form-cell">
+                  <label>Change Name</label>
+                  <div class="sr-form-field">
+                    <input type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="sr-form-row">
+                <div class="sr-form-cell">
+                  <label>Change Email</label>
+                  <div class="sr-form-field">
+                    <input type="email">
+                  </div>
+                </div>
+              </div>
+              <div class="sr-form-row">
+                <div class="sr-form-cell">
+                  <label>Upload an image</label>
+                  <div class="sr-form-field">
+                    <div class="sr-form-ctrl inputFile">
+                      <input type="file">
+                      <div class="choseFileArea">
+                        <div class="fileImg">
+                          <img src="../../../../assets/images/icon_upload_photo.png" alt="">
+                        </div>
+                        <p>
+                          <span>{{choseFileCtrl}}</span>{{fileName}}
+                        </p>
+                      </div>
+                      <div class="figureUpld"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="sr-form-row">
+                  <div class="sr-form-cell">
+                      <button class="button-submit" type="">
+                          <img src="../../../../assets/images/addIcon.png" alt=""> Save Changes
+                      </button>
+                  </div>
+              </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</ngx-smart-modal>
