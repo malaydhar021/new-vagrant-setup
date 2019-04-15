@@ -383,6 +383,26 @@ a {
       border-bottom: 11px solid rgba(0, 0, 0, 0);
       border-top: 11px solid rgba(0, 0, 0, 0);
     }
+
+    @media (max-width: 480px) {
+      .greenTag {
+        font-size: 11px;
+        height: 18px;
+        line-height: 16px;
+        padding: 1px 5px;
+        margin-left: 10px;
+
+        &:before {
+          border-right: 11px solid #47e3bd;
+          border-bottom: 9px solid rgba(0, 0, 0, 0);
+          border-top: 9px solid rgba(0, 0, 0, 0);
+        }
+
+        &:after {
+          top: 7px;
+        }
+      }
+    }
   }
 
   &::after {
@@ -1542,7 +1562,11 @@ a {
         }
 
         @media (max-width: 991px) {
-          height: inherit;
+          // height: inherit;
+
+          .ng-scrollbar-visible {
+            padding-right: 0;
+          }
         }
       }
     }
@@ -2179,7 +2203,12 @@ a {
   }
 
   @media (max-width: 991px) {
-    height: inherit;
+    // height: inherit;
+    height: calc(100vh - 270px);
+
+    .ng-scrollbar-visible {
+      padding-right: 0;
+    }
   }
 }
 
@@ -2944,6 +2973,13 @@ a {
     transform: translateY(-50%);
 
     // added for modal overflow at top
+    @media (max-width: 767px) {
+      -webkit-transform: none;
+      transform: none;
+      top: auto;
+      margin: 70px auto;
+    }
+
     @media (max-height: 480px) and (orientation: landscape) {
       -webkit-transform: none;
       transform: none;
