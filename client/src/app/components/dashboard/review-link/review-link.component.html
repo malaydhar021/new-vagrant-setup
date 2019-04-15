@@ -1,89 +1,79 @@
-<div class="container">
-  <app-left-panel></app-left-panel>
-
-  <div class="rightPanel">
-    <app-header></app-header>
-
-    <div class="mainBox">
-      <header class="mainBoxHeader">
-        <div class="mainBoxHeaderLeft">
-          <button type="button" class="addReview" (click)="openModelWithAddOrEdit('add', null)">
-            <img src="../../../../assets/images/addIcon.png" alt="">
-            Add Review Link
-          </button>
-        </div>
-        <div class="mainBoxHeaderRight">
-          <input type="text" placeholder="Search ...">
-        </div>
-      </header>
-      <div class="dataTableArea">
-        <div class="table table-col-5 reviewLinkTab">
-          <ul class="thead">
-            <li>REVIEWS</li>
-            <li>CAMPAIGN</li>
-            <li>URL SLUG</li>
-            <li>CREATED DATE</li>
-            <li>ACTION(S)</li>
-          </ul>
-          <div class="tbody">
-            <ng-scrollbar [compact]="true">
-              <ul>
-                <li class="row" *ngFor="let review of reviewLinks; let i = index">
-                  <a class="rowMoreInfo"><img src="../../../../assets/images/down_double_arrow.png" alt=""> More
-                    Options</a>
-                  <div class="rowContainer">
-                    <div class="tcol">
-                      <div class="userImg">
-                        <img src="../../../../assets/images/User_profile_icon_small.png" alt="">
-                      </div>
-                      <div class="userReview">
-                        <h2>{{review.name}} <span class="greenTag">$1 a day</span></h2>
-                        <p>
-                          {{review.description}}
-                        </p>
-                        <div class="reviewLinkinfo">
-                          <div class="minRating">
-                            <p>Min. Rating: </p>
-                            <div class="stars">
-                              <img src="../../../../assets/images/star_active.png" alt="">
-                              <!-- <img src="../../../../assets/images/star_active.png" alt="">
-                              <img src="../../../../assets/images/star_active.png" alt="">
-                              <img src="../../../../assets/images/star_active.png" alt="">
-                              <img src="../../../../assets/images/star_active.png" alt=""> -->
-                            </div>
-                          </div>
-                          <div class="approve">
-                            <p>Auto Approve:</p>
-                            <input type="checkbox" class="tglBtn" [(ngModel)]="review.auto_approve" #review.auto_approve="ngModel" readonly>
-                          </div>
+<div class="mainBox">
+  <header class="mainBoxHeader">
+    <div class="mainBoxHeaderLeft">
+      <button type="button" class="addReview" (click)="openModelWithAddOrEdit('add', null)">
+        <img src="../../../../assets/images/addIcon.png" alt="">
+        Add Review Link
+      </button>
+    </div>
+    <div class="mainBoxHeaderRight">
+      <input type="text" placeholder="Search ...">
+    </div>
+  </header>
+  <div class="dataTableArea">
+    <div class="table table-col-5 reviewLinkTab">
+      <ul class="thead">
+        <li>REVIEWS</li>
+        <li>CAMPAIGN</li>
+        <li>URL SLUG</li>
+        <li>CREATED DATE</li>
+        <li>ACTION(S)</li>
+      </ul>
+      <div class="tbody">
+        <ng-scrollbar [compact]="true">
+          <ul>
+            <li class="row" *ngFor="let review of reviewLinks; let i = index">
+              <a class="rowMoreInfo"><img src="../../../../assets/images/down_double_arrow.png" alt=""> More
+                Options</a>
+              <div class="rowContainer">
+                <div class="tcol">
+                  <div class="userImg">
+                    <img src="../../../../assets/images/User_profile_icon_small.png" alt="">
+                  </div>
+                  <div class="userReview">
+                    <h2>{{review.name}} <span class="greenTag">$1 a day</span></h2>
+                    <p>
+                      {{review.description}}
+                    </p>
+                    <div class="reviewLinkinfo">
+                      <div class="minRating">
+                        <p>Min. Rating: </p>
+                        <div class="stars">
+                          <img src="../../../../assets/images/star_active.png" alt="">
+                          <!-- <img src="../../../../assets/images/star_active.png" alt="">
+                          <img src="../../../../assets/images/star_active.png" alt="">
+                          <img src="../../../../assets/images/star_active.png" alt="">
+                          <img src="../../../../assets/images/star_active.png" alt=""> -->
                         </div>
                       </div>
-                    </div>
-                    <div class="tcol">
-                      <p>{{ review.campaign.campaign_name }}<br>Landing Page</p>
-                    </div>
-                    <div class="tcol">
-                      <p>{{review.url_slug}}</p>
-                    </div>
-                    <div class="tcol">
-                      <p>{{review.created_at | date:'medium'}}</p>
-                    </div>
-                    <div class="tcol">
-                      <a class="edit" (click)="openModelWithAddOrEdit('edit', review)"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                      <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                      <div class="approve">
+                        <p>Auto Approve:</p>
+                        <input type="checkbox" class="tglBtn" [(ngModel)]="review.auto_approve" #review.auto_approve="ngModel" readonly>
+                      </div>
                     </div>
                   </div>
-                </li>
-              </ul>
-            </ng-scrollbar>
-          </div>
-        </div>
+                </div>
+                <div class="tcol">
+                  <p>{{ review.campaign.campaign_name }}<br>Landing Page</p>
+                </div>
+                <div class="tcol">
+                  <p>{{review.url_slug}}</p>
+                </div>
+                <div class="tcol">
+                  <p>{{review.created_at | date:'medium'}}</p>
+                </div>
+                <div class="tcol">
+                  <a class="edit" (click)="openModelWithAddOrEdit('edit', review)"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                  <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </ng-scrollbar>
       </div>
     </div>
   </div>
 </div>
-
-
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalReview">
   <div class="sr-modal-container">
     <div class="sr-modal-header">

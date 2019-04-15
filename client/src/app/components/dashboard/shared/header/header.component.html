@@ -34,7 +34,7 @@
       <a class="hdrProfile" (click)="tglProfileMenu()" style="background-image:url(../../../../assets/images/pp.png)"></a>
       <div class="settingDrop">
         <ul>
-          <li><a>Edit Profile</a></li>
+          <li [routerLink]="['/dashboard/profile']" routerLinkActive="active"><a>Edit Profile</a></li>
           <li><a (click)="onLogout()">Logout</a></li>
         </ul>
       </div>

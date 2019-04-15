@@ -19,6 +19,7 @@ import { ExitPopupComponent } from '../components/dashboard/exit-popup/exit-popu
 import { HeaderComponent } from '../components/dashboard/shared/header/header.component';
 import { PlansComponent } from '../components/dashboard/plans/plans.component';
 import { UpdatePaymentInfoComponent } from '../components/dashboard/update-payment-info/update-payment-info.component';
+import {ProfileComponent} from '../components/dashboard/shared/profile/profile.component';
 
 import { MessageModule} from '../components/shared/message/message.module'
 // importing services
@@ -50,6 +51,7 @@ import { MenuService } from '../services/menu.service';
     HeaderComponent,
     PlansComponent,
     UpdatePaymentInfoComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

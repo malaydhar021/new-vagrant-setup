@@ -1,118 +1,56 @@
-<div class="container">
-  <app-left-panel></app-left-panel>
-
-  <div class="rightPanel">
-    <app-header></app-header>
-
-    <div class="mainBox brandingMain">
-      <header class="mainBoxHeader">
-        <div class="mainBoxHeaderLeft">
-          <button type="button" class="addReview" (click)="onAddBrand()">
-            <img src="../../../../assets/images/addIcon.png" alt=""> 
-            Add Branding
-          </button>
-        </div>
-        <div class="mainBoxHeaderRight">
-          <input type="text" placeholder="Search ...">
-        </div>
-      </header>
-      <!-- <div class="dataTableArea">
-        <div *ngIf="successMessage !== null">{{ successMessage }}</div>
-        <div *ngIf="errorMessage !== null">{{ errorMessage }}</div>
-        <div *ngIf="(isDeleting && errorMessage !== null)">{{ errorMessage }}</div>
-        <div class="table">
-          <ul class="thead">
-            <li>BRAND NAME & URL</li>
-            <li>CREATED DATE</li>
-            <li>ACTION(S)</li>
+<div class="mainBox brandingMain">
+  <header class="mainBoxHeader">
+    <div class="mainBoxHeaderLeft">
+      <button type="button" class="addReview" (click)="onAddBrand()">
+        <img src="../../../../assets/images/addIcon.png" alt=""> 
+        Add Branding
+      </button>
+    </div>
+    <div class="mainBoxHeaderRight">
+      <input type="text" placeholder="Search ...">
+    </div>
+  </header>
+  <div class="dataTableArea">
+    <div *ngIf="successMessage !== null">{{ successMessage }}</div>
+    <div *ngIf="errorMessage !== null">{{ errorMessage }}</div>
+    <div *ngIf="(isDeleting && errorMessage !== null)">{{ errorMessage }}</div>
+    <div class="table">
+      <ul class="thead">
+        <li>BRAND NAME & URL</li>
+        <li>CREATED DATE</li>
+        <li>ACTION(S)</li>
+      </ul>
+      <div class="tbody">
+        <ng-scrollbar [compact]="true" *ngIf="brands.length > 0; else noRecords">
+          <ul>
+            <li class="row" *ngFor="let brand of brands">
+              <div class="rowContainer">
+                <div class="tcol">
+                  <h2>{{ brand.brand_name }}</h2>
+                  <p>{{ brand.url }}</p>
+                </div>
+                <div class="tcol">
+                  <p>{{brand.created_at | date : 'medium'}}</p>
+                </div>
+                <div class="tcol">
+                  <a (click)="onEditBrand(brand)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                  <a (click)="onDeleteBrand(brand.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                </div>
+              </div>
+            </li>
           </ul>
-          <div class="tbody">
-            <ng-scrollbar [compact]="true" *ngIf="brands.length > 0; else noRecords">
-              <ul>
-                <li class="row" *ngFor="let brand of brands">
-                  <div class="rowContainer">
-                    <div class="tcol">
-                      <h2>{{ brand.brand_name }}</h2>
-                      <p>{{ brand.url }}</p>
-                    </div>
-                    <div class="tcol">
-                      <p>{{brand.created_at | date : 'medium'}}</p>
-                    </div>
-                    <div class="tcol">
-                      <a (click)="onEditBrand(brand)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                      <a (click)="onDeleteBrand(brand.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </ng-scrollbar>
-            <ng-template #noRecords>
-                <ul>
-                  <li class="row">
-                    <div class="rowContainer">
-                      <div class="tcol">
-                        <p>Sorry no brands found</p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-            </ng-template>
-          </div>
-        </div>
-      </div> -->
-      <div class="edit-info-user">
-          <h2>Edit your profile information</h2>
-          <p>Explicitly we don't share your information with anyone. Its secured with us only.</p>
-
-          <div class="userInfo text-center">
-              <div class="userDisplay">
-                <span class="showDisplay" style="background-image:url(../../../../assets/images/pp.png);"></span>
-              </div>
-              <h5>Jon Vaughn</h5>
-              <p>Jon@thinkvaughn.com</p>
-              <div class="editInfoHd">
-                <a href="javascript:void(0)" (click)="ngxSmartModalService.getModal('modal2').open()">
-                  <img src="../../../../assets/images/icon_edit_black.png" alt="">
-                </a>
-              </div>
-          </div>
-
-          <div class="formChangepass">
-            <h2>Change password</h2>
-            <p>We reccommend to change your password in every 1 or 2 months to keep your account safe & secured.</p>
-
-            <form>
-              <div class="sr-form-row">
-                <div class="sr-form-cell">
-                  <label>Current Password</label>
-                  <div class="sr-form-field">
-                    <input type="password">
+        </ng-scrollbar>
+        <ng-template #noRecords>
+            <ul>
+              <li class="row">
+                <div class="rowContainer">
+                  <div class="tcol">
+                    <p>Sorry no brands found</p>
                   </div>
                 </div>
-              </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small">
-                  <label>New Password</label>
-                  <div class="sr-form-field">
-                    <input type="password">
-                  </div>
-                </div>
-
-                <div class="sr-form-cell-small">
-                  <label>Re-type New Password</label>
-                  <div class="sr-form-field">
-                    <input type="password">
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-row">
-                <button class="button-submit">
-                  <img src="../../../../assets/images/addIcon.png" alt="">
-                  Update
-                </button>
-              </div>
-            </form>
-          </div>
+              </li>
+            </ul>
+        </ng-template>
       </div>
     </div>
   </div>

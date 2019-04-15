@@ -1,266 +1,254 @@
-<div class="container">
-  <app-left-panel></app-left-panel>
+<div class="mainBox campaignMain">
+  <header class="mainBoxHeader">
+    <div class="mainBoxHeaderLeft">
+      <button type="button" class="addReview" (click)="onAddCampaign()"><img src="../../../../assets/images/addIcon.png" alt=""> Add Campaign</button>
+    </div>
+    <div class="mainBoxHeaderRight">
+      <input type="text" placeholder="Search ...">
+    </div>
+  </header>
+  <div class="dataTableArea">
+    <div class="table table-col-5">
+      <ul class="thead">
+        <li>BRAND NAME & URL</li>
+        <li>VISUAL STYLE</li>
+        <li>EXIT POPUP</li>
+        <li>CREATED DATE</li>
+        <li>ACTION(S)</li>
+      </ul>
+      <div class="tbody">
+        <ng-scrollbar [compact]="true" *ngIf="campaigns.length > 0; else noRecords">
+        <ul>
+          <li class="row" *ngFor="let campaign of campaigns">
+            <div class="rowContainer" [ngClass]="{ratePop: isSelectingReview}">
+              <div class="tcol">
+                <div class="loopedTag">LOOPED</div>
+                <div class="userReview">
+                  <h2>{{ campaign.campaign_name }} <span class="redTag" *ngIf="campaign.is_active">ACTIVE</span></h2>
+                  <p>{{ campaign.domain_name }}</p>
+                </div>
+                <a (click)="onCopySnippet()" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
+              </div>
+              <div class="tcol">
+                <div class="reviewTheme">
+                  <img *ngIf="campaign.style.name == 'Rounded'" src="../../../../assets/images/stickyTheme1.png" alt="">
+                  <img *ngIf="campaign.style.name== 'Square'" src="../../../../assets/images/stickyTheme2.png" alt="">
+                  <img *ngIf="campaign.style.name == 'Tear Drop'" src="../../../../assets/images/stickyTheme3.png" alt="">
+                  <img *ngIf="campaign.style.name == 'Square Elevated'" src="../../../../assets/images/stickyTheme4.png" alt="">
+                  <img *ngIf="campaign.style.name == 'Tear Drop Elevated'" src="../../../../assets/images/stickyTheme5.png" alt="">
+                </div>
+              </div>
+              <div class="tcol">
+                <img src="../../../../assets/images/tick_type_2.png" alt="">
+              </div>
+              <div class="tcol">
+                <p>Dec 3, 2018, 5:39:18 PM</p>
+              </div>
+              <div class="tcol">
+                <a (click)="onEditCampaign(campaign)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a (click)="onClickStickyReviews()" class="assignTask"><img src="../../../../assets/images/icon_assign_task.png" class="assignTaskImg" alt=""></a>
+                <a (click)="onDeleteCampaign(campaign.id)" class="delete"><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
 
-  <div class="rightPanel">
-    <app-header></app-header>
-
-    <div class="mainBox campaignMain">
-      <header class="mainBoxHeader">
-        <div class="mainBoxHeaderLeft">
-          <button type="button" class="addReview" (click)="onAddCampaign()"><img src="../../../../assets/images/addIcon.png" alt=""> Add Campaign</button>
-        </div>
-        <div class="mainBoxHeaderRight">
-          <input type="text" placeholder="Search ...">
-        </div>
-      </header>
-      <div class="dataTableArea">
-        <div class="table table-col-5">
-          <ul class="thead">
-            <li>BRAND NAME & URL</li>
-            <li>VISUAL STYLE</li>
-            <li>EXIT POPUP</li>
-            <li>CREATED DATE</li>
-            <li>ACTION(S)</li>
-          </ul>
-          <div class="tbody">
-            <ng-scrollbar [compact]="true" *ngIf="campaigns.length > 0; else noRecords">
-            <ul>
-              <li class="row" *ngFor="let campaign of campaigns">
-                <div class="rowContainer" [ngClass]="{ratePop: isSelectingReview}">
-                  <div class="tcol">
-                    <div class="loopedTag">LOOPED</div>
-                    <div class="userReview">
-                      <h2>{{ campaign.campaign_name }} <span class="redTag" *ngIf="campaign.is_active">ACTIVE</span></h2>
-                      <p>{{ campaign.domain_name }}</p>
-                    </div>
-                    <a (click)="onCopySnippet()" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-                  </div>
-                  <div class="tcol">
-                    <div class="reviewTheme">
-                      <img *ngIf="campaign.style.name == 'Rounded'" src="../../../../assets/images/stickyTheme1.png" alt="">
-                      <img *ngIf="campaign.style.name== 'Square'" src="../../../../assets/images/stickyTheme2.png" alt="">
-                      <img *ngIf="campaign.style.name == 'Tear Drop'" src="../../../../assets/images/stickyTheme3.png" alt="">
-                      <img *ngIf="campaign.style.name == 'Square Elevated'" src="../../../../assets/images/stickyTheme4.png" alt="">
-                      <img *ngIf="campaign.style.name == 'Tear Drop Elevated'" src="../../../../assets/images/stickyTheme5.png" alt="">
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <img src="../../../../assets/images/tick_type_2.png" alt="">
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a (click)="onEditCampaign(campaign)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a (click)="onClickStickyReviews()" class="assignTask"><img src="../../../../assets/images/icon_assign_task.png" class="assignTaskImg" alt=""></a>
-                    <a (click)="onDeleteCampaign(campaign.id)" class="delete"><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-
-                      <div class="taskBox">
-                        <div class="review-box">
-                          <div class="reviewer-img"></div>
-                          <div class="review-main">
-                            <div class="reviewer-name">Mark Williams</div>
-                            <div class="rewiew-msg">Just awesome</div>
-                            <div class="review-main-footer">
-                              <span class="rewiew-time">
-                                7 days ago
-                              </span>
-                              <img src="../../../../assets/images/icon_poweredby.png" alt="" class="poweredBy"> by 
-                              <span class="brand-name">Tier5LLC</span>
-                              <div class="reviewer-rating">
-                                <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                                <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                                <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                                <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                                <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                              </div>
-                            </div>
+                  <div class="taskBox">
+                    <div class="review-box">
+                      <div class="reviewer-img"></div>
+                      <div class="review-main">
+                        <div class="reviewer-name">Mark Williams</div>
+                        <div class="rewiew-msg">Just awesome</div>
+                        <div class="review-main-footer">
+                          <span class="rewiew-time">
+                            7 days ago
+                          </span>
+                          <img src="../../../../assets/images/icon_poweredby.png" alt="" class="poweredBy"> by 
+                          <span class="brand-name">Tier5LLC</span>
+                          <div class="reviewer-rating">
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
                           </div>
-                          <div class="closeReview"></div>
                         </div>
-
-                        <div class="review-options">
-                          <ul>
-                            <li>
-                              <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
-                              <p>Just awesome</p>
-                              <span class="greenTag">$1 a day</span>
-                            </li>
-                            <li>
-                              <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
-                              <p>Great Product to ...</p>
-                            </li>
-                            <li>
-                              <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
-                              <p>Highly reccomme ...</p>
-                            </li>
-                            <li>
-                              <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
-                              <p>Amazing software ...</p>
-                            </li>
-                          </ul>
-                        </div>
-                        <button class="saveBtn">
-                          <img src="../../../../assets/images/addIcon.png" alt=""> Save
-                        </button>
                       </div>
+                      <div class="closeReview"></div>
+                    </div>
+
+                    <div class="review-options">
+                      <ul>
+                        <li>
+                          <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
+                          <p>Just awesome</p>
+                          <span class="greenTag">$1 a day</span>
+                        </li>
+                        <li>
+                          <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
+                          <p>Great Product to ...</p>
+                        </li>
+                        <li>
+                          <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
+                          <p>Highly reccomme ...</p>
+                        </li>
+                        <li>
+                          <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
+                          <p>Amazing software ...</p>
+                        </li>
+                      </ul>
+                    </div>
+                    <button class="saveBtn">
+                      <img src="../../../../assets/images/addIcon.png" alt=""> Save
+                    </button>
                   </div>
+              </div>
+            </div>
+          </li>
+          <li class="row">
+            <div class="rowContainer">
+              <div class="tcol">
+                <div class="loopedTag">LOOPED</div>
+                <div class="userReview">
+                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
+                  <p>https://www.usestickyreviews.com</p>
                 </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="loopedTag">LOOPED</div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                      <p>https://www.usestickyreviews.com</p>
-                    </div>
-                    <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-                  </div>
-                  <div class="tcol">
-                    <div class="reviewTheme">
-                      <img src="../../../../assets/images/stickyTheme2.png" alt="">
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <img src="../../../../assets/images/tick_type_2.png" alt="">
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
+                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
+              </div>
+              <div class="tcol">
+                <div class="reviewTheme">
+                  <img src="../../../../assets/images/stickyTheme2.png" alt="">
                 </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="loopedTag">LOOPED</div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                      <p>https://www.usestickyreviews.com</p>
-                    </div>
-                    <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-                  </div>
-                  <div class="tcol">
-                    <div class="reviewTheme">
-                      <img src="../../../../assets/images/stickyTheme3.png" alt="">
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <img src="../../../../assets/images/tick_type_2.png" alt="">
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
+              </div>
+              <div class="tcol">
+                <img src="../../../../assets/images/tick_type_2.png" alt="">
+              </div>
+              <div class="tcol">
+                <p>Dec 3, 2018, 5:39:18 PM</p>
+              </div>
+              <div class="tcol">
+                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+          <li class="row">
+            <div class="rowContainer">
+              <div class="tcol">
+                <div class="loopedTag">LOOPED</div>
+                <div class="userReview">
+                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
+                  <p>https://www.usestickyreviews.com</p>
                 </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="loopedTag">LOOPED</div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                      <p>https://www.usestickyreviews.com</p>
-                    </div>
-                    <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-                  </div>
-                  <div class="tcol">
-                    <div class="reviewTheme">
-                      <img src="../../../../assets/images/stickyTheme4.png" alt="">
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <img src="../../../../assets/images/tick_type_2.png" alt="">
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
+                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
+              </div>
+              <div class="tcol">
+                <div class="reviewTheme">
+                  <img src="../../../../assets/images/stickyTheme3.png" alt="">
                 </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="loopedTag">LOOPED</div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                      <p>https://www.usestickyreviews.com</p>
-                    </div>
-                    <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-                  </div>
-                  <div class="tcol">
-                    <div class="reviewTheme">
-                      <img src="../../../../assets/images/stickyTheme5.png" alt="">
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <img src="../../../../assets/images/tick_type_2.png" alt="">
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
+              </div>
+              <div class="tcol">
+                <img src="../../../../assets/images/tick_type_2.png" alt="">
+              </div>
+              <div class="tcol">
+                <p>Dec 3, 2018, 5:39:18 PM</p>
+              </div>
+              <div class="tcol">
+                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+          <li class="row">
+            <div class="rowContainer">
+              <div class="tcol">
+                <div class="loopedTag">LOOPED</div>
+                <div class="userReview">
+                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
+                  <p>https://www.usestickyreviews.com</p>
                 </div>
-              </li>
-              <li class="row">
-                <div class="rowContainer">
-                  <div class="tcol">
-                    <div class="loopedTag">LOOPED</div>
-                    <div class="userReview">
-                      <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                      <p>https://www.usestickyreviews.com</p>
-                    </div>
-                    <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-                  </div>
-                  <div class="tcol">
-                    <div class="reviewTheme">
-                      <img src="../../../../assets/images/stickyTheme1.png" alt="">
-                    </div>
-                  </div>
-                  <div class="tcol">
-                    <img src="../../../../assets/images/tick_type_2.png" alt="">
-                  </div>
-                  <div class="tcol">
-                    <p>Dec 3, 2018, 5:39:18 PM</p>
-                  </div>
-                  <div class="tcol">
-                    <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                    <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                  </div>
+                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
+              </div>
+              <div class="tcol">
+                <div class="reviewTheme">
+                  <img src="../../../../assets/images/stickyTheme4.png" alt="">
                 </div>
-              </li>
+              </div>
+              <div class="tcol">
+                <img src="../../../../assets/images/tick_type_2.png" alt="">
+              </div>
+              <div class="tcol">
+                <p>Dec 3, 2018, 5:39:18 PM</p>
+              </div>
+              <div class="tcol">
+                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+          <li class="row">
+            <div class="rowContainer">
+              <div class="tcol">
+                <div class="loopedTag">LOOPED</div>
+                <div class="userReview">
+                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
+                  <p>https://www.usestickyreviews.com</p>
+                </div>
+                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
+              </div>
+              <div class="tcol">
+                <div class="reviewTheme">
+                  <img src="../../../../assets/images/stickyTheme5.png" alt="">
+                </div>
+              </div>
+              <div class="tcol">
+                <img src="../../../../assets/images/tick_type_2.png" alt="">
+              </div>
+              <div class="tcol">
+                <p>Dec 3, 2018, 5:39:18 PM</p>
+              </div>
+              <div class="tcol">
+                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+          <li class="row">
+            <div class="rowContainer">
+              <div class="tcol">
+                <div class="loopedTag">LOOPED</div>
+                <div class="userReview">
+                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
+                  <p>https://www.usestickyreviews.com</p>
+                </div>
+                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
+              </div>
+              <div class="tcol">
+                <div class="reviewTheme">
+                  <img src="../../../../assets/images/stickyTheme1.png" alt="">
+                </div>
+              </div>
+              <div class="tcol">
+                <img src="../../../../assets/images/tick_type_2.png" alt="">
+              </div>
+              <div class="tcol">
+                <p>Dec 3, 2018, 5:39:18 PM</p>
+              </div>
+              <div class="tcol">
+                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+        </ul>
+        </ng-scrollbar>
+        <ng-template #noRecords>
+            <ul>
+                <li class="row">
+                  <p class="no-records">Sorry no campaigns found !</p>
+                </li>
             </ul>
-            </ng-scrollbar>
-            <ng-template #noRecords>
-                <ul>
-                    <li class="row">
-                      <p class="no-records">Sorry no campaigns found !</p>
-                    </li>
-                </ul>
-            </ng-template>
-          </div>
-        </div>
+        </ng-template>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
   <div class="sr-modal-container">
     <div class="sr-modal-header">

@@ -8,15 +8,18 @@ import { ReviewLinkComponent } from '../../components/dashboard/review-link/revi
 import { ExitPopupComponent } from '../../components/dashboard/exit-popup/exit-popup.component';
 import { PlansComponent } from '../../components/dashboard/plans/plans.component';
 import { UpdatePaymentInfoComponent } from '../../components/dashboard/update-payment-info/update-payment-info.component';
+import {ProfileComponent} from '../../components/dashboard/shared/profile/profile.component';
 const routes: Routes = [
-  {path: '', component: DashboardComponent},
-  {path: 'branding', component: BrandingComponent},
-  {path: 'sticky-reviews', component: StickyReviewsComponent},
-  {path: 'campaign', component: CampaignComponent},
-  {path: 'review-link', component: ReviewLinkComponent},
-  {path: 'exit-popup', component: ExitPopupComponent},
-  {path: 'plans', component: PlansComponent},
-  {path: 'update-payment-info', component: UpdatePaymentInfoComponent},
+  {path: '', component: DashboardComponent, children:[
+    {path: 'profile', component: ProfileComponent},
+    {path: 'sticky-reviews', component: StickyReviewsComponent},
+    {path: 'branding', component: BrandingComponent},
+    {path: 'campaign', component: CampaignComponent},
+    {path: 'exit-popup', component: ExitPopupComponent},
+    {path: 'plans', component: PlansComponent},
+    {path: 'review-link', component: ReviewLinkComponent},
+    {path: 'update-payment-info', component: UpdatePaymentInfoComponent}
+  ]}
 ];
 
 @NgModule({

@@ -1,77 +1,70 @@
-<div class="container">
-  <app-left-panel></app-left-panel>
-
-  <div class="rightPanel">
-    <app-header></app-header>
-
-    <div class="mainBox stickyMain">
-      <header class="mainBoxHeader">
-        <div class="mainBoxHeaderLeft">
-          <button type="button" class="addReview" (click)="onAddStickyReview()">
-            <img src="../../../../assets/images/addIcon.png" alt=""> Add Review
-          </button>
-        </div>
-        <div class="mainBoxHeaderRight">
-          <input type="text" placeholder="Search ..." [(ngModel)]="keyword">
-        </div>
-      </header>
-      <div class="dataTableArea">
-        <div *ngIf="successMessage !== null">{{ successMessage }}</div>
-        <div *ngIf="(isDeleting && errorMessage !== null)">{{ errorMessage }}</div>
-        <div class="table table-col-4">
-          <ul class="thead">
-            <li>REVIEWS</li>
-            <li>STAR RATING</li>
-            <li>CREATED DATE</li>
-            <li>ACTION(S)</li>
-          </ul>
-          <div class="tbody">
-            <ng-scrollbar [compact]="true" *ngIf="reviews.length > 0; else noRecords">
-              <ul>
-                <li class="row" *ngFor="let review of reviews">
-                  <div class="rowContainer">
-                    <div class="tcol">
-                      <div class="userImg">
-                        <img src="{{ review.image_url }}" alt="" class="sticky-review-image">
-                      </div>
-                      <div class="userReview">
-                        <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null">{{ review.tags }}</span></h2>
-                        <p>
-                          {{ review.description }}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="tcol">
-                      <div class="rating">
-                        <bar-rating [(rate)]="review.rating" [max]="5" [theme]="'default'" [readOnly]="true"></bar-rating>
-                      </div>
-                    </div>
-                    <div class="tcol">
-                      <p>{{ review.created_at | date : 'medium' }}</p>
-                    </div>
-                    <div class="tcol">
-                      <a (click)="onEditStickyReview(review)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                      <a (click)="onDeleteStickyReview(review.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-                    </div>
-                  </div>
-                </li>                
-              </ul>
-            </ng-scrollbar>
-            <ng-template #noRecords>
-                <ul>
-                    <li class="row">
-                      <p class="no-records">Sorry no sticky reviews found !</p>
-                    </li>
-                </ul>
-            </ng-template>
-          </div>
-        </div>
-        
-      </div>
-      
+<div class="mainBox stickyMain">
+  <header class="mainBoxHeader">
+    <div class="mainBoxHeaderLeft">
+      <button type="button" class="addReview" (click)="onAddStickyReview()">
+        <img src="../../../../assets/images/addIcon.png" alt=""> Add Review
+      </button>
     </div>
+    <div class="mainBoxHeaderRight">
+      <input type="text" placeholder="Search ..." [(ngModel)]="keyword">
+    </div>
+  </header>
+  <div class="dataTableArea">
+    <div *ngIf="successMessage !== null">{{ successMessage }}</div>
+    <div *ngIf="(isDeleting && errorMessage !== null)">{{ errorMessage }}</div>
+    <div class="table table-col-4">
+      <ul class="thead">
+        <li>REVIEWS</li>
+        <li>STAR RATING</li>
+        <li>CREATED DATE</li>
+        <li>ACTION(S)</li>
+      </ul>
+      <div class="tbody">
+        <ng-scrollbar [compact]="true" *ngIf="reviews.length > 0; else noRecords">
+          <ul>
+            <li class="row" *ngFor="let review of reviews">
+              <div class="rowContainer">
+                <div class="tcol">
+                  <div class="userImg">
+                    <img src="{{ review.image_url }}" alt="" class="sticky-review-image">
+                  </div>
+                  <div class="userReview">
+                    <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null">{{ review.tags }}</span></h2>
+                    <p>
+                      {{ review.description }}
+                    </p>
+                  </div>
+                </div>
+                <div class="tcol">
+                  <div class="rating">
+                    <bar-rating [(rate)]="review.rating" [max]="5" [theme]="'default'" [readOnly]="true"></bar-rating>
+                  </div>
+                </div>
+                <div class="tcol">
+                  <p>{{ review.created_at | date : 'medium' }}</p>
+                </div>
+                <div class="tcol">
+                  <a (click)="onEditStickyReview(review)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                  <a (click)="onDeleteStickyReview(review.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                </div>
+              </div>
+            </li>                
+          </ul>
+        </ng-scrollbar>
+        <ng-template #noRecords>
+            <ul>
+                <li class="row">
+                  <p class="no-records">Sorry no sticky reviews found !</p>
+                </li>
+            </ul>
+        </ng-template>
+      </div>
+    </div>
+    
   </div>
+  
 </div>
+ 
 <!-- Modal form for add / edit a sticky review -->
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
   <div class="sr-modal-container">
