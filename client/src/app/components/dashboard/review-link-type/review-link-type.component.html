@@ -1,8 +1,7 @@
 <div class="reviewLinkBody">
+  <div class="reviewlinkForm">
     <header class="reviewLHdr">
-      <div class="figureHeader">
-        <img src="../../../../assets/images/" alt="">
-      </div>
+      <div class="figureHeader" style="background-image: url(../../../../assets/images/dp.jpeg);"></div>
       <div class="headerTxtRvw">
         <h3>
           FHL-PROMO
@@ -23,17 +22,25 @@
   
               <div class="ftReview">
                   <button type="submit" class="btnOutline btnApprove">
+                    <span>
+                      <img src="../../../../assets/images/icon_thumb_up_green.png" alt="">
+                      <img class="hoverIco" src="../../../../assets/images/icon_thumb_up_green_w.png" alt="">
+                    </span>
                     yes
                   </button>
   
-                  <button type="submit" class="btnOutline btnApprove">
+                  <button type="submit" class="btnOutline btnReject">
+                    <span>
+                      <img src="../../../../assets/images/icon_thumb_down_red.png" alt="">
+                      <img class="hoverIco" src="../../../../assets/images/icon_thumb_down_red_w.png" alt="">
+                    </span>
                     No
                   </button>
               </div>
             </form>
         </div>
   
-        <div class="stepReview step_2">        
+        <div class="stepReview step_2 active">        
           <form>
             <div class="formRow">
               <label>
@@ -49,63 +56,63 @@
                   Select Review Type
               </label>
               <div class="inRowRvw">
-                <div class="reviewRadio">
-                  <input type="radio" name="radioRevwType" />
+                <label class="reviewRadio">
+                  <input type="radio" name="radioRevwType" checked />
                   <span>Video</span>
-                </div>
+                </label>
   
-                <div class="reviewRadio">
+                <label class="reviewRadio">
                   <input type="radio" name="radioRevwType" />
                   <span>Audio</span>
-                </div>
+                </label>
   
-                <div class="reviewRadio">
+                <label class="reviewRadio">
                   <input type="radio" name="radioRevwType" />
                   <span>Textual</span>
-                </div>
-              </div>
-            </div>
-  
-            <div class="formRow">
-              <div class="reviewUp reviewVideo">
-                <div class="inRowRvw">
-                  <div class="rvwVidOpt">
-                    <label class="revUp">
-                      <input type="radio" name="vidType">
-                      <span>
-                          Upload Video
-                      </span>
-                    </label>
-                    <label class="revRec">
-                      <input type="radio" name="vidType">
-                      <span>
-                          Record Video
-                      </span>
-                    </label>
-                  </div>
-                  <div class="reviewVidSh">
-                    <div class="vidUpV vidUp">
-                      
-                    </div>
-    
-                    <div class="vidUpV vidRec">
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="reviewUp reviewAudio">
-                <div class="inRowRvw">
-                  <textarea placeholder="Title for your review"></textarea>
-                </div>
-              </div>
-              <div class="reviewUp reviewTxt">
-                <label>
-                    Review Description
                 </label>
-                <div class="inRowRvw">
-                  <textarea placeholder="Title for your review"></textarea>
-                </div>
+              </div>
+
+              <div class="choiceState">
+                  <div class="reviewUp reviewVideo active">
+                    <div class="inRowRvw">
+                      <div class="rvwVidOpt">
+                        <label class="revUp">
+                          <input type="radio" name="vidType">
+                          <span>
+                              Upload Video
+                          </span>
+                        </label>
+                        <label class="revRec">
+                          <input type="radio" name="vidType" checked>
+                          <span>
+                              Record Video
+                          </span>
+                        </label>
+                      </div>
+                      <div class="reviewVidSh">
+                        <div class="vidUpV vidUp">
+                            <img src="../../../../assets/images/vid.jpg" alt="">
+                        </div>
+        
+                        <div class="vidUpV vidRec active">
+                            <img src="../../../../assets/images/vid.jpg" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="reviewUp reviewAudio">
+                    <div class="inRowRvw">
+                      
+                    </div>
+                  </div>
+                  <div class="reviewUp reviewTxt">
+                    <label>
+                        Review Description
+                    </label>
+                    <div class="inRowRvw">
+                      <textarea placeholder="Title for your review"></textarea>
+                    </div>
+                  </div>
               </div>
             </div>
   
@@ -128,7 +135,7 @@
                     yes
                   </button>
   
-                  <button type="submit" class="btnOutline btnApprove">
+                  <button type="submit" class="btnOutline btnReject">
                     No
                   </button>
   
@@ -169,6 +176,7 @@
             </form>
         </div>
     </div>
+  </div>
   
     <footer class="footerCopy">
       <p>&copy; 2019 All rights reserved. Logistics LLC</p>
