@@ -5234,6 +5234,16 @@ body.sign-upPage {
       color: #fff;
     }
   }
+
+  &.btnSkip {
+    border-color: #ccc;
+    color: #ccc;
+
+    &:hover {
+      background-color: #ccc;
+      color: #000;
+    }
+  }
 }
 
 .text-center {
@@ -5350,7 +5360,7 @@ textarea {
         text-align: center;
         font-weight: 600;
         font-family: 'SegoeUI';
-        letter-spacing: 2px;
+        letter-spacing: normal;
       }
 
       .stepReview {
@@ -5549,6 +5559,17 @@ textarea {
             button {
               width: 100px;
             }
+          }
+        }
+
+        &.step_3 {
+          h2 {
+            @include mt(80px);
+            letter-spacing: normal;
+          }
+
+          button {
+            width: 60px;
           }
         }
 
