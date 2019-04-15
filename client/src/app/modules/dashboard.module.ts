@@ -49,7 +49,7 @@ import { MenuService } from '../services/menu.service';
     ExitPopupComponent,
     HeaderComponent,
     PlansComponent,
-    UpdatePaymentInfoComponent
+    UpdatePaymentInfoComponent,
   ],
   imports: [
     CommonModule,

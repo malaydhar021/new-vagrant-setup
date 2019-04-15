@@ -8,7 +8,6 @@ import { ReviewLinkComponent } from '../../components/dashboard/review-link/revi
 import { ExitPopupComponent } from '../../components/dashboard/exit-popup/exit-popup.component';
 import { PlansComponent } from '../../components/dashboard/plans/plans.component';
 import { UpdatePaymentInfoComponent } from '../../components/dashboard/update-payment-info/update-payment-info.component';
-
 const routes: Routes = [
   {path: '', component: DashboardComponent},
   {path: 'branding', component: BrandingComponent},
@@ -17,7 +16,7 @@ const routes: Routes = [
   {path: 'review-link', component: ReviewLinkComponent},
   {path: 'exit-popup', component: ExitPopupComponent},
   {path: 'plans', component: PlansComponent},
-  {path: 'update-payment-info', component: UpdatePaymentInfoComponent}
+  {path: 'update-payment-info', component: UpdatePaymentInfoComponent},
 ];
 
 @NgModule({

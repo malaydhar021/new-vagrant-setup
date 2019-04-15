@@ -7,6 +7,7 @@ import { ResetPasswordComponent } from '../../components/forgot-password/reset-p
 import { DashboardModule } from '../dashboard.module';
 import { NotFoundComponent } from '../../components/not-found/not-found.component';
 import { AuthGuard } from '../../services/guards/auth.guard.service';
+import { ReviewLinkTypeComponent } from '../../components/dashboard/review-link-type/review-link-type.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'reset-password/:token', component: ResetPasswordComponent },
     { path: 'dashboard', canLoad: [AuthGuard], loadChildren: () => DashboardModule },
     { path: 'not-found', component: NotFoundComponent },
+    {path: 'review-link-type', component: ReviewLinkTypeComponent}  
 ];
 
 @NgModule({
