@@ -56,4 +56,14 @@ export class ReviewLinkService {
   public deleteReviewLink(data: ReviewLinkModel) {
       return this.httpClient.post(ReviewLinkApiEndpoints.deleteReviewLinks, data);
   }
+
+  /**
+   * Method to make an api call to check duplicate url slug
+   * @method checkDuplicateUrlSlug
+   * @since Version 1.0.0
+   * @returns Observable<Object>
+   */
+  public checkDuplicateUrlSlug(data: any) {
+    return this.httpClient.post(ReviewLinkApiEndpoints.checkDuplicateUrlSlug, data);
+  }
 }

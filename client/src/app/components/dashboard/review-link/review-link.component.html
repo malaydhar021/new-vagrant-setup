@@ -7,7 +7,7 @@
     <div class="mainBox">
       <header class="mainBoxHeader">
         <div class="mainBoxHeaderLeft">
-          <button type="button" class="addReview" (click)="ngxSmartModalService.getModal('modal1').open()">
+          <button type="button" class="addReview" (click)="openModelWithAddOrEdit('add', null)">
             <img src="../../../../assets/images/addIcon.png" alt="">
             Add Review Link
           </button>
@@ -69,7 +69,7 @@
                       <p>{{review.created_at | date:'medium'}}</p>
                     </div>
                     <div class="tcol">
-                      <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                      <a class="edit" (click)="openModelWithAddOrEdit('edit', review)"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
                       <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
                     </div>
                   </div>
@@ -88,12 +88,14 @@
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
-        Add Review Link
+        {{reviewLinkForm.get('id').value ? "Edit" : "Add" }} Review Link
       </h2>
     </div>
     <div class="sr-modal-body">
 
       <form [formGroup]="reviewLinkForm" (ngSubmit)="onSubmit()">
+
+        <input type="text" hidden formControlName="id">
         <div class="sr-form">
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
@@ -124,7 +126,7 @@
               <div class="sr-form-field">
                 <label>Auto Approve <a href="javascript:void(0)" class="tooltip">
                   <img src="../../../../assets/images/icon_info2.png" alt=""></a> 
-                <input type="checkbox" class="tglBtn"></label>
+                <input type="checkbox" class="tglBtn" formControlName="auto_approve"></label>
               </div>
             </div>
             <div class="sr-form-cell-small">
@@ -139,7 +141,7 @@
             <div class="sr-form-cell-small">
               <label>Define Min. Rating</label>
 
-              <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'"></bar-rating>
+              <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="min_rating"></bar-rating>
             </div>
             <div class="sr-form-cell-small imageUp">
               <label>Upload an image</label>
@@ -214,7 +216,7 @@
           <div class="sr-form-row">
             <div class="sr-form-cell">
               <button class="button-submit" type="" [disabled]="!this.reviewLinkForm.valid">
-                <img src="../../../../assets/images/addIcon.png" alt=""> Save Review Link
+                <img src="../../../../assets/images/addIcon.png" alt=""> {{reviewLinkForm.get('id').value ? "Update" : "Save" }} Review Link
               </button>
             </div>
           </div>

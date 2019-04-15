@@ -347,4 +347,14 @@ export class ReviewLinkApiEndpoints {
   public static get deleteReviewLinks() : string {
     return apiBaseUrl.concat('/delete-review-link');
   }
+
+  /**
+   * checkDuplicateUrlSlug to generate api endpoint to check duplicate url slug
+   * @method checkDuplicateUrlSlug
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get checkDuplicateUrlSlug() : string {
+    return apiBaseUrl.concat('/check-duplicate-review-link');
+  }
 }

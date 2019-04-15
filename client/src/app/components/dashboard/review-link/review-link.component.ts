@@ -78,22 +78,27 @@ export class ReviewLinkComponent implements OnInit {
 
   /**
    * create the reactive form for adding review link
+   * @method createReviewLinkForm
+   * @since Version 1.0.0
+   * @returns Void
    */
   createReviewLinkForm() {
     this.reviewLinkForm = this.fornBuilder.group({
       id: [null],
-      myLogo: ['', [Validators.required]],
+      myLogo: [''],
       name: ['', Validators.required],
       description: ['', Validators.required],
       url_slug: [Math.random().toString(36).substr(2, 9), Validators.required],
       campaign_id: [''],
-      auto_approve: [''],
+      auto_approve: [0],
       min_rating: [''],
       negative_info_review_msg_1: ['', Validators.required],
       negative_info_review_msg_2: ['', Validators.required],
       positive_review_msg: ['', Validators.required]
     });
   }
+
+  
 
    /**
    * ngOnInit method initialize angular reactive form object for add / edit form of a brand. 
@@ -109,11 +114,68 @@ export class ReviewLinkComponent implements OnInit {
     this.createReviewLinkForm();
   }
 
-  onAddReviewLink(){
+  /**
+   * openModelWithAddOrEdit method to handle the model popup for add or edit the review link
+   * @method openModelWithAddOrEdit
+   * @param action 
+   * @param data 
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  openModelWithAddOrEdit(action: string, data: any){
+    this.ngxSmartModalService.getModal('modal1').open();
+    if (action === 'add'){
+      this.createReviewLinkForm();
+    }
+
+    if (action === 'edit') {
+      Log.info("In Edit", data)
+      this.reviewLinkForm.patchValue({
+        'id': data.id,
+        'name': data.name,
+        'description': data.description,
+        'url_slug': data.url_slug,
+        'campaign_id': data.campaign_id,
+        'auto_approve': data.auto_approve,
+        'min_rating': data.min_rating,
+        'negative_info_review_msg_1': data.negative_info_review_msg_1,
+        'negative_info_review_msg_2': data.negative_info_review_msg_2,
+        'positive_review_msg': data.positive_review_msg
+      });
+    }
+  }
+  
+  
+  /**
+   * onSubmit method to handle submit button from Modal popup for add or edit the review link
+   * @method onSubmit
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  onSubmit(){
+    Log.info("asjdhasdhjas")
+    let id = this.reviewLinkForm.get('id').value;
+    if (id){
+      this.update(this.reviewLinkForm.value);
+    } else {
+      this.create(this.reviewLinkForm.value);
+    }
 
   }
 
-  onSubmit(){
-    console.log("jahsgd")
+  update(data: ReviewLinkModel){
+    Log.info(data, "Update Review link")
+  }
+
+  create(data: ReviewLinkModel){
+    Log.info(data, "Create Review Link");
+  }
+
+  delete(id: string){
+    Log.info(id, "Delete Review Link")
+  }
+
+  checkUrlSlug(slug: string){
+    
   }
 }
