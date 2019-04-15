@@ -136,8 +136,8 @@ return [
             'required' => ["message" => "Password is required"],
             'min' => ["message" => "Password should be at least 8 characters long"],
             'regex' => [
-                'message' => "Password should contains one english uppercase characters (A–Z), " .
-                            "one english lowercase characters (a–z), " .
+                'message' => "Password should contains one English uppercase characters (A–Z), " .
+                            "one English lowercase characters (a–z), " .
                             "one numeric value (0–9) and one special characters (!, $, #, or %)",
                 'rules' => [
                     "English uppercase characters (A–Z)",

@@ -20,12 +20,14 @@ class UserResource extends Resource
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
                 'email' => $this->email,
+                'image' => $this->image_url,
             ];
         } else {
             return [
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
                 'email' => $this->email,
+                'image' => $this->image_url,
                 'subscription' => new SubscriptionResource($this),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),

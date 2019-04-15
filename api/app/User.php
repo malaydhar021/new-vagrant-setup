@@ -6,10 +6,12 @@ use App\Notifications\CardExpiring;
 use App\Notifications\CardUpdated;
 use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
+use App\Notifications\PasswordUpdated;
 use App\Notifications\SubscriptionCreated;
 use App\Notifications\SubscriptionDeleted;
 use App\Notifications\SubscriptionTrialWillEnd;
 use App\Notifications\SubscriptionUpdated;
+use App\Traits\FileStorage;
 use App\Traits\Subscription;
 use App\Subscription as LocalSubscription;
 
@@ -22,7 +24,7 @@ use App\Notifications\SubscriptionTerminated;
 
 class User extends Authenticatable
 {
-    use Billable, HasApiTokens, Notifiable, Subscription;
+    use Billable, FileStorage, HasApiTokens, Notifiable, Subscription;
 
     /**
      * The attributes that are mass assignable.
@@ -33,6 +35,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
         'stripe_id',
         'card_brand',
         'card_last_four',
@@ -76,6 +79,34 @@ class User extends Authenticatable
     }
 
     /**
+     * Set the user's profile image URL
+     *
+     * @param  \Illumiate\Http\UploadedFile  $file
+     * @return void
+     */
+    public function setImageUrlAttribute($file)
+    {
+        if ($this->image) {
+            $this->deleteImageFile($this->image);
+        }
+
+        $filename = $this->saveImageFile($file);
+        $this->image = $filename;
+
+        return $filename;
+    }
+
+    /**
+     * Get the user's image URL
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->getImageFileURI($this->image);
+    }
+
+    /**
      * Get all the subscription of an user
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -114,6 +145,16 @@ class User extends Authenticatable
     public function sendPasswordResetSuccessNotification()
     {
         $this->notify(new PasswordResetSuccess($this->name));
+    }
+
+    /**
+     * Send password updated notification with greetings
+     *
+     * @return void
+     */
+    public function sendPasswordUpdatedNotification()
+    {
+        $this->notify(new PasswordUpdated($this->name, $this->updated_at));
     }
 
     /**

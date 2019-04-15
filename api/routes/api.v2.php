@@ -13,36 +13,38 @@ use App\Helpers\Hashids;
 |
 */
 
-Route::prefix('auth')->namespace('Auth')->group(function () {
-    Route::get('email-registration-status', 'AuthController@checkEmail')->name('auth.email.check');
-    Route::post('validate-email-password', 'AuthController@validateEmailPassword')->name('auth.email.password.validate');
-    Route::post('register', 'AuthController@register')->name('auth.register');
-    Route::post('login', 'AuthController@login')->name('auth.login');
-    Route::post('logout', 'AuthController@logout')->name('auth.logout')->middleware('auth:api');
+Route::prefix('auth')->namespace('Auth')->name('auth.')->group(function () {
+    Route::get('email-registration-status', 'AuthController@checkEmail')->name('email.check');
+    Route::post('validate-email-password', 'AuthController@validateEmailPassword')->name('email.password.validate');
+    Route::post('register', 'AuthController@register')->name('register');
+    Route::post('login', 'AuthController@login')->name('login');
+    Route::post('logout', 'AuthController@logout')->name('logout')->middleware('auth:api');
 
-    Route::prefix('password')->group(function () {
-        Route::prefix('token')->group(function () {
-            Route::post('/', 'PasswordResetTokenController@store')->name('auth.password.token.store');
-            Route::get('{token}', 'PasswordResetTokenController@show')->name('auth.password.token.show');
+    Route::prefix('password')->name('password.')->group(function () {
+        Route::prefix('token')->name('token.')->group(function () {
+            Route::post('/', 'PasswordResetTokenController@store')->name('store');
+            Route::get('{token}', 'PasswordResetTokenController@show')->name('show');
         });
-        Route::put('/', 'PasswordResetController@update')->name('auth.password.update');
+        Route::put('/', 'PasswordResetController@update')->name('update');
     });
 });
 
-Route::prefix('user')->middleware('auth:api')->group(function () {
+Route::prefix('user')->name('user.')->middleware('auth:api')->group(function () {
 
-    Route::get('/', 'UserController@index')->name('user.index');
+    Route::get('/', 'UserController@index')->name('index');
+    Route::put('/', 'UserController@update')->name('update');
+    Route::put('password', 'UserController@updatePassword')->name('password.update');
 
-    Route::prefix('card')->group(function () {
-        Route::get('/', 'CardController@index')->name('user.card.index');
-        Route::put('/', 'CardController@update')->name('user.card.update');
+    Route::prefix('card')->name('card.')->group(function () {
+        Route::get('/', 'CardController@index')->name('index');
+        Route::put('/', 'CardController@update')->name('update');
     });
 
-    Route::prefix('subscription')->group(function () {
-        Route::get('/', 'SubscriptionController@index')->name('user.subscription.index');
-        Route::post('/', 'SubscriptionController@store')->name('user.subscription.store');
-        Route::put('/', 'SubscriptionController@update')->name('user.subscription.update');
-        Route::delete('/', 'SubscriptionController@destroy')->name('user.subscription.destroy');
+    Route::prefix('subscription')->name('subscription.')->group(function () {
+        Route::get('/', 'SubscriptionController@index')->name('index');
+        Route::post('/', 'SubscriptionController@store')->name('store');
+        Route::put('/', 'SubscriptionController@update')->name('update');
+        Route::delete('/', 'SubscriptionController@destroy')->name('destroy');
     });
 });
 
