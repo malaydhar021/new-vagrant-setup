@@ -8,6 +8,7 @@ import { AuthApiEndPoints } from '../helpers/api.helper';
 import { Log } from '../helpers/app.helper';
 import { Observable, of } from 'rxjs';
 import { ResetPasswordModel } from '../models/reset-password.model';
+import { UserUpdatePasswordModel } from '../models/user.model';
 
 /**
  * This service will handle all operations related to user login and authentication
@@ -135,5 +136,16 @@ export class AuthService {
    */
   public resetPassword(data : ResetPasswordModel) {
     return this.httpClient.put(AuthApiEndPoints.resetPassword, data);
+  }
+
+  /**
+   * This method is used to call a service for changing the password
+   * @method changePassword
+   * @since version 1.0.0
+   * @param data (UserUpdatePasswordModel)
+   * @returns Observable<Object>
+   */
+  public changePassword(data : UserUpdatePasswordModel) {
+    return this.httpClient.put(AuthApiEndPoints.changePassword, data);
   }
 }

@@ -17,6 +17,7 @@
     </div>
   
     <div class="formChangepass">
+      <span style="color: green;" *ngIf="successMessage">  {{successMessage}}</span>
       <h2>Change password</h2>
       <p>We reccommend to change your password in every 1 or 2 months to keep your account safe & secured.</p>
   
@@ -61,12 +62,12 @@
             <div class="sr-form-field">
               <input
                 type="password"
-                formControlName="confirm_password"
-                [ngClass]="{'error' : !userPasswordUpdateForm.get('confirm_password').valid && userPasswordUpdateForm.get('confirm_password').touched}">
+                formControlName="new_password_confirmation"
+                [ngClass]="{'error' : !userPasswordUpdateForm.get('new_password_confirmation').valid && userPasswordUpdateForm.get('new_password_confirmation').touched}">
                 <div 
-                *ngIf="!userPasswordUpdateForm.get('confirm_password').valid && (userPasswordUpdateForm.get('confirm_password').dirty || userPasswordUpdateForm.get('confirm_password').touched)">
-                  <span *ngIf="userPasswordUpdateForm.get('confirm_password').errors.required">Required!</span>
-                  <span *ngIf="userPasswordUpdateForm.get('confirm_password').errors.mustMatch">Same as New Password!</span>
+                *ngIf="!userPasswordUpdateForm.get('new_password_confirmation').valid && (userPasswordUpdateForm.get('new_password_confirmation').dirty || userPasswordUpdateForm.get('new_password_confirmation').touched)">
+                  <span *ngIf="userPasswordUpdateForm.get('new_password_confirmation').errors.required">Required!</span>
+                  <span *ngIf="userPasswordUpdateForm.get('new_password_confirmation').errors.mustMatch">Same as New Password!</span>
                 </div>
             </div>
           </div>

@@ -16,3 +16,10 @@ export class UserModel {
     year: number;
     cvc: any;
 }
+
+
+export class UserUpdatePasswordModel{
+    current_password: string;
+    new_password: string;
+    new_password_confirmation: string;
+}

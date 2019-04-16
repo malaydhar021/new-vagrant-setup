@@ -75,6 +75,16 @@ export class AuthApiEndPoints {
   public static get resetPassword() : string {
     return apiBaseUrl.concat('/auth/password');
   }
+
+  /**
+   * This method will return the api route for update the password
+   * @method updatePassword
+   * @since version 1.0.0
+   * @returns string
+   */
+  public static get changePassword() : string {
+    return apiBaseUrl.concat('/user/password');
+  }
 }
 
 
