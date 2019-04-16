@@ -5,6 +5,7 @@
         <img src="../../../../assets/images/addIcon.png" alt=""> Add Review
       </button>
     </div>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <div class="mainBoxHeaderRight">
       <input type="text" placeholder="Search ..." [(ngModel)]="keyword">
     </div>
@@ -99,36 +100,20 @@
                   </div>
                 </div>
                 <div class="sr-form-cell-small">
-                  <label>Tag(s)</label>
+                  <label>Tags (optional)<i class="fas fa-info-circle"></i></label>
                   <div class="sr-form-field">
                     <input type="text" class="sr-form-ctrl" formControlName="srTags">
                   </div>
                 </div>
-              </div>
+              </div>              
               <div class="sr-form-row">
-                <div class="sr-form-cell">
-                  <label>Review</label>
-                  <div class="sr-form-field">
-                    <textarea class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.srComment.errors}" formControlName="srComment"></textarea>
-                    <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.srComment.errors !== null 
-                      && getFormControls.srComment.errors.required)">
-                      Review is required
-                    </div>
-                    <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.srComment.errors !== null 
-                      && getFormControls.srComment.errors.maxlength)">
-                      Review should be maximum 80 characters
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small">
+                <div class="sr-form-cell-small rating_modals">
                   <label>Rate your review</label>
                   <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="srRating"></bar-rating>
+                  <bar-rating [(rate)]="rate" [max]="4" [theme]="'default'" formControlName="srRating"></bar-rating>
+                  <bar-rating [(rate)]="rate" [max]="3" [theme]="'default'" formControlName="srRating"></bar-rating>
+                  <bar-rating [(rate)]="rate" [max]="2" [theme]="'default'" formControlName="srRating"></bar-rating>
+                  <bar-rating [(rate)]="rate" [max]="1" [theme]="'default'" formControlName="srRating"></bar-rating>
                   <div class="error-msg" *ngIf="(
                     isSubmitted 
                     && getFormControls.srRating.errors !== null 
@@ -142,45 +127,105 @@
                     <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" class="sr-form-ctrl dateTime" formControlName="srDateTime">
                   </div>
                   <owl-date-time #dt1></owl-date-time>
+
+                  <label style="margin-top: 20px;">Select Review Type:</label>
+                  <div class="sr-form-field">
+                    <select class="sr-form-ctrl">
+                      <option>Textual</option>
+                      <option>Video</option>
+                      <option>Audio</option>
+                    </select>
+                  </div>
+
                 </div>
               </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell">
-                  <label>Upload an image</label>
-                  <div class="sr-form-field">
-                    <div class="sr-form-ctrl inputFile">
-                      <input type="file" (change)="onChangeFile($event)" formControlName="srImage" [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
-                      <div class="choseFileArea">
-                        <div class="fileImg">
-                          <img src="../../../../assets/images/icon_upload_photo.png" alt="">
-                        </div>
-                        <p>
-                          <span>{{choseFileCtrl}}</span>{{fileName}}
-                        </p>
+              <div class="text_review">
+                <div class="sr-form-row">
+                  <div class="sr-form-cell">
+                    <label>Description</label>
+                    <div class="sr-form-field">
+                      <textarea class="sr-form-ctrl description_textarea" [ngClass]="{error: isSubmitted && getFormControls.srComment.errors}" formControlName="srComment"></textarea>
+                      <div class="error-msg" *ngIf="(
+                        isSubmitted 
+                        && getFormControls.srComment.errors !== null 
+                        && getFormControls.srComment.errors.required)">
+                        Review is required
                       </div>
-                      <div class="figureUpld"></div>
+                      <div class="error-msg" *ngIf="(
+                        isSubmitted 
+                        && getFormControls.srComment.errors !== null 
+                        && getFormControls.srComment.errors.maxlength)">
+                        Review should be maximum 80 characters
+                      </div>
                     </div>
                   </div>
-                  <div class="error-msg" *ngIf="(
-                    isSubmitted 
-                    && getFormControls.srImage.errors !== null 
-                    && getFormControls.srImage.errors.required)">
-                    Image is required
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                    isSubmitted 
-                    && getFormControls.srImage.errors !== null 
-                    && getFormControls.srImage.errors.invalidFileType)">
-                    Invalid file type. File should be an image
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                    isSubmitted 
-                    && getFormControls.srImage.errors !== null 
-                    && getFormControls.srImage.errors.invalidFileSize)">
-                    Invalid image size
+                </div>
+              </div>
+              <div class="video_review">
+                <div class="sr-form-row">
+                  <div class="sr-form-cell">
+                    <label>Upload your video file</label>
+                    <div class="sr-form-field">
+                      
+                      <div class="box">
+                        <input type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6 hidden" data-multiple-caption="{count} files selected" multiple />
+                        <label for="file-7" class="upload_btns" style="height: 40px;"><span></span> <strong style="float: left;" class="left_btns"><i class="fas fa-video"></i> Choose a file&hellip;</strong></label>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="audio_review">
+                <div class="sr-form-row">
+                  <div class="sr-form-cell">
+                    <label>Upload your audio file</label>
+                    <div class="sr-form-field">
+                      <div class="box">
+                        <input type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6 hidden" data-multiple-caption="{count} files selected" multiple />
+                        <label for="file-7" class="upload_btns" style="height: 40px;"><span></span> <strong style="float: left;" class="left_btns"><i class="fas fa-microphone-alt"></i> Choose a file&hellip;</strong></label>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                <div class="sr-form-row">
+                  <div class="sr-form-cell">
+                    <label>Upload an image</label>
+                    <div class="sr-form-field">
+                      <div class="sr-form-ctrl inputFile">
+                        <input type="file" (change)="onChangeFile($event)" formControlName="srImage" [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                        <div class="choseFileArea">
+                          <div class="fileImg">
+                            <img src="../../../../assets/images/icon_upload_photo.png" alt="">
+                          </div>
+                          <p>
+                            <span>{{choseFileCtrl}}</span>{{fileName}}
+                          </p>
+                        </div>
+                        <!-- <div class="figureUpld"></div> -->
+                      </div>
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.required)">
+                      Image is required
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.invalidFileType)">
+                      Invalid file type. File should be an image
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.invalidFileSize)">
+                      Invalid image size
+                    </div>
+                  </div>
+                </div>
             </ng-scrollbar>
           </div>
 
@@ -208,3 +253,72 @@
       <div class="loaderShadow"></div>
   </div>
 </div>
+
+<style>
+  *,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+
+
+.hidden {
+    position: absolute;
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+
+
+/* style 6 */
+
+.inputfile-6 + label {
+    color: #d3394c;
+}
+
+.inputfile-6 + label {
+    border: 1px solid #d3394c;
+    background-color: #f1e5e6;
+    padding: 0;
+}
+
+.inputfile-6:focus + label,
+.inputfile-6.has-focus + label,
+.inputfile-6 + label:hover {
+    border-color: #722040;
+}
+
+.inputfile-6 + label span,
+.inputfile-6 + label strong {
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+}
+
+.inputfile-6 + label span {
+    width: 100px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.inputfile-6 + label strong {
+    height: 100%;
+    color: #f1e5e6;
+    background-color: #d3394c;
+    display: inline-block;
+}
+
+.inputfile-6:focus + label strong,
+.inputfile-6.has-focus + label strong,
+.inputfile-6 + label:hover strong {
+    background-color: #722040;
+}
+</style>

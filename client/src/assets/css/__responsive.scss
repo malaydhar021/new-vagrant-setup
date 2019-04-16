@@ -1,3 +1,41 @@
+.sr-modal {
+	.sr-modal-container {
+		.sr-modal-body {
+			.sr-form {
+				.sr-form-row {
+					.sr-form-cell-small {
+						label {
+							i {
+								float:right;
+								color:#47e3bd;
+								cursor:pointer;
+							}
+						}
+						label.upload_btns {
+							float:left;
+							height:40px;
+						}
+						strong.left_btns {
+							float:left;
+						}
+					}
+					.br.br-default {
+						margin:8px 0!important;
+					}
+					.sr-form-cell {
+						.sr-form-field {
+							.sr-form-ctrl.description_textarea {
+								min-height:125px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
 .stickyMain {
 	.dataTableArea {
 		.table.table-col-4 {
