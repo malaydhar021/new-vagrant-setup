@@ -20,12 +20,21 @@
       <h2>Change password</h2>
       <p>We reccommend to change your password in every 1 or 2 months to keep your account safe & secured.</p>
   
-      <form>
+      <form [formGroup]="userPasswordUpdateForm" (ngSubmit)="onUpdatePassword()">
         <div class="sr-form-row">
           <div class="sr-form-cell">
             <label>Current Password</label>
             <div class="sr-form-field">
-              <input type="password">
+              <input 
+                type="password"
+                formControlName="current_password"
+                [ngClass]="{'error' : !userPasswordUpdateForm.get('current_password').valid && userPasswordUpdateForm.get('current_password').touched}">
+              <div 
+                *ngIf="!userPasswordUpdateForm.get('current_password').valid && (userPasswordUpdateForm.get('current_password').dirty || userPasswordUpdateForm.get('current_password').touched)">
+                <span class="error-msg" *ngIf="userPasswordUpdateForm.get('current_password').errors.required">
+                  Required!
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -33,19 +42,37 @@
           <div class="sr-form-cell-small">
             <label>New Password</label>
             <div class="sr-form-field">
-              <input type="password">
+              <input
+                type="password"
+                formControlName="new_password"
+                [ngClass]="{'error' : !userPasswordUpdateForm.get('new_password').valid && userPasswordUpdateForm.get('new_password').touched}">
+              <div 
+                *ngIf="!userPasswordUpdateForm.get('new_password').valid && (userPasswordUpdateForm.get('new_password').dirty || userPasswordUpdateForm.get('new_password').touched)">
+                <span class="error-msg" *ngIf="userPasswordUpdateForm.get('new_password').errors.required">Required!</span>
+                <span class="error-msg" *ngIf="userPasswordUpdateForm.get('new_password').errors.pattern">
+                  Password should contains one english uppercase characters (A–Z), one english lowercase characters (a–z), one numeric value (0–9) and one special characters (!, $, #, or %)
+                </span>
+              </div>
             </div>
           </div>
   
           <div class="sr-form-cell-small">
             <label>Re-type New Password</label>
             <div class="sr-form-field">
-              <input type="password">
+              <input
+                type="password"
+                formControlName="confirm_password"
+                [ngClass]="{'error' : !userPasswordUpdateForm.get('confirm_password').valid && userPasswordUpdateForm.get('confirm_password').touched}">
+                <div 
+                *ngIf="!userPasswordUpdateForm.get('confirm_password').valid && (userPasswordUpdateForm.get('confirm_password').dirty || userPasswordUpdateForm.get('confirm_password').touched)">
+                  <span *ngIf="userPasswordUpdateForm.get('confirm_password').errors.required">Required!</span>
+                  <span *ngIf="userPasswordUpdateForm.get('confirm_password').errors.mustMatch">Same as New Password!</span>
+                </div>
             </div>
           </div>
         </div>
         <div class="sr-form-row">
-          <button class="button-submit">
+          <button class="button-submit" type="submit" [disabled]="!userPasswordUpdateForm.valid">
             <img src="../../../../assets/images/addIcon.png" alt="">
             Update
           </button>
