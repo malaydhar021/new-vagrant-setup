@@ -5,7 +5,6 @@
         <img src="../../../../assets/images/addIcon.png" alt=""> Add Review
       </button>
     </div>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <div class="mainBoxHeaderRight">
       <input type="text" placeholder="Search ..." [(ngModel)]="keyword">
     </div>
@@ -100,7 +99,7 @@
                   </div>
                 </div>
                 <div class="sr-form-cell-small">
-                  <label>Tags (optional)<i class="fas fa-info-circle"></i></label>
+                  <label>Tags (optional)<img src="../../../../assets/images/icon_info2.png" class="infos_imgs" alt="infos"></label>
                   <div class="sr-form-field">
                     <input type="text" class="sr-form-ctrl" formControlName="srTags">
                   </div>
@@ -169,7 +168,7 @@
                       
                       <div class="box">
                         <input type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6 hidden" data-multiple-caption="{count} files selected" multiple />
-                        <label for="file-7" class="upload_btns" style="height: 40px;"><span></span> <strong style="float: left;" class="left_btns"><i class="fas fa-video"></i> Choose a file&hellip;</strong></label>
+                        <label for="file-7" class="upload_btns" style="height: 40px;"><span></span> <strong style="float: left;" class="left_btns"><img src="../../../../assets/images/icon_video_2.png" class="video_imgs" alt="infos"> Choose a file&hellip;</strong></label>
                       </div>
                     </div>
                   </div>
@@ -182,7 +181,7 @@
                     <div class="sr-form-field">
                       <div class="box">
                         <input type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6 hidden" data-multiple-caption="{count} files selected" multiple />
-                        <label for="file-7" class="upload_btns" style="height: 40px;"><span></span> <strong style="float: left;" class="left_btns"><i class="fas fa-microphone-alt"></i> Choose a file&hellip;</strong></label>
+                        <label for="file-7" class="upload_btns" style="height: 40px;"><span></span> <strong style="float: left;" class="left_btns"><img src="../../../../assets/images/icon_audio_2.png" class="audio_imgs" alt="infos"> Choose a file&hellip;</strong></label>
                       </div>  
                     </div>
                   </div>
@@ -253,72 +252,3 @@
       <div class="loaderShadow"></div>
   </div>
 </div>
-
-<style>
-  *,
-*:after,
-*:before {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-
-
-
-
-.hidden {
-    position: absolute;
-    overflow: hidden;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-}
-
-
-
-/* style 6 */
-
-.inputfile-6 + label {
-    color: #d3394c;
-}
-
-.inputfile-6 + label {
-    border: 1px solid #d3394c;
-    background-color: #f1e5e6;
-    padding: 0;
-}
-
-.inputfile-6:focus + label,
-.inputfile-6.has-focus + label,
-.inputfile-6 + label:hover {
-    border-color: #722040;
-}
-
-.inputfile-6 + label span,
-.inputfile-6 + label strong {
-    padding: 0.625rem 1.25rem;
-    /* 10px 20px */
-}
-
-.inputfile-6 + label span {
-    width: 100px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    vertical-align: top;
-}
-
-.inputfile-6 + label strong {
-    height: 100%;
-    color: #f1e5e6;
-    background-color: #d3394c;
-    display: inline-block;
-}
-
-.inputfile-6:focus + label strong,
-.inputfile-6.has-focus + label strong,
-.inputfile-6 + label:hover strong {
-    background-color: #722040;
-}
-</style>
