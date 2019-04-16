@@ -1865,9 +1865,13 @@ a {
     .table.table-col-5.reviewLinkTab {
       .tbody li.row {
         position: relative;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
 
         .rowContainer {
           padding: 14px 0;
+          border: none;
+          background-color: transparent;
 
           .tcol {
             .userReview {
@@ -1945,6 +1949,62 @@ a {
           }
         }
 
+        .contentMsg {
+          padding: 30px 160px 50px 94px;
+          clear: both;
+          display: none;
+          -webkit-box-align: start;
+          -ms-flex-align: start;
+          align-items: flex-start;
+
+          .colReviews {
+            max-width: 250px;
+            @include mr(50px);
+            @include mb(25px);
+
+            h5 {
+              font-size: 15px;
+              @include mb(20px);
+
+              @media (max-width: 991px) {
+                font-size: 14px;
+                @include mb(10px);
+              }
+            }
+
+            p {
+              font-size: 13px;
+              line-height: 22px;
+
+              a {
+                color: inherit;
+              }
+            }
+
+            &.negativeMsg {
+              h5 {
+                color: #F78787;
+              }
+            }
+
+            &.positiveMsg {
+              h5 {
+                color: #49E3BE;
+              }
+            }
+
+            &:last-child {
+              @include mr(0);
+            }
+          }
+
+          @media (max-width: 991px) {
+            padding: 15px 0 30px;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+          }
+        }
+
         .rowMoreInfo {
           position: absolute;
           z-index: 10;
@@ -1981,8 +2041,21 @@ a {
           }
         }
 
+        &.showMore {
+          .contentMsg {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+          }
+        }
+
         &:hover .rowMoreInfo {
           opacity: 1;
+        }
+
+        &:hover {
+          border-color: #E1E0E9;
+          background: #FAFBFF;
         }
       }
     }
@@ -4362,6 +4435,146 @@ body.sign-upPage {
       }
     }
   }
+
+  .reviewPreview {
+    height: 342px;
+    padding: 45px 0 27px;
+    margin: 0 35px;
+
+    .reviewlinkForm {
+      margin: 0 auto;
+      width: 182px;
+      min-height: 269.21px;
+      position: relative !important;
+      transform: none !important;
+      left: auto;
+      top: auto;
+
+      .reviewLHdr {
+        padding-top: 28.29px;
+        padding-bottom: 12px;
+
+        .figureHeader {
+          width: 35.59px;
+          height: 35.59px;
+          top: -19px;
+        }
+
+        .headerTxtRvw {
+          h3 {
+            font-size: 8px;
+          }
+          p {
+            font-size: 6px;
+            @include mt(9.56px);          
+          }
+        }
+
+        &:after {
+          width: 30px;
+        }
+      }
+      .bodyCreview {
+        .form_eParent {
+          h2 {
+            @include mt(40px);
+            font-size: 11px;
+            line-height: normal;
+          }
+        }
+
+        .stepReview {
+          padding-bottom: 17px;
+        }
+
+        .ftReview {
+          button {
+            font-size: 5px;
+            padding: 0 6px;
+            height: 15px;
+
+            img {
+              width: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .showpreview {
+    padding: 24px 0 32px;
+    text-align: center;
+    margin: 0 35px;
+
+    a {
+      color: #268BFF;
+      font-size: 14px;
+
+      span {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .prevwHvr {
+        display: none;
+      }
+
+      &:hover {
+        color: #888686;
+        img:not(.prevwHvr) {
+          display: none;
+        }
+        .prevwHvr {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .sr-form-row {
+    .sr-form-cell-third {
+      float: left;
+      width: 33.333%;
+      padding-right: 15px;
+    }
+    label {
+      @include mb(8px);
+      color: #BBB9D1;
+      font-size: 13px;
+      font-weight: 600;
+      display: block;
+    }
+  }
+
+  .copyDesg {
+    @include mt(30px);
+    label {
+      @include mb(8px);
+      font-size: 13px;
+      color: #BBB9D1;
+      display: block;      
+    }
+  }
+}
+
+.row {
+  margin: 0 -15px;
+
+  .col_row {
+    padding: 0 15px;
+    float: left;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  &:before,
+  &:after {
+    display: table;
+    content: '';
+  }
 }
 
 .previewpopup {
@@ -4472,20 +4685,20 @@ body.sign-upPage {
 
   .colorPicker {
     float: right;
-
-    .colorChosen {
-      border-radius: 3px;
-      border: 1px solid #ECECEC;
-      width: 26px;
-      height: 26px;
-      outline: none !important;
-      cursor: pointer;
-    }
   }
 
   &.bgColor {
     margin-bottom: 85px;
   }
+}
+
+.colorChosen {
+  border-radius: 3px;
+  border: 1px solid #ECECEC;
+  width: 26px;
+  height: 26px;
+  outline: none !important;
+  cursor: pointer;
 }
 
 .headerInForm {
@@ -5286,411 +5499,6 @@ textarea {
   min-height: 100vh;
   background-color: #4E24DF;
 
-  .reviewlinkForm {
-    min-height: 590px;
-    width: 400px;
-    background: #fff;
-    justify-self: center;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    @include border-radius(10px);
-
-    .reviewLHdr {
-      text-align: center;
-      padding-top: 62px;
-      position: relative;
-      padding-bottom: 22px;
-
-      .figureHeader {
-        position: absolute;
-        top: -39px;
-        left: 50%;
-        -webkit-transform: translateX(-50%);
-        transform: translateX(-50%);
-        width: 78px;
-        height: 78px;
-        border-radius: 50%;
-        overflow: hidden;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-
-      h3 {
-        color: #000000;
-        font-weight: 600;
-        font-family: 'SegoeUI';
-      }
-
-      p {
-        font-size: 15px;
-        color: #000000;
-        margin-top: 15px;
-      }
-
-      &:after {
-        position: absolute;
-        content: '';
-        bottom: 0;
-        left: 50%;
-        -webkit-transform: translateX(-50%);
-        transform: translateX(-50%);
-        height: 1px;
-        width: 60px;
-        background-color: #ccc;
-      }
-    }
-
-    .bodyCreview {
-      -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-      flex: 1 1 auto;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-      align-items: stretch;
-      -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-
-      form {
-        height: 100%;
-      }
-
-      h2 {
-        font-size: 26px;
-        color: #000000;
-        line-height: 37px;
-        text-align: center;
-        font-weight: 600;
-        font-family: 'SegoeUI';
-        letter-spacing: normal;
-      }
-
-      .stepReview {
-        display: none;
-        padding-bottom: 38px;
-        width: 100%;
-        -webkit-box-flex: 1;
-        -ms-flex: 1 1 100%;
-        flex: 1 1 100%;
-
-        .form_eParent {
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          -webkit-box-orient: vertical;
-          -webkit-box-direction: normal;
-          -ms-flex-direction: column;
-          flex-direction: column;
-        }
-
-        .ftReview {
-          margin: 0 auto;
-          @include mt(auto);
-          display: -webkit-inline-box;
-          display: -ms-inline-flexbox;
-          display: inline-flex;
-          -webkit-box-pack: justify;
-          -ms-flex-pack: justify;
-          justify-content: space-between;
-          -webkit-box-align: center;
-          -ms-flex-align: center;
-          align-items: center;
-          width: 100%;
-          max-width: 216px;
-
-          button {
-            height: 33px;
-            padding: 0 10px;
-            font-size: 12px;
-            border-radius: 30px;
-
-            span {
-              @include mr(2px);
-              vertical-align: text-bottom;
-              font-size: 0;
-              position: relative;
-              -webkit-transition: all ease 0.4s;
-              transition: all ease 0.4s;
-            }
-
-            .hoverIco {
-              display: none;
-            }
-
-            &:hover {
-              span {
-                img:not(.hoverIco) {
-                  display: none;
-                }
-
-                .hoverIco {
-                  display: inline-block;
-                }
-              }
-            }
-          }
-        }
-
-        .formRow {
-          margin-top: 22px;
-
-          label {
-            font-size: 13px;
-            color: #000000;
-            font-weight: 600;
-            font-family: 'SegoeUI';
-            display: block;
-            @include mb(9px);
-          }
-
-          .inRowRvw {
-
-            .reviewRadio,
-            .rvwVidOpt label {
-              display: inline-block;
-              vertical-align: middle;
-              cursor: pointer;
-              margin: 0;
-              line-height: 20px;
-
-              input {
-                display: none;
-              }
-
-              span {
-                font-size: 12px;
-                padding-left: 28px;
-                position: relative;
-                display: block;
-
-                &:before {
-                  content: '';
-                  position: absolute;
-                  left: 0;
-                  width: 20px;
-                  height: 20px;
-                  -webkit-box-shadow: 0 0 0 1px #ACACAC;
-                  box-shadow: 0 0 0 1px #ACACAC;
-                  border-radius: 50%;
-                  border: 6px solid #fff;
-                  background-color: #fff;
-                  -webkit-box-sizing: border-box;
-                  box-sizing: border-box;
-                  -webkit-transition: all ease-in-out 0.4s;
-                  transition: all ease-in-out 0.4s;
-                }
-              }
-
-              input:checked+span {
-                &:before {
-                  background-color: #E30C5D;
-                  -webkit-box-shadow: 0 0 0 1px #000000;
-                  box-shadow: 0 0 0 1px #000000;
-                }
-              }
-            }
-
-            .reviewRadio:not(:last-child),
-            .revRec:not(:last-child),
-            .revUp:not(:last-child) {
-              @include mr(28px);
-            }
-
-            input[type=text],
-            input[type=email],
-            input[type=tel],
-            textarea {
-              width: 100%;
-              border: 1px solid #7A7A7A;
-              font-size: 11px;
-              color: #727272;
-              padding: 11px;
-              background-color: #fff;
-              @include border-radius(0px);
-            }
-
-            input[type=text] {
-              height: 40px;
-            }
-
-            textarea {
-              resize: none;
-              height: 79px;
-            }
-          }
-
-          .choiceState {
-            @include mt(25px);
-
-            .reviewUp:not(.reviewTxt) {
-              @include border-radius(5px);
-              background-color: #F3F2FF;
-              padding: 13px;
-              padding-top: 15px;
-            }
-
-            .reviewVidSh {
-              @include mt(20px);
-
-              .vidUpV {
-                display: none;
-
-                &.active {
-                  display: block;
-                }
-              }
-            }
-          }
-
-          .reviewUp {
-            display: none;
-
-            &.active {
-              display: block;
-            }
-          }
-        }
-
-        &.step_1 {
-          h2 {
-            margin: 80px auto 0;
-            max-width: 216px;
-          }
-        }
-
-        &.step_2 {
-          .ftReview {
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            @include mt(53px);
-
-            button {
-              width: 100px;
-            }
-          }
-        }
-
-        &.step_3 {
-          h2 {
-            @include mt(80px);
-            letter-spacing: normal;
-          }
-
-          button {
-            width: 60px;
-          }
-        }
-
-        &.step_4 {
-          .figReview {
-            text-align: center;
-            @include mt(70px);
-            @include mb(20px);
-          }
-        }
-
-        &.step_5 {
-          h2 {
-            margin: auto auto 30px auto;
-          }
-
-          .addpicture {
-            position: relative;
-
-            input {
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              left: 0;
-              right: 0;
-              opacity: 0;
-              cursor: pointer;
-              width: 100%;
-              height: 100%;
-            }
-
-            span {
-              display: table-cell;
-              width: 100%;
-              height: 85.95px;
-              max-height: 215px;
-              position: relative;
-              pointer-events: none;
-              vertical-align: middle;
-              text-align: center;
-              font-size: 16px;
-              color: #BBB9D1;
-              font-family: 'SegoeUI';
-              font-weight: 600;
-
-              em {
-                font-style: normal;
-                text-decoration: underline;
-                color: #0CE3BE;
-              }
-            }
-
-            input:empty+span {
-              border: 1.5px dashed #BBB9D1;
-              @include border-radius(14px);
-            }
-          }
-
-          button {
-            margin: 0 auto;
-            width: 100px;
-          }
-        }
-
-        &.step_6 {
-          button {
-            margin: 0 auto;
-            width: 100px;
-          }
-        }
-
-        &.step_7 {
-          .figReview {
-            text-align: center;
-            @include mt(70px);
-          }
-        }
-
-        &.active {
-          display: block;
-        }
-      }
-    }
-
-    .headerTxtRvw,
-    .bodyCreview {
-      padding: 0 37px;
-    }
-
-    @media (max-height: 800px) {
-      -webkit-transform: none;
-      transform: none;
-      margin: 150px auto 60px;
-      position: relative;
-      top: auto;
-      left: auto;
-    }
-  }
-
   .footerCopy {
     @include mb(40px);
     @include mt(auto);
@@ -5702,14 +5510,423 @@ textarea {
   }
 }
 
+.reviewlinkForm {
+  min-height: 590px;
+  width: 400px;
+  background: #fff;
+  justify-self: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  @include border-radius(10px);
+
+  .reviewLHdr {
+    text-align: center;
+    padding-top: 62px;
+    position: relative;
+    padding-bottom: 22px;
+
+    .figureHeader {
+      position: absolute;
+      top: -39px;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    h3 {
+      color: #000000;
+      font-weight: 600;
+      font-family: 'SegoeUI';
+    }
+
+    p {
+      font-size: 15px;
+      color: #000000;
+      margin-top: 15px;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      bottom: 0;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      height: 1px;
+      width: 60px;
+      background-color: #ccc;
+    }
+  }
+
+  .bodyCreview {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    form {
+      height: 100%;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #000000;
+      line-height: 37px;
+      text-align: center;
+      font-weight: 600;
+      font-family: 'SegoeUI';
+      letter-spacing: normal;
+    }
+
+    .stepReview {
+      display: none;
+      padding-bottom: 38px;
+      width: 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 1 1 100%;
+      flex: 1 1 100%;
+
+      .form_eParent {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .ftReview {
+        margin: 0 auto;
+        @include mt(auto);
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 100%;
+        max-width: 216px;
+
+        button {
+          height: 33px;
+          padding: 0 10px;
+          font-size: 12px;
+          border-radius: 30px;
+          text-transform: capitalize;
+
+          span {
+            @include mr(2px);
+            vertical-align: text-bottom;
+            font-size: 0;
+            position: relative;
+            -webkit-transition: all ease 0.4s;
+            transition: all ease 0.4s;
+          }
+
+          .hoverIco {
+            display: none;
+          }
+
+          &:hover {
+            span {
+              img:not(.hoverIco) {
+                display: none;
+              }
+
+              .hoverIco {
+                display: inline-block;
+              }
+            }
+          }
+        }
+      }
+
+      .formRow {
+        margin-top: 22px;
+
+        label {
+          font-size: 13px;
+          color: #000000;
+          font-weight: 600;
+          font-family: 'SegoeUI';
+          display: block;
+          @include mb(9px);
+        }
+
+        .inRowRvw {
+
+          .reviewRadio,
+          .rvwVidOpt label {
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            margin: 0;
+            line-height: 20px;
+
+            input {
+              display: none;
+            }
+
+            span {
+              font-size: 12px;
+              padding-left: 28px;
+              position: relative;
+              display: block;
+
+              &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 20px;
+                height: 20px;
+                -webkit-box-shadow: 0 0 0 1px #ACACAC;
+                box-shadow: 0 0 0 1px #ACACAC;
+                border-radius: 50%;
+                border: 6px solid #fff;
+                background-color: #fff;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                -webkit-transition: all ease-in-out 0.4s;
+                transition: all ease-in-out 0.4s;
+              }
+            }
+
+            input:checked+span {
+              &:before {
+                background-color: #E30C5D;
+                -webkit-box-shadow: 0 0 0 1px #000000;
+                box-shadow: 0 0 0 1px #000000;
+              }
+            }
+          }
+
+          .reviewRadio:not(:last-child),
+          .revRec:not(:last-child),
+          .revUp:not(:last-child) {
+            @include mr(28px);
+          }
+
+          input[type=text],
+          input[type=email],
+          input[type=tel],
+          textarea {
+            width: 100%;
+            border: 1px solid #7A7A7A;
+            font-size: 11px;
+            color: #727272;
+            padding: 11px;
+            background-color: #fff;
+            @include border-radius(0px);
+          }
+
+          input[type=text] {
+            height: 40px;
+          }
+
+          textarea {
+            resize: none;
+            height: 79px;
+          }
+        }
+
+        .choiceState {
+          @include mt(25px);
+          @include mb(53px);
+
+          .reviewUp:not(.reviewTxt) {
+            @include border-radius(5px);
+            background-color: #F3F2FF;
+            padding: 13px;
+            padding-top: 15px;
+          }
+
+          .reviewVidSh {
+            @include mt(20px);
+
+            .vidUpV {
+              display: none;
+
+              &.active {
+                display: block;
+              }
+            }
+          }
+        }
+
+        .reviewUp {
+          display: none;
+
+          &.active {
+            display: block;
+          }
+        }
+      }
+
+      &.step_1 {
+        h2 {
+          margin: 80px auto 0;
+          max-width: 216px;
+        }
+      }
+
+      &.step_2 {
+        .ftReview {
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          // @include mt(53px);
+
+          button {
+            width: 100px;
+          }
+        }
+      }
+
+      &.step_3 {
+        h2 {
+          @include mt(80px);
+          letter-spacing: normal;
+        }
+
+        button {
+          width: 60px;
+        }
+      }
+
+      &.step_4 {
+        .figReview {
+          text-align: center;
+          @include mt(70px);
+          @include mb(20px);
+        }
+      }
+
+      &.step_5 {
+        h2 {
+          margin: auto auto 30px auto;
+        }
+
+        .addpicture {
+          position: relative;
+
+          input {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+          }
+
+          span {
+            display: table-cell;
+            width: 100%;
+            height: 85.95px;
+            max-height: 215px;
+            position: relative;
+            pointer-events: none;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 16px;
+            color: #BBB9D1;
+            font-family: 'SegoeUI';
+            font-weight: 600;
+
+            em {
+              font-style: normal;
+              text-decoration: underline;
+              color: #0CE3BE;
+            }
+          }
+
+          input:empty+span {
+            border: 1.5px dashed #BBB9D1;
+            @include border-radius(14px);
+          }
+        }
+
+        button {
+          margin: 0 auto;
+          width: 100px;
+        }
+      }
+
+      &.step_6 {
+        button {
+          margin: 0 auto;
+          width: 100px;
+        }
+      }
+
+      &.step_7 {
+        .figReview {
+          text-align: center;
+          @include mt(70px);
+        }
+      }
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+
+  .headerTxtRvw,
+  .bodyCreview {
+    padding: 0 37px;
+  }
+
+  @media (max-height: 800px) {
+    -webkit-transform: none;
+    transform: none;
+    margin: 150px auto 60px;
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+}
+
 // Review link type
 
 
 
 // Popup styles
+// Global form field style for error msg and general input design
 .sr-form-field {
   position: relative;
-  
+
   .sr-form-ctrl {
     font-family: 'Segoe UI Web (West European)';
     background: #F3F2FF;
@@ -5754,6 +5971,8 @@ textarea {
     display: block;
   }
 }
+
+// Global form field style for error msg and general input design
 
 .popupTxt {
   display: table;
