@@ -109,10 +109,6 @@
                 <div class="sr-form-cell-small rating_modals">
                   <label>Rate your review</label>
                   <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="srRating"></bar-rating>
-                  <bar-rating [(rate)]="rate" [max]="4" [theme]="'default'" formControlName="srRating"></bar-rating>
-                  <bar-rating [(rate)]="rate" [max]="3" [theme]="'default'" formControlName="srRating"></bar-rating>
-                  <bar-rating [(rate)]="rate" [max]="2" [theme]="'default'" formControlName="srRating"></bar-rating>
-                  <bar-rating [(rate)]="rate" [max]="1" [theme]="'default'" formControlName="srRating"></bar-rating>
                   <div class="error-msg" *ngIf="(
                     isSubmitted 
                     && getFormControls.srRating.errors !== null 
@@ -138,54 +134,112 @@
 
                 </div>
               </div>
-              <div class="text_review">
-                <div class="sr-form-row">
-                  <div class="sr-form-cell">
-                    <label>Description</label>
-                    <div class="sr-form-field">
-                      <textarea class="sr-form-ctrl description_textarea" [ngClass]="{error: isSubmitted && getFormControls.srComment.errors}" formControlName="srComment"></textarea>
-                      <div class="error-msg" *ngIf="(
-                        isSubmitted 
-                        && getFormControls.srComment.errors !== null 
-                        && getFormControls.srComment.errors.required)">
-                        Review is required
-                      </div>
-                      <div class="error-msg" *ngIf="(
-                        isSubmitted 
-                        && getFormControls.srComment.errors !== null 
-                        && getFormControls.srComment.errors.maxlength)">
-                        Review should be maximum 80 characters
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="video_review">
-                <div class="sr-form-row">
-                  <div class="sr-form-cell">
-                    <label>Upload your video file</label>
-                    <div class="sr-form-field">
-                      
-                      <div class="box">
-                        <input type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6 hidden" data-multiple-caption="{count} files selected" multiple />
-                        <label for="file-7" class="upload_btns" style="height: 40px;"><span></span> <strong style="float: left;" class="left_btns"><img src="../../../../assets/images/icon_video_2.png" class="video_imgs" alt="infos"> Choose a file&hellip;</strong></label>
+
+              <div class="all_options_div">
+
+                <div class="option_review active">
+                  <div class="sr-form-row">
+                    <div class="sr-form-cell">
+                      <label>Description</label>
+                      <div class="sr-form-field">
+                        <textarea class="sr-form-ctrl description_textarea" [ngClass]="{error: isSubmitted && getFormControls.srComment.errors}" formControlName="srComment"></textarea>
+                        <div class="error-msg" *ngIf="(
+                          isSubmitted 
+                          && getFormControls.srComment.errors !== null 
+                          && getFormControls.srComment.errors.required)">
+                          Review is required
+                        </div>
+                        <div class="error-msg" *ngIf="(
+                          isSubmitted 
+                          && getFormControls.srComment.errors !== null 
+                          && getFormControls.srComment.errors.maxlength)">
+                          Review should be maximum 80 characters
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="audio_review">
-                <div class="sr-form-row">
-                  <div class="sr-form-cell">
-                    <label>Upload your audio file</label>
+
+                <div class="option_review">
+                  <div class="sr-form-row">
+                    <div class="sr-form-cell">
+                    <label>Upload a video file</label>
                     <div class="sr-form-field">
-                      <div class="box">
-                        <input type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6 hidden" data-multiple-caption="{count} files selected" multiple />
-                        <label for="file-7" class="upload_btns" style="height: 40px;"><span></span> <strong style="float: left;" class="left_btns"><img src="../../../../assets/images/icon_audio_2.png" class="audio_imgs" alt="infos"> Choose a file&hellip;</strong></label>
-                      </div>  
+                      <div class="sr-form-ctrl inputFile">
+                        <input type="file" (change)="onChangeFile($event)" formControlName="srImage" [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                        <div class="choseFileArea">
+                          <div class="fileImg">
+                            <img src="../../../../assets/images/icon_upload_video.png" alt="">
+                          </div>
+                          <p>
+                            <span>{{choseFileCtrl}}</span>{{fileName}}
+                          </p>
+                        </div>
+                        <!-- <div class="figureUpld"></div> -->
+                      </div>
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.required)">
+                      Video is required
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.invalidFileType)">
+                      Invalid file type. File should be an video
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.invalidFileSize)">
+                      Invalid video size
                     </div>
                   </div>
+                  </div>
                 </div>
+
+                <div class="option_review">
+                  <div class="sr-form-row">
+                    <div class="sr-form-cell">
+                    <label>Upload an audio file</label>
+                    <div class="sr-form-field">
+                      <div class="sr-form-ctrl inputFile">
+                        <input type="file" (change)="onChangeFile($event)" formControlName="srImage" [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                        <div class="choseFileArea">
+                          <div class="fileImg">
+                            <img src="../../../../assets/images/icon_upload_audio.png" alt="">
+                          </div>
+                          <p>
+                            <span>{{choseFileCtrl}}</span>{{fileName}}
+                          </p>
+                        </div>
+                        <!-- <div class="figureUpld"></div> -->
+                      </div>
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.required)">
+                      Audio file is required
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.invalidFileType)">
+                      Invalid file type. File should be an audio file
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.srImage.errors !== null 
+                      && getFormControls.srImage.errors.invalidFileSize)">
+                      Invalid audio format
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
               </div>
 
                 <div class="sr-form-row">
@@ -193,6 +247,7 @@
                     <label>Upload an image</label>
                     <div class="sr-form-field">
                       <div class="sr-form-ctrl inputFile">
+                        <img src="../../../../assets/images/user.png" class="user_images" alt="">
                         <input type="file" (change)="onChangeFile($event)" formControlName="srImage" [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
                         <div class="choseFileArea">
                           <div class="fileImg">

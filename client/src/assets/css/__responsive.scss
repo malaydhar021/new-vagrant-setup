@@ -26,6 +26,8 @@
 						.sr-form-field {
 							.sr-form-ctrl.description_textarea {
 								min-height:125px;
+								resize:vertical;
+								margin-bottom:20px;
 							}
 						}
 					}
@@ -132,54 +134,39 @@ img.infos_imgs {
 	padding-left:0!important;
 }
 
+.option_review {
+	display:none;
+	margin-bottom:20px;
+}
+.option_review.active {
+	display:block;
+}
+img.user_images {
+    width: 75px;
+    margin: 12px 0 0 10px;
+}
+.previewpopup2 {
+	&.exitPopup {
+		&.theme1 {
+			.leftSec {
+				width: 65px;
+		    	height: 260px;
 
-*,
-*:after,
-*:before {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-.hidden {
-    position: absolute;
-    overflow: hidden;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-}
-.inputfile-6 + label {
-    color: #d3394c;
-}
-.inputfile-6 + label {
-    border: 1px solid #d3394c;
-    background-color: #f1e5e6;
-    padding: 0;
-}
-.inputfile-6:focus + label,
-.inputfile-6.has-focus + label,
-.inputfile-6 + label:hover {
-    border-color: #722040;
-}
-.inputfile-6 + label span,
-.inputfile-6 + label strong {
-    padding: 0.625rem 1.25rem;
-    /* 10px 20px */
-}
-.inputfile-6 + label span {
-    width: 100px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    vertical-align: top;
-}
-.inputfile-6 + label strong {
-    height: 100%;
-    color: #f1e5e6;
-    background-color: #d3394c;
-    display: inline-block;
-}
-.inputfile-6:focus + label strong,
-.inputfile-6.has-focus + label strong,
-.inputfile-6 + label:hover strong {
-    background-color: #722040;
+		    	img {
+		    		margin: 15px 0 0 12px;
+		    	}
+
+		    	h2 {
+		    		font-size: 15px;
+    				bottom: 68px;
+   					width: 155px;
+		    	}
+		    	h2:after {
+		    	    width: 108px;
+		    	    bottom: 12px;
+    				left: 120px;
+		    	}
+			}
+		}
+	}
 }
