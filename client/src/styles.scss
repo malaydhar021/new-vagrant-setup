@@ -1366,6 +1366,23 @@ a {
           display: inline-block;
           width: 100%;
 
+          .no-records {
+            padding: 15px;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-family: 'SegoeUI';
+            color: #333;
+
+            @media (max-width: 991px) {
+              padding: 0;
+            }
+
+            @media (max-width: 575px) {
+              font-size: 17px;
+            }
+          }
+
           .rowContainer {
             float: left;
             width: 100%;
@@ -1945,7 +1962,26 @@ a {
                   flex-direction: column;
                 }
               }
+
+              @media (max-width: 1365px) {
+                @include ml(0);
+                width: calc(100% - 40px);
+              }
             }
+
+            @media (max-width: 1600px) {
+              &:first-child {
+                padding-left: 15px;
+              }
+
+              // &:last-child {
+              //   padding-right: 15px;
+              // }
+            }
+          }
+
+          @media (max-width: 1199px) {
+              padding-right: 40px;
           }
         }
 
@@ -1997,15 +2033,24 @@ a {
             &:last-child {
               @include mr(0);
             }
+
+            @media (max-width: 1365px) {
+              @include mr(15px);
+            }
           }
 
           &:after {
             clear: both;
           }
+
           &:before,
           &:after {
             display: table;
             content: '';
+          }
+
+          @media (max-width: 1600px) {
+            padding: 15px 30px 30px;
           }
 
           @media (max-width: 991px) {
@@ -2057,6 +2102,15 @@ a {
             display: -ms-flexbox;
             display: flex;
           }
+
+          .rowMoreInfo {
+            img {
+              -webkit-transform: translateY(1px) rotate(180deg);
+              transform: translateY(1px) rotate(180deg);
+              @include mr(3px);
+              @include ml(0);
+            }
+          }
         }
 
         &:hover .rowMoreInfo {
@@ -2066,6 +2120,24 @@ a {
         &:hover {
           border-color: #E1E0E9;
           background: #FAFBFF;
+        }
+      }
+
+      .thead {
+        li {
+          @media (max-width: 1600px) {
+            &:first-child {
+              padding-left: 15px;
+
+              &:after {
+                left: 15px;
+              }
+            }
+
+            &:last-child {
+              padding-right: 15px;
+            }
+          }
         }
       }
     }
@@ -3081,7 +3153,7 @@ a {
     transform: translateY(-50%);
 
     // added for modal overflow at top
-    @media (max-width: 767px) {
+    @media (max-width: 991px) {
       -webkit-transform: none;
       transform: none;
       top: auto;
@@ -4414,6 +4486,7 @@ body.sign-upPage {
   .sr-modal-container {
     .sr-modal-body {
       .sr-form-row {
+
         .sr-form-cell,
         .sr-form-cell-small {
           .sr-form-field {
@@ -4466,8 +4539,14 @@ body.sign-upPage {
           }
 
           &.ftReviewPop {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
+
+            button.button-submit {}
           }
         }
       }
@@ -4487,11 +4566,33 @@ body.sign-upPage {
             &:first-child {
               @include mr(auto);
               @include mt(0);
+
+              @media (max-width: 767px) {
+                @include mr(15px);
+              }
+
+              @media (max-width: 575px) {
+                @include mr(0);
+              }
             }
+
             &:last-child {
               @include ml(auto);
               @include mt(0);
+
+              @media (max-width: 767px) {
+                @include ml(15px);
+              }
+
+              @media (max-width: 575px) {
+                @include ml(0);
+              }
             }
+          }
+
+          @media (max-width: 575px) {
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
           }
         }
       }
@@ -4508,6 +4609,7 @@ body.sign-upPage {
       width: 182px;
       min-height: 269.21px;
       position: relative !important;
+      -webkit-transform: none !important;
       transform: none !important;
       left: auto;
       top: auto;
@@ -4526,9 +4628,10 @@ body.sign-upPage {
           h3 {
             font-size: 8px;
           }
+
           p {
             font-size: 6px;
-            @include mt(9.56px);          
+            @include mt(9.56px);
           }
         }
 
@@ -4536,6 +4639,7 @@ body.sign-upPage {
           width: 30px;
         }
       }
+
       .bodyCreview {
         .form_eParent {
           h2 {
@@ -4590,9 +4694,11 @@ body.sign-upPage {
 
       &:hover {
         color: #888686;
+
         img:not(.prevwHvr) {
           display: none;
         }
+
         .prevwHvr {
           display: inline-block;
         }
@@ -4616,6 +4722,7 @@ body.sign-upPage {
         }
       }
     }
+
     label {
       @include mb(8px);
       color: #BBB9D1;
@@ -4627,16 +4734,17 @@ body.sign-upPage {
 
   .copyDesg {
     @include mt(30px);
+
     label {
       @include mb(8px);
       font-size: 13px;
       color: #BBB9D1;
-      display: block;      
+      display: block;
     }
   }
 }
 
-.row {
+.row:not(li) {
   margin: 0 -15px;
 
   .col_row {
@@ -5563,6 +5671,10 @@ textarea {
   outline: none !important;
 }
 
+img {
+  max-width: 100%;
+}
+
 .reviewLinkBody {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5585,6 +5697,16 @@ textarea {
       font-size: 14px;
       color: #F8FDFF;
     }
+
+    @media (max-width: 575px) {
+      @include mb(0);
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 575px) {
+    // display: block;
+    padding: 100px 0 50px;
   }
 }
 
@@ -5678,6 +5800,11 @@ textarea {
       font-weight: 600;
       font-family: 'SegoeUI';
       letter-spacing: normal;
+
+      @media (max-width: 575px) {
+        font-size: 18px;
+        line-height: 28px;
+      }
     }
 
     .stepReview {
@@ -5697,6 +5824,10 @@ textarea {
         -ms-flex-direction: column;
         flex-direction: column;
         height: 100%;
+
+        @media (max-width: 575px) {
+          display: block;
+        }
       }
 
       .ftReview {
@@ -5744,6 +5875,17 @@ textarea {
                 display: inline-block;
               }
             }
+          }
+        }
+
+        @media (max-width: 575px) {
+          display: block;
+          margin: 50px 0 0 0;
+          max-width: 100%;
+          text-align: center;
+
+          button+button {
+            @include ml(15px);
           }
         }
       }
@@ -5947,6 +6089,11 @@ textarea {
               text-decoration: underline;
               color: #0CE3BE;
             }
+
+            @media (max-width: 575px) {
+              padding: 0 30px;
+              font-size: 13px;
+            }
           }
 
           input:empty+span {
@@ -5979,11 +6126,19 @@ textarea {
         display: block;
       }
     }
+
+    @media (max-width: 575px) {
+      display: block;
+    }
   }
 
   .headerTxtRvw,
   .bodyCreview {
     padding: 0 37px;
+
+    @media (max-width: 575px) {
+      padding: 0 15px;
+    }
   }
 
   @media (max-height: 800px) {
@@ -5993,6 +6148,15 @@ textarea {
     position: relative;
     top: auto;
     left: auto;
+  }
+
+  @media (max-width: 575px) {
+    width: auto;
+    margin: 0 15px 50px;
+    min-height: 1px;
+    position: static;
+    -webkit-transform: none;
+    transform: none;
   }
 }
 
