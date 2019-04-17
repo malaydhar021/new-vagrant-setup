@@ -1981,7 +1981,7 @@ a {
           }
 
           @media (max-width: 1199px) {
-              padding-right: 40px;
+            padding-right: 40px;
           }
         }
 
@@ -2477,6 +2477,7 @@ a {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 50px;
+    background-color: #fff;
 
     .rightSecContainer {
       position: relative;
@@ -2511,6 +2512,10 @@ a {
           font-size: 14px;
           font-weight: 600;
           color: color(sr-txt-color3);
+          background-image: url(#{$imgUrl}/icon_mmail_lb.png);
+          background-repeat: no-repeat;
+          background-position: left 13px center;
+          ;
 
           &::-webkit-input-placeholder {
             color: #D9D9D9;
@@ -2677,6 +2682,10 @@ a {
           font-size: 14px;
           font-weight: 600;
           color: color(sr-txt-color3);
+          background-image: url(#{$imgUrl}/icon_mmail_lb.png);
+          background-repeat: no-repeat;
+          background-position: left 13px center;
+          ;
 
           &::-webkit-input-placeholder {
             color: #D9D9D9;
@@ -2807,6 +2816,10 @@ a {
       font-weight: 600;
       color: color(sr-txt-color3);
       margin-top: -25px;
+      background-image: url(#{$imgUrl}/icon_mmail_g.png);
+      background-repeat: no-repeat;
+      background-position: left 13px center;
+      ;
 
       &::-webkit-input-placeholder {
         color: #D9D9D9;
@@ -2950,6 +2963,10 @@ a {
         font-size: 14px;
         font-weight: 600;
         color: color(sr-txt-color3);
+        background-image: url(#{$imgUrl}/icon_mmail_g.png);
+        background-repeat: no-repeat;
+        background-position: left 13px center;
+        ;
 
         &::-webkit-input-placeholder {
           color: #D9D9D9;
@@ -3100,7 +3117,10 @@ a {
       font-size: 14px;
       font-weight: 600;
       color: color(sr-txt-color3);
-      background: url(#{$imgUrl}/icon_mmail_v.png) no-repeat left 13px center;
+      background-image: url(#{$imgUrl}/icon_mmail_v.png);
+      background-repeat: no-repeat;
+      background-position: left 13px center;
+      ;
     }
 
     input[type="text"]::-webkit-input-placeholder {
@@ -3153,7 +3173,7 @@ a {
     transform: translateY(-50%);
 
     // added for modal overflow at top
-    @media (max-width: 991px) {
+    @media (max-width: 1024px) {
       -webkit-transform: none;
       transform: none;
       top: auto;
@@ -3240,6 +3260,8 @@ a {
             padding-right: 5px;
             width: calc(100% + 14px) !important;
           }
+
+          .formScroll {}
         }
 
         .sr-form-row {
@@ -3429,6 +3451,19 @@ a {
               width: 100%;
               float: none;
               padding-right: 0;
+            }
+          }
+
+          .option_review {
+            margin-bottom: 20px;
+
+            .sr-form-cell {
+              display: none;
+              position: relative;
+
+              &.active {
+                display: block;
+              }
             }
           }
 
@@ -4327,6 +4362,20 @@ body.sign-upPage {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    pointer-events: none;
+
+    @media (max-width: 767px) {
+      top: 15px;
+      width: 90px;
+      left: 10px;
+      height: 90px;
+    }
+
+    @media (max-width: 575px) {
+      top: 30px;
+      width: 60px;
+      height: 60px;
+    }
   }
 }
 
@@ -4344,10 +4393,25 @@ body.sign-upPage {
   transform: translate(-50%, -50%);
   z-index: 10;
   pointer-events: none;
+
+  @media (max-width: 575px) {
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    left: auto;
+    right: 15px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 50%;
+  }
 }
 
 .choseFileArea .fileImg {
   float: left;
+
+  @media (max-width: 575px) {
+    display: none;
+  }
 }
 
 .choseFileArea p {
@@ -4355,6 +4419,14 @@ body.sign-upPage {
   font-size: 12px;
   color: #BBB9D1;
   padding-left: 25px;
+
+  @media (max-width: 767px) {
+    padding-left: 8px;
+  }
+
+  @media (max-width: 575px) {
+    padding-left: 0;
+  }
 }
 
 .choseFileArea p span {
@@ -4789,17 +4861,9 @@ body.sign-upPage {
     margin: 30px auto;
     position: relative;
 
-    &:after {
-      position: absolute;
-      content: '';
-      width: 74%;
-      height: 10px;
-      border-radius: 0 0 5px 5px;
-      bottom: -10px;
-      background: rgba(255, 255, 255, 0.4);
-      left: 13%;
-      -webkit-box-shadow: 0 0 32px rgba(0, 0, 0, 0.1);
-      box-shadow: 0 0 32px rgba(0, 0, 0, 0.1);
+    @media (max-width: 767px) {
+      -webkit-transform: scale(0.8);
+      transform: scale(0.8);
     }
   }
 
@@ -4831,7 +4895,7 @@ body.sign-upPage {
         border-radius: 0 0 5px 5px;
 
         input[type=text] {
-          height: 30px;
+          height: 26px;
           border-width: 1px;
           font-size: 10px;
           font-weight: normal;
@@ -4842,23 +4906,275 @@ body.sign-upPage {
 
         input[type=button] {
           width: auto;
-          height: 30px;
+          height: 26px;
           margin: 15px auto 0;
           font-size: 10px;
           padding: 0 30px;
         }
       }
+
+      &:after {
+        position: absolute;
+        content: '';
+        width: 74%;
+        height: 10px;
+        border-radius: 0 0 5px 5px;
+        bottom: -10px;
+        background: rgba(255, 255, 255, 0.4);
+        left: 13%;
+        -webkit-box-shadow: 0 0 32px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 32px rgba(0, 0, 0, 0.1);
+      }
     }
 
   }
 
-  &.theme4 {}
+  &.theme4 {
+    .previewComp {
+      width: 220px;
+      background-color: #ffffff;
 
-  &.theme3 {}
+      .topSec {
+        padding: 15px;
 
-  &.theme2 {}
+        p {
+          width: 30px;
+          height: 30px;
 
-  &.theme1 {}
+          img {
+            max-width: 10px;
+          }
+        }
+      }
+
+      .bottomSec {
+        padding: 15px 10px;
+
+        h2 {
+          font-size: 14px;
+        }
+
+        p {
+          font-size: 8px;
+          padding-bottom: 20px;
+        }
+
+        form {
+          input[type=text] {
+            height: 24px;
+            font-size: 8px;
+            font-weight: normal;
+            padding: 0 5px 0 25px;
+            background-size: 12px;
+            background-position: left 7px center;
+            border-width: 1px;
+          }
+
+          input[type=button] {
+            height: 24px;
+            margin: 0;
+            font-size: 8px;
+            padding: 0 10px;
+            width: 100%;
+            font-size: 9px;
+            @include mt(5px);
+          }
+        }
+      }
+    }
+  }
+
+  &.theme3 {
+    .previewComp {
+      width: 220px;
+      background-color: #FB8FFF;
+      -webkit-box-shadow: 0 0 90px rgba(0, 0, 0, 0.23);
+      box-shadow: 0 0 90px rgba(0, 0, 0, 0.23);
+
+      .topSec {
+        padding: 20px 15px;
+
+        p {
+          font-size: 8px;
+          padding-bottom: 20px;
+        }
+
+        img {
+          max-width: 15px;
+        }
+
+        h2 {
+          font-size: 12px;
+          padding: 7px 0;
+        }
+      }
+
+      .bottomSec {
+        padding: 0 30px 25px 30px;
+
+        form {
+          input[type=text] {
+            height: 24px;
+            font-size: 8px;
+            font-weight: normal;
+            padding: 0 5px 0 25px;
+            background-size: 12px;
+            background-position: left 7px center;
+            border-width: 1px;
+            margin-top: -16px;
+          }
+
+          input[type=button] {
+            height: 24px;
+            margin: 0;
+            font-size: 8px;
+            padding: 0 10px;
+            width: 100%;
+            font-size: 9px;
+            @include mt(5px);
+          }
+        }
+      }
+    }
+  }
+
+  &.theme2 {
+    .previewComp {
+      margin: 30px auto;
+      position: relative;
+      width: 250px;
+      overflow: hidden;
+      background-color: #EEF7FF;
+
+      .leftSec {
+        width: 82px;
+        height: 180px;
+        padding: 8px;
+
+        h2 {
+          font-size: 10px;
+        }
+
+        img {
+          width: 13px;
+          margin: 10px 0 0 -20px;
+        }
+
+        &:before {
+          content: "";
+          width: 19px;
+          height: 1px;
+          background: #000F41;
+          position: absolute;
+          left: 0;
+          top: 25px;
+        }
+      }
+
+      .rightSec {
+        width: calc(100% - 82px);
+        height: 180px;
+        padding: 5px 12px;
+
+        p {
+          padding-bottom: 8px;
+          font-size: 8px;
+        }
+
+        form {
+          input[type=text] {
+            height: 24px;
+            border-width: 1px;
+            font-size: 8px;
+            font-weight: normal;
+            padding: 0 5px 0 25px;
+            background-size: 12px;
+            background-position: left 7px center;
+            border-width: 1px;
+          }
+
+          input[type=button] {
+            height: 24px;
+            margin: 0;
+            font-size: 8px;
+            padding: 0 10px;
+            width: 100%;
+            font-size: 9px;
+            @include mt(5px);
+          }
+        }
+      }
+    }
+  }
+
+  &.theme1 {
+    .previewComp {
+      margin: 30px auto;
+      position: relative;
+      width: 250px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      overflow: hidden;
+
+      .leftSec {
+        width: 40px;
+        height: 190px;
+
+        h2 {
+          font-size: 10px;
+          width: 85px;
+          bottom: 40px;
+          left: -25px;
+
+          &:after {
+            width: 106px;
+            bottom: 7px;
+            left: 81px;
+          }
+        }
+
+        img {
+          width: 10px;
+          margin: 12px 0 0 -15px;
+        }
+      }
+
+      .rightSec {
+        width: calc(100% - 40px);
+        height: 190px;
+        padding: 30px 10px;
+
+        p {
+          font-weight: 600;
+          font-size: 8px;
+          padding-bottom: 12px;
+        }
+
+        form {
+          input[type=text] {
+            height: 26px;
+            border-width: 1px;
+            font-size: 10px;
+            font-weight: normal;
+            padding: 0 5px 0 25px;
+            background-size: 12px;
+            background-position: left 7px center;
+            border-width: 1px;
+            width: calc(100% - 64px);
+          }
+
+          input[type=button] {
+            height: 26px;
+            margin: 0;
+            font-size: 10px;
+            padding: 0 10px;
+            width: 64px;
+            font-size: 9px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .inlineRow {
@@ -4889,7 +5205,7 @@ body.sign-upPage {
 
 .headerInForm {
   font-size: 0;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   overflow: hidden;
 
   span {

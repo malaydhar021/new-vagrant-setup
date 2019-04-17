@@ -29,7 +29,8 @@
                     <img src="{{ review.image_url }}" alt="" class="sticky-review-image">
                   </div>
                   <div class="userReview">
-                    <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null">{{ review.tags }}</span></h2>
+                    <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null">{{ review.tags }}</span>
+                    </h2>
                     <p>
                       {{ review.description }}
                     </p>
@@ -44,33 +45,35 @@
                   <p>{{ review.created_at | date : 'medium' }}</p>
                 </div>
                 <div class="tcol">
-                  <a (click)="onEditStickyReview(review)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                  <a (click)="onDeleteStickyReview(review.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                  <a (click)="onEditStickyReview(review)" class="edit"><img
+                      src="../../../../assets/images/icon_edit.png" alt=""></a>
+                  <a (click)="onDeleteStickyReview(review.id)" class="delete"><img
+                      src="../../../../assets/images/icon_delete_green.png" alt=""></a>
                 </div>
               </div>
-            </li>                
+            </li>
           </ul>
         </ng-scrollbar>
         <ng-template #noRecords>
-            <ul>
-                <li class="row">
-                  <p class="no-records">Sorry no sticky reviews found !</p>
-                </li>
-            </ul>
+          <ul>
+            <li class="row">
+              <p class="no-records">Sorry no sticky reviews found !</p>
+            </li>
+          </ul>
         </ng-template>
       </div>
     </div>
-    
+
   </div>
-  
+
 </div>
- 
+
 <!-- Modal form for add / edit a sticky review -->
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
-          Add Sticky Review(s)
+        Add Sticky Review(s)
       </h2>
     </div>
     <div class="sr-modal-body">
@@ -78,209 +81,198 @@
         <div *ngIf="errorMessage !== null">{{ errorMessage }}</div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="sr-form-content">
-            <ng-scrollbar [compact]="true" class="formScroll">
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small">
-                  <label>Review Link Name</label>
-                  <div class="sr-form-field">
-                    <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.srName.errors}" formControlName="srName">
-                    <div class="error-msg" *ngIf="(
+            <div class="sr-form-row">
+              <div class="sr-form-cell-small">
+                <label>Review Link Name</label>
+                <div class="sr-form-field">
+                  <input type="text" class="sr-form-ctrl"
+                    [ngClass]="{error: isSubmitted && getFormControls.srName.errors}" formControlName="srName">
+                  <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srName.errors !== null 
                       && getFormControls.srName.errors.required)">
-                      Review link name is required
-                    </div>
-                    <div class="error-msg" *ngIf="(
+                    Review link name is required
+                  </div>
+                  <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srName.errors !== null 
                       && getFormControls.srName.errors.maxlength)">
-                      Review link name should be maximum 25 characters
-                    </div>
+                    Review link name should be maximum 25 characters
                   </div>
                 </div>
-                <div class="sr-form-cell-small">
-                  <label>Tags (optional)<img src="../../../../assets/images/icon_info2.png" class="infos_imgs" alt="infos"></label>
-                  <div class="sr-form-field">
-                    <input type="text" class="sr-form-ctrl" formControlName="srTags">
-                  </div>
+              </div>
+              <div class="sr-form-cell-small">
+                <label>Tags (optional)<img src="../../../../assets/images/icon_info2.png" class="infos_imgs"
+                    alt="infos"></label>
+                <div class="sr-form-field">
+                  <input type="text" class="sr-form-ctrl" formControlName="srTags">
                 </div>
-              </div>              
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small rating_modals">
-                  <label>Rate your review</label>
-                  <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="srRating"></bar-rating>
-                  <div class="error-msg" *ngIf="(
+              </div>
+            </div>
+            <div class="sr-form-row">
+              <div class="sr-form-cell-small rating_modals">
+                <label>Rate your review</label>
+                <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="srRating"></bar-rating>
+                <div class="error-msg" *ngIf="(
                     isSubmitted 
                     && getFormControls.srRating.errors !== null 
                     && getFormControls.srRating.errors.required)">
-                    Review rating is required
-                  </div>
-                </div>
-                <div class="sr-form-cell-small">
-                  <label>Select Date and Time (Optional)</label>
-                  <div class="sr-form-field">
-                    <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" class="sr-form-ctrl dateTime" formControlName="srDateTime">
-                  </div>
-                  <owl-date-time #dt1></owl-date-time>
-
-                  <label style="margin-top: 20px;">Select Review Type:</label>
-                  <div class="sr-form-field">
-                    <select class="sr-form-ctrl">
-                      <option>Textual</option>
-                      <option>Video</option>
-                      <option>Audio</option>
-                    </select>
-                  </div>
-
+                  Review rating is required
                 </div>
               </div>
+              <div class="sr-form-cell-small">
+                <label>Select Date and Time (Optional)</label>
+                <div class="sr-form-field">
+                  <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" class="sr-form-ctrl dateTime"
+                    formControlName="srDateTime">
+                </div>
+                <owl-date-time #dt1></owl-date-time>
 
-              <div class="all_options_div">
+                <label style="margin-top: 20px;">Select Review Type:</label>
+                <div class="sr-form-field">
+                  <select class="sr-form-ctrl">
+                    <option value="textual">Textual</option>
+                    <option value="video">Video</option>
+                    <option value="audio">Audio</option>
+                  </select>
+                </div>
 
-                <div class="option_review active">
-                  <div class="sr-form-row">
-                    <div class="sr-form-cell">
-                      <label>Description</label>
-                      <div class="sr-form-field">
-                        <textarea class="sr-form-ctrl description_textarea" [ngClass]="{error: isSubmitted && getFormControls.srComment.errors}" formControlName="srComment"></textarea>
-                        <div class="error-msg" *ngIf="(
+              </div>
+            </div>
+            <div class="sr-form-row">
+              <div class="option_review">
+                <div class="sr-form-cell reviewopt opt_Text active">
+                  <label>Description</label>
+                  <div class="sr-form-field">
+                    <textarea class="sr-form-ctrl description_textarea"
+                      [ngClass]="{error: isSubmitted && getFormControls.srComment.errors}"
+                      formControlName="srComment"></textarea>
+                    <div class="error-msg" *ngIf="(
                           isSubmitted 
                           && getFormControls.srComment.errors !== null 
                           && getFormControls.srComment.errors.required)">
-                          Review is required
-                        </div>
-                        <div class="error-msg" *ngIf="(
+                      Review is required
+                    </div>
+                    <div class="error-msg" *ngIf="(
                           isSubmitted 
                           && getFormControls.srComment.errors !== null 
                           && getFormControls.srComment.errors.maxlength)">
-                          Review should be maximum 80 characters
-                        </div>
-                      </div>
+                      Review should be maximum 80 characters
                     </div>
                   </div>
                 </div>
-
-                <div class="option_review">
-                  <div class="sr-form-row">
-                    <div class="sr-form-cell">
-                    <label>Upload a video file</label>
-                    <div class="sr-form-field">
-                      <div class="sr-form-ctrl inputFile">
-                        <input type="file" (change)="onChangeFile($event)" formControlName="srImage" [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
-                        <div class="choseFileArea">
-                          <div class="fileImg">
-                            <img src="../../../../assets/images/icon_upload_video.png" alt="">
-                          </div>
-                          <p>
-                            <span>{{choseFileCtrl}}</span>{{fileName}}
-                          </p>
+                <div class="sr-form-cell reviewopt opt_Video">
+                  <label>Upload a video file</label>
+                  <div class="sr-form-field">
+                    <div class="sr-form-ctrl inputFile">
+                      <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
+                        [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                      <div class="choseFileArea">
+                        <div class="fileImg">
+                          <img src="../../../../assets/images/icon_upload_video.png" alt="">
                         </div>
-                        <!-- <div class="figureUpld"></div> -->
+                        <p>
+                          <span>{{choseFileCtrl}}</span>{{fileName}}
+                        </p>
                       </div>
+                      <!-- <div class="figureUpld"></div> -->
                     </div>
-                    <div class="error-msg" *ngIf="(
+                  </div>
+                  <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.required)">
-                      Video is required
-                    </div>
-                    <div class="error-msg" *ngIf="(
+                    Video is required
+                  </div>
+                  <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.invalidFileType)">
-                      Invalid file type. File should be an video
-                    </div>
-                    <div class="error-msg" *ngIf="(
+                    Invalid file type. File should be an video
+                  </div>
+                  <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.invalidFileSize)">
-                      Invalid video size
-                    </div>
-                  </div>
+                    Invalid video size
                   </div>
                 </div>
-
-                <div class="option_review">
-                  <div class="sr-form-row">
-                    <div class="sr-form-cell">
-                    <label>Upload an audio file</label>
-                    <div class="sr-form-field">
-                      <div class="sr-form-ctrl inputFile">
-                        <input type="file" (change)="onChangeFile($event)" formControlName="srImage" [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
-                        <div class="choseFileArea">
-                          <div class="fileImg">
-                            <img src="../../../../assets/images/icon_upload_audio.png" alt="">
-                          </div>
-                          <p>
-                            <span>{{choseFileCtrl}}</span>{{fileName}}
-                          </p>
+                <div class="sr-form-cell reviewopt opt_Audio">
+                  <label>Upload an audio file</label>
+                  <div class="sr-form-field">
+                    <div class="sr-form-ctrl inputFile">
+                      <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
+                        [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                      <div class="choseFileArea">
+                        <div class="fileImg">
+                          <img src="../../../../assets/images/icon_upload_audio.png" alt="">
                         </div>
-                        <!-- <div class="figureUpld"></div> -->
+                        <p>
+                          <span>{{choseFileCtrl}}</span>{{fileName}}
+                        </p>
                       </div>
+                      <!-- <div class="figureUpld"></div> -->
                     </div>
-                    <div class="error-msg" *ngIf="(
+                  </div>
+                  <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.required)">
-                      Audio file is required
-                    </div>
-                    <div class="error-msg" *ngIf="(
+                    Audio file is required
+                  </div>
+                  <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.invalidFileType)">
-                      Invalid file type. File should be an audio file
-                    </div>
-                    <div class="error-msg" *ngIf="(
+                    Invalid file type. File should be an audio file
+                  </div>
+                  <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.invalidFileSize)">
-                      Invalid audio format
-                    </div>
-                  </div>
+                    Invalid audio format
                   </div>
                 </div>
-
               </div>
-
-                <div class="sr-form-row">
-                  <div class="sr-form-cell">
-                    <label>Upload an image</label>
-                    <div class="sr-form-field">
-                      <div class="sr-form-ctrl inputFile">
-                        <img src="../../../../assets/images/user.png" class="user_images" alt="">
-                        <input type="file" (change)="onChangeFile($event)" formControlName="srImage" [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
-                        <div class="choseFileArea">
-                          <div class="fileImg">
-                            <img src="../../../../assets/images/icon_upload_photo.png" alt="">
-                          </div>
-                          <p>
-                            <span>{{choseFileCtrl}}</span>{{fileName}}
-                          </p>
-                        </div>
-                        <!-- <div class="figureUpld"></div> -->
+            </div>
+            <div class="sr-form-row">
+              <div class="sr-form-cell">
+                <label>Upload an image</label>
+                <div class="sr-form-field">
+                  <div class="sr-form-ctrl inputFile">
+                    <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
+                      [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                    <div class="choseFileArea">
+                      <div class="fileImg">
+                        <img src="../../../../assets/images/icon_upload_photo.png" alt="">
                       </div>
+                      <p>
+                        <span>{{choseFileCtrl}}</span>{{fileName}}
+                      </p>
                     </div>
-                    <div class="error-msg" *ngIf="(
+                    <div class="figureUpld"></div>
+                  </div>
+                </div>
+                <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.required)">
-                      Image is required
-                    </div>
-                    <div class="error-msg" *ngIf="(
+                  Image is required
+                </div>
+                <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.invalidFileType)">
-                      Invalid file type. File should be an image
-                    </div>
-                    <div class="error-msg" *ngIf="(
+                  Invalid file type. File should be an image
+                </div>
+                <div class="error-msg" *ngIf="(
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.invalidFileSize)">
-                      Invalid image size
-                    </div>
-                  </div>
+                  Invalid image size
                 </div>
-            </ng-scrollbar>
+              </div>
+            </div>
           </div>
 
           <div class="sr-form-row">
@@ -301,9 +293,9 @@
 <!-- Loader -->
 <div class="loaderOuter" *ngIf="loader">
   <div class="loaderContainer">
-      <div class="loader">
-          <img src="../../../../assets/images/face_icon.png" alt="">
-      </div>
-      <div class="loaderShadow"></div>
+    <div class="loader">
+      <img src="../../../../assets/images/face_icon.png" alt="">
+    </div>
+    <div class="loaderShadow"></div>
   </div>
 </div>

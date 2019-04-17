@@ -193,6 +193,7 @@
               <label>Exit Popup Name</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl">
+                <span class="error-msg"></span>
               </div>
             </div>
             <div class="sr-form-cell-small">
@@ -206,10 +207,10 @@
           </div>
 
           <div class="sr-form-row">
-            <div class="sr-form-cell-small">  
-            <div class="headerInForm">
+            <div class="sr-form-cell-small">
+              <div class="headerInForm">
                 <span>POPUP CONTENT</span>
-              </div>            
+              </div>
               <label>Add Sticky Reviews <input type="checkbox" class="tglBtn" checked></label>
               <label style="margin-top: 20px;">Select Reviews</label>
               <div class="sr-form-field">
@@ -220,62 +221,64 @@
                 </select>
               </div>
             </div>
-             <div class="sr-form-cell-small exitPopup_paddings">
-              <label>Add Email Field <input type="checkbox" class="tglBtn" checked></label>          
+            <div class="sr-form-cell-small exitPopup_paddings">
+              <label>Add Email Field <input type="checkbox" class="tglBtn" checked></label>
             </div>
           </div>
           <div class="sr-form-row">
-            <div class="sr-form-cell-small">  
+            <div class="sr-form-cell-small">
               <div class="headerInForm">
                 <span>HEADER</span>
               </div>
               <label>Header Text</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl">
+                <span class="error-msg"></span>
               </div>
             </div>
-            <div class="sr-form-cell-small">  
+            <div class="sr-form-cell-small">
               <div class="headerInForm">
                 <span>CTA BUTTON</span>
               </div>
               <label>Button Text</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl">
+                <span class="error-msg"></span>
               </div>
             </div>
           </div>
 
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
-                <div class="inlineRow clearfix">
-                  <label>Header Text Color</label>
-                  <div class="colorPicker">
-                    <input type="text" class="colorChosen" readonly style="background-color:#FFFFFF;">
-                  </div>
+              <div class="inlineRow clearfix">
+                <label>Header Text Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#FFFFFF;">
                 </div>
+              </div>
 
-                <div class="inlineRow clearfix">
-                    <label>Header Background Color</label>
-                    <div class="colorPicker">
-                      <input type="text" class="colorChosen" readonly style="background-color:#3A2A98;">
-                    </div>
+              <div class="inlineRow clearfix">
+                <label>Header Background Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#3A2A98;">
                 </div>
-            </div> 
+              </div>
+            </div>
             <div class="sr-form-cell-small">
-                <div class="inlineRow clearfix">
-                  <label>Button Text Color</label>
-                  <div class="colorPicker">
-                    <input type="text" class="colorChosen" readonly style="background-color:#FFFFFF;">
-                  </div>
+              <div class="inlineRow clearfix">
+                <label>Button Text Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#FFFFFF;">
                 </div>
+              </div>
 
-                <div class="inlineRow clearfix">
-                    <label>Button Background Color</label>
-                    <div class="colorPicker">
-                      <input type="text" class="colorChosen" readonly style="background-color:#E30C5D;">
-                    </div>
+              <div class="inlineRow clearfix">
+                <label>Button Background Color</label>
+                <div class="colorPicker">
+                  <input type="text" class="colorChosen" readonly style="background-color:#E30C5D;">
                 </div>
-            </div>               
+              </div>
+            </div>
           </div>
 
           <div class="sr-form-row">
@@ -287,6 +290,7 @@
               <label>Paragraph Text</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl">
+                <span class="error-msg"></span>
               </div>
 
               <div class="inlineRow clearfix">
@@ -303,16 +307,100 @@
                 </div>
               </div>
 
-              <label>Choose Visual Appearance<img src="../../../../assets/images/icon_info2.png" class="infos_imgs" alt="infos"></label>
+              <label>Choose Visual Appearance<img src="../../../../assets/images/icon_info2.png" class="infos_imgs"
+                  alt="infos"></label>
               <div class="sr-form-field">
                 <select class="sr-form-ctrl">
                   <option>Double layered purple ninja</option>
                 </select>
               </div>
-                      
+
             </div>
 
             <div class="sr-form-cell-small">
+              <div class="previewpopup exitPopup theme1" style="background-color: #252525; display: none;">
+                <div class="previewComp">
+                  <div class="leftSec">
+                    <img src="../../../../assets/images/icon_mic_white.png" alt="">
+                    <h2>Take a break,<br> TAKE A LOOK</h2>
+                  </div>
+                  <div class="rightSec">
+                    <div class="rightSecContainer">
+                      <p>
+                        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet
+                        lacinia.
+                      </p>
+                      <form action="">
+                        <input type="text" placeholder="Enter your email">
+                        <input type="button" value="Subcribe">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="previewpopup exitPopup theme2" style="background-color: #8cb5fe; display: none;">
+                <div class="previewComp">
+                  <div class="leftSec">
+                    <img src="../../../../assets/images/icon_mic_white.png" alt="">
+                    <h2>Take a break, TAKE A LOOK</h2>
+                  </div>
+                  <div class="rightSec">
+                    <div class="rightSecContainer">
+                      <p>
+                        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet
+                        lacinia.
+                      </p>
+                      <form action="">
+                        <input type="text" placeholder="Enter your email">
+                        <input type="button" value="Subcribe">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="previewpopup exitPopup theme3" style="background-color: #fb8fff; display: none;">
+                <div class="previewComp">
+                  <div class="topSec">
+                    <img src="../../../../assets/images/icon_mic_white.png" alt="">
+                    <h2>Take a break, take a look</h2>
+                    <p>
+                      Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
+                    </p>
+                  </div>
+                  <div class="bottomSec">
+                    <div class="rightSecContainer">
+                      <form action="">
+                        <input type="text" placeholder="Enter your email">
+                        <input type="button" value="Subcribe">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="previewpopup exitPopup theme4" style="background-color: #e7e7e4; display: none;">
+                <div class="previewComp">
+                  <div class="topSec">
+                    <p><img src="../../../../assets/images/icon_mic_colored_1.png" alt=""></p>
+                  </div>
+                  <div class="bottomSec">
+                    <div class="rightSecContainer">
+                      <h2>Take a break, take a look</h2>
+                      <p>
+                        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet
+                        lacinia.
+                      </p>
+                      <form action="">
+                        <input type="text" placeholder="Enter your email">
+                        <input type="button" value="Subcribe">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div class="previewpopup exitPopup theme5" style="background-color: #facc00;">
                 <div class="previewComp">
                   <div class="topSec">
@@ -330,25 +418,6 @@
                   </div>
                 </div>
               </div>
-
-              <div class="previewpopup2 exitPopup theme1" style="background-color: #facc00;">
-                  <div class="leftSec">
-                    <img src="../../../../assets/images/icon_mic_white.png" alt="">
-                    <h2>Take a break,<br> TAKE A LOOK</h2>
-                  </div>
-                  <div class="rightSec">
-                    <div class="rightSecContainer">
-                      <p>
-                        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
-                      </p>
-                      <form action="">
-                        <input type="text" placeholder="Enter your email">
-                        <input type="button" value="Subcribe">
-                      </form>
-                    </div>
-                  </div>   
-                </div>
-
             </div>
 
 
