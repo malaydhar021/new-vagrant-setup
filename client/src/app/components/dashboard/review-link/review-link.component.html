@@ -213,10 +213,14 @@
             </div>
           </div>
           <div class="sr-form-row">
-            <div class="sr-form-cell">
-              <button class="button-submit" type="" [disabled]="!this.reviewLinkForm.valid">
+            <div class="sr-form-cell ftReviewPop">
+              <!-- <button class="button-submit" type="" [disabled]="!this.reviewLinkForm.valid">
                 <img src="../../../../assets/images/addIcon.png" alt="">
                 {{reviewLinkForm.get('id').value ? "Update" : "Save" }} Review Link
+              </button> -->
+
+              <button class="button-submit">
+                Next Step <span>&gt;</span>
               </button>
             </div>
           </div>
@@ -281,19 +285,19 @@
             <div class="sr-form-cell-third">
               <label>Page Background</label>
               <div class="colorPicker">
-                <input type="text" class="colorChosen" style="background-color: #B8CBEB;" >
+                <input type="text" class="colorChosen" style="background-color: #B8CBEB;" readonly >
               </div>
             </div>
             <div class="sr-form-cell-third">
               <label>Modal Background</label>
               <div class="colorPicker">
-                <input type="text" class="colorChosen" style="background-color: #ffffff;" >
+                <input type="text" class="colorChosen" style="background-color: #ffffff;" readonly >
               </div>
             </div>
             <div class="sr-form-cell-third">
               <label>Text Colour</label>
               <div class="colorPicker">
-                <input type="text" class="colorChosen" style="background-color: #268BFF;" >
+                <input type="text" class="colorChosen" style="background-color: #268BFF;" readonly >
               </div>
             </div>
           </div>
@@ -311,7 +315,12 @@
           </div>
 
           <div class="sr-form-row">
-            <div class="sr-form-cell">
+            <div class="sr-form-cell ftReviewPop">
+              <button class="button-submit">
+                <span>&lt;</span>
+                Previous Step
+              </button>
+              
               <button class="button-submit" type="" [disabled]="!this.reviewLinkForm.valid">
                 <img src="../../../../assets/images/addIcon.png" alt="">
                 {{reviewLinkForm.get('id').value ? "Update" : "Save" }} Review Link

@@ -1961,6 +1961,7 @@ a {
             max-width: 250px;
             @include mr(50px);
             @include mb(25px);
+            float: left;
 
             h5 {
               font-size: 15px;
@@ -1996,6 +1997,15 @@ a {
             &:last-child {
               @include mr(0);
             }
+          }
+
+          &:after {
+            clear: both;
+          }
+          &:before,
+          &:after {
+            display: table;
+            content: '';
           }
 
           @media (max-width: 991px) {
@@ -3195,6 +3205,10 @@ a {
               @media (max-width: 767px) {
                 margin-bottom: 8px;
               }
+
+              @media (max-width: 575px) {
+                font-size: 13px;
+              }
             }
 
             .sr-form-field {
@@ -3312,6 +3326,11 @@ a {
             @media (max-width: 767px) {
               margin-bottom: 20px;
             }
+
+            @media (max-width: 575px) {
+              display: block;
+              width: 100%;
+            }
           }
 
           .sr-form-cell-small {
@@ -3323,10 +3342,21 @@ a {
             &:nth-child(2) {
               padding-left: 20px;
               padding-right: 0;
+
+              @media (max-width: 575px) {
+                padding-left: 0;
+              }
             }
 
             label {
               margin-bottom: 12px;
+            }
+
+            @media (max-width: 575px) {
+              display: block;
+              width: 100%;
+              float: none;
+              padding-right: 0;
             }
           }
 
@@ -4374,13 +4404,16 @@ body.sign-upPage {
 
 .modalReview .sr-modal-container .sr-modal-body .sr-form .sr-form-row .sr-form-cell .sr-form-field input[type=text].sr-form-ctrl {
   height: 70px;
+
+  @media (max-width: 575px) {
+    height: 50px;
+  }
 }
 
 .modalReview {
   .sr-modal-container {
     .sr-modal-body {
       .sr-form-row {
-
         .sr-form-cell,
         .sr-form-cell-small {
           .sr-form-field {
@@ -4429,6 +4462,35 @@ body.sign-upPage {
                 overflow: hidden;
                 text-overflow: ellipsis;
               }
+            }
+          }
+
+          &.ftReviewPop {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+
+      .reviewLink_step_1 {
+        .ftReviewPop {
+          button {
+            @include ml(auto);
+            @include mt(0);
+          }
+        }
+      }
+
+      .reviewLink_step_2 {
+        .ftReviewPop {
+          button {
+            &:first-child {
+              @include mr(auto);
+              @include mt(0);
+            }
+            &:last-child {
+              @include ml(auto);
+              @include mt(0);
             }
           }
         }
@@ -4500,6 +4562,10 @@ body.sign-upPage {
         }
       }
     }
+
+    @media (max-width: 767px) {
+      margin: 0 15px;
+    }
   }
 
   .showpreview {
@@ -4510,10 +4576,12 @@ body.sign-upPage {
     a {
       color: #268BFF;
       font-size: 14px;
+      font-weight: 600;
 
       span {
         display: inline-block;
         vertical-align: middle;
+        @include mr(8px);
       }
 
       .prevwHvr {
@@ -4537,6 +4605,16 @@ body.sign-upPage {
       float: left;
       width: 33.333%;
       padding-right: 15px;
+
+      @media (max-width: 575px) {
+        float: none;
+        padding-right: 0;
+        width: 100%;
+
+        &:not(:last-child) {
+          @include mb(15px);
+        }
+      }
     }
     label {
       @include mb(8px);
