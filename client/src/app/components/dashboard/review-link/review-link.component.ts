@@ -153,6 +153,7 @@ export class ReviewLinkComponent implements OnInit {
    * @returns Void
    */
   onSubmit(){
+    Log.info("asjdhasdhjas")
     let id = this.reviewLinkForm.get('id').value;
     if (id){
       this.update(this.reviewLinkForm.value);

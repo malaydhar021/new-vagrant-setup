@@ -18,6 +18,7 @@
   
     <div class="formChangepass">
       <span style="color: green;" *ngIf="successMessage">  {{successMessage}}</span>
+      <span><message></message></span>
       <h2>Change password</h2>
       <p>We reccommend to change your password in every 1 or 2 months to keep your account safe & secured.</p>
   
@@ -29,13 +30,11 @@
               <input 
                 type="password"
                 formControlName="current_password"
+                class="sr-form-ctrl"
                 [ngClass]="{'error' : !userPasswordUpdateForm.get('current_password').valid && userPasswordUpdateForm.get('current_password').touched}">
-              <div 
-                *ngIf="!userPasswordUpdateForm.get('current_password').valid && (userPasswordUpdateForm.get('current_password').dirty || userPasswordUpdateForm.get('current_password').touched)">
-                <span class="error-msg" *ngIf="userPasswordUpdateForm.get('current_password').errors.required">
+                <span class="error-msg" *ngIf="!userPasswordUpdateForm.get('current_password').valid && userPasswordUpdateForm.get('current_password').errors.required" class="error-msg">
                   Required!
                 </span>
-              </div>
             </div>
           </div>
         </div>
@@ -46,14 +45,14 @@
               <input
                 type="password"
                 formControlName="new_password"
+                class="sr-form-ctrl"
                 [ngClass]="{'error' : !userPasswordUpdateForm.get('new_password').valid && userPasswordUpdateForm.get('new_password').touched}">
-              <div 
-                *ngIf="!userPasswordUpdateForm.get('new_password').valid && (userPasswordUpdateForm.get('new_password').dirty || userPasswordUpdateForm.get('new_password').touched)">
-                <span class="error-msg" *ngIf="userPasswordUpdateForm.get('new_password').errors.required">Required!</span>
-                <span class="error-msg" *ngIf="userPasswordUpdateForm.get('new_password').errors.pattern">
+                <span class="error-msg" *ngIf="!userPasswordUpdateForm.get('new_password').valid &&  userPasswordUpdateForm.get('new_password').errors.required" class="error-msg">Required!</span>
+                
+                <span class="error-msg" *ngIf="!userPasswordUpdateForm.get('new_password').valid && userPasswordUpdateForm.get('new_password').errors.pattern" class="error-msg">
                   Password should contains one english uppercase characters (A–Z), one english lowercase characters (a–z), one numeric value (0–9) and one special characters (!, $, #, or %)
                 </span>
-              </div>
+              
             </div>
           </div>
   
@@ -63,12 +62,9 @@
               <input
                 type="password"
                 formControlName="new_password_confirmation"
-                [ngClass]="{'error' : !userPasswordUpdateForm.get('new_password_confirmation').valid && userPasswordUpdateForm.get('new_password_confirmation').touched}">
-                <div 
-                *ngIf="!userPasswordUpdateForm.get('new_password_confirmation').valid && (userPasswordUpdateForm.get('new_password_confirmation').dirty || userPasswordUpdateForm.get('new_password_confirmation').touched)">
-                  <span *ngIf="userPasswordUpdateForm.get('new_password_confirmation').errors.required">Required!</span>
-                  <span *ngIf="userPasswordUpdateForm.get('new_password_confirmation').errors.mustMatch">Same as New Password!</span>
-                </div>
+                [ngClass]="{'error' : !userPasswordUpdateForm.get('new_password_confirmation').valid && userPasswordUpdateForm.get('new_password_confirmation').touched}" class="sr-form-ctrl">
+                <span *ngIf="!userPasswordUpdateForm.get('new_password_confirmation').valid && userPasswordUpdateForm.get('new_password_confirmation').errors.required" class="error-msg">Required!</span>
+                <span *ngIf="!userPasswordUpdateForm.get('new_password_confirmation').valid && userPasswordUpdateForm.get('new_password_confirmation').errors.mustMatch" class="error-msg">Same as New Password!</span>
             </div>
           </div>
         </div>

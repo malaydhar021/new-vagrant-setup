@@ -175,9 +175,10 @@ export class RequestInterceptor implements HttpInterceptor {
       // this.errorService.updateMessage(error.error.message);
       // errMsg = error.error.message;
       Log.debug(error.error.errors, "Catch 400 validation messgaes");
-      this.errorService.updateValidationMessage(error.error.errors);
+      this.errorService.updateMessage(error.error.errors);
+      //this.errorService.updateValidationMessage(error.error.errors);
     } else {
-      this.errorService.updateMessage(this.defaultErrorMessage);
+      this.errorService.updateMessage(error.error.message);
     }
   }
 }

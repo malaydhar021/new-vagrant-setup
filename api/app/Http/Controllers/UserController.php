@@ -76,7 +76,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => "Current password is invalid.",
-            ], 403);
+            ], 400);
         }
     }
 }

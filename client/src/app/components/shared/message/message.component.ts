@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ErrorsService } from '../../../services/errors.service';
+import { LoaderService } from '../../../services/loader.service';
 
 /**
  * MessageComponent is responsible for showing messages when a server sends an error message
@@ -30,13 +31,16 @@ export class MessageComponent implements OnInit {
    * @returns Void
    */
   constructor(
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private loaderService: LoaderService,
   ) {
     // A subscription to an error service error message object
     this.subscription = this.errorService.error$.subscribe(
       errMsg => {
           // Assign the error message to the error message template string variable
           this.errorMessage = errMsg;
+          console.log('In message component');
+          this.loaderService.disableLoader();
       }
   );
    }

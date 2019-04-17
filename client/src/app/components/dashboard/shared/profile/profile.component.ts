@@ -91,9 +91,6 @@ export class ProfileComponent implements OnInit {
           this.successMessage = ''
         }, 1500)
         Log.info(response, response.message);
-      },
-      (error: any) => {
-        this.loaderService.disableLoader();
       }
     )
     
