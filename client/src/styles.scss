@@ -2066,6 +2066,7 @@ a {
             }
 
             @media (max-width: 480px) {
+
               &:nth-child(3),
               &:nth-child(4),
               &:nth-child(5) {
@@ -4802,6 +4803,16 @@ body.sign-upPage {
         }
       }
 
+
+      .reviewStep {
+        .choseFileArea {
+          left: 50%;
+          right: auto;
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      }
+
       .reviewLink_step_1 {
         .ftReviewPop {
           button {
@@ -4846,6 +4857,13 @@ body.sign-upPage {
             flex-wrap: wrap;
           }
         }
+      }
+
+      .figureUpld {
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
       }
     }
   }
@@ -4992,6 +5010,12 @@ body.sign-upPage {
       color: #BBB9D1;
       display: block;
     }
+  }
+}
+
+.cdk-overlay-pane {
+  @media (max-width: 480px) {
+    max-width: 238px;
   }
 }
 
@@ -5291,13 +5315,14 @@ body.sign-upPage {
       margin: 30px auto;
       position: relative;
       width: 250px;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
       overflow: hidden;
 
       .leftSec {
         width: 40px;
         height: 190px;
+        border-radius: 3px 0 0 3px;
 
         h2 {
           font-size: 10px;
@@ -5333,13 +5358,14 @@ body.sign-upPage {
           input[type=text] {
             height: 26px;
             border-width: 1px;
-            font-size: 10px;
+            font-size: 8px;
             font-weight: normal;
             padding: 0 5px 0 25px;
             background-size: 12px;
             background-position: left 7px center;
             border-width: 1px;
             width: calc(100% - 64px);
+            border-radius: 3px;
           }
 
           input[type=button] {
@@ -5691,11 +5717,19 @@ body.sign-upPage {
     color: #404040;
     font-weight: normal;
     @include mb(7px);
+    
+    @media (max-width: 575px) {
+      font-size: 22px;
+    }
   }
 
   p {
     font-size: 14px;
     color: #A8A8A8;
+    
+    @media (max-width: 575px) {
+      font-size: 13px;
+    }
   }
 
   .userDisplay {
@@ -5795,6 +5829,16 @@ body.sign-upPage {
 
           &:nth-child(2) {
             padding-left: 20px;
+            padding-right: 0;
+
+            @media (max-width: 575px) {
+              padding-left: 0;
+            }
+          }
+
+          @media (max-width: 575px) {
+            float: none;
+            width: 100%;
             padding-right: 0;
           }
         }
