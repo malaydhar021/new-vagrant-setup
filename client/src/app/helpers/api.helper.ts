@@ -75,16 +75,6 @@ export class AuthApiEndPoints {
   public static get resetPassword() : string {
     return apiBaseUrl.concat('/auth/password');
   }
-
-  /**
-   * This method will return the api route for update the password
-   * @method updatePassword
-   * @since version 1.0.0
-   * @returns string
-   */
-  public static get changePassword() : string {
-    return apiBaseUrl.concat('/user/password');
-  }
 }
 
 
@@ -368,3 +358,34 @@ export class ReviewLinkApiEndpoints {
     return apiBaseUrl.concat('/check-duplicate-review-link');
   }
 }
+
+
+/**
+ *  UserApiEndpoints helper class is holding all static methods for user api endpoints based on the environment
+ * @class UserApiEndpoints
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @version 1.0.0
+ * @license Proprietery
+ */
+export class UserApiEndpoints {
+  /**
+   * getAuthUserInfo to generate api endpoint to get authenticated user informations
+   * @method getAuthUserInfo
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get getAuthUserInfo() : string {
+    return apiBaseUrl.concat('/user');
+  }
+
+  /**
+   * This method will return the api route for update the password
+   * @method updatePassword
+   * @since version 1.0.0
+   * @returns string
+   */
+  public static get changePassword() : string {
+    return apiBaseUrl.concat('/user/password');
+  }
+}
+

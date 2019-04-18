@@ -17,8 +17,7 @@
     </div>
   
     <div class="formChangepass">
-      <span style="color: green;" *ngIf="successMessage">  {{successMessage}}</span>
-      <span><message></message></span>
+      <span><message [successMessage] = 'successMessage'></message></span>
       <h2>Change password</h2>
       <p>We reccommend to change your password in every 1 or 2 months to keep your account safe & secured.</p>
   

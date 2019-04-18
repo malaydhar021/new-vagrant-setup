@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators}              from '@angular/forms';
 import { NgxSmartModalService }                           from 'ngx-smart-modal';
 import * as ValidationEngine                              from '../../../../helpers/form.helper';
 import { LoaderService }                                  from '../../../../services/loader.service';
-import {AuthService}                                      from '../../../../services/auth.service';
+import {UserService}                                      from '../../../../services/user.service';
 import { Log }                                            from '../../../../helpers/app.helper';
 
 
@@ -33,14 +33,14 @@ export class ProfileComponent implements OnInit {
    * @since Version 1.0.0
    * @param ngxSmartModalService
    * @param formBuilder 
-   * @param 
+   * @param userService
    * @returns Void
    */
   constructor(
     private ngxSmartModalService: NgxSmartModalService,
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
-    private authService: AuthService
+    private userService: UserService
   ) { }
   
   /**
@@ -78,7 +78,7 @@ export class ProfileComponent implements OnInit {
     // Start loader
     this.loaderService.enableLoader();
     // Api call for changing password 
-    this.authService.changePassword(values).subscribe(
+    this.userService.changePassword(values).subscribe(
       (response: any) => {
         // disable the loader 
         this.loaderService.disableLoader();
@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit {
         setTimeout(()=> {
           // reset the success message from server
           this.successMessage = ''
-        }, 1500)
+        }, 3000)
         Log.info(response, response.message);
       }
     )

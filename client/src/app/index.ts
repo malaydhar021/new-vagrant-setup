@@ -21,11 +21,13 @@ import { ErrorsService } from './services/errors.service';
 import { SignupService } from './services/signup.service';
 import { ReviewLinkService } from './services/review-link.service';
 import { LoaderService } from './services/loader.service';
+import { UserService } from './services/user.service';
 
 import { MessageModule } from './components/shared/message/message.module';
 import { LoaderModule } from './components/shared/loader/loader.module';
 import { MenuService } from './services/menu.service';
 import { ReviewLinkTypeComponent } from './components/dashboard/review-link-type/review-link-type.component';
+
 
 /**
  * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
@@ -89,6 +91,7 @@ export class AppComponent {}
       SignupService,
       ReviewLinkService,
       LoaderService,
+      UserService,
       { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

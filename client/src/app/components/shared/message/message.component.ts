@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ErrorsService } from '../../../services/errors.service';
@@ -21,6 +21,9 @@ export class MessageComponent implements OnInit {
 
   errorMessage : string = null; // Error Message for the MessageComponent 
   subscription : Subscription;  // Subscription Variable to create server side error message subscriptions 
+  
+  // This property is bound using its original name.
+  @Input() successMessage?: string = ''
 
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -39,8 +42,10 @@ export class MessageComponent implements OnInit {
       errMsg => {
           // Assign the error message to the error message template string variable
           this.errorMessage = errMsg;
-          console.log('In message component');
           this.loaderService.disableLoader();
+          setTimeout(()=>{
+            this.errorMessage = ''
+          }, 3000)
       }
   );
    }
