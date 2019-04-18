@@ -403,5 +403,15 @@ export class UserApiEndpoints {
   public static get changePassword() : string {
     return apiBaseUrl.concat('/user/password');
   }
+
+  /**
+   * This method will return the api route for user
+   * @method user
+   * @since version 1.0.0
+   * @returns string
+   */
+  public static get user() : string {
+    return apiBaseUrl.concat('/user');
+  }
 }
 

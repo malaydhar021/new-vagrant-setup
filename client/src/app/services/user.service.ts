@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UserApiEndpoints } from '../helpers/api.helper';
 import { UserUpdatePasswordModel } from '../models/user.model';
 
@@ -38,5 +38,17 @@ export class UserService {
    */
   public changePassword(data : UserUpdatePasswordModel) {
     return this.httpClient.put(UserApiEndpoints.changePassword, data);
+  }
+
+
+  /**
+   * This method is used to call a service for changing the profile
+   * @method changeProfile
+   * @since version 1.0.0
+   * @param data (UserUpdatePasswordModel)
+   * @returns Observable<Object>
+   */
+  public changeProfile(data : FormData) {
+    return this.httpClient.post(UserApiEndpoints.user, data);
   }
 }

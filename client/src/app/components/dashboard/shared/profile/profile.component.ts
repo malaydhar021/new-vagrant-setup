@@ -5,6 +5,7 @@ import * as ValidationEngine                              from '../../../../help
 import { LoaderService }                                  from '../../../../services/loader.service';
 import {UserService}                                      from '../../../../services/user.service';
 import { Log }                                            from '../../../../helpers/app.helper';
+import {UserAuthInfo}                                     from '../../../../models/user.model';
 
 
 /**
@@ -25,6 +26,15 @@ export class ProfileComponent implements OnInit {
   
   userPasswordUpdateForm: FormGroup // Form group for user password update form
   successMessage: string = ''; // Message coming form server after successful api call
+  userInfo: UserAuthInfo;
+  userProfileUpdateForm : FormGroup;
+  profileImage : any = null;
+  allowedFileTypes: string[] = [
+    'image/jpeg',
+    'image/png',
+    'image/bmp',
+    'image/gif'
+  ];
 
    /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -93,7 +103,91 @@ export class ProfileComponent implements OnInit {
         Log.info(response, response.message);
       }
     )
-    
+  }
+
+
+  /**
+   * getUserInfo method to get user information
+   * @method getUserInfo
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  getUserInfo(){
+
+    this.loaderService.enableLoader();
+
+    this.userService.getAuthUserInfo().subscribe(
+      (response: any)=>{
+        this.loaderService.disableLoader();
+        this.userInfo = response.data
+      }
+    )
+  }
+   /**
+   * openUserProfileUpdateForm method to open user profile update form
+   * @method openUserProfileUpdateForm
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  openUserProfileUpdateForm(){
+
+    this.ngxSmartModalService.getModal('modal2').open();
+
+    this.userProfileUpdateForm = this.formBuilder.group({
+      name: [this.userInfo.name, Validators.required],
+      email: [this.userInfo.email, Validators.compose([Validators.required, Validators.email])],
+      image: [null]
+    })
+
+  }
+  /**
+   * onUserProfileUpdate method to open user profile update
+   * @method onUserProfileUpdate
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  onUserProfileUpdate() {
+
+    this.loaderService.enableLoader();
+
+    let values: any = this.userProfileUpdateForm.value;
+    let formData = new FormData();
+    formData.append('_method', "PUT");
+    if (this.profileImage){
+      formData.append('image', values.image);
+    }
+    formData.append('name', values.name);
+    formData.append('email', values.email);
+    this.userService.changeProfile(formData).subscribe(
+      (response: any)=> {
+        this.loaderService.disableLoader();
+        this.userInfo = response.data.user;
+        this.ngxSmartModalService.getModal('modal2').close();
+      }
+    )
+
+  }
+  /**
+   * onFileChange method to make the changes when a file selected
+   * @method onFileChange
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  onFileChange(event){
+    if (event.target.files.length > 0) {
+      
+      const file = event.target.files[0];
+      
+      this.profileImage = file;
+
+      this.userProfileUpdateForm.get('image').setValue(file);
+      if(this.profileImage){
+        this.userProfileUpdateForm.setValidators(ValidationEngine.FileType('image', this.profileImage, this.allowedFileTypes));
+        this.userProfileUpdateForm.updateValueAndValidity();
+        this.userProfileUpdateForm.setValidators(ValidationEngine.FileSize('image', this.profileImage, 1, 'MB'));
+        this.userProfileUpdateForm.updateValueAndValidity();
+      }
+    }
   }
 
   /**
@@ -104,9 +198,16 @@ export class ProfileComponent implements OnInit {
    * @returns Void
    */
   ngOnInit() {
-
     // initialize the update user password form 
     this.createUserPasswordUpdateForm();
+    // get user info 
+    this.getUserInfo();
+    // Initiate the user profile update form
+    this.userProfileUpdateForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      image: [null]
+    })
   }
 
 }

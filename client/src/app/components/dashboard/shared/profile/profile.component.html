@@ -3,14 +3,14 @@
     <h2>Edit your profile information</h2>
     <p>Explicitly we don't share your information with anyone. Its secured with us only.</p>
   
-    <div class="userInfo text-center">
+    <div class="userInfo text-center" *ngIf="userInfo">
         <div class="userDisplay">
-          <span class="showDisplay" style="background-image:url(../../../../assets/images/pp.png);"></span>
+          <span class="showDisplay" [ngStyle]="{'background-image': 'url(' + userInfo.image + ')'}"></span>
         </div>
-        <h5>Jon Vaughn</h5>
-        <p>Jon@thinkvaughn.com</p>
+        <h5>{{userInfo.name}}</h5>
+        <p>{{userInfo.email}}</p>
         <div class="editInfoHd">
-          <a href="javascript:void(0)" (click)="ngxSmartModalService.getModal('modal2').open()">
+          <a href="javascript:void(0)" (click)="openUserProfileUpdateForm()">
             <img src="../../../../assets/images/icon_edit_black.png" alt="">
           </a>
         </div>
@@ -86,13 +86,22 @@
       </h2>
     </div>
     <div class="sr-modal-body profileImg">
-        <form>
+        <message></message>
+        <form [formGroup]="userProfileUpdateForm" (ngSubmit)="onUserProfileUpdate()">
             <div class="sr-form">
               <div class="sr-form-row">
                 <div class="sr-form-cell">
                   <label>Change Name</label>
                   <div class="sr-form-field">
-                    <input type="text">
+                    <input 
+                      type="text"
+                      class="sr-form-ctrl"
+                      formControlName="name"
+                      [ngClass]="{'error' : !userProfileUpdateForm.get('name').valid && userProfileUpdateForm.get('name').touched}"
+                      >
+                      <span class="error-msg" *ngIf="!userProfileUpdateForm.get('name').valid && userProfileUpdateForm.get('name').errors.required">
+                        Required!
+                      </span>
                   </div>
                 </div>
               </div>
@@ -100,7 +109,18 @@
                 <div class="sr-form-cell">
                   <label>Change Email</label>
                   <div class="sr-form-field">
-                    <input type="email">
+                    <input 
+                      type="email"
+                      class="sr-form-ctrl"
+                      formControlName="email"
+                      [ngClass]="{'error' : !userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').touched}"
+                    >
+                    <span class="error-msg" *ngIf="!userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').errors.required">
+                      Required!
+                    </span>
+                    <span class="error-msg" *ngIf="!userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').errors.email">
+                      Must be an email!
+                    </span>
                   </div>
                 </div>
               </div>
@@ -109,7 +129,20 @@
                   <label>Upload an image</label>
                   <div class="sr-form-field">
                     <div class="sr-form-ctrl inputFile">
-                      <input type="file">
+                      <input 
+                          type="file"
+                          class="sr-form-ctrl"
+                          
+                          (change)="onFileChange($event)"
+                          [ngClass]="{'error' : !userProfileUpdateForm.get('image').valid}"
+                          >
+                          <!-- invalidFileType invalidFileSize -->
+                          <span class="error-msg" *ngIf="!userProfileUpdateForm.get('image').valid && userProfileUpdateForm.get('image').errors.invalidFileType">
+                            Invalide File Type
+                          </span>
+                          <span class="error-msg" *ngIf="!userProfileUpdateForm.get('image').valid && userProfileUpdateForm.get('image').errors.invalidFileSize">
+                              Invalide File Size
+                            </span>
                       <div class="choseFileArea">
                         <div class="fileImg">
                           <img src="../../../../assets/images/icon_upload_photo.png" alt="">
@@ -125,7 +158,7 @@
               </div>
               <div class="sr-form-row">
                   <div class="sr-form-cell">
-                      <button class="button-submit" type="">
+                      <button class="button-submit" type="submit" [disabled]="!userProfileUpdateForm.valid">
                           <img src="../../../../assets/images/addIcon.png" alt=""> Save Changes
                       </button>
                   </div>

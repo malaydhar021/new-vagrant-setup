@@ -23,3 +23,14 @@ export class UserUpdatePasswordModel{
     new_password: string;
     new_password_confirmation: string;
 }
+
+/**
+ * UserAuthInfo is for the authenticated user model
+ */
+export class UserAuthInfo {
+    id:             string;
+    name:           string;
+    email:          string;
+    image?:         string;
+    subscription?:  any;
+}
