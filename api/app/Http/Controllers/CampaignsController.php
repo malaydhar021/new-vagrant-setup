@@ -85,7 +85,7 @@ class CampaignsController extends Controller
         $campaign->campaign_name = $request->input('campaign_name');
         $campaign->domain_name = $request->input('domain_name');
         $campaign->style_id = Hashids::decode($request->input('style_id'));
-        $campaign->styles = null; // should be null cause this style used to determine old styles, now deprecated field.
+        $campaign->styles = null; // @deprecated on v2, should be null because this style used to determine old styles.
         $campaign->delay = $request->has('delay') ? $request->input('delay') : 3000;
         $campaign->delay_before_start = $request->has('delay_before_start') ?
                                             $request->input('delay_before_start') : null;
@@ -103,7 +103,7 @@ class CampaignsController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Successfully created campaign.',
+            'message' => 'Campaign has created successfully.',
             'data' => new CampaignsResource($campaign),
         ], 201);
     }
@@ -163,7 +163,7 @@ class CampaignsController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Successfully updated the campaign.',
+            'message' => 'Campaign details has updated successfully.',
             'data' => new CampaignsResource($campaign),
         ], 201);
     }

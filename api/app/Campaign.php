@@ -80,7 +80,7 @@ class Campaign extends Model
      * Get the campaign's delay
      *
      * @param  string  $value
-     * @return string
+     * @return integer
      */
     public function getDelayAttribute($value)
     {
@@ -91,7 +91,7 @@ class Campaign extends Model
      * Get the campaign's delay before start
      *
      * @param  string  $value
-     * @return string
+     * @return integer
      */
     public function getDelayBeforeStartAttribute($value)
     {
@@ -102,7 +102,7 @@ class Campaign extends Model
      * Get the campaign's stay timing
      *
      * @param  string  $value
-     * @return string
+     * @return integer
      */
     public function getStayTimingAttribute($value)
     {
@@ -113,7 +113,7 @@ class Campaign extends Model
      * Get the campaign's loop
      *
      * @param  string  $value
-     * @return string
+     * @return boolean
      */
     public function getLoopAttribute($value)
     {
@@ -124,7 +124,7 @@ class Campaign extends Model
      * Get the campaign's is active
      *
      * @param  string  $value
-     * @return string
+     * @return boolean
      */
     public function getIsActiveAttribute($value)
     {

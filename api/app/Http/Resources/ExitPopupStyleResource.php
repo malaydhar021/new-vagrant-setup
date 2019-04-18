@@ -5,10 +5,10 @@ namespace App\Http\Resources;
 use App\Helpers\Hashids;
 use Carbon\Carbon;
 
-class CampaignStyleResource extends Resource
+class ExitPopupStyleResource extends Resource
 {
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array

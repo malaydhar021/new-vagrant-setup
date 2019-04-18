@@ -3,11 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Traits\AuthTrait;
+use Illuminate\Support\Facades\Auth;
 
 class ExitPopUpRequest extends FormRequest
 {
-    use AuthTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,11 +14,9 @@ class ExitPopUpRequest extends FormRequest
      */
     public function authorize()
     {
-        if(is_integer($this->isAuthenticated())) {
-            return true;
-        } else {
-            return false;
-        }
+        if (Auth::check())  return true;
+
+        return false;
     }
 
     /**
@@ -30,16 +27,29 @@ class ExitPopUpRequest extends FormRequest
     public function rules()
     {
         return [
-            'created_by'                => 'required|numeric',
-            'name'                      => 'required|string',
-            'header_text'               => 'required|string',
-            'header_text_color'         => 'required|string',
-            'header_background_color'   => 'required|string',
-            'semi_header_text_color'    => 'required_if:semi_header_text,!=,null',
-            'select_active_campaign'    => 'required|numeric',
-            'select_sticky_reviews'     => 'required'
+            'name' => "required|string",
+            'has_campaign' => "required|boolean",
+            'campaign_id' => "required_if:has_campaign,1|string",
+            'has_sticky_reviews' => "required|boolean",
+            'sticky_reviews' => "required_if:has_sticky_reviews,1|array",
+            'sticky_reviews.*'  => "required_if:has_sticky_reviews,1|string|distinct",
+            'has_email_field' => "required|boolean",
+            'header_text' => "required|string",
+            'header_text_color' => "required|string",
+            'header_background_color' => "required|string",
+            'paragraph_text' => "required|string",
+            'paragraph_text_color' => "required|string",
+            'body_background_color' => "required|string",
+            'popup_backdrop_color' => "required|string",
+            'button_text' => "required|string",
+            'button_url' => "required|url",
+            'button_text' => "required|string",
+            'button_text_color' => "required|string",
+            'button_background_color' => "required|string",
+            'style_id' => "required|string",
         ];
     }
+
     /**
      * Get the error messages for the defined validation rules.
      *
@@ -48,20 +58,47 @@ class ExitPopUpRequest extends FormRequest
     public function messages()
     {
         return [
-            'created_by.required'                   => 'Please provide the id of the review link creator, and it should be numeric',
-            'created_by.numeric'                    => 'You should provide the id of the creator and it should be numeric',
-            'name.required'                         => 'Exit pop up name is required!',
-            'name.string'                           => 'Exit pop up name should be type of string.',
-            'header_text.required'                  => 'Exit pop up header text is required!',
-            'header_text.string'                    => 'Exit pop up header text should be type of string.',
-            'header_text_color.required'            => 'Exit pop up header text color is required!',
-            'header_text_color.string'              => 'Exit pop up header text color should be type of string.',
-            'header_background_color.required'      => 'Header background color is required!',
-            'header_background_color.string'        => 'Header background color should be type oof string. Hint: define rgba or hex code.',
-            'semi_header_text_color.required_if'    => 'Semi header text color is required if you define a text as semi header text.',
-            'select_active_campaign.required'       => 'Please select a campaign.',
-            'select_active_campaign.numeric'        => 'Please select the active campaign properly!',
-            'select_sticky_reviews'                 => 'Please select one or more sticky reviews!'
+            'name.required' => "Exit pop up name is required!",
+            'name.string' => "Exit pop up name should be a valid string.",
+            'has_campaign.required' => "Campaign switch is required.",
+            'has_campaign.boolean' => "Campaign switch needs to be turned on or off.",
+            'campaign_id.required_if' => "Campaign is required.",
+            'campaign_id.string' => "Campaigns should be a valid string.",
+            'has_sticky_reviews.required' => "Sticky review switch is required.",
+            'has_sticky_reviews.boolean' => "Sticky review switch needs to be turned on or off.",
+            'sticky_reviews.required_if' => "Sticky reviews are required.",
+            'sticky_reviews.array' => "Sticky reviews should be an array.",
+            'sticky_reviews*.required_if' => "At least one sticky review item is required inside the array.",
+            'sticky_reviews*.string' => "Sticky review item should be a valid string.",
+            'sticky_reviews*.distinct' => "Sticky review item should be distinct, no repetead item is allowed.",
+            'has_email_field.required' => "Add email field is required",
+            'has_email_field.boolean' => "Add email field to be turned on or off.",
+            'header_text.required' => "Header text is required.",
+            'header_text.string' => "Header text should be a valid string.",
+            'header_text_color.required' => "Header text color is required.",
+            'header_text_color.string' => "Header text color should be a valid string.",
+            'header_background_color.required' => "Header background color is required!",
+            'header_background_color.string' => "Header background color should be valid string.",
+            'paragraph_text.required' => "Paragraph text is required.",
+            'paragraph_text.string' => "Paragraph text should be a valid string.",
+            'paragraph_text_color.required' => "Paragraph text color is required.",
+            'paragraph_text_color.string' => "Paragraph text color should be a valid string.",
+            'body_background_color.required' => "Body background color is required.",
+            'body_background_color.string' => "Body background color should be a valid string.",
+            'popup_backdrop_color.required' => "Popup backdrop color is required.",
+            'popup_backdrop_color.string' => "Popup backdrop color should be a valid string.",
+            'button_text.required' => "Button text is required.",
+            'button_text.string' => "Button text should be a valid string.",
+            'button_url.required' => "Button url is required.",
+            'button_url.url' => "Button url should be a valid URL.",
+            'button_text.required' => "Button text is required.",
+            'button_text.string' => "Button text should be a valid string.",
+            'button_text_color.required' => "Button text color is required.",
+            'button_text_color.string' => "Button text color should be a valid string.",
+            'button_background_color.required' => "Button background color is required.",
+            'button_background_color.string' => "Button background color should be a valid string.",
+            'style_id.required' => "Style is required.",
+            'style_id.string' => "Style ID should be a valid string.",
         ];
     }
 }

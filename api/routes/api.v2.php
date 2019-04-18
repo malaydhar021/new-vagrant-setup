@@ -73,11 +73,21 @@ Route::middleware('auth:api')->group(function () {
         Route::patch('/{id}/sticky-reviews', 'CampaignsController@syncStickyReviews')->name('sticky-reviews.sync');
     });
 
-    // exit popup api routes
-    Route::get('/get-all-exit-pop-ups', 'ApiV2Controller@getAllExitPopUps')->name('getAllExitPopUps');
-    Route::post('/save-exit-pop-up', 'ApiV2Controller@postExitPopUpRequest')->name('postExitPopUpRequest');
-    Route::post('/update-exit-pop-up', 'ApiV2Controller@postUpdateExitPopUp')->name('postUpdateExitPopUp');
-    Route::post('/delete-exit-popup', 'ApiV2Controller@postDeleteExitPopUp')->name('postDeleteExitPopUp');
+    // @deprecated v2 exit popup api routes
+    // Route::get('/get-all-exit-pop-ups', 'ApiV2Controller@getAllExitPopUps')->name('getAllExitPopUps');
+    // Route::post('/save-exit-pop-up', 'ApiV2Controller@postExitPopUpRequest')->name('postExitPopUpRequest');
+    // Route::post('/update-exit-pop-up', 'ApiV2Controller@postUpdateExitPopUp')->name('postUpdateExitPopUp');
+    // Route::post('/delete-exit-popup', 'ApiV2Controller@postDeleteExitPopUp')->name('postDeleteExitPopUp');
+
+    Route::prefix('exit-popups')->name('exit-popups.')->group(function () {
+        Route::get('/styles', 'ExitPopupsController@styles')->name('styles.index');
+        Route::get('/', 'ExitPopupsController@index')->name('index');
+        Route::post('/', 'ExitPopupsController@store')->name('store');
+        Route::get('/{id}', 'ExitPopupsController@show')->name('show');
+        Route::put('/{id}', 'ExitPopupsController@update')->name('update');
+        Route::patch('/{id}', 'ExitPopupsController@update')->name('update');
+        Route::delete('/{id}', 'ExitPopupsController@destroy')->name('delete');
+    });
 
     Route::prefix('sticky-reviews')->name('sticky-reviews.')->group(function () {
         Route::get('/', 'StickyReviewsController@index')->name('index');
