@@ -1302,6 +1302,23 @@ a {
     }
   }
 
+  .no-records {
+    padding: 15px;
+    font-size: 24px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: 'SegoeUI';
+    color: #333;
+
+    @media (max-width: 991px) {
+      padding: 0;
+    }
+
+    @media (max-width: 575px) {
+      font-size: 17px;
+    }
+  }
+
   .dataTableArea {
     padding-bottom: 10px;
 
@@ -1978,10 +1995,100 @@ a {
               //   padding-right: 15px;
               // }
             }
+
+            @media (max-width: 991px) {
+              padding-left: 5px;
+              padding-right: 5px;
+
+              &:first-child {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 40%;
+                flex: 0 0 40%;
+                max-width: 40%;
+                padding-top: 0;
+                padding-bottom: 0;
+
+                .greenTag {
+                  @include ml(12px);
+                  font-size: 10px;
+                }
+              }
+
+              &:nth-child(2) {
+                display: none;
+              }
+
+              &:nth-child(3) {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 15%;
+                flex: 0 0 15%;
+                max-width: 15%;
+              }
+
+              &:nth-child(4) {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 25%;
+                flex: 0 0 25%;
+                max-width: 25%;
+              }
+
+              &:nth-child(5) {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 20%;
+                flex: 0 0 20%;
+                max-width: 20%;
+                text-align: right;
+
+                a {
+                  @include mt(0);
+                }
+              }
+            }
+
+            @media (max-width: 767px) {
+              &:nth-child(1) {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 100%;
+                flex: 0 0 100%;
+                max-width: 100%;
+                padding: 0;
+              }
+
+              &:nth-child(3),
+              &:nth-child(4),
+              &:nth-child(5) {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 33%;
+                flex: 0 0 33%;
+                max-width: 33.333%;
+                @include mt(15px);
+              }
+            }
+
+            @media (max-width: 480px) {
+              &:nth-child(3),
+              &:nth-child(4),
+              &:nth-child(5) {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 100%;
+                flex: 0 0 100%;
+                max-width: 100%;
+                @include mt(15px);
+                padding-left: 55px;
+              }
+            }
           }
 
           @media (max-width: 1199px) {
             padding-right: 40px;
+          }
+
+          @media (max-width: 991px) {
+            padding-right: 10px;
+          }
+
+          @media (max-width: 767px) {
+            padding-right: 0;
           }
         }
 
@@ -2016,6 +2123,11 @@ a {
               a {
                 color: inherit;
               }
+
+              @media (max-width: 991px) {
+                font-size: 12px;
+                line-height: 20px;
+              }
             }
 
             &.negativeMsg {
@@ -2036,6 +2148,12 @@ a {
 
             @media (max-width: 1365px) {
               @include mr(15px);
+            }
+
+            @media (max-width: 991px) {
+              @include mr(0);
+              max-width: 30%;
+              padding-right: 10px;
             }
           }
 
@@ -2092,7 +2210,7 @@ a {
 
           @media (max-width: 991px) {
             top: auto;
-            bottom: 15px;
+            bottom: -35px;
           }
         }
 
@@ -2141,6 +2259,63 @@ a {
         }
       }
     }
+
+    // 404/Maintenace change for Dashboard area
+    .maintainPages {
+
+      .errorBody,
+      .maintenanceBody {
+        height: 100%;
+        background-color: transparent;
+        z-index: 8;
+
+        .graphicsError {
+          max-width: 250px;
+        }
+      }
+
+      .maintainGfx {
+        &:after {
+          background-size: cover;
+          width: 160px;
+          height: 160px;
+        }
+
+        &:before {
+          background-size: cover;
+          width: 160px;
+          height: 150px;
+        }
+
+        @media (max-width: 767px) {
+          display: none;
+        }
+      }
+
+      .maintainGfx2 {
+        &:after {
+          background-size: cover;
+          -webkit-transform: translateY(-50%) scale(0.7);
+          transform: translateY(-50%) scale(0.7);
+
+          @media (max-width: 767px) {
+            left: 0;
+          }
+        }
+
+        &:before {
+          background-size: cover;
+          -webkit-transform: translateY(-50%) scale(0.7);
+          transform: translateY(-50%) scale(0.7);
+
+          @media (max-width: 767px) {
+            right: 0;
+          }
+        }
+      }
+    }
+
+    // 404/Maintenace change for Dashboard area
 
     @media (max-width: 991px) {
       padding: 0;
@@ -3191,7 +3366,7 @@ a {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0 15px;
-    border-radius: 60px 60px 60px 0;
+    border-radius: 50px 50px 50px 0;
     -webkit-box-shadow: 0 0 90px rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 90px rgba(0, 0, 0, 0.4);
     margin: 0;
@@ -3846,6 +4021,10 @@ body.sign-upPage {
           -webkit-transform: none;
           transform: none;
           top: auto;
+        }
+
+        @media (max-width: 991px) {
+          @include mt(50px);
         }
       }
 
@@ -5267,6 +5446,12 @@ body.sign-upPage {
       width: 224px;
       height: 222px;
       background-image: url(#{$imgUrl}/404_left_bubbles.png);
+      background-size: cover;
+
+      @media (max-width: 1199px) {
+        width: 104px;
+        height: 102px;
+      }
     }
 
     &:after {
@@ -5277,6 +5462,16 @@ body.sign-upPage {
       width: 294px;
       height: 291px;
       background-image: url(#{$imgUrl}/404_right_bubbles.png);
+      background-size: cover;
+
+      @media (max-width: 1199px) {
+        width: 104px;
+        height: 102px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      display: none;
     }
   }
 
@@ -5286,7 +5481,7 @@ body.sign-upPage {
     &:before {
       position: absolute;
       content: '';
-      z-index: 2;
+      z-index: 1;
     }
 
     &:before {
@@ -5297,6 +5492,13 @@ body.sign-upPage {
       width: 200px;
       height: 273px;
       background-image: url(#{$imgUrl}/404_iconographic_1.png);
+      background-size: cover;
+
+      @media (max-width: 767px) {
+        width: 130px;
+        height: 163px;
+        left: 86px;
+      }
     }
 
     &:after {
@@ -5307,6 +5509,13 @@ body.sign-upPage {
       width: 217px;
       height: 468px;
       background-image: url(#{$imgUrl}/404_iconographic_2.png);
+      background-size: cover;
+
+      @media (max-width: 767px) {
+        width: 130px;
+        height: 163px;
+        right: 86px;
+      }
     }
   }
 }
@@ -5335,6 +5544,12 @@ body.sign-upPage {
     text-align: center;
   }
 
+  .graphicsError {
+    @media (max-width: 767px) {
+      max-width: 250px;
+    }
+  }
+
   @media (max-height: 620px) and (orientation: landscape) {
     @include f-justify-start();
     overflow: auto;
@@ -5359,12 +5574,20 @@ body.sign-upPage {
     font-size: 30px;
     color: #000;
     font-weight: normal;
-    @include mb(15px)
+    @include mb(15px);
+
+    @media (max-width: 767px) {
+      font-size: 22px;
+    }
   }
 
   p {
     font-size: 17px;
     color: #878787;
+
+    @media (max-width: 767px) {
+      font-size: 14px;
+    }
   }
 
   .btn-oval {
@@ -5825,6 +6048,10 @@ body.sign-upPage {
       }
     }
   }
+
+  @media (max-width: 1600px) {
+    @include ml(0);
+  }
 }
 
 .errorMsgSign {
@@ -5833,6 +6060,10 @@ body.sign-upPage {
 
   .log-stat_msg {
     @include mt(0);
+  }
+
+  @media (max-width: 1600px) {
+    padding-left: 0;
   }
 }
 
