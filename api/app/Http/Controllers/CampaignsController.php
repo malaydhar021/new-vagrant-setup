@@ -85,16 +85,18 @@ class CampaignsController extends Controller
         $campaign->campaign_name = $request->input('campaign_name');
         $campaign->domain_name = $request->input('domain_name');
         $campaign->style_id = Hashids::decode($request->input('style_id'));
-        $campaign->styles = null;
-        $campaign->delay = $request->input('delay');
-        $campaign->delay_before_start = $request->input('delay_before_start');
+        $campaign->styles = null; // should be null cause this style used to determine old styles, now deprecated field.
+        $campaign->delay = $request->has('delay') ? $request->input('delay') : 3000;
+        $campaign->delay_before_start = $request->has('delay_before_start') ?
+                                            $request->input('delay_before_start') : null;
+        $campaign->stay_timing = $request->has('stay_timing') ? $request->input('stay_timing') : 1000;
         $campaign->loop = $request->input('loop');
         $campaign->exit_pop_up = $request->input('exit_pop_up');
         $campaign->exit_pop_up_id = Hashids::decode($request->input('exit_pop_up_id'));
         $campaign->branding = $request->input('branding');
         $campaign->branding_id = Hashids::decode($request->input('branding_id'));
         $campaign->created_by = Auth::user()->id;
-        $campaign->is_active = (string) ((int) $request->input('is_active'));
+        $campaign->is_active = true;
         $campaign->save();
 
         $campaign->load('campaignStyle', 'brandingDetails', 'exitPopUp', 'user');
@@ -145,14 +147,14 @@ class CampaignsController extends Controller
                                 $request->input('delay') : $campaign->delay,
             'delay_before_start' => $request->has('delay_before_start') ?
                                 $request->input('delay_before_start') : $campaign->delay_before_start,
+            'stay_timing' => $request->has('stay_timing') ?
+                                $request->input('stay_timing') : $campaign->stay_timing,
             'loop' => $request->has('loop') ?
                                 $request->input('loop') : $campaign->loop,
             'branding' => $request->has('branding') ?
                                 $request->input('branding') : $campaign->branding,
             'branding_id' => $request->has('branding_id') ?
                                 Hashids::decode($request->input('branding_id')) : $campaign->branding_id,
-            'is_active' => $request->has('is_active') ?
-                                (string) ((int) $request->input('is_active')) : $campaign->is_active,
             'exit_pop_up' => $request->has('exit_pop_up') ?
                                 $request->input('exit_pop_up') : $campaign->exit_pop_up,
             'exit_pop_up_id' => $request->has('exit_pop_up_id') ?

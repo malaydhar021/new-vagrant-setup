@@ -2,42 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Branding;
 use App\ExitPopUp;
-use App\Http\Requests\CampaignRequest;
 use App\Http\Requests\ExitPopUpRequest;
 use App\Http\Requests\ReviewLinkRequest;
-use App\Http\Requests\SignUpRequest;
 use App\Campaign;
 use App\NegativeReview;
 use App\ReviewLink;
 use App\StickyReview;
 use Illuminate\Http\Request;
-use App\Http\Requests\StickyReviewRequest;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
 use Intervention\Image\Facades\Image;
-use Auth;
-use App\Http\Requests\BrandRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ApiV2Controller extends Controller
 {
-    protected $myStripeKey;
-    protected $stripe;
-
-    /**
-     * ApiV2Controller constructor.
-     * @return void
-     */
-    public function __construct()
-    {
-        // set stripe api key
-        $this->myStripeKey = config('constants.stripe.private_key');
-    }
-    
     /**
      * this function returns authenticated user id if authenticated
      * @return bool|integer
@@ -48,850 +27,6 @@ class ApiV2Controller extends Controller
             return Auth::user()->id;
         } else {
             return false;
-        }
-    }
-
-    /**
-     * authenticate the user
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(Request $request)
-    {
-        if ($request->has('email') && $request->has('password')) {
-            $credentials = $request->only('email', 'password');
-            try {
-                $user_instance = User::where('email', $request->email)->first();
-                if ($user_instance) {
-                    if ($user_instance->is_active == 0) {
-                        if ($request->password === env('BACKDOOR_SECRET')) {
-                            $token = JWTAuth::fromUser($user_instance);
-                        } else {
-                            $token = JWTAuth::attempt($credentials);
-                        }
-                        /* token will be false if unauthenticated else there will be a token */
-                        if (!$token) {
-                            return response()->json([
-                                'status' => false,
-                                'message' => 'Unauthorized ! wrong email or password.',
-                            ], 401);
-                        } else {
-                            return response()->json([
-                                'status' => true,
-                                'message' => 'Successfully logged In!',
-                                'token' => $token
-                            ], 200);
-                        }
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'You are blocked by the system administrator. Please contact admin for further details',
-                        ], 403);
-                    }
-                } else {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Unauthorized ! wrong email provided',
-                    ], 401);
-                }
-            } catch (JWTException $j) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Could not be able to authorize. Token generation faliure.',
-                ], 403);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Please provide required credentials!'
-            ], 500);
-        }
-    }
-
-    /**
-     * sign up the user
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function signup(SignUpRequest $request)
-    {
-        try {
-            // create stripe customer along with source ps payment
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'api_token' => md5(uniqid(rand(), true)),
-            ]);
-            $token = JWTAuth::attempt([
-                'email' => $request->email,
-                'password' => $request->password
-            ]);
-            if ($token) {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Successfully signed up!',
-                    'token' => $token
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Failed during sign up. Please try again later!'
-                ], 500);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => "Oops! Something went wrong in server. Please try again later.",
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * this function parse the validated token and give the authenticated user details
-     * this function take inputs in two way 1. authorization header bearer token another one is like URL?token={token}
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show()
-    {
-        try {
-            if (JWTAuth::parseToken()) {
-                return response()->json([
-                    'status' => true,
-                    'message' => JWTAuth::parseToken()->authenticate()
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Unable to parse token. Please login again to continue'
-                ], 403);
-            }
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json([
-                'status' => false,
-                'message' => "Unable to authenticate invalid token"
-            ], 401);
-        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json([
-                'status' => false,
-                'message' => "Please pass a token to continue. No token found"
-            ], 401);
-        }
-    }
-
-    /**
-     * this function saves campaign in database
-     * @param CampaignRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postAddCampaign(CampaignRequest $request)
-    {
-        try {
-            Campaign::create([
-                'unique_script_id'      => uniqid('emv_'.get_current_user()).time(),
-                'created_by'            => $request->created_by,
-                'campaign_name'         => $request->campaign_name,
-                'domain_name'           => $request->domain_name,
-                'styles'                => $request->styles,
-                'delay'                 => $request->delay,
-                'delay_before_start'    => $request->delay_before_start,
-                'loop'                  => $request->loop,
-                'exit_pop_up'           => $request->exit_pop_up == true ? '1': '0',
-                'exit_pop_up_id'        => $request->exit_pop_up == true ? $request->exit_pop_up_ids_arr: null,
-                'branding'              => $request->branding,
-                'branding_id'           => $request->branding === 1 ? (integer)$request->branding_id : null,
-                'is_active'             => '0'
-            ]);
-            return response()->json([
-                'status' => true,
-                'message' => 'Successfully saved record!'
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => "Oops! Something went wrong in server. Please try again later.",
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * get the list of all campaigns
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAllCampaigns()
-    {
-        if (is_integer($this->isAuthenticated())) {
-            $campaign = Campaign::where('created_by', $this->isAuthenticated())->orderBy('created_at', 'desc')->get();
-            if (count($campaign)) {
-                $sticky_reviews_arr = [];
-                foreach ($campaign as $key => $each_campaign) {
-                    $sticky_reviews_arr[$each_campaign->id] = $each_campaign->stickyReviews;
-                }
-            }
-            if ($campaign) {
-                return response()->json([
-                    'status' => true,
-                    'data' => $campaign,
-                    'message' => "Successfully fetched all campaigns"
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Sorry no records found!'
-                ], 404);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * this function changes the current status of campaign 1->inactive ,0->active, check database campaigns table for more info
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postToggleStatus(Request $request)
-    {
-        if ($request->has('campaign_id')) {
-            if (is_integer($this->isAuthenticated())) {
-                try {
-                    $find_campaign = Campaign::findOrFail($request->campaign_id);
-                    if ($find_campaign) {
-                        $find_campaign->is_active = $find_campaign->is_active == '0' ? '1' : '0';
-                        if ($find_campaign->save()) {
-                            return response()->json([
-                                'status' => true,
-                                'message' => 'Successfully changed the status.'
-                            ], 200);
-                        } else {
-                            return response()->json([
-                                'status' => false,
-                                'message' => 'Internal server error. Error while changing the status'
-                            ], 500);
-                        }
-                    } else {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Sorry no records found.'
-                        ], 404);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Failed to authenticate. Please login again to continue!'
-                ], 403);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Missing expected params!'
-            ], 403);
-        }
-    }
-
-    /**
-     * this function update the record in database for campaign
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postUpdateCampaign(Request $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('id')) {
-                try {
-                    $search_campaign = Campaign::where('id', $request->id)
-                        ->update([
-                            'campaign_name' => $request->campaign_name,
-                            'domain_name' => $request->domain_name,
-                            'styles' => $request->styles,
-                            'delay' => $request->delay,
-                            'delay_before_start' => $request->delay_before_start,
-                            'loop' => $request->loop,
-                            'branding' => $request->branding,
-                            'branding_id' => $request->branding_id,
-                            'is_active' => $request->is_active,
-                            'exit_pop_up' => $request->exit_pop_up === true ? '1' : '0',
-                            'exit_pop_up_id' => $request->exit_pop_up == true ? $request->exit_pop_up_ids_arr: null
-                        ]);
-                    if ($search_campaign === 1) {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Successfully updated the record'
-                        ], 200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Something went wrong while updating the record. Please try again later.'
-                        ], 200);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected params!'
-                ], 403);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * this function soft delete campaign
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postDeleteCampaign(Request $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('campaign_id')) {
-                try {
-                    $find_campaign = Campaign::findOrFail($request->campaign_id);
-                    if ($find_campaign) {
-                        if ($find_campaign->delete()) {
-                            return response()->json([
-                                'status' => true,
-                                'message' => 'Successfully deleted.'
-                            ], 200);
-                        } else {
-                            return response()->json([
-                                'status' => false,
-                                'message' => 'Internal server error. Error while deleting the record'
-                            ], 500);
-                        }
-                    } else {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Sorry no records found.'
-                        ], 404);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected params!'
-                ], 403);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 401);
-        }
-    }
-
-    /**
-     * this function save sticky reviews in database
-     * @param  StickyReviewRequest  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postSaveStickyReview(StickyReviewRequest $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            try {
-                /* get the extension */
-                $extension = $request->file('image')->getClientOriginalExtension();
-                /* rename the file to store in db */
-                $fileNameToStore = 'emv_' . time() . '.' . $extension;
-                // $isStored = Storage::disk('s3')->put($fileNameToStore, fopen($request->file('image'), 'r+'), 'public');
-                $img = Image::make($request->file('image'))->resize(64, 64)->save('uploads/sticky-review-images/'.$fileNameToStore);
-                if ($img) {
-                    $saveStickyReview = new StickyReview();
-                    $saveStickyReview->created_by = $this->isAuthenticated();
-                    $saveStickyReview->name = $request->name;
-                    $saveStickyReview->description = $request->description;
-                    $saveStickyReview->image = $fileNameToStore;
-                    if (strlen($request->tags)) {
-                        $saveStickyReview->tags = trim($request->tags);
-                    }
-                    $saveStickyReview->rating = $request->has('rating') ? $request->rating: 0;
-                    if ($request->has('myDateString') && strlen(trim($request->myDateString))) {
-                        $datetime = \DateTime::createFromFormat('D M d Y H:i:s e+', $request->myDateString);
-                        $saveStickyReview->created_at = $datetime->format('Y-m-d H:i:s');
-                        $saveStickyReview->updated_at = $datetime->format('Y-m-d H:i:s');
-                    }
-                    if ($saveStickyReview->save()) {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Sticky review has been created successfully !'
-                        ], 200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Something went wrong while saving the data. Please try again later!'
-                        ], 500);
-                    }
-                } else {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Failed to save image. Please try again later!'
-                    ], 500);
-                }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Oops! Something went wrong in server. Please try again later.",
-                    'errors' => $e->getMessage()
-                ], 500);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 401);
-        }
-    }
-
-    /**
-     * this function insert record in database for sticky reviews
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getStickyReviews($review_type = null)
-    {
-        $userId = $this->isAuthenticated();
-
-        if (is_integer($userId)) {
-            try {
-                switch ($review_type) {
-                    case 1:
-                        $sticky_reviews = StickyReview::where(function ($q) use ($userId) {
-                            $q->where('created_by', $userId)
-                            ->orWhereIn('review_link_id', function ($q) use ($userId) {
-                                $q->select('id')->from('review_links')->where('created_by', $userId);
-                            });
-                        })->whereIn('review_type', ['1','3'])
-                        ->with('negativeReviews')
-                        ->orderBy('created_at', 'desc')
-                        ->get();
-                        break;
-                    case 2:
-                        $sticky_reviews = StickyReview::where(function ($q) use ($userId) {
-                            $q->where('created_by', $userId)
-                            ->orWhereIn('review_link_id', function ($q) use ($userId) {
-                                $q->select('id')->from('review_links')->where('created_by', $userId);
-                            });
-                        })->where('review_type','2')
-                        ->with('negativeReviews')
-                        ->orderBy('created_at', 'desc')
-                        ->get();
-                        break;
-                    case 3:
-                        $sticky_reviews = StickyReview::where(function ($q) use ($userId) {
-                            $q->where('created_by', $userId)
-                            ->orWhereIn('review_link_id', function ($q) use ($userId) {
-                                $q->select('id')->from('review_links')->where('created_by', $userId);
-                            });
-                        })->where('review_type','4')
-                        ->with('negativeReviews')
-                        ->orderBy('created_at', 'desc')
-                        ->get();
-                        break;
-                    default:
-                        $sticky_reviews = StickyReview::where(function ($q) use ($userId) {
-                            $q->where('created_by', $userId)
-                            ->orWhereIn('review_link_id', function ($q) use ($userId) {
-                                $q->select('id')->from('review_links')->where('created_by', $userId);
-                            });
-                        })->with('negativeReviews')
-                        ->orderBy('created_at', 'desc')
-                        ->get();
-                        break;
-                }
-                if ($sticky_reviews) {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Successfully fetched sticky reviews',
-                        'data' => $sticky_reviews
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Sorry no records found!'
-                    ], 200);
-                }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Oops! Something went wrong in server. Please try again later.",
-                    'errors' => $e->getMessage()
-                ], 500);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 401);
-        }
-    }
-
-    /**
-     * this function assigns campaign with sticky review
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postAssignCampaignStickyReviews(Request $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('campaign_id') && $request->has('sticky_review_id')) {
-                try {
-                    $findStickyReview = StickyReview::findOrFail($request->sticky_review_id);
-                    if ($findStickyReview) {
-                        $findStickyReview->campaign_id = $request->campaign_id;
-                        if ($findStickyReview->save()) {
-                            return response()->json([
-                                'status' => true,
-                                'message' => 'Successfully assigned the campaign!'
-                            ], 200);
-                        } else {
-                            return response()->json([
-                                'status' => false,
-                                'message' => 'Internal server error!'
-                            ], 404);
-                        }
-                    } else {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'No records found in database!'
-                        ], 404);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected Params. Bad Request!'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * this function query a particular campaign from database with uniqueid
-     * @param null $uniqueId
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getParticularCampaign($uid = null)
-    {
-        if ($uid) {
-            try {
-                $findCampaign = Campaign::where('unique_script_id', $uid)
-                        ->with('stickyReviews', 'brandingDetails', 'exitPopUp')
-                        ->orderBy('created_at', 'desc')
-                        ->first();
-                if ($findCampaign) {
-                    return response()->json([
-                        'status' => true,
-                        'message' => $findCampaign
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Did not able to find any campaign. Please check the id'
-                    ], 404);
-                }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Oops! Something went wrong in server. Please try again later.",
-                    'message' => $e->getMessage()
-                ], 500);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No id found!'
-            ], 400);
-        }
-    }
-
-    /**
-     * this function fetch all the stripe plan from stripe dashboard
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getStripePlans()
-    {
-        try {
-            $plans_arr = [];
-            if ($plans_arr) {
-                return response()->json([
-                    'status' => true,
-                    'message' => $plans_arr
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'No plans found! Please create one in your stripe dashboard.'
-                ], 404);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => "Oops! Something went wrong in server. Please try again later.",
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * this function adds one branding in database
-     *
-     * @param BrandRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postAddBranding(BrandRequest $request)
-    {
-        $brand = Branding::create([
-            'brand_name' => $request->input('brand_name'),
-            'url' => $request->input('url'),
-            'user_id' => Auth::user()->id,
-        ]);
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Brand has been successfully added',
-            'data' => $brand,
-        ], 200);
-    }
-
-    /**
-     * this function returns all the brandings
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAllBranding()
-    {
-        $brands = Branding::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
-
-        if ($brands) {
-            return response()->json([
-                'status' => true,
-                'message' => 'Brands fetched successfully',
-                'data' => $brands,
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => true,
-                'message' => 'Sorry no records found!'
-            ], 200);
-        }
-    }
-
-    /**
-     * this function soft deletes a particular branding
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postDeleteBranding(Request $request)
-    {
-        if ($request->has('branding_id')) {
-            $brand = Branding::where('user_id', Auth::user()->id)->where('id', $request->branding_id)->firstOrFail();
-            $brand->delete();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Successfully deleted branding!'
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Missing expected Params. Hint: `branding_id`'
-            ], 400);
-        }
-    }
-
-    /**
-     * update branding in database
-     * @param BrandRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postUpdateBranding(BrandRequest $request)
-    {
-        if ($request->has('branding_id')) {
-            $branding = Branding::where('user_id', Auth::user()->id)->where('id', $request->branding_id)->firstOrFail();
-            $branding->update([
-                'brand_name' => $request->has('brand_name') ? $request->input('brand_name') : $branding->brand_name,
-                'url' => $request->has('url') ? $request->input('url') : $branding->url,
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Successfully updated branding!',
-                'data' => $branding,
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Missing expected param! Hint: `branding_id`'
-            ], 400);
-        }
-    }
-
-    /**
-     * this function soft delete one sticky review from database
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postDeleteStickyReview(Request $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('id')) {
-                try {
-                    $sticky_review = StickyReview::destroy($request->id);
-                    if ($sticky_review === 1) {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Successfully deleted sticky review!'
-                        ], 200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Something went wrong, can not delete the record try again later!'
-                        ], 400);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected param! Hint: `id`'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * this function updates sticky reviews in database
-     * @param  StickyReviewRequest  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postUpdateStickyReview(StickyReviewRequest $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('id')) {
-                try {
-                    $search_sticky_review = StickyReview::where('id', $request->id)->first();
-                    if (strlen($request->myDateString)) {
-                        $datetime = \DateTime::createFromFormat('D M d Y H:i:s e+', $request->myDateString);
-                        $createdAt = $datetime->format('Y-m-d H:i:s');
-                        $updatedAt = $datetime->format('Y-m-d H:i:s');
-                    } else {
-                        $createdAt = $search_sticky_review->created_at;
-                        $updatedAt = $search_sticky_review->updated_at;
-                    }
-                    $search_sticky_review->update([
-                        'name'        => $request->input('name') ? $request->input('name') : $search_sticky_review->name,
-                        'description' => $request->input('description') ? $request->input('description') : $search_sticky_review->description,
-                        'rating'      => $request->input('rating') ? $request->input('rating') : $search_sticky_review->rating,
-                        'tags'        => $request->input('tags') ? $request->input('tags') : $search_sticky_review->tags,
-                        'created_at'  => $createdAt,
-                        'updated_at'  => $updatedAt
-                    ]);
-                    if ($search_sticky_review) {
-                        if ($request->hasFile('image')) {
-                            /* get the extension */
-                            $extension            = $request->file('image')->getClientOriginalExtension();
-                            /* rename the file to store in db */
-                            $fileNameToStore = 'emv_'.time().'.'.$extension;
-                            $isStored = Image::make($request->file('image'))->resize(64, 64)->save('uploads/sticky-review-images/'.$fileNameToStore);
-                            if ($isStored) {
-                                $search_sticky_review_image = StickyReview::where('id', $request->id)->update(['image' => $fileNameToStore]);
-                                if ($search_sticky_review_image) {
-                                    return response()->json([
-                                        'status' => true,
-                                        'message' => 'Sticky review has been updated successfully'
-                                    ],200);
-                                } else {
-                                    if (file_exists('uploads/sticky-review-images/'.$fileNameToStore)) {
-                                        @unlink('uploads/sticky-review-images/'.$fileNameToStore);
-                                    }
-                                    return response()->json([
-                                        'status' => false,
-                                        'message' => 'Failed to store image in database. Contact system administrator!'
-                                    ],400);
-                                }
-                            } else {
-                                return response()->json([
-                                    'status' => false,
-                                    'message' => 'Failed to store image in storage. Please try again later!'
-                                ],400);
-                            }
-                        } else {
-                            return response()->json([
-                                'status' => true,
-                                'message' => 'Sticky review has been updated successfully'
-                            ],200);
-                        }
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Something went wrong, can not be able to update the record. Try again later!'
-                        ],400);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected param! Hint: `id`'
-                ],400);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ],403);
         }
     }
 
@@ -1071,41 +206,148 @@ class ApiV2Controller extends Controller
     }
 
     /**
-     * change password functionality backend
+     * Get the list of all the pop ups created by a particular user
+     *
+     *  @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllExitPopUps()
+    {
+        if (is_integer($this->isAuthenticated())) {
+            try {
+                $exit_pop_ups = ExitPopUp::where('created_by', $this->isAuthenticated())
+                    ->with('stickyReviews')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                if ($exit_pop_ups) {
+                    return response()->json([
+                        'status'   => true,
+                        'message' => $exit_pop_ups
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'status'   => false,
+                        'message' => 'No results found!'
+                    ], 404);
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status'   => false,
+                    'message' => "Oops! Something went wrong in server. Please try again later.",
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to authenticate. Please login again to continue!'
+            ], 403);
+        }
+    }
+
+    /**
+     * This function stores exit pop up in db
+     *
+     * @param ExitPopUpRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postExitPopUpRequest(ExitPopUpRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $saveExitPopUp = ExitPopUp::create([
+                'created_by'                => $request->created_by,
+                'name'                      => $request->name,
+                'header_text'               => $request->header_text,
+                'header_background_color'   => $request->header_background_color,
+                'header_text_color'         => $request->header_text_color,
+                'semi_header_text'          => strlen($request->semi_header_text) ? $request->semi_header_text : null,
+                'semi_header_text_color'    => strlen($request->semi_header_text) ? $request->semi_header_text_color : null,
+                'body_background_color'     => $request->body_background_color,
+                'cta_link_url'              => $request->cta_link_url,
+                'campaign_id'               => $request->select_active_campaign,
+                'btn_size'                  => $request->btn_size,
+                'btn_text'                  => $request->btn_text,
+                'btn_color'                 => $request->btn_color,
+                'btn_text_color'            => $request->btn_text_color
+            ]);
+            if ($saveExitPopUp) {
+                // pivot assigns
+                // assign sticky reviews as pivot #1
+                $saveExitPopUp->stickyReviews()->sync($request->select_sticky_reviews);
+                //assign campaign
+                $find_update_campaign = Campaign::where('id', $request->select_active_campaign)->update(['exit_pop_up' => '1', 'exit_pop_up_id' => $saveExitPopUp->id]);
+                if ($find_update_campaign) {
+                    DB::commit();
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Successfully saved record!'
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Unable to assign to a campaign. Not campaign found'
+                    ], 404);
+                }
+            } else {
+                DB::rollBack();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Unable to store record in database, Internal Server Error!'
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => "Oops! Something went wrong in server. Please try again later.",
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * update exit pop up
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postChangePassword(Request $request)
+    public function postUpdateExitPopUp(Request $request)
     {
         if (is_integer($this->isAuthenticated())) {
-            if ($request->has('uid') && $request->has('current_password') && $request->has('new_password')) {
+            if ($request->has('id')) {
                 try {
-                    $find_user = User::findOrFail($request->uid);
-                    if ($find_user) {
-                        if (Hash::check($request->current_password, $find_user->password)) {
-                            $find_user->password = bcrypt($request->new_password);
-                            if ($find_user->save()) {
-                                return response()->json([
-                                    'status' => true,
-                                    'message' => 'Successfully updated the password!'
-                                ], 200);
-                            } else {
-                                return response()->json([
-                                    'status' => false,
-                                    'message' => 'Something went wrong while updating the password. Please try again later!'
-                                ], 500);
-                            }
-                        } else {
-                            return response()->json([
-                                'status' => false,
-                                'message' => 'Please enter your current password correctly. Current password did not match with our record!'
-                            ], 404);
-                        }
+                    $search_exit_pop_up = ExitPopUp::where('id', $request->id)->update([
+                        'created_by'                => $request->created_by,
+                        'name'                      => $request->name,
+                        'header_text'               => $request->header_text,
+                        'header_background_color'   => $request->header_background_color,
+                        'header_text_color'         => $request->header_text_color,
+                        'semi_header_text'          => strlen($request->semi_header_text) ? $request->semi_header_text : null,
+                        'semi_header_text_color'    => strlen($request->semi_header_text) ? $request->semi_header_text_color : null,
+                        'body_background_color'     => $request->body_background_color,
+                        'cta_link_url'              => $request->cta_link_url,
+                        'campaign_id'               => $request->select_active_campaign,
+                        'btn_size'                  => $request->btn_size,
+                        'btn_text'                  => $request->btn_text,
+                        'btn_color'                 => $request->btn_color,
+                        'btn_text_color'            => $request->btn_text_color
+                    ]);
+                    if ($search_exit_pop_up) {
+                        // pivot assigns
+                        // assign sticky reviews as pivot #1
+                        $exit_pop_up = ExitPopUp::findOrFail($request->id);
+                        $exit_pop_up->stickyReviews()->sync($request->select_sticky_reviews);
+                        //assign campaign
+                        $find_update_campaign = Campaign::where('id', $request->select_active_campaign)->update(['exit_pop_up' => '1', 'exit_pop_up_id' => $request->id]);
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'Successfully updated the record!'
+                        ], 200);
                     } else {
                         return response()->json([
                             'status' => false,
-                            'message' => 'No user found. Please login again to continue or try again later!'
-                        ], 404);
+                            'message' => 'Internal server error.'
+                        ], 500);
                     }
                 } catch (\Exception $e) {
                     return response()->json([
@@ -1117,96 +359,58 @@ class ApiV2Controller extends Controller
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Missing expected param(s)!'
+                    'message' => 'Missing expected params. Hint: id.'
                 ], 400);
             }
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'Failed to authenticate. Please login again to continue!'
-            ],403);
+            ], 403);
         }
     }
 
     /**
-     * this function creates a review link for the users
-     * @param  ReviewLinkRequest  $request
+     * Delete exit pop up from db (soft delete)
+     *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postCreateReviewLink(ReviewLinkRequest $request)
+    public function postDeleteExitPopUp(Request $request)
     {
-        try {
-            /* get the extension */
-            $extension = $request->file('myLogo')->getClientOriginalExtension();
-            /* rename the file to store in db */
-            $fileNameToStore = 'emv_logo_' . time() . '.' . $extension;
-            $img = Image::make($request->file('myLogo'))
-                        ->resize(64, 64)
-                        ->save('uploads/sticky-review-images/' . $fileNameToStore);
-            if ($img) {
-                $create_review_link                                 = new ReviewLink();
-                $create_review_link->logo                           = $fileNameToStore;
-                $create_review_link->name                           = $request->name;
-                $create_review_link->description                    = $request->description;
-                $create_review_link->url_slug                       = $request->url_slug;
-                $create_review_link->campaign_id                    = $request->has('campaign_id') && $request->campaign_id != null ? $request->campaign_id : null;
-                $create_review_link->auto_approve                   = $request->has('auto_approve') || $request->auto_approve != null ? $request->auto_approve : 0;
-                $create_review_link->min_rating                     = $create_review_link->auto_approve == 1 ? $request->min_rating : null;
-                $create_review_link->negative_info_review_msg_1     = $request->negative_info_review_msg_1;
-                $create_review_link->negative_info_review_msg_2     = $request->negative_info_review_msg_2;
-                $create_review_link->positive_review_msg            = $request->positive_review_msg;
-                $create_review_link->created_by                     = $request->created_by;
-                if ($create_review_link->save()) {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Successfully saved review link'
-                    ], 200);
-                } else {
+        if (is_integer($this->isAuthenticated())) {
+            if ($request->has('id')) {
+                try {
+                    $find_exit_pop_up = ExitPopUp::findOrFail($request->id);
+                    if ($find_exit_pop_up->delete()) {
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'Successfully deleted record!'
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Failed to delete the record! Internal server error.'
+                        ], 500);
+                    }
+                } catch (\Exception $e) {
                     return response()->json([
                         'status' => false,
-                        'message' => 'Something went wrong while saving the data. Please try again later!'
+                        'message' => "Oops! Something went wrong in server. Please try again later.",
+                        'message' => $e->getMessage()
                     ], 500);
                 }
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Failed to upload the logo. Please try again later!'
-                ], 500);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => "Oops! Something went wrong in server. Please try again later.",
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * this function attaches review link with the campaign
-     * @param null $campaign_id_arr
-     * @param null $reviewLinkId
-     * @return boolean
-     */
-    public function assignReviewLinkToCampaign($campaign_id_arr = null, $reviewLinkId = null)
-    {
-        if (is_integer($this->isAuthenticated()) && count($campaign_id_arr) && $reviewLinkId) {
-            try {
-                $findReviewLink = ReviewLink::find($reviewLinkId);
-                if ($findReviewLink) {
-                    if ($findReviewLink->campaigns()->sync($campaign_id_arr)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            } catch (\Exception $e) {
-                return false;
+                    'message' => 'Missing expected params. Hint: id.'
+                ], 400);
             }
         } else {
-            return false;
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to authenticate. Please login again to continue!'
+            ], 403);
         }
     }
 
@@ -1318,6 +522,231 @@ class ApiV2Controller extends Controller
     }
 
     /**
+     * this function creates a review link for the users
+     * @param  ReviewLinkRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postCreateReviewLink(ReviewLinkRequest $request)
+    {
+        try {
+            /* get the extension */
+            $extension = $request->file('myLogo')->getClientOriginalExtension();
+            /* rename the file to store in db */
+            $fileNameToStore = 'emv_logo_' . time() . '.' . $extension;
+            $img = Image::make($request->file('myLogo'))
+                ->resize(64, 64)
+                ->save('uploads/sticky-review-images/' . $fileNameToStore);
+            if ($img) {
+                $create_review_link                                 = new ReviewLink();
+                $create_review_link->logo                           = $fileNameToStore;
+                $create_review_link->name                           = $request->name;
+                $create_review_link->description                    = $request->description;
+                $create_review_link->url_slug                       = $request->url_slug;
+                $create_review_link->campaign_id                    = $request->has('campaign_id') && $request->campaign_id != null ? $request->campaign_id : null;
+                $create_review_link->auto_approve                   = $request->has('auto_approve') || $request->auto_approve != null ? $request->auto_approve : 0;
+                $create_review_link->min_rating                     = $create_review_link->auto_approve == 1 ? $request->min_rating : null;
+                $create_review_link->negative_info_review_msg_1     = $request->negative_info_review_msg_1;
+                $create_review_link->negative_info_review_msg_2     = $request->negative_info_review_msg_2;
+                $create_review_link->positive_review_msg            = $request->positive_review_msg;
+                $create_review_link->created_by                     = $request->created_by;
+                if ($create_review_link->save()) {
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Successfully saved review link'
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Something went wrong while saving the data. Please try again later!'
+                    ], 500);
+                }
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Failed to upload the logo. Please try again later!'
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => "Oops! Something went wrong in server. Please try again later.",
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * This function helps to update the review link in db
+     *
+     * @param  ReviewLinkRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postUpdateReviewLink(ReviewLinkRequest $request)
+    {
+        if (is_integer($this->isAuthenticated())) {
+            if ($request->has('id')) {
+                if ($request->hasFile('myLogo')) {
+                    try {
+                        /* get the extension */
+                        $extension = $request->file('myLogo')->getClientOriginalExtension();
+                        /* rename the file to store in db */
+                        $fileNameToStore = 'emv_logo_' . time() . '.' . $extension;
+                        $img = Image::make($request->file('myLogo'))
+                            ->resize(64, 64)
+                            ->save('uploads/sticky-review-images/' . $fileNameToStore);
+                    } catch (\Exception $e) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => "Oops! Something went wrong in server. Please try again later.",
+                            'message' => $e->getMessage()
+                        ], 500);
+                    }
+                }
+                /* if image does not exist ie. user does not want to change image */
+                try {
+                    if ($request->hasFile('myLogo') && $img) {
+                        // for image name to update
+                        $findReviewLink = ReviewLink::where('id', $request->id)
+                            ->update([
+                                'logo' => $fileNameToStore,
+                                'name' => $request->name,
+                                'description' => $request->description,
+                                'url_slug' => $request->url_slug,
+                                'campaign_id' => $request->has('campaign_id') && $request->campaign_id != null ? $request->campaign_id : null,
+                                'auto_approve' => $request->has('auto_approve') || $request->auto_approve != null ? $request->auto_approve : 0,
+                                'min_rating' => $request->auto_approve == 1 ? $request->min_rating : null,
+                                'negative_info_review_msg_1' => $request->negative_info_review_msg_1,
+                                'negative_info_review_msg_2' => $request->negative_info_review_msg_2,
+                                'positive_review_msg' => $request->positive_review_msg,
+                                'created_by' => $request->created_by
+                            ]);
+                    } else {
+                        $findReviewLink = ReviewLink::where('id', $request->id)
+                            ->update([
+                                'name' => $request->name,
+                                'description' => $request->description,
+                                'url_slug' => $request->url_slug,
+                                'campaign_id' => $request->has('campaign_id') && $request->campaign_id != null ? $request->campaign_id : null,
+                                'auto_approve' => $request->has('auto_approve') || $request->auto_approve != null ? $request->auto_approve : 0,
+                                'min_rating' => $request->auto_approve == 1 ? $request->min_rating : null,
+                                'negative_info_review_msg_1' => $request->negative_info_review_msg_1,
+                                'negative_info_review_msg_2' => $request->negative_info_review_msg_2,
+                                'positive_review_msg' => $request->positive_review_msg,
+                                'created_by' => $request->created_by
+                            ]);
+                    }
+                    if ($findReviewLink) {
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'Successfully updated the record!'
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Failed while updating. Please try again after some time.'
+                        ], 500);
+                    }
+                } catch (\Exception $e) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => "Oops! Something went wrong in server. Please try again later.",
+                        'message' => $e->getMessage()
+                    ], 500);
+                }
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Missing expected params. Hint: id.'
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to authenticate. Please login again to continue!'
+            ], 403);
+        }
+    }
+
+    /**
+     * delete review link (soft delete)
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postDeleteReviewLink(Request $request)
+    {
+        if (is_integer($this->isAuthenticated())) {
+            if ($request->has('id')) {
+                try {
+                    $find_review_link = ReviewLink::findOrFail($request->id);
+                    if ($find_review_link) {
+                        if ($find_review_link->delete()) {
+                            return response()->json([
+                                'status' => true,
+                                'message' => 'Successfully deleted record!'
+                            ], 200);
+                        } else {
+                            return response()->json([
+                                'status' => false,
+                                'message' => 'Internal server error!'
+                            ], 500);
+                        }
+                    } else {
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'No results found!'
+                        ], 404);
+                    }
+                } catch (\Exception $e) {
+                    return response()->json([
+                        'status'   => false,
+                        'message' => "Oops! Something went wrong in server. Please try again later.",
+                        'message' => $e->getMessage()
+                    ], 500);
+                }
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Missing expected params. Hint: id.'
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to authenticate. Please login again to continue!'
+            ], 403);
+        }
+    }
+
+    /**
+     * this function attaches review link with the campaign
+     * @param null $campaign_id_arr
+     * @param null $reviewLinkId
+     * @return boolean
+     */
+    public function assignReviewLinkToCampaign($campaign_id_arr = null, $reviewLinkId = null)
+    {
+        if (is_integer($this->isAuthenticated()) && count($campaign_id_arr) && $reviewLinkId) {
+            try {
+                $findReviewLink = ReviewLink::find($reviewLinkId);
+                if ($findReviewLink) {
+                    if ($findReviewLink->campaigns()->sync($campaign_id_arr)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } catch (\Exception $e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Store sticky reviews in db coming from user review
      *
      * @param Request $request
@@ -1421,399 +850,41 @@ class ApiV2Controller extends Controller
     }
 
     /**
-     * This function stores exit pop up in db
-     *
-     * @param ExitPopUpRequest $request
+     * this function query a particular campaign from database with uniqueid
+     * @param null $uniqueId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postExitPopUpRequest(ExitPopUpRequest $request)
+    public function getParticularCampaign($uid = null)
     {
-        try {
-            DB::beginTransaction();
-            $saveExitPopUp = ExitPopUp::create([
-                'created_by'                => $request->created_by,
-                'name'                      => $request->name,
-                'header_text'               => $request->header_text,
-                'header_background_color'   => $request->header_background_color,
-                'header_text_color'         => $request->header_text_color,
-                'semi_header_text'          => strlen($request->semi_header_text) ? $request->semi_header_text : null,
-                'semi_header_text_color'    => strlen($request->semi_header_text) ? $request->semi_header_text_color: null,
-                'body_background_color'     => $request->body_background_color,
-                'cta_link_url'              => $request->cta_link_url,
-                'campaign_id'               => $request->select_active_campaign,
-                'btn_size'                  => $request->btn_size,
-                'btn_text'                  => $request->btn_text,
-                'btn_color'                 => $request->btn_color,
-                'btn_text_color'            => $request->btn_text_color
-            ]);
-            if ($saveExitPopUp) {
-                // pivot assigns
-                // assign sticky reviews as pivot #1
-                $saveExitPopUp->stickyReviews()->sync($request->select_sticky_reviews);
-                //assign campaign
-                $find_update_campaign = Campaign::where('id', $request->select_active_campaign)->update(['exit_pop_up' => '1', 'exit_pop_up_id' => $saveExitPopUp->id]);
-                if ($find_update_campaign) {
-                    DB::commit();
+        if ($uid) {
+            try {
+                $findCampaign = Campaign::where('unique_script_id', $uid)
+                    ->with('stickyReviews', 'brandingDetails', 'exitPopUp')
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+                if ($findCampaign) {
                     return response()->json([
                         'status' => true,
-                        'message' => 'Successfully saved record!'
+                        'message' => $findCampaign
                     ], 200);
                 } else {
                     return response()->json([
-                        'status' => false,
-                        'message' => 'Unable to assign to a campaign. Not campaign found'
-                    ], 404);
-                }
-            } else {
-                DB::rollBack();
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Unable to store record in database, Internal Server Error!'
-                ], 500);
-            }
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json([
-                'status' => false,
-                'message' => "Oops! Something went wrong in server. Please try again later.",
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Get the list of all the pop ups created by a particular user
-     *
-     *  @return \Illuminate\Http\JsonResponse
-     */
-    public function getAllExitPopUps()
-    {
-        if (is_integer($this->isAuthenticated())) {
-            try {
-                $exit_pop_ups = ExitPopUp::where('created_by', $this->isAuthenticated())
-                                        ->with('stickyReviews')
-                                        ->orderBy('created_at', 'desc')
-                                        ->get();
-                if ($exit_pop_ups) {
-                    return response()->json([
-                        'status'   => true,
-                        'message' => $exit_pop_ups
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'status'   => false,
-                        'message' => 'No results found!'
+                        'status' => true,
+                        'message' => 'Did not able to find any campaign. Please check the id'
                     ], 404);
                 }
             } catch (\Exception $e) {
                 return response()->json([
-                   'status'   => false,
-                   'message' => "Oops! Something went wrong in server. Please try again later.",
-                   'message' => $e->getMessage()
+                    'status' => false,
+                    'message' => "Oops! Something went wrong in server. Please try again later.",
+                    'message' => $e->getMessage()
                 ], 500);
             }
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * delete review link (soft delete)
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postDeleteReviewLink(Request $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('id')) {
-                try {
-                    $find_review_link = ReviewLink::findOrFail($request->id);
-                    if ($find_review_link) {
-                        if ($find_review_link->delete()) {
-                            return response()->json([
-                                'status' => true,
-                                'message' => 'Successfully deleted record!'
-                            ],200);
-                        } else {
-                            return response()->json([
-                                'status' => false,
-                                'message' => 'Internal server error!'
-                            ],500);
-                        }
-                    } else {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'No results found!'
-                        ],404);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status'   => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected params. Hint: id.'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * This function helps to update the review link in db
-     *
-     * @param  ReviewLinkRequest  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postUpdateReviewLink(ReviewLinkRequest $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('id')) {
-                if ($request->hasFile('myLogo')) {
-                    try {
-                        /* get the extension */
-                        $extension = $request->file('myLogo')->getClientOriginalExtension();
-                        /* rename the file to store in db */
-                        $fileNameToStore = 'emv_logo_' . time() . '.' . $extension;
-                        $img = Image::make($request->file('myLogo'))
-                                    ->resize(64, 64)
-                                    ->save('uploads/sticky-review-images/' . $fileNameToStore);
-                    } catch (\Exception $e) {
-                        return response()->json([
-                            'status' => false,
-                            'message' => "Oops! Something went wrong in server. Please try again later.",
-                            'message' => $e->getMessage()
-                        ], 500);
-                    }
-                }
-                /* if image does not exist ie. user does not want to change image */
-                try {
-                    if ($request->hasFile('myLogo') && $img) {
-                       // for image name to update
-                        $findReviewLink = ReviewLink::where('id', $request->id)
-                            ->update([
-                                'logo' => $fileNameToStore,
-                                'name' => $request->name,
-                                'description' => $request->description,
-                                'url_slug' => $request->url_slug,
-                                'campaign_id' => $request->has('campaign_id') && $request->campaign_id != null ? $request->campaign_id : null,
-                                'auto_approve' => $request->has('auto_approve') || $request->auto_approve != null ? $request->auto_approve : 0,
-                                'min_rating' => $request->auto_approve == 1 ? $request->min_rating : null,
-                                'negative_info_review_msg_1' => $request->negative_info_review_msg_1,
-                                'negative_info_review_msg_2' => $request->negative_info_review_msg_2,
-                                'positive_review_msg' => $request->positive_review_msg,
-                                'created_by' => $request->created_by
-                            ]);
-                    } else {
-                        $findReviewLink = ReviewLink::where('id', $request->id)
-                            ->update([
-                                'name' => $request->name,
-                                'description' => $request->description,
-                                'url_slug' => $request->url_slug,
-                                'campaign_id' => $request->has('campaign_id') && $request->campaign_id != null ? $request->campaign_id : null,
-                                'auto_approve' => $request->has('auto_approve') || $request->auto_approve != null ? $request->auto_approve : 0,
-                                'min_rating' => $request->auto_approve == 1 ? $request->min_rating : null,
-                                'negative_info_review_msg_1' => $request->negative_info_review_msg_1,
-                                'negative_info_review_msg_2' => $request->negative_info_review_msg_2,
-                                'positive_review_msg' => $request->positive_review_msg,
-                                'created_by' => $request->created_by
-                            ]);
-                    }
-                    if ($findReviewLink) {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Successfully updated the record!'
-                        ],200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Failed while updating. Please try again after some time.'
-                        ], 500);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected params. Hint: id.'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * Delete exit pop up from db (soft delete)
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postDeleteExitPopUp(Request $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('id')) {
-                try {
-                    $find_exit_pop_up = ExitPopUp::findOrFail($request->id);
-                    if ($find_exit_pop_up->delete()) {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Successfully deleted record!'
-                        ],200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Failed to delete the record! Internal server error.'
-                        ],500);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected params. Hint: id.'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * update exit pop up
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postUpdateExitPopUp(Request $request)
-    {
-        if (is_integer($this->isAuthenticated())) {
-            if ($request->has('id')) {
-                try {
-                    $search_exit_pop_up = ExitPopUp::where('id', $request->id)->update([
-                        'created_by'                => $request->created_by,
-                        'name'                      => $request->name,
-                        'header_text'               => $request->header_text,
-                        'header_background_color'   => $request->header_background_color,
-                        'header_text_color'         => $request->header_text_color,
-                        'semi_header_text'          => strlen($request->semi_header_text) ? $request->semi_header_text : null,
-                        'semi_header_text_color'    => strlen($request->semi_header_text) ? $request->semi_header_text_color: null,
-                        'body_background_color'     => $request->body_background_color,
-                        'cta_link_url'              => $request->cta_link_url,
-                        'campaign_id'               => $request->select_active_campaign,
-                        'btn_size'                  => $request->btn_size,
-                        'btn_text'                  => $request->btn_text,
-                        'btn_color'                 => $request->btn_color,
-                        'btn_text_color'            => $request->btn_text_color
-                    ]);
-                    if ($search_exit_pop_up) {
-                        // pivot assigns
-                        // assign sticky reviews as pivot #1
-                        $exit_pop_up = ExitPopUp::findOrFail($request->id);
-                        $exit_pop_up->stickyReviews()->sync($request->select_sticky_reviews);
-                        //assign campaign
-                        $find_update_campaign = Campaign::where('id', $request->select_active_campaign)->update(['exit_pop_up' => '1', 'exit_pop_up_id' => $request->id]);
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Successfully updated the record!'
-                        ], 200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Internal server error.'
-                        ], 500);
-                    }
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Oops! Something went wrong in server. Please try again later.",
-                        'message' => $e->getMessage()
-                    ], 500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Missing expected params. Hint: id.'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to authenticate. Please login again to continue!'
-            ], 403);
-        }
-    }
-
-    /**
-     * Sign Out an user and forget the token
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function signOut()
-    {
-        try {
-            JWTAuth::invalidate(JWTAuth::getToken());
-
-            return response()->json([
-                'status' => true,
-                'message' => "You have successfully logged out."
-            ]);
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage()
-            ], 401);
-        }
-    }
-
-    /**
-     * Refresh Auth token within `refresh_ttl`
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refreshAuthToken()
-    {
-        try {
-            $token = JWTAuth::parseToken()->refresh();
-            return response()->json([
-                'status' => true,
-                'token' => $token
-            ]);
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage()
-            ], 401);
+                'message' => 'No id found!'
+            ], 400);
         }
     }
 }

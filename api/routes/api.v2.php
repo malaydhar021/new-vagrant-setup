@@ -28,7 +28,6 @@ Route::prefix('auth')->namespace('Auth')->name('auth.')->group(function () {
 });
 
 Route::prefix('user')->name('user.')->middleware('auth:api')->group(function () {
-
     Route::get('/', 'UserController@index')->name('index');
     Route::put('/', 'UserController@update')->name('update');
     Route::put('password', 'UserController@updatePassword')->name('password.update');
@@ -62,12 +61,6 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/{id}', 'BrandsController@destroy')->name('delete');
     });
 
-    // @deprecated v2 branding api routes
-    // Route::get('/get-all-branding', 'ApiV2Controller@getAllBranding')->name('getAllBranding');
-    // Route::post('/post-add-branding', 'ApiV2Controller@postAddBranding')->name('postAddBranding');
-    // Route::post('/update-branding', 'ApiV2Controller@postUpdateBranding')->name('postUpdateBranding');
-    // Route::post('/delete-branding', 'ApiV2Controller@postDeleteBranding')->name('postDeleteBranding');
-
     Route::prefix('campaigns')->name('campaigns.')->group(function () {
         Route::get('/styles', 'CampaignsController@styles')->name('styles.index');
         Route::get('/', 'CampaignsController@index')->name('index');
@@ -96,13 +89,6 @@ Route::middleware('auth:api')->group(function () {
         Route::patch('/{id}/campaigns', 'StickyReviewsController@syncCampaigns')->name('campaigns.sync');
     });
 
-    // @deprecated v2 sticky reviews api routes
-    // Route::get('/get-all-sticky-reviews/{review_type?}', 'ApiV2Controller@getStickyReviews')->name('getStickyReviews');
-    // Route::post('/save-sticky-review', 'ApiV2Controller@postSaveStickyReview')->name('postSaveStickyReview');
-    // Route::post('/update-sticky-review', 'ApiV2Controller@postUpdateStickyReview')->name('postUpdateStickyReview');
-    // Route::post('/delete-sticky-review', 'ApiV2Controller@postDeleteStickyReview')->name('postDeleteStickyReview');
-    // Route::post('/assign-campaign-to-sticky-review', 'ApiV2Controller@postAssignCampaignStickyReviews')->name('postAssignCampaignStickyReviews');
-
     // review link api routes
     Route::get('/get-all-review-link/{id?}', 'ApiV2Controller@getAllReviewLinks')->name('getAllCampaigns');
     Route::post('/create-review-link', 'ApiV2Controller@postCreateReviewLink')->name('postCreateReviewLink');
@@ -111,6 +97,5 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/check-duplicate-review-link', 'ApiV2Controller@postCheckDuplicateReviewLink')->name('postCheckDuplicateReviewLink');
 });
 
-// Route::post('/change-password', 'ApiV2Controller@postChangePassword')->name('postChangePassword');
 Route::post('/save-user-review', 'ApiV2Controller@postSaveUserReview')->name('postSaveUserReview');
 Route::get('/campaign-details/{uid}', 'ApiV2Controller@getParticularCampaign')->name('getParticularCampaign');

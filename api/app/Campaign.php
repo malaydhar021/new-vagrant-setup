@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Campaign extends Model
 {
     use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +22,7 @@ class Campaign extends Model
         'styles',
         'delay',
         'delay_before_start',
+        'stay_timing',
         'loop',
         'exit_pop_up',
         'exit_pop_up_id',
@@ -49,7 +51,7 @@ class Campaign extends Model
     /**
      * Set the campaign's domain name
      *
-     * @param  strong  $value
+     * @param  string  $value
      * @return void
      */
     public function setDomainNameAttribute($value)
@@ -61,37 +63,119 @@ class Campaign extends Model
     }
 
     /**
-     * this functions defines many to many relationship  to StickyReview model
+     * Get the campaign's domain name
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getDomainNameAttribute($value)
+    {
+        $segements = null;
+        preg_match('/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)/', $value, $segements);
+
+        return $segements[1];
+    }
+
+    /**
+     * Get the campaign's delay
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getDelayAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    /**
+     * Get the campaign's delay before start
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getDelayBeforeStartAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    /**
+     * Get the campaign's stay timing
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getStayTimingAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    /**
+     * Get the campaign's loop
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getLoopAttribute($value)
+    {
+        return (boolean) $value;
+    }
+
+    /**
+     * Get the campaign's is active
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getIsActiveAttribute($value)
+    {
+        return (boolean) ! $value;
+    }
+
+    /**
+     * Stiky reviews attached to the campaign
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function stickyReviews()
     {
-        return $this->belongsToMany('App\StickyReview')->orderBy('created_at','desc');
+        return $this->belongsToMany(StickyReview::class)->orderBy('created_at','desc');
     }
 
     /**
-     * this function returns the data of related branding
+     * The Branding attached to the campaign
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function brandingDetails()
     {
-        return $this->hasOne('App\Branding', 'id', 'branding_id');
+        return $this->hasOne(Branding::class, 'id', 'branding_id');
     }
 
     /**
-     * Exit pop up one to one relation
+     * The exit pop-up attached to the campaign
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function exitPopUp()
     {
-        return $this->hasOne('App\ExitPopUp', 'id', 'exit_pop_up_id');
+        return $this->hasOne(ExitPopUp::class, 'id', 'exit_pop_up_id');
     }
 
+    /**
+     * The campaign style decorates the campaign
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function campaignStyle()
     {
         return $this->belongsTo(CampaignStyle::class, 'style_id', 'id');
     }
 
+    /**
+     * The user owns the campaign
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');

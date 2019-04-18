@@ -27,15 +27,16 @@ class CampaignRequest extends FormRequest
     public function rules()
     {
         return [
-            'campaign_name'         => 'required',
-            'domain_name'           => 'required',
-            'style_id'              => 'required|string',
-            'delay'                 => 'required|numeric',
-            'branding'              => 'required|boolean',
-            'branding_id'           => 'required_if:branding, 1',
-            'exit_pop_up'           => 'required|boolean',
-            'exit_pop_up_id'        => 'required_if:exit_pop_up, 1',
-            'is_active'             => 'nullable|boolean',
+            'campaign_name' => 'required',
+            'domain_name' => 'required',
+            'style_id' => 'required|string',
+            'delay' => 'nullable|numeric',
+            'delay_before_start' => 'nullable|numeric',
+            'stay_timing' => 'nullable|numeric',
+            'branding' => 'required|boolean',
+            'branding_id' => 'required_if:branding,1',
+            'exit_pop_up' => 'required|boolean',
+            'exit_pop_up_id' => 'required_if:exit_pop_up,1',
         ];
     }
 
@@ -47,15 +48,18 @@ class CampaignRequest extends FormRequest
     public function messages()
     {
         return [
-            'campaign_name.required'  => 'Campaign name is a required field.',
-            'domain_name.required'    => 'Domain name is a required field.',
-            'styles.required'         => 'Please choose a style.',
-            'delay.required'          => 'Time Delay is required.',
-            'delay.numeric'           => 'Time Delay should be numeric.',
-            'branding.required'       => 'Branding is required.',
-            'branding.boolean'        => 'Branding needs to be on or off!',
-            'branding_id.required_if' => 'Branding id required',
-            'is_active.boolean'       => 'Is active shoulde be boolean type',
+            'campaign_name.required' => "Campaign name is required.",
+            'domain_name.required' => "Domain name is required.",
+            'style_id.required' => "Please choose a style.",
+            'delay.numeric' => "Delay between next appearance should be numeric.",
+            'delay_before_start.numeric' => "Delay before start should be numeric.",
+            'stay_timing.numeric' => "Stay timing should be numeric.",
+            'branding.required' => "Branding is required.",
+            'branding.boolean' => "Branding needs to be turned on or off.",
+            'branding_id.required_if' => "Select one branding or turn off branding.",
+            'exit_pop_up.required' => "Exit pop-up is required.",
+            'exit_pop_up.boolean' => "Exit pop-up needs to be turned on or off.",
+            'exit_pop_up_id.required_if' => "Select one exit pop-up or turn off exit pop-up.",
         ];
     }
 }
