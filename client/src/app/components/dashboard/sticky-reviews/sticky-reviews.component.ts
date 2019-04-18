@@ -274,6 +274,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // creating an instance of `FormData` class
     const formData = new FormData();
     // appending request body params to formData object
+    // formData.append('_method', 'PUT'); // adding method
     formData.append('name', this.form.value.srName); // adding name
     formData.append('tags', this.form.value.srTags); // adding tags
     formData.append('description', this.form.value.srComment); // adding review

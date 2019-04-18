@@ -2,6 +2,10 @@
 
 ## Campaign
 
+## V0.0.3
+
+1. Added client side validations in add a campaign modal
+
 ## V0.0.2
 
 1. Modified campaign api endpoints

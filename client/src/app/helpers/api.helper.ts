@@ -192,8 +192,10 @@ export class CampaignApiEndpoints {
 
   /**
    * Method to generate api endpoint to add a campaign
+   * ### *DEPRECATED* ###
    * @method addCampaign
    * @since Version 1.0.0
+   * @deprecated In version 1.0.0
    * @returns String
    */
   public static get addCampaign() : string {
@@ -202,8 +204,10 @@ export class CampaignApiEndpoints {
 
   /**
    * Method to generate api endpoint to update a campaign
+   * ### *DEPRECATED* ###
    * @method updateCampaign
    * @since Version 1.0.0
+   * @deprecated In version 1.0.0
    * @returns String
    */
   public static get updateCampaign() : string {
@@ -212,8 +216,10 @@ export class CampaignApiEndpoints {
 
   /**
    * Method to generate api endpoint to delete a campaign
+   * ### *DEPRECATED* ###
    * @method deleteCampaign
    * @since Version 1.0.0
+   * @deprecated In version 1.0.0
    * @returns String
    */
   public static get deleteCampaign() : string {
@@ -238,6 +244,16 @@ export class CampaignApiEndpoints {
    */
   public static get updateCampaignStatus() : string {
     return apiBaseUrl.concat('/toggle-campaign-status');
+  }
+
+  /**
+   * Method to generate api endpoint to get all available styles
+   * @method styles
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get styles() : string {
+    return this.campaigns.concat('/styles');
   }
 }
 

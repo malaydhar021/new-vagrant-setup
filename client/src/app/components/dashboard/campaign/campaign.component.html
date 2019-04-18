@@ -1,7 +1,8 @@
 <div class="mainBox campaignMain">
   <header class="mainBoxHeader">
     <div class="mainBoxHeaderLeft">
-      <button type="button" class="addReview" (click)="onAddCampaign()"><img src="../../../../assets/images/addIcon.png" alt=""> Add Campaign</button>
+      <button type="button" class="addReview" (click)="onAddCampaign()"><img src="../../../../assets/images/addIcon.png"
+          alt=""> Add Campaign</button>
     </div>
     <div class="mainBoxHeaderRight">
       <input type="text" placeholder="Search ...">
@@ -10,7 +11,7 @@
   <div class="dataTableArea">
     <div class="table table-col-5">
       <ul class="thead">
-        <li>BRAND NAME & URL</li>
+        <li>CAMPAIGN NAME & URL</li>
         <li>VISUAL STYLE</li>
         <li>EXIT POPUP</li>
         <li>CREATED DATE</li>
@@ -18,36 +19,44 @@
       </ul>
       <div class="tbody">
         <ng-scrollbar [compact]="true" *ngIf="campaigns.length > 0; else noRecords">
-        <ul>
-          <li class="row" *ngFor="let campaign of campaigns">
-            <div class="rowContainer" [ngClass]="{ratePop: isSelectingReview}">
-              <div class="tcol">
-                <div class="loopedTag">LOOPED</div>
-                <div class="userReview">
-                  <h2>{{ campaign.campaign_name }} <span class="redTag" *ngIf="campaign.is_active">ACTIVE</span></h2>
-                  <p>{{ campaign.domain_name }}</p>
+          <ul>
+            <li class="row" *ngFor="let campaign of campaigns; let i = index">
+              <div class="rowContainer" [ngClass]="{ratePop: isSelectingReview && rowIndex === i}">
+                <div class="tcol">
+                  <div class="loopedTag">LOOPED</div>
+                  <div class="userReview">
+                    <h2>{{ campaign.campaign_name }} <span class="redTag" *ngIf="campaign.is_active">ACTIVE</span></h2>
+                    <p>{{ campaign.domain_name }}</p>
+                  </div>
+                  <a (click)="onCopySnippet()" class="copyBtn"><img
+                      src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
                 </div>
-                <a (click)="onCopySnippet()" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-              </div>
-              <div class="tcol">
-                <div class="reviewTheme">
-                  <img *ngIf="campaign.style.name == 'Rounded'" src="../../../../assets/images/stickyTheme1.png" alt="">
-                  <img *ngIf="campaign.style.name== 'Square'" src="../../../../assets/images/stickyTheme2.png" alt="">
-                  <img *ngIf="campaign.style.name == 'Tear Drop'" src="../../../../assets/images/stickyTheme3.png" alt="">
-                  <img *ngIf="campaign.style.name == 'Square Elevated'" src="../../../../assets/images/stickyTheme4.png" alt="">
-                  <img *ngIf="campaign.style.name == 'Tear Drop Elevated'" src="../../../../assets/images/stickyTheme5.png" alt="">
+                <div class="tcol">
+                  <div class="reviewTheme">
+                    <img *ngIf="campaign.style.name == 'Rounded'" src="../../../../assets/images/stickyTheme1.png"
+                      alt="">
+                    <img *ngIf="campaign.style.name== 'Square'" src="../../../../assets/images/stickyTheme2.png" alt="">
+                    <img *ngIf="campaign.style.name == 'Tear Drop'" src="../../../../assets/images/stickyTheme3.png"
+                      alt="">
+                    <img *ngIf="campaign.style.name == 'Square Elevated'"
+                      src="../../../../assets/images/stickyTheme4.png" alt="">
+                    <img *ngIf="campaign.style.name == 'Tear Drop Elevated'"
+                      src="../../../../assets/images/stickyTheme5.png" alt="">
+                  </div>
                 </div>
-              </div>
-              <div class="tcol">
-                <img src="../../../../assets/images/tick_type_2.png" alt="">
-              </div>
-              <div class="tcol">
-                <p>Dec 3, 2018, 5:39:18 PM</p>
-              </div>
-              <div class="tcol">
-                <a (click)="onEditCampaign(campaign)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a (click)="onClickStickyReviews()" class="assignTask"><img src="../../../../assets/images/icon_assign_task.png" class="assignTaskImg" alt=""></a>
-                <a (click)="onDeleteCampaign(campaign.id)" class="delete"><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
+                <div class="tcol">
+                  <img src="../../../../assets/images/tick_type_2.png" alt="">
+                </div>
+                <div class="tcol">
+                  <p>{{ campaign.created_at | date: 'medium'}}</p>
+                </div>
+                <div class="tcol">
+                  <a (click)="onEditCampaign(campaign)" class="edit"><img src="../../../../assets/images/icon_edit.png"
+                      alt=""></a>
+                  <a (click)="onClickStickyReviews(i)" class="assignTask"><img
+                      src="../../../../assets/images/icon_assign_task.png" class="assignTaskImg" alt=""></a>
+                  <a (click)="onDeleteCampaign(campaign.id)" class="delete"><img
+                      src="../../../../assets/images/icon_delete_red.png" alt=""></a>
 
                   <div class="taskBox">
                     <div class="review-box">
@@ -59,7 +68,7 @@
                           <span class="rewiew-time">
                             7 days ago
                           </span>
-                          <img src="../../../../assets/images/icon_poweredby.png" alt="" class="poweredBy"> by 
+                          <img src="../../../../assets/images/icon_poweredby.png" alt="" class="poweredBy"> by
                           <span class="brand-name">Tier5LLC</span>
                           <div class="reviewer-rating">
                             <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
@@ -74,334 +83,233 @@
                     </div>
 
                     <div class="review-options">
-                      <ul>
-                        <li>
-                          <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
-                          <p>Just awesome</p>
-                          <span class="greenTag">$1 a day</span>
-                        </li>
-                        <li>
-                          <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
-                          <p>Great Product to ...</p>
-                        </li>
-                        <li>
-                          <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
-                          <p>Highly reccomme ...</p>
-                        </li>
-                        <li>
-                          <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
-                          <p>Amazing software ...</p>
-                        </li>
-                      </ul>
+                      <ng-scrollbar [compact]="true" *ngIf="campaign.sticky_reviews.length > 0; else noStickyReviews">
+                        <ul>
+                          <li *ngFor="let review of campaign.sticky_reviews">
+                            <div class="checkbox"><input type="checkbox" class="sr-checkbox"></div>
+                            <p>{{ review.name }}</p>
+                            <span class="greenTag" *ngIf="review.tags !== null">{{ review.tags }}</span>
+                          </li>
+                        </ul>
+                      </ng-scrollbar>
+                      <ng-template #noStickyReviews>
+                        <p>Sorry no sticky reviews found ! </p>
+                      </ng-template>
                     </div>
                     <button class="saveBtn">
                       <img src="../../../../assets/images/addIcon.png" alt=""> Save
                     </button>
                   </div>
-              </div>
-            </div>
-          </li>
-          <li class="row">
-            <div class="rowContainer">
-              <div class="tcol">
-                <div class="loopedTag">LOOPED</div>
-                <div class="userReview">
-                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                  <p>https://www.usestickyreviews.com</p>
-                </div>
-                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-              </div>
-              <div class="tcol">
-                <div class="reviewTheme">
-                  <img src="../../../../assets/images/stickyTheme2.png" alt="">
                 </div>
               </div>
-              <div class="tcol">
-                <img src="../../../../assets/images/tick_type_2.png" alt="">
-              </div>
-              <div class="tcol">
-                <p>Dec 3, 2018, 5:39:18 PM</p>
-              </div>
-              <div class="tcol">
-                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li class="row">
-            <div class="rowContainer">
-              <div class="tcol">
-                <div class="loopedTag">LOOPED</div>
-                <div class="userReview">
-                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                  <p>https://www.usestickyreviews.com</p>
-                </div>
-                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-              </div>
-              <div class="tcol">
-                <div class="reviewTheme">
-                  <img src="../../../../assets/images/stickyTheme3.png" alt="">
-                </div>
-              </div>
-              <div class="tcol">
-                <img src="../../../../assets/images/tick_type_2.png" alt="">
-              </div>
-              <div class="tcol">
-                <p>Dec 3, 2018, 5:39:18 PM</p>
-              </div>
-              <div class="tcol">
-                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li class="row">
-            <div class="rowContainer">
-              <div class="tcol">
-                <div class="loopedTag">LOOPED</div>
-                <div class="userReview">
-                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                  <p>https://www.usestickyreviews.com</p>
-                </div>
-                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-              </div>
-              <div class="tcol">
-                <div class="reviewTheme">
-                  <img src="../../../../assets/images/stickyTheme4.png" alt="">
-                </div>
-              </div>
-              <div class="tcol">
-                <img src="../../../../assets/images/tick_type_2.png" alt="">
-              </div>
-              <div class="tcol">
-                <p>Dec 3, 2018, 5:39:18 PM</p>
-              </div>
-              <div class="tcol">
-                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li class="row">
-            <div class="rowContainer">
-              <div class="tcol">
-                <div class="loopedTag">LOOPED</div>
-                <div class="userReview">
-                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                  <p>https://www.usestickyreviews.com</p>
-                </div>
-                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-              </div>
-              <div class="tcol">
-                <div class="reviewTheme">
-                  <img src="../../../../assets/images/stickyTheme5.png" alt="">
-                </div>
-              </div>
-              <div class="tcol">
-                <img src="../../../../assets/images/tick_type_2.png" alt="">
-              </div>
-              <div class="tcol">
-                <p>Dec 3, 2018, 5:39:18 PM</p>
-              </div>
-              <div class="tcol">
-                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li class="row">
-            <div class="rowContainer">
-              <div class="tcol">
-                <div class="loopedTag">LOOPED</div>
-                <div class="userReview">
-                  <h2>Just awesome <span class="redTag">ACTIVE</span></h2>
-                  <p>https://www.usestickyreviews.com</p>
-                </div>
-                <a href="" class="copyBtn"><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
-              </div>
-              <div class="tcol">
-                <div class="reviewTheme">
-                  <img src="../../../../assets/images/stickyTheme1.png" alt="">
-                </div>
-              </div>
-              <div class="tcol">
-                <img src="../../../../assets/images/tick_type_2.png" alt="">
-              </div>
-              <div class="tcol">
-                <p>Dec 3, 2018, 5:39:18 PM</p>
-              </div>
-              <div class="tcol">
-                <a href="" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
         </ng-scrollbar>
         <ng-template #noRecords>
-            <ul>
-                <li class="row">
-                  <p class="no-records">Sorry no campaigns found !</p>
-                </li>
-            </ul>
+          <ul>
+            <li class="row">
+              <p class="no-records">Sorry no campaigns found ! <a (click)="onAddCampaign()">Click here</a> to add a new
+                campaign</p>
+            </li>
+          </ul>
         </ng-template>
       </div>
     </div>
   </div>
 </div>
+
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
-  <div class="sr-modal-container">
-    <div class="sr-modal-header">
-      <h2>
-          Add Campaign
-      </h2>
-    </div>
-    <div class="sr-modal-body">
-      <div class="sr-form">
-        <div class="sr-form-content" #mainScreen [ngClass]="{'activeScroll': scrollTrigger}">
-          <ng-scrollbar [compact]="true" class="formScroll">
-            <div class="sr-form-row">
-              <div class="sr-form-cell-small">
-                <label>Campaign Name</label>
-                <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl">
-                  <div class="error-msg">
-                    Brand Name is not valid
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="sr-modal-container">
+      <div class="sr-modal-header">
+        <h2>Add Campaign</h2>
+      </div>
+      <div class="sr-modal-body">
+        <div class="sr-form">
+          <div class="sr-form-content" #mainScreen [ngClass]="{'activeScroll': scrollTrigger}">
+            <ng-scrollbar [compact]="true" class="formScroll">
+              <div class="sr-form-row">
+                <div class="sr-form-cell-small">
+                  <label>Campaign Name</label>
+                  <div class="sr-form-field">
+                    <input type="text" class="sr-form-ctrl"
+                      [ngClass]="{error: isSubmitted && getFormControls.campaignName.errors}"
+                      formControlName="campaignName">
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignName.errors !== null 
+                      && getFormControls.campaignName.errors.required)">
+                      Campaign name is required
+                    </div>
+                  </div>
+                </div>
+                <div class="sr-form-cell-small">
+                  <label>Domain Name</label>
+                  <div class="sr-form-field">
+                    <input type="text" class="sr-form-ctrl"
+                      [ngClass]="{error: isSubmitted && getFormControls.campaignDomainName.errors}"
+                      formControlName="campaignDomainName">
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignDomainName.errors !== null 
+                      && getFormControls.campaignDomainName.errors.required)">
+                      Domain name is required
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignDomainName.errors !== null 
+                      && getFormControls.campaignDomainName.errors.pattern)">
+                      Domain name should be a valid URL
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="sr-form-cell-small">
-                <label>Domain Name</label>
-                <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl">
-                  <div class="error-msg">
-                    Brand Name is not valid
+              <div class="sr-form-row">
+                <div class="sr-form-cell-small">
+                  <label>Choose Visual Style</label>
+                  <div class="sr-form-field">
+                    <select class="sr-form-ctrl"
+                      [ngClass]="{error: isSubmitted && getFormControls.campaignVisualStyle.errors}"
+                      formControlName="campaignVisualStyle">
+                      <option value="{{ style.id }}" *ngFor="let style of styles">{{ style.name }}</option>
+                    </select>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignVisualStyle.errors !== null 
+                      && getFormControls.campaignVisualStyle.errors.required)">
+                      Visual style is required
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="sr-form-row">
-              <div class="sr-form-cell-small">
-                <label>Choose Visual Style</label>
-                <div class="sr-form-field">
-                  <select class="sr-form-ctrl">
-                    <option value=""></option>
-                  </select>
-                  <div class="error-msg">
-                    Brand Name is not valid
-                  </div>
-                </div>
-                <div class="style-preview">
-                  <div class="review-box">
-                    <div class="reviewer-img"></div>
-                    <div class="review-main">
-                      <div class="reviewer-name">Mark Williams</div>
-                      <div class="rewiew-msg">Just awesome</div>
-                      <div class="review-main-footer">
-                        <span class="rewiew-time">
-                          7 days ago
-                        </span>
-                        <img src="../../../../assets/images/icon_poweredby.png" alt="" class="poweredBy"> by 
-                        <span class="brand-name">Tier5LLC</span>
-                        <div class="reviewer-rating">
-                          <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                          <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                          <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                          <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                          <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                  <!-- Preview style -->
+                  <div class="style-preview">
+                    <div class="review-box">
+                      <div class="reviewer-img"></div>
+                      <div class="review-main">
+                        <div class="reviewer-name">Mark Williams</div>
+                        <div class="rewiew-msg">Just awesome</div>
+                        <div class="review-main-footer">
+                          <span class="rewiew-time">
+                            7 days ago
+                          </span>
+                          <img src="../../../../assets/images/icon_poweredby.png" alt="" class="poweredBy"> by
+                          <span class="brand-name">Tier5LLC</span>
+                          <div class="reviewer-rating">
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
+                          </div>
                         </div>
                       </div>
+                      <div class="closeReview"></div>
                     </div>
-                    <div class="closeReview"></div>
                   </div>
+                  <!-- End of preview style -->
                 </div>
-              </div>
-              <div class="sr-form-cell-small">
-                <label>Choose Visual Style</label>
-                <div class="option-list">
-                  <ul>
-                    <li>
-                      <input type="checkbox" class="sr-checkbox"><span>Just awesome</span>
-                    </li>
-                    <li>
-                      <input type="checkbox" class="sr-checkbox"><span>Great Product to ...</span>
-                    </li>
-                    <li>
-                      <input type="checkbox" class="sr-checkbox"><span>Highly reccomme ...</span>
-                    </li>
-                    <li>
-                      <input type="checkbox" class="sr-checkbox"><span>Amazing software ...</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="sr-form-row">
-              <div class="sr-form-cell-small">
-                <label>Delay Before Start</label>
-                <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl">
-                  <div class="error-msg">
-                    Brand Name is not valid
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-cell-small">
-                <label>Stay Timing<span>(ex: 1000 for 1 second)</span></label>
-                <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl">
-                  <div class="error-msg">
-                    Brand Name is not valid
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="sr-form-row">
-              <div class="sr-form-cell">
-                <label>Delay between next appearance<span>(ex: 1000 for 1 second)</span></label>
-                <div class="sr-form-field small">
-                  <input type="text" class="sr-form-ctrl">
-                  <div class="error-msg">
-                    Brand Name is not valid
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="sr-form-row">
-              <div class="sr-form-cell-small">
-                <label>Add Branding <input type="checkbox" class="tglBtn"></label>
-                <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl">
-                  <div class="error-msg">
-                    Brand Name is not valid
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-cell-small">
-                <label>Add Exit Pop-up <input type="checkbox" class="tglBtn"></label>
-                <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl">
-                  <div class="error-msg">
-                    Brand Name is not valid
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-scrollbar>
-        </div>
 
-        <div class="sr-form-row">
-          <div class="sr-form-cell">
-            <button class="button-submit">
-              <img src="../../../../assets/images/addIcon.png" alt=""> Save Campaign
-            </button>
+                <div class="sr-form-cell-small">
+                  <label>Choose Sticky Reviews</label>
+                  <div class="option-list">
+                    <ul>
+                      <li *ngFor="let review of stickyReviewsTemp; let i = index">
+                        <input type="checkbox" class="sr-checkbox"><span>{{ review.name }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="sr-form-row">
+                <div class="sr-form-cell-small">
+                  <label>Delay Before Start <span>(in seconds)</span></label>
+                  <div class="sr-form-field">
+                    <input type="text" class="sr-form-ctrl"
+                      [ngClass]="{error: isSubmitted && getFormControls.campaignDelayBeforeStart.errors}"
+                      formControlName="campaignDelayBeforeStart">
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignDelayBeforeStart.errors !== null 
+                      && getFormControls.campaignDelayBeforeStart.errors.required)">
+                      Delay before start is required
+                    </div>
+                  </div>
+                </div>
+                <div class="sr-form-cell-small">
+                  <label>Stay Timing<span>(ex: 1000 for 1 second)</span></label>
+                  <div class="sr-form-field">
+                    <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.campaignStayTime.errors}" formControlName="campaignStayTime">
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignStayTime.errors !== null 
+                      && getFormControls.campaignStayTime.errors.required)">
+                      Stay timing is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="sr-form-row">
+                <div class="sr-form-cell">
+                  <label>Interval Between Reviews <span>(in seconds)</span></label>
+                  <div class="sr-form-field small">
+                    <input type="text" class="sr-form-ctrl"
+                      [ngClass]="{error: isSubmitted && getFormControls.campaignDelayBetweenTwoReview.errors}"
+                      formControlName="campaignDelayBetweenTwoReview">
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignDelayBetweenTwoReview.errors !== null 
+                      && getFormControls.campaignDelayBetweenTwoReview.errors.required)">
+                      Interval Between Reviews is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="sr-form-row">
+                <div class="sr-form-cell-small">
+                  <label>Loop sticky reviews <input type="checkbox" class="tglBtn" formControlName="campaignLoop" [checked]="true"></label>
+                </div>
+              </div>
+              <div class="sr-form-row">
+                <div class="sr-form-cell-small">
+                  <label>Add Branding <input type="checkbox" class="tglBtn" formControlName="isBrandingSelected"></label>
+                  <div class="sr-form-field">
+                    <input type="text" class="sr-form-ctrl"
+                      [ngClass]="{error: isSubmitted && getFormControls.campaignBrand.errors}"
+                      formControlName="campaignBrand">
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignBrand.errors !== null 
+                      && getFormControls.campaignBrand.errors.required)">
+                      Please select a branding
+                    </div>
+                  </div>
+                </div>
+                <div class="sr-form-cell-small">
+                  <label>Add Exit Pop-up <input type="checkbox" class="tglBtn" formControlName="isExitPopupSelected"></label>
+                  <div class="sr-form-field">
+                    <input type="text" class="sr-form-ctrl"
+                      [ngClass]="{error: isSubmitted && getFormControls.campaignExitPopup.errors}"
+                      formControlName="campaignExitPopup">
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted 
+                      && getFormControls.campaignExitPopup.errors !== null 
+                      && getFormControls.campaignExitPopup.errors.required)">
+                      Please select an exit popup
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-scrollbar>
+          </div>
+
+          <div class="sr-form-row">
+            <div class="sr-form-cell">
+              <button class="button-submit">
+                <img src="../../../../assets/images/addIcon.png" alt=""> Save Campaign
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- <button (click)="myModal.close()">Close</button> -->
+  </form>
 </ngx-smart-modal>
-
-
-

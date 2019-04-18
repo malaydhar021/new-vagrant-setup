@@ -7,5 +7,15 @@
  * @license Proprietary
  */
 export class CampaignModel {
-    id?: number
+    id?: number;
+    campaign_name: string;
+    domain_name: string;
+    delay: number
+    delay_before_start: number;
+    exit_pop_up: boolean;
+    exit_pop_up_id: number;
+    branding: boolean;
+    branding_id: number;
+    loop: number;
+    style_id: string
 }

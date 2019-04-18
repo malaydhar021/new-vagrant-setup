@@ -13,7 +13,7 @@ class PasswordResetTokenController extends Controller
 {
     /**
      * Create a password reset token
-     *
+     * @todo Remove token from api response
      * @return void
      */
     public function store(Request $request)
@@ -42,6 +42,7 @@ class PasswordResetTokenController extends Controller
         return response()->json([
             'status' => true,
             'message' => "We have e-mailed you the password reset link!",
+            'token' => $passwordReset->token
         ]);
     }
 

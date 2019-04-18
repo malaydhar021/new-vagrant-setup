@@ -38,7 +38,7 @@ export class CampaignService {
    * @returns Observable<Object>
    */
   public addCampaign(data: CampaignModel) {
-    return this.httpClient.post(CampaignApiEndpoints.addCampaign, data);
+    return this.httpClient.post(CampaignApiEndpoints.campaigns, data);
   }
 
   /**
@@ -48,7 +48,7 @@ export class CampaignService {
    * @returns Observable<Object>
    */
   public updateCampaign(data: CampaignModel) {
-    return this.httpClient.post(CampaignApiEndpoints.updateCampaign, data);
+    return this.httpClient.put(CampaignApiEndpoints.campaigns, data);
   }
 
   /**
@@ -57,7 +57,17 @@ export class CampaignService {
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
-  public deleteCampaign(data: CampaignModel) {
-    return this.httpClient.post(CampaignApiEndpoints.deleteCampaign, data);
+  public deleteCampaign(id: number) {
+    return this.httpClient.delete(CampaignApiEndpoints.campaigns.concat('/' + id));
+  }
+
+  /**
+   * Method to make an api call to delete a campaign
+   * @method deleteCampaign
+   * @since Version 1.0.0
+   * @returns Observable<Object>
+   */
+  public getStyles() {
+    return this.httpClient.get(CampaignApiEndpoints.styles);
   }
 }

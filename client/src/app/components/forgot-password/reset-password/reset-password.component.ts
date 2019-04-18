@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,6 +33,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   validationErrors : any = null;
 
   constructor(
+    private renderer: Renderer2,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private errorService: ErrorsService,
@@ -42,6 +43,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   ) {
     // if user is already logged in then redirect the user to dashboard
     if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+    // add `loginPage` class to reset password template body
+    this.renderer.addClass(document.body, 'loginPage'); 
     this.subscription = this.errorService.error$.subscribe(
       errMsg => {
         this.loader = false;
@@ -86,7 +89,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         password: [null, [Validators.required, Validators.minLength(8)]],
         confirmPassword: [null, [Validators.required]]
       }, {
-        validator: ValidationEngine.MustMatch('password', 'confirmPassword') // custom validator to match the with password and confirm password
+        validator: ValidationEngine.MustMatch('password', 'confirmPassword') // custom validator to match with password and confirm password
       }
     );
   }
@@ -99,6 +102,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
    * @returns void
    */
   public ngOnDestroy() {
+    this.renderer.removeClass(document.body, 'loginPage');
     this.subscription.unsubscribe();
   }
 
