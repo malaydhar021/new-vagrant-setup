@@ -6578,6 +6578,11 @@ img {
             resize: none;
             height: 79px;
           }
+
+          .ratingRvTxt {
+            text-align: center;
+            @include mt(30px);
+          }
         }
 
         .choiceState {
@@ -6910,8 +6915,8 @@ img {
 
   .closePopup {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: -1px;
+    top: -1px;
     width: 20px;
     height: 20px;
 
@@ -7355,6 +7360,7 @@ img {
   box-shadow: 0 0 30px rgba(87, 105, 177, 0.16);
 
   .popupTxt {
+    border: none;
     width: 100%;
     background: transparent;
     position: static;
