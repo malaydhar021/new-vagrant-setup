@@ -1,6 +1,22 @@
-<span class="error-message">
-  {{errorMessage}}
+<!-- ERROR MESSAGES -->
+<span>
+  <div class="log-stat_msg log_Failed">{{ errorMessage }}</div>
+  <!-- Validation error messages for branding -->
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.name !== undefined">{{ validationErrorMessages.name }}</div>
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.url !== undefined">{{ validationErrorMessages.url }}</div>
 </span>
-<span *ngIf= "successMessage" class="success-message"> 
-  {{successMessage}}
+<!-- END -->
+
+
+<!-- SUCCESS MESSAGE -->
+<span *ngIf= "successMessage">
+  <div class="log-stat_msg log_Success">{{ successMessage }}</div>
 </span>
+<!-- END -->
+
+
+<!-- WARNING MESSAGE -->
+<span *ngIf= "warningMessage">
+  <div class="log-stat_msg log_Warning">{{ warningMessage }}</div>
+</span>
+<!-- END -->

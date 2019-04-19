@@ -7,7 +7,7 @@
  * @license Proprietary
  */
 export class BrandingModel {
-  brand_name?: string;
+  name?: string;
   url?: string;
   branding_id?: number;
   id?: number;

@@ -5,8 +5,10 @@ import { Subscription } from 'rxjs';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { BrandingService } from '../../../services/branding.service';
 import { ErrorsService } from '../../../services/errors.service';
+import { LoaderService } from '../../../services/loader.service';
 import { BrandingModel } from '../../../models/branding.model';
 import { Log } from '../../../helpers/app.helper';
+
 
 /**
  * BrandingComponent is responsible for showing, adding, updating and deleting brands
@@ -53,23 +55,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private errorService: ErrorsService,
     private brandingService: BrandingService,
-  ) {
-    // update errorMessage if anything caught by our error interceptor
-    this.subscription = this.errorService.error$.subscribe(
-      errMsg => {
-        this.loader = false;
-        this.errorMessage = errMsg;
-      }
-    );
-    // update validationErrors if anything has been caught by our error interceptor
-    this.subscription = this.errorService.validationErrors$.subscribe(
-      validationErrMsg => {
-        Log.info(validationErrMsg, 'validation errors');
-        this.loader = false;
-        this.validationErrors = validationErrMsg;
-      }
-    );
-  }
+    private loaderService: LoaderService,
+  ) {}
 
   /**
    * ngOnInit method initialize angular reactive form object for add / edit form of a brand. 
@@ -80,7 +67,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
    */
   public ngOnInit() {
     // show the loader as it's going to fetch records from api
-    this.loader = true;
+    this.loaderService.enableLoader();
     // set the page title
     this.title.setTitle('Stickyreviews :: Branding');
     // making an api call to get all brandings  
@@ -88,7 +75,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
     // initialize the fombuilder for add / edit a brand form
     this.form = this.formBuilder.group({
       brandName : [null, Validators.required], // brand name
-      brandUrl : [null, Validators.required] // brand url
+      brandUrl : [null, Validators.required] // brand url 
     });
   }
 
@@ -109,9 +96,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  public ngOnDestroy() {}
 
   /**
    * resetForm method is just reset the form after successfully
@@ -137,9 +122,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
         Log.success(response);
         if (response.status) {
           // update the brands array with latest api response data
-          this.brands = response.data;
+          this.brands = response.data;          
           // hide the loader
-          this.loader = false;
+          this.loaderService.disableLoader();
         }
       }
     );
@@ -184,16 +169,16 @@ export class BrandingComponent implements OnInit, OnDestroy {
       return;
     }
     // show the loader
-    this.loader = true;
+    this.loaderService.enableLoader();
     // prepare the data as request body
     const data = {
-      brand_name: this.form.value.brandName,
+      name: this.form.value.brandName,
       url: this.form.value.brandUrl
     };
     if(this.isEditing) {
       // edit brand
       data['branding_id'] = this.brandId;
-      this.editBrand(data);
+      this.editBrand(data, this.brandId);
     } else {
       // add a brand
       this.addBrand(data);
@@ -227,7 +212,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
           // hide the loader
-          this.loader = false;
+          this.loaderService.disableLoader();
         }
       }
     );
@@ -240,9 +225,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
    * @param data BrandingModel class object
    * @returns Void
    */
-  public editBrand(data: BrandingModel) {
+  public editBrand(data: BrandingModel, id: number) {
     // let's make an api call to add this brand
-    this.brandingService.updateBranding(data).subscribe(
+    this.brandingService.updateBranding(data, id).subscribe(
       (response : any ) => {
         Log.info(response, 'edit a brand response');
         if(response.status) {
@@ -260,7 +245,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // show the error message to user in case there is any error from api respose
           this.errorMessage = response.message;
           // hide the loader
-          this.loader = false;
+          this.loaderService.disableLoader();
         }
       }
     );
@@ -281,7 +266,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.isEditing = true;
     // prepare data object with the selected brand row
     const data = {
-      brandName: brand.brand_name,
+      brandName: brand.name,
       brandUrl: brand.url
     };
     // set values into the form of currently selected row
@@ -305,11 +290,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
       return;
     }
     // show loader
-    this.loader = true;
-    // prepare data to make a delete request
-    const data = {branding_id: brandId};
+    this.loaderService.enableLoader();
     // make a api call to delete the brand
-    this.brandingService.deleteBranding(data).subscribe(
+    this.brandingService.deleteBranding(brandId).subscribe(
       (response: any) => {
         Log.info(response, 'delete api response');
         if(response.status) {
@@ -321,7 +304,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // show the error message to user in case there is any error from api respose
           this.errorMessage = response.message;
           // hide the loader
-          this.loader = false;
+          this.loaderService.disableLoader();
         }
       }
     );

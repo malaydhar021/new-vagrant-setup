@@ -7,20 +7,16 @@ import { Subject } from 'rxjs';
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
- * @todo Later on we have to implement some kind of global loader service which will show or hide loader asynchronously.
- * @deprecated 1.0.0
  */
 
 @Injectable()
 export class LoaderService {
-    private _loader = false;
     loaderStatus: Subject<any> = new Subject();
 
     constructor() {}
 
     /**
      * Function to showloader. this will update loader status asynchronously
-     *
      * @since 1.0.0
      * @returns void
      */
@@ -30,7 +26,6 @@ export class LoaderService {
 
     /**
      * Function to disable loader. loader setter method used to set the _loader value;
-     *
      * @since 1.0.0
      * @returns void
      */
@@ -40,7 +35,6 @@ export class LoaderService {
 
     /**
      * Function to get loader status.
-     *
      * @since 1.0.0
      * @returns void
      */

@@ -128,7 +128,7 @@ export class SignupApiEndpoints {
  * @class BrandingApiEndpoints
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
- * @license Proprietery
+ * @license Proprietary
  */
 export class BrandingApiEndpoints {
   /**
@@ -138,11 +138,12 @@ export class BrandingApiEndpoints {
    * @returns String
    */
   public static get brands(): string {
-    return apiBaseUrl.concat('/get-all-branding');
+    return apiBaseUrl.concat('/brands');
   }
 
   /**
-   * addBrand to generate api endpoint to add a brand
+   * addBrand to generate api endpoint to add a brand. This deprecated api provider
+   * ### *DEPRECATED* ###
    * @method addBrand
    * @since Version 1.0.0
    * @returns String 
@@ -152,7 +153,8 @@ export class BrandingApiEndpoints {
   }
 
   /**
-   * updateBrand to generate api endpoint to update a brand
+   * updateBrand to generate api endpoint to update a brand. This deprecated api provider
+   * ### *DEPRECATED* ###
    * @method updateBrand
    * @since Version 1.0.0
    * @returns String 
@@ -162,7 +164,8 @@ export class BrandingApiEndpoints {
   }
 
   /**
-   * deleteBrand to generate api endpoint to delete a brand
+   * deleteBrand to generate api endpoint to delete a brand. This deprecated api provider
+   * ### *DEPRECATED* ###
    * @method deleteBrand
    * @since Version 1.0.0
    * @returns String 

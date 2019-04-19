@@ -24,6 +24,11 @@
 
 ## Branding
 
+## V1.1.0
+
+1. Updated component, helper and service for branding with updated api endpoints
+2. Introduced global loader and messaged to branding to display loader and messages
+
 ## V1.0.0
 
 1. Implemented CRUD operation of branding feature

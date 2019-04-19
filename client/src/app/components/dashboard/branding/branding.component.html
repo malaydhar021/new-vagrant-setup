@@ -11,9 +11,10 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <div *ngIf="successMessage !== null">{{ successMessage }}</div>
+    <!-- <div *ngIf="successMessage !== null">{{ successMessage }}</div>
     <div *ngIf="errorMessage !== null">{{ errorMessage }}</div>
-    <div *ngIf="(isDeleting && errorMessage !== null)">{{ errorMessage }}</div>
+    <div *ngIf="(isDeleting && errorMessage !== null)">{{ errorMessage }}</div> -->
+    <message [successMessage]="successMessage"></message>
     <div class="table">
       <ul class="thead">
         <li>BRAND NAME & URL</li>
@@ -26,7 +27,7 @@
             <li class="row" *ngFor="let brand of brands">
               <div class="rowContainer">
                 <div class="tcol">
-                  <h2>{{ brand.brand_name }}</h2>
+                  <h2>{{ brand.name }}</h2>
                   <p>{{ brand.url }}</p>
                 </div>
                 <div class="tcol">
@@ -64,7 +65,8 @@
       </h2>
     </div>
     <div class="sr-modal-body">
-      <div *ngIf="errorMessage !== null">{{ errorMessage }}</div>
+      <!-- <div *ngIf="errorMessage !== null">{{ errorMessage }}</div> -->
+      <message></message>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="sr-form">
           <div class="sr-form-row">
@@ -108,12 +110,3 @@
   </div>
   <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>
-<!-- Loader -->
-<div class="loaderOuter" *ngIf="loader">
-    <div class="loaderContainer">
-        <div class="loader">
-            <img src="../../../../assets/images/face_icon.png" alt="">
-        </div>
-        <div class="loaderShadow"></div>
-    </div>
-</div>

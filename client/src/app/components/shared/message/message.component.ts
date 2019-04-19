@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ErrorsService } from '../../../services/errors.service';
 import { LoaderService } from '../../../services/loader.service';
+import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * MessageComponent is responsible for showing messages when a server sends an error message
@@ -17,13 +18,15 @@ import { LoaderService } from '../../../services/loader.service';
   styleUrls: ['./message.component.scss']
 })
 
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, OnDestroy {
 
-  errorMessage : string = null; // Error Message for the MessageComponent 
-  subscription : Subscription;  // Subscription Variable to create server side error message subscriptions 
-  
+  errorMessage: string = null; // Error Message for the MessageComponent
+  validationErrorMessages: string = null; // Error Message for the MessageComponent 
+  subscription: Subscription;  // Subscription Variable to create server side error message subscriptions 
+
   // This property is bound using its original name.
-  @Input() successMessage?: string = ''
+  @Input() successMessage?: string = '';
+  @Input() warningMessage?: string = '';
 
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -40,17 +43,34 @@ export class MessageComponent implements OnInit {
     // A subscription to an error service error message object
     this.subscription = this.errorService.error$.subscribe(
       errMsg => {
-          // Assign the error message to the error message template string variable
-          this.errorMessage = errMsg;
-          this.loaderService.disableLoader();
-          setTimeout(()=>{
-            this.errorMessage = ''
-          }, 3000)
+        // Assign the error message to the error message template string variable
+        this.errorMessage = errMsg;
+        this.loaderService.disableLoader();
+        setTimeout(() => {
+          this.errorMessage = ''
+        }, 3000)
       }
-  );
-   }
+    );
 
-  ngOnInit() {
+    // update validationErrors if anything has been caught by our error interceptor
+    this.subscription = this.errorService.validationErrors$.subscribe(
+      validationErrMsg => {
+        Log.info(validationErrMsg, 'validation errors');
+        this.loaderService.disableLoader();
+        this.validationErrorMessages = validationErrMsg;
+      }
+    );
   }
 
+  /**
+  * @method ngOnInit
+  */
+  public ngOnInit() { }
+
+  /**
+   * @method ngOnDestroy
+   */
+  public ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

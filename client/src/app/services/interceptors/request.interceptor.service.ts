@@ -92,6 +92,7 @@ export class RequestInterceptor implements HttpInterceptor {
       case 400: // Bad Request
         // update the error messaged based on message object in http response
         const errorMessage400 = this.updateErrorMessage(error);
+        Log.notice(error);
         // update error messages for only for 400 http request. 
         // This will mostly handle the server side form validation messages.
         this.updateErrorMessage400(error);
@@ -105,6 +106,12 @@ export class RequestInterceptor implements HttpInterceptor {
         // this.router.navigate(['/login']);
         // return observable as string
         return of(errorMessage404);
+
+      case 405: // Method not allowed
+        // update the error messaged based on message object in http response
+        const errorMessage405 = this.updateErrorMessage(error);
+        // return observable as string
+        return of(errorMessage405);
 
       case 422: // Unprocessable Entity
         // update the error messaged based on message object in http response
@@ -175,10 +182,10 @@ export class RequestInterceptor implements HttpInterceptor {
       // this.errorService.updateMessage(error.error.message);
       // errMsg = error.error.message;
       Log.debug(error.error.errors, "Catch 400 validation messgaes");
-      this.errorService.updateMessage(error.error.errors);
+      this.errorService.updateValidationMessage(error.error.errors);
       //this.errorService.updateValidationMessage(error.error.errors);
     } else {
-      this.errorService.updateMessage(error.error.message);
+      this.errorService.updateValidationMessage(this.defaultErrorMessage);
     }
   }
 }

@@ -38,7 +38,7 @@ export class BrandingService {
    * @returns Observable<Object>
    */
   public addBranding(data: BrandingModel) {
-    return this.httpClient.post(BrandingApiEndpoints.addBrand, data);
+    return this.httpClient.post(BrandingApiEndpoints.brands, data);
   }
 
   /**
@@ -47,8 +47,8 @@ export class BrandingService {
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
-  public updateBranding(data: BrandingModel) {
-    return this.httpClient.post(BrandingApiEndpoints.updateBrand, data);
+  public updateBranding(data: BrandingModel, id: number) {
+    return this.httpClient.put(BrandingApiEndpoints.brands.concat('/' + id), data);
   }
 
   /**
@@ -57,7 +57,7 @@ export class BrandingService {
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
-  public deleteBranding(data: BrandingModel) {
-    return this.httpClient.post(BrandingApiEndpoints.deleteBrand, data);
+  public deleteBranding(id: number) {
+    return this.httpClient.delete(BrandingApiEndpoints.brands.concat('/' + id));
   }
 }
