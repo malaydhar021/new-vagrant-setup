@@ -2159,13 +2159,20 @@ a {
             }
 
             @media (max-width: 1365px) {
-              @include mr(15px);
+              max-width: 220px;
             }
 
             @media (max-width: 991px) {
               @include mr(0);
-              max-width: 30%;
               padding-right: 10px;
+            }
+
+            @media (max-width: 767px) {
+              @include mr(0);
+              width: 100%;
+              max-width: inherit;
+              padding-right: 0;
+              padding: 10px;
             }
           }
 
