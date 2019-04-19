@@ -151,7 +151,12 @@ class ExitPopupsController extends Controller
      */
     public function show($id)
     {
-        //
+            $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
+                return response([
+                    'status' => true,
+                    'message' => "Exit-poup details have found.",
+                    'data' => new ExitPopupResource($exitPopup),
+                ]);
     }
 
     /**
@@ -184,5 +189,8 @@ class ExitPopupsController extends Controller
          *
          * @see https://laravel.com/docs/5.7/eloquent#observers
          */
+        $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
+        $exitPopup->delete();
+        return json;
     }
 }
