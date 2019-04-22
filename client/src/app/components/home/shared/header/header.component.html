@@ -13,18 +13,22 @@
 
     <div class="settingDrop">
       <div class="topSec">
-        <h2>
+        <h2 *ngIf=" userPlanDetails && userPlanDetails.status !== 'NA'">
           <span>Your current</span>
           membership plan
         </h2>
-        <div class="planName">
-          STARTER
+        <h2 *ngIf=" userPlanDetails && userPlanDetails.status === 'NA'">
+          <span>Your current</span>
+          Your not subscribe
+        </h2>
+        <div class="planName" *ngIf=" userPlanDetails && userPlanDetails.status !== 'NA'">
+          STARTER 
         </div>
-        <a [routerLink]="['/dashboard/plans']" class="upgrade">Upgrade Now</a>
+        <a [routerLink]="['/home/plans']" class="upgrade">{{(userPlanDetails && userPlanDetails.status === 'NA') ? 'Add' : 'Upgrade'}} Now</a>
       </div>
       <div class="bottomSec">
         <ul>
-          <li><a [routerLink]="['/dashboard/update-payment-info']" routerLinkActive="active">Update Payment Info</a></li>
+          <li><a [routerLink]="['/home/update-payment-info']" routerLinkActive="active">{{(userPlanDetails && userPlanDetails.status === 'NA') ? 'Add' : Update}} Payment Info</a></li>
         </ul>
       </div>
     </div>
@@ -34,7 +38,7 @@
       <a class="hdrProfile" (click)="tglProfileMenu()" style="background-image:url(../../../../assets/images/pp.png)"></a>
       <div class="settingDrop">
         <ul>
-          <li><a [routerLink]="['/dashboard/profile']" routerLinkActive="active">Edit Profile</a></li>
+          <li><a [routerLink]="['/home/profile']" routerLinkActive="active">Edit Profile</a></li>
           <li><a (click)="onLogout()">Logout</a></li>
         </ul>
       </div>

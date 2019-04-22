@@ -418,3 +418,26 @@ export class UserApiEndpoints {
   }
 }
 
+
+/**
+ *  SubscriptionApiEndpoints helper class is holding all static methods for subscription api endpoints based on the environment
+ * @class SubscriptionApiEndpoints
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @version 1.0.0
+ * @license Proprietery
+ */
+export class SubscriptionApiEndpoints {
+  /**
+   * subscription to generate api endpoint to implement CRUD on a user subscription
+   * @method subscription
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get subscription() : string {
+    return apiBaseUrl.concat('/user/subscription');
+  }
+
+}
+
+
+

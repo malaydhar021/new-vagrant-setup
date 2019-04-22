@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { AuthService } from '../../../../services/auth.service';
-import { ErrorsService } from '../../../../services/errors.service';
-import { MenuService } from '../../../../services/menu.service';
-import { Log } from '../../../../helpers/app.helper';
+import { Component, OnInit, OnDestroy }         from '@angular/core';
+import { Router }                               from '@angular/router';
+import { CookieService }                        from 'ngx-cookie-service';
+import { Subscription }                         from 'rxjs';
+import { AuthService }                          from '../../../../services/auth.service';
+import { ErrorsService }                        from '../../../../services/errors.service';
+import { MenuService }                          from '../../../../services/menu.service';
+import { Log }                                  from '../../../../helpers/app.helper';
+import { SubscriptionService}                   from '../../../../services/subscription.service';
 
 /**
  * This component is responsible for handling all sort of operations in application header
@@ -30,6 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;  
   menuSubscription: Subscription; 
   error: string = null;
+  userPlanSubscription: Subscription;
+  userPlanDetails:any
 
   
   constructor(
@@ -37,7 +40,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private cookieService: CookieService,
     private authService: AuthService,
     private errorService: ErrorsService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private subscriptionService: SubscriptionService
   ) {
     // subscription to upate the error property to disaply in template
     this.subscription = this.errorService.error$.subscribe(
@@ -52,6 +56,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isActive = status;
       }
     );
+
+    this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan=>{
+      this.userPlanDetails = userPlan;
+    })
     
   }
 
@@ -63,6 +71,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.subscription.unsubscribe();
     this.menuSubscription.unsubscribe();
+    this.userPlanSubscription.unsubscribe();
   }
 
   /**
@@ -102,5 +111,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         Log.error(err, 'Some error occured');
       }
     );
+  }
+
+  currentPlan(){
+    if (this.userPlanDetails && this.userPlanDetails.data && (this.userPlanDetails.data.pricing_plan.id === "enterprise-monthly")){
+
+    }
   }
 }
