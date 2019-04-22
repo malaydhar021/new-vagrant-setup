@@ -23,7 +23,7 @@ return [
             'id' => "starter-monthly",          // Stripe plan ID
             'name' => "Starter Monthly",        // Stripe plan name
             'alias' => "Starter",               // Defined by you to show in fronetend
-            'amount' => 10.00,
+            'amount' => 15.00,
             'trial' => 14,                      // Trial periods in days
             'type' => 'recurring',              // Billing type 'recurring'
             'interval' => 30,                   // No of days if type is recurring
@@ -55,9 +55,9 @@ return [
 
         'highest' => [
             'id' => "enterprise-monthly",
-            'name' => "Enterprise Monthly",
-            'alias' => "Enterprise",
-            'amount' => 50.00,
+            'name' => "Agency Monthly",
+            'alias' => "Agency",
+            'amount' => 47.00,
             'trial' => null,
             'type' => 'recurring',
             'interval' => 30,

@@ -9,6 +9,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -126,7 +127,8 @@ class Handler extends ExceptionHandler
             /** Model Not Found Exception Response */
             if ($exception instanceof ModelNotFoundException) {
                 $explodedErrorMessage = array_reverse(preg_split("/[\s\\\[\]]/", $exception->getMessage()));
-                $model = strtolower($explodedErrorMessage[1]);
+                $model = str_replace('_', ' ', Str::snake($explodedErrorMessage[1]));
+
                 return response()->json([
                     'status' => false,
                     'message' => "The ${model}'s details you are looking for is not found. Please try again later.",

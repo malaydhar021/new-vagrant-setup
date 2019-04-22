@@ -26,6 +26,6 @@ class Hashids
     public static function decode($id)
     {
         $decodedId = VinklaHashids::decode($id);
-        return array_key_exists(0, $decodedId) ? $decodedId[0] : null;
+        return array_key_exists(0, $decodedId) ? $decodedId[0] : $id;
     }
 }

@@ -1,0 +1,154 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\ReviewLink;
+use App\Http\Requests\ReviewLinkRequest;
+use App\Http\Resources\ReviewLinkResource;
+use Illuminate\Support\Facades\Auth;
+use App\Helpers\Hashids;
+
+class ReviewLinksController extends Controller
+{
+    /**
+     * The query builder instance to fetch campaign(s)
+     *
+     * @var  Illuminate\Database\Query\Builder
+     */
+    private $queryBuilder;
+
+    /**
+     * Create a new constructor instance
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->queryBuilder = ReviewLink::where('created_by', Auth::user()->id)
+                ->with('campaign', 'stickyReviews', 'user');
+
+            return $next($request);
+        });
+    }
+
+    /**
+     * Display a listing of the review links.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $noOfReviewLinks = $this->queryBuilder->count();
+        $reviewLinks = $this->queryBuilder->orderBy('created_at', 'desc')->get();
+
+        if ($noOfReviewLinks) {
+            return response()->json([
+                'status' => true,
+                'message' => "${noOfReviewLinks} review link(s) have found.",
+                'data' => ReviewLinkResource::collection($reviewLinks),
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => 'Sorry, no review links have found!'
+            ]);
+        }
+    }
+
+    /**
+     * Store a newly created review link in storage.
+     *
+     * @param  \App\Http\Requests\ReviewLinkRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(ReviewLinkRequest $request)
+    {
+        $reviewLink = new ReviewLink();
+        $reviewLink->name = $request->input('name');
+        $reviewLink->url_slug = $request->input('url_slug');
+        $reviewLink->logo = $request->file('logo');
+        $reviewLink->description = $request->input('description');
+        $reviewLink->auto_approve = $request->input('auto_approve');
+        $reviewLink->min_rating = $request->input('min_rating');
+        $reviewLink->positive_review_message = $request->input('positive_review_message');
+        $reviewLink->negative_info_review_message_1 = $request->input('negative_info_review_message_1');
+        $reviewLink->negative_info_review_message_2 = $request->input('negative_info_review_message_2');
+        $reviewLink->campaign_id = $request->input('campaign_id');
+        $reviewLink->created_by = Auth::user()->id;
+        $reviewLink->save();
+
+        $reviewLink->load('campaign', 'user');
+
+        return response()->json([
+            'status' => true,
+            'message' => "Review link has created successfully.",
+            'data' => new ReviewLinkResource($reviewLink),
+        ], 201);
+    }
+
+    /**
+     * Display the specified review link.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $reviewLink = $this->queryBuilder->where('id', $id)->firstOrFail();
+
+        return response()->json([
+            'status' => true,
+            'message' => "Review link details has fetched successfully.",
+            'data' => new ReviewLinkResource($reviewLink),
+        ]);
+    }
+
+    /**
+     * Update the specified review link in storage.
+     *
+     * @param  \App\Http\Requests\ReviewLinkRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(ReviewLinkRequest $request, $id)
+    {
+        $reviewLink = $this->queryBuilder->where('id', $id)->firstOrFail();
+        $reviewLink->name = $request->input('name');
+        $reviewLink->url_slug = $request->input('url_slug');
+        $reviewLink->description = $request->input('description');
+        $reviewLink->auto_approve = $request->input('auto_approve');
+        $reviewLink->min_rating = $request->input('min_rating');
+        $reviewLink->positive_review_message = $request->input('positive_review_message');
+        $reviewLink->negative_info_review_message_1 = $request->input('negative_info_review_message_1');
+        $reviewLink->negative_info_review_message_2 = $request->input('negative_info_review_message_2');
+        $reviewLink->campaign_id = $request->input('campaign_id');
+        if ($request->has('logo')) {
+            $reviewLink->logo = $request->file('logo');
+        }
+        $reviewLink->update();
+
+        $reviewLink->load('campaign', 'user');
+
+        return response()->json([
+            'status' => true,
+            'message' => "Review link details has updated successfully.",
+            'data' => new ReviewLinkResource($reviewLink),
+        ]);
+    }
+
+    /**
+     * Remove the specified review link from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $reviewLink = $this->queryBuilder->where('id', $id)->firstOrFail();
+        $reviewLink->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => "Review link has deleted successfully.",
+        ]);
+    }
+}

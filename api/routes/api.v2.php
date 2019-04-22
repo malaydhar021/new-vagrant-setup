@@ -90,11 +90,19 @@ Route::middleware('auth:api')->group(function () {
     });
 
     // review link api routes
-    Route::get('/get-all-review-link/{id?}', 'ApiV2Controller@getAllReviewLinks')->name('getAllCampaigns');
-    Route::post('/create-review-link', 'ApiV2Controller@postCreateReviewLink')->name('postCreateReviewLink');
-    Route::post('/update-review-link', 'ApiV2Controller@postUpdateReviewLink')->name('postUpdateReviewLink');
-    Route::post('/delete-review-link', 'ApiV2Controller@postDeleteReviewLink')->name('postDeleteReviewLink');
-    Route::post('/check-duplicate-review-link', 'ApiV2Controller@postCheckDuplicateReviewLink')->name('postCheckDuplicateReviewLink');
+    // Route::get('/get-all-review-link/{id?}', 'ApiV2Controller@getAllReviewLinks')->name('getAllCampaigns');
+    // Route::post('/create-review-link', 'ApiV2Controller@postCreateReviewLink')->name('postCreateReviewLink');
+    // Route::post('/update-review-link', 'ApiV2Controller@postUpdateReviewLink')->name('postUpdateReviewLink');
+    // Route::post('/delete-review-link', 'ApiV2Controller@postDeleteReviewLink')->name('postDeleteReviewLink');
+    // Route::post('/check-duplicate-review-link', 'ApiV2Controller@postCheckDuplicateReviewLink')->name('postCheckDuplicateReviewLink');
+    Route::prefix('review-links')->name('review-links.')->group(function () {
+        Route::get('/', 'ReviewLinksController@index')->name('index');
+        Route::post('/', 'ReviewLinksController@store')->name('store');
+        Route::get('/{id}', 'ReviewLinksController@show')->name('show');
+        Route::post('/{id}', 'ReviewLinksController@update')->name('update');
+        Route::patch('/{id}', 'ReviewLinksController@update')->name('update');
+        Route::delete('/{id}', 'ReviewLinksController@destroy')->name('delete');
+    });
 });
 
 Route::post('/save-user-review', 'ApiV2Controller@postSaveUserReview')->name('postSaveUserReview');

@@ -37,7 +37,7 @@ class StickyReviewRequest extends FormRequest
             'review_video' => "required_if:type,3|file|" .
                 "mimetypes:application/ogg,application/x-mpegURL,video/3gpp,video/mp4,video/MP2T,video/ogg," .
                 "video/quicktime,video/webm,video/x-msvideo,video/x-ms-wmv",
-             'image' => "required|image|mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp",
+            'image' => "required|image|mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp",
         ];
     }
 

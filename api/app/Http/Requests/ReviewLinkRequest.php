@@ -2,11 +2,29 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Hashids;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ReviewLinkRequest extends FormRequest
 {
+    /**
+     * Get the validator instance for the request.
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function getValidatorInstance()
+    {
+        if ($this->request->has('campaign_id')) {
+            $this->merge([
+                'campaign_id' => Hashids::decode($this->request->get('campaign_id')),
+            ]);
+        }
+
+        return parent::getValidatorInstance();
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,15 +45,20 @@ class ReviewLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'myLogo'                        => 'required|image|mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp',
-            'name'                          => 'required|string',
-            'description'                   => 'required| string',
-            'url_slug'                      => 'required|unique:review_links,url_slug',
-            'min_rating'                    => 'required_if:auto_approve, 1',
-            'negative_info_review_msg_1'    => 'required',
-            'negative_info_review_msg_2'    => 'required',
-            'positive_review_msg'           => 'required',
-            'created_by'                    => 'required|numeric'
+            'name' => "required|string",
+            'url_slug' => "required|unique:review_links,id," . $this->route('id'),
+            'logo' => [
+                $this->method() == 'PUT' ? "required" : "nullable",
+                "image",
+                "mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp",
+            ],
+            'description' => "required|string",
+            'auto_approve' => "required|boolean",
+            'min_rating' => "required_if:auto_approve,1|integer",
+            'positive_review_message' => "required|string",
+            'negative_info_review_message_1' => "required|string",
+            'negative_info_review_message_2' => "required|string",
+            'campaign_id' => "required|exists:campaigns,id",
         ];
     }
 
@@ -47,20 +70,23 @@ class ReviewLinkRequest extends FormRequest
     public function messages()
     {
         return [
-            'myLogo.required' => "Logo is required.",
-            'myLogo.image' => "Logo is not a valid image",
-            'myLogo.image' => "Logo should be type of jpg, jpeg, png, bmp, gif, ico or webp." .
+            'name.required' => "Review Link name is required.",
+            'url_slug.required' => "URL slug is required.",
+            'url_slug.unique' => "URL slug should be unique.",
+            'logo.required' => "Logo is required.",
+            'logo.image' => "Logo is not a valid image",
+            'logo.mimes' => "Logo should be type of jpg, jpeg, png, bmp, gif, ico or webp." .
                 "No other file format is currently supported.",
-            'name.required' => "Review Link name is required!",
-            'description.required' => "Review description is required!",
-            'url_slug.required' => "URL slug is required!",
-            'url_slug.unique' => "URL slug should be unique!",
+            'description.required' => "Description is required.",
+            'auto_approve.required' => "Please turn on or off auto approve switch.",
+            'auto_approve.boolean' => "Please turn on or off auto approve switch.",
             'min_rating.required_if' => "If auto approve is on you have to define minimum star rating, " .
                 "else you can switch off it.",
             'negative_info_review_msg_1.required' => "Negative info message is required.",
             'negative_info_review_msg_2.required' => "Negative info message is required.",
             'positive_review_msg.required' => "Positive info message is required.",
-            'created_by.required' => "Please provide the id of the review link creator, and it should be numeric.",
+            'campaign_id.required' => "Campaign is required.",
+            'campaign_id.exists' => "This campaign does not matches our record, please select a valid campaign.",
         ];
     }
 }
