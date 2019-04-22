@@ -7401,6 +7401,173 @@ img {
   }
 }
 
+.dashboardMain {
+  .mainBoxHeader {
+    .mainBoxHeaderLeft {
+      h1 {
+        color: #000000;
+
+        @media (max-width: 480px) {
+          font-size: 24px;
+          font-weight: normal;
+        }
+      }
+
+      @media (max-width: 991px) {
+        -webkit-transform: none !important;
+        transform: none !important;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        bottom: auto !important;
+      }
+    }
+
+    @media (max-width: 991px) {
+      padding: 15px 0 !important;
+      @include mb(10px);
+    }
+  }
+
+  .dataTableArea {
+    @media (max-width: 991px) {
+      padding-bottom: 0;
+    }
+  }
+
+  @media (max-width: 991px) {
+    padding-top: 0 !important;
+  }
+}
+
+.dashVideos {
+  padding: 0 32px;
+
+  .dashVideo_e {
+    @include mb(50px);
+    background-color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 50%;
+    float: left;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    .hdrVdo {
+      -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+      order: 2;
+      padding-left: 15px;
+      @include mt(5%);
+
+      h4 {
+        font-size: 24px;
+        font-weight: 500;
+        font-family: 'SegoeUI';
+        color: #343434;
+        @include mb(0);
+
+        @media (max-width: 480px) {
+          font-size: 15px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 100%;
+        flex: 1 1 100%;
+        padding: 0;
+        @include mt(5px);
+      }
+    }
+
+    .dashVid_body {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 70%;
+      flex: 0 0 70%;
+
+      .vidFrame {
+        height: 216px;
+        width: 100%;
+
+        @media (max-width: 1199px) {
+          height: 156px;
+        }
+      }
+
+      &:not(:first-child) {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 60%;
+        flex: 0 0 60%;
+
+        @media (max-width: 767px) {
+          -webkit-box-flex: 1;
+          -ms-flex: 1 1 100%;
+          flex: 1 1 100%;
+        }
+      }
+
+      @media (max-width: 767px) {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 100%;
+        flex: 1 1 100%;
+      }
+    }
+
+    &:first-child {
+      width: 100%;
+      float: none;
+
+      .vidFrame {
+        height: 406px;
+
+        @media (max-width: 1199px) {
+          height: 270px;
+        }
+      }
+    }
+
+    &:not(:first-child) {
+      padding: 0 5px;
+
+      h4 {
+        font-size: 16px;
+        font-weight: normal;
+
+        @media (max-width: 1199px) {
+          font-size: 13px
+        }
+      }
+
+      @media (max-width: 480px) {
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 767px) {
+      width: 100%;
+      padding: 0;
+    }
+
+    @media (max-width: 575px) {
+      @include mb(20px);
+    }
+  }
+
+  @media (max-width: 991px) {
+    padding: 0 15px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
+}
+
 // Video Popup
 .vidPop {
   padding: 22px 20px 0;
