@@ -56,8 +56,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private errorService: ErrorsService,
     private signupService: SignupService
   ) {
-    // if user is already logged in then redirect the user to dashboard
-    if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+    // if user is already logged in then redirect the user to home
+    if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     this.renderer.addClass(document.body, 'sign-upPage');
     this.subscription = this.errorService.error$.subscribe(
       errMsg => {
@@ -77,15 +77,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
   /**
    * ngOnInit method initialize angular reactive form object for sign up form step 1 and step 2. 
    * Also it set the title of the page. It has some guard checking at the very top if the user is
-   * logged in then redirect user to dashboard page. Also it handles some sort of custom validations
+   * logged in then redirect user to home page. Also it handles some sort of custom validations
    * specially for signup form step 2.
    * @method ngOnInit
    * @since Version 1.0.0
    * @returns Void
    */
   public ngOnInit() {
-    // check if the user is logged in or not. if logged in then redirect to dashboard
-    if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+    // check if the user is logged in or not. if logged in then redirect to home
+    if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Sign Up');
     // initialize the fombuilder for signup form step 1 

@@ -41,8 +41,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     private title: Title,
     private route: ActivatedRoute
   ) {
-    // if user is already logged in then redirect the user to dashboard
-    if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+    // if user is already logged in then redirect the user to home
+    if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // add `loginPage` class to reset password template body
     this.renderer.addClass(document.body, 'loginPage'); 
     this.subscription = this.errorService.error$.subscribe(
@@ -67,8 +67,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
    * @returns void
    */
   public ngOnInit() {
-    // check if the user is logged in or not. if logged in then redirect to dashboard
-    if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+    // check if the user is logged in or not. if logged in then redirect to home
+    if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Reset Password');
     this.loader = true; // show loader

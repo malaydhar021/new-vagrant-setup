@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit {
         private cookieService: CookieService,
         private errorService: ErrorsService
     ) {
-        // if user is already logged in then redirect the user to dashboard
-        if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']);}
+        // if user is already logged in then redirect the user to home
+        if (this.authService.isAuthenticated) { this.router.navigate(['/home']);}
         this.renderer.addClass(document.body, 'loginPage');
         this.subscription = this.errorService.error$.subscribe(
             errMsg => {
@@ -62,8 +62,8 @@ export class LoginComponent implements OnInit {
      * @returns Void
      */
     public ngOnInit() {
-        // check if the user is logged in or not. if logged in then redirect to dashboard
-        if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+        // check if the user is logged in or not. if logged in then redirect to home
+        if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
         // set the page title
         this.title.setTitle('Stickyreviews :: Login');
         // initialize formBuilder with client side validation
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
     /**
      * Function to do the user loging and handle api response
      * @since Version 1.0.0
-     * @todo Implemented redirected to addons route instead of statically routed to dashboard each and every time
+     * @todo Implemented redirected to addons route instead of statically routed to home each and every time
      * @returns void
      */
     public onSubmit() {
@@ -125,8 +125,8 @@ export class LoginComponent implements OnInit {
                         // store in session storage if remember is unchecked
                         sessionStorage.setItem('_sr', JSON.stringify(data));
                     }
-                    // redirectt to dashboard
-                    this.router.navigate(['/dashboard']);
+                    // redirectt to home
+                    this.router.navigate(['/home']);
                 } else {
                     this.error = response.message;
                 }

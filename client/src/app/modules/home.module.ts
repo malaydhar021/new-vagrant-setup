@@ -7,19 +7,20 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 /** custom imports */
-import { DashboardRoutingModule } from './routes/dashboard.route.module'; // dashobaord routing module
+import { HomeRoutingModule } from './routes/home.route.module'; // dashobaord routing module
 // importing components
-import { DashboardComponent } from '../components/dashboard/dashboard.component';
-import { BrandingComponent } from '../components/dashboard/branding/branding.component';
-import { LeftPanelComponent } from '../components/dashboard/shared/left-panel/left-panel.component';
-import { StickyReviewsComponent } from '../components/dashboard/sticky-reviews/sticky-reviews.component';
-import { CampaignComponent } from '../components/dashboard/campaign/campaign.component';
-import { ReviewLinkComponent } from '../components/dashboard/review-link/review-link.component';
-import { ExitPopupComponent } from '../components/dashboard/exit-popup/exit-popup.component';
-import { HeaderComponent } from '../components/dashboard/shared/header/header.component';
-import { PlansComponent } from '../components/dashboard/plans/plans.component';
-import { UpdatePaymentInfoComponent } from '../components/dashboard/update-payment-info/update-payment-info.component';
-import {ProfileComponent} from '../components/dashboard/shared/profile/profile.component';
+import { HomeComponent } from '../components/home/home.component';
+import { DashboardComponent } from '../components/home/dashboard/dashboard.component';
+import { BrandingComponent } from '../components/home/branding/branding.component';
+import { LeftPanelComponent } from '../components/home/shared/left-panel/left-panel.component';
+import { StickyReviewsComponent } from '../components/home/sticky-reviews/sticky-reviews.component';
+import { CampaignComponent } from '../components/home/campaign/campaign.component';
+import { ReviewLinkComponent } from '../components/home/review-link/review-link.component';
+import { ExitPopupComponent } from '../components/home/exit-popup/exit-popup.component';
+import { HeaderComponent } from '../components/home/shared/header/header.component';
+import { PlansComponent } from '../components/home/plans/plans.component';
+import { UpdatePaymentInfoComponent } from '../components/home/update-payment-info/update-payment-info.component';
+import {ProfileComponent} from '../components/home/shared/profile/profile.component';
 
 import { MessageModule} from '../components/shared/message/message.module'
 // importing services
@@ -41,6 +42,7 @@ import { MenuService } from '../services/menu.service';
  */
 @NgModule({
   declarations: [
+    HomeComponent,
     DashboardComponent,
     BrandingComponent,
     LeftPanelComponent,
@@ -57,7 +59,7 @@ import { MenuService } from '../services/menu.service';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    DashboardRoutingModule,
+    HomeRoutingModule,
     NgScrollbarModule,
     BarRatingModule,
     NgxSmartModalModule.forRoot(),
@@ -73,4 +75,4 @@ import { MenuService } from '../services/menu.service';
     MenuService
   ]
 })
-export class DashboardModule { }
+export class HomeModule { }

@@ -14,13 +14,14 @@ export class LeftPanelComponent implements OnInit, OnDestroy {
   
   constructor( private menuService: MenuService) {
     this.allRoute = {
-      '' : ['/dashboard'],
-      'branding' : ['/dashboard/branding'],
-      'campaign' : ['/dashboard/campaign'],
-      'sticky-reviews' : ['/dashboard/sticky-reviews'],
-      'review-link' : ['/dashboard/review-link'],
-      'exit-popup' : ['/dashboard/exit-popup'],
-      'update-payment-info' : ['/dashboard/update-payment-info'],
+      '' : ['/home'],
+      'dashboard' : ['/home/dashboard'],
+      'branding' : ['/home/branding'],
+      'campaign' : ['/home/campaign'],
+      'sticky-reviews' : ['/home/sticky-reviews'],
+      'review-link' : ['/home/review-link'],
+      'exit-popup' : ['/home/exit-popup'],
+      'update-payment-info' : ['/home/update-payment-info'],
     };
     
     this.subscription = this.menuService.activeMenu$.subscribe(

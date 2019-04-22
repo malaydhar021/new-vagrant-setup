@@ -36,7 +36,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private title: Title,
     private renderer: Renderer2
   ) {
-    if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+    if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     this.renderer.addClass(document.body, 'loginPage');
     this.subscription = this.errorService.error$.subscribe(
       errMsg => {
@@ -53,8 +53,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
    * @returns void
    */
   public ngOnInit() {
-    // check if the user is logged in or not. if logged in then redirect to dashboard
-    if (this.authService.isAuthenticated) { this.router.navigate(['/dashboard']); }
+    // check if the user is logged in or not. if logged in then redirect to home
+    if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Forgot Password');
     // initialize formBuilder with client side validation

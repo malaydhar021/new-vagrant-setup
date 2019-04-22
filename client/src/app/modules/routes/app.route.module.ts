@@ -4,10 +4,10 @@ import { LoginComponent } from '../../components/login/login.component';
 import { SignUpComponent } from '../../components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from '../../components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '../../components/forgot-password/reset-password/reset-password.component';
-import { DashboardModule } from '../dashboard.module';
+import { HomeModule } from '../home.module';
 import { NotFoundComponent } from '../../components/not-found/not-found.component';
 import { AuthGuard } from '../../services/guards/auth.guard.service';
-import { ReviewLinkTypeComponent } from '../../components/dashboard/review-link-type/review-link-type.component';
+import { ReviewLinkTypeComponent } from '../../components/home/review-link-type/review-link-type.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,7 +15,7 @@ const routes: Routes = [
     { path: 'sign-up', component: SignUpComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'reset-password/:token', component: ResetPasswordComponent },
-    { path: 'dashboard', canLoad: [AuthGuard], loadChildren: () => DashboardModule },
+    { path: 'home', canLoad: [AuthGuard], loadChildren: () => HomeModule },
     { path: 'not-found', component: NotFoundComponent },
     {path: 'review-link-type', component: ReviewLinkTypeComponent}  
 ];

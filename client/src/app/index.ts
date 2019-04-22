@@ -25,8 +25,7 @@ import { UserService } from './services/user.service';
 
 import { MessageModule } from './components/shared/message/message.module';
 import { LoaderModule } from './components/shared/loader/loader.module';
-import { MenuService } from './services/menu.service';
-import { ReviewLinkTypeComponent } from './components/dashboard/review-link-type/review-link-type.component';
+import { ReviewLinkTypeComponent } from './components/home/review-link-type/review-link-type.component';
 
 
 /**
