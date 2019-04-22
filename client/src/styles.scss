@@ -7568,6 +7568,18 @@ img {
   }
 }
 
+// Error msg for file upload
+.sr-form-field {
+  .inputFile {
+    &.error {
+      .error-msg {
+        right: -2px !important;
+        display: block !important;
+      }
+    }
+  }
+}
+
 // Video Popup
 .vidPop {
   padding: 22px 20px 0;
