@@ -32,7 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   menuSubscription: Subscription; 
   error: string = null;
   userPlanSubscription: Subscription;
-  userPlanDetails:any
+  userPlanDetails:any;
+  currentPlanName:string = ''
 
   
   constructor(
@@ -57,8 +58,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan=>{
+    this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
       this.userPlanDetails = userPlan;
+      userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias && (this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase())
     })
     
   }

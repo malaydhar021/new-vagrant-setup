@@ -21,7 +21,11 @@
               <li><strong>No Review Links</strong></li>
             </ul>
             <p class="price">$15</p>
-            <button type="button" class="planBtn">CURRENT </button>
+            <button
+              type="button"
+              class="planBtn"
+              [ngClass]="{'current': buttonText('Starter')== 'CURRENT' }" 
+              (click)="addUpdatePlan('lowest')">{{buttonText('Starter')}}</button>
           </div>
           <div class="planCell">
             <div class="planHead">
@@ -37,7 +41,11 @@
               <li><strong>5 Review Links</strong></li>
             </ul>
             <p class="price">$25</p>
-            <button type="button" class="planBtn">UPGRADE</button>
+            <button
+              type="button"
+              class="planBtn"
+              [ngClass]="{'current': buttonText('Premium')== 'CURRENT' }"
+              (click)="addUpdatePlan('modest')">{{buttonText('Premium')}}</button>
           </div>
           <div class="planCell">
             <div class="planHead">
@@ -53,7 +61,11 @@
               <li><strong>Unlimited Review Links</strong></li>
             </ul>
             <p class="price">$47</p>
-            <button type="button" class="planBtn">UPGRADE</button>
+            <button
+              type="button"
+              class="planBtn"
+              [ngClass]="{'current': buttonText('Agency') == 'CURRENT' }"
+              (click)="addUpdatePlan('highest')">{{buttonText('Agency')}}</button>
           </div>
         </div>
 
@@ -115,164 +127,46 @@
       </div>
   </div> -->
 </div>
-  
-  
-  
-  
-  <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
-    <div class="sr-modal-container">
-      <div class="sr-modal-header">
-        <h2>
-            Add Campaign
-        </h2>
-      </div>
-      <div class="sr-modal-body">
-        <div class="sr-form">
-          <div class="sr-form-content" #mainScreen [ngClass]="{'activeScroll': scrollTrigger}">
-            <ng-scrollbar [compact]="true" class="formScroll">
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small">
-                  <label>Campaign Name</label>
-                  <div class="sr-form-field">
-                    <input type="text" class="sr-form-ctrl">
-                    <div class="error-msg">
-                      Brand Name is not valid
-                    </div>
-                  </div>
-                </div>
-                <div class="sr-form-cell-small">
-                  <label>Domain Name</label>
-                  <div class="sr-form-field">
-                    <input type="text" class="sr-form-ctrl">
-                    <div class="error-msg">
-                      Brand Name is not valid
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small">
-                  <label>Choose Visual Style</label>
-                  <div class="sr-form-field">
-                    <select class="sr-form-ctrl">
-                      <option value=""></option>
-                    </select>
-                    <div class="error-msg">
-                      Brand Name is not valid
-                    </div>
-                  </div>
-                  <div class="style-preview">
-                    <div class="review-box">
-                      <div class="reviewer-img"></div>
-                      <div class="review-main">
-                        <div class="reviewer-name">Mark Williams</div>
-                        <div class="rewiew-msg">Just awesome</div>
-                        <div class="review-main-footer">
-                          <span class="rewiew-time">
-                            7 days ago
-                          </span>
-                          <img src="../../../../assets/images/icon_poweredby.png" alt="" class="poweredBy"> by 
-                          <span class="brand-name">Tier5LLC</span>
-                          <div class="reviewer-rating">
-                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                            <span><img src="../../../../assets/images/small_star_active.png" alt=""></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="closeReview"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="sr-form-cell-small">
-                  <label>Choose Visual Style</label>
-                  <div class="option-list">
-                    <ul>
-                      <li>
-                        <input type="checkbox" class="sr-checkbox"><span>Just awesome</span>
-                      </li>
-                      <li>
-                        <input type="checkbox" class="sr-checkbox"><span>Great Product to ...</span>
-                      </li>
-                      <li>
-                        <input type="checkbox" class="sr-checkbox"><span>Highly reccomme ...</span>
-                      </li>
-                      <li>
-                        <input type="checkbox" class="sr-checkbox"><span>Amazing software ...</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small">
-                  <label>Delay Before Start</label>
-                  <div class="sr-form-field">
-                    <input type="text" class="sr-form-ctrl">
-                    <div class="error-msg">
-                      Brand Name is not valid
-                    </div>
-                  </div>
-                </div>
-                <div class="sr-form-cell-small">
-                  <label>Stay Timing<span>(ex: 1000 for 1 second)</span></label>
-                  <div class="sr-form-field">
-                    <input type="text" class="sr-form-ctrl">
-                    <div class="error-msg">
-                      Brand Name is not valid
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell">
-                  <label>Delay between next appearance<span>(ex: 1000 for 1 second)</span></label>
-                  <div class="sr-form-field small">
-                    <input type="text" class="sr-form-ctrl">
-                    <div class="error-msg">
-                      Brand Name is not valid
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small">
-                  <label>Add Branding <input type="checkbox" class="tglBtn"></label>
-                  <div class="sr-form-field">
-                    <input type="text" class="sr-form-ctrl">
-                    <div class="error-msg">
-                      Brand Name is not valid
-                    </div>
-                  </div>
-                </div>
-                <div class="sr-form-cell-small">
-                  <label>Add Exit Pop-up <input type="checkbox" class="tglBtn"></label>
-                  <div class="sr-form-field">
-                    <input type="text" class="sr-form-ctrl">
-                    <div class="error-msg">
-                      Brand Name is not valid
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ng-scrollbar>
+<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+        Add Credit Card Info
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+      <div class="cardForm updateCardModal">
+        <h2>Credit Card Information</h2>
+        <div class="formRow">
+          <div class="formCol6">
+            <label>Credit Card Number</label>
+            <input type="text" class="formCtrl card" ngModel mask="0000 0000 0000 0000">
           </div>
-  
-          <div class="sr-form-row">
-            <div class="sr-form-cell">
-              <button class="button-submit">
-                <img src="../../../../assets/images/addIcon.png" alt=""> Save Campaign
-              </button>
-            </div>
+          <div class="formCol4">
+            <label>CVC Number</label>
+            <input type="password" class="formCtrl" ngModel mask="000">
           </div>
+        </div>
+        <div class="formRow">
+          <div class="formCol5">
+            <label>Expiry Month</label>
+            <select class="formCtrl">
+              <option [value]="month" *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]; let y = index">{{month}}</option>
+             
+            </select>
+          </div>
+          <div class="formCol5">
+            <label>Expiry Year</label>
+            <select class="formCtrl">
+              <option [value]="year" *ngFor="let year of years; let y = index">{{year}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="formRow">
+          <button type="button" class="UpdateCardBtn">Subscribe</button>
         </div>
       </div>
     </div>
-    <!-- <button (click)="myModal.close()">Close</button> -->
-  </ngx-smart-modal>
-  
-  
-  
-  
+  </div>
+  <!-- <button (click)="myModal.close()">Close</button> -->
+</ngx-smart-modal>

@@ -1,50 +1,38 @@
 
-<div class="container">
-  <app-left-panel></app-left-panel>
-
-  <div class="rightPanel">
-    <app-header></app-header>
-
-    <div class="mainBox">
-      <div class="updatePaymentInfo">
-        <h1>
-          <span class="cardIcon"><img src="../../../../assets/images/icon_update_card.png" alt=""></span>
-          Update Payment Info
-          <span>You have added following card information with your account</span>
-        </h1>
-        <div class="cards">
-          <ul>
-            <li>
-              <div class="cardNumber">
-                <span>CARD NUMBER</span>
-                <p>xxxx xxxx xxxx 1234</p>
-              </div>
-              <div class="expDate">
-                <span>EXPIRY (MM/YY)</span>
-                <p>02/22</p>
-              </div>
-            </li>
-            <li>
-              <div class="cardNumber">
-                <span>CARD NUMBER</span>
-                <p>xxxx xxxx xxxx 7890</p>
-              </div>
-              <div class="expDate">
-                <span>EXPIRY (MM/YY)</span>
-                <p>05/21</p>
-              </div>
-            </li>
-          </ul>
-          <button type="button" class="UpdateCardBtn" (click)="ngxSmartModalService.getModal('modal1').open()">Update My Card Info</button>
-        </div>
-      </div>
+<div class="mainBox">
+  <div class="updatePaymentInfo">
+    <h1>
+      <span class="cardIcon"><img src="../../../../assets/images/icon_update_card.png" alt=""></span>
+      Update Payment Info
+      <span>You have added following card information with your account</span>
+    </h1>
+    <div class="cards">
+      <ul>
+        <li>
+          <div class="cardNumber">
+            <span>CARD NUMBER</span>
+            <p>xxxx xxxx xxxx 1234</p>
+          </div>
+          <div class="expDate">
+            <span>EXPIRY (MM/YY)</span>
+            <p>02/22</p>
+          </div>
+        </li>
+        <li>
+          <div class="cardNumber">
+            <span>CARD NUMBER</span>
+            <p>xxxx xxxx xxxx 7890</p>
+          </div>
+          <div class="expDate">
+            <span>EXPIRY (MM/YY)</span>
+            <p>05/21</p>
+          </div>
+        </li>
+      </ul>
+      <button type="button" class="UpdateCardBtn" (click)="ngxSmartModalService.getModal('modal1').open()">Update My Card Info</button>
     </div>
   </div>
 </div>
-
-
-
-
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
   <div class="sr-modal-container">
     <div class="sr-modal-header">

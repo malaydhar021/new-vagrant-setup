@@ -59,4 +59,27 @@ export class SubscriptionService {
     
     return this.httpClient.get(SubscriptionApiEndpoints.subscription);
   }
+
+  /**
+   * addSubscription method will make an api request add a user subscription
+   *  @method addSubscription
+   * @since 1.0.0
+   * @returns Observable<Object>
+   */
+  addSubscription(data: any){
+    
+    return this.httpClient.post(SubscriptionApiEndpoints.subscription, data);
+  }
+
+  /**
+   * updateSubscription method will make an api request add a user subscription
+   *  @method addSubscription
+   * @since 1.0.0
+   * @returns Observable<Object>
+   */
+  updateSubscription(data: any){
+    
+    return this.httpClient.put(SubscriptionApiEndpoints.subscription, data);
+  }
+
 }
