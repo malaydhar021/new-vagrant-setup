@@ -73,7 +73,7 @@ class BrandsController extends Controller
             'status' => true,
             'message' => 'Brand has created successfully.',
             'data' => new BrandResource($brand),
-        ], 201);
+        ]);
     }
 
     /**
@@ -112,7 +112,7 @@ class BrandsController extends Controller
             'status' => true,
             'message' => 'Brand details has updated successfully.',
             'data' => new BrandResource($brand),
-        ], 201);
+        ]);
     }
 
     /**

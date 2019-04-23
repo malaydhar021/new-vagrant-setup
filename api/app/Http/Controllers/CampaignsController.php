@@ -45,7 +45,7 @@ class CampaignsController extends Controller
             'status' => true,
             'message' => "Campaign styles fetched successfully.",
             'data' => CampaignStyleResource::collection(CampaignStyle::all()),
-        ], 200);
+        ]);
     }
 
     /**
@@ -63,12 +63,12 @@ class CampaignsController extends Controller
                 'status' => true,
                 'message' => "${noOfCampaigns} campaign(s) have found.",
                 'data' => CampaignsResource::collection($campaigns),
-            ], 200);
+            ]);
         } else {
             return response()->json([
                 'status' => true,
                 'message' => 'Sorry, no campaigns have found!'
-            ], 200);
+            ]);
         }
     }
 
@@ -105,7 +105,7 @@ class CampaignsController extends Controller
             'status' => true,
             'message' => 'Campaign has created successfully.',
             'data' => new CampaignsResource($campaign),
-        ], 201);
+        ]);
     }
 
     /**
@@ -122,7 +122,7 @@ class CampaignsController extends Controller
             'status' => true,
             'message' => 'Campaign details found successfully.',
             'data' => new CampaignsResource($campaign),
-        ], 200);
+        ]);
     }
 
     /**
@@ -165,7 +165,7 @@ class CampaignsController extends Controller
             'status' => true,
             'message' => 'Campaign details has updated successfully.',
             'data' => new CampaignsResource($campaign),
-        ], 201);
+        ]);
     }
 
     /**
@@ -182,7 +182,7 @@ class CampaignsController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Campaign deleted successfully.',
-        ], 200);
+        ]);
     }
 
     /**
@@ -203,7 +203,7 @@ class CampaignsController extends Controller
             'status' => true,
             'message' => 'Successfully ' . ($campaign->is_active ? 'dectivated' : 'activated' ) . ' the campaign.',
             'data' => new CampaignsResource($campaign),
-        ], 201);
+        ]);
     }
 
     /**

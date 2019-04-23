@@ -110,7 +110,7 @@ class ReviewLinksController extends Controller
             'status' => true,
             'message' => "Review link has created successfully.",
             'data' => new ReviewLinkResource($reviewLink),
-        ], 201);
+        ]);
     }
 
     /**
@@ -164,7 +164,7 @@ class ReviewLinksController extends Controller
             'status' => true,
             'message' => "Review link details has updated successfully.",
             'data' => new ReviewLinkResource($reviewLink),
-        ], 201);
+        ]);
     }
 
     /**

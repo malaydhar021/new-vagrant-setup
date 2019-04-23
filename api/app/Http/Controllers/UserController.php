@@ -47,7 +47,7 @@ class UserController extends Controller
             'data' => [
                 'user' => new UserResource($user),
             ],
-        ], 201);
+        ]);
     }
 
     /**
@@ -71,7 +71,7 @@ class UserController extends Controller
                 'data' => [
                     'user' => new UserResource($user),
                 ],
-            ], 201);
+            ]);
         } else {
             return response()->json([
                 'status' => false,

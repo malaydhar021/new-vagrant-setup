@@ -111,7 +111,7 @@ class StickyReviewsController extends Controller
             'status' => true,
             'message' => "Sticky review has created successfully.",
             'data' => new StickyReviewResource($stickyReview),
-        ], 201);
+        ]);
     }
 
     /**
@@ -166,7 +166,7 @@ class StickyReviewsController extends Controller
         }
 
         if ($request->has('image')) {
-            $stickyReview->image = $request->file('image');            
+            $stickyReview->image = $request->file('image');
         }
  
         if ($request->has('reviewd_at') && strlen(trim($request->input('reviewd_at')))) {
@@ -186,7 +186,7 @@ class StickyReviewsController extends Controller
             'status' => true,
             'message' => "Sticky Review details has updated successfully.",
             'data' => new StickyReviewResource($stickyReview),
-        ], 201);
+        ]);
     }
 
     /**

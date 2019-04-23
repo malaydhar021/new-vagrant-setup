@@ -148,7 +148,7 @@ class ExitPopupsController extends Controller
             'status' => true,
             'message' => "Exit popup has created successfully.",
             'data' => new ExitPopupResource($exitPopup),
-        ], 201);
+        ]);
     }
 
     /**
@@ -241,7 +241,7 @@ class ExitPopupsController extends Controller
             'status' => true,
             'message' => "Exit popup has Updated successfully.",
             'data' => new ExitPopupResource($exitPopup),
-        ], 201);
+        ]);
     }
 
     /**

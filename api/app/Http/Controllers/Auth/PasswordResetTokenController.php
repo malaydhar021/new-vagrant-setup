@@ -27,7 +27,7 @@ class PasswordResetTokenController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => "We can't find an user with that e-mail address.",
-            ], 200);
+            ]);
         }
 
         $passwordReset = PasswordReset::updateOrCreate([

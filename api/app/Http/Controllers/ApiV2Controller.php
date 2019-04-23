@@ -51,7 +51,7 @@ class ApiV2Controller extends Controller
                             'status' => false,
                             'message' => 'This email already registered with us.',
                         ],
-                    ], 200);
+                    ]);
                 } else {
                     $userCreate = User::create([
                         'name'              => $request->name,
@@ -69,7 +69,7 @@ class ApiV2Controller extends Controller
                                 'message' => 'Successfully created the user! By default password has been set to 123456, '
                                     . 'do change it after you login',
                             ],
-                        ], 200);
+                        ]);
                     }
                 }
             } catch (\Exception $e) {
@@ -82,7 +82,7 @@ class ApiV2Controller extends Controller
                             'message' => array_key_exists(2, $e->errorInfo) ? $e->errorInfo[2] : $e->getMessage(),
                         ],
                     ],
-                ], 200);
+                ]);
             }
         } else {
             return response()->json([
@@ -91,7 +91,7 @@ class ApiV2Controller extends Controller
                     'status' => false,
                     'message' => 'Missing expected param!'
                 ]
-            ], 200);
+            ]);
         }
     }
 
@@ -113,7 +113,7 @@ class ApiV2Controller extends Controller
                                 'status' => true,
                                 'message' => 'Successfully deleted the user!'
                             ],
-                        ], 200);
+                        ]);
                     } else {
                         return response()->json([
                             'data' => [
@@ -121,7 +121,7 @@ class ApiV2Controller extends Controller
                                 'status' => false,
                                 'message' => 'Something went wrong while deleting the record!'
                             ],
-                        ], 200); // for zapier its 200 the error code. Dont change in future then it will break the system
+                        ]); // for zapier its 200 the error code. Dont change in future then it will break the system
                     }
                 } else {
                     return response()->json([
@@ -130,7 +130,7 @@ class ApiV2Controller extends Controller
                             'status' => false,
                             'message' => 'No Records found with the email '. $request->email
                         ],
-                    ], 200);
+                    ]);
                 }
             } catch (\Exception $e) {
                 return response()->json([
@@ -142,7 +142,7 @@ class ApiV2Controller extends Controller
                             'message' => $e->getMessage(),
                         ],
                     ]
-                ], 200);
+                ]);
             }
         } else {
             return response()->json([
@@ -151,7 +151,7 @@ class ApiV2Controller extends Controller
                     'status' => false,
                     'message' => 'Missing expected param!',
                 ]
-            ], 200);
+            ]);
         }
     }
 
@@ -172,7 +172,7 @@ class ApiV2Controller extends Controller
                             'status' => true,
                             'message' => 'Successfully updated the user!',
                         ]
-                    ], 200);
+                    ]);
                 } else {
                     return response()->json([
                         'data' => [
@@ -180,7 +180,7 @@ class ApiV2Controller extends Controller
                             'status' => false,
                             'message' => 'Something went wrong while updating the record!',
                         ],
-                    ], 200);
+                    ]);
                 }
             } catch (\Exception $e) {
                 return response()->json([
@@ -192,7 +192,7 @@ class ApiV2Controller extends Controller
                             'message' => $e->getMessage(),
                         ],
                     ],
-                ], 200);
+                ]);
             }
         } else {
             return response()->json([
@@ -201,7 +201,7 @@ class ApiV2Controller extends Controller
                     'status' => false,
                     'message' => 'Missing expected param!',
                 ]
-            ], 200);
+            ]);
         }
     }
 
@@ -325,7 +325,7 @@ class ApiV2Controller extends Controller
                     return response()->json([
                         'status' => true,
                         'message' => $findCampaign
-                    ], 200);
+                    ]);
                 } else {
                     return response()->json([
                         'status' => true,
