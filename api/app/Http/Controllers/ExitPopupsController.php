@@ -129,7 +129,14 @@ class ExitPopupsController extends Controller
         } catch (Exception $exception) {
             DB::rollBack();
 
-            report($exception);
+            return response()->json([
+                'status' => true,
+                'message' => "Whoops! looks like something went wrong. Please try again later.",
+                'errors' => [
+                    'error_message' => $exception->getMessage(),
+                    'error_trace' => config('app.debug') ? $exception->getTrace() : null,
+                ],
+            ], 500);
         } finally {
             DB::commit();
         }
@@ -168,7 +175,71 @@ class ExitPopupsController extends Controller
      */
     public function update(ExitPopUpRequest $request, $id)
     {
-        //
+        $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
+        $exitPopup->name = $request->input('name');
+        $exitPopup->has_campaign = $request->input('has_campaign');
+        $exitPopup->campaign_id = Hashids::decode($request->input('campaign_id'));
+        $exitPopup->has_sticky_reviews = $request->input('has_sticky_reviews');
+        $exitPopup->has_email_field = $request->input('has_email_field');
+        $exitPopup->header_text = $request->input('header_text');
+        $exitPopup->header_text_color = $request->input('header_text_color');
+        $exitPopup->header_background_color = $request->input('header_background_color');
+        $exitPopup->paragraph_text = $request->input('paragraph_text');
+        $exitPopup->paragraph_text_color = $request->input('paragraph_text_color');
+        $exitPopup->body_background_color = $request->input('body_background_color');
+        $exitPopup->popup_backdrop_color = $request->input('popup_backdrop_color');
+        $exitPopup->button_text = $request->input('button_text');
+        $exitPopup->button_url = $request->input('button_url');
+        $exitPopup->button_text_color = $request->input('button_text_color');
+        $exitPopup->button_background_color = $request->input('button_background_color');
+        $exitPopup->button_size = 'S'; // @deprecated on v2, from now on button size will be always small i.e. 'S'
+        $exitPopup->style_id = Hashids::decode($request->input('style_id'));
+        $exitPopup->created_by = Auth::user()->id;
+
+        try {
+            DB::beginTransaction();
+
+            $exitPopup->save();
+
+            if ($exitPopup->has_campaign) {
+                $stickyReviews = $request->input('sticky_reviews');
+                $deocdedStickyReviews = [];
+
+                array_walk($stickyReviews, function (&$value) use (&$deocdedStickyReviews) {
+                    $deocdedStickyReviews[] = Hashids::decode($value);
+                });
+
+                $exitPopup->stickyReviews()->sync($deocdedStickyReviews);
+            }
+
+            if ($exitPopup->has_sticky_reviews) {
+                Campaign::where('id', $exitPopup->campaign_id)->update([
+                    'exit_pop_up' => '1',
+                    'exit_pop_up_id' => $exitPopup->id
+                ]);
+            }
+        } catch (Exception $exception) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => true,
+                'message' => "Whoops! looks like something went wrong. Please try again later.",
+                'errors' => [
+                    'error_message' => $exception->getMessage(),
+                    'error_trace' => config('app.debug') ? $exception->getTrace() : null,
+                ],
+            ], 500);
+        } finally {
+            DB::commit();
+        }
+
+        $exitPopup->load('style', 'campaign', 'stickyReviews', 'user');
+
+        return response()->json([
+            'status' => true,
+            'message' => "Exit popup has Updated successfully.",
+            'data' => new ExitPopupResource($exitPopup),
+        ], 201);
     }
 
     /**
@@ -189,8 +260,23 @@ class ExitPopupsController extends Controller
          *
          * @see https://laravel.com/docs/5.7/eloquent#observers
          */
-        $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
-        $exitPopup->delete();
-        return json;
+        try{
+            $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
+            $exitPopup->delete();
+            $exitPopup->stickyReviews()->detatch();
+            return response()->json([
+                'status' => true,
+                'message' => 'Exit popup deleted successfully.',
+            ], 201);
+        } catch(Exception $exception) {
+            return response()->json([
+                'status' => true,
+                'message' => "Whoops! looks like something went wrong. Please try again later...",
+                'errors' => [
+                    'error_message' => $exception->getMessage(),
+                    'error_trace' => config('app.debug') ? $exception->getTrace() : null,
+                ],
+            ], 500);
+        }
     }
 }
