@@ -127,7 +127,7 @@ export class SignupApiEndpoints {
  * BrandingApiEndpoints helper class is holding all static methods for branding api endpoints based on the environment
  * @class BrandingApiEndpoints
  * @author Tier5 LLC `<work@tier5.us>`
- * @version 1.0.0
+ * @version 1.0.1
  * @license Proprietary
  */
 export class BrandingApiEndpoints {
@@ -146,6 +146,7 @@ export class BrandingApiEndpoints {
    * ### *DEPRECATED* ###
    * @method addBrand
    * @since Version 1.0.0
+   * @deprecated In version 1.0.1
    * @returns String 
    */
   public static get addBrand(): string {
@@ -157,6 +158,7 @@ export class BrandingApiEndpoints {
    * ### *DEPRECATED* ###
    * @method updateBrand
    * @since Version 1.0.0
+   * @deprecated In version 1.0.1
    * @returns String 
    */
   public static get updateBrand() : string {
@@ -168,6 +170,7 @@ export class BrandingApiEndpoints {
    * ### *DEPRECATED* ###
    * @method deleteBrand
    * @since Version 1.0.0
+   * @deprecated In version 1.0.1
    * @returns String 
    */
   public static get deleteBrand() : string {
@@ -275,11 +278,12 @@ export class StickyReviewsApiEndpoints {
    * @returns String
    */
   public static get stickyReviews() : string {
-    return apiBaseUrl.concat('/get-all-sticky-reviews');
+    return apiBaseUrl.concat('/sticky-reviews');
   }
 
   /**
-   * Method to generate api endpoint to add a sticky review
+   * Method to generate api endpoint to add a sticky review. This has been deprecated by api service provider
+   * ### *DEPRECATED* ###
    * @method addStickyReview
    * @since Version 1.0.0
    * @returns String
@@ -289,7 +293,8 @@ export class StickyReviewsApiEndpoints {
   }
 
   /**
-   * Method to generate api endpoint to update a sticky review
+   * Method to generate api endpoint to update a sticky review. This has been deprecated by api service provider
+   * ### *DEPRECATED* ###
    * @method updateStickyReview
    * @since Version 1.0.0
    * @returns String
@@ -299,7 +304,8 @@ export class StickyReviewsApiEndpoints {
   }
 
   /**
-   * Method to generate api endpoint to delete a sticky review
+   * Method to generate api endpoint to delete a sticky review. This has been deprecated by api service provider
+   * ### *DEPRECATED* ###
    * @method deleteStickyReview
    * @since Version 1.0.0
    * @returns String
@@ -309,7 +315,8 @@ export class StickyReviewsApiEndpoints {
   }
 
   /**
-   * Method to generate api endpoint to assign a campaign to a sticky review
+   * Method to generate api endpoint to assign a campaign to a sticky review. This has been deprecated by api service provider
+   * ### *DEPRECATED* ###
    * @method assignCampaignToStickyReview
    * @since Version 1.0.0
    * @returns String

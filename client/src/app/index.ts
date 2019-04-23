@@ -25,35 +25,31 @@ import { SignupService }                        from './services/signup.service'
 import { SubscriptionService }                  from './services/subscription.service';
 import { UserService }                          from './services/user.service';
 
-import { MessageModule }                        from './components/shared/message/message.module';
-import { MenuService }                          from './services/menu.service';
-import { ReviewLinkTypeComponent }              from './components/home/review-link-type/review-link-type.component';
-
+import { MessageModule } from './components/shared/message/message.module';
+import { ReviewLinkTypeComponent } from './components/home/review-link-type/review-link-type.component';
+import { MediaPlayerModule } from './modules/media-player.module';
+import { MediaPlayerService } from './services/media-player.service';
 
 /**
  * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
- * In this componentt only the ```<router-outlet></router-outlet>``` angular routing hook whchi is
+ * In this component only the ```<router-outlet></router-outlet>``` angular routing hook whchi is
  * responsible for displaying html content based on the url route, is persent. It is recommemnded
- *
- * @package AppComponent
+ * @class AppComponent
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
 
 @Component({
-    selector: 'app-root',
-    template: `
-    <app-loader></app-loader>
-    <router-outlet></router-outlet>
-    `
+  selector: 'app-root',
+  template: `<app-loader></app-loader><router-outlet></router-outlet>`
 })
-export class AppComponent {}
+export class AppComponent { }
 
 /**
  * This module is entry point to this application. AppComponent is the first component when the application
- * is getting bootstraped. This module will only load all the public pages components and services. Dashboard module
- * (under modules directory) will be loaded lazyly once the user is authenticated.
+ * is getting bootstrapped. This module will only load all the public pages components and services. Dashboard module
+ * (under modules directory) will be loaded lazily once the user is authenticated.
  *
  * @package AppModule
  * @version 1.0.0
@@ -63,38 +59,40 @@ export class AppComponent {}
 
 @NgModule({
   declarations: [
-      AppComponent,
-      LoginComponent,
-      SignUpComponent,
-      ForgotPasswordComponent,
-      ResetPasswordComponent,
-      NotFoundComponent,
-      ReviewLinkTypeComponent
+    AppComponent,
+    LoginComponent,
+    SignUpComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    NotFoundComponent,
+    ReviewLinkTypeComponent
   ],
   imports: [
-      BrowserModule,
-      AppRoutingModule,
-      ReactiveFormsModule,
-      FormsModule,
-      HttpClientModule,
-      NgxMaskModule.forRoot(),
-      BrowserAnimationsModule,
-      MessageModule,
-      LoaderModule
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    NgxMaskModule.forRoot(),
+    BrowserAnimationsModule,
+    MessageModule,
+    LoaderModule,
+    MediaPlayerModule,
   ],
   providers: [
-      Title,
-      AuthService,
-      AuthGuard,
-      GlobalService,
-      CookieService,
-      ErrorsService,
-      SignupService,
-      ReviewLinkService,
-      LoaderService,
-      UserService,
-      SubscriptionService,
-      { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+    Title,
+    AuthService,
+    AuthGuard,
+    GlobalService,
+    CookieService,
+    ErrorsService,
+    SignupService,
+    ReviewLinkService,
+    LoaderService,
+    UserService,
+    SubscriptionService,
+    MediaPlayerService,
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

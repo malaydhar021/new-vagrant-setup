@@ -165,7 +165,9 @@ class StickyReviewsController extends Controller
                     $request->input('description') : $stickyReview->description;
         }
 
-        $stickyReview->image = $request->has('image') ? $request->file('image') : $stickyReview->image;
+        if ($request->has('image')) {
+            $stickyReview->image = $request->file('image');            
+        }
  
         if ($request->has('reviewd_at') && strlen(trim($request->input('reviewd_at')))) {
             $datetime = Carbon::createFromFormat('D M d Y H:i:s e+', $request->input('reviewd_at'));

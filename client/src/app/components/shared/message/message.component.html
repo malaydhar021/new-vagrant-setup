@@ -4,19 +4,24 @@
   <!-- Validation error messages for branding -->
   <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.name !== undefined">{{ validationErrorMessages.name }}</div>
   <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.url !== undefined">{{ validationErrorMessages.url }}</div>
+  <!-- Validation for error messages for sticky reviews -->
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.review_video !== undefined">{{ validationErrorMessages.review_video }}</div>
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.review_audio !== undefined">{{ validationErrorMessages.review_audio }}</div>
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.review_text !== undefined">{{ validationErrorMessages.review_text }}</div>
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.image !== undefined">{{ validationErrorMessages.image }}</div>
 </span>
 <!-- END -->
 
 
 <!-- SUCCESS MESSAGE -->
-<span *ngIf= "successMessage">
+<span *ngIf="successMessage">
   <div class="log-stat_msg log_Success">{{ successMessage }}</div>
 </span>
 <!-- END -->
 
 
 <!-- WARNING MESSAGE -->
-<span *ngIf= "warningMessage">
+<span *ngIf="warningMessage">
   <div class="log-stat_msg log_Warning">{{ warningMessage }}</div>
 </span>
 <!-- END -->

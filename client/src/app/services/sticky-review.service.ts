@@ -25,13 +25,10 @@ export class StickyReviewService {
    * Method to make an api call to get all sticky reviews
    * @method getAllStickyReviews
    * @since Version 1.0.0
-   * @param reviewType Review type to filter reviews based on this param
    * @returns Observable<Object>
    */
-  public getAllStickyReviews(reviewType?: number) {
-    // check if review type is provided then append type to as last url segment
-    const url = (reviewType !== undefined) ? StickyReviewsApiEndpoints.stickyReviews.concat('/' + reviewType) : StickyReviewsApiEndpoints.stickyReviews;
-    return this.httpClient.get(url);
+  public getAllStickyReviews() {
+    return this.httpClient.get(StickyReviewsApiEndpoints.stickyReviews);
   }
 
   /**
@@ -42,7 +39,7 @@ export class StickyReviewService {
    * @returns Observable<Object>
    */
   public addStickyReview(data: FormData) {
-    return this.httpClient.post(StickyReviewsApiEndpoints.addStickyReview, data);
+    return this.httpClient.post(StickyReviewsApiEndpoints.stickyReviews, data);
   }
 
   /**
@@ -52,8 +49,8 @@ export class StickyReviewService {
    * @param data FormData Data to send over http request
    * @returns Observable<Object>
    */
-  public updateStickyReview(data: FormData) {
-    return this.httpClient.post(StickyReviewsApiEndpoints.updateStickyReview, data);
+  public updateStickyReview(data: FormData, id: number) {
+    return this.httpClient.post(StickyReviewsApiEndpoints.stickyReviews.concat('/' + id), data);
   }
 
   /**
@@ -64,7 +61,7 @@ export class StickyReviewService {
    * @returns Observable<Object>
    */
   public deleteStickyReview(data: StickyReviewModel) {
-    return this.httpClient.post(StickyReviewsApiEndpoints.deleteStickyReview, data);
+    return this.httpClient.post(StickyReviewsApiEndpoints.stickyReviews, data);
   }
 
 }

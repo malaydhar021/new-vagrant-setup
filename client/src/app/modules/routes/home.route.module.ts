@@ -12,6 +12,7 @@ import { ProfileComponent } from '../../components/home/shared/profile/profile.c
 import { DashboardComponent } from '../../components/home/dashboard/dashboard.component';
 const routes: Routes = [
   {path: '', component: HomeComponent, children:[
+    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
     {path: 'dashboard', component: DashboardComponent},
     {path: 'profile', component: ProfileComponent},
     {path: 'sticky-reviews', component: StickyReviewsComponent},

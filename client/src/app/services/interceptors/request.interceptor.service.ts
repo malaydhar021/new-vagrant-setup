@@ -82,10 +82,6 @@ export class RequestInterceptor implements HttpInterceptor {
       case 403: // Forbidden
         // update the error messaged based on message object in http response
         const errorMessage403 = this.updateErrorMessage(error);
-        // logging out the user
-        this.authService.removeStorageData();
-        // redirect user to loging page
-        this.router.navigate(['/login']);
         // return observable as string
         return of(errorMessage403);
 
@@ -113,6 +109,12 @@ export class RequestInterceptor implements HttpInterceptor {
         // return observable as string
         return of(errorMessage405);
 
+      case 413: // Requset entity is too long
+        // update the error messaged based on message object in http response
+        const errorMessage413 = this.updateErrorMessage(error);
+        // return observable as string
+        return of(errorMessage413);
+
       case 422: // Unprocessable Entity
         // update the error messaged based on message object in http response
         const errorMessage422 = this.updateErrorMessage(error);
@@ -122,6 +124,7 @@ export class RequestInterceptor implements HttpInterceptor {
       case 500: // Internal Server Error
         // update the error messaged based on message object in http response
         const errorMessage500 = this.updateErrorMessage(error);
+        Log.debug(error.error.message, "500 internal server error");
         // return observable as string
         return of(errorMessage500);
 
@@ -171,11 +174,11 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Function to update error message for 404 http error response using errorService.
+   * Function to update validation error messages for 400 http error response using errorService.
    * @method updateErrorMessage400
    * @since version 1.1.0
    * @param error HttpErrorResponse
-   * @returns Array
+   * @returns Void
    */
   private updateErrorMessage400(error: HttpErrorResponse) {
     if (error instanceof HttpErrorResponse && error.error.hasOwnProperty('errors')) {

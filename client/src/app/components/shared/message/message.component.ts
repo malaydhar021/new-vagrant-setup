@@ -23,6 +23,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   errorMessage: string = null; // Error Message for the MessageComponent
   validationErrorMessages: string = null; // Error Message for the MessageComponent 
   subscription: Subscription;  // Subscription Variable to create server side error message subscriptions 
+  validationSubscription: Subscription;  // Subscription Variable to create server side validation error message subscriptions 
 
   // This property is bound using its original name.
   @Input() successMessage?: string = '';
@@ -46,14 +47,14 @@ export class MessageComponent implements OnInit, OnDestroy {
         // Assign the error message to the error message template string variable
         this.errorMessage = errMsg;
         this.loaderService.disableLoader();
-        setTimeout(() => {
-          this.errorMessage = ''
-        }, 3000)
+        // setTimeout(() => {
+        //   this.errorMessage = ''
+        // }, 3000)
       }
     );
 
     // update validationErrors if anything has been caught by our error interceptor
-    this.subscription = this.errorService.validationErrors$.subscribe(
+    this.validationSubscription = this.errorService.validationErrors$.subscribe(
       validationErrMsg => {
         Log.info(validationErrMsg, 'validation errors');
         this.loaderService.disableLoader();
@@ -72,5 +73,6 @@ export class MessageComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.validationSubscription.unsubscribe();
   }
 }

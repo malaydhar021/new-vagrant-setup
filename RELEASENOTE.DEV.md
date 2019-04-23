@@ -16,6 +16,12 @@
 
 ## Sticky Review
 
+## V2.0.0
+
+1. Added review type with audio and video upload feature
+2. Implemented client side validation for audio/video files
+3. Implemented preview for audio, video and image in add/edit review modal
+
 ## V1.0.0
 
 1. Implemented CRUD operation of sticky review feature

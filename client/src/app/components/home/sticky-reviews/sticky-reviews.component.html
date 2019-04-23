@@ -10,8 +10,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <div *ngIf="successMessage !== null">{{ successMessage }}</div>
-    <div *ngIf="(isDeleting && errorMessage !== null)">{{ errorMessage }}</div>
+    <message [successMessage]="successMessage"></message>
     <div class="table table-col-4">
       <ul class="thead">
         <li>REVIEWS</li>
@@ -29,7 +28,7 @@
                     <img src="{{ review.image_url }}" alt="" class="sticky-review-image">
                   </div>
                   <div class="userReview">
-                    <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null">{{ review.tags }}</span>
+                    <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null && review.tags !== ''">{{ review.tags }}</span>
                     </h2>
                     <p>
                       {{ review.description }}
@@ -63,9 +62,7 @@
         </ng-template>
       </div>
     </div>
-
   </div>
-
 </div>
 
 <!-- Modal form for add / edit a sticky review -->
@@ -78,7 +75,7 @@
     </div>
     <div class="sr-modal-body">
       <div class="sr-form">
-        <div *ngIf="errorMessage !== null">{{ errorMessage }}</div>
+        <message></message>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="sr-form-content">
             <div class="sr-form-row">
@@ -130,111 +127,122 @@
 
                 <label style="margin-top: 20px;">Select Review Type:</label>
                 <div class="sr-form-field">
-                  <select class="sr-form-ctrl">
-                    <option value="textual">Textual</option>
-                    <option value="video">Video</option>
-                    <option value="audio">Audio</option>
+                  <select class="sr-form-ctrl" formControlName="srType">
+                    <option [value]="type.id" *ngFor="let type of reviewTypes">{{ type.name }}</option>
                   </select>
                 </div>
-
               </div>
             </div>
+
+            <!-- for audio  player-->
+            <app-media-player [audioPlayer]="true"></app-media-player>
+            <!-- for video player-->
+            <app-media-player [videoPlayer]="true"></app-media-player>
+
             <div class="sr-form-row">
               <div class="option_review">
-                <div class="sr-form-cell reviewopt opt_Text active">
+                <!-- Textual review  -->
+                <div class="sr-form-cell reviewopt opt_Text active" *ngIf="selectedReivewType == 1">
                   <label>Description</label>
                   <div class="sr-form-field">
                     <textarea class="sr-form-ctrl description_textarea"
-                      [ngClass]="{error: isSubmitted && getFormControls.srComment.errors}"
-                      formControlName="srComment"></textarea>
+                      [ngClass]="{error: isSubmitted && getFormControls.sr.errors}" formControlName="sr"></textarea>
                     <div class="error-msg" *ngIf="(
                           isSubmitted 
-                          && getFormControls.srComment.errors !== null 
-                          && getFormControls.srComment.errors.required)">
+                          && getFormControls.sr.errors !== null 
+                          && getFormControls.sr.errors.required)">
                       Review is required
                     </div>
                     <div class="error-msg" *ngIf="(
                           isSubmitted 
-                          && getFormControls.srComment.errors !== null 
-                          && getFormControls.srComment.errors.maxlength)">
-                      Review should be maximum 80 characters
+                          && getFormControls.sr.errors !== null 
+                          && getFormControls.sr.errors.maxlength)">
+                      Review should be maximum {{ allowedMaxTextReviewChars }} characters
                     </div>
                   </div>
                 </div>
-                <div class="sr-form-cell reviewopt opt_Video">
-                  <label>Upload a video file</label>
-                  <div class="sr-form-field">
-                    <div class="sr-form-ctrl inputFile">
-                      <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
-                        [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
-                      <div class="choseFileArea">
-                        <div class="fileImg">
-                          <img src="../../../../assets/images/icon_upload_video.png" alt="">
-                        </div>
-                        <p>
-                          <span>{{choseFileCtrl}}</span>{{fileName}}
-                        </p>
-                      </div>
-                      <!-- <div class="figureUpld"></div> -->
-                    </div>
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.srImage.errors !== null 
-                      && getFormControls.srImage.errors.required)">
-                    Video is required
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.srImage.errors !== null 
-                      && getFormControls.srImage.errors.invalidFileType)">
-                    Invalid file type. File should be an video
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.srImage.errors !== null 
-                      && getFormControls.srImage.errors.invalidFileSize)">
-                    Invalid video size
-                  </div>
-                </div>
-                <div class="sr-form-cell reviewopt opt_Audio">
+                <!-- End of textual review -->
+
+                <!-- Audio review type file upload -->
+                <div class="sr-form-cell reviewopt opt_Audio active" *ngIf="selectedReivewType == 2">
                   <label>Upload an audio file</label>
                   <div class="sr-form-field">
                     <div class="sr-form-ctrl inputFile">
-                      <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
-                        [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                      <input type="file" (change)="onChangeReviewFile($event)"
+                        [ngClass]="{error: isSubmitted && getFormControls.sr.errors}">
+                      <input type="hidden" name="hiddenFileName" formControlName="sr">
                       <div class="choseFileArea">
                         <div class="fileImg">
                           <img src="../../../../assets/images/icon_upload_audio.png" alt="">
                         </div>
                         <p>
-                          <span>{{choseFileCtrl}}</span>{{fileName}}
+                          <span>{{reviewChoseFileCtrl}}</span>{{reviewFileName}}
                         </p>
                       </div>
-                      <!-- <div class="figureUpld"></div> -->
+                    </div>
+                  </div>
+                  <div class="error-msg" *ngIf="(
+                        isSubmitted 
+                        && getFormControls.sr.errors !== null 
+                        && getFormControls.sr.errors.required)">
+                    Audio file is required
+                  </div>
+                  <div class="error-msg" *ngIf="(
+                        isSubmitted 
+                        && getFormControls.sr.errors !== null 
+                        && getFormControls.sr.errors.invalidFileType)">
+                    Invalid file type. File should be an audio file
+                  </div>
+                  <div class="error-msg" *ngIf="(
+                        isSubmitted 
+                        && getFormControls.sr.errors !== null 
+                        && getFormControls.sr.errors.invalidFileSize)">
+                    Invalid file size. File size should be maximum {{allowedMaxAudioFileSize}} {{unit}}
+                  </div>
+                </div>
+                <!-- End of audio file upload -->
+
+                <!-- Video review type file upload -->
+                <div class="sr-form-cell reviewopt opt_Video active" *ngIf="selectedReivewType == 3">
+                  <label>Upload a video file</label>
+                  <div class="sr-form-field">
+                    <div class="sr-form-ctrl inputFile">
+                      <input type="file" (change)="onChangeReviewFile($event)"
+                        [ngClass]="{error: isSubmitted && getFormControls.sr.errors}">
+                      <input type="hidden" name="hiddenFileName" formControlName="sr">
+                      <div class="choseFileArea">
+                        <div class="fileImg">
+                          <img src="../../../../assets/images/icon_upload_video.png" alt="">
+                        </div>
+                        <p>
+                          <span>{{reviewChoseFileCtrl}}</span>{{reviewFileName}}
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div class="error-msg" *ngIf="(
                       isSubmitted 
-                      && getFormControls.srImage.errors !== null 
-                      && getFormControls.srImage.errors.required)">
-                    Audio file is required
+                      && getFormControls.sr.errors !== null 
+                      && getFormControls.sr.errors.required)">
+                    Video is required
                   </div>
                   <div class="error-msg" *ngIf="(
                       isSubmitted 
-                      && getFormControls.srImage.errors !== null 
-                      && getFormControls.srImage.errors.invalidFileType)">
-                    Invalid file type. File should be an audio file
+                      && getFormControls.sr.errors !== null 
+                      && getFormControls.sr.errors.invalidFileType)">
+                    Invalid file type. File should be an video
                   </div>
                   <div class="error-msg" *ngIf="(
                       isSubmitted 
-                      && getFormControls.srImage.errors !== null 
-                      && getFormControls.srImage.errors.invalidFileSize)">
-                    Invalid audio format
+                      && getFormControls.sr.errors !== null 
+                      && getFormControls.sr.errors.invalidFileSize)">
+                    Invalid file size. File size should be maximum {{ allowedMaxVideoFileSize }} {{ unit }}
                   </div>
                 </div>
+                <!-- End of video file upload -->
               </div>
             </div>
+            <!-- Image file upload section -->
             <div class="sr-form-row">
               <div class="sr-form-cell">
                 <label>Upload an image</label>
@@ -250,7 +258,7 @@
                         <span>{{choseFileCtrl}}</span>{{fileName}}
                       </p>
                     </div>
-                    <div class="figureUpld"></div>
+                    <div class="figureUpld" [style.background-image]="'url('+ imagePreviewUrl +')'"></div>
                   </div>
                 </div>
                 <div class="error-msg" *ngIf="(
@@ -269,7 +277,7 @@
                       isSubmitted 
                       && getFormControls.srImage.errors !== null 
                       && getFormControls.srImage.errors.invalidFileSize)">
-                  Invalid image size
+                  Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
                 </div>
               </div>
             </div>
@@ -286,16 +294,5 @@
       </div>
     </div>
   </div>
-  <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>
 <!-- Modal ends -->
-
-<!-- Loader -->
-<div class="loaderOuter" *ngIf="loader">
-  <div class="loaderContainer">
-    <div class="loader">
-      <img src="../../../../assets/images/face_icon.png" alt="">
-    </div>
-    <div class="loaderShadow"></div>
-  </div>
-</div>

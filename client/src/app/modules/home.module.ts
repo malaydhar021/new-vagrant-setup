@@ -28,14 +28,12 @@ import { BrandingService } from '../services/branding.service'; // services for 
 import { CampaignService } from '../services/campaign.service';
 import { StickyReviewService } from '../services/sticky-review.service';
 import { MenuService } from '../services/menu.service';
-
-
-
-
+import { MediaPlayerModule } from './media-player.module';
+import { MediaPlayerService } from '../services/media-player.service';
 
 /**
- * DashboardModule is loading all components and services along with few angular modules once the user is logged in.
- * @class DashboardModule
+ * HomeModule is loading all components and services along with few angular modules once the user is logged in.
+ * @class HomeModule
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
@@ -66,13 +64,15 @@ import { MenuService } from '../services/menu.service';
     NgxMaskModule.forRoot(),
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    MessageModule
+    MessageModule,
+    MediaPlayerModule
   ],
   providers: [
     BrandingService,
     CampaignService,
     StickyReviewService,
-    MenuService
+    MenuService,
+    MediaPlayerService
   ]
 })
 export class HomeModule { }

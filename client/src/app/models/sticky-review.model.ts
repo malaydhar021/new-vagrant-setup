@@ -8,13 +8,31 @@
  */
 export class StickyReviewModel {
     id?: number;
+    type?: number;
     review_type?: number;
     name?: string;
     tags?: string;
-    description?: string;
+    review?: string;
+    review_text?: string;
+    review_audio?: File;
+    review_video?: File;
     rating?: number;
-    myDateString?: string;
+    reviewd_at?: string;
     image?: File;
     image_url?: string;
     created_at?: string;
+}
+
+/**
+ * StickyReviewTypesModel model to hold data for review types. There are three types of
+ * review type for now textual | audio | video
+ * @class StickyReviewTypesModel
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export class StickyReviewTypesModel {
+    id: number;
+    name: string;
+    slug: string;
 }

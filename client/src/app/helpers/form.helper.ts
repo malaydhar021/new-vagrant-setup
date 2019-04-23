@@ -139,6 +139,7 @@ export const FileType = (controlName: string, file: File, allowedFileTypes: stri
       // checking if there is any file or not
       return;
     }
+    Log.debug(file.type, "Checking file type for uploaded file");
     if(allowedFileTypes.indexOf(file.type) === -1) {
       // set error on control if validation fails
       control.setErrors({invalidFileType: true});
