@@ -1,8 +1,10 @@
-import { Component, OnInit }      from '@angular/core';
-import { Subscription }           from 'rxjs';
-import { SubscriptionService }    from '../../../services/subscription.service';
-import {LoaderService}            from '../../../services/loader.service';
-import { NgxSmartModalService }   from 'ngx-smart-modal';
+import { Component, OnInit }                  from '@angular/core';
+import { Subscription }                       from 'rxjs';
+import { NgxSmartModalService }               from 'ngx-smart-modal';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { SubscriptionService }                from '../../../services/subscription.service';
+import { LoaderService }                      from '../../../services/loader.service';
 
 @Component({
   selector: 'app-plans',
@@ -14,9 +16,16 @@ export class PlansComponent implements OnInit {
     userPlanSubscription: Subscription;
     userPlanDetails:any
     pricingPlanType: string = null;
-    years:any = []
+    years:any = [];
+    cardForm: FormGroup;
+    currentYear: Number;
 
-    constructor( private subscriptionService: SubscriptionService, private loaderService: LoaderService, private ngxSmartModalService:NgxSmartModalService) { 
+
+    constructor( 
+      private subscriptionService: SubscriptionService,
+      private loaderService: LoaderService,
+      private ngxSmartModalService:NgxSmartModalService,
+      private formBuilder: FormBuilder) { 
 
       this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan=>{
         this.userPlanDetails = userPlan;
@@ -26,82 +35,40 @@ export class PlansComponent implements OnInit {
     ngOnInit() {
       this.getCurrentSubscription();
       this.createYearArray();
+      this.createCardForm();
     }
 
-    currentPlan(plan){
-      let currentplan = this.userPlanDetails.data.pricing_plan.alias;
-
-      if(!currentplan) {
-        return "ADD"
-      }
-
-      if (plan ==='Agency'){
-        return 'AGENCY'
-      }
-
-      if (plan ==='Premium'){
-        return 'PREMIUM'
-      }
-
-      if (plan ==='Starter'){
-        return 'STARTER'
-      }
-
+    createCardForm(reset= false){
+      this.cardForm = this.formBuilder.group({
+        pricing_plan_type: [this.pricingPlanType],
+        card_number: [null, Validators.compose([Validators.required, Validators.minLength(14)])],
+        cvc_number:[null, Validators.compose([Validators.required, Validators.minLength(3)])],
+        expiry_month:[1, Validators.required],
+        expiry_year: [this.currentYear, Validators.required],
+        affiliate_id: []
+      })
+      reset && this.cardForm.reset();
     }
 
     buttonText(plan){
-      let currentPlan = null; 
+      let currentPlan = null , text = null; 
       if(this.userPlanDetails && this.userPlanDetails.data && this.userPlanDetails.data.pricing_plan){
-
         currentPlan = this.userPlanDetails.data.pricing_plan.alias;
       }
-                          
-      
-      if (!currentPlan){
-        return 'ADD'
-      }
-      if (plan == currentPlan){
+      if (!currentPlan) {return "ADD"} ;
+      if (plan == currentPlan) {return 'CURRENT'};
 
-        return 'CURRENT'
+      plan == 'Starter' ? text = "DOWNGRADE" : null;
+      plan == 'Premium' ? currentPlan == 'Starter' ? text = 'UPGRADE' : text = 'DOWNGRADE' : null;
+      plan == 'Agency' ? text = "UPGRADE"  : null 
+      return text;
 
-      } else {
-
-        if (plan == 'Starter') {
-          if(currentPlan  == 'Premium'){
-            return "DOWNGRADE"
-          }
-          if (currentPlan == 'Agency'){
-            return "DOWNGRADE"
-          }
-        }
-
-        if(plan == 'Premium'){
-
-          if (currentPlan == 'Starter'){
-            return "UPGRADE"
-          }
-          if(currentPlan == 'Agency'){
-            return "DOWNGRADE"
-          }
-        }
-
-        if(plan == 'Agency'){
-
-          if(currentPlan == 'Starter'){
-            return "UPGRADE"
-          }
-          if (currentPlan == 'Premium'){
-            return "UPGRADE"
-          }
-        }
-      }
     }
 
     getCurrentSubscription(){
       this.loaderService.enableLoader()
       this.subscriptionService.getCurrentSubscription().subscribe(
         (data: any)=>{
-          //console.log()
           this.loaderService.disableLoader();
           this.subscriptionService.setUserSubscription(data.subscription);
       })
@@ -109,20 +76,46 @@ export class PlansComponent implements OnInit {
 
     addUpdatePlan(plan){
       this.pricingPlanType = plan;
-      console.log(this.userPlanDetails);
       if (this.userPlanDetails.status == 'NA'){
         this.ngxSmartModalService.getModal('modal1').open();
         return
       }
+      this.update();
 
     }
 
     createYearArray(){
       var currentDate = new Date();
       var currentYear = currentDate.getFullYear();
+      this.currentYear = currentYear
       for (let i = 0; i <= 25; i++){
         this.years.push(currentYear + i);
       }
+    }
+
+    add(){
+      this.loaderService.enableLoader();
+      let value = this.cardForm.value;
+      value.pricing_plan_type = this.pricingPlanType;
+      this.subscriptionService.addSubscription(value).subscribe(
+        (response: any) => {
+          this.loaderService.disableLoader();
+          this.subscriptionService.setUserSubscription(response.subscription);
+          this.ngxSmartModalService.getModal('modal1').close();
+          this.createCardForm(true);
+        }
+      )
+    }
+
+    update(){
+      this.loaderService.enableLoader()
+
+      this.subscriptionService.updateSubscription({ pricing_plan_type : this.pricingPlanType}).subscribe(
+        (response:any)=>{
+          this.loaderService.disableLoader();
+          this.subscriptionService.setUserSubscription(response.subscription);
+        }
+      )
     }
 
 }

@@ -76,56 +76,11 @@
         </div>
 
         <div class="cancelReg">
-          <p>I want to <a href="javascript:void(0)" class="link-inline">Cancel my membership.</a></p>
+          <p>I want to <a href="javascript:void(0)" class="link-inline" [routerLink]="['/home/cancel-membership']">Cancel my membership.</a></p>
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="membershipCancellation text-center d-cell">
-      <div class="cancelReason">
-        <div class="ico">
-          <img src="../../../../assets/images/logo_iconography.png" alt="">
-        </div>
-        <h2>Cancellation of Sticky Reviews Membership</h2>
-        <p>We are so sad to see you go. We would like you to tell us the reason of cancellation of your membership. This would help us to serve the community better experience.</p>
-
-        <div class="formCancellation">
-          <form>
-              <div class="sr-form-row">
-                <div class="sr-form-cell">
-                  <label>Select your Reason</label>
-                  <div class="sr-form-field">
-                    <select class="sr-form-ctrl customSelect">
-                      <option>Others</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell">
-                  <label>Describe your reason</label>
-                  <div class="sr-form-field">
-                    <textarea class="sr-form-ctrl" placeholder="Be as descriptive as possible"></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="sr-form-row">
-                <button class="button-submit">
-                  Submit
-                </button>
-              </div>
-          </form>
-        </div>
-      </div>
-      <div class="cancellationConfirmation">
-          <figure>
-            <img src="../../../../assets/images/icon_tick_confirmation.png" alt="">
-          </figure>
-          <h2>Your subscription has been cancelled successfully.</h2>
-          <p>Hey Jon, Thanks for being a premium user of Sticky Reviews so far. <br>We would be happy to you see back again.</p>
-          <p>Your account has been suspended and you can Subscribe again whenever you want.</p>
-      </div>
-  </div> -->
 </div>
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
   <div class="sr-modal-container">
@@ -134,38 +89,76 @@
         Add Credit Card Info
       </h2>
     </div>
-    <div class="sr-modal-body">
-      <div class="cardForm updateCardModal">
-        <h2>Credit Card Information</h2>
-        <div class="formRow">
-          <div class="formCol6">
-            <label>Credit Card Number</label>
-            <input type="text" class="formCtrl card" ngModel mask="0000 0000 0000 0000">
+    <div class="sr-modal-body"> 
+      <message></message>
+      <form [formGroup]="cardForm" (ngSubmit)="add()">
+        <div class="cardForm updateCardModal">
+          <h2>Credit Card Information</h2>
+          <div class="formRow">
+            <div class="formCol6" >
+              <label>Credit Card Number</label>
+              <input 
+                type="text" 
+                class="formCtrl card sr-form-ctrl" 
+                mask="0000 0000 0000 0000"
+                formControlName="card_number"
+                [ngClass]="{'error' : !cardForm.get('card_number').valid && cardForm.get('card_number').touched}">
+                <span class="error-msg" *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').errors.required">
+                  Required!
+                </span>
+                <span class="error-msg" *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').errors.minlength">
+                  Minimum length 14
+                </span>
+            </div>
+            <div class="formCol4">
+              <label>CVC Number</label>
+              <input 
+                type="password" 
+                class="formCtrl"
+                mask="0000"
+                value=""
+                formControlName="cvc_number"
+                [ngClass]="{'error' : !cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched}"
+                value=''
+                >
+                <span class="error-msg" *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').errors.required" class="error-msg">
+                  Required!
+                </span>
+                <span class="error-msg" *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').errors.minlength" class="error-msg">
+                  Minimum length 3
+                </span>
+            </div>
           </div>
-          <div class="formCol4">
-            <label>CVC Number</label>
-            <input type="password" class="formCtrl" ngModel mask="000">
+          <div class="formRow">
+            <div class="formCol5">
+              <label>Expiry Month</label>
+              <select 
+                class="formCtrl"
+                formControlName="expiry_month"
+                >
+                <option [value]="month" *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]; let y = index">{{month}}</option>
+               
+              </select>
+            </div>
+            <div class="formCol5">
+              <label>Expiry Year</label>
+              <select 
+                class="formCtrl"
+                formControlName="expiry_year">
+                <option [value]="year" *ngFor="let year of years; let y = index">{{year}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="formRow">
+            <button
+              type="submit"
+              class="UpdateCardBtn"
+              [disabled]="!cardForm.valid">
+              Subscribe
+            </button>
           </div>
         </div>
-        <div class="formRow">
-          <div class="formCol5">
-            <label>Expiry Month</label>
-            <select class="formCtrl">
-              <option [value]="month" *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]; let y = index">{{month}}</option>
-             
-            </select>
-          </div>
-          <div class="formCol5">
-            <label>Expiry Year</label>
-            <select class="formCtrl">
-              <option [value]="year" *ngFor="let year of years; let y = index">{{year}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="formRow">
-          <button type="button" class="UpdateCardBtn">Subscribe</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
   <!-- <button (click)="myModal.close()">Close</button> -->

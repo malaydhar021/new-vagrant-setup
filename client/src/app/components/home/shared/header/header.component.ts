@@ -114,10 +114,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-  currentPlan(){
-    if (this.userPlanDetails && this.userPlanDetails.data && (this.userPlanDetails.data.pricing_plan.id === "enterprise-monthly")){
-
-    }
-  }
+  
 }

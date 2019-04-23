@@ -22,7 +22,7 @@ export class SubscriptionService {
     this.getCurrentSubscription().subscribe(
       (response: any) => {
         this.setUserSubscription(response.subscription)
-        if (!response.subscription.data || response.subscription.status === 'NA'){
+        if (response.subscription.status !== 'ACTIVE'){
           this.router.navigate(['/home/plans'])
         }
     })
@@ -72,7 +72,7 @@ export class SubscriptionService {
   }
 
   /**
-   * updateSubscription method will make an api request add a user subscription
+   * updateSubscription method will make an api request update a user subscription
    *  @method addSubscription
    * @since 1.0.0
    * @returns Observable<Object>
@@ -80,6 +80,18 @@ export class SubscriptionService {
   updateSubscription(data: any){
     
     return this.httpClient.put(SubscriptionApiEndpoints.subscription, data);
+  }
+
+
+  /**
+   * deleteSubscription method will make an api request delete a user subscription
+   *  @method addSubscription
+   * @since 1.0.0
+   * @returns Observable<Object>
+   */
+  deleteSubscription(data: any){
+    
+    return this.httpClient.post(SubscriptionApiEndpoints.subscription, data);
   }
 
 }

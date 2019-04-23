@@ -19,7 +19,7 @@
         </h2>
         <h2 *ngIf=" userPlanDetails && userPlanDetails.status === 'NA'">
           <span>Your current</span>
-          Your not subscribe
+            You haven't subscribe
         </h2>
         <div class="planName" *ngIf=" userPlanDetails && userPlanDetails.status !== 'NA'">
           {{currentPlanName}} 

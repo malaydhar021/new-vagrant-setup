@@ -25,10 +25,13 @@ import { SignupService }                        from './services/signup.service'
 import { SubscriptionService }                  from './services/subscription.service';
 import { UserService }                          from './services/user.service';
 
-import { MessageModule } from './components/shared/message/message.module';
 import { ReviewLinkTypeComponent } from './components/home/review-link-type/review-link-type.component';
 import { MediaPlayerModule } from './modules/media-player.module';
 import { MediaPlayerService } from './services/media-player.service';
+import { MessageModule }                        from './components/shared/message/message.module';
+import { MenuService }                          from './services/menu.service';
+
+import {SubscriptionGuard}                      from './services/guards/subscription.gaurd.service';
 
 /**
  * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
@@ -80,6 +83,7 @@ export class AppComponent { }
     MediaPlayerModule,
   ],
   providers: [
+<<<<<<< HEAD
     Title,
     AuthService,
     AuthGuard,
@@ -93,6 +97,21 @@ export class AppComponent { }
     SubscriptionService,
     MediaPlayerService,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+=======
+      Title,
+      AuthService,
+      AuthGuard,
+      GlobalService,
+      CookieService,
+      ErrorsService,
+      SignupService,
+      ReviewLinkService,
+      LoaderService,
+      UserService,
+      SubscriptionService,
+      SubscriptionGuard,
+      { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+>>>>>>> Plans v0.3
   ],
   bootstrap: [AppComponent]
 })
