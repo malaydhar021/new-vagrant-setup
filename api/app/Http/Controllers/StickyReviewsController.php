@@ -48,7 +48,7 @@ class StickyReviewsController extends Controller
     public function index()
     {
         $noOfStickyReviews = $this->queryBuilder->count();
-        $stickyReviews = $this->queryBuilder->orderBy('created_at', 'desc')->get();
+        $stickyReviews = $this->queryBuilder->orderBy('id', 'desc')->get();
 
         if ($noOfStickyReviews) {
             return response()->json([
@@ -80,16 +80,24 @@ class StickyReviewsController extends Controller
 
         switch ($request->input('type')) {
             case 1:
-                $stickyReview->review_text = $request->input('review_text');
+                if ($request->has('review_text')) {
+                    $stickyReview->review_text = $request->input('review_text');
+                }
                 break;
             case 2:
-                $stickyReview->review_audio = $request->file('review_audio');
+                if ($request->has('review_audio')) {
+                    $stickyReview->review_audio = $request->file('review_audio');
+                }
                 break;
             case 3:
-                $stickyReview->review_video = $request->file('review_video');
+                if ($request->has('review_video')) {
+                    $stickyReview->review_video = $request->file('review_video');
+                }
                 break;
             default:
-                $stickyReview->description = $request->input('description');
+                if ($request->has('description')) {
+                    $stickyReview->description = $request->input('description');
+                }
         }
 
         if ($request->has('reviewd_at') && strlen(trim($request->input('reviewd_at')))) {
@@ -142,27 +150,31 @@ class StickyReviewsController extends Controller
     {
         $stickyReview = $this->queryBuilder->where('id', $id)->firstOrFail();
 
-        $stickyReview->name = $request->has('name') ? $request->input('name') : $stickyReview->name;
-        $stickyReview->tags = $request->has('tags') ? trim($request->input('tags')) : $stickyReview->tags;
-        $stickyReview->rating = $request->has('rating') ? $request->input('rating') : $stickyReview->rating;
-        $stickyReview->type = $request->has('type') ? $request->input('type') : $stickyReview->type;
+        $stickyReview->name = $request->input('name');
+        $stickyReview->tags = trim($request->input('tags'));
+        $stickyReview->rating = $request->input('rating');
+        $stickyReview->type = $request->input('type');
 
         switch ($request->input('type')) {
             case 1:
-                $stickyReview->review_text = $request->has('review_text') ?
-                    $request->input('review_text') : $stickyReview->review_text;
+                if ($request->has('review_text')) {
+                    $stickyReview->review_text = $request->input('review_text');
+                }
                 break;
             case 2:
-                $stickyReview->review_audio = $request->has('review_audio') ?
-                    $request->file('review_audio') : $stickyReview->review_audio;
+                if ($request->has('review_audio')) {
+                    $stickyReview->review_audio = $request->file('review_audio');
+                }
                 break;
             case 3:
-                $stickyReview->review_video = $request->has('review_video') ?
-                    $request->file('review_video') : $stickyReview->review_video;
+                if ($request->has('review_video')) {
+                    $stickyReview->review_video = $request->file('review_video');
+                }
                 break;
             default:
-                $stickyReview->description = $request->has('description') ?
-                    $request->input('description') : $stickyReview->description;
+                if ($request->has('description')) {
+                    $stickyReview->description = $request->input('description');
+                }
         }
 
         if ($request->has('image')) {

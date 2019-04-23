@@ -39,6 +39,27 @@ class StickyReview extends Model
     ];
 
     /**
+     * Set the sticky review's review title
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setReviewTitleAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+    }
+
+    /**
+     * Get the sticky review's review title
+     *
+     * @return string
+     */
+    public function getReviewTitleAttribute()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set the sticky review's review text
      *
      * @param  string  $value
@@ -130,6 +151,31 @@ class StickyReview extends Model
      * @return string
      */
     public function getImageUrlAttribute()
+    {
+        return $this->getImageFileURI($this->image);
+    }
+
+    /**
+     * Set the sticky review's profile picture
+     *
+     * @param  \Illuminate\Http\UploadedFile  $value
+     * @return void
+     */
+    public function setProfilePictureAttribute($value)
+    {
+        if ($this->image) {
+            $this->deleteImageFile($this->image);
+        }
+
+        $this->attributes['image'] = $this->saveImageFile($value);
+    }
+
+    /**
+     * Get the sticky review's profile picture
+     *
+     * @return string
+     */
+    public function getProfilePictureAttribute()
     {
         return $this->getImageFileURI($this->image);
     }

@@ -48,7 +48,7 @@ class ReviewLinkRequest extends FormRequest
             'name' => "required|string",
             'url_slug' => "required|unique:review_links,id," . $this->route('id'),
             'logo' => [
-                $this->method() == 'PUT' ? "required" : "nullable",
+                $this->method() == 'POST' ? "required" : "nullable",
                 "image",
                 "mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp",
             ],

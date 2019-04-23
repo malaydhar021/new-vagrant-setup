@@ -32,7 +32,7 @@ class ReviewLinksController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Checks if an slug is exist or not
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse

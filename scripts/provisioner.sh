@@ -46,6 +46,9 @@ sudo npm install --global n
 sudo n lts
 sudo ln -sf /usr/local/bin/node /usr/bin/nodejs
 
+echo -r "\nInstalling Multimedia Driver...\n"
+sudo apt-get install -y unzip ffmpeg x264 x265
+
 cat >> /etc/bash.bashrc <<- "EOF"
 # Add project binraies in executable path
 export PATH=$PATH:/vagrant/bin

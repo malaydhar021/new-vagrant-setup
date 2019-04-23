@@ -2,14 +2,19 @@
 
 namespace App\Traits;
 
-use DateTime;
+use App\Exceptions\FileStoringException;
 
-use FFMpeg\FFMpeg;
+use Exception;
+
+use FFMpeg;
 use FFMpeg\Format\Audio\Mp3;
+use FFMpeg\Format\Video\X264;
 
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+
 use Intervention\Image\Facades\Image;
 
 trait FileStorage
@@ -48,7 +53,15 @@ trait FileStorage
      */
     public function saveImageFile($imageFile)
     {
-        return $this->saveFile(Image::make($imageFile)->resize(256, 256)->encode('png', 100), "image");
+        try {
+            return $this->saveFile(Image::make($imageFile)->resize(256, 256)->encode('png', 100), "image");
+        } catch (Exception $exception) {
+            Log::error("Audio Conversion Error: ", $exception->getTrace());
+
+            throw new FileStoringException(
+                "An error occured during uploading the image, either check the file is valid or please try again later."
+            );
+        }
     }
 
     /**
@@ -59,27 +72,31 @@ trait FileStorage
      */
     public function saveAudioFile($audioFile)
     {
-        // $actualFileExtension = pathinfo($audioFile->getClientOriginalName(), PATHINFO_EXTENSION);
+        $originalFileName = $this->saveFile($audioFile, "audio");
 
-        // $uniqueName = (new DateTime())->getTimestamp();
-        // $tempAudioFileName = strlen(trim($actualFileExtension)) ? $uniqueName . "." . $actualFileExtension : $uniqueName;
-        // $newAudioFileName = $uniqueName . ".mp3";
+        try {
+            $convertedFileName = sha1(microtime()) . '.mp3';
 
-        // $path = config('filepaths.audio');
-        // Storage::put($path . $tempAudioFileName, file_get_contents($audioFile));
+            FFMpeg::fromDisk('audio')
+                ->open($originalFileName)
+                ->export()
+                ->toDisk('audio')
+                ->inFormat(new Mp3)
+                ->save($convertedFileName);
 
-        // if ($actualFileExtension != 'mp3') {
-        //     /** Convert audio file with MPEG-3 layer using `mp3` container */
-        //     $audio = (FFMpeg::create())->open(getcwd() . "/public/storage/" . $path . $tempAudioFileName);
-        //     $audio->save(new Mp3(), getcwd() . "/public/storage/" . $path . $newAudioFileName);
+            $this->deleteAudioFile($originalFileName);
 
-        //     $this->deleteAudioFile($tempAudioFileName);
-        // }
+            return $convertedFileName;
+        } catch (Exception $exception) {
+            Log::error("Audio Conversion Error: ", $exception->getTrace());
 
-        // return $newAudioFileName;
-        return $this->saveFile($audioFile, "audio");
+            $this->deleteAudioFile($originalFileName);
+
+            throw new FileStoringException(
+                "An error occured during uploading the audio, either check the file is valid or please try again later."
+            );
+        }
     }
-
 
     /**
      * Converts and saves a recorded video file to `mp4`
@@ -89,25 +106,30 @@ trait FileStorage
      */
     public function saveVideoFile($videoFile)
     {
-        // $actualFileExtension = pathinfo($videoFile->getClientOriginalName(), PATHINFO_EXTENSION);
+        $originalFileName = $this->saveFile($videoFile, "video");
 
-        // $uniqueName = (new DateTime())->getTimestamp();
-        // $tempVideoFileName = strlen(trim($actualFileExtension)) ? $uniqueName . "." . $actualFileExtension : $uniqueName;
-        // $newVideoFileName = $uniqueName . ".mp4";
+        try {
+            $convertedFileName = sha1(microtime()) . '.mp4';
 
-        // $path = config('filepaths.audio');
-        // Storage::put($path . $tempVideoFileName, file_get_contents($videoFile));
+            FFMpeg::fromDisk('video')
+                ->open($originalFileName)
+                ->export()
+                ->toDisk('video')
+                ->inFormat(new X264('libmp3lame', 'libx264'))
+                ->save($convertedFileName);
 
-        // if ($actualFileExtension != 'mp4') {
-        //     /** Convert audio file with MPEG-4 layer using `mp4` container */
-        //     $audio = (FFMpeg::create())->open(getcwd() . "/public/storage/" . $path . $tempVideoFileName);
-        //     $audio->save(new Mp3(), getcwd() . "/public/storage/" . $path . $newVideoFileName);
+            $this->deleteVideoFile($originalFileName);
 
-        //     $this->deleteVideoFile($tempVideoFileName);
-        // }
+            return $convertedFileName;
+        } catch (Exception $exception) {
+            Log::error("Video Conversion Error: ", $exception->getTrace());
 
-        // return $newVideoFileName;
-        return $this->saveFile($videoFile, "video");
+            $this->deleteAudioFile($originalFileName);
+
+            throw new FileStoringException(
+                "An error occured during uploading the video, either check the file is valid or please try again later."
+            );
+        }
     }
 
     /**
@@ -211,20 +233,29 @@ trait FileStorage
         switch (strtolower($mime)) {
             case "application/ogg":
                 return ".ogg";
-            case "application/x-mpegurl":
-                return ".m3u8";
+            case "audio/amr":
+                return ".amr";
             case "audio/mp4":
                 return ".mp4";
             case "audio/mpeg":
                 return ".mp3";
             case "audio/ogg":
                 return ".ogg";
-            case "audio/webm":
-                return ".webm";
             case "audio/vorbis":
                 return ".ogg";
             case "audio/vnd.wav":
                 return ".wav";
+            case "audio/wav":
+            case "audio/wave":
+                return ".wav";
+            case "audio/webm":
+                return ".webm";
+            case "audio/x-aac":
+                return ".aac";
+            case "audio/x-ms-wma":
+                return ".wma";
+            case "audio/x-matroska":
+                return ".mka";
             case "audio/x-mpegurl":
                 return ".m3u";
             case "image/gif":
@@ -245,14 +276,16 @@ trait FileStorage
                 return ".3gp";
             case "video/mp4":
                 return ".mp4";
-            case "video/mp2t":
-                return ".ts";
+            case "video/mpeg":
+                return ".mpg";
             case "video/ogg":
                 return ".ogg";
             case "video/quicktime":
                 return ".mov";
             case "video/webm":
                 return ".webm";
+            case "video/x-flv":
+                return ".flv";
             case "video/x-msvideo":
                 return ".avi";
             case "video/x-ms-wmv":

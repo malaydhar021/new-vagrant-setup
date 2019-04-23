@@ -28,7 +28,7 @@ class UserProfileRequest extends FormRequest
     {
         return [
             'email' => "email|unique:users,email," . Auth::user()->id,
-            'image' => "nullable|image|mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp",
+            'image' => "nullable|image|mimes:gif,jpeg,png,webp",
         ];
     }
 
@@ -43,7 +43,7 @@ class UserProfileRequest extends FormRequest
             'email.email' => "Email should be type of email. Example: jon@tier5.us",
             'email.unique' => "Email already exists, and registered with some other user.",
             'image.image' => "Image is not a valid image",
-            'image.image' => "Image should be type of jpg, jpeg, png, bmp, gif, ico or webp. " .
+            'image.image' => "Image should be type of .gif, .jpg, .jpeg, .png, or .webp. " .
                 "No other file format is currently supported.",
         ];
     }

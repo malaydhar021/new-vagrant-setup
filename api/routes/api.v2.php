@@ -104,5 +104,13 @@ Route::middleware('auth:api')->group(function () {
     });
 });
 
-Route::post('/save-user-review', 'ApiV2Controller@postSaveUserReview')->name('postSaveUserReview');
-Route::get('/campaign-details/{uid}', 'ApiV2Controller@getParticularCampaign')->name('getParticularCampaign');
+Route::prefix('user-reviews')->name('user-reviews.')->group(function () {
+    Route::get('{slug}', 'UserReviewsController@show')->name('show');
+    Route::post('{slug}/validate', 'UserReviewsController@validateParams')->name('params.validate');
+    Route::post('{slug}', 'UserReviewsController@store')->name('store');
+});
+
+Route::prefix('widget')->name('widget.')->group(function () {
+    Route::get('/{usid}', 'WidgetController@index')->name('index');
+    Route::post('/{usid}/postback', 'WidgetController@postback')->name('postback');
+});

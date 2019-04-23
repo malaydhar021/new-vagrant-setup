@@ -121,7 +121,15 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'status' => false,
                     'message' => $exception->getMessage(),
-                ], 422);
+                ], 400);
+            }
+
+            /** File Storing Exception Exception Response */
+            if ($exception instanceof FileStoringException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $exception->getMessage(),
+                ], 500);
             }
 
             /** Model Not Found Exception Response */

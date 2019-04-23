@@ -30,14 +30,29 @@ class StickyReviewRequest extends FormRequest
             'name' => "required|string|min:1|max:25",
             'rating' => "required|integer|digits:1|min:1|max:5",
             'type' => "required|integer|digits:1|min:1|max:3",
-            'review_text' => "required_if:type,1|string|min:1|max:60",
-            'review_audio' => "required_if:type,2|file|" .
-                "mimetypes:application/ogg,audio/mpeg,audio/mp4,audio/ogg,audio/webm,audio/vorbis,audio/vnd.wav," .
-                "audio/x-mpegurl",
-            'review_video' => "required_if:type,3|file|" .
-                "mimetypes:application/ogg,application/x-mpegURL,video/3gpp,video/mp4,video/MP2T,video/ogg," .
-                "video/quicktime,video/webm,video/x-msvideo,video/x-ms-wmv",
-            'image' => "required|image|mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp",
+            'review_text' => [
+                $this->method() == 'POST' ? "required_if:type,1" : "nullable",
+                "string",
+                "min:1",
+                "max:60"
+            ],
+            'review_audio' => [
+                $this->method() == 'POST' ? "required_if:type,2" : "nullable",
+                "file",
+                "mimetypes:application/octet-stream,application/ogg,audio/AMR,audio/x-matroska,audio/mpeg,audio/mp4," .
+                "audio/ogg,audio/webm,audio/vorbis,audio/wav,audio/wave,audio/vnd.wav,audio/x-aac,audio/x-ms-wma",
+            ],
+            'review_video' => [
+                $this->method() == 'POST' ? "required_if:type,3" : "nullable",
+                "file",
+                "mimetypes:application/octet-stream,application/ogg,video/3gpp,video/x-matroska,video/mp4," .
+                "video/mpeg,video/ogg,video/quicktime,video/webm,video/x-flv,video/x-msvideo,video/x-ms-wmv",
+            ],
+            'image' => [
+                $this->method() == 'POST' ? "required" : "nullable",
+                "image",
+                "mimes:gif,jpeg,png,webp"
+            ],
         ];
     }
 
@@ -67,14 +82,16 @@ class StickyReviewRequest extends FormRequest
             'review_text.max' => "Review text should be between 1 to 60 characters length long.",
             'review_audio.required_if' => "Review audio is required when type is audio.",
             'review_audio.mimetypes' => "Review audio is not a valid audio file. It should be type of " .
-                ".mp3, .mp4, .m3u, .wav, .webm or .ogg. No other file format is currently supported.",
+                ".aac, .amr, .mka, .mp3, .mp4, .ogg, .wma, .wav, or .webm. " .
+                "No other file format is currently supported.",
             'review_video.required_if' => "Review video is required when type is video.",
             'review_video.mimetypes' => "Review video is not a valid video file. It should be type of " .
-                ".mp4, .m3u8, .ts, .3gp, .mov, .avi, .wmv, .webm or .ogg. No other file format is currently supported.",
+                ".3gp, .avi, .flv, .mkv, .mp4, .mpg, .mov, .ogg, .wmv, or .webm. " .
+                "No other file format is currently supported.",
             'image.required' => "Image is required.",
             'image.image' => "Image is not a valid image file.",
             'image.mimes' => "Image is not a valid image file. Image should be type of " .
-                ".jpg, .jpeg, .png, .bmp, .gif, .ico or .webp. No other file format is currently supported.",
+                ".gif, .jpg, .jpeg, .png, or .webp. No other file format is currently supported.",
         ];
     }
 }

@@ -15,6 +15,7 @@ use Exception;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ExitPopupsController extends Controller
 {
@@ -222,6 +223,8 @@ class ExitPopupsController extends Controller
             }
         } catch (Exception $exception) {
             DB::rollBack();
+
+            Log::error("Exit Popup Saving Error: ", $exception->getTrace());
 
             return response()->json([
                 'status' => true,
