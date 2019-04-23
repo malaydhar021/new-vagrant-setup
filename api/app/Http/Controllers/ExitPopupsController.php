@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Campaign;
 use App\ExitPopUp as ExitPopup;
 use App\ExitPopupStyle;
+use App\ExitPopUpStickyReview;
 use App\Helpers\Hashids;
 use App\Http\Requests\ExitPopUpRequest;
 use App\Http\Resources\ExitPopupResource;
@@ -86,7 +87,7 @@ class ExitPopupsController extends Controller
         $exitPopup = new ExitPopup();
         $exitPopup->name = $request->input('name');
         $exitPopup->has_campaign = $request->input('has_campaign');
-        $exitPopup->campaign_id = Hashids::decode($request->input('campaign_id'));
+        $exitPopup->campaign_id = $request->input('campaign_id');
         $exitPopup->has_sticky_reviews = $request->input('has_sticky_reviews');
         $exitPopup->has_email_field = $request->input('has_email_field');
         $exitPopup->header_text = $request->input('header_text');
@@ -101,7 +102,7 @@ class ExitPopupsController extends Controller
         $exitPopup->button_text_color = $request->input('button_text_color');
         $exitPopup->button_background_color = $request->input('button_background_color');
         $exitPopup->button_size = 'S'; // @deprecated on v2, from now on button size will be always small i.e. 'S'
-        $exitPopup->style_id = Hashids::decode($request->input('style_id'));
+        $exitPopup->style_id = $request->input('style_id');
         $exitPopup->created_by = Auth::user()->id;
 
         try {
@@ -112,7 +113,7 @@ class ExitPopupsController extends Controller
             if ($exitPopup->has_campaign) {
                 $stickyReviews = $request->input('sticky_reviews');
                 $deocdedStickyReviews = [];
-                
+
                 array_walk($stickyReviews, function (&$value) use (&$deocdedStickyReviews) {
                     $deocdedStickyReviews[] = Hashids::decode($value);
                 });
@@ -158,12 +159,13 @@ class ExitPopupsController extends Controller
      */
     public function show($id)
     {
-            $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
-                return response([
-                    'status' => true,
-                    'message' => "Exit-poup details have found.",
-                    'data' => new ExitPopupResource($exitPopup),
-                ]);
+        $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
+
+        return response()->json([
+            'status' => true,
+            'message' => "Exit-poup details have found.",
+            'data' => new ExitPopupResource($exitPopup),
+        ]);
     }
 
     /**
@@ -178,7 +180,7 @@ class ExitPopupsController extends Controller
         $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
         $exitPopup->name = $request->input('name');
         $exitPopup->has_campaign = $request->input('has_campaign');
-        $exitPopup->campaign_id = Hashids::decode($request->input('campaign_id'));
+        $exitPopup->campaign_id = $request->input('campaign_id');
         $exitPopup->has_sticky_reviews = $request->input('has_sticky_reviews');
         $exitPopup->has_email_field = $request->input('has_email_field');
         $exitPopup->header_text = $request->input('header_text');
@@ -193,7 +195,7 @@ class ExitPopupsController extends Controller
         $exitPopup->button_text_color = $request->input('button_text_color');
         $exitPopup->button_background_color = $request->input('button_background_color');
         $exitPopup->button_size = 'S'; // @deprecated on v2, from now on button size will be always small i.e. 'S'
-        $exitPopup->style_id = Hashids::decode($request->input('style_id'));
+        $exitPopup->style_id = $request->input('style_id');
         $exitPopup->created_by = Auth::user()->id;
 
         try {
@@ -250,33 +252,13 @@ class ExitPopupsController extends Controller
      */
     public function destroy($id)
     {
-        /**
-         * TODO: On delete first update the campaign with `exit_pop_up` as 0 and `exit_pop_up_id` as null and then,
-         * delete all the entries from `exit_pop_up_sticky_review` table where `exit_pop_up_id` matches with the current
-         * exit popup ID.
-         *
-         * Hint: Create a ExitPopupObserver and put these logic inside the deleting method as I did on UserObserver,
-         * so on contoller by calling $exitPopup->delete() will do do the magic.
-         *
-         * @see https://laravel.com/docs/5.7/eloquent#observers
-         */
-        try{
-            $exitPopup = $this->queryBuilder->where('id', $id)->firstOrFail();
-            $exitPopup->delete();
-            $exitPopup->stickyReviews()->detatch();
-            return response()->json([
-                'status' => true,
-                'message' => 'Exit popup deleted successfully.',
-            ], 201);
-        } catch(Exception $exception) {
-            return response()->json([
-                'status' => true,
-                'message' => "Whoops! looks like something went wrong. Please try again later...",
-                'errors' => [
-                    'error_message' => $exception->getMessage(),
-                    'error_trace' => config('app.debug') ? $exception->getTrace() : null,
-                ],
-            ], 500);
-        }
+        $exitPopUp = $this->queryBuilder->findOrFail($id);
+        $exitPopUp->delete();
+        ExitPopUpStickyReview::where('exit_pop_up_id',$id)->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Exit popup deleted successfully.',
+        ]);
     }
 }

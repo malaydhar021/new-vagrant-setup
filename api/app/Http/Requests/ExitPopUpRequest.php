@@ -2,11 +2,30 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Hashids;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ExitPopUpRequest extends FormRequest
 {
+    /**
+     * Get the validator instance for the request.
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function getValidatorInstance()
+    {
+        if ($this->request->has('campaign_id')) {
+            $this->merge([
+                'campaign_id' => Hashids::decode($this->request->get('campaign_id')),
+                'style_id'=> Hashids::decode($this->request->get('style_id')),
+            ]);
+        }
+
+        return parent::getValidatorInstance();
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,7 +48,7 @@ class ExitPopUpRequest extends FormRequest
         return [
             'name' => "required|string",
             'has_campaign' => "required|boolean",
-            'campaign_id' => "required_if:has_campaign,1|string",
+            'campaign_id' => "required_if:has_campaign,1|exists:campaigns,id",
             'has_sticky_reviews' => "required|boolean",
             'sticky_reviews' => "required_if:has_sticky_reviews,1|array",
             'sticky_reviews.*'  => "required_if:has_sticky_reviews,1|string|distinct",
@@ -46,7 +65,7 @@ class ExitPopUpRequest extends FormRequest
             'button_text' => "required|string",
             'button_text_color' => "required|string",
             'button_background_color' => "required|string",
-            'style_id' => "required|string",
+            'style_id' => "required|exists:campaign_styles,id",
         ];
     }
 
@@ -63,14 +82,14 @@ class ExitPopUpRequest extends FormRequest
             'has_campaign.required' => "Campaign switch is required.",
             'has_campaign.boolean' => "Campaign switch needs to be turned on or off.",
             'campaign_id.required_if' => "Campaign is required.",
-            'campaign_id.string' => "Campaigns should be a valid string.",
+            'campaign_id.exists' => "This campaign does not matches our record, please select a valid campaign.",
             'has_sticky_reviews.required' => "Sticky review switch is required.",
             'has_sticky_reviews.boolean' => "Sticky review switch needs to be turned on or off.",
             'sticky_reviews.required_if' => "Sticky reviews are required.",
             'sticky_reviews.array' => "Sticky reviews should be an array.",
             'sticky_reviews*.required_if' => "At least one sticky review item is required inside the array.",
             'sticky_reviews*.string' => "Sticky review item should be a valid string.",
-            'sticky_reviews*.distinct' => "Sticky review item should be distinct, no repetead item is allowed.",
+            'sticky_reviews*.distinct' => "Sticky review item should be distinct, no repeated item is allowed.",
             'has_email_field.required' => "Add email field is required",
             'has_email_field.boolean' => "Add email field to be turned on or off.",
             'header_text.required' => "Header text is required.",
@@ -98,7 +117,7 @@ class ExitPopUpRequest extends FormRequest
             'button_background_color.required' => "Button background color is required.",
             'button_background_color.string' => "Button background color should be a valid string.",
             'style_id.required' => "Style is required.",
-            'style_id.string' => "Style ID should be a valid string.",
+            'style_id.exists' => "This style does not matches our record, please select a valid style.",
         ];
     }
 }
