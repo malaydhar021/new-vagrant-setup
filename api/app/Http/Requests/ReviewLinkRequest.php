@@ -58,6 +58,10 @@ class ReviewLinkRequest extends FormRequest
             'positive_review_message' => "required|string",
             'negative_info_review_message_1' => "required|string",
             'negative_info_review_message_2' => "required|string",
+            'page_background' => "required|string",
+            'modal_background' => "required|string",
+            'text_color' => "required|string",
+            'copyright_text' => "required|string|min:1|max:255",
             'campaign_id' => "required|exists:campaigns,id",
         ];
     }
@@ -85,6 +89,16 @@ class ReviewLinkRequest extends FormRequest
             'negative_info_review_msg_1.required' => "Negative info message is required.",
             'negative_info_review_msg_2.required' => "Negative info message is required.",
             'positive_review_msg.required' => "Positive info message is required.",
+            'page_background.required' => "Page background is required.",
+            'page_background.string' => "Page background is not a valid string.",
+            'modal_background.required' => "Modal background is required.",
+            'modal_background.string' => "Modal background is not a valid string.",
+            'text_color.required' => "Text color is required.",
+            'text_color.string' => "Text color is not a valid string.",
+            'copyright_text.required' => "Copyright text is required.",
+            'copyright_text.string' => "Copyright text is not a valid string.",
+            'copyright_text.min' => "Copyright text should be 1 to 255 characters length long.",
+            'copyright_text.max' => "Copyright text should be 1 to 255 characters length long.",
             'campaign_id.required' => "Campaign is required.",
             'campaign_id.exists' => "This campaign does not matches our record, please select a valid campaign.",
         ];

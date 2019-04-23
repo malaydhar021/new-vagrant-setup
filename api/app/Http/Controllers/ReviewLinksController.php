@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\ReviewLink;
 use App\Http\Requests\ReviewLinkRequest;
 use App\Http\Resources\ReviewLinkResource;
+use App\ReviewLink;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Helpers\Hashids;
 
 class ReviewLinksController extends Controller
 {
@@ -31,9 +32,32 @@ class ReviewLinksController extends Controller
     }
 
     /**
+     * Undocumented function
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkSlug(Request $request)
+    {
+        $exists = ReviewLink::whereUrlSlug($request->input('url_slug'))->first();
+
+        if ($exists) {
+            return response()->json([
+                'status' => false,
+                'message' => "This slug is already been taken. Please try with another slug.",
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => "This slug is available.",
+            ]);
+        }
+    }
+
+    /**
      * Display a listing of the review links.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -58,7 +82,7 @@ class ReviewLinksController extends Controller
      * Store a newly created review link in storage.
      *
      * @param  \App\Http\Requests\ReviewLinkRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(ReviewLinkRequest $request)
     {
@@ -72,6 +96,10 @@ class ReviewLinksController extends Controller
         $reviewLink->positive_review_message = $request->input('positive_review_message');
         $reviewLink->negative_info_review_message_1 = $request->input('negative_info_review_message_1');
         $reviewLink->negative_info_review_message_2 = $request->input('negative_info_review_message_2');
+        $reviewLink->page_background = $request->input('page_background');
+        $reviewLink->modal_background = $request->input('modal_background');
+        $reviewLink->text_color = $request->input('text_color');
+        $reviewLink->copyright_text = $request->input('copyright_text');
         $reviewLink->campaign_id = $request->input('campaign_id');
         $reviewLink->created_by = Auth::user()->id;
         $reviewLink->save();
@@ -89,7 +117,7 @@ class ReviewLinksController extends Controller
      * Display the specified review link.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -107,7 +135,7 @@ class ReviewLinksController extends Controller
      *
      * @param  \App\Http\Requests\ReviewLinkRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(ReviewLinkRequest $request, $id)
     {
@@ -120,6 +148,10 @@ class ReviewLinksController extends Controller
         $reviewLink->positive_review_message = $request->input('positive_review_message');
         $reviewLink->negative_info_review_message_1 = $request->input('negative_info_review_message_1');
         $reviewLink->negative_info_review_message_2 = $request->input('negative_info_review_message_2');
+        $reviewLink->page_background = $request->input('page_background');
+        $reviewLink->modal_background = $request->input('modal_background');
+        $reviewLink->text_color = $request->input('text_color');
+        $reviewLink->copyright_text = $request->input('copyright_text');
         $reviewLink->campaign_id = $request->input('campaign_id');
         if ($request->has('logo')) {
             $reviewLink->logo = $request->file('logo');
@@ -132,14 +164,14 @@ class ReviewLinksController extends Controller
             'status' => true,
             'message' => "Review link details has updated successfully.",
             'data' => new ReviewLinkResource($reviewLink),
-        ]);
+        ], 201);
     }
 
     /**
      * Remove the specified review link from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {

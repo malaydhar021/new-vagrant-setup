@@ -73,12 +73,6 @@ Route::middleware('auth:api')->group(function () {
         Route::patch('/{id}/sticky-reviews', 'CampaignsController@syncStickyReviews')->name('sticky-reviews.sync');
     });
 
-    // @deprecated v2 exit popup api routes
-    // Route::get('/get-all-exit-pop-ups', 'ApiV2Controller@getAllExitPopUps')->name('getAllExitPopUps');
-    // Route::post('/save-exit-pop-up', 'ApiV2Controller@postExitPopUpRequest')->name('postExitPopUpRequest');
-    // Route::post('/update-exit-pop-up', 'ApiV2Controller@postUpdateExitPopUp')->name('postUpdateExitPopUp');
-    // Route::post('/delete-exit-popup', 'ApiV2Controller@postDeleteExitPopUp')->name('postDeleteExitPopUp');
-
     Route::prefix('exit-popups')->name('exit-popups.')->group(function () {
         Route::get('/styles', 'ExitPopupsController@styles')->name('styles.index');
         Route::get('/', 'ExitPopupsController@index')->name('index');
@@ -99,13 +93,8 @@ Route::middleware('auth:api')->group(function () {
         Route::patch('/{id}/campaigns', 'StickyReviewsController@syncCampaigns')->name('campaigns.sync');
     });
 
-    // review link api routes
-    // Route::get('/get-all-review-link/{id?}', 'ApiV2Controller@getAllReviewLinks')->name('getAllCampaigns');
-    // Route::post('/create-review-link', 'ApiV2Controller@postCreateReviewLink')->name('postCreateReviewLink');
-    // Route::post('/update-review-link', 'ApiV2Controller@postUpdateReviewLink')->name('postUpdateReviewLink');
-    // Route::post('/delete-review-link', 'ApiV2Controller@postDeleteReviewLink')->name('postDeleteReviewLink');
-    // Route::post('/check-duplicate-review-link', 'ApiV2Controller@postCheckDuplicateReviewLink')->name('postCheckDuplicateReviewLink');
     Route::prefix('review-links')->name('review-links.')->group(function () {
+        Route::get('slug-status', 'ReviewLinksController@checkSlug')->name('slug.check');
         Route::get('/', 'ReviewLinksController@index')->name('index');
         Route::post('/', 'ReviewLinksController@store')->name('store');
         Route::get('/{id}', 'ReviewLinksController@show')->name('show');
