@@ -4545,34 +4545,85 @@ body.sign-upPage {
   background: #F3F2FF url(#{$imgUrl}/icon_date_calendar.png) no-repeat right 14px center;
 }
 
-.sr-modal .sr-modal-container .sr-modal-body .sr-form .sr-form-row .sr-form-cell .sr-form-field .sr-form-ctrl.inputFile {
-  height: 120px;
-  position: relative;
+.sr-modal .sr-modal-container .sr-modal-body .sr-form .sr-form-row .sr-form-cell {
+  &.opt_Video {
+    .sr-form-field {
+      .sr-form-ctrl.inputFile {
+        height: auto;
+        text-align: center;
 
-  .figureUpld {
-    top: 10px;
-    width: 100px;
-    left: 15px;
-    height: 100px;
-    background: transparent url(#{$imgUrl}/user.png);
-    border-radius: 50%;
-    position: absolute;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    pointer-events: none;
+        input {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
 
-    @media (max-width: 767px) {
-      top: 15px;
-      width: 90px;
-      left: 10px;
-      height: 90px;
+        .figureUpld {
+          left: 0;
+          top: 0;
+          bottom: 0;
+          height: 230px;
+          position: relative;
+          width: 100%;
+          margin-top: 20px;
+          background: none;
+          border: 2px dashed #ccc;
+          border-radius: 5px;
+          
+          app-media-player {
+            pointer-events: all;
+          }
+        }
+      }
     }
 
-    @media (max-width: 575px) {
-      top: 30px;
-      width: 60px;
-      height: 60px;
+    &.active {
+      height: 350px;
+
+      .choseFileArea {
+        position: relative;
+        top: auto;
+        transform: none;
+        left: auto;
+        display: inline-block;
+        text-align: left;
+        @include mt(15px);
+      }
+    }
+  }
+
+  .sr-form-field .sr-form-ctrl.inputFile {
+    height: 120px;
+    position: relative;
+
+    .figureUpld {
+      top: 10px;
+      width: 100px;
+      left: 15px;
+      height: 100px;
+      background: transparent url(#{$imgUrl}/user.png);
+      border-radius: 50%;
+      position: absolute;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      pointer-events: none;
+
+      @media (max-width: 767px) {
+        top: 15px;
+        width: 90px;
+        left: 10px;
+        height: 90px;
+      }
+
+      @media (max-width: 575px) {
+        top: 30px;
+        width: 60px;
+        height: 60px;
+      }
     }
   }
 }
@@ -4601,6 +4652,15 @@ body.sign-upPage {
 
   @media (max-width: 480px) {
     max-width: 50%;
+  }
+
+  &:after {
+    clear: both;
+  }
+  &:after,
+  &:before {
+    content: '';
+    display: table;
   }
 }
 
