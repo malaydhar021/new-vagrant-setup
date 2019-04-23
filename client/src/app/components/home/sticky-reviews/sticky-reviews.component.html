@@ -66,7 +66,7 @@
 </div>
 
 <!-- Modal form for add / edit a sticky review -->
-<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
+<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal" [dismissable]="true">
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
@@ -159,7 +159,7 @@
                 <!-- End of textual review -->
 
                 <!-- Audio review type file upload -->
-                <div class="sr-form-cell reviewopt opt_Audio active" *ngIf="selectedReivewType == 2">
+                <div class="sr-form-cell reviewopt opt_Video audio_upd active" *ngIf="selectedReivewType == 2">
                   <label>Upload an audio file</label>
                   <div class="sr-form-field">
                     <div class="sr-form-ctrl inputFile">
@@ -173,6 +173,10 @@
                         <p>
                           <span>{{reviewChoseFileCtrl}}</span>{{reviewFileName}}
                         </p>
+                      </div>
+                      <div class="figureUpld">
+                        <!-- for audio  player-->
+                        <app-media-player [audioPlayer]="true"></app-media-player>
                       </div>
                     </div>
                   </div>
@@ -215,8 +219,6 @@
                       </div>
 
                       <div class="figureUpld">
-                        <!-- for audio  player-->
-                        <app-media-player [audioPlayer]="true"></app-media-player>
                         <!-- for video player-->
                         <app-media-player [videoPlayer]="true"></app-media-player>
                       </div>

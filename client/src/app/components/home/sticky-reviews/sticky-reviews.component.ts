@@ -144,7 +144,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         this.reviewFileName = 'or drag & drop your image here';
         this.reviewAsFile = null;
         // assign current value of review type a class property
-        this.selectedReivewType = value;
+        this.selectedReivewType = value;       
         Log.debug(this.selectedReivewType);
       }
     );
@@ -164,10 +164,16 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @since Version 2.0.0
    * @returns Void
    */
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
       Log.info("Sticky review modal has been closed !");
+      this.resetForm;
+    });
+    // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
+    // In this case reset the form when modal is dismissed
+    this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
+      Log.info("Sticky review modal has been dismissed !");
       this.resetForm;
     });
   }
@@ -197,6 +203,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.imagePreviewUrl = 'assets/images/user.png';
     // set review type dropdown default value to `textual`
     this.getFormControls.srType.setValue(1);
+    this.mediaPlayerService.updateAudioSrc(null);
+    this.mediaPlayerService.updateVideoSrc(null);
     return;
   }
 
@@ -358,7 +366,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     const data = {
       srName: review.name,
       srTags: review.tags,
-      sr: review.review,
+      sr: (review.type == 1) ? review.review : '',
       srRating: review.rating,
       srType: review.type,
       srImageUrl: review.image_url,
@@ -373,9 +381,11 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     };
     // let update media player src based on reivew type
     if(review.type == 2) {
+      this.mediaPlayerService.updateAudioSrc(null);
       // update audio player scr to play the audio
       this.mediaPlayerService.updateAudioSrc(review.review);  
     } else if (review.type == 3) {
+      this.mediaPlayerService.updateVideoSrc(null);
       // update video player scr to play the video
       this.mediaPlayerService.updateVideoSrc(review.review);
     }
@@ -441,7 +451,13 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       // called once readAsDataURL is completed
       reader.onload = (e) => { 
-        this.mediaPlayerService.updateVideoSrc(reader.result.toString());
+        if(this.selectedReivewType == 2) {
+          this.mediaPlayerService.updateVideoSrc(null);
+          this.mediaPlayerService.updateAudioSrc(reader.result.toString());
+        } else if(this.selectedReivewType == 3) {
+          this.mediaPlayerService.updateAudioSrc(null);
+          this.mediaPlayerService.updateVideoSrc(reader.result.toString());
+        }        
       }
     }
   }

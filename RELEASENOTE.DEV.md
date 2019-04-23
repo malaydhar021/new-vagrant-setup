@@ -16,6 +16,14 @@
 
 ## Sticky Review
 
+## V2.1.0
+
+1. Fixed style for audio and video preview
+2. Fixed issues with audio and video preview when review type is changed from dropdown
+3. Fixed issue with textual review if case audio / video review is edited and textual review has been selected
+4. Fixed minor bugs in add / edit review modal
+5. Enhanced performance
+
 ## V2.0.0
 
 1. Added review type with audio and video upload feature

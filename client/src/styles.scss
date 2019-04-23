@@ -4593,6 +4593,19 @@ body.sign-upPage {
         @include mt(15px);
       }
     }
+
+    &.audio_upd {
+      height: auto;
+
+      .sr-form-ctrl.inputFile {
+        .figureUpld {
+          height: auto;
+        }
+      }
+      &.active {
+        height: auto;
+      }
+    }
   }
 
   .sr-form-field .sr-form-ctrl.inputFile {
