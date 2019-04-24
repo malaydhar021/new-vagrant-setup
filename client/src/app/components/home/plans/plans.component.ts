@@ -113,7 +113,7 @@ export class PlansComponent implements OnInit {
       this.subscriptionService.updateSubscription({ pricing_plan_type : this.pricingPlanType}).subscribe(
         (response:any)=>{
           this.loaderService.disableLoader();
-          //this.subscriptionService.setUserSubscription(response.subscription);
+          this.subscriptionService.setUserSubscription(response.subscription);
         }
       )
     }

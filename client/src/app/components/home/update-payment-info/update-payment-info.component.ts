@@ -1,7 +1,8 @@
-import { Component, OnInit }            from '@angular/core';
-import { NgxSmartModalService }         from 'ngx-smart-modal';
-import { SubscriptionService }          from '../../../services/subscription.service';
-import { LoaderService }                from '../../../services/loader.service';
+import { Component, OnInit }                  from '@angular/core';
+import { NgxSmartModalService }               from 'ngx-smart-modal';
+import { SubscriptionService }                from '../../../services/subscription.service';
+import { LoaderService }                      from '../../../services/loader.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-update-payment-info',
@@ -9,25 +10,49 @@ import { LoaderService }                from '../../../services/loader.service';
   styleUrls: ['./update-payment-info.component.scss']
 })
 export class UpdatePaymentInfoComponent implements OnInit {
-  cards:any;
+  card:any;
+  years:any = [];
+  cardForm: FormGroup;
+  currentYear: Number;
   constructor(
-    public ngxSmartModalService: NgxSmartModalService,
-    public subscriptionService: SubscriptionService,
-    public loaderService: LoaderService
+    private ngxSmartModalService: NgxSmartModalService,
+    private subscriptionService:  SubscriptionService,
+    private loaderService:        LoaderService,
+    private formBuilder :         FormBuilder
     ) { }
 
   ngOnInit() {
-    this.getUserCardDetails()
+    this.getUserCardDetails();
+    this.createYearArray();
   }
 
   getUserCardDetails(){
+    this.loaderService.enableLoader();
     this.subscriptionService.getCardDetails().subscribe(
       (response:any) => {
-        console.log(response);
-      },
-      (error:any) =>{
-        console.log(error);
+        this.loaderService.disableLoader();
+        this.card = response.card;
       }
     )
   }
+
+  createYearArray(){
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    this.currentYear = currentYear
+    for (let i = 0; i <= 25; i++){
+      this.years.push(currentYear + i);
+    }
+  }
+
+  createCardForm(reset= false){
+    this.cardForm = this.formBuilder.group({
+      card_number: [null, Validators.compose([Validators.required, Validators.minLength(14)])],
+      cvc_number:[null, Validators.compose([Validators.required, Validators.minLength(3)])],
+      expiry_month:[1, Validators.required],
+      expiry_year: [this.currentYear, Validators.required]
+    })
+    reset && this.cardForm.reset();
+  }
+
 }

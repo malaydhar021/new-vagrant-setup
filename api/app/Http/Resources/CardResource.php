@@ -19,7 +19,7 @@ class CardResource extends Resource
             'brand' => ucwords(str_replace('_', ' ', Str::snake($this->card_brand))),
             'expiry_month' => $this->card_exp_month,
             'expiry_year' => $this->card_exp_year,
-            'owner' => (new UserResource($this->id))->briefOnly(),
+            'owner' => (new UserResource($this))->briefOnly(),
         ];
     }
 }

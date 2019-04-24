@@ -35,7 +35,7 @@
 
   </div>
   <div class="headerRight" [ngClass]="tglProfile ? 'active' : ''">
-      <a class="hdrProfile" (click)="tglProfileMenu()" style="background-image:url(../../../../assets/images/pp.png)"></a>
+      <a class="hdrProfile" (click)="tglProfileMenu()" [style.background-image]="'url('+ userImageUrl +')'"></a>
       <div class="settingDrop">
         <ul>
           <li><a [routerLink]="['/home/profile']" routerLinkActive="active">Edit Profile</a></li>

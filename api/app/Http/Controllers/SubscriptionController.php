@@ -88,7 +88,7 @@ class SubscriptionController extends Controller
                     'message' => "You are not allowed to downgrade. Please contact your sales person or Tier5 partner.",
                     'requested_action' => 'downgrade',
                     'card_required' => false,
-                ]);
+                ],400);
             }
 
             $limitExceeds = [];
@@ -121,17 +121,17 @@ class SubscriptionController extends Controller
                     'requested_action' => 'downgrade',
                     'card_required' => false,
                     'steps_required' => $exceedMessages,
-                ]);
+                ],400);
             }
         }
 
-        if (!$wannaDowngrade && $user->is_third_party) {    // Wanna upgrade but don't have card info
+        if (!$wannaDowngrade && $user->is_third_party && !$user->card_last_four) {    // Wanna upgrade but don't have card info
             return response()->json([
                 'status' => false,
                 'message' => "Before upgrading your subscription you need to provide your card details.",
                 'requested_action' => 'upgrade',
                 'card_required' => true,
-            ]);
+            ], 400);
         } else {
             $user->changeSubscriptionPlan($request->input('pricing_plan_type'));
         }

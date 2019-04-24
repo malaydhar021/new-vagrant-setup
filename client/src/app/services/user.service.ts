@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserApiEndpoints } from '../helpers/api.helper';
 import { UserUpdatePasswordModel } from '../models/user.model';
+import { Subject, BehaviorSubject }        from 'rxjs';
 
 /**
  * This service will handle all operations related to user after login
@@ -13,7 +14,7 @@ import { UserUpdatePasswordModel } from '../models/user.model';
 
 @Injectable()
 export class UserService {
-
+  public userImageUrl$ = new BehaviorSubject("assets/images/user.png");
   constructor(
     private httpClient: HttpClient,
   ) { }
@@ -50,5 +51,13 @@ export class UserService {
    */
   public changeProfile(data : FormData) {
     return this.httpClient.post(UserApiEndpoints.user, data);
+  }
+
+  setUserImage(url){
+    this.userImageUrl$.next(url);
+  }
+
+  getUserImage$() {
+    this.userImageUrl$.asObservable();
   }
 }

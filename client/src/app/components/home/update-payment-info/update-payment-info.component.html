@@ -7,29 +7,24 @@
       <span>You have added following card information with your account</span>
     </h1>
     <div class="cards">
-      <ul>
+      <ul *ngIf="card">
         <li>
           <div class="cardNumber">
             <span>CARD NUMBER</span>
-            <p>xxxx xxxx xxxx 1234</p>
+            <p>xxxx xxxx xxxx {{card.number}}</p>
           </div>
           <div class="expDate">
             <span>EXPIRY (MM/YY)</span>
-            <p>02/22</p>
-          </div>
-        </li>
-        <li>
-          <div class="cardNumber">
-            <span>CARD NUMBER</span>
-            <p>xxxx xxxx xxxx 7890</p>
-          </div>
-          <div class="expDate">
-            <span>EXPIRY (MM/YY)</span>
-            <p>05/21</p>
+            <p>{{card.expiry_month}}/{{card.expiry_year}}</p>
           </div>
         </li>
       </ul>
-      <button type="button" class="UpdateCardBtn" (click)="ngxSmartModalService.getModal('modal1').open()">Update My Card Info</button>
+      <ul *ngIf="!card">
+        <li>
+          <p>You don't have any card</p>
+        </li>
+      </ul>
+      <button type="button" class="UpdateCardBtn" (click)="ngxSmartModalService.getModal('modal1').open()">{{card ? 'Update' : 'Add'}} My Card Info</button>
     </div>
   </div>
 </div>
@@ -37,7 +32,7 @@
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
-        Update Credit Card Info
+        {{card ? 'Update' : 'Add'}} Credit Card Info
       </h2>
     </div>
     <div class="sr-modal-body">

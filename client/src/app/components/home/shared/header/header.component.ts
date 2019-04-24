@@ -7,6 +7,7 @@ import { ErrorsService }                        from '../../../../services/error
 import { MenuService }                          from '../../../../services/menu.service';
 import { Log }                                  from '../../../../helpers/app.helper';
 import { SubscriptionService}                   from '../../../../services/subscription.service';
+import { UserService }                          from 'src/app/services/user.service';
 
 /**
  * This component is responsible for handling all sort of operations in application header
@@ -33,7 +34,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   error: string = null;
   userPlanSubscription: Subscription;
   userPlanDetails:any;
-  currentPlanName:string = ''
+  currentPlanName:string = '';
+  userImageUrlSubscription: Subscription;
+  userImageUrl: string 
 
   
   constructor(
@@ -42,7 +45,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private errorService: ErrorsService,
     private menuService: MenuService,
-    private subscriptionService: SubscriptionService
+    private subscriptionService: SubscriptionService,
+    private userService: UserService
+
   ) {
     // subscription to upate the error property to disaply in template
     this.subscription = this.errorService.error$.subscribe(
@@ -65,13 +70,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase()
       }
     })
+
+    this.userImageUrlSubscription = this.userService.userImageUrl$.subscribe(url =>{
+      console.log(url);
+      this.userImageUrl = url;
+    })
     
   }
 
   /**
    * 
    */
-  public ngOnInit() { }
+  public ngOnInit() {
+    this.userService.getAuthUserInfo().subscribe(
+      (response:any)=>{
+        if (response.data.image){
+          this.userService.setUserImage(response.data.image)
+        }
+      }
+    )
+   }
 
   public ngOnDestroy() {
     this.subscription.unsubscribe();

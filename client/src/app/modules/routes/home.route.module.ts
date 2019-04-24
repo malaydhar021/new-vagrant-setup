@@ -23,8 +23,8 @@ const routes: Routes = [
     {path: 'profile',             component: ProfileComponent},
     {path: 'update-payment-info', component: UpdatePaymentInfoComponent},
     {path: 'cancel-membership',   component: CancelMembershipComponent},
+    {path: 'dashboard',           component: DashboardComponent},
 
-    {path: 'dashboard',       canActivate: [SubscriptionGuard], component: DashboardComponent},
     {path: 'sticky-reviews',  canActivate: [SubscriptionGuard], component: StickyReviewsComponent},
     {path: 'branding',        canActivate: [SubscriptionGuard], component: BrandingComponent},
     {path: 'campaign',        canActivate: [SubscriptionGuard], component: CampaignComponent},

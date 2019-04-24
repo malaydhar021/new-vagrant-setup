@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
   profileImage : any = null;
   choseFileCtrl: string = 'Browse from your computer';
   fileName: string = 'or drag & drop your image here';
+  imagePreviewUrl: string = 'assets/images/user.png';
   allowedFileTypes: string[] = [
     'image/jpeg',
     'image/png',
@@ -140,6 +141,7 @@ export class ProfileComponent implements OnInit {
       email: [this.userInfo.email, Validators.compose([Validators.required, Validators.email])],
       image: [null]
     })
+    this.imagePreviewUrl = this.userInfo.image;
 
   }
   /**
@@ -164,6 +166,9 @@ export class ProfileComponent implements OnInit {
       (response: any)=> {
         this.loaderService.disableLoader();
         this.userInfo = response.data.user;
+        if (this.userInfo.image){
+          this.userService.setUserImage(this.userInfo.image)
+        }
         this.ngxSmartModalService.getModal('modal2').close();
       }
     )
@@ -188,6 +193,13 @@ export class ProfileComponent implements OnInit {
         this.userProfileUpdateForm.updateValueAndValidity();
         this.userProfileUpdateForm.setValidators(ValidationEngine.FileSize('image', this.profileImage, 1, 'MB'));
         this.userProfileUpdateForm.updateValueAndValidity();
+      }
+      let reader = new FileReader();
+      
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      // called once readAsDataURL is completed
+      reader.onload = (e) => { 
+        this.imagePreviewUrl = reader.result.toString();
       }
     }
   }

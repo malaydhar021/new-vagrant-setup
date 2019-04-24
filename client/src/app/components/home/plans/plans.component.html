@@ -68,7 +68,9 @@
               (click)="addUpdatePlan('highest')">{{buttonText('Agency')}}</button>
           </div>
         </div>
-
+        <div>
+          <message></message>
+        </div>
         <div class="planNote text-center">
           <p>
               *Billed monthly, <span class="link-inline">no set up fee.</span>
@@ -103,10 +105,12 @@
                 mask="0000 0000 0000 0000"
                 formControlName="card_number"
                 [ngClass]="{'error' : !cardForm.get('card_number').valid && cardForm.get('card_number').touched}">
-                <span class="error-msg" *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').errors.required">
+                <span class="error-msg" 
+                  *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.required">
                   Required!
                 </span>
-                <span class="error-msg" *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').errors.minlength">
+                <span class="error-msg" 
+                  *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.minlength">
                   Minimum length 14
                 </span>
             </div>
@@ -121,10 +125,12 @@
                 [ngClass]="{'error' : !cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched}"
                 value=''
                 >
-                <span class="error-msg" *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').errors.required" class="error-msg">
+                <span class="error-msg" 
+                  *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched && cardForm.get('cvc_number').errors.required" class="error-msg">
                   Required!
                 </span>
-                <span class="error-msg" *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').errors.minlength" class="error-msg">
+                <span class="error-msg" 
+                *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched && cardForm.get('cvc_number').errors.minlength" class="error-msg">
                   Minimum length 3
                 </span>
             </div>
