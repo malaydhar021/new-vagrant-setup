@@ -83,21 +83,7 @@ export class AppComponent { }
     MediaPlayerModule,
   ],
   providers: [
-<<<<<<< HEAD
-    Title,
-    AuthService,
-    AuthGuard,
-    GlobalService,
-    CookieService,
-    ErrorsService,
-    SignupService,
-    ReviewLinkService,
-    LoaderService,
-    UserService,
-    SubscriptionService,
-    MediaPlayerService,
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
-=======
+
       Title,
       AuthService,
       AuthGuard,
@@ -110,8 +96,8 @@ export class AppComponent { }
       UserService,
       SubscriptionService,
       SubscriptionGuard,
+      MediaPlayerService,
       { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
->>>>>>> Plans v0.3
   ],
   bootstrap: [AppComponent]
 })
