@@ -76,7 +76,7 @@ export class PlansComponent implements OnInit {
 
     addUpdatePlan(plan){
       this.pricingPlanType = plan;
-      if (this.userPlanDetails.status == 'NA'){
+      if (this.userPlanDetails.status !== "ACTIVE"){
         this.ngxSmartModalService.getModal('modal1').open();
         return
       }
@@ -113,7 +113,7 @@ export class PlansComponent implements OnInit {
       this.subscriptionService.updateSubscription({ pricing_plan_type : this.pricingPlanType}).subscribe(
         (response:any)=>{
           this.loaderService.disableLoader();
-          this.subscriptionService.setUserSubscription(response.subscription);
+          //this.subscriptionService.setUserSubscription(response.subscription);
         }
       )
     }

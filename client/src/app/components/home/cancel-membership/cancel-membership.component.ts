@@ -19,6 +19,7 @@ export class CancelMembershipComponent implements OnInit {
   userInfo: any;
   name: string = '';
   plan: string = '';
+  subscriptionStatus:string;
   listOfReasons: Array<string>=['Bad Onboarding', 'Buggy Product', 'Bad Support', 'Not A Right Fit', 'Price Is Too High', 'Others']
   constructor(
     private subscriptionService: SubscriptionService,
@@ -52,7 +53,10 @@ export class CancelMembershipComponent implements OnInit {
         this.loaderService.disableLoader();
         this.userInfo = response.data;
         this.name = response.data.name;
-        this.plan = response.data.subscription.data && response.data.subscription.data.pricing_plan.alias ? response.data.subscription.data.pricing_plan.alias : null
+        if (response.data && response.data.subscription && response.data.subscription.data && response.data.subscription.data.pricing_plan){
+          this.plan = response.data.subscription.data.pricing_plan.alias
+        }
+        this.subscriptionStatus = response.data.subscription.status;
       }
     )
   }
@@ -61,18 +65,17 @@ export class CancelMembershipComponent implements OnInit {
     this.subscriptionService.getCurrentSubscription().subscribe(
       (response:any)=> {
         this.loaderService.disableLoader();
-        this.subscriptionService.setUserSubscription(response.data);
+        this.subscriptionService.setUserSubscription(response.subscription);
       }
     )
   }
   cancelMembership(){
     let value = this.cancellationForm.value;
-    console.log(value);
     value['_method'] = "DELETE"
     this.loaderService.enableLoader()
     this.subscriptionService.deleteSubscription(value).subscribe(
       (response : any)=>{
-        this.showCancelationForm = true;
+        this.showCancelationForm = false;
         this.getUserSubscribtion();
       }
     )

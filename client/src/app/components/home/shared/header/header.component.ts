@@ -61,6 +61,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
       this.userPlanDetails = userPlan;
       userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias && (this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase())
+      if(userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias){
+        this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase()
+      }
     })
     
   }
@@ -114,5 +117,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     );
   }
-  
+
 }

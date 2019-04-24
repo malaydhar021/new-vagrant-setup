@@ -444,6 +444,17 @@ export class SubscriptionApiEndpoints {
     return apiBaseUrl.concat('/user/subscription');
   }
 
+  /**
+   * cards to generate api endpoint to implement CRUD on a user card
+   * @method cards
+   * @since Version 1.0.0
+   * @returns String 
+   */
+  public static get cards() : string {
+    return apiBaseUrl.concat('/user/card');
+  }
+  
+
 }
 
 

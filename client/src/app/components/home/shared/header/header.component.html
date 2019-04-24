@@ -13,22 +13,22 @@
 
     <div class="settingDrop">
       <div class="topSec">
-        <h2 *ngIf=" userPlanDetails && userPlanDetails.status !== 'NA'">
+        <h2 *ngIf=" userPlanDetails && userPlanDetails.status === 'ACTIVE'">
           <span>Your current</span>
           membership plan
         </h2>
-        <h2 *ngIf=" userPlanDetails && userPlanDetails.status === 'NA'">
+        <h2 *ngIf=" userPlanDetails && userPlanDetails.status !== 'ACTIVE'">
           <span>Your current</span>
             You haven't subscribe
         </h2>
-        <div class="planName" *ngIf=" userPlanDetails && userPlanDetails.status !== 'NA'">
+        <div class="planName" *ngIf=" userPlanDetails && userPlanDetails.status === 'ACTIVE'">
           {{currentPlanName}} 
         </div>
-        <a [routerLink]="['/home/plans']" class="upgrade">{{(userPlanDetails && userPlanDetails.status === 'NA') ? 'Add' : 'Update'}} Now</a>
+        <a [routerLink]="['/home/plans']" class="upgrade">{{(userPlanDetails && userPlanDetails.status !== 'ACTIVE') ? 'Add' : 'Update'}} Now</a>
       </div>
       <div class="bottomSec">
         <ul>
-          <li><a [routerLink]="['/home/update-payment-info']" routerLinkActive="active">{{(userPlanDetails && userPlanDetails.status === 'NA') ? 'Add' : Update}} Payment Info</a></li>
+          <li><a [routerLink]="['/home/update-payment-info']" routerLinkActive="active">{{(userPlanDetails && userPlanDetails.status !== 'ACTIVE') ? 'Add' : Update}} Payment Info</a></li>
         </ul>
       </div>
     </div>

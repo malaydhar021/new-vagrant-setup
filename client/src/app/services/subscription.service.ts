@@ -94,4 +94,15 @@ export class SubscriptionService {
     return this.httpClient.post(SubscriptionApiEndpoints.subscription, data);
   }
 
+
+  /**
+   * getCardDetails method will make an api request delete a user subscription
+   *  @method getCardDetails
+   * @since 1.0.0
+   * @returns Observable<Object>
+   */
+  getCardDetails(){
+    return this.httpClient.get(SubscriptionApiEndpoints.cards);
+  }
+
 }

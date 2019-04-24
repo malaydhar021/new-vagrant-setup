@@ -29,6 +29,8 @@ export class ProfileComponent implements OnInit {
   userInfo: UserAuthInfo;
   userProfileUpdateForm : FormGroup;
   profileImage : any = null;
+  choseFileCtrl: string = 'Browse from your computer';
+  fileName: string = 'or drag & drop your image here';
   allowedFileTypes: string[] = [
     'image/jpeg',
     'image/png',
