@@ -47,14 +47,20 @@ class StickyReviewsController extends Controller
      */
     public function index()
     {
-        $noOfStickyReviews = $this->queryBuilder->count();
-        $stickyReviews = $this->queryBuilder->orderBy('id', 'desc')->get();
-
+        $searchParams = \Request::get('searchParams');
+        if($searchParams!=""){
+            $stickyReviews = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%')->orderBy('created_at', 'desc')->paginate();
+            $noOfStickyReviews = $this->queryBuilder->count();
+        }else{
+            $stickyReviews = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
+            $noOfStickyReviews = $this->queryBuilder->count();
+        }
         if ($noOfStickyReviews) {
+            StickyReviewResource::collection($stickyReviews);
             return response()->json([
                 'status' => true,
                 'message' => "${noOfStickyReviews} sticky reviews has found.",
-                'data' => StickyReviewResource::collection($stickyReviews),
+                'data' => $stickyReviews,
             ]);
         } else {
             return response()->json([

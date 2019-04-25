@@ -60,14 +60,21 @@ class ExitPopupsController extends Controller
      */
     public function index()
     {
-        $noOfExitPopups = $this->queryBuilder->count();
-        $exitPopups = $this->queryBuilder->orderBy('created_at', 'desc')->get();
+        $searchParams = \Request::get('searchParams');
+        if($searchParams!=""){
+            $exitPopups = $this->queryBuilder->orderBy('created_at', 'desc')->where('name','LIKE','%' . $searchParams . '%')->paginate();
+            $noOfExitPopups = $this->queryBuilder->count();
+        }else{
+            $exitPopups = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
+            $noOfExitPopups = $this->queryBuilder->count();
+        }
 
         if ($noOfExitPopups) {
+            ExitPopupResource::collection($exitPopups);
             return response([
                 'status' => true,
                 'message' => "${noOfExitPopups} exit-poup(s) have found.",
-                'data' => ExitPopupResource::collection($exitPopups),
+                'data' => $exitPopups,
             ]);
         } else {
             return response([
