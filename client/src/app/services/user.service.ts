@@ -53,11 +53,14 @@ export class UserService {
     return this.httpClient.post(UserApiEndpoints.user, data);
   }
 
+  /**
+   * This method is used to set the user image url
+   * @method setUserImage
+   * @since version 1.0.0
+   * @param url (user image url)
+   * @returns none
+   */
   setUserImage(url){
     this.userImageUrl$.next(url);
-  }
-
-  getUserImage$() {
-    this.userImageUrl$.asObservable();
   }
 }

@@ -6,6 +6,13 @@ import { SubscriptionService }                from '../../../services/subscripti
 import { LoaderService }                      from '../../../services/loader.service';
 import { UserService }                        from '../../../services/user.service';
 
+/**
+ * CancelMembershipComponent is responsible for cancelling user membership
+ * @class CancelMembershipComponent
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 @Component({
   selector: 'app-cancel-membership',
   templateUrl: './cancel-membership.component.html',
@@ -20,7 +27,19 @@ export class CancelMembershipComponent implements OnInit {
   name: string = '';
   plan: string = '';
   subscriptionStatus:string;
-  listOfReasons: Array<string>=['Bad Onboarding', 'Buggy Product', 'Bad Support', 'Not A Right Fit', 'Price Is Too High', 'Others']
+  listOfReasons: Array<string>=['Bad Onboarding', 'Buggy Product', 'Bad Support', 'Not A Right Fit', 'Price Is Too High', 'Others'];
+
+   /**
+   * Constructor to inject required service. It also subscribe to a observable which emits the current
+   * value of defined variable. 
+   * @constructor constructor
+   * @since Version 1.0.0
+   * @param subscriptionService
+   * @param loaderService
+   * @param formBuilder 
+   * @param userService
+   * @returns Void
+   */
   constructor(
     private subscriptionService: SubscriptionService,
     private loaderService: LoaderService,
@@ -29,6 +48,8 @@ export class CancelMembershipComponent implements OnInit {
   ) { 
     
   }
+
+
   onChangeReason(){
     
     if (this.cancellationForm.get('reason').value == "Others"){
@@ -41,12 +62,13 @@ export class CancelMembershipComponent implements OnInit {
       this.cancellationForm.get('description').updateValueAndValidity();
     }
   }
+  
   ngOnInit() {
+    this.createCancellationForm();
+    this.getAuthUserInfo();
+  }
 
-    this.cancellationForm = this.formBuilder.group({
-      reason: ['Bad Onboarding',Validators.required ],
-      description: [null]
-    })
+  getAuthUserInfo(){
     this.loaderService.enableLoader();
     this.userService.getAuthUserInfo().subscribe(
       (response: any)=>{
@@ -61,7 +83,6 @@ export class CancelMembershipComponent implements OnInit {
     )
   }
   getUserSubscribtion(){
-    // this.loaderService.enableLoader();
     this.subscriptionService.getCurrentSubscription().subscribe(
       (response:any)=> {
         this.loaderService.disableLoader();
@@ -79,6 +100,13 @@ export class CancelMembershipComponent implements OnInit {
         this.getUserSubscribtion();
       }
     )
+  }
+
+  createCancellationForm(){
+    this.cancellationForm = this.formBuilder.group({
+      reason: ['Bad Onboarding',Validators.required ],
+      description: [null]
+    })
   }
 
 }

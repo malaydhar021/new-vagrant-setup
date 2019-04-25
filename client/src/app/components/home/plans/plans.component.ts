@@ -6,6 +6,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService }                from '../../../services/subscription.service';
 import { LoaderService }                      from '../../../services/loader.service';
 
+/**
+ * PlansComponent is responsible for handling user subscriptions 
+ * @class PlansComponent
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
@@ -20,7 +27,17 @@ export class PlansComponent implements OnInit {
     cardForm: FormGroup;
     currentYear: Number;
 
-
+    /**
+   * Constructor to inject required service. It also subscribe to a observable which emits the current
+   * value of defined variable. 
+   * @constructor constructor
+   * @since Version 1.0.0
+   * @param subscriptionService
+   * @param loaderService
+   * @param ngxSmartModalService
+   * @param formBuilder
+   * @returns Void
+   */
     constructor( 
       private subscriptionService: SubscriptionService,
       private loaderService: LoaderService,
