@@ -36,14 +36,20 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        $noOfBrands = $this->queryBuilder->count();
-        $brands = $this->queryBuilder->orderBy('created_at', 'desc')->get();
-
+        $searchParams = \Request::get('searchParams');
+        if($searchParams!=""){
+            $brands = $this->queryBuilder->where('brand_name','LIKE','%' . $searchParams . '%')->orderBy('created_at', 'desc')->paginate();
+            $noOfBrands = $this->queryBuilder->count();
+        }else{
+            $brands = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
+            $noOfBrands = $this->queryBuilder->count();
+        }
         if ($noOfBrands) {
+            BrandResource::collection($brands);
             return response()->json([
                 'status' => true,
                 'message' => "${noOfBrands} brand(s) have found.",
-                'data' => BrandResource::collection($brands),
+                'data' => $brands,
             ]);
         } else {
             return response()->json([
