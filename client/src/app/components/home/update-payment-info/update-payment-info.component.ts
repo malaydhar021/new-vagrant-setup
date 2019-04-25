@@ -24,6 +24,7 @@ export class UpdatePaymentInfoComponent implements OnInit {
   ngOnInit() {
     this.getUserCardDetails();
     this.createYearArray();
+    this.createCardForm();
   }
 
   getUserCardDetails(){
@@ -53,6 +54,18 @@ export class UpdatePaymentInfoComponent implements OnInit {
       expiry_year: [this.currentYear, Validators.required]
     })
     reset && this.cardForm.reset();
+  }
+
+  add(){
+    this.loaderService.enableLoader();
+    this.subscriptionService.updateCardDetails(this.cardForm.value).subscribe(
+      (response: any)=> {
+        this.loaderService.disableLoader();
+        this.card = response.card;
+        this.ngxSmartModalService.getModal('modal1').close();
+        this.createCardForm(true);
+      }
+    )
   }
 
 }

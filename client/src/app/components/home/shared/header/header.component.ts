@@ -72,7 +72,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     })
 
     this.userImageUrlSubscription = this.userService.userImageUrl$.subscribe(url =>{
-      console.log(url);
       this.userImageUrl = url;
     })
     

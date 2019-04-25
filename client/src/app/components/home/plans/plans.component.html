@@ -120,10 +120,8 @@
                 type="password" 
                 class="formCtrl"
                 mask="0000"
-                value=""
                 formControlName="cvc_number"
                 [ngClass]="{'error' : !cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched}"
-                value=''
                 >
                 <span class="error-msg" 
                   *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched && cardForm.get('cvc_number').errors.required" class="error-msg">
