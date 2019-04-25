@@ -55,14 +55,20 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        $noOfCampaigns = $this->queryBuilder->count();
-        $campaigns = $this->queryBuilder->orderBy('created_at', 'desc')->get();
-
+        $searchParams = \Request::get('searchParams');
+        if($searchParams!=""){
+            $campaigns = $this->queryBuilder->orderBy('created_at', 'desc')->where('campaign_name','LIKE','%' . $searchParams . '%')->orWhere('domain_name','LIKE','%' . $searchParams . '%')->paginate();
+            $noOfCampaigns = $this->queryBuilder->count();
+        }else{
+            $campaigns = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
+            $noOfCampaigns = $this->queryBuilder->count();
+        }
         if ($noOfCampaigns) {
+            CampaignsResource::collection($campaigns);
             return response()->json([
                 'status' => true,
                 'message' => "${noOfCampaigns} campaign(s) have found.",
-                'data' => CampaignsResource::collection($campaigns),
+                'data' => $campaigns,
             ]);
         } else {
             return response()->json([
