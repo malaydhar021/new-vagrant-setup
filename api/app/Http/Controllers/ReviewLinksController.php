@@ -61,14 +61,20 @@ class ReviewLinksController extends Controller
      */
     public function index()
     {
-        $noOfReviewLinks = $this->queryBuilder->count();
-        $reviewLinks = $this->queryBuilder->orderBy('created_at', 'desc')->get();
-
+        $searchParams = \Request::get('searchParams');
+        if($searchParams!=""){
+            $reviewLinks = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%')->orWhere('url_slug','LIKE','%' . $searchParams . '%')->orderBy('created_at', 'desc')->paginate();
+            $noOfReviewLinks = $this->queryBuilder->count();
+        }else{
+            $reviewLinks = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
+            $noOfReviewLinks = $this->queryBuilder->count();
+        }
         if ($noOfReviewLinks) {
+            ReviewLinkResource::collection($reviewLinks);
             return response()->json([
                 'status' => true,
                 'message' => "${noOfReviewLinks} review link(s) have found.",
-                'data' => ReviewLinkResource::collection($reviewLinks),
+                'data' =>$reviewLinks,
             ]);
         } else {
             return response()->json([
