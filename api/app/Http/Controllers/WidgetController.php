@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Campaign;
+use App\Http\Resources\WidgetResource;
 
 class WidgetController extends Controller
 {
@@ -15,9 +17,14 @@ class WidgetController extends Controller
      */
     public function index(Request $request, $usid)
     {
+        $campaign = Campaign::where('unique_script_id', $usid)
+            ->with('campaignStyle', 'exitPopUp', 'brandingDetails', 'stickyReviews', 'user')
+            ->firstOrFail();
+
         return response()->json([
             'status' => true,
-            'message' => "OK",
+            'message' => "Widget details fetched successfully.",
+            'data' => new WidgetResource($campaign),
         ]);
     }
 

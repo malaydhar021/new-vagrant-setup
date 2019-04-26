@@ -43,9 +43,7 @@ class StickyReviewResource extends Resource
                 'type' => $type,
                 'review' => $review,
                 'image_url' => $this->image_url,
-                'tags' => $this->tags,
-                'review_type' => $this->review_type,
-                'reviewd_at' => Carbon::parse($this->created_at)->toDateTimeString(),
+                'reviewed_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             ];
         } else {
             return [
@@ -57,10 +55,10 @@ class StickyReviewResource extends Resource
                 'image_url' => $this->image_url,
                 'tags' => $this->tags,
                 'review_type' => $this->review_type,
-                'review_link' => (new ReviewLinkResource($this->review_link))->briefOnly(),
+                'review_link' => (new ReviewLinkResource($this->whenLoaded('reviewLink')))->briefOnly(),
                 'campaigns' => (CampaignsResource::collection($this->whenLoaded('campaigns')))->briefOnly(),
                 'created_by' => (new UserResource($this->user))->briefOnly(),
-                'reviewd_at' => Carbon::parse($this->created_at)->toDateTimeString(),
+                'reviewed_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
             ];

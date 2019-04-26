@@ -135,6 +135,9 @@ class UserReviewsController extends Controller
                 $negativeReview->phone_number = $request->input('phone_number');
                 $negativeReview->save();
             }
+
+            $userReview->load('reviewLink');
+            $userReview->campaigns()->attach([$userReview->reviewLink->campaign_id]);
         } catch (Exception $exception) {
             DB::rollBack();
 
@@ -151,8 +154,6 @@ class UserReviewsController extends Controller
         } finally {
             DB::commit();
         }
-
-        $userReview->load('negativeReviews');
 
         return response()->json([
             'status' => true,

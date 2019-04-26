@@ -132,6 +132,16 @@ class Campaign extends Model
     }
 
     /**
+     * Get the campaign's is active
+     *
+     * @return boolean
+     */
+    public function getIsBrandOnAttribute()
+    {
+        return (boolean) $this->branding;
+    }
+
+    /**
      * Stiky reviews attached to the campaign
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
