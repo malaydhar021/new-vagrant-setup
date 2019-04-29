@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use App\Helpers\Hashids;
 
+use App\Exceptions\PrivilegeViolationException;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +35,31 @@ class ExitPopUpRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check())  return true;
+        if (Auth::check()) {
+            $user = Auth::user();
+            $pricingPlan = $user->pricing_plan;
+
+            if ($user->subscription_status == 'CANCELLED') {
+                throw new PrivilegeViolationException(
+                    "Your action is forbidden due to cancellation of your subscription plan. Please resubscribe again" .
+                        " to continue."
+                );
+            } elseif ($user->subscription_status == 'TERMINATED') {
+                throw new PrivilegeViolationException(
+                    "Your action is forbidden due to termination of your subscription plan. Please resubscribe again " .
+                        "to continue."
+                );
+            }
+
+            if ($user->exit_popups_count >= config('pricing.plans.' . $pricingPlan . '.privileges')['exit-popups']) {
+                throw new PrivilegeViolationException(
+                    "You can not create a new exit popup, please delete one existing exit popup or upgrade your " .
+                        "current subscription plan."
+                );
+            }
+
+            return true;
+        }
 
         return false;
     }

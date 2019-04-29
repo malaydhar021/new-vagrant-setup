@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use App\Helpers\Hashids;
 
+use App\Exceptions\PrivilegeViolationException;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +34,31 @@ class ReviewLinkRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check())  return true;
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user->subscription_status == 'CANCELLED') {
+                throw new PrivilegeViolationException(
+                    "Your action is forbidden due to cancellation of your subscription plan. Please resubscribe again" .
+                        " to continue."
+                );
+            } elseif ($user->subscription_status == 'TERMINATED') {
+                throw new PrivilegeViolationException(
+                    "Your action is forbidden due to termination of your subscription plan. Please resubscribe again " .
+                        "to continue."
+                );
+            }
+
+            $pricingPlan = $user->pricing_plan;
+            if ($user->review_links_count >= config('pricing.plans.' . $pricingPlan . '.privileges')['review-links']) {
+                throw new PrivilegeViolationException(
+                    "You can not create a new review link, please delete one existing review link or upgrade your " .
+                        "current subscription plan."
+                );
+            }
+
+            return true;
+        }
 
         return false;
     }

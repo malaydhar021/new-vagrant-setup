@@ -124,6 +124,14 @@ class Handler extends ExceptionHandler
                 ], 400);
             }
 
+            /** Privilege violation Exception Response */
+            if ($exception instanceof PrivilegeViolationException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $exception->getMessage(),
+                ], 403);
+            }
+
             /** File Storing Exception Exception Response */
             if ($exception instanceof FileStoringException) {
                 return response()->json([

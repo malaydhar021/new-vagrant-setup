@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Exceptions\PrivilegeViolationException;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +16,30 @@ class CampaignRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check()) return true;
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user->subscription_status == 'CANCELLED') {
+                throw new PrivilegeViolationException(
+                    "Your action is forbidden due to cancellation of your subscription plan. Please resubscribe again" .
+                        " to continue."
+                );
+            } elseif ($user->subscription_status == 'TERMINATED') {
+                throw new PrivilegeViolationException(
+                    "Your action is forbidden due to termination of your subscription plan. Please resubscribe again " .
+                        "to continue."
+                );
+            }
+
+            if ($user->campaigns_count >= config('pricing.plans.' . $user->pricing_plan . '.privileges')['campaigns']) {
+                throw new PrivilegeViolationException(
+                    "You can not create a new campaign, please delete one existing campaign or upgrade your " .
+                        "current subscription plan."
+                );
+            }
+
+            return true;
+        }
 
         return false;
     }

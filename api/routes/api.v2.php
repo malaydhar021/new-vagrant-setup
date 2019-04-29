@@ -47,7 +47,7 @@ Route::prefix('user')->name('user.')->middleware('auth:api')->group(function () 
 
 Route::get('pricing-plans', 'PricingPlansController@index')->name('pricing-plans.index');
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['auth:api', 'subscription'])->group(function () {
     Route::bind('id', function ($value, $route) {
         return \App\Helpers\Hashids::decode($value);
     });

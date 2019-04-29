@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Campaign;
+use App\Exceptions\PrivilegeViolationException;
 use App\Http\Requests\SubscribedEmailRequest;
 use App\Http\Resources\WidgetResource;
 use App\SubscribedEmail;
@@ -23,6 +24,12 @@ class WidgetController extends Controller
         $campaign = Campaign::where('unique_script_id', $usid)
             ->with('campaignStyle', 'exitPopUp', 'brandingDetails', 'stickyReviews', 'user')
             ->firstOrFail();
+
+        if ($campaign->user->subscription_status == 'CANCELLED' ||
+            $campaign->user->subscription_status == 'TERMINATED'
+        ) {
+            throw new PrivilegeViolationException("Your action is forbidden.");
+        }
 
         return response()->json([
             'status' => true,

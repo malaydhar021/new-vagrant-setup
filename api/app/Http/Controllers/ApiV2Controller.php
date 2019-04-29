@@ -2,34 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\ExitPopUp;
-use App\Http\Requests\ExitPopUpRequest;
-use App\Http\Requests\ReviewLinkRequest;
-use App\Campaign;
-use App\NegativeReview;
-use App\ReviewLink;
-use App\StickyReview;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\User;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ApiV2Controller extends Controller
 {
-    /**
-     * this function returns authenticated user id if authenticated
-     * @return bool|integer
-     */
-    public function isAuthenticated()
-    {
-        if (Auth::check()) {
-            return Auth::user()->id;
-        } else {
-            return false;
-        }
-    }
-
     /**
      * this function helps to create a user when its coming from third party
      * like clickfunnel
@@ -202,148 +179,6 @@ class ApiV2Controller extends Controller
                     'message' => 'Missing expected param!',
                 ]
             ]);
-        }
-    }
-
-    /**
-     * Store sticky reviews in db coming from user review
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postSaveUserReview(Request $request)
-    {
-        // would you like to recommend us is true
-        if ($request->step1 === 'true') {
-            // show in web is true
-            if ($request->step3 === 'true') {
-                    if ($request->hasFile('imageData')) {
-                        $extension = $request->file('imageData')->getClientOriginalExtension();
-                        $fileNameToStore = 'emv_' . time() . '.' . $extension;
-                        $img = Image::make($request->file('imageData'))
-                                ->resize(64, 64)
-                                ->save('uploads/sticky-review-images/' . $fileNameToStore);
-                    } else {
-                        $fileNameToStore = 'reviews_default.png';
-                        $img = true;
-                    }
-                if ($img) {
-                    $step2 = json_decode($request->step2, true);
-                    if (StickyReview::storeStickyReview(
-                        $request->created_by,
-                        $step2['review_title'],
-                        $step2['description'],
-                        $fileNameToStore,
-                        $step2['rating'],
-                        3,
-                        $request->review_link_id
-                    )) {
-                        return response()->json([
-                            'status' => true,
-                            'message' => 'Successfully saved record!'
-                        ],200);
-                    } else {
-                        return response()->json([
-                            'status' => false,
-                            'message' => 'Failed to store data! Please try again later'
-                        ],500);
-                    }
-                } else {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Failed to store image! Please try again later'
-                    ],500);
-                }
-            } else {
-                // show in web false
-                if (StickyReview::storeStickyReview(
-                    $request->created_by,
-                    json_decode($request->step2, true)['review_title'],
-                    json_decode($request->step2, true)['description'],
-                    'reviews_default.png',
-                    json_decode($request->step2, true)['rating'],
-                    2,
-                    $request->review_link_id
-                )) {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Successfully saved record!'
-                    ],200);
-                } else {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Failed to store data! Please try again later'
-                    ],500);
-                }
-            }
-        } else {
-            // recommend us false
-            $review_id = StickyReview::storeStickyReview(
-                $request->created_by,
-                json_decode($request->step2, true)['review_title'],
-                json_decode($request->step2, true)['description'],
-                'reviews_dislike.png',
-                json_decode($request->step2, true)['rating'],
-                4,
-                $request->review_link_id
-            );
-            if ($review_id) {
-                if (NegativeReview::storeNegativeReview($review_id, json_decode($request->step3, true)['email'], json_decode($request->step3, true)['phone_number'])) {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Successfully saved record!'
-                    ],200);
-                } else {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Failed to store data! Please try again later'
-                    ],500);
-                }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Failed to store data! Please try again later'
-                ],500);
-            }
-        }
-    }
-
-    /**
-     * this function query a particular campaign from database with uniqueid
-     * @param null $uniqueId
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getParticularCampaign($uid = null)
-    {
-        if ($uid) {
-            try {
-                $findCampaign = Campaign::where('unique_script_id', $uid)
-                    ->with('stickyReviews', 'brandingDetails', 'exitPopUp')
-                    ->orderBy('created_at', 'desc')
-                    ->first();
-                if ($findCampaign) {
-                    return response()->json([
-                        'status' => true,
-                        'message' => $findCampaign
-                    ]);
-                } else {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Did not able to find any campaign. Please check the id'
-                    ], 404);
-                }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Oops! Something went wrong in server. Please try again later.",
-                    'message' => $e->getMessage()
-                ], 500);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No id found!'
-            ], 400);
         }
     }
 }

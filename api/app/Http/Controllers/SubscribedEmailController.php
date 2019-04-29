@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\SubscribedEmail;
 use App\Http\Resources\SubscribedEmailResource;
+use App\SubscribedEmail;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SubscribedEmailController extends Controller

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Campaign;
+use App\CampaignStyle;
 use App\Helpers\Hashids;
 use App\Http\Requests\CampaignRequest;
 use App\Http\Resources\CampaignsResource;
 use App\Http\Resources\CampaignStyleResource;
-use App\Campaign;
-use App\CampaignStyle;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

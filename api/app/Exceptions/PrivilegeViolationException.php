@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Throwable;
 
-class SubscriptionException extends Exception
+class PrivilegeViolationException extends Exception
 {
     /**
      * SubscriptionException Constructor
@@ -14,8 +14,8 @@ class SubscriptionException extends Exception
      * @param integer $code
      * @param Throwable $previous
      */
-    public function __construct(string $message = "", int $code = null, Throwable $previous = null)
+    public function __construct(string $message, int $code = null, Throwable $previous = null)
     {
-        parent::__construct($message, 400, $previous);
+        parent::__construct($message, 403, $previous);
     }
 }

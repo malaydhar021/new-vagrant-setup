@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Campaign;
+use App\Exceptions\PrivilegeViolationException;
 use App\Helpers\Hashids;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -32,7 +33,16 @@ class SubscribedEmailRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Campaign::whereUniqueScriptId($this->route('usid'))->first()) return true;
+        $campaign = Campaign::whereUniqueScriptId($this->route('usid'))->with('user')->first();
+
+        if ($campaign) {
+            if ($campaign->user->subscription_status == 'CANCELLED' ||
+                $campaign->user->subscription_status == 'TERMINATED') {
+                throw new PrivilegeViolationException("Your action is forbidden.");
+            }
+
+            return true;
+        }
 
         return false;
     }
