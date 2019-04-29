@@ -64,12 +64,12 @@ class ExitPopUp extends Model
     }
 
     /**
-     * Get the exit popup's has sticky review
+     * Get the exit popup's has sticky reviews
      *
      * @param  string  $value
      * @return boolean
      */
-    public function getHasStickyReviewAttribute($value)
+    public function getHasStickyReviewsAttribute($value)
     {
         return (boolean) $value;
     }
@@ -266,5 +266,15 @@ class ExitPopUp extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    /**
+     * The subscribed emails gathered by the exit popup
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subscribedEmail()
+    {
+        return $this->hasMany(SubscribedEmail::class, 'exit_pop_up_id', 'id');
     }
 }

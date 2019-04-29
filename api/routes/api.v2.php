@@ -102,6 +102,10 @@ Route::middleware('auth:api')->group(function () {
         Route::patch('/{id}', 'ReviewLinksController@update')->name('update');
         Route::delete('/{id}', 'ReviewLinksController@destroy')->name('delete');
     });
+
+    Route::prefix('subscribed-emails')->name('subscribed-emails.')->group(function () {
+        Route::get('/', 'SubscribedEmailController@index')->name('index');
+    });
 });
 
 Route::prefix('user-reviews')->name('user-reviews.')->group(function () {

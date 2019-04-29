@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Campaign;
+use App\Http\Requests\SubscribedEmailRequest;
 use App\Http\Resources\WidgetResource;
+use App\SubscribedEmail;
+
+use Illuminate\Http\Request;
 
 class WidgetController extends Controller
 {
@@ -31,12 +34,17 @@ class WidgetController extends Controller
     /**
      * Store postback information from widget
      *
-     * @param  \Illuminate\Http\Request
+     * @param  \App\Http\Requests\SubscribedEmailRequest
      * @param  string  $usid
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postback(Request $request, $usid)
+    public function postback(SubscribedEmailRequest $request, $usid)
     {
+        $subscribedEmail = new SubscribedEmail();
+        $subscribedEmail->email = $request->input('email');
+        $subscribedEmail->exit_pop_up_id = $request->input('exit_popup_id');
+        $subscribedEmail->save();
+
         return response()->json([
             'status' => true,
             'message' => "Thanks for subscribing.",
