@@ -19,19 +19,9 @@ class BrandRequest extends FormRequest
         if (Auth::check()) {
             $user = Auth::user();
 
-            if ($user->subscription_status == 'CANCELLED') {
-                throw new PrivilegeViolationException(
-                    "Your action is forbidden due to cancellation of your subscription plan. Please resubscribe again" .
-                    " to continue."
-                );
-            } elseif ($user->subscription_status == 'TERMINATED') {
-                throw new PrivilegeViolationException(
-                    "Your action is forbidden due to termination of your subscription plan. Please resubscribe again " .
-                    "to continue."
-                );
-            }
-
-            if ($user->brands_count >= config('pricing.plans.' . $user->pricing_plan . '.privileges')['brands']) {
+            $pricingPlan = $user->pricing_plan;
+            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['brands'];
+            if (($saturationPoint !== -1) && ($user->brands_count >= $saturationPoint)) {
                 throw new PrivilegeViolationException(
                     "You can not create a new brand, please delete one existing brand or upgrade your " .
                     "current subscription plan."

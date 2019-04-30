@@ -19,20 +19,9 @@ class StickyReviewRequest extends FormRequest
         if (Auth::check()) {
             $user = Auth::user();
 
-            if ($user->subscription_status == 'CANCELLED') {
-                throw new PrivilegeViolationException(
-                    "Your action is forbidden due to cancellation of your subscription plan. Please resubscribe again" .
-                        " to continue."
-                );
-            } elseif ($user->subscription_status == 'TERMINATED') {
-                throw new PrivilegeViolationException(
-                    "Your action is forbidden due to termination of your subscription plan. Please resubscribe again " .
-                        "to continue."
-                );
-            }
-
-            $privilege = config('pricing.plans.' . $user->pricing_plan . '.privileges');
-            if ($user->sticky_reviews_count >= $privilege['sticky-reviews']) {
+            $pricingPlan = $user->pricing_plan;
+            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['sticky-reviews'];
+            if (($saturationPoint !== -1) && ($user->sticky_reviews_count >= $saturationPoint)) {
                 throw new PrivilegeViolationException(
                     "You can not create a new sticky review, please delete one existing sticky review or upgrade " .
                         "your current subscription plan."

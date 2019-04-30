@@ -51,20 +51,29 @@ class CampaignsController extends Controller
     /**
      * Get the list of all campaigns
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $searchParams = \Request::get('searchParams');
-        if($searchParams!=""){
-            $campaigns = $this->queryBuilder->orderBy('created_at', 'desc')->where('campaign_name','LIKE','%' . $searchParams . '%')->orWhere('domain_name','LIKE','%' . $searchParams . '%')->paginate();
-            $noOfCampaigns = $this->queryBuilder->count();
-        }else{
-            $campaigns = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
-            $noOfCampaigns = $this->queryBuilder->count();
+        if ($request->has('searchParams')) {
+            $this->queryBuilder = $this->queryBuilder
+                    ->where('campaign_name', 'LIKE', '%' . $request->get('searchParams') . '%')
+                    ->orWhere('domain_name', 'LIKE', '%' . $request->get('searchParams') . '%');
         }
-        if ($noOfCampaigns) {
+
+        $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
+
+        if ($request->has('paginate') &&
+            ($request->input('paginate') == false || $request->input('paginate') == 'false')) {
+            $campaigns = (CampaignsResource::collection($this->queryBuilder->get()))->briefOnly();
+        } else {
+            $campaigns = $this->queryBuilder->paginate();
             CampaignsResource::collection($campaigns);
+        }
+        $noOfCampaigns = $this->queryBuilder->count();
+
+        if ($noOfCampaigns) {
             return response()->json([
                 'status' => true,
                 'message' => "${noOfCampaigns} campaign(s) have found.",

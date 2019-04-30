@@ -19,8 +19,6 @@ class CampaignsResource extends Resource
             return [
                 'id' => Hashids::encode($this->id),
                 'campaign_name' => $this->campaign_name,
-                'domain_name' => $this->domain_name,
-                'style' => (new CampaignStyleResource($this->campaignStyle))->briefOnly(),
             ];
         } else {
             return [

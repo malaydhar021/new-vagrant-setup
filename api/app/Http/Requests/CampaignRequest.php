@@ -19,19 +19,9 @@ class CampaignRequest extends FormRequest
         if (Auth::check()) {
             $user = Auth::user();
 
-            if ($user->subscription_status == 'CANCELLED') {
-                throw new PrivilegeViolationException(
-                    "Your action is forbidden due to cancellation of your subscription plan. Please resubscribe again" .
-                        " to continue."
-                );
-            } elseif ($user->subscription_status == 'TERMINATED') {
-                throw new PrivilegeViolationException(
-                    "Your action is forbidden due to termination of your subscription plan. Please resubscribe again " .
-                        "to continue."
-                );
-            }
-
-            if ($user->campaigns_count >= config('pricing.plans.' . $user->pricing_plan . '.privileges')['campaigns']) {
+            $pricingPlan = $user->pricing_plan;
+            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['campaigns'];
+            if (($saturationPoint !== -1) && ($user->campaigns_count >= $saturationPoint)) {
                 throw new PrivilegeViolationException(
                     "You can not create a new campaign, please delete one existing campaign or upgrade your " .
                         "current subscription plan."

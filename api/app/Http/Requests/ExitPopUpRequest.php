@@ -37,21 +37,10 @@ class ExitPopUpRequest extends FormRequest
     {
         if (Auth::check()) {
             $user = Auth::user();
+
             $pricingPlan = $user->pricing_plan;
-
-            if ($user->subscription_status == 'CANCELLED') {
-                throw new PrivilegeViolationException(
-                    "Your action is forbidden due to cancellation of your subscription plan. Please resubscribe again" .
-                        " to continue."
-                );
-            } elseif ($user->subscription_status == 'TERMINATED') {
-                throw new PrivilegeViolationException(
-                    "Your action is forbidden due to termination of your subscription plan. Please resubscribe again " .
-                        "to continue."
-                );
-            }
-
-            if ($user->exit_popups_count >= config('pricing.plans.' . $pricingPlan . '.privileges')['exit-popups']) {
+            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['exit-popups'];
+            if (($saturationPoint !== -1) && ($user->exit_popups_count >= $saturationPoint)) {
                 throw new PrivilegeViolationException(
                     "You can not create a new exit popup, please delete one existing exit popup or upgrade your " .
                         "current subscription plan."
