@@ -46,31 +46,15 @@ class UserPasswordRequest extends FormRequest
             'current_password.required' => "Current password is required.",
             'new_password.required' => "New password is required.",
             'new_password.min' => "New password should be at least 8 characters long",
-            'new_password.regex' => [
-                'message' => "New password should contains one English uppercase characters (A–Z), " .
-                    "one English lowercase characters (a–z), " .
-                    "one numeric value (0–9) and one special characters (!, $, #, or %)",
-                'requirements' => [
-                    "English uppercase characters (A–Z)",
-                    "English lowercase characters (a–z)",
-                    "Numeric value (0–9)",
-                    "Special characters (!, $, #, or %)",
-                ],
-            ],
+            'new_password.regex' => "New password should contains one English uppercase characters (A–Z), " .
+                "one English lowercase characters (a–z), " .
+                "one numeric value (0–9) and one special characters (!, $, #, or %)",
             'new_password.confirmed' => "New password and re-entered new password should be exactly same.",
             'new_password_confirmation.required' => "Please re-enter new password.",
             'new_password_confirmation.min' => "Re-entered new password should be at least 8 characters long",
-            'new_password_confirmation.regex' => [
-                'message' => "Re-entered new password should contains one English uppercase characters (A–Z), " .
-                    "one English lowercase characters (a–z), " .
-                    "one numeric value (0–9) and one special characters (!, $, #, or %)",
-                'requirements' => [
-                    "English uppercase characters (A–Z)",
-                    "English lowercase characters (a–z)",
-                    "Numeric value (0–9)",
-                    "Special characters (!, $, #, or %)",
-                ],
-            ],
+            'new_password_confirmation.regex' => "Re-entered new password should contains one English uppercase " .
+                "characters (A–Z), one English lowercase characters (a–z), " .
+                "one numeric value (0–9) and one special characters (!, $, #, or %)",
         ];
     }
 }

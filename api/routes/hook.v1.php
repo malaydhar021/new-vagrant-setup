@@ -15,8 +15,8 @@ Route::prefix('web')->middleware('web')->name('web.')->group(function () {
     Route::any('stripe', 'StripeWebhookController@handleWebhook')->name('stripe');
 
     Route::prefix('user')->name('user.')->group(function () {
-        Route::post('/create', 'ApiV2Controller@postSignUpUserThirdParty')->name('store');
-        Route::post('/delete', 'ApiV2Controller@postDeleteUser')->name('delete');
-        Route::post('/status', 'ApiV2Controller@postAlterState')->name('status.toggle');
+        Route::post('/create', 'ThirdPartyWebhooksController@store')->name('store');
+        Route::post('/delete', 'ThirdPartyWebhooksController@destroy')->name('destroy');
+        Route::post('/status', 'ThirdPartyWebhooksController@alterStatus')->name('status.alter');
     });
 });

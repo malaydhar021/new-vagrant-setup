@@ -103,6 +103,25 @@ class User extends Authenticatable
         return $this->getImageFileURI($this->image);
     }
 
+    public function setPricingPlanAttribute($value)
+    {
+        switch ($value) {
+            case 1:
+                $value = 'lowset';
+                break;
+            case 2:
+                $value = 'modest';
+                break;
+            case 3:
+                $value = 'highest';
+                break;
+            default:
+                $value = 'lowset';
+        }
+
+        return $this->attributes['pricing_plan'] = $value;
+    }
+
     /**
      * Get all the subscription of an user
      *

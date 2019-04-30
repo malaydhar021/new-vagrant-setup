@@ -14,5 +14,6 @@ sudo bash -c 'cat >> /etc/hosts <<- "EOF"
 192.168.15.68   app.local.usestickyreviews.com
 192.168.15.68   lib.local.usestickyreviews.com
 192.168.15.68   www.local.usestickyreviews.com
+192.168.15.68   hook.local.usestickyreviews.com
 EOF
 '
