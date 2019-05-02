@@ -453,7 +453,17 @@ export class SubscriptionApiEndpoints {
   public static get cards() : string {
     return apiBaseUrl.concat('/user/card');
   }
-  
+}
+
+export class ExitPopupApiEndpoints {
+
+  public static get addExitPopup(): string {
+    return apiBaseUrl.concat('/exit-popups');
+  }
+
+  public static get getVisualStyles(): string {
+    return apiBaseUrl.concat('/exit-popups/styles');
+  }
 
 }
 

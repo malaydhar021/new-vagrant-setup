@@ -32,6 +32,7 @@ import { MessageModule }                        from './components/shared/messag
 import { MenuService }                          from './services/menu.service';
 
 import {SubscriptionGuard}                      from './services/guards/subscription.gaurd.service';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 /**
  * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
@@ -81,6 +82,7 @@ export class AppComponent { }
     MessageModule,
     LoaderModule,
     MediaPlayerModule,
+    ColorPickerModule,
   ],
   providers: [
 

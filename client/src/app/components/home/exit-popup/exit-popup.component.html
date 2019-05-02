@@ -87,11 +87,11 @@
   <div class="rightSec">
     <div class="rightSecContainer">
       <p>
-        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
+        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia. popUp 1
       </p>
       <form action="">
         <input type="text" placeholder="Enter your email">
-        <input type="button" value="Subcribe">
+        <input type="button" value="Subscribe">
       </form>
     </div>
   </div>
@@ -107,11 +107,11 @@
   <div class="rightSec">
     <div class="rightSecContainer">
       <p>
-        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
+        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia. this is exit popup 2
       </p>
       <form action="">
         <input type="text" placeholder="Enter your email">
-        <input type="button" value="Subcribe">
+        <input type="button" value="Subscribe">
       </form>
     </div>
   </div>
@@ -124,14 +124,14 @@
     <img src="../../../../assets/images/icon_mic_white.png" alt="">
     <h2>Take a break, take a look</h2>
     <p>
-      Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
+      Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia. pop up 3
     </p>
   </div>
   <div class="bottomSec">
     <div class="rightSecContainer">
       <form action="">
         <input type="text" placeholder="Enter your email">
-        <input type="button" value="Subcribe">
+        <input type="button" value="Subscribe">
       </form>
     </div>
   </div>
@@ -147,11 +147,11 @@
     <div class="rightSecContainer">
       <h2>Take a break, take a look</h2>
       <p>
-        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
+        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia. popUp 4
       </p>
       <form action="">
         <input type="text" placeholder="Enter your email">
-        <input type="button" value="Subcribe">
+        <input type="button" value="Subscribe">
       </form>
     </div>
   </div>
@@ -165,13 +165,13 @@
     <h2>Take a break, take a look</h2>
     <p>
       Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia. Aliquam eros
-      magna, ullamcorper.
+      magna, ullamcorper. popUp 5
     </p>
   </div>
   <div class="btmSec">
     <form action="">
       <input type="text" placeholder="Enter your email">
-      <input type="button" value="Subcribe">
+      <input type="button" value="Subscribe">
     </form>
   </div>
   <!-- <button (click)="myModal.close()">Close</button> -->
@@ -186,21 +186,29 @@
     </div>
     <div class="sr-modal-body">
 
-      <form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="sr-form">
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
               <label>Exit Popup Name</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl">
-                <span class="error-msg"></span>
+                <input type="text" class="sr-form-ctrl"  [ngClass]="{error: isSubmitted && getFormControls.exitPopUpName.errors}" formControlName="exitPopUpName">
+                <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.exitPopUpName.errors !== null
+                  && getFormControls.exitPopUpName.errors.required)">
+                  Exit popup name Name is required
+                </div>
               </div>
             </div>
+
             <div class="sr-form-cell-small">
               <label>Attach a Campaign</label>
               <div class="sr-form-field">
                 <select class="sr-form-ctrl">
                   <option>$1 a day - demo</option>
+                  <option>$2 a day - demo</option>
+                  <option>$3 a day - demo</option>
                 </select>
               </div>
             </div>
@@ -215,9 +223,9 @@
               <label style="margin-top: 20px;">Select Reviews</label>
               <div class="sr-form-field">
                 <select class="sr-form-ctrl">
-                  <option></option>
-                  <option></option>
-                  <option></option>
+                  <option> Review 1 </option>
+                  <option> Review 2 </option>
+                  <option> Review 3 </option>
                 </select>
               </div>
             </div>
@@ -253,14 +261,14 @@
               <div class="inlineRow clearfix">
                 <label>Header Text Color</label>
                 <div class="colorPicker">
-                  <input type="text" class="colorChosen" readonly style="background-color:#FFFFFF;">
+                  <input [(colorPicker)]="color1" [style.background]="color1" class="colorChosen" readonly formControlName="headerTextColor"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix">
                 <label>Header Background Color</label>
                 <div class="colorPicker">
-                  <input type="text" class="colorChosen" readonly style="background-color:#3A2A98;">
+                  <input [(colorPicker)]="color2" [style.background]="color2" class="colorChosen" readonly formControlName="headerBackgroundColor"/>
                 </div>
               </div>
             </div>
@@ -268,14 +276,14 @@
               <div class="inlineRow clearfix">
                 <label>Button Text Color</label>
                 <div class="colorPicker">
-                  <input type="text" class="colorChosen" readonly style="background-color:#FFFFFF;">
+                  <input [(colorPicker)]="color3" [style.background]="color3" class="colorChosen" readonly formControlName="buttonTextColor"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix">
                 <label>Button Background Color</label>
                 <div class="colorPicker">
-                  <input type="text" class="colorChosen" readonly style="background-color:#E30C5D;">
+                  <input [(colorPicker)]="color4" [style.background]="color4" class="colorChosen" readonly formControlName="buttonBackgroundColor"/>
                 </div>
               </div>
             </div>
@@ -296,28 +304,29 @@
               <div class="inlineRow clearfix">
                 <label>Paragraph Text Color</label>
                 <div class="colorPicker">
-                  <input type="text" class="colorChosen" readonly style="background-color:#7D6CE2;">
+                  <input [(colorPicker)]="color5" [style.background]="color5" class="colorChosen" readonly formControlName="paragraphTextColor"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix bgColor">
                 <label>Body Background Color</label>
                 <div class="colorPicker">
-                  <input type="text" class="colorChosen" readonly style="background-color:#FFCC00;">
+                  <input [(colorPicker)]="color6" [style.background]="color6" class="colorChosen" readonly formControlName="bodyBackgroundColor"/>
                 </div>
               </div>
 
               <label>Choose Visual Appearance<img src="../../../../assets/images/icon_info2.png" class="infos_imgs"
                   alt="infos"></label>
               <div class="sr-form-field">
-                <select class="sr-form-ctrl">
-                  <option>Double layered purple ninja</option>
+                <select class="sr-form-ctrl" formControlName="exitPopupVisualStyles">
+                  <option *ngFor="let style of visualStyles" [ngValue]="style.id"> {{ style.name }}</option>
                 </select>
               </div>
 
             </div>
 
             <div class="sr-form-cell-small">
+
               <div class="previewpopup exitPopup theme1" style="background-color: #252525; display: none;">
                 <div class="previewComp">
                   <div class="leftSec">
@@ -418,12 +427,8 @@
                   </div>
                 </div>
               </div>
+
             </div>
-
-
-
-
-
           </div>
 
           <div class="sr-form-row">
@@ -433,6 +438,7 @@
               </button>
             </div>
           </div>
+
         </div>
       </form>
     </div>

@@ -34,7 +34,8 @@ import { StickyReviewService } from '../services/sticky-review.service';
 import { MenuService } from '../services/menu.service';
 import { MediaPlayerModule } from './media-player.module';
 import { MediaPlayerService } from '../services/media-player.service';
-
+import {ExitPopupService} from '../services/exit-popup.service';
+import { ColorPickerModule } from 'ngx-color-picker';
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
  * @class HomeModule
@@ -70,14 +71,16 @@ import { MediaPlayerService } from '../services/media-player.service';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MessageModule,
-    MediaPlayerModule
+    MediaPlayerModule,
+    ColorPickerModule
   ],
   providers: [
     BrandingService,
     CampaignService,
     StickyReviewService,
     MenuService,
-    MediaPlayerService
+    MediaPlayerService,
+    ExitPopupService,
   ]
 })
 export class HomeModule { }
