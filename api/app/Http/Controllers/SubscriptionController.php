@@ -92,19 +92,23 @@ class SubscriptionController extends Controller
             }
 
             $limitExceeds = [];
-            if ($user->brands_count > $newPlanPriviledges['brands']) {
+            if (($newPlanPriviledges['brands'] !== -1) && ($user->brands_count > $newPlanPriviledges['brands'])) {
                 $limitExceeds['brands'] = $user->brands_count - $newPlanPriviledges['brands'];
             }
-            if ($user->campaigns_count > $newPlanPriviledges['campaigns']) {
+            if (($newPlanPriviledges['campaigns'] !== -1) &&
+                ($user->campaigns_count > $newPlanPriviledges['campaigns'])) {
                 $limitExceeds['campaigns'] = $user->campaigns_count - $newPlanPriviledges['campaigns'];
             }
-            if ($user->review_links_count > $newPlanPriviledges['review-links']) {
+            if (($newPlanPriviledges['review-links'] !== -1) &&
+                ($user->review_links_count > $newPlanPriviledges['review-links'])) {
                 $limitExceeds['review-links'] = $user->review_links_count - $newPlanPriviledges['review-links'];
             }
-            if ($user->sticky_reviews_count > $newPlanPriviledges['sticky-reviews']) {
+            if (($newPlanPriviledges['sticky-reviews'] !== -1) &&
+                ($user->sticky_reviews_count > $newPlanPriviledges['sticky-reviews'])) {
                 $limitExceeds['sticky-reviews'] = $user->sticky_reviews_count - $newPlanPriviledges['sticky-reviews'];
             }
-            if ($user->exit_popups_count > $newPlanPriviledges['exit-popups']) {
+            if (($newPlanPriviledges['exit-popups'] !== -1) &&
+                ($user->exit_popups_count > $newPlanPriviledges['exit-popups'])) {
                 $limitExceeds['exit-popups'] = $user->exit_popups_count - $newPlanPriviledges['exit-popups'];
             }
 
