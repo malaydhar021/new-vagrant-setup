@@ -45,18 +45,24 @@ class StickyReviewsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $searchParams = \Request::get('searchParams');
-        if($searchParams!=""){
-            $stickyReviews = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%')->orderBy('created_at', 'desc')->paginate();
-            $noOfStickyReviews = $this->queryBuilder->count();
-        }else{
-            $stickyReviews = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
-            $noOfStickyReviews = $this->queryBuilder->count();
-        }
-        if ($noOfStickyReviews) {
+        if ($request->has('searchParams')) {
+            $this->queryBuilder = $this->queryBuilder
+                ->where('name', 'LIKE', '%' . $request->get('searchParams') . '%');
+            }
+            $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
+
+        if ($request->has('paginate') &&
+            ($request->input('paginate') == false || $request->input('paginate') == 'false')) {
+            $stickyReviews = (StickyReviewResource::collection($this->queryBuilder->get()))->briefOnly();
+        } else {
+            $stickyReviews = $this->queryBuilder->paginate();
             StickyReviewResource::collection($stickyReviews);
+        }
+        $noOfStickyReviews = $this->queryBuilder->count();
+
+        if ($noOfStickyReviews) {
             return response()->json([
                 'status' => true,
                 'message' => "${noOfStickyReviews} sticky reviews has found.",

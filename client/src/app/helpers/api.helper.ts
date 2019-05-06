@@ -465,6 +465,14 @@ export class ExitPopupApiEndpoints {
     return apiBaseUrl.concat('/exit-popups/styles');
   }
 
+  public static get getCampaignsList(): string {
+    return apiBaseUrl.concat('/campaigns/?paginate=false');
+  }
+
+  public static get getStickyReviews(): string {
+    return apiBaseUrl.concat('/sticky-reviews/?paginate=false');
+  }
+
 }
 
 

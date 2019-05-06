@@ -185,7 +185,7 @@
       </h2>
     </div>
     <div class="sr-modal-body">
-
+      <div *ngIf="errorMessage!==''"> {{this.errorMessage}} </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="sr-form">
           <div class="sr-form-row">
@@ -201,14 +201,15 @@
                 </div>
               </div>
             </div>
-
             <div class="sr-form-cell-small">
+              <label>Campaign <input type="checkbox" class="tglBtn" formControlName="hasCampaign" (ngModelChange)='addCampaing()'></label>
+            </div>
+
+            <div class="sr-form-cell-small" *ngIf="showCampaign">
               <label>Attach a Campaign</label>
               <div class="sr-form-field">
-                <select class="sr-form-ctrl">
-                  <option>$1 a day - demo</option>
-                  <option>$2 a day - demo</option>
-                  <option>$3 a day - demo</option>
+                <select class="sr-form-ctrl" formControlName="campaign">
+                  <option *ngFor="let campaign of campaigns" [ngValue]="campaign.id"> {{ campaign.campaign_name }}</option>
                 </select>
               </div>
             </div>
@@ -219,18 +220,20 @@
               <div class="headerInForm">
                 <span>POPUP CONTENT</span>
               </div>
-              <label>Add Sticky Reviews <input type="checkbox" class="tglBtn" checked></label>
-              <label style="margin-top: 20px;">Select Reviews</label>
-              <div class="sr-form-field">
-                <select class="sr-form-ctrl">
-                  <option> Review 1 </option>
-                  <option> Review 2 </option>
-                  <option> Review 3 </option>
+              <label>Add Sticky Reviews
+                <input type="checkbox" class="tglBtn" formControlName="hasStickyReview" (ngModelChange)='addStickeyReview()'>
+              </label>
+
+              <label style="margin-top: 20px;" *ngIf="showStickyReviews">Select Reviews</label>
+              <div class="sr-form-field" *ngIf="showStickyReviews">
+                <select class="sr-form-ctrl" formControlName="stickyReviews" multiple>
+                  <option *ngFor="let stickyReview of stickyReviews" [ngValue]="stickyReview.id"> {{ stickyReview.name }}</option>
                 </select>
               </div>
+
             </div>
             <div class="sr-form-cell-small exitPopup_paddings">
-              <label>Add Email Field <input type="checkbox" class="tglBtn" checked></label>
+              <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>
             </div>
           </div>
           <div class="sr-form-row">
@@ -240,20 +243,33 @@
               </div>
               <label>Header Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl">
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupHeaderText">
                 <span class="error-msg"></span>
               </div>
             </div>
-            <div class="sr-form-cell-small">
+
+            <div class="sr-form-cell-small" *ngIf="showEmailField">
               <div class="headerInForm">
                 <span>CTA BUTTON</span>
               </div>
               <label>Button Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl">
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonText">
                 <span class="error-msg"></span>
               </div>
             </div>
+
+            <div class="sr-form-cell-small" *ngIf="showEmailField">
+              <div class="headerInForm">
+                <span>CTA BUTTON URL</span>
+              </div>
+              <label>Button URL</label>
+              <div class="sr-form-field">
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl">
+                <span class="error-msg"></span>
+              </div>
+            </div>
+
           </div>
 
           <div class="sr-form-row">
@@ -261,14 +277,14 @@
               <div class="inlineRow clearfix">
                 <label>Header Text Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color1" [style.background]="color1" class="colorChosen" readonly formControlName="headerTextColor"/>
+                  <input [(colorPicker)]="color1" [style.background]="color1" class="colorChosen" formControlName="headerTextColor" (colorPickerChange)="getHeaderTextColor($event)"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix">
                 <label>Header Background Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color2" [style.background]="color2" class="colorChosen" readonly formControlName="headerBackgroundColor"/>
+                  <input [(colorPicker)]="color2" [style.background]="color2" class="colorChosen" readonly formControlName="headerBackgroundColor" (colorPickerChange)="getHeaderBackgroundColor($event)"/>
                 </div>
               </div>
             </div>
@@ -276,14 +292,14 @@
               <div class="inlineRow clearfix">
                 <label>Button Text Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color3" [style.background]="color3" class="colorChosen" readonly formControlName="buttonTextColor"/>
+                  <input [(colorPicker)]="color3" [style.background]="color3" class="colorChosen" readonly formControlName="buttonTextColor" (colorPickerChange)="getButtonTextColor($event)"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix">
                 <label>Button Background Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color4" [style.background]="color4" class="colorChosen" readonly formControlName="buttonBackgroundColor"/>
+                  <input [(colorPicker)]="color4" [style.background]="color4" class="colorChosen" readonly formControlName="buttonBackgroundColor" (colorPickerChange)="getButtonBackgroundColor($event)"/>
                 </div>
               </div>
             </div>
@@ -297,28 +313,28 @@
 
               <label>Paragraph Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl">
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupParagraphText">
                 <span class="error-msg"></span>
               </div>
 
               <div class="inlineRow clearfix">
                 <label>Paragraph Text Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color5" [style.background]="color5" class="colorChosen" readonly formControlName="paragraphTextColor"/>
+                  <input [(colorPicker)]="color5" [style.background]="color5" class="colorChosen" formControlName="paragraphTextColor" (colorPickerChange)="getparagraphTextColor($event)"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix bgColor">
-                <label>Body Background Color</label>
+                <label>Body Background Color </label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color6" [style.background]="color6" class="colorChosen" readonly formControlName="bodyBackgroundColor"/>
+                  <input [(colorPicker)]="color6" [style.background]="color6" class="colorChosen" readonly formControlName="bodyBackgroundColor" (colorPickerChange)="getBodyBackgroundColor($event)"/>
                 </div>
               </div>
 
               <label>Choose Visual Appearance<img src="../../../../assets/images/icon_info2.png" class="infos_imgs"
                   alt="infos"></label>
               <div class="sr-form-field">
-                <select class="sr-form-ctrl" formControlName="exitPopupVisualStyles">
+                <select class="sr-form-ctrl" formControlName="exitPopupVisualStyles"  (change)="setPopupVisualStyle()">
                   <option *ngFor="let style of visualStyles" [ngValue]="style.id"> {{ style.name }}</option>
                 </select>
               </div>
@@ -326,103 +342,99 @@
             </div>
 
             <div class="sr-form-cell-small">
-
-              <div class="previewpopup exitPopup theme1" style="background-color: #252525; display: none;">
+<!--              background-color: #252525;-->
+              <div class="previewpopup exitPopup theme1" [style.background-color]="this.bodyBackgroundColor" style="display: block;" *ngIf="showMe==='1'">
                 <div class="previewComp">
-                  <div class="leftSec">
+                  <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
                     <img src="../../../../assets/images/icon_mic_white.png" alt="">
-                    <h2>Take a break,<br> TAKE A LOOK</h2>
+                    <h2 [style.color]="this.headerTextColor"> {{this.form.value.exitPopupHeaderText}} </h2>
                   </div>
                   <div class="rightSec">
                     <div class="rightSecContainer">
-                      <p>
-                        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet
-                        lacinia.
+                      <p [style.color]="this.paragraphTextColor">
+                        {{this.form.value.exitPopupParagraphText}}
                       </p>
-                      <form action="">
+                      <form action="" *ngIf="showEmailField">
                         <input type="text" placeholder="Enter your email">
-                        <input type="button" value="Subcribe">
+                        <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="previewpopup exitPopup theme2" style="background-color: #8cb5fe; display: none;">
+<!--              background-color: #8cb5fe-->
+              <div class="previewpopup exitPopup theme2" [style.background-color]="this.bodyBackgroundColor" style="display: block;" *ngIf="showMe==='2'">
                 <div class="previewComp">
-                  <div class="leftSec">
+                  <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
                     <img src="../../../../assets/images/icon_mic_white.png" alt="">
-                    <h2>Take a break, TAKE A LOOK</h2>
+                    <h2 [style.color]="this.headerTextColor">{{this.form.value.exitPopupHeaderText}} </h2>
                   </div>
                   <div class="rightSec">
                     <div class="rightSecContainer">
-                      <p>
-                        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet
-                        lacinia.
+                      <p [style.color]="this.paragraphTextColor">
+                        {{this.form.value.exitPopupParagraphText}}
                       </p>
-                      <form action="">
+                      <form action="{{this.form.value.exitPopupButtonUrl}}" *ngIf="showEmailField">
                         <input type="text" placeholder="Enter your email">
-                        <input type="button" value="Subcribe">
+                        <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="previewpopup exitPopup theme3" style="background-color: #fb8fff; display: none;">
+<!--              background-color: #fb8fff;-->
+              <div class="previewpopup exitPopup theme3" [style.background-color]="this.bodyBackgroundColor" style="display: block;" *ngIf="showMe==='3'">
                 <div class="previewComp">
-                  <div class="topSec">
+                  <div class="topSec" [style.background-color]="this.headerBackgroundColor">
                     <img src="../../../../assets/images/icon_mic_white.png" alt="">
-                    <h2>Take a break, take a look</h2>
-                    <p>
-                      Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
+                    <h2 [style.color]="this.headerTextColor">{{this.form.value.exitPopupHeaderText}} </h2>
+                    <p [style.color]="this.paragraphTextColor">
+                      {{this.form.value.exitPopupParagraphText}}
                     </p>
                   </div>
                   <div class="bottomSec">
                     <div class="rightSecContainer">
-                      <form action="">
+                      <form action="{{this.form.value.exitPopupButtonUrl}}" *ngIf="showEmailField">
                         <input type="text" placeholder="Enter your email">
-                        <input type="button" value="Subcribe">
+                        <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="previewpopup exitPopup theme4" style="background-color: #e7e7e4; display: none;">
+<!--              background-color: #e7e7e4-->
+              <div class="previewpopup exitPopup theme4" [style.background-color]="this.bodyBackgroundColor"  style="display: block;" *ngIf="showMe==='4'">
                 <div class="previewComp">
-                  <div class="topSec">
+                  <div class="topSec" [style.background-color]="this.headerBackgroundColor">
                     <p><img src="../../../../assets/images/icon_mic_colored_1.png" alt=""></p>
                   </div>
                   <div class="bottomSec">
                     <div class="rightSecContainer">
-                      <h2>Take a break, take a look</h2>
-                      <p>
-                        Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet
-                        lacinia.
+                      <h2 [style.color]="this.headerTextColor">{{this.form.value.exitPopupHeaderText}} </h2>
+                      <p [style.color]="this.paragraphTextColor">
+                        {{this.form.value.exitPopupParagraphText}}
                       </p>
-                      <form action="">
+                      <form action="{{this.form.value.exitPopupButtonUrl}}" *ngIf="showEmailField">
                         <input type="text" placeholder="Enter your email">
-                        <input type="button" value="Subcribe">
+                        <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="previewpopup exitPopup theme5" style="background-color: #facc00;">
+<!--              background-color: #facc00;-->
+              <div class="previewpopup exitPopup theme5" [style.background-color]="this.bodyBackgroundColor" style="display: block;" *ngIf="showMe==='5'">
                 <div class="previewComp">
-                  <div class="topSec">
-                    <h2>Take a break, take a look</h2>
-                    <p>
-                      Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.
-                      Aliquam eros magna, ullamcorper.
+                  <div class="topSec" [style.background-color]="this.headerBackgroundColor">
+                    <h2 [style.color]="this.headerTextColor">{{this.form.value.exitPopupHeaderText}} </h2>
+                    <p [style.color]="this.paragraphTextColor">
+                      {{this.form.value.exitPopupParagraphText}}
                     </p>
                   </div>
                   <div class="btmSec">
-                    <form action="">
+                    <form action="{{this.form.value.exitPopupButtonUrl}}" *ngIf="showEmailField">
                       <input type="text" placeholder="Enter your email">
-                      <input type="button" value="Subcribe">
+                      <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                     </form>
                   </div>
                 </div>

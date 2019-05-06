@@ -65,4 +65,12 @@ export class ExitPopupService {
     public getVisualStyles() {
         return this.httpClient.get(ExitPopupApiEndpoints.getVisualStyles);
     }
+
+    public getCampaignsList() {
+        return this.httpClient.get(ExitPopupApiEndpoints.getCampaignsList);
+    }
+
+    public getStickyReviews() {
+        return this.httpClient.get(ExitPopupApiEndpoints.getStickyReviews);
+    }
 }

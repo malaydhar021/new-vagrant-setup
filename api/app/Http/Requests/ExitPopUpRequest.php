@@ -18,6 +18,8 @@ class ExitPopUpRequest extends FormRequest
      */
     public function getValidatorInstance()
     {
+        \Log::info(print_r($this->request->all(),true));
+
         if ($this->request->has('campaign_id')) {
             $this->merge([
                 'campaign_id' => Hashids::decode($this->request->get('campaign_id')),
@@ -75,11 +77,10 @@ class ExitPopUpRequest extends FormRequest
             'paragraph_text_color' => "required|string",
             'body_background_color' => "required|string",
             'popup_backdrop_color' => "required|string",
-            'button_text' => "required|string",
-            'button_url' => "required|url",
-            'button_text' => "required|string",
-            'button_text_color' => "required|string",
-            'button_background_color' => "required|string",
+            'button_text' => "required_if:has_email_field,1|required|string",
+            'button_url' => "required_if:has_email_field,1|required|url",
+            'button_text_color' => "required_if:has_email_field,1|required|string",
+            'button_background_color' => "required_if:has_email_field,1|required|string",
             'style_id' => "required|exists:campaign_styles,id",
         ];
     }
