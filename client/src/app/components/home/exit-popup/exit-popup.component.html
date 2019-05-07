@@ -11,66 +11,71 @@
   <div class="dataTableArea">
     <div class="popupListContainer">
       <ng-scrollbar [compact]="true">
+<!--        <ul class="popupList">-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup1').open()">-->
+<!--              <img src="../../../../assets/images/thumb1.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 1</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup2').open()">-->
+<!--              <img src="../../../../assets/images/thumb2.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 2</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup3').open()">-->
+<!--              <img src="../../../../assets/images/thumb3.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 3</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup4').open()">-->
+<!--              <img src="../../../../assets/images/thumb4.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 4</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">-->
+<!--              <img src="../../../../assets/images/thumb5.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 5</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--        </ul>-->
         <ul class="popupList">
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup1').open()">
-              <img src="../../../../assets/images/thumb1.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 1</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup2').open()">
-              <img src="../../../../assets/images/thumb2.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 2</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup3').open()">
-              <img src="../../../../assets/images/thumb3.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 3</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup4').open()">
-              <img src="../../../../assets/images/thumb4.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 4</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">
-              <img src="../../../../assets/images/thumb5.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 5</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
+          <li  *ngFor="let exitPopup of exitPopups;let i = index">
+            <span> {{ exitPopup.name }} </span>
           </li>
         </ul>
       </ng-scrollbar>
@@ -209,7 +214,7 @@
               <label>Attach a Campaign</label>
               <div class="sr-form-field">
                 <select class="sr-form-ctrl" formControlName="campaign">
-                  <option *ngFor="let campaign of campaigns" [ngValue]="campaign.id"> {{ campaign.campaign_name }}</option>
+                  <option *ngFor="let campaign of campaigns;let i = index" [ngValue]="campaign.id" [selected]="i == 0"> {{ campaign.campaign_name }}</option>
                 </select>
               </div>
             </div>
@@ -227,7 +232,7 @@
               <label style="margin-top: 20px;" *ngIf="showStickyReviews">Select Reviews</label>
               <div class="sr-form-field" *ngIf="showStickyReviews">
                 <select class="sr-form-ctrl" formControlName="stickyReviews" multiple>
-                  <option *ngFor="let stickyReview of stickyReviews" [ngValue]="stickyReview.id"> {{ stickyReview.name }}</option>
+                  <option *ngFor="let stickyReview of stickyReviews;let i = index" [ngValue]="stickyReview.id" [selected]="i == 0"> {{ stickyReview.name }}</option>
                 </select>
               </div>
 
@@ -277,29 +282,29 @@
               <div class="inlineRow clearfix">
                 <label>Header Text Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color1" [style.background]="color1" class="colorChosen" formControlName="headerTextColor" (colorPickerChange)="getHeaderTextColor($event)"/>
+                  <input [(colorPicker)]="color1" [style.background]="color1" class="colorChosen" formControlName="headerTextColor" (colorPickerChange)="getHeaderTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix">
                 <label>Header Background Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color2" [style.background]="color2" class="colorChosen" readonly formControlName="headerBackgroundColor" (colorPickerChange)="getHeaderBackgroundColor($event)"/>
+                  <input [(colorPicker)]="color2" [style.background]="color2" class="colorChosen" formControlName="headerBackgroundColor" (colorPickerChange)="getHeaderBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                 </div>
               </div>
             </div>
-            <div class="sr-form-cell-small">
+            <div class="sr-form-cell-small" *ngIf="showEmailField">
               <div class="inlineRow clearfix">
                 <label>Button Text Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color3" [style.background]="color3" class="colorChosen" readonly formControlName="buttonTextColor" (colorPickerChange)="getButtonTextColor($event)"/>
+                  <input [(colorPicker)]="color3" [style.background]="color3" class="colorChosen" formControlName="buttonTextColor" (colorPickerChange)="getButtonTextColor($event)"[cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix">
                 <label>Button Background Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color4" [style.background]="color4" class="colorChosen" readonly formControlName="buttonBackgroundColor" (colorPickerChange)="getButtonBackgroundColor($event)"/>
+                  <input [(colorPicker)]="color4" [style.background]="color4" class="colorChosen" formControlName="buttonBackgroundColor" (colorPickerChange)="getButtonBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                 </div>
               </div>
             </div>
@@ -320,14 +325,14 @@
               <div class="inlineRow clearfix">
                 <label>Paragraph Text Color</label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color5" [style.background]="color5" class="colorChosen" formControlName="paragraphTextColor" (colorPickerChange)="getparagraphTextColor($event)"/>
+                  <input [(colorPicker)]="color5" [style.background]="color5" class="colorChosen" formControlName="paragraphTextColor" (colorPickerChange)="getparagraphTextColor($event)"  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                 </div>
               </div>
 
               <div class="inlineRow clearfix bgColor">
                 <label>Body Background Color </label>
                 <div class="colorPicker">
-                  <input [(colorPicker)]="color6" [style.background]="color6" class="colorChosen" readonly formControlName="bodyBackgroundColor" (colorPickerChange)="getBodyBackgroundColor($event)"/>
+                  <input [(colorPicker)]="color6" [style.background]="color6" class="colorChosen" formControlName="bodyBackgroundColor" (colorPickerChange)="getBodyBackgroundColor($event)"  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                 </div>
               </div>
 

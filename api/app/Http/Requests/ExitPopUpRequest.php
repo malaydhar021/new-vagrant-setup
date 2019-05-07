@@ -7,6 +7,7 @@ use App\Helpers\Hashids;
 use App\Exceptions\PrivilegeViolationException;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ExitPopUpRequest extends FormRequest
@@ -18,14 +19,34 @@ class ExitPopUpRequest extends FormRequest
      */
     public function getValidatorInstance()
     {
-        \Log::info(print_r($this->request->all(),true));
+        $this->merge([
+            'has_campaign' => (integer) $this->request->get('has_campaign'),
+            'has_sticky_reviews' => (integer) $this->request->get('has_sticky_reviews'),
+            'has_email_field' => (integer) $this->request->get('has_email_field'),
+            'style_id'=> Hashids::decode($this->request->get('style_id')),
+        ]);
 
-        if ($this->request->has('campaign_id')) {
-            $this->merge([
-                'campaign_id' => Hashids::decode($this->request->get('campaign_id')),
-                'style_id'=> Hashids::decode($this->request->get('style_id')),
-            ]);
+        $request = $this->request->all();
+        if ($this->request->has('has_campaign') && $this->request->has('campaign_id')) {
+            if ($this->request->get('campaign_id')) {
+                $this->merge([
+                    'campaign_id' => Hashids::decode($this->request->get('campaign_id')),
+                ]);
+            } else {
+                unset($request['campaign_id']);
+            }
         }
+
+        if ($this->request->has('has_sticky_reviews') && $this->request->has('sticky_reviews') && $this->request->get('sticky_reviews') == null) {
+            unset($request['sticky_reviews']);
+        }
+
+
+        if ($this->request->has('has_email_field') && $this->request->has('button_url') && $this->request->get('button_url') == null) {
+            unset($request['button_url']);
+        }
+
+        $this->request = (new Request())->replace($request);
 
         return parent::getValidatorInstance();
     }
@@ -62,6 +83,7 @@ class ExitPopUpRequest extends FormRequest
      */
     public function rules()
     {
+        \Log::info('New request for validation ./n'.print_r($this->request->all(),true));
         return [
             'name' => "required|string",
             'has_campaign' => "required|boolean",
@@ -77,10 +99,10 @@ class ExitPopUpRequest extends FormRequest
             'paragraph_text_color' => "required|string",
             'body_background_color' => "required|string",
             'popup_backdrop_color' => "required|string",
-            'button_text' => "required_if:has_email_field,1|required|string",
-            'button_url' => "required_if:has_email_field,1|required|url",
-            'button_text_color' => "required_if:has_email_field,1|required|string",
-            'button_background_color' => "required_if:has_email_field,1|required|string",
+            'button_text' => "required_if:has_email_field,1|string",
+            'button_url' => "required_if:has_email_field,1|url",
+            'button_text_color' => "required_if:has_email_field,1|string",
+            'button_background_color' => "required_if:has_email_field,1|string",
             'style_id' => "required|exists:campaign_styles,id",
         ];
     }
@@ -122,15 +144,15 @@ class ExitPopUpRequest extends FormRequest
             'body_background_color.string' => "Body background color should be a valid string.",
             'popup_backdrop_color.required' => "Popup backdrop color is required.",
             'popup_backdrop_color.string' => "Popup backdrop color should be a valid string.",
-            'button_text.required' => "Button text is required.",
+            'button_text.required_if' => "Button text is required.",
             'button_text.string' => "Button text should be a valid string.",
-            'button_url.required' => "Button url is required.",
+            'button_url.required_if' => "Button url is required.",
             'button_url.url' => "Button url should be a valid URL.",
-            'button_text.required' => "Button text is required.",
+            'button_text.required_if' => "Button text is required.",
             'button_text.string' => "Button text should be a valid string.",
-            'button_text_color.required' => "Button text color is required.",
+            'button_text_color.required_if' => "Button text color is required.",
             'button_text_color.string' => "Button text color should be a valid string.",
-            'button_background_color.required' => "Button background color is required.",
+            'button_background_color.required_if' => "Button background color is required.",
             'button_background_color.string' => "Button background color should be a valid string.",
             'style_id.required' => "Style is required.",
             'style_id.exists' => "This style does not matches our record, please select a valid style.",

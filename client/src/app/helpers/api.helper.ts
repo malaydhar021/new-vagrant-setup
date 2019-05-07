@@ -457,6 +457,10 @@ export class SubscriptionApiEndpoints {
 
 export class ExitPopupApiEndpoints {
 
+  public static get getUserExitPopups(): string {
+    return apiBaseUrl.concat('/exit-popups');
+  }
+
   public static get addExitPopup(): string {
     return apiBaseUrl.concat('/exit-popups');
   }

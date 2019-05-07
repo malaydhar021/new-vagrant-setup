@@ -31,6 +31,10 @@ export class ExitPopupService {
     //     return this.httpClient.get(BrandingApiEndpoints.brands);
     // }
 
+    public getUserExitPopups() {
+        return this.httpClient.get(ExitPopupApiEndpoints.getUserExitPopups);
+    }
+
     /**
      * Method to make an api call to add a brand.
      * @method getAllBrandings
@@ -38,7 +42,6 @@ export class ExitPopupService {
      * @returns Observable<Object>
      */
     public addExitPopup(data: ExitPopupModel) {
-        console.log('i am in the services !');
         return this.httpClient.post(ExitPopupApiEndpoints.addExitPopup, data);
     }
 

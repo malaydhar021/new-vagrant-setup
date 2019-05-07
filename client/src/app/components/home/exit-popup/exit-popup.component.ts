@@ -23,16 +23,17 @@ export class ExitPopupComponent implements OnInit {
   errorMessage: string = null;
 
   // selectedColor: string = 'color1';
-  color1: string = '#2889e9';
-  color2: string = '#e920e9';
-  color3: string = '#fff500';
-  color4: string = '#c77ff1';
-  color5: string = '#e93e20';
+  color1: string = '#252525';
+  color2: string = '#47e3bd';
+  color3: string = '#d2d9e9';
+  color4: string = '#3a2a98';
+  color5: string = '#252525';
   color6: string = '#252525';
 
   visualStyles: [] = []; // holds all visual style as an array
   campaigns: [] = []; // holds all campaigns as an array
   stickyReviews: [] = []; // holds all sticky Reviews as an array
+  exitPopups: [] = []; // holds all the user exit popups
   showStickyReviews: boolean = false; // show the sticky review names
   showEmailField: boolean = true;
   showMe: string = '1'; // show the selected exitpopup style
@@ -69,50 +70,42 @@ export class ExitPopupComponent implements OnInit {
       hasStickyReview: [false],
       hasEmailField: [true],
       exitPopupHeaderText: ['Take a break, TAKE A LOOK'],
-      exitPopupButtonText: ['subscribe'],
+      exitPopupButtonText: ['Subscribe'],
       exitPopupParagraphText: ['Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.'],
       stickyReviews: [null],
       exitPopupButtonUrl: [null],
     });
     this.getVisualStyles();
+    this.getUserExitPopups();
   }
 
   public get getFormControls() {
     return this.form.controls;
   }
 
+  public getUserExitPopups() {
+    this.exitPopupService.getUserExitPopups().subscribe(
+        (response: any ) => {
+          if (response.status) {
+            this.exitPopups = response.data.data;
+          }
+        }
+    );
+  }
 
   public onSubmit() {
     console.log(' some thing will happen ... ');
     this.isSubmitted = true;
     // check if the form does not pass the client side validation
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       return;
     }
     this.loaderService.enableLoader();
 
-    if (this.form.value.hasCampaign === true) {
-      this.form.value.hasCampaign = 1;
-    } else {
-      this.form.value.hasCampaign = 0;
-    }
-
-    if (this.form.value.hasEmailField === true) {
-      this.form.value.hasEmailField = 1;
-    } else {
-      this.form.value.hasEmailField = 0;
-    }
-
-    if (this.form.value.hasStickyReview === true) {
-      this.form.value.hasStickyReview = 1;
-    } else {
-      this.form.value.hasStickyReview = 0;
-    }
-
     const data = {
       name: this.form.value.exitPopUpName,
       has_campaign: this.form.value.hasCampaign,
-      campaign_id: this.form.value.campaign,
+      campaign_id: '',
       has_sticky_reviews: this.form.value.hasStickyReview,
       sticky_reviews: this.form.value.stickyReviews,
       has_email_field: this.form.value.hasEmailField,
@@ -129,16 +122,48 @@ export class ExitPopupComponent implements OnInit {
       button_background_color: this.color4,
       style_id: this.form.value.exitPopupVisualStyles,
     };
+
+    if (this.form.value.hasCampaign === true) {
+      this.form.value.hasCampaign = 1;
+      data.has_campaign = 1;
+      data.campaign_id = this.form.value.campaign;
+    } else {
+      data.has_campaign = 0;
+      delete data.campaign_id;
+    }
+
+    if (this.form.value.hasEmailField === true) {
+      data.has_email_field = 1;
+      data.button_text = this.form.value.exitPopupButtonText;
+      data.button_url = this.form.value.exitPopupButtonUrl;
+      data.button_text_color = this.color3;
+      data.button_background_color = this.color4;
+    } else {
+      data.has_email_field = 0;
+      delete data.button_text;
+      delete data.button_url;
+      delete data.button_text_color;
+      delete data.button_background_color;
+    }
+
+    if (this.form.value.hasStickyReview === true) {
+      data.has_sticky_reviews = 1;
+      data.sticky_reviews = this.form.value.stickyReviews;
+    } else {
+      data.has_sticky_reviews = 0;
+      delete data.sticky_reviews;
+    }
     this.addExitPopUp(data);
-    console.log(data);
   }
 
   public addExitPopUp(data: ExitPopupModel) {
     // let's make an api call to add this brand
     this.exitPopupService.addExitPopup(data).subscribe(
         (response: any ) => {
+          console.log(response);
           if (response.status) {
             this.loaderService.disableLoader();
+            this.form.reset();
             this.ngxSmartModalService.getModal('modal1').close();
           } else {
             this.errorMessage = response.message;
@@ -249,8 +274,8 @@ export class ExitPopupComponent implements OnInit {
 
   public addCampaing() {
     if (this.form.value.hasCampaign === true) {
-      this.showCampaign = true;
       this.getCampaignsList();
+      this.showCampaign = true;
     } else {
       this.showCampaign = false;
     }
