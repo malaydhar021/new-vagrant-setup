@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router, CanLoad, Route } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
-import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * AuthGuard service will prevent access to protected routes for unauthenticated users
@@ -11,11 +10,9 @@ import { Log } from 'src/app/helpers/app.helper';
  * @package AuthGuard
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
- * @license Proprietery
+ * @license Proprietary
  */
-
 @Injectable()
-
 export class AuthGuard implements CanLoad {
     constructor(private router: Router, private authService: AuthService) {}
 

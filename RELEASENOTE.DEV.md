@@ -1,5 +1,11 @@
 # Development Release Notes
 
+## User Review
+
+## V0.0.1
+
+1. Implemented media module for audio and video player and recorder
+
 ## Campaign
 
 ## V0.0.3

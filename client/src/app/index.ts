@@ -24,14 +24,11 @@ import { SignUpComponent }                      from './components/sign-up/sign-
 import { SignupService }                        from './services/signup.service';
 import { SubscriptionService }                  from './services/subscription.service';
 import { UserService }                          from './services/user.service';
-
-import { ReviewLinkTypeComponent } from './components/home/review-link-type/review-link-type.component';
-import { MediaPlayerModule } from './modules/media-player.module';
-import { MediaPlayerService } from './services/media-player.service';
+import { ReviewLinkTypeComponent }              from './components/home/review-link-type/review-link-type.component';
 import { MessageModule }                        from './components/shared/message/message.module';
-import { MenuService }                          from './services/menu.service';
-
 import {SubscriptionGuard}                      from './services/guards/subscription.gaurd.service';
+import { MediaModule }                          from './modules/media.module';
+import { MediaService }                         from './services/media.service';
 
 /**
  * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
@@ -42,7 +39,6 @@ import {SubscriptionGuard}                      from './services/guards/subscrip
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
-
 @Component({
   selector: 'app-root',
   template: `<app-loader></app-loader><router-outlet></router-outlet>`
@@ -59,7 +55,6 @@ export class AppComponent { }
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,10 +75,9 @@ export class AppComponent { }
     BrowserAnimationsModule,
     MessageModule,
     LoaderModule,
-    MediaPlayerModule,
+    MediaModule
   ],
   providers: [
-
       Title,
       AuthService,
       AuthGuard,
@@ -96,7 +90,7 @@ export class AppComponent { }
       UserService,
       SubscriptionService,
       SubscriptionGuard,
-      MediaPlayerService,
+      MediaService,
       { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

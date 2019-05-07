@@ -15,7 +15,7 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:build",
           "options": {
             "outputPath": "../app",
             "index": "src/index.html",
@@ -27,7 +27,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/videogular2/fonts/videogular.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -126,7 +125,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
             "browserTarget": "stickyreviews:build"
           },
@@ -149,7 +148,7 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "ngx-build-plus:karma",
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
