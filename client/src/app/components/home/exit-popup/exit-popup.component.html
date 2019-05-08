@@ -11,73 +11,73 @@
   <div class="dataTableArea">
     <div class="popupListContainer">
       <ng-scrollbar [compact]="true">
-<!--        <ul class="popupList">-->
-<!--          <li>-->
-<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup1').open()">-->
-<!--              <img src="../../../../assets/images/thumb1.png" alt="">-->
-<!--            </div>-->
-<!--            <div class="popupCtrl">-->
-<!--              <p>Exit Pop 1</p>-->
-<!--              <div class="crtlRight">-->
-<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
-<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup2').open()">-->
-<!--              <img src="../../../../assets/images/thumb2.png" alt="">-->
-<!--            </div>-->
-<!--            <div class="popupCtrl">-->
-<!--              <p>Exit Pop 2</p>-->
-<!--              <div class="crtlRight">-->
-<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
-<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup3').open()">-->
-<!--              <img src="../../../../assets/images/thumb3.png" alt="">-->
-<!--            </div>-->
-<!--            <div class="popupCtrl">-->
-<!--              <p>Exit Pop 3</p>-->
-<!--              <div class="crtlRight">-->
-<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
-<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup4').open()">-->
-<!--              <img src="../../../../assets/images/thumb4.png" alt="">-->
-<!--            </div>-->
-<!--            <div class="popupCtrl">-->
-<!--              <p>Exit Pop 4</p>-->
-<!--              <div class="crtlRight">-->
-<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
-<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">-->
-<!--              <img src="../../../../assets/images/thumb5.png" alt="">-->
-<!--            </div>-->
-<!--            <div class="popupCtrl">-->
-<!--              <p>Exit Pop 5</p>-->
-<!--              <div class="crtlRight">-->
-<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
-<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--        </ul>-->
         <ul class="popupList">
-          <li  *ngFor="let exitPopup of exitPopups;let i = index">
-            <span> {{ exitPopup.name }} </span>
+          <li>
+            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup1').open()">
+              <img src="../../../../assets/images/thumb1.png" alt="">
+            </div>
+            <div class="popupCtrl">
+              <p>Exit Pop 1</p>
+              <div class="crtlRight">
+                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup2').open()">
+              <img src="../../../../assets/images/thumb2.png" alt="">
+            </div>
+            <div class="popupCtrl">
+              <p>Exit Pop 2</p>
+              <div class="crtlRight">
+                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup3').open()">
+              <img src="../../../../assets/images/thumb3.png" alt="">
+            </div>
+            <div class="popupCtrl">
+              <p>Exit Pop 3</p>
+              <div class="crtlRight">
+                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup4').open()">
+              <img src="../../../../assets/images/thumb4.png" alt="">
+            </div>
+            <div class="popupCtrl">
+              <p>Exit Pop 4</p>
+              <div class="crtlRight">
+                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">
+              <img src="../../../../assets/images/thumb5.png" alt="">
+            </div>
+            <div class="popupCtrl">
+              <p>Exit Pop 5</p>
+              <div class="crtlRight">
+                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
+              </div>
+            </div>
           </li>
         </ul>
+<!--        <ul class="popupList">-->
+<!--          <li  *ngFor="let exitPopup of exitPopups;let i = index">-->
+<!--            <span> {{ exitPopup.name }} </span>-->
+<!--          </li>-->
+<!--        </ul> Commented out for Development perpose -->
       </ng-scrollbar>
     </div>
 
