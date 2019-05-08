@@ -98,15 +98,15 @@
 }
 
 $colors: (sr-green: #47e3bd,
-sr-blue: #3a2a98,
-sr-red: #e30b5d,
-sr-lightblue: #f3f2ff,
-sr-txt-color1: #000000,
-sr-txt-color2: #3a3a3a,
-sr-txt-color3: #848484,
-sr-txt-color4: #536470,
-sr-txt-color5: #ffffff,
-sr-common-border-color: #ebebf2,
+  sr-blue: #3a2a98,
+  sr-red: #e30b5d,
+  sr-lightblue: #f3f2ff,
+  sr-txt-color1: #000000,
+  sr-txt-color2: #3a3a3a,
+  sr-txt-color3: #848484,
+  sr-txt-color4: #536470,
+  sr-txt-color5: #ffffff,
+  sr-common-border-color: #ebebf2,
 
 );
 
@@ -2651,6 +2651,7 @@ a {
       position: absolute;
       bottom: 91px;
       left: -43px;
+      word-break: break-word;
 
       &::after {
         content: "";
@@ -2982,6 +2983,7 @@ a {
       color: #fff;
       font-weight: 600;
       padding: 12px 0 20px;
+      word-break: break-all;
     }
 
     p {
@@ -3534,6 +3536,17 @@ a {
                 appearance: none;
                 padding-right: 28px;
                 background: #F3F2FF url(#{$imgUrl}/icon_down_arrow.png) no-repeat right 10px center;
+
+                &[multiple] {
+                  background-image: none;
+                  height: auto;
+                  min-height: 50px;
+
+                  option {
+                    min-height: 30px;
+                    padding: 5px;
+                  }
+                }
               }
 
               .error-msg {
@@ -4572,7 +4585,7 @@ body.sign-upPage {
           background: none;
           border: 2px dashed #ccc;
           border-radius: 5px;
-          
+
           app-media-player {
             pointer-events: all;
           }
@@ -4586,6 +4599,7 @@ body.sign-upPage {
       .choseFileArea {
         position: relative;
         top: auto;
+        -webkit-transform: none;
         transform: none;
         left: auto;
         display: inline-block;
@@ -4602,6 +4616,7 @@ body.sign-upPage {
           height: auto;
         }
       }
+
       &.active {
         height: auto;
       }
@@ -4670,6 +4685,7 @@ body.sign-upPage {
   &:after {
     clear: both;
   }
+
   &:after,
   &:before {
     content: '';
@@ -5145,6 +5161,7 @@ body.sign-upPage {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  position: relative;
 
   img {
     max-width: 100%;
@@ -5153,7 +5170,90 @@ body.sign-upPage {
 
   .previewComp {
     margin: 30px auto;
-    position: relative;
+    // position: relative;
+    position: absolute !important;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin: 0 !important;
+
+    .rightSecContainer,
+    .topSec {
+      .popAdd {
+        .popupParent {
+          height: 50px;
+          padding-bottom: 10px;
+
+          .popupTxt {
+            -webkit-transform: scale(0.40) translate(-50%, -50%);
+            transform: scale(0.40) translate(-50%, -50%);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            margin: 0 auto !important;
+            left: 50%;
+            top: 50%;
+            text-align: left;
+
+            p {
+              text-align: left;
+              padding-bottom: 0;
+            }
+          }
+        }
+
+        &.vidPreV_parent {
+          height: 80px;
+          padding-bottom: 5px;
+
+          .popupParent {
+            height: auto;
+            padding-bottom: 0;
+            width: 350px;
+
+            &.vidParent_1,
+            &.vidParent_2,
+            &.vidParent_3,
+            &.vidParent_4,
+            &.vidParent_5 {
+              width: 350px;
+              -webkit-transform: scale(0.245);
+              transform: scale(0.245);
+              height: auto;
+              -webkit-transform-origin: -24% 0;
+              transform-origin: -18% 0;
+              display: inline-block;
+              position: absolute;
+              left: 50%;
+
+              .popupTxt {
+                -webkit-transform: none;
+                transform: none;
+                left: auto;
+                top: auto;
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .rightSec,
+    .btmSec,
+    .bottomSec {
+      .linkTo {
+        @include mt(5px !important);
+
+        .button-submit {
+          @include mt(0 !important);
+          font-size: 8px !important;
+          padding: 2px !important;
+          line-height: 14px !important;
+          border-radius: 3px !important;
+        }
+      }
+    }
 
     @media (max-width: 767px) {
       -webkit-transform: scale(0.8);
@@ -5166,20 +5266,30 @@ body.sign-upPage {
       width: 180px;
 
       .topSec {
-        padding: 20px 10px;
+        padding: 10px;
         border-radius: 5px 5px 0 0;
 
         h2 {
           width: auto;
-          font-size: 16px;
-          padding: 0 20px;
+          font-size: 10px;
+          padding: 0 40px;
           margin-bottom: 0;
         }
 
         p {
-          font-size: 10px;
-          margin-top: 8px;
+          font-size: 9px;
+          margin-top: 5px;
           line-height: 12px;
+        }
+
+        .popupParent {
+          padding-bottom: 0;
+        }
+
+        .vidPreV_parent {
+          padding-bottom: 0;
+          height: 75px;
+          @include mt(5px);
         }
       }
 
@@ -5189,7 +5299,7 @@ body.sign-upPage {
         border-radius: 0 0 5px 5px;
 
         input[type=text] {
-          height: 26px;
+          height: 20px;
           border-width: 1px;
           font-size: 10px;
           font-weight: normal;
@@ -5200,10 +5310,17 @@ body.sign-upPage {
 
         input[type=button] {
           width: auto;
-          height: 26px;
+          height: 20px;
           margin: 15px auto 0;
           font-size: 10px;
           padding: 0 30px;
+          @include border-radius(3px);
+        }
+
+        .button-submit {
+          width: auto;
+          padding-left: 24px !important;
+          padding-right: 24px !important;
         }
       }
 
@@ -5211,9 +5328,9 @@ body.sign-upPage {
         position: absolute;
         content: '';
         width: 74%;
-        height: 10px;
+        height: 6px;
         border-radius: 0 0 5px 5px;
-        bottom: -10px;
+        bottom: -6px;
         background: rgba(255, 255, 255, 0.4);
         left: 13%;
         -webkit-box-shadow: 0 0 32px rgba(0, 0, 0, 0.1);
@@ -5229,7 +5346,7 @@ body.sign-upPage {
       background-color: #ffffff;
 
       .topSec {
-        padding: 15px;
+        padding: 10px;
 
         p {
           width: 30px;
@@ -5242,37 +5359,45 @@ body.sign-upPage {
       }
 
       .bottomSec {
-        padding: 15px 10px;
+        padding: 10px;
 
         h2 {
-          font-size: 14px;
+          padding-top: 0;
+          font-size: 10px;
+          padding-bottom: 5px;
         }
 
         p {
           font-size: 8px;
-          padding-bottom: 20px;
+          padding-bottom: 8px;
         }
 
         form {
           input[type=text] {
-            height: 24px;
+            height: 20px;
             font-size: 8px;
             font-weight: normal;
             padding: 0 5px 0 25px;
             background-size: 12px;
             background-position: left 7px center;
             border-width: 1px;
+            @include border-radius(3px);
           }
 
           input[type=button] {
-            height: 24px;
+            height: 20px;
             margin: 0;
             font-size: 8px;
             padding: 0 10px;
             width: 100%;
             font-size: 9px;
             @include mt(5px);
+            @include border-radius(3px);
           }
+        }
+
+        .linkTo {
+          padding: 0 30px;
         }
       }
     }
@@ -5286,40 +5411,40 @@ body.sign-upPage {
       box-shadow: 0 0 90px rgba(0, 0, 0, 0.23);
 
       .topSec {
-        padding: 20px 15px;
+        padding: 10px 15px;
 
         p {
           font-size: 8px;
           padding-bottom: 20px;
         }
 
-        img {
-          max-width: 15px;
+        >img {
+          max-width: 10px;
         }
 
         h2 {
-          font-size: 12px;
-          padding: 7px 0;
+          font-size: 9px;
+          padding: 3px 0;
         }
       }
 
       .bottomSec {
-        padding: 0 30px 25px 30px;
+        padding: 0 30px 15px 30px;
 
         form {
           input[type=text] {
-            height: 24px;
+            height: 20px;
             font-size: 8px;
             font-weight: normal;
             padding: 0 5px 0 25px;
             background-size: 12px;
             background-position: left 7px center;
             border-width: 1px;
-            margin-top: -16px;
+            margin-top: -13px;
           }
 
           input[type=button] {
-            height: 24px;
+            height: 20px;
             margin: 0;
             font-size: 8px;
             padding: 0 10px;
@@ -5342,7 +5467,7 @@ body.sign-upPage {
 
       .leftSec {
         width: 82px;
-        height: 180px;
+        height: 195px;
         padding: 8px;
 
         h2 {
@@ -5367,17 +5492,20 @@ body.sign-upPage {
 
       .rightSec {
         width: calc(100% - 82px);
-        height: 180px;
+        height: 195px;
         padding: 5px 12px;
 
-        p {
-          padding-bottom: 8px;
-          font-size: 8px;
+        .rightSecContainer {
+          >p {
+            font-weight: 600;
+            font-size: 6px;
+            padding-bottom: 12px;
+          }
         }
 
         form {
           input[type=text] {
-            height: 24px;
+            height: 20px;
             border-width: 1px;
             font-size: 8px;
             font-weight: normal;
@@ -5388,13 +5516,13 @@ body.sign-upPage {
           }
 
           input[type=button] {
-            height: 24px;
+            height: 20px;
             margin: 0;
             font-size: 8px;
             padding: 0 10px;
             width: 100%;
-            font-size: 9px;
-            @include mt(5px);
+            font-size: 8px;
+            @include mt(3px);
           }
         }
       }
@@ -5411,7 +5539,7 @@ body.sign-upPage {
       overflow: hidden;
 
       .leftSec {
-        width: 40px;
+        width: 50px;
         height: 190px;
         border-radius: 3px 0 0 3px;
 
@@ -5419,12 +5547,13 @@ body.sign-upPage {
           font-size: 10px;
           width: 85px;
           bottom: 40px;
-          left: -25px;
+          left: -19px;
+          word-break: break-word;
 
           &:after {
             width: 106px;
             bottom: 7px;
-            left: 81px;
+            left: 85px;
           }
         }
 
@@ -5435,19 +5564,21 @@ body.sign-upPage {
       }
 
       .rightSec {
-        width: calc(100% - 40px);
+        width: calc(100% - 50px);
         height: 190px;
-        padding: 30px 10px;
+        padding: 15px 10px;
 
-        p {
-          font-weight: 600;
-          font-size: 8px;
-          padding-bottom: 12px;
+        .rightSecContainer {
+          >p {
+            font-weight: 600;
+            font-size: 6px;
+            padding-bottom: 12px;
+          }
         }
 
         form {
           input[type=text] {
-            height: 26px;
+            height: 22px;
             border-width: 1px;
             font-size: 8px;
             font-weight: normal;
@@ -5460,17 +5591,24 @@ body.sign-upPage {
           }
 
           input[type=button] {
-            height: 26px;
+            height: 22px;
             margin: 0;
             font-size: 10px;
             padding: 0 10px;
             width: 64px;
             font-size: 9px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
           }
         }
       }
     }
   }
+}
+
+// Changes to preview popup 08/05/2019
+.rightSecContainer {
+  word-break: break-all;
 }
 
 .inlineRow {
@@ -6913,6 +7051,22 @@ img {
   .bodyPopup {
     display: table-cell;
     vertical-align: middle;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    .audioRv {
+
+      audio,
+      iframe {
+        width: 100%;
+        max-width: 215px;
+        height: 30px;
+      }
+    }
+
+    .audioRv+.popupFt {
+      margin-top: 5px;
+    }
 
     h6 {
       font-size: 14px;
@@ -7652,6 +7806,65 @@ img {
     }
   }
 }
+
+// Link from exit popup
+.linkTo {
+  @include mt(10px);
+  text-align: center;
+
+  .button-submit {
+    padding: 5px;
+    font-size: 16px;
+    width: 100%;
+    font-weight: normal;
+    line-height: 32px;
+    border-radius: 5px;
+  }
+}
+
+// Link from exit popup
+
+// Exit popup listing
+.exitPopup {
+  .vidPreV_parent {
+    height: 180px;
+    position: relative;
+
+    .popupParent {
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translateX(-50%) scale(0.50);
+      transform: translateX(-50%) scale(0.50);
+      top: -77px;
+    }
+  }
+
+  .rightSec,
+  .topSec,
+  .bottomSec {
+    .popAdd {
+      .popupTxt {
+        @include ml(auto);
+        @include mr(auto);
+        @include mb(0);
+      }
+      .popupParent {
+        .bodyPopup {
+          text-align: left;
+          p {
+            padding-bottom: 0;
+            text-align: left;
+            @include mt(0);
+          }
+        }
+      }
+    }
+  }
+
+  &.theme1 {}
+}
+
+// Exit popup listing
 
 // Video Popup
 .vidPop {

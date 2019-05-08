@@ -220,26 +220,26 @@ export class ExitPopupComponent implements OnInit {
     }
   }
 
-  public setPopupVisualStyle() {
-    switch (this.form.value.exitPopupVisualStyles) {
-      case 'Zvz85wKy':
-        return this.showMe = '3';
-        break;
-      case 'Z0zbQjPn':
+  public setPopupVisualStyle() {        
+    switch (this.form.value.exitPopupVisualStyles) {      
+      case 101:
         return this.showMe = '1';
         break;
-      case 'Bow2QzJ9':
+      case 102:
         return this.showMe = '2';
         break;
-      case 'OVjr8wMG':
+      case 103:      
+        return this.showMe = '3';
+      break;
+      case 104:
         return this.showMe = '4';
         break;
-      case '3Aw7GwKZ':
+      case 105:
         return this.showMe = '5';
         break;
       default:
         return this.showMe = '1';
-    }
+    }    
   }
 
   public getHeaderTextColor($e) {

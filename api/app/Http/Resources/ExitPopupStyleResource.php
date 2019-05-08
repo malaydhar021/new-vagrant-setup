@@ -19,11 +19,13 @@ class ExitPopupStyleResource extends Resource
             return [
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
+		'type' => $this->type,
             ];
         } else {
             return [
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
+		'type' => $this->type,
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
             ];
