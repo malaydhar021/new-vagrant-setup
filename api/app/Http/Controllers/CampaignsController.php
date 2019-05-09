@@ -26,6 +26,7 @@ class CampaignsController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware(function ($request, $next) {
             $this->queryBuilder = Campaign::where('created_by', Auth::user()->id)
                 ->with('campaignStyle', 'exitPopUp', 'brandingDetails', 'stickyReviews', 'user');
@@ -249,6 +250,20 @@ class CampaignsController extends Controller
             'status' => true,
             'message' => 'Sticky reviews synced with the campaign successfully.',
             'data' => new CampaignsResource($campaign),
+        ]);
+    }
+
+    public function stickyReviewStyle($id){
+        \Log::info('campaing ID --> '.$id);
+
+        $campaign = $this->queryBuilder->whereId($id)->firstOrFail();
+        $campaignStickyReviewStyle = $campaign->style_id;
+
+        \Log::info('Campaign style id --> '.$campaignStickyReviewStyle);
+        return response()->json([
+            'status' => true,
+            'message' => 'Campaign style id found successfully.',
+            'data' => $campaignStickyReviewStyle,
         ]);
     }
 }

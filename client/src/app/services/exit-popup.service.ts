@@ -76,4 +76,8 @@ export class ExitPopupService {
     public getStickyReviews() {
         return this.httpClient.get(ExitPopupApiEndpoints.getStickyReviews);
     }
+
+    public getCampaignsStyle(id: string) {
+        return this.httpClient.get(ExitPopupApiEndpoints.getCampaignsStyle.concat(id));
+    }
 }

@@ -71,6 +71,7 @@ Route::middleware(['auth:api', 'subscription'])->group(function () {
         Route::delete('/{id}', 'CampaignsController@destroy')->name('delete');
         Route::patch('/{id}/status', 'CampaignsController@toggleStatus')->name('status.toggle');
         Route::patch('/{id}/sticky-reviews', 'CampaignsController@syncStickyReviews')->name('sticky-reviews.sync');
+        Route::get('/sticky-review-style/{id}', 'CampaignsController@stickyReviewStyle')->name('sticky-review.style');
     });
 
     Route::prefix('exit-popups')->name('exit-popups.')->group(function () {

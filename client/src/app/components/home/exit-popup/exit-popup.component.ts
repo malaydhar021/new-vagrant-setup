@@ -44,6 +44,7 @@ export class ExitPopupComponent implements OnInit {
   buttonBackgroundColor: string = this.color4;
   headerBackgroundColor: string = this.color2;
   bodyBackgroundColor: string = this.color6;
+  campaignStickyReviewStyleId: string = '';
 
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
@@ -220,15 +221,15 @@ export class ExitPopupComponent implements OnInit {
     }
   }
 
-  public setPopupVisualStyle() {        
-    switch (this.form.value.exitPopupVisualStyles) {      
+  public setPopupVisualStyle() {
+    switch (this.form.value.exitPopupVisualStyles) {
       case 101:
         return this.showMe = '1';
         break;
       case 102:
         return this.showMe = '2';
         break;
-      case 103:      
+      case 103:
         return this.showMe = '3';
       break;
       case 104:
@@ -279,6 +280,20 @@ export class ExitPopupComponent implements OnInit {
     } else {
       this.showCampaign = false;
     }
+  }
+
+  /**
+   * This function will return sticky review style id according to a campaign
+   */
+  public getCampaignStyles() {
+    console.log(this.form.value.campaign);
+    this.exitPopupService.getCampaignsStyle(this.form.value.campaign).subscribe(
+        (response: any ) => {
+          if (response.status) {
+            this.campaignStickyReviewStyleId = response.data;
+          }
+        }
+    );
   }
 
 }
