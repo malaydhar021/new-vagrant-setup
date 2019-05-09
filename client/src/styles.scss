@@ -7826,42 +7826,78 @@ img {
 
 // Exit popup listing
 .exitPopup {
-  .vidPreV_parent {
-    height: 180px;
-    position: relative;
+  &.prevwPage {
 
-    .popupParent {
-      position: absolute;
-      left: 50%;
-      -webkit-transform: translateX(-50%) scale(0.50);
-      transform: translateX(-50%) scale(0.50);
-      top: -77px;
-    }
-  }
+    .rightSec,
+    .topSec,
+    .bottomSec {
+      .popAdd {
+        padding-bottom: 15px;
 
-  .rightSec,
-  .topSec,
-  .bottomSec {
-    .popAdd {
-      .popupTxt {
-        @include ml(auto);
-        @include mr(auto);
-        @include mb(0);
-      }
-      .popupParent {
-        .bodyPopup {
-          text-align: left;
-          p {
-            padding-bottom: 0;
+        .popupTxt {
+          @include ml(auto);
+          @include mr(auto);
+          @include mb(0);
+        }
+
+        .popupParent {
+          height: 100px;
+          position: relative;
+
+          .popupTxt {
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            -webkit-transform: translateX(-50%) scale(0.8);
+            transform: translateX(-50%) scale(0.8);
+            top: 0;
+          }
+
+          .bodyPopup {
             text-align: left;
-            @include mt(0);
+
+            p {
+              padding-bottom: 0;
+              text-align: left;
+              @include mt(0);
+            }
+          }
+        }
+
+        &.vidPreV_parent {
+          height: 180px;
+          position: relative;
+
+          .popupParent {
+            position: absolute;
+            left: 50%;
+            -webkit-transform: translateX(-50%) scale(0.50);
+            transform: translateX(-50%) scale(0.50);
+            top: -77px;
+            height: auto;
+
+            .popupTxt {
+              position: static;
+              -webkit-transform: none;
+              transform: none;
+            }
           }
         }
       }
     }
-  }
 
-  &.theme1 {}
+    &.theme4 {
+      .linkTo {
+        padding: 0 30px;
+      }
+    }
+
+    &.theme5 {
+      .popAdd {
+        padding-bottom: 0;
+      }
+    }
+  }
 }
 
 // Exit popup listing
