@@ -5255,6 +5255,19 @@ body.sign-upPage {
       }
     }
 
+    .nsm-dialog-btn-close {
+      background-image: none;
+      right: 0;
+      top: 0;
+
+      img {
+        display: inline-block;
+        margin: 0;
+        width: 7px;
+        opacity: 1;
+      }
+    }
+
     @media (max-width: 767px) {
       -webkit-transform: scale(0.8);
       transform: scale(0.8);
@@ -5263,7 +5276,7 @@ body.sign-upPage {
 
   &.theme5 {
     .previewComp {
-      width: 180px;
+      width: 150px;
 
       .topSec {
         padding: 10px;
@@ -5272,14 +5285,14 @@ body.sign-upPage {
         h2 {
           width: auto;
           font-size: 10px;
-          padding: 0 40px;
+          padding: 0 30px;
           margin-bottom: 0;
         }
 
         p {
-          font-size: 9px;
+          font-size: 6px;
           margin-top: 5px;
-          line-height: 12px;
+          line-height: 8px;
         }
 
         .popupParent {
@@ -5321,6 +5334,19 @@ body.sign-upPage {
           width: auto;
           padding-left: 24px !important;
           padding-right: 24px !important;
+        }
+      }
+
+      .nsm-dialog-btn-close {
+        background-image: none;
+        right: 0;
+        top: -1px;
+        width: 25px;
+        height: 22px;
+
+        img {
+          @include ml(5px);
+          @include mb(3px);
         }
       }
 
@@ -5400,6 +5426,19 @@ body.sign-upPage {
           padding: 0 30px;
         }
       }
+
+      .nsm-dialog-btn-close {
+        background-image: none;
+        right: 0;
+        top: -1px;
+        width: 25px;
+        height: 22px;
+
+        img {
+          @include ml(5px);
+          @include mb(3px);
+        }
+      }
     }
   }
 
@@ -5454,6 +5493,19 @@ body.sign-upPage {
           }
         }
       }
+
+      .nsm-dialog-btn-close {
+        background-image: none;
+        right: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+
+        img {
+          @include ml(5px);
+          @include mb(3px);
+        }
+      }
     }
   }
 
@@ -5464,11 +5516,17 @@ body.sign-upPage {
       width: 250px;
       overflow: hidden;
       background-color: #EEF7FF;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
 
       .leftSec {
-        width: 82px;
-        height: 195px;
         padding: 8px;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 82px;
+        flex: 0 0 82px;
+        min-height: 195px;
+        height: auto;
 
         h2 {
           font-size: 10px;
@@ -5477,6 +5535,8 @@ body.sign-upPage {
         img {
           width: 13px;
           margin: 10px 0 0 -20px;
+          -webkit-filter: none;
+          filter: none;
         }
 
         &:before {
@@ -5491,9 +5551,13 @@ body.sign-upPage {
       }
 
       .rightSec {
-        width: calc(100% - 82px);
-        height: 195px;
+        // width: calc(100% - 82px);
+        // height: 195px;
         padding: 5px 12px;
+        flex: 0 0 calc(100% - 82px);
+        width: auto;
+        height: inherit;
+        max-width: calc(100% - 82px);
 
         .rightSecContainer {
           >p {
@@ -5524,6 +5588,19 @@ body.sign-upPage {
             font-size: 8px;
             @include mt(3px);
           }
+        }
+      }
+
+      .nsm-dialog-btn-close {
+        background-image: none;
+        right: 0;
+        top: -1px;
+        width: 20px;
+        height: 20px;
+
+        img {
+          @include ml(5px);
+          @include mb(3px);
         }
       }
     }
@@ -5602,6 +5679,14 @@ body.sign-upPage {
           }
         }
       }
+
+      .nsm-dialog-btn-close {
+        background-image: none;
+        right: -19px;
+        top: -3px;
+        width: 50px;
+        height: 20px;
+      }
     }
   }
 }
@@ -5662,6 +5747,37 @@ body.sign-upPage {
       background-color: #ddd;
       left: 100%;
       margin-left: 15px;
+    }
+  }
+}
+
+.prevwPage {
+  &.theme5 {
+    .linkTo {
+      padding: 0 65px;
+    }
+  }
+
+  &.theme2 {
+    .nsm-body {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+
+      .leftSec {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 282px;
+        flex: 0 0 282px;
+        min-height: 360px;
+        height: auto;
+      }
+
+      .rightSec {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 418px;
+        flex: 0 0 418px;
+        height: inherit;
+      }
     }
   }
 }
@@ -7261,6 +7377,7 @@ img {
     .closePopup {
       background-color: #ACBACC;
       @include border-radius(5px 5px 5px 0);
+      right: 10px;
 
       &:after {
         background-color: #8698AF;
@@ -7324,6 +7441,8 @@ img {
     background-color: #F8F8F8;
     -webkit-box-shadow: 0 10px 30px rgba(87, 105, 177, 0.16);
     box-shadow: 0 10px 30px rgba(87, 105, 177, 0.16);
+    border-radius: 10px;
+    border-bottom-left-radius: 0;
 
     .bodyPopup {
       padding-left: 18px;
@@ -7895,6 +8014,11 @@ img {
     &.theme5 {
       .popAdd {
         padding-bottom: 0;
+
+        &.vidPreV_parent {
+          margin-bottom: -40px;
+          margin-top: 20px;
+        }
       }
     }
   }
