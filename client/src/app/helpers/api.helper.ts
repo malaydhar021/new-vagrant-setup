@@ -481,6 +481,10 @@ export class ExitPopupApiEndpoints {
     return apiBaseUrl.concat('/campaigns/sticky-review-style/');
   }
 
+  public static get getstickyReviewInfo(): string {
+    return apiBaseUrl.concat('/sticky-reviews/');
+  }
+
 }
 
 

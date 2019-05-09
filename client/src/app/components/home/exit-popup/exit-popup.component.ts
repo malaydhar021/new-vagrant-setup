@@ -44,7 +44,15 @@ export class ExitPopupComponent implements OnInit {
   buttonBackgroundColor: string = this.color4;
   headerBackgroundColor: string = this.color2;
   bodyBackgroundColor: string = this.color6;
-  campaignStickyReviewStyleId: string = '';
+  campaignStickyReviewStyleId: string = '1';
+
+  reviewUserName: string = '';
+  reviewImageUrl: string = '';
+  reviewName: string = '';
+  reviewDescription: string = '';
+  reviewAt: string = '';
+  reviewType: string = '1';
+  reviewRating: string = '1';
 
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
@@ -290,10 +298,40 @@ export class ExitPopupComponent implements OnInit {
     this.exitPopupService.getCampaignsStyle(this.form.value.campaign).subscribe(
         (response: any ) => {
           if (response.status) {
+            console.log(response.data);
             this.campaignStickyReviewStyleId = response.data;
           }
         }
     );
+  }
+
+  public getStickyReviewStyle() {
+    console.log(this.form.value.stickyReviews[0]);
+    if (this.form.value.stickyReviews[0] !== undefined) {
+      // get the [0] position of the array and trit is as the id and send data according to it.
+      this.exitPopupService.getstickyReviewInfo(this.form.value.stickyReviews[0]).subscribe(
+          (response: any ) => {
+            if (response.status) {
+              // console.log(response.data.created_by.name);
+              this.reviewUserName = response.data.created_by.name;
+              this.reviewImageUrl = response.data.image_url;
+              this.reviewName = response.data.name;
+              this.reviewDescription = response.data.review;
+              this.reviewAt = response.data.reviewed_at;
+              this.reviewType = response.data.type;
+              this.reviewRating = response.data.rating;
+            }
+          }
+      );
+    }
+  }
+
+  public getStars(rating) {
+    var starts = new Array(1);
+    for (let i=1; i<rating; i++) {
+      starts.push(i);
+    }
+    return starts;
   }
 
 }

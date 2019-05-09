@@ -80,4 +80,8 @@ export class ExitPopupService {
     public getCampaignsStyle(id: string) {
         return this.httpClient.get(ExitPopupApiEndpoints.getCampaignsStyle.concat(id));
     }
+
+    public getstickyReviewInfo(id: string) {
+        return this.httpClient.get(ExitPopupApiEndpoints.getstickyReviewInfo.concat(id));
+    }
 }
