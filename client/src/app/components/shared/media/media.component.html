@@ -1,8 +1,8 @@
 <!-- Audio recorder component -->
-<app-audio-recorder *ngIf="recorder === 'audio'"></app-audio-recorder>
+<app-audio-recorder *ngIf="recorder === 'audio'" [height]="height" [width]="width"></app-audio-recorder>
 <!-- Audio player component -->
-<app-audio-player *ngIf="player === 'audio'" [source]="src"></app-audio-player>
+<app-audio-player *ngIf="player === 'audio'" [source]="src" [height]="height" [width]="width"></app-audio-player>
 <!-- Video recorder component -->
-<app-video-recorder *ngIf="recorder === 'video'"></app-video-recorder>
+<app-video-recorder *ngIf="recorder === 'video'" [height]="height" [width]="width"></app-video-recorder>
 <!-- Video player component -->
-<app-video-player *ngIf="player === 'video'" [source]="src"></app-video-player>
+<app-video-player *ngIf="player === 'video'" [source]="src" [height]="height" [width]="width"></app-video-player>

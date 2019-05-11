@@ -16,7 +16,7 @@ const routes: Routes = [
     { path: 'sign-up', component: SignUpComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'reset-password/:token', component: ResetPasswordComponent },
-    { path: 'user-review/:id', loadChildren: () => UserReviewModule },
+    { path: 'user-review/:slug', loadChildren: () => UserReviewModule },
     { path: 'home', canLoad: [AuthGuard], loadChildren: () => HomeModule },
     { path: 'not-found', component: NotFoundComponent },
     { path: 'review-link-type', component: ReviewLinkTypeComponent }  

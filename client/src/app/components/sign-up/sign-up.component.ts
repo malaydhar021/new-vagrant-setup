@@ -27,21 +27,21 @@ export class SignUpComponent implements OnInit, OnDestroy {
   signupFormStep1: FormGroup; // instance of angular reactive form FormGroup class
   signupFormStep2: FormGroup; // instance of angular reactive form FormGroup class
   isStep2: boolean = false; // flag to set which step show be shown based on true / false
-  subscription: Subscription; // subscibe to a observable to get the current value of that variable
+  subscription: Subscription; // subscribe to a observable to get the current value of that variable
   loader: boolean = false; // to show / hide the loader by setting true / false
   errorMessage: string = null; // to display server side errors into component template
-  isSubmittedStep1: boolean = false; // flag to set to true if the signpu form step 1 has been submitted
+  isSubmittedStep1: boolean = false; // flag to set to true if the signup form step 1 has been submitted
   isSubmittedStep2: boolean = false; // flag to set to true if the signpu form step 2 has been submitted
-  validationErrors : any = null; // to display server side valildation errors into component template
+  validationErrors : any = null; // to display server side validation errors into component template
 
   /**
    * Constructor method which initialize few angular services and few custom services to serve a certain purpose
    * @constructor constructor
    * @since Version 1.0.0
-   * @param title Titile service from angular to change the title of the page from DOM element
+   * @param title Title service from angular to change the title of the page from DOM element
    * @param renderer Renderer2 service from angular core to add or remove some class on some document selector
    * @param router Angular router to handle route operations like redirect to one route by programme
-   * @param formBuilder Angular reative form builder to handle forms
+   * @param formBuilder Angular reactive form builder to handle forms
    * @param authService AuthService is a custom service to handle actions related to user authentication
    * @param errorService ErrorsService is a custom service to handle all sort of server side erros along with all validation error messages
    * @param signupService SignupService is a custom service only for signup to make api calls mainly
@@ -115,7 +115,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
    * This will unsubscribe the subscription and also remove the `sign-upPage class` from body when
    * this component will be destroyed.
    * @method ngOnDestroy
-   * @since Versoin 1.0.0
+   * @since Version 1.0.0
    * @returns Void
    */
   public ngOnDestroy() {

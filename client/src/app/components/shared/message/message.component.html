@@ -1,14 +1,20 @@
 <!-- ERROR MESSAGES -->
 <span>
   <div class="log-stat_msg log_Failed">{{ errorMessage }}</div>
+  <div class="log-stat_msg log_Failed" *ngFor="let error of validationErrorMessages">
+    {{ error }}
+  </div>
   <!-- Validation error messages for branding -->
-  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.name !== undefined">{{ validationErrorMessages.name }}</div>
-  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.url !== undefined">{{ validationErrorMessages.url }}</div>
+  <!-- <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.name !== undefined">{{ validationErrorMessages.name }}</div>
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.url !== undefined">{{ validationErrorMessages.url }}</div> -->
   <!-- Validation for error messages for sticky reviews -->
-  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.review_video !== undefined">{{ validationErrorMessages.review_video }}</div>
+  <!-- <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.review_video !== undefined">{{ validationErrorMessages.review_video }}</div>
   <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.review_audio !== undefined">{{ validationErrorMessages.review_audio }}</div>
   <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.review_text !== undefined">{{ validationErrorMessages.review_text }}</div>
-  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.image !== undefined">{{ validationErrorMessages.image }}</div>
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.image !== undefined">{{ validationErrorMessages.image }}</div> -->
+  <!-- Validation error messages for user review steps-->
+  <!-- <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.email !== undefined">{{ validationErrorMessages.email }}</div>
+  <div class="log-stat_msg log_Failed" *ngIf="validationErrorMessages.phone_number !== undefined">{{ validationErrorMessages.phone_number }}</div> -->
 </span>
 <!-- END -->
 

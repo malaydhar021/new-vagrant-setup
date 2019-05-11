@@ -331,7 +331,7 @@ export class StickyReviewsApiEndpoints {
  * @class ReviewLinkApiEndpoints
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
- * @license Proprietery
+ * @license Proprietary
  */
 export class ReviewLinkApiEndpoints {
   /**
@@ -391,7 +391,7 @@ export class ReviewLinkApiEndpoints {
  * @class UserApiEndpoints
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
- * @license Proprietery
+ * @license Proprietary
  */
 export class UserApiEndpoints {
   /**
@@ -427,11 +427,11 @@ export class UserApiEndpoints {
 
 
 /**
- *  SubscriptionApiEndpoints helper class is holding all static methods for subscription api endpoints based on the environment
+ * SubscriptionApiEndpoints helper class is holding all static methods for subscription api endpoints based on the environment
  * @class SubscriptionApiEndpoints
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
- * @license Proprietery
+ * @license Proprietary
  */
 export class SubscriptionApiEndpoints {
   /**
@@ -457,5 +457,19 @@ export class SubscriptionApiEndpoints {
 
 }
 
-
-
+/**
+ * @class UserReviewApiEndpoints
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export class UserReviewApiEndpoints {
+  /**
+   * @method userReviewLinkInfo
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get userReviewLinkInfo(): string {
+    return apiBaseUrl.concat('/user-reviews');
+  }
+}

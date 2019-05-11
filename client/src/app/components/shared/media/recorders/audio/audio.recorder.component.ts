@@ -15,33 +15,35 @@ import { Log } from '../../../../../helpers/app.helper';
   styleUrls: ['./audio.recorder.component.scss']
 })
 export class AudioRecorderComponent implements OnInit, OnDestroy {
-  private idx: string = 'audio_review_recorder';
-  private player: any = false;
+  idx: string = 'audio_review_recorder';
+  player: any = false;
+  @Input() height?: number = null; // height of the audio recorder
+  @Input() width?: number = null; // width of the audio recorder
 
 
   // configuration for videojs-record plugin
-  private configPluginsRecord: any = {
+  configPluginsRecord: any = {
     audio: true,
     video: false,
     maxLength: 300,
     msDisplayMax: 10,
-    debug: true,
+    debug: false,
   };
 
   // configuration for videojs-wavesurfer plugin
-  private configPluginsWavesurfer: any = { 
+  configPluginsWavesurfer: any = { 
     src: 'live',
     waveColor: '#36393b',
     progressColor: 'black',
-    debug: true,
+    debug: false,
     cursorWidth: 1,
     msDisplayMax: 20,
     hideScrollbar: true
   }
   // main configuration for videojs with videojs-wavesurfer and videojs-record plugins
-  private config = {
+  config = {
     controls: true,
-    fluid: true,
+    fluid: false,
     loop: false,
     width: 320,
     height: 240,
@@ -70,8 +72,8 @@ export class AudioRecorderComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public ngAfterViewInit() {
-    // Log.info("audio recorder component");
+  public ngAfterViewInit() {    
+    this.setConfig();
     // initialize the player using media service
     this.mediaService.initPlayer(this.idx, this.config);
     // assign the player to `player` property
@@ -79,6 +81,21 @@ export class AudioRecorderComponent implements OnInit, OnDestroy {
     // Log.info(this.player, "log player in audio component");
     // execute the media callback events
     this.mediaService.mediaEvents();
+  }
+
+  /**
+   * Method to override the default config
+   * @method setConfig
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public setConfig() {
+    if(this.height !== null) {
+      this.config.height = this.height;
+    }
+    if(this.width !== null) {
+      this.config.width = this.width;
+    }
   }
 
   /**

@@ -1,10 +1,23 @@
 <div class="stepReview step_2 active">
-  <form class="form_eParent" (ngSubmit)="onSubmit()">
+  <message></message>
+  <form [formGroup]="form" class="form_eParent" (ngSubmit)="onSubmit()">
     <div class="formRow">
-      <label> Review Title </label>
+      <label> Review Title(Max: {{ allowedMaxReviewTitle }} chars) </label>
       <div class="inRowRvw sr-form-field">
-        <input class="sr-form-ctrl" type="text" placeholder="Title for your review" />
+        <input class="sr-form-ctrl" type="text" placeholder="Title for your review" formControlName="name" [ngClass]="{error: isSubmitted && getFormControls.name.errors}" />
         <div class="error-msg"></div>
+      </div>
+      <div class="error-msg" *ngIf="(
+            isSubmitted
+            && getFormControls.name.errors !== null 
+            && getFormControls.name.errors.required)">
+        Review title is required
+      </div>
+      <div class="error-msg" *ngIf="(
+            isSubmitted
+            && getFormControls.name.errors !== null 
+            && getFormControls.name.errors.maxlength)">
+        Review title should be maximum {{ allowedMaxReviewTitle }} characters
       </div>
     </div>
     <div class="formRow">
@@ -12,84 +25,158 @@
         Select Review Type
       </label>
       <div class="inRowRvw">
+        <!-- Textual review radio -->
         <label class="reviewRadio">
-          <input type="radio" name="radioRevwType" checked />
+          <input type="radio" name="reviewType" formControlName="reviewType" [value]="1" />
           <span>Textual</span>
         </label>
-
+        <!-- Audio review radio -->
         <label class="reviewRadio">
-          <input type="radio" name="radioRevwType" />
-          <span>Video</span>
-        </label>
-
-        <label class="reviewRadio">
-          <input type="radio" name="radioRevwType" />
+          <input type="radio" name="reviewType" formControlName="reviewType" [value]="2" />
           <span>Audio</span>
         </label>
+        <!-- Video review radio -->
+        <label class="reviewRadio">
+          <input type="radio" name="reviewType" formControlName="reviewType" [value]="3" />
+          <span>Video</span>
+        </label>
       </div>
-
       <div class="choiceState">
         <!-- Textual review box -->
-        <div class="reviewUp reviewTxt active">
-          <label>
-            Review Description
-          </label>
+        <div class="reviewUp reviewTxt active" *ngIf="selectedReviewType == 1">
+          <label>Review (Max: {{ allowedMaxTextReviewChars }} chars)</label>
           <div class="inRowRvw sr-form-field">
-            <textarea class="sr-form-ctrl" placeholder="Title for your review"></textarea>
+            <textarea class="sr-form-ctrl" placeholder="Title for your review" formControlName="review"
+              [ngClass]="{error: getFormControls.review.errors}"></textarea>
+          </div>
+          <div class="error-msg" *ngIf="(
+                getFormControls.review.errors !== null 
+                && getFormControls.review.errors.required)">
+            Review is required
+          </div>
+          <div class="error-msg" *ngIf="(
+                getFormControls.review.errors !== null 
+                && getFormControls.review.errors.maxlength)">
+            Review should be maximum {{ allowedMaxTextReviewChars }} characters
           </div>
         </div>
         <!-- Audio review box -->
-        <div class="reviewUp reviewAudio active">
-            <div class="inRowRvw">
-              <div class="rvwVidOpt">
-                <label class="revUp">
-                  <input type="radio" name="vidType">
-                  <span>
-                    Upload Audio
-                  </span>
-                </label>
-                <label class="revRec">
-                  <input type="radio" name="vidType" checked>
-                  <span>
-                    Record Audio
-                  </span>
-                </label>
-              </div>
-              <div class="reviewVidSh">
-                
-                <div class="vidUpV vidUp">
-                  <img src="../../../../assets/images/vid.jpg" alt="">
-                </div>
-                <div class="vidUpV vidRec active">
-                  <app-media [recorder]="'audio'"></app-media>
-                </div>
-              </div>
-            </div>
-          </div>
-        <!-- Video review box -->
-        <div class="reviewUp reviewVideo active">
+        <div class="reviewUp reviewAudio active" *ngIf="selectedReviewType == 2">
           <div class="inRowRvw">
             <div class="rvwVidOpt">
               <label class="revUp">
-                <input type="radio" name="vidType">
-                <span>
-                  Upload Video
-                </span>
+                <input type="radio" name="reviewTypeAction" formControlName="reviewTypeAction" [value]="1">
+                <span>Upload Audio (Max: {{ allowedMaxAudioFileSize }} {{ unit }})</span>
               </label>
               <label class="revRec">
-                <input type="radio" name="vidType" checked>
-                <span>
-                  Record Video
-                </span>
+                <input type="radio" name="reviewTypeAction" formControlName="reviewTypeAction" [value]="2">
+                <span>Record Audio</span>
               </label>
             </div>
             <div class="reviewVidSh">
-              <div class="vidUpV vidUp">
-                <img src="../../../../assets/images/vid.jpg" alt="">
+              <!-- Upload Audio -->
+              <div class="vidUpV vidUp active" *ngIf="selectedReviewTypeAction == 1">
+                <div class="sr-form-field">
+                  <div class="sr-form-ctrl inputFile">
+                    <input type="file" (change)="onChangeReviewFile($event)"
+                      [ngClass]="{error: getFormControls.review.errors}">
+                    <input type="hidden" formControlName="review">
+                    <div class="choseFileArea">
+                      <div class="fileImg">
+                        <img src="../../../../assets/images/icon_upload_audio.png" alt="">
+                      </div>
+                      <p>
+                        <span>{{reviewChoseFileCtrl}}</span>{{reviewFileName}}
+                      </p>
+                    </div>
+                    <div class="figureUpld">
+                      <!-- for audio  player-->
+                      <app-media [player]="'audio'" *ngIf="getFormControls.review.valid" [height]="80" [width]="281">
+                      </app-media>
+                    </div>
+                  </div>
+                </div>
+                <div class="error-msg" *ngIf="(
+                        getFormControls.review.errors !== null 
+                        && getFormControls.review.errors.required)">
+                  Audio file is required
+                </div>
+                <div class="error-msg" *ngIf="(
+                        getFormControls.review.errors !== null 
+                        && getFormControls.review.errors.invalidFileType)">
+                  Invalid file type. File should be an audio file
+                </div>
+                <div class="error-msg" *ngIf="(
+                        getFormControls.review.errors !== null 
+                        && getFormControls.review.errors.invalidFileSize)">
+                  Invalid file size. File size should be maximum {{allowedMaxAudioFileSize}} {{unit}}
+                </div>
               </div>
+              <!-- Record Audio -->
+              <div class="vidUpV vidRec active" *ngIf="selectedReviewTypeAction == 2">
+                <app-media [recorder]="'audio'" [height]="181" [width]="298"></app-media>
+                <input type="hidden" formControlName="review">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Video review box -->
+        <div class="reviewUp reviewVideo active" *ngIf="selectedReviewType == 3">
+          <div class="inRowRvw">
+            <div class="rvwVidOpt">
+              <label class="revUp">
+                <input type="radio" name="reviewTypeAction" formControlName="reviewTypeAction" [value]="1">
+                <span>Upload Video (Max: {{ allowedMaxVideoFileSize }} {{ unit }})</span>
+              </label>
+              <label class="revRec">
+                <input type="radio" name="reviewTypeAction" formControlName="reviewTypeAction" [value]="2">
+                <span>Record Video</span>
+              </label>
+            </div>
+            <div class="reviewVidSh">
+              <!-- Upload Video -->
+              <div class="vidUpV vidUp active" *ngIf="selectedReviewTypeAction == 1">
+                <!-- <img src="../../../../assets/images/vid.jpg" alt=""> -->
+                <div class="sr-form-field">
+                  <div class="sr-form-ctrl inputFile">
+                    <input type="file" (change)="onChangeReviewFile($event)"
+                      [ngClass]="{error: getFormControls.review.errors}">
+                    <input type="hidden" formControlName="review">
+                    <div class="choseFileArea">
+                      <div class="fileImg">
+                        <img src="../../../../assets/images/icon_upload_video.png" alt="">
+                      </div>
+                      <p>
+                        <span>{{reviewChoseFileCtrl}}</span>{{reviewFileName}}
+                      </p>
+                    </div>
 
-              <div class="vidUpV vidRec active">
-                <app-media [recorder]="'video'"></app-media>
+                    <div class="figureUpld">
+                      <!-- for video player-->
+                      <app-media [player]="'video'" *ngIf="getFormControls.review.valid"></app-media>
+                    </div>
+                  </div>
+                </div>
+                <div class="error-msg" *ngIf="(
+                    getFormControls.review.errors !== null 
+                    && getFormControls.review.errors.required)">
+                  Video is required
+                </div>
+                <div class="error-msg" *ngIf="(
+                    getFormControls.review.errors !== null 
+                    && getFormControls.review.errors.invalidFileType)">
+                  Invalid file type. File should be an video
+                </div>
+                <div class="error-msg" *ngIf="(
+                    getFormControls.review.errors !== null 
+                    && getFormControls.review.errors.invalidFileSize)">
+                  Invalid file size. File size should be maximum {{ allowedMaxVideoFileSize }} {{ unit }}
+                </div>
+              </div>
+              <!-- Record Video -->
+              <div class="vidUpV vidRec active" *ngIf="selectedReviewTypeAction == 2">
+                <app-media [recorder]="'video'" [height]="181" [width]="298"></app-media>
+                <input type="hidden" formControlName="review">
               </div>
             </div>
           </div>
@@ -97,13 +184,16 @@
         <!-- End of all review types-->
 
         <!-- User rating -->
-          <div class="ratingRvTxt">
-            <img src="../../../../assets/images/star_active.png" alt="">
-            <img src="../../../../assets/images/star_active.png" alt="">
-            <img src="../../../../assets/images/star_active.png" alt="">
-            <img src="../../../../assets/images/star_active.png" alt="">
-            <img src="../../../../assets/images/star_inactive.png" alt="">
+        <div class="sr-form-cell-small rating_modals">
+          <!-- <label>Rate your review</label> -->
+          <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="rating"></bar-rating>
+          <div class="error-msg" *ngIf="(
+                isSubmitted 
+                && getFormControls.rating.errors !== null 
+                && getFormControls.rating.errors.required)">
+            Review rating is required
           </div>
+        </div>
       </div>
     </div>
 

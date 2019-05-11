@@ -17,25 +17,27 @@ import { Subscription } from 'rxjs';
 })
 export class AudioPlayerComponent implements OnInit, OnDestroy {
   @Input() source?: string = null;
-  private idx: string = 'audio_review_player';
-  private player: any = false;
-  private subscription: Subscription;
-  private audioSrc: string = null;
+  @Input() height?: number = null; // height of the audio player
+  @Input() width?: number = null; // width of the audio player
+  idx: string = 'audio_review_player';
+  player: any = false;
+  subscription: Subscription;
+  audioSrc: string = null;
   // configuration for videojs-wavesurfer plugin
-  private configPluginsWavesurfer: any = { 
+  configPluginsWavesurfer: any = { 
     src: '',
     waveColor: '#36393b',
     progressColor: 'black',
-    debug: true,
+    debug: false,
     cursorWidth: 1,
     msDisplayMax: 20,
     hideScrollbar: true
   }
   // main configuration for videojs with videojs-wavesurfer and videojs-record plugins
-  private config = {
+  config = {
     controls: true,
-    autoplay: true,
-    fluid: true,
+    autoplay: false,
+    fluid: false,
     loop: false,
     width: 320,
     height: 240,
@@ -74,7 +76,12 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   public ngAfterViewInit() {
     if(this.audioSrc !== null || this.source !== null) {
       this.config.plugins.wavesurfer.src = (this.source !== null) ? this.source : this.audioSrc;
-      this.config.autoplay = (this.source !== null) ? false : true;
+      if(this.height !== null) {
+        this.config.height = this.height;
+      }
+      if(this.width !== null) {
+        this.config.width = this.width;
+      }
       // initialize the player using media service
       this.mediaService.initPlayer(this.idx, this.config);      
       // assign the player to `player` property

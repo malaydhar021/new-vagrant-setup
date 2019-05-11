@@ -45,7 +45,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   allowedMaxImageFileSize:number = 1; // max file size for sticky review image
   allowedMaxAudioFileSize:number = 20; // max file size for review type audio
   allowedMaxVideoFileSize:number = 30; // max file size for review type video
-  unit: string = "MB";
+  unit: string = "MB"; // legal values are GB|MB|KB
   allowedMaxTextReviewChars: number = 60; // max chars for text review
   // allowed file types for sticky review image
   allowedImageFileTypes: string[] = [
@@ -225,7 +225,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       (response: any) => {
         Log.success(response);
         if (response.status) {
-          // update the brands array with latest api response data
+          // update the reviews array with latest api response data
           this.reviews = response.data;
           Log.debug(this.reviews.length, "Checking the length of the reviews property");
           // hide the loader
@@ -627,4 +627,3 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     );
   }
 }
-

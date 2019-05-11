@@ -1,34 +1,31 @@
-<div class="reviewLinkBody">
-  <div class="reviewlinkForm">
+<div class="reviewLinkBody" [style.background-color]="urlInfo.page_background">
+  <div class="reviewlinkForm" [style.background-color]="urlInfo.modal_background">
+    <!-- Header -->
     <header class="reviewLHdr">
-      <div class="figureHeader" style="background-image: url(../../../../assets/images/dp.jpeg);"></div>
+      <div *ngIf="urlInfo.logo !== null" class="figureHeader" [style.background-image]="'url('+  urlInfo.logo  +')'"></div>
       <div class="headerTxtRvw">
-        <h3>
-          FHL-PROMO
-        </h3>
-        <p>
-          What did you think about the special Funnel Hacking Live Offer?
-        </p>
+        <h3 *ngIf="urlInfo.name !== null">{{ urlInfo.name }}</h3>
+        <p *ngIf="urlInfo.description !== null">{{ urlInfo.description }}</p>
       </div>
     </header>
-    
+    <!-- Different screens -->
     <div class="bodyCreview">
       <!-- screen for recommendation from user -->
-      <app-recommendation></app-recommendation>
+      <app-recommendation *ngIf="stepBuilder.recommendation"></app-recommendation>
       <!-- screen to get review from user -->
-      <app-review></app-review>
+      <app-review *ngIf="stepBuilder.review" [slug]="slug"></app-review>
       <!-- screen to get the permission from user whether review will be shown or not -->
-      <app-permission></app-permission>
+      <app-permission *ngIf="stepBuilder.permission"></app-permission>
       <!-- screen to upload user dp -->
-      <app-display-picture></app-display-picture>
+      <app-display-picture *ngIf="stepBuilder.displayPicture" [slug]="slug"></app-display-picture>
       <!-- screen to get user's contact info  -->
-      <app-contact></app-contact>
+      <app-contact *ngIf="stepBuilder.contact" [slug]="slug"></app-contact>
       <!-- screen for thank you message -->
-      <app-thank-you></app-thank-you>
+      <app-thank-you *ngIf="stepBuilder.thankYou"></app-thank-you>
     </div>
   </div>
-
-  <footer class="footerCopy">
-    <p>&copy; 2019 All rights reserved. Logistics LLC</p>
+  <!-- Footer -->
+  <footer class="footerCopy" *ngIf="urlInfo.copyright_text !== null">
+    <p [innerHTML]="urlInfo.copyright_text"></p>
   </footer>
 </div>

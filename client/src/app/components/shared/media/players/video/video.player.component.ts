@@ -20,16 +20,22 @@ import { Log } from '../../../../../helpers/app.helper';
 })
 export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() source?: string = null; // video player source
-  private idx: string = 'video_review_player';
-  private player: any = false;
-  private subscription: Subscription;
-  private url: string = null; // source url of video file 
+  @Input() height?: number = null; // height of the video recorder
+  @Input() width?: number = null; // width of the video recorder
+
+  idx: string = 'video_review_player';
+  player: any = false;
+  subscription: Subscription;
+  url: string = null; // source url of video file 
   // video.js configuration
-  private config = {
+  config = {
     controls: true,
     autoplay: true,
-    fluid: true,
-    loop: false
+    fluid: false,
+    loop: false,
+    width: 320,
+    height: 240,
+    debug: true
   };
 
   /**
@@ -102,10 +108,22 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.initVideoPlayer();
   }
 
+  /**
+   * Method to initialize player with the help of media service
+   * @method initVideoPlayer
+   * @since Version 1.0.0
+   * @returns Void
+   */
   public initVideoPlayer() {
     if(this.url !== null || this.source !== null) {
       this.config.autoplay = (this.source !== null) ? false : true;
       Log.info(this.config.autoplay, "log autoplay in config");
+      if(this.height !== null) {
+        this.config.height = this.height;
+      }
+      if(this.width !== null) {
+        this.config.width = this.width;
+      }
       this.mediaService.initPlayer(this.idx, this.config);
       this.player = this.mediaService.player;
       this.mediaService.mediaEvents();

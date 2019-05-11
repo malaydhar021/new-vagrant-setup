@@ -33,6 +33,10 @@ export class MediaService {
   private videoSrcSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   videoSrc$: Observable<any> = this.videoSrcSubject.asObservable();
 
+  // declaring variant of Subject recorded file when audio|video recording will be finished
+  private recordedFileSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  recordedFile$: Observable<any> = this.recordedFileSubject.asObservable();
+
   // reference to the element itself. used to access events and methods
   private _elementRef: ElementRef
 
@@ -70,6 +74,17 @@ export class MediaService {
    */
   public updateVideoSrc(src: string) {
     this.videoSrcSubject.next(src);
+  }
+
+  /**
+   * Method to update audio src from desired components / services asynchronously
+   * @method updateRecordedFile
+   * @since Version 1.0.0
+   * @param file (any) Blob data of recorded file for audio|video file
+   * @returns Observable<Blob>
+   */
+  public updateRecordedFile(file: File) {
+    this.recordedFileSubject.next(file);
   }
 
   /**
@@ -260,27 +275,39 @@ export class MediaService {
   }
 
   /**
+   * Method will be executed when any such device error will occur
    * @method deviceError
+   * @since Version 1.0.0
+   * @returns Void
    */
   public deviceError() {
+    if(!this._player) return;
     this._player.on('deviceError', () => {
       Log.error(this._player.deviceErrorCode, "device errors");
     });
   }
 
   /**
+   * Method will be execute when some error will occur mainly in client side
    * @method error
+   * @since Version 1.0.0
+   * @returns Void
    */
   public error() {
+    if(!this._player) return;
     this._player.on('error', (element, error) => {
       Log.error(error, "errors");
     });
   }
 
   /**
+   * Method to execute when audio | video recording is started
    * @method startRecord
+   * @since Version 1.0.0
+   * @returns Void
    */
   public startRecord() {
+    if(!this._player) return;
     // user clicked the record button and started recording
     this._player.on('startRecord', () => {
         Log.info('started audio recording!');
@@ -288,32 +315,64 @@ export class MediaService {
   }
 
   /**
+   * Method to execute when audio | video recording is finished
    * @method finishRecord
+   * @since Version 1.0.0
+   * @returns Void
    */
   public finishRecord() {
+    if(!this._player) return;
     // user completed recording and stream is available
       this._player.on('finishRecord', () => {
         // the blob object contains the recorded data that
         // can be downloaded by the user, stored on server etc.
         Log.info(this._player.recordedData, "audio recording finished");
+        // to save the data
+        // this._player.record().saveAs({'audio': 'audio-review.mp3'});
+        
+        // lets update recorded file using observable
+        this.updateRecordedFile(this._player.recordedData);
     });
   }
 
   /**
+   * Method to execute when audio | video recording is finished and it's converted
+   * @method finishRecord
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public finishConvert() {
+    if(!this._player) return;
+    // converter ready and stream is available
+    this._player.on('finishConvert', () => {
+      // the blob object contains the recorded data that
+      // can be downloaded by the user, stored on server etc.
+      Log.info(this._player.convertedData, "Finish converted data");
+    });
+  }
+
+  /**
+   * Method to execute when audio | video recorder or player is ready
    * @method readyState
    * @since Version 1.0.0
    * @returns Void
    */
   public readyState() {
+    if(!this._player) return;
     this._player.on('ready', () => {
       // do something
     });
   }
 
   /**
-   * mediaEvents
+   * Method to catch all media events 
+   * ex: startRecord | finishRecord | deviceError | error
+   * @method mediaEvents
+   * @since Version 1.0.0
+   * @returns Void
    */
   public mediaEvents() {
+    if(!this._player) return;
     // event callback for device error
     this.deviceError();    
     // error callback

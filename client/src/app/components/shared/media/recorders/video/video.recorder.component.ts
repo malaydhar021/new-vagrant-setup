@@ -15,10 +15,12 @@ import { Log } from '../../../../../helpers/app.helper';
   styleUrls: ['./video.recorder.component.scss']
 })
 export class VideoRecorderComponent implements OnInit {
-  private idx: string = 'video_review_recorder'; // video recorder selector
-  private player: any = false; // the player instance
+  idx: string = 'video_review_recorder'; // video recorder selector
+  player: any = false; // the player instance
+  @Input() height?: number = null; // height of the video recorder
+  @Input() width?: number = null; // width of the video recorder
   // video.js configuration with videojs-record plugin configuration
-  private config = {
+  config = {
     controls: true,
     autoplay: false,
     fluid: false,
@@ -35,7 +37,7 @@ export class VideoRecorderComponent implements OnInit {
         video: true,
         play: true,
         pause: true,
-        maxLength: 300,
+        maxLength: 180,
         msDisplayMax: 10,
         debug: true
       }
@@ -62,7 +64,11 @@ export class VideoRecorderComponent implements OnInit {
    * @since Version 1.0.0
    * @returns Void
    */
-  public ngOnDestroy() {}
+  public ngOnDestroy() {
+    // if(this.player) {
+    //   this.player = false;
+    // }
+  }
 
   /**
    * @method ngAfterViewInit
@@ -70,6 +76,29 @@ export class VideoRecorderComponent implements OnInit {
    * @returns Void
    */
   public ngAfterViewInit() {
+    Log.debug(this.mediaService.player, "show me player object");
+    if(!this.mediaService.player) {
+      this.initVideoRecorder();
+    }
+  }
+
+  /**
+   * Method to override the default config
+   * @method setConfig
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public setConfig() {
+    if(this.height !== null) {
+      this.config.height = this.height;
+    }
+    if(this.width !== null) {
+      this.config.width = this.width;
+    }
+  }
+
+  public initVideoRecorder() {
+    this.setConfig();
     // initialize the video recorder with the selector element and config property
     this.mediaService.initPlayer(this.idx, this.config);
     // retrieve the player and assign it to `player` class property for future use

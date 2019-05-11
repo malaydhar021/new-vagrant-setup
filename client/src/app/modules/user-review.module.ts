@@ -9,7 +9,11 @@ import { PermissionComponent } from '../components/user-review/permission/permis
 import { DisplayPictureComponent } from '../components/user-review/display-picture/display-picture.component';
 import { ContactComponent } from '../components/user-review/contact/contact.component';
 import { ThankYouComponent } from '../components/user-review/thank-you/thank-you.component';
-
+import { UserReviewService } from '../services/user-review.service';
+import { BarRatingModule } from 'ngx-bar-rating';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MessageModule } from '../components/shared/message/message.module';
+import { DigitsOnlyDirective } from '../directives/digits-only.directive';
 
 /**
  * Module to deal with all sort of operations for user review
@@ -27,12 +31,19 @@ import { ThankYouComponent } from '../components/user-review/thank-you/thank-you
     DisplayPictureComponent,
     ContactComponent,
     ThankYouComponent,
+    DigitsOnlyDirective
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    BarRatingModule,
     UserReviewRoutingModule,
-    MediaModule
+    MediaModule,
+    MessageModule
   ],
-  providers: []
+  providers: [
+    UserReviewService
+  ]
 })
 export class UserReviewModule {}

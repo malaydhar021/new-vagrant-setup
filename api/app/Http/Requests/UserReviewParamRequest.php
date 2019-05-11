@@ -35,13 +35,13 @@ class UserReviewParamRequest extends FormRequest
             'review_text' => "required_if:review_type,1|string|min:1|max:60",
             'review_audio' => "required_if:review_type,2|file|" .
                 "mimetypes:application/octet-stream,application/ogg,audio/AMR,audio/x-matroska,audio/mpeg,audio/mp4," .
-                "audio/ogg,audio/webm,audio/vorbis,audio/wav,audio/wave,audio/vnd.wav,audio/x-aac,audio/x-ms-wma",
+                "audio/ogg,audio/webm,video/webm,audio/vorbis,audio/wav,audio/wave,audio/vnd.wav,audio/x-aac,audio/x-ms-wma",
             'review_video' => "required_if:review_type,3|file|" .
                 "mimetypes:application/octet-stream,application/ogg,video/3gpp,video/x-matroska,video/mp4," .
                 "video/mpeg,video/ogg,video/quicktime,video/webm,video/x-flv,video/x-msvideo,video/x-ms-wmv",
             'rating' => "sometimes|required|integer|digits:1|min:1|max:5",
             'email' => "sometimes|required|email",
-            'phone_number' => "sometimes|required|phone:AUTO",
+            'phone_number' => "sometimes|nullable|phone:AUTO",
             'profile_picture' => "sometimes|required|image|mimes:gif,jpeg,png,webp",
         ];
     }
