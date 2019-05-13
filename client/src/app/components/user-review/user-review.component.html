@@ -11,17 +11,17 @@
     <!-- Different screens -->
     <div class="bodyCreview">
       <!-- screen for recommendation from user -->
-      <app-recommendation *ngIf="stepBuilder.recommendation"></app-recommendation>
+      <app-recommendation *ngIf="stepBuilder.recommendation" class="in_step recommendation_step"></app-recommendation>
       <!-- screen to get review from user -->
-      <app-review *ngIf="stepBuilder.review" [slug]="slug"></app-review>
+      <app-review *ngIf="stepBuilder.review" [slug]="slug" class="in_step review_step"></app-review>
       <!-- screen to get the permission from user whether review will be shown or not -->
-      <app-permission *ngIf="stepBuilder.permission"></app-permission>
+      <app-permission *ngIf="stepBuilder.permission" class="in_step permission_step"></app-permission>
       <!-- screen to upload user dp -->
-      <app-display-picture *ngIf="stepBuilder.displayPicture" [slug]="slug"></app-display-picture>
+      <app-display-picture *ngIf="stepBuilder.displayPicture" [slug]="slug" class="in_step dp_step"></app-display-picture>
       <!-- screen to get user's contact info  -->
-      <app-contact *ngIf="stepBuilder.contact" [slug]="slug"></app-contact>
+      <app-contact *ngIf="stepBuilder.contact" [slug]="slug" class="in_step contact_step"></app-contact>
       <!-- screen for thank you message -->
-      <app-thank-you *ngIf="stepBuilder.thankYou"></app-thank-you>
+      <app-thank-you *ngIf="stepBuilder.thankYou" class="in_step thankyou_step"></app-thank-you>
     </div>
   </div>
   <!-- Footer -->

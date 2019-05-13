@@ -18,10 +18,10 @@ export class UserReviewService {
   // default step builder
   stepBuilder: any = {
     recommendation: false,
-    review: false,
+    review: true,
     permission: false,
     displayPicture: false,
-    contact: true,
+    contact: false,
     thankYou: false
   }
   // declare review model

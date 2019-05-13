@@ -7,26 +7,28 @@
 
     <div class="addpicture">
       <input type="file" (change)="onChangeFile($event)" formControlName="dp" [ngClass]="{error: getFormControls.dp.errors}"/>
+      <div class="error-msg" *ngIf="(
+            isSubmitted
+            && getFormControls.dp.errors !== null 
+            && getFormControls.dp.errors.required)">
+        Image is required
+      </div>
+      <div class="error-msg" *ngIf="(
+            getFormControls.dp.errors !== null 
+            && getFormControls.dp.errors.invalidFileType)">
+        Invalid file type. File should be an image
+      </div>
+      <div class="error-msg" *ngIf="(
+            getFormControls.dp.errors !== null 
+            && getFormControls.dp.errors.invalidFileSize)">
+        Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
+      </div>
       <input type="hidden" formControlName="dp"/>
-      <span [innerHTML]="choseFileCtrl"></span>
-      <span>{{fileName}}</span>
+      <div class="picInp">
+        <span [innerHTML]="choseFileCtrl"></span>
+        <span> {{fileName}}</span>
+      </div>
       <div class="figureUpld" [style.background-image]="'url('+ imagePreviewUrl +')'"></div>
-    </div>
-    <div class="error-msg" *ngIf="(
-          isSubmitted
-          && getFormControls.dp.errors !== null 
-          && getFormControls.dp.errors.required)">
-      Image is required
-    </div>
-    <div class="error-msg" *ngIf="(
-          getFormControls.dp.errors !== null 
-          && getFormControls.dp.errors.invalidFileType)">
-      Invalid file type. File should be an image
-    </div>
-    <div class="error-msg" *ngIf="(
-          getFormControls.dp.errors !== null 
-          && getFormControls.dp.errors.invalidFileSize)">
-      Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
     </div>
 
     <div class="ftReview">

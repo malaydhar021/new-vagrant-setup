@@ -57,7 +57,7 @@ export class ContactComponent implements OnInit {
   public ngOnInit() {
     // initialize the form builder for user display picture
     this.form = this.formBuilder.group({
-      email : [null], // email input // [Validators.required, Validators.email]
+      email : [null, [Validators.required, Validators.email]], // email input // 
       phone: [null] // phone number input
     });
   }

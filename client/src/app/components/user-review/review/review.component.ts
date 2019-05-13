@@ -33,8 +33,8 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
   validationErrors: any = null; // for showing validation messages
   isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
   allowedMaxReviewTitle: number = 25; // max chars for text review
-  allowedMaxAudioFileSize:number = 20; // max file size for review type audio
-  allowedMaxVideoFileSize:number = 30; // max file size for review type video
+  allowedMaxAudioFileSize:number = 1; // max file size for review type audio
+  allowedMaxVideoFileSize:number = 1; // max file size for review type video
   unit: string = "MB";
   allowedMaxTextReviewChars: number = 60; // max chars for text review
   // allowed file types for audio file
