@@ -17,8 +17,8 @@ import { UserReviewModel } from '../models/user-review.model';
 export class UserReviewService {
   // default step builder
   stepBuilder: any = {
-    recommendation: false,
-    review: true,
+    recommendation: true,
+    review: false,
     permission: false,
     displayPicture: false,
     contact: false,
