@@ -10,6 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class ExitPopUpRequest extends FormRequest
 {
     /**
@@ -19,6 +20,8 @@ class ExitPopUpRequest extends FormRequest
      */
     public function getValidatorInstance()
     {
+        \Log::info($this->request->get('sticky_reviews'));
+
         $this->merge([
             'has_campaign' => (integer) $this->request->get('has_campaign'),
             'has_sticky_reviews' => (integer) $this->request->get('has_sticky_reviews'),
@@ -83,7 +86,6 @@ class ExitPopUpRequest extends FormRequest
      */
     public function rules()
     {
-        \Log::info('New request for validation ./n'.print_r($this->request->all(),true));
         return [
             'name' => "required|string",
             'has_campaign' => "required|boolean",
@@ -103,7 +105,10 @@ class ExitPopUpRequest extends FormRequest
             'button_url' => "required_if:has_email_field,1|url",
             'button_text_color' => "required_if:has_email_field,1|string",
             'button_background_color' => "required_if:has_email_field,1|string",
-            'style_id' => "required|exists:campaign_styles,id",
+            'style_id' => "required|exists:exit_popup_styles,id",
+            'cta_button_text' => "required",
+            'cta_button_text_color' => "required",
+            'cta_button_background_color' => "required",
         ];
     }
 
@@ -156,6 +161,9 @@ class ExitPopUpRequest extends FormRequest
             'button_background_color.string' => "Button background color should be a valid string.",
             'style_id.required' => "Style is required.",
             'style_id.exists' => "This style does not matches our record, please select a valid style.",
+            'cta_button_text.required' => "CTA button text is required.",
+            'cta_button_text_color.required' => "CTA button text color is required.",
+            'cta_button_background_color.required' => "CTA button background color is required.",
         ];
     }
 }

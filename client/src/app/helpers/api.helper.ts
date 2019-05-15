@@ -485,6 +485,14 @@ export class ExitPopupApiEndpoints {
     return apiBaseUrl.concat('/sticky-reviews/');
   }
 
+  public static get deleteExitPopup(): string {
+    return apiBaseUrl.concat('/exit-popups/');
+  }
+
+  public static get getEditExitPopup(): string {
+    return apiBaseUrl.concat('/exit-popups/');
+  }
+
 }
 
 

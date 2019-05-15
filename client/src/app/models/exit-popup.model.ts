@@ -26,4 +26,7 @@ export class ExitPopupModel {
     button_text_color?: string;
     button_background_color?: string;
     style_id?: string;
+    cta_button_text?: string;
+    cta_button_text_color?: string;
+    cta_button_background_color?: string;
 }

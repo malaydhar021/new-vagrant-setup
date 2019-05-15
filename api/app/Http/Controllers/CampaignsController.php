@@ -254,8 +254,6 @@ class CampaignsController extends Controller
     }
 
     public function stickyReviewStyle($id){
-        \Log::info('campaing ID --> '.$id);
-
         $campaign = $this->queryBuilder->whereId($id)->firstOrFail();
         $campaignStickyReviewStyle = $campaign->style_id;
 

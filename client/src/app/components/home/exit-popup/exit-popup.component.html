@@ -1,83 +1,96 @@
 <div class="mainBox exitMain">
   <header class="mainBoxHeader">
     <div class="mainBoxHeaderLeft">
-      <button type="button" class="addReview" (click)="ngxSmartModalService.getModal('modal1').open()">
-        <img src="../../../../assets/images/addIcon.png" alt=""> Add an Exit pop-up</button>
+      <button type="button" class="addReview" (click)="openAddExitPopupModal()">
+        <img src="../../../../assets/images/addIcon.png" alt="addIcon"> Add an Exit pop-up</button>
     </div>
     <div class="mainBoxHeaderRight">
       <input type="text" placeholder="Search ...">
     </div>
   </header>
   <div class="dataTableArea">
+    <message [successMessage]="successMessage"></message>
     <div class="popupListContainer">
       <ng-scrollbar [compact]="true">
-        <ul class="popupList">
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup1').open()">
-              <img src="../../../../assets/images/thumb1.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 1</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup2').open()">
-              <img src="../../../../assets/images/thumb2.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 2</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup3').open()">
-              <img src="../../../../assets/images/thumb3.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 3</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup4').open()">
-              <img src="../../../../assets/images/thumb4.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 4</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">
-              <img src="../../../../assets/images/thumb5.png" alt="">
-            </div>
-            <div class="popupCtrl">
-              <p>Exit Pop 5</p>
-              <div class="crtlRight">
-                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>
-                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <!--        <ul class="popupList">-->
-        <!--          <li  *ngFor="let exitPopup of exitPopups;let i = index">-->
-        <!--            <span> {{ exitPopup.name }} </span>-->
-        <!--          </li>-->
-        <!--        </ul> Commented out for Development perpose -->
+<!--        <ul class="popupList">-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup1').open()">-->
+<!--              <img src="../../../../assets/images/thumb1.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 1</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup2').open()">-->
+<!--              <img src="../../../../assets/images/thumb2.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 2</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup3').open()">-->
+<!--              <img src="../../../../assets/images/thumb3.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 3</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup4').open()">-->
+<!--              <img src="../../../../assets/images/thumb4.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 4</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">-->
+<!--              <img src="../../../../assets/images/thumb5.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="popupCtrl">-->
+<!--              <p>Exit Pop 5</p>-->
+<!--              <div class="crtlRight">-->
+<!--                <a><img src="../../../../assets/images/icon_edit.png" alt=""></a>-->
+<!--                <a href=""><img src="../../../../assets/images/icon_delete_red.png" alt=""></a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--        </ul>-->
+                <ul class="popupList">
+                  <li  *ngFor="let exitPopup of exitPopups;let i = index">
+                    <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">
+                      <img src="../../../../assets/images/thumb5.png" alt="thumb5">
+                    </div>
+                    <div class="popupCtrl">
+                      <p>{{ exitPopup.name }}</p>
+
+                      <div class="crtlRight">
+                        <a (click)="onEditExitPopup(exitPopup)"><img src="../../../../assets/images/icon_edit.png" alt="iconEdit"></a>
+                        <a (click)="deleteExitPopup(exitPopup.id)"><img src="../../../../assets/images/icon_delete_red.png" alt="iconDelete"></a>
+                      </div>
+
+                    </div>
+                  </li>
+                </ul>
+
       </ng-scrollbar>
     </div>
 
@@ -2952,11 +2965,11 @@
   <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>
 
-<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalCreateExit">
+<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalCreateExit" [escapable]="false">
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
-        Create Exit popup
+          {{ isEditing ? 'Edit': 'Create' }} Exit popup
       </h2>
     </div>
     <div class="sr-modal-body">
@@ -2986,8 +2999,8 @@
             <div class="sr-form-cell-small" *ngIf="showCampaign">
               <label>Attach a Campaign</label>
               <div class="sr-form-field">
-                <select class="sr-form-ctrl" formControlName="campaign" (ngModelChange)="getCampaignStyles()">
-                  <option *ngFor="let campaign of campaigns;let i = index" [ngValue]="campaign.id" [selected]="i == 0"> {{ campaign.campaign_name }}</option>
+                <select class="sr-form-ctrl" formControlName="campaign" (ngModelChange)="getCampaignStyles()" [compareWith]="compareFn">
+                  <option *ngFor="let campaign of campaigns;let i = index" [ngValue]="campaign"> {{ campaign.campaign_name }}</option>
                 </select>
               </div>
             </div>
@@ -3004,8 +3017,8 @@
 
               <label style="margin-top: 20px;" *ngIf="showStickyReviews">Select Reviews</label>
               <div class="sr-form-field" *ngIf="showStickyReviews">
-                <select class="sr-form-ctrl" formControlName="stickyReviews" multiple (ngModelChange)="getStickyReviewStyle()">
-                  <option *ngFor="let stickyReview of stickyReviews;let i = index" [ngValue]="stickyReview.id" [selected]="i == 0"> {{ stickyReview.name }}</option>
+                <select class="sr-form-ctrl" formControlName="stickyReviews" multiple (change)="getStickyReviewStyle()"  [compareWith]="compareFn">
+                  <option *ngFor="let stickyReview of stickyReviews; let i = index" [ngValue]="stickyReview"> {{ stickyReview.name }} </option>
                 </select>
               </div>
 
@@ -3021,8 +3034,13 @@
               </div>
               <label>Header Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupHeaderText">
-                <span class="error-msg"></span>
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupHeaderText"  [ngClass]="{error: isSubmitted && getFormControls.exitPopupHeaderText.errors}" >
+                <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.exitPopupHeaderText.errors !== null
+                  && getFormControls.exitPopupHeaderText.errors.required)">
+                  Header text is required.
+                </div>
               </div>
             </div>
 
@@ -3032,21 +3050,65 @@
               </div>
               <label>Button Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonText">
-                <span class="error-msg"></span>
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonText" [ngClass]="{error: isSubmitted && getFormControls.exitPopupButtonText.errors}" >
+                <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.exitPopupButtonText.errors !== null
+                  && getFormControls.exitPopupButtonText.errors.required)">
+                  Button text is required.
+                </div>
               </div>
             </div>
 
-            <div class="sr-form-cell-small" *ngIf="showEmailField">
+            <div class="sr-form-cell-small">
               <div class="headerInForm">
-                <span>CTA BUTTON URL</span>
+                <span>CTA BUTTON</span>
               </div>
-              <label>Button URL</label>
+
+              <label>CTA Button text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl">
-                <span class="error-msg"></span>
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupCtaButtonText" [ngClass]="{error: isSubmitted && getFormControls.exitPopupCtaButtonText.errors}" >
+                <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.exitPopupCtaButtonText.errors !== null
+                  && getFormControls.exitPopupCtaButtonText.errors.required)">
+                  CTA button text is required.
+                </div>
+              </div>
+
+
+              <label>CTA Button URL</label>
+              <div class="sr-form-field">
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl" [ngClass]="{error: isSubmitted && getFormControls.exitPopupButtonUrl.errors}" >
+                <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.exitPopupButtonUrl.errors !== null
+                  && getFormControls.exitPopupButtonUrl.errors.required)">
+                  CTA button URL is required.
+                </div>
               </div>
             </div>
+
+
+            <!-- CTA Button HTML-->
+            <div class="sr-form-cell-small">
+              <div class="inlineRow clearfix">
+                <label>CTA Button Text Color</label>
+                <div class="colorPicker">
+                  <input [(colorPicker)]="color7" [style.background]="color7" class="colorChosen" formControlName="ctaButtonTextColor" (colorPickerChange)="getCtaButtonTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+                </div>
+              </div>
+
+              <div class="inlineRow clearfix">
+                <label>CTA Button Background Color</label>
+                <div class="colorPicker">
+                  <input [(colorPicker)]="color8" [style.background]="color8" class="colorChosen" formControlName="ctaButtonBackgroundColor" (colorPickerChange)="getCtaButtonBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+                </div>
+              </div>
+            </div>
+            <!-- CTA Button HTML-->
+
+
 
           </div>
 
@@ -3091,8 +3153,13 @@
 
               <label>Paragraph Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupParagraphText">
-                <span class="error-msg"></span>
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupParagraphText" [ngClass]="{error: isSubmitted && getFormControls.exitPopupParagraphText.errors}" >
+                <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.exitPopupParagraphText.errors !== null
+                  && getFormControls.exitPopupParagraphText.errors.required)">
+                  Paragraph text is required.
+                </div>
               </div>
 
               <div class="inlineRow clearfix">
@@ -3112,8 +3179,8 @@
               <label>Choose Visual Appearance<img src="../../../../assets/images/icon_info2.png" class="infos_imgs"
                                                   alt="infos"></label>
               <div class="sr-form-field">
-                <select class="sr-form-ctrl" formControlName="exitPopupVisualStyles"  (change)="setPopupVisualStyle()">
-                  <option *ngFor="let style of visualStyles" [ngValue]="style.type"> {{ style.name }}</option>
+                <select class="sr-form-ctrl" formControlName="exitPopupVisualStyles" (change)="setPopupVisualStyle()"  [compareWith]="compareFn">
+                  <option *ngFor="let style of visualStyles; let i = index" [ngValue]="style"> {{ style.name }}</option>
                 </select>
               </div>
 
@@ -3662,8 +3729,8 @@
                       </form>
 
                       <div class="linkTo">
-                        <a href="javascript:void(0)" class="button-submit">
-                          Take me there!
+                        <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit"  [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
+                          {{this.form.value.exitPopupCtaButtonText}}
                         </a>
                       </div>
                     </div>
@@ -3700,7 +3767,7 @@
                                 <h6>{{reviewName}}</h6>
                                 <p>{{reviewDescription |  slice:0:80 }}</p>
                                 <footer class="popupFt">
-                                  <!--                                  {{reviewAt  | date }} -->
+                                  <!-- {{reviewAt  | date }} -->
                                   7 days ago
                                   <span><img src="../../../../assets/images/icon_poweredby.png" alt=""></span>
                                   by
@@ -4209,14 +4276,14 @@
                           </div>
                         </div>
                       </div>
-                      <form action="{{this.form.value.exitPopupButtonUrl}}" *ngIf="showEmailField">
+                      <form action="#" *ngIf="showEmailField">
                         <input type="text" placeholder="Enter your email">
                         <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
 
                       <div class="linkTo">
-                        <a href="javascript:void(0)" class="button-submit">
-                          Take me there!
+                        <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
+                          {{this.form.value.exitPopupCtaButtonText}}
                         </a>
                       </div>
                     </div>
@@ -4768,8 +4835,8 @@
                       </form>
 
                       <div class="linkTo">
-                        <a href="javascript:void(0)" class="button-submit">
-                          Take me there!
+                        <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
+                          {{this.form.value.exitPopupCtaButtonText}}
                         </a>
                       </div>
                     </div>
@@ -5321,8 +5388,8 @@
                       </form>
 
                       <div class="linkTo">
-                        <a href="javascript:void(0)" class="button-submit">
-                          Take me there!
+                        <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
+                          {{this.form.value.exitPopupCtaButtonText}}
                         </a>
                       </div>
                     </div>
@@ -5872,8 +5939,8 @@
                     </form>
 
                     <div class="linkTo">
-                      <a href="javascript:void(0)" class="button-submit">
-                        Take me there!
+                      <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
+                        {{this.form.value.exitPopupCtaButtonText}}
                       </a>
                     </div>
                   </div>

@@ -111,6 +111,9 @@ class ExitPopupsController extends Controller
         $exitPopup->button_background_color = $request->input('button_background_color');
         $exitPopup->button_size = 'S'; // @deprecated on v2, from now on button size will be always small i.e. 'S'
         $exitPopup->style_id = $request->input('style_id');
+        $exitPopup->cta_button_text = $request->input('cta_button_text');
+        $exitPopup->cta_button_text_color = $request->input('cta_button_text_color');
+        $exitPopup->cta_button_background_color = $request->input('cta_button_background_color');
         $exitPopup->created_by = Auth::user()->id;
 
         try {
@@ -118,7 +121,7 @@ class ExitPopupsController extends Controller
 
             $exitPopup->save();
 
-            if ($exitPopup->has_campaign) {
+            if ($exitPopup->has_sticky_reviews) {
                 $stickyReviews = $request->input('sticky_reviews');
                 $deocdedStickyReviews = [];
 
@@ -127,14 +130,12 @@ class ExitPopupsController extends Controller
                 });
 
                 $exitPopup->stickyReviews()->sync($deocdedStickyReviews);
-            }
-
-            if ($exitPopup->has_sticky_reviews) {
                 Campaign::where('id', $exitPopup->campaign_id)->update([
                     'exit_pop_up' => '1',
                     'exit_pop_up_id' => $exitPopup->id
                 ]);
             }
+
         } catch (Exception $exception) {
             DB::rollBack();
 
@@ -204,6 +205,9 @@ class ExitPopupsController extends Controller
         $exitPopup->button_background_color = $request->input('button_background_color');
         $exitPopup->button_size = 'S'; // @deprecated on v2, from now on button size will be always small i.e. 'S'
         $exitPopup->style_id = $request->input('style_id');
+        $exitPopup->cta_button_text = $request->input('cta_button_text');
+        $exitPopup->cta_button_text_color = $request->input('cta_button_text_color');
+        $exitPopup->cta_button_background_color = $request->input('cta_button_background_color');
         $exitPopup->created_by = Auth::user()->id;
 
         try {
@@ -211,7 +215,7 @@ class ExitPopupsController extends Controller
 
             $exitPopup->save();
 
-            if ($exitPopup->has_campaign) {
+            if ($exitPopup->has_sticky_reviews) {
                 $stickyReviews = $request->input('sticky_reviews');
                 $deocdedStickyReviews = [];
 
@@ -220,14 +224,13 @@ class ExitPopupsController extends Controller
                 });
 
                 $exitPopup->stickyReviews()->sync($deocdedStickyReviews);
-            }
 
-            if ($exitPopup->has_sticky_reviews) {
                 Campaign::where('id', $exitPopup->campaign_id)->update([
                     'exit_pop_up' => '1',
                     'exit_pop_up_id' => $exitPopup->id
                 ]);
             }
+
         } catch (Exception $exception) {
             DB::rollBack();
 

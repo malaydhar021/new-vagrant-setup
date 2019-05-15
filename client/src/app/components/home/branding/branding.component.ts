@@ -122,7 +122,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
         Log.success(response);
         if (response.status) {
           // update the brands array with latest api response data
-          this.brands = response.data;          
+          this.brands = response.data;
           // hide the loader
           this.loaderService.disableLoader();
         }

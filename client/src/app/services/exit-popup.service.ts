@@ -51,9 +51,9 @@ export class ExitPopupService {
      * @since Version 1.0.0
      * @returns Observable<Object>
      */
-    // public updateBranding(data: BrandingModel, id: number) {
-    //     return this.httpClient.put(BrandingApiEndpoints.brands.concat('/' + id), data);
-    // }
+    public updateExitPopup(data: ExitPopupModel, id: number) {
+        return this.httpClient.put(ExitPopupApiEndpoints.addExitPopup.concat('/' + id), data);
+    }
 
     /**
      * Method to make an api call to delete a brand
@@ -83,5 +83,13 @@ export class ExitPopupService {
 
     public getstickyReviewInfo(id: string) {
         return this.httpClient.get(ExitPopupApiEndpoints.getstickyReviewInfo.concat(id));
+    }
+
+    public deleteExitPopup(id: string) {
+        return this.httpClient.delete(ExitPopupApiEndpoints.deleteExitPopup.concat(id));
+    }
+
+    public getEditExitPopup(id: string) {
+        return this.httpClient.get(ExitPopupApiEndpoints.getEditExitPopup.concat(id));
     }
 }

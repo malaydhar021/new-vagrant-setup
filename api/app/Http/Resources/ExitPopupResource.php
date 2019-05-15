@@ -40,7 +40,11 @@ class ExitPopupResource extends Resource
                 'button_url' => $this->button_url,
                 'button_text_color' => $this->button_text_color,
                 'button_background_color' => $this->button_background_color,
-                'style' => (new ExitPopupStyleResource($this->whenLoaded('campaignStyle')))->briefOnly(),
+                // 'style' => (new ExitPopupStyleResource($this->whenLoaded('campaignStyle')))->briefOnly(), // style
+                'style_id' => (new ExitPopupStyleResource($this->whenLoaded('style')))->briefOnly(),
+                'cta_button_text' => $this->cta_button_text,
+                'cta_button_text_color' => $this->cta_button_text_color,
+                'cta_button_background_color' => $this->cta_button_background_color,
                 'created_by' => (new UserResource($this->whenLoaded('user')))->briefOnly(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
