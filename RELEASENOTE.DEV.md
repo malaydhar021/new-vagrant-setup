@@ -18,6 +18,14 @@
 
 ## Campaign
 
+## V1.0.0
+
+1. Implemented campaign listing feature
+2. Implemented campaign add feature
+3. Implemented campaign edit feature
+4. Implemented update sticky reviews from listing and edit modal as well
+5. Implemented copy snippet feature in listing page
+
 ## V0.0.3
 
 1. Added client side validations in add a campaign modal

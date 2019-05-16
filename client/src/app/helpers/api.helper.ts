@@ -10,6 +10,15 @@ import { environment } from '../../environments/environment';
 export const apiBaseUrl: string = environment.API_BASE_URL;
 
 /**
+ * WidgetUrl constant holds the widget script url based on the environment
+ * @constant WidgetUrl
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export const WidgetUrl: string = environment.WIDGET_BASE_URL;
+
+/**
  * AuthApiEndPoints helper is holding all auth related api endpoints based on the environment
  * @class AuthApiEndPoints
  * @author Tier5 LLC `<work@tier5.us>`

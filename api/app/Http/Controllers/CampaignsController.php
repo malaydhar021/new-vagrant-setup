@@ -83,7 +83,8 @@ class CampaignsController extends Controller
         } else {
             return response()->json([
                 'status' => true,
-                'message' => 'Sorry, no campaigns have found!'
+                'message' => 'Sorry, no campaigns have found!',
+                'data' => $campaigns
             ]);
         }
     }
@@ -103,10 +104,9 @@ class CampaignsController extends Controller
         $campaign->style_id = Hashids::decode($request->input('style_id'));
         $campaign->styles = null; // @deprecated on v2, should be null because this style used to determine old styles.
         $campaign->delay = $request->has('delay') ? $request->input('delay') : 3000;
-        $campaign->delay_before_start = $request->has('delay_before_start') ?
-                                            $request->input('delay_before_start') : null;
+        $campaign->delay_before_start = $request->has('delay_before_start') ? $request->input('delay_before_start') : null;
         $campaign->stay_timing = $request->has('stay_timing') ? $request->input('stay_timing') : 1000;
-        $campaign->loop = $request->input('loop');
+        $campaign->loop = ($request->input('loop')) ? '1' : '0';
         $campaign->exit_pop_up = $request->input('exit_pop_up');
         $campaign->exit_pop_up_id = Hashids::decode($request->input('exit_pop_up_id'));
         $campaign->branding = $request->input('branding');
@@ -157,8 +157,9 @@ class CampaignsController extends Controller
                                 $request->input('campaign_name') : $campaign->campaign_name,
             'domain_name' => $request->has('domain_name') ?
                                 $request->input('domain_name') : $campaign->domain_name,
-            'styles' => $request->has('styles') ?
-                                Hashids::decode($request->input('styles')) : $campaign->styles,
+            'styles' => null, // will be deprecated in next version
+            'style_id' => $request->has('style_id') ?
+                                Hashids::decode($request->input('style_id')) : $campaign->style_id,
             'delay' => $request->has('delay') ?
                                 $request->input('delay') : $campaign->delay,
             'delay_before_start' => $request->has('delay_before_start') ?
@@ -166,7 +167,7 @@ class CampaignsController extends Controller
             'stay_timing' => $request->has('stay_timing') ?
                                 $request->input('stay_timing') : $campaign->stay_timing,
             'loop' => $request->has('loop') ?
-                                $request->input('loop') : $campaign->loop,
+                                $request->input('loop') ? '1' : '0' : $campaign->loop,
             'branding' => $request->has('branding') ?
                                 $request->input('branding') : $campaign->branding,
             'branding_id' => $request->has('branding_id') ?

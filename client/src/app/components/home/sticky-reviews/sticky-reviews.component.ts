@@ -125,7 +125,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.title.setTitle('Stickyreviews :: Sticky Reviews');
     // make an api call to get all sticky reviews
     this.getStickyReviews();
-    // initialize the fombuilder for add / edit a sticky review form
+    // initialize the form builder for add / edit a sticky review form
     this.form = this.formBuilder.group({
       srName : [null, [Validators.required, Validators.maxLength(25)]], // sticky review name
       srTags : [null], // sticky review tags
@@ -167,18 +167,15 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   public ngAfterViewInit() {
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
-      Log.info("Sticky review modal has been closed !");
       this.resetForm;
     });
     // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
     // In this case reset the form when modal is dismissed
     this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
-      Log.info("Sticky review modal has been dismissed !");
       this.resetForm;
     });
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
-      Log.info("Sticky review modal has been escaped !");
       this.resetForm;
     });
   }
@@ -226,7 +223,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         Log.success(response);
         if (response.status) {
           // update the reviews array with latest api response data
-          this.reviews = response.data;
+          this.reviews = response.data.data;
           Log.debug(this.reviews.length, "Checking the length of the reviews property");
           // hide the loader
           this.loaderService.disableLoader();

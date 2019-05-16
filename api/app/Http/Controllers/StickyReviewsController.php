@@ -47,11 +47,10 @@ class StickyReviewsController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('searchParams')) {
-            $this->queryBuilder = $this->queryBuilder
-                ->where('name', 'LIKE', '%' . $request->get('searchParams') . '%');
-            }
-            $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
+        if ($searchParams = $request->has('searchParams')) {
+            $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%');
+        }
+        $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
 
         if ($request->has('paginate') &&
             ($request->input('paginate') == false || $request->input('paginate') == 'false')) {
@@ -72,6 +71,7 @@ class StickyReviewsController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => "Sorry, no sticky reviews has found.",
+                'data' => $stickyReviews
             ]);
         }
     }

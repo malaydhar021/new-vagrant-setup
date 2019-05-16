@@ -6,6 +6,7 @@ use App\Branding as Brand;
 use App\Http\Requests\BrandRequest;
 use App\Http\Resources\BrandResource;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BrandsController extends Controller
@@ -34,27 +35,33 @@ class BrandsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $searchParams = \Request::get('searchParams');
-        if($searchParams!=""){
-            $brands = $this->queryBuilder->where('brand_name','LIKE','%' . $searchParams . '%')->orderBy('created_at', 'desc')->paginate();
-            $noOfBrands = $this->queryBuilder->count();
-        }else{
-            $brands = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
-            $noOfBrands = $this->queryBuilder->count();
+        if ($searchParams = $request->has('searchParams')) {
+            $this->queryBuilder = $this->queryBuilder->where('brand_name','LIKE','%' . $searchParams . '%');
         }
-        if ($noOfBrands) {
+        $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
+
+        if ($request->has('paginate') &&
+            ($request->input('paginate') == false || $request->input('paginate') == 'false')) {
+            $brands = (BrandResource::collection($this->queryBuilder->get()))->briefOnly();
+        } else {
+            $brands = $this->queryBuilder->paginate();
             BrandResource::collection($brands);
+        }
+        $noOfBrands = $this->queryBuilder->count();
+
+        if ($noOfBrands) {
             return response()->json([
                 'status' => true,
                 'message' => "${noOfBrands} brand(s) have found.",
-                'data' => $brands,
+                'data' => $brands
             ]);
         } else {
             return response()->json([
                 'status' => true,
                 'message' => 'Sorry no brands have found.',
+                'data' => $brands
             ]);
         }
     }
