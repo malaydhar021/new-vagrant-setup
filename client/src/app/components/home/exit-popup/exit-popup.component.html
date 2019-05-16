@@ -75,9 +75,9 @@
 <!--          </li>-->
 <!--        </ul>-->
                 <ul class="popupList">
-                  <li  *ngFor="let exitPopup of exitPopups;let i = index">
+                  <li *ngFor="let exitPopup of exitPopups;let i = index">
                     <div class="popupThubm" (click)="ngxSmartModalService.getModal('exitPopup5').open()">
-                      <img src="../../../../assets/images/thumb5.png" alt="thumb5">
+                      <img src="{{exitPopup.popup_preview_img}}" alt="thumb5">
                     </div>
                     <div class="popupCtrl">
                       <p>{{ exitPopup.name }}</p>

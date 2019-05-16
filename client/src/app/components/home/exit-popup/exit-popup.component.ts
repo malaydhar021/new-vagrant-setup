@@ -171,15 +171,16 @@ export class ExitPopupComponent implements OnInit {
     );
   }
 
-  public onSubmit() {
+  public async onSubmit() {
     // console.log(' try to save/update exit popups ... ');
     this.isSubmitted = true;
     // check if the form does not pass the client side validation
     if (this.form.invalid) {
       return;
     }
-    this.loaderService.enableLoader();
 
+    let someOp =  await this.makeImage();
+    this.loaderService.enableLoader();
     const data = {
       name: this.form.value.exitPopUpName,
       has_campaign: this.form.value.hasCampaign,
@@ -239,19 +240,8 @@ export class ExitPopupComponent implements OnInit {
       data.has_sticky_reviews = 0;
       delete data.sticky_reviews;
     }
-    // Make Image
-    // var node = document.getElementById('canvas');
-    //
-    // htmlToImage.toPng(node).then((dataUrl) => {
-    //   // return this.imageCode = dataUrl;
-    //   this.imageCode = dataUrl
-    //   console.log(this.imageCode);
-    //   return dataUrl;
-    // }).catch((error) => {
-    //   console.error('oops, something went wrong!', error);
-    // });
-    
-    // data.popup_preview_img = this.imageCode;
+
+    data.popup_preview_img = this.imageCode;
     if (this.isEditing) {
       this.updateExitPopup(data, this.exitPopupId);
     } else {
@@ -554,16 +544,16 @@ export class ExitPopupComponent implements OnInit {
   }
 
   async makeImage() {
-    console.log('trying to make an Image ');
-    var node = document.getElementById('canvas');
-    htmlToImage.toPng(node).then((dataUrl) => {
-      return dataUrl;
-    }).catch((error) => {
-          console.error('oops, something went wrong!', error);
-        });
+    // console.log('trying to make an Image ');
+    return new  Promise((resolve, reject) => {
+      var node = document.getElementById('canvas');
+      htmlToImage.toPng(node).then((dataUrl) => {
+        this.imageCode =  dataUrl;
+        resolve(dataUrl) ;
+      }).catch((error) => {
+        console.error('oops, something went wrong!', error);
+      });
+    })
   }
-
-
-
 
 }
