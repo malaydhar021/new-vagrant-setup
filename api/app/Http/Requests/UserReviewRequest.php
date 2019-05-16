@@ -51,14 +51,14 @@ class UserReviewRequest extends FormRequest
             'review_text' => "required_if:review_type,1|string|min:1|max:60",
             'review_audio' => "required_if:review_type,2|file|" .
                 "mimetypes:application/octet-stream,application/ogg,audio/AMR,audio/x-matroska,audio/mpeg,audio/mp4," .
-                "audio/ogg,audio/webm,audio/vorbis,audio/wav,audio/wave,audio/vnd.wav,audio/x-aac,audio/x-ms-wma",
+                "audio/ogg,audio/webm,video/webm,audio/vorbis,audio/wav,audio/wave,audio/vnd.wav,audio/x-aac,audio/x-ms-wma",
             'review_video' => "required_if:review_type,3|file|" .
                 "mimetypes:application/octet-stream,application/ogg,video/3gpp,video/x-matroska,video/mp4," .
                 "video/mpeg,video/ogg,video/quicktime,video/webm,video/x-flv,video/x-msvideo,video/x-ms-wmv",
             'rating' => "required|integer|digits:1|min:1|max:5",
             'email' => "required_if:recommendation,0|email",
-            'phone_number' => "required_if:recommendation,0|phone:AUTO",
-            'grant_review_use' => "required_if:recommendation,1|boolean",
+            'phone_number' => "sometimes|phone:AUTO",
+            'grant_review_use' => "required_if:recommendation,1|nullable",
             'profile_picture' => "required_if:grant_review_use,1|image|mimes:gif,jpeg,png,webp",
             'review_link_id' => "required|exists:review_links,id",
         ];

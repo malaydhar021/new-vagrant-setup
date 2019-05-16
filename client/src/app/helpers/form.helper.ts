@@ -141,6 +141,8 @@ export const FileType = (controlName: string, file: File, allowedFileTypes: stri
     }
     Log.debug(file.type, "Checking file type for uploaded file");
     if(allowedFileTypes.indexOf(file.type) === -1) {
+      // set file to null
+      file = null;
       // set error on control if validation fails
       control.setErrors({invalidFileType: true});
     } else {
@@ -171,14 +173,14 @@ export const FileSize = (controlName: string, file: File, maxSize: number, unit:
       return;
     }
     // log the file data
-    Log.debug(file, 'Log the file');
-    // logging file size
-    Log.debug(file.size, 'checking the size of the file');
-    // logging file size in KB
-    Log.debug(Utilities.bytesToAny(file.size, unit), "check file in kb");
+    Log.debug(file.name, 'File Name');
+    // logging file size in {{unit}}
+    Log.debug(Utilities.bytesToAny(file.size, unit) + ' ' + unit, " File Size " + unit);
     // checking if file size matches the condition
     if(Utilities.bytesToAny(file.size, unit) > maxSize) {
-      // set error on control if validation fails
+      // set file to null
+      file = null;
+      // set error on control if validation fails      
       control.setErrors({invalidFileSize: true});
     } else {
       // there is no errors i.e data has passed the validation

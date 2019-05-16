@@ -17,11 +17,10 @@ import { Log } from 'src/app/helpers/app.helper';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss']
 })
-
 export class MessageComponent implements OnInit, OnDestroy {
-
+  // declaring class properties
   errorMessage: string = null; // Error Message for the MessageComponent
-  validationErrorMessages: string = null; // Error Message for the MessageComponent 
+  validationErrorMessages: string[] = []; // Error Message for the MessageComponent 
   subscription: Subscription;  // Subscription Variable to create server side error message subscriptions 
   validationSubscription: Subscription;  // Subscription Variable to create server side validation error message subscriptions 
 
@@ -45,8 +44,8 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.subscription = this.errorService.error$.subscribe(
       errMsg => {
         // Assign the error message to the error message template string variable
-        this.errorMessage = errMsg;
         this.loaderService.disableLoader();
+        this.errorMessage = errMsg;
         // setTimeout(() => {
         //   this.errorMessage = ''
         // }, 3000)
@@ -56,9 +55,8 @@ export class MessageComponent implements OnInit, OnDestroy {
     // update validationErrors if anything has been caught by our error interceptor
     this.validationSubscription = this.errorService.validationErrors$.subscribe(
       validationErrMsg => {
-        Log.info(validationErrMsg, 'validation errors');
         this.loaderService.disableLoader();
-        this.validationErrorMessages = validationErrMsg;
+        this.validationErrorMessages = Object.values(validationErrMsg);
       }
     );
   }

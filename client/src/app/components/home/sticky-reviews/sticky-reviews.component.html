@@ -66,7 +66,7 @@
 </div>
 
 <!-- Modal form for add / edit a sticky review -->
-<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal" [dismissable]="true">
+<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal" [dismissable]="true" [escapable]="false">
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
@@ -156,8 +156,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- End of textual review -->
-
+                <!-- End of textual review --> 
                 <!-- Audio review type file upload -->
                 <div class="sr-form-cell reviewopt opt_Video audio_upd active" *ngIf="selectedReivewType == 2">
                   <label>Upload an audio file</label>
@@ -176,7 +175,7 @@
                       </div>
                       <div class="figureUpld">
                         <!-- for audio  player-->
-                        <app-media-player [audioPlayer]="true"></app-media-player>
+                        <app-media [player]="'audio'"></app-media>
                       </div>
                     </div>
                   </div>
@@ -200,7 +199,7 @@
                   </div>
                 </div>
                 <!-- End of audio file upload -->
-
+                <!-- <app-media [player]="'video'"></app-media> -->
                 <!-- Video review type file upload -->
                 <div class="sr-form-cell reviewopt opt_Video active" *ngIf="selectedReivewType == 3">
                   <label>Upload a video file</label>
@@ -220,7 +219,7 @@
 
                       <div class="figureUpld">
                         <!-- for video player-->
-                        <app-media-player [videoPlayer]="true"></app-media-player>
+                        <app-media [player]="'video'" *ngIf="getFormControls.sr.valid"></app-media>
                       </div>
                     </div>
                   </div>
@@ -254,6 +253,7 @@
                   <div class="sr-form-ctrl inputFile">
                     <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
                       [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                      <input type="hidden" formControlName="srImage" />
                     <div class="choseFileArea">
                       <div class="fileImg">
                         <img src="../../../../assets/images/icon_upload_photo.png" alt="">

@@ -19,7 +19,7 @@ export class ReviewLinkService {
  
     /**
      * Method to make an api call to get all brands
-     * @method getAllBrandings
+     * @method getAllReviewLinks
      * @since Version 1.0.0
      * @returns Observable<Object>
      */
@@ -29,7 +29,7 @@ export class ReviewLinkService {
 
   /**
    * Method to make an api call to add a brand.
-   * @method getAllBrandings
+   * @method addReviewLink
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
@@ -39,7 +39,7 @@ export class ReviewLinkService {
 
   /**
    * Method to make an api call to update a brand
-   * @method getAllBrandings
+   * @method updateReviewLink
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
@@ -49,7 +49,7 @@ export class ReviewLinkService {
 
   /**
    * Method to make an api call to delete a brand
-   * @method getAllBrandings
+   * @method deleteReviewLink
    * @since Version 1.0.0
    * @returns Observable<Object>
    */

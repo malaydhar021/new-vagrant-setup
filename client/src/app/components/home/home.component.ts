@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
   constructor(private title: Title, private subscriptionService: SubscriptionService) {}
 
   ngOnInit() {
-      this.title.setTitle('Stickyreviews :: Dashboard');
+      this.title.setTitle('Stickyreviews :: Home');
       this.subscriptionService.checkSubscription();
   }
 

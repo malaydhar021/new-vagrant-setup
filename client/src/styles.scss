@@ -1,3 +1,11 @@
+@import '~video.js/dist/video-js.css';
+/*
+videojs.wavesurfer.css is only required when recording audio-only:
+*/
+@import '~videojs-wavesurfer/dist/css/videojs.wavesurfer.min.css';
+
+@import '~videojs-record/dist/css/videojs.record.css';
+
 @font-face {
   font-family: 'Segoe UI Web (West European)';
   src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-light.woff2') format('woff2'), url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-light.woff') format('woff');
@@ -6827,7 +6835,7 @@ img {
       }
 
       .formRow {
-        margin-top: 22px;
+        margin-top: 25px;
 
         label {
           font-size: 13px;
@@ -6927,7 +6935,7 @@ img {
             @include border-radius(5px);
             background-color: #F3F2FF;
             padding: 13px;
-            padding-top: 15px;
+            padding-bottom: 22px;
           }
 
           .reviewVidSh {
@@ -6946,9 +6954,73 @@ img {
         .reviewUp {
           display: none;
 
+          &.reviewAudio,
+          &.reviewVideo {
+            .rvwVidOpt {
+              label {
+                max-width: calc(50% - 28px);
+                line-height: normal;
+              }
+            }
+
+            .reviewVidSh {
+              .inputFile {
+                position: relative;
+                padding: 0;
+                height: inherit;
+
+                .inputSec_in {
+                  position: relative;
+                  height: 100px;
+                  border-radius: 3px;
+                  border: 2px dashed #ccc;
+
+                  .choseFileArea {
+                    width: 100%;
+                    text-align: center;
+
+                    .fileImg,
+                    p {
+                      display: inline-block;
+                      vertical-align: middle;
+                      float: none;
+                      text-align: left;
+                    }
+
+                    .fileImg {
+                      font-size: 0;
+                    }
+                  }
+
+                  input[type=file] {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0;
+                    z-index: 3;
+                    cursor: pointer;
+                  }
+                }
+
+                .figureUpld {
+                  .video-js {
+                    width: 100%;
+                    @include mt(8px);
+                  }
+                }
+              }
+            }
+          }
+
           &.active {
             display: block;
           }
+        }
+
+        .error-msg {
+          max-width: 100%;
         }
       }
 
@@ -6998,6 +7070,7 @@ img {
 
         .addpicture {
           position: relative;
+          display: table;
 
           input {
             position: absolute;
@@ -7011,7 +7084,7 @@ img {
             height: 100%;
           }
 
-          span {
+          .picInp {
             display: table-cell;
             width: 100%;
             height: 85.95px;
@@ -7020,27 +7093,46 @@ img {
             pointer-events: none;
             vertical-align: middle;
             text-align: center;
-            font-size: 16px;
-            color: #BBB9D1;
-            font-family: 'SegoeUI';
-            font-weight: 600;
-
-            em {
-              font-style: normal;
-              text-decoration: underline;
-              color: #0CE3BE;
-            }
-
-            @media (max-width: 575px) {
-              padding: 0 30px;
-              font-size: 13px;
-            }
-          }
-
-          input:empty+span {
             border: 1.5px dashed #BBB9D1;
             @include border-radius(14px);
+            padding-left: 90px;
+            padding-right: 15px;
+
+            span {
+              font-size: 16px;
+              color: #BBB9D1;
+              font-family: 'SegoeUI';
+              font-weight: 600;
+
+              em {
+                font-style: normal;
+                text-decoration: underline;
+                color: #0CE3BE;
+              }
+
+              &:last-child {
+                color: #333;
+              }
+
+              @media (max-width: 575px) {
+                padding: 0 30px;
+                font-size: 13px;
+              }
+            }
           }
+
+          .figureUpld {
+            width: 68px;
+            position: absolute;
+            top: 9px;
+            left: 5px;
+            height: 68px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+          }
+
         }
 
         button {
@@ -7065,6 +7157,49 @@ img {
 
       &.active {
         display: block;
+      }
+    }
+
+    .in_step {
+      padding-bottom: 38px;
+      width: 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 1 1 100%;
+      flex: 1 1 100%;
+
+      .stepReview {
+        height: 100%;
+        padding-bottom: 0;
+
+        .rating_modals {
+          @include mt(35px);
+
+          .br-units {
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            text-align: center;
+
+            .br-unit {
+              &:last-child {
+                @include mr(0);
+              }
+            }
+          }
+
+          bar-rating+.error-msg {
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 100%;
+            color: #fff;
+            background: #ff5d5d;
+            padding: 5px 15px 7px;
+            border-radius: 0 0 7px 40px;
+            text-align: right;
+            text-align: right;
+            margin-top: 8px;
+          }
+        }
       }
     }
 

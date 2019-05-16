@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Helpers\Hashids;
+use App\StickyReview;
+
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class WidgetResource extends JsonResource
 {
@@ -63,6 +65,20 @@ class WidgetResource extends JsonResource
             $exitPopup = null;
         }
 
+        $srQuery = StickyReview::join(
+            'campaign_sticky_review',
+            'campaign_sticky_review.sticky_review_id',
+            '=',
+            'sticky_reviews.id'
+        )->where('campaign_sticky_review.campaign_id', $this->id);
+
+        if ($srQuery->count()) {
+            $stickyReviews = $srQuery->paginate(5);
+            (StickyReviewResource::collection($stickyReviews))->briefOnly();
+        } else {
+            $stickyReviews = [];
+        }
+
         return [
             'unique_script_id' => $this->unique_script_id,
             'domain_name' => $this->domain_name,
@@ -74,7 +90,7 @@ class WidgetResource extends JsonResource
             'loop' => $this->loop,
             'is_brand_on' => $this->is_brand_on,
             'brand' => $brand,
-            'sticky_reviews' => (StickyReviewResource::collection($this->whenLoaded('stickyReviews')))->briefOnly(),
+            'sticky_reviews' => $stickyReviews,
             'exit_pop_up' => $exitPopup,
         ];
     }

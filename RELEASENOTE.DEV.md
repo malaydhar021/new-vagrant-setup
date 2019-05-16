@@ -1,5 +1,21 @@
 # Development Release Notes
 
+## User Review
+
+## V1.0.0
+
+1. Implemented step builder for all the steps in user review
+2. Fixed issue media module during audio|video preview
+3. Implemented feature and functionalities for all steps
+4. Implemented client side validation for all steps
+5. Implemented server side validation in current step data
+6. Enhanced message module to show all server side validation messages
+7. Fixed issue with validation rules in api endpoints while recording in chrome browser 
+
+## V0.0.1
+
+1. Implemented media module for audio and video player and recorder
+
 ## Campaign
 
 ## V0.0.3

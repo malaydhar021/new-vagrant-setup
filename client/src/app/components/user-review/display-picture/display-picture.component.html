@@ -1,0 +1,39 @@
+<div class="stepReview step_5 active">
+  <message></message>
+  <form [formGroup]="form" class="form_eParent" (ngSubmit)="onSubmit()">
+    <h2>
+      Upload a profile picture
+    </h2>
+
+    <div class="addpicture">
+      <input type="file" (change)="onChangeFile($event)" formControlName="dp" [ngClass]="{error: getFormControls.dp.errors}"/>
+      <div class="error-msg" *ngIf="(
+            isSubmitted
+            && getFormControls.dp.errors !== null 
+            && getFormControls.dp.errors.required)">
+        Image is required
+      </div>
+      <div class="error-msg" *ngIf="(
+            getFormControls.dp.errors !== null 
+            && getFormControls.dp.errors.invalidFileType)">
+        Invalid file type. File should be an image
+      </div>
+      <div class="error-msg" *ngIf="(
+            getFormControls.dp.errors !== null 
+            && getFormControls.dp.errors.invalidFileSize)">
+        Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
+      </div>
+      <input type="hidden" formControlName="dp"/>
+      <div class="picInp">
+        <span [innerHTML]="choseFileCtrl"></span>
+        <span> {{fileName}}</span>
+      </div>
+      <div class="figureUpld" [style.background-image]="'url('+ imagePreviewUrl +')'"></div>
+    </div>
+
+    <div class="ftReview">
+      <button type="submit" class="btnOutline btnApprove">Save</button>
+    </div>
+  </form>
+  <!-- <img [src]="imagePreviewUrl"/> -->
+</div>

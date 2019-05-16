@@ -7,7 +7,7 @@ import * as ValidationEngine from '../../../helpers/form.helper';
 import { StickyReviewModel, StickyReviewTypesModel } from '../../../models/sticky-review.model';
 import { LoaderService } from '../../../services/loader.service';
 import { StickyReviewService } from '../../../services/sticky-review.service';
-import { MediaPlayerService } from '../../../services/media-player.service';
+import { MediaService } from '../../../services/media.service';
 import { Log } from '../../../helpers/app.helper';
 
 /**
@@ -45,7 +45,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   allowedMaxImageFileSize:number = 1; // max file size for sticky review image
   allowedMaxAudioFileSize:number = 20; // max file size for review type audio
   allowedMaxVideoFileSize:number = 30; // max file size for review type video
-  unit: string = "MB";
+  unit: string = "MB"; // legal values are GB|MB|KB
   allowedMaxTextReviewChars: number = 60; // max chars for text review
   // allowed file types for sticky review image
   allowedImageFileTypes: string[] = [
@@ -107,7 +107,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
     private stickyReviewService: StickyReviewService,
-    private mediaPlayerService: MediaPlayerService
+    private mediaService: MediaService
   ) {}
 
   /**
@@ -176,6 +176,11 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       Log.info("Sticky review modal has been dismissed !");
       this.resetForm;
     });
+    // reset form when modal has been closed by esc key
+    this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
+      Log.info("Sticky review modal has been escaped !");
+      this.resetForm;
+    });
   }
 
   /**
@@ -203,8 +208,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.imagePreviewUrl = 'assets/images/user.png';
     // set review type dropdown default value to `textual`
     this.getFormControls.srType.setValue(1);
-    this.mediaPlayerService.updateAudioSrc(null);
-    this.mediaPlayerService.updateVideoSrc(null);
+    this.mediaService.updateAudioSrc(null);
+    this.mediaService.updateVideoSrc(null);
     return;
   }
 
@@ -220,7 +225,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       (response: any) => {
         Log.success(response);
         if (response.status) {
-          // update the brands array with latest api response data
+          // update the reviews array with latest api response data
           this.reviews = response.data;
           Log.debug(this.reviews.length, "Checking the length of the reviews property");
           // hide the loader
@@ -381,13 +386,13 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     };
     // let update media player src based on reivew type
     if(review.type == 2) {
-      this.mediaPlayerService.updateAudioSrc(null);
+      this.mediaService.updateAudioSrc(null);
       // update audio player scr to play the audio
-      this.mediaPlayerService.updateAudioSrc(review.review);  
+      this.mediaService.updateAudioSrc(review.review);  
     } else if (review.type == 3) {
-      this.mediaPlayerService.updateVideoSrc(null);
+      this.mediaService.updateVideoSrc(null);
       // update video player scr to play the video
-      this.mediaPlayerService.updateVideoSrc(review.review);
+      this.mediaService.updateVideoSrc(review.review);
     }
     // set image preview for existing image
     this.imagePreviewUrl = review.image_url;
@@ -452,11 +457,11 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       // called once readAsDataURL is completed
       reader.onload = (e) => { 
         if(this.selectedReivewType == 2) {
-          this.mediaPlayerService.updateVideoSrc(null);
-          this.mediaPlayerService.updateAudioSrc(reader.result.toString());
+          this.mediaService.updateVideoSrc(null);
+          this.mediaService.updateAudioSrc(reader.result.toString());
         } else if(this.selectedReivewType == 3) {
-          this.mediaPlayerService.updateAudioSrc(null);
-          this.mediaPlayerService.updateVideoSrc(reader.result.toString());
+          this.mediaService.updateAudioSrc(null);
+          this.mediaService.updateVideoSrc(reader.result.toString());
         }        
       }
     }
@@ -622,4 +627,3 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     );
   }
 }
-

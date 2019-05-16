@@ -1,0 +1,25 @@
+<div class="stepReview step_1 active">
+  <form class="form_eParent">
+    <h2>
+      Would you recommend us?
+    </h2>
+
+    <div class="ftReview">
+      <button type="button" class="btnOutline btnApprove" (click)="isRecommended(1)">
+        <span>
+          <img src="../../../../assets/images/icon_thumb_up_green.png" alt="">
+          <img class="hoverIco" src="../../../../assets/images/icon_thumb_up_green_w.png" alt="">
+        </span>
+        yes
+      </button>
+
+      <button type="button" class="btnOutline btnReject" (click)="isRecommended(0)">
+        <span>
+          <img src="../../../../assets/images/icon_thumb_down_red.png" alt="">
+          <img class="hoverIco" src="../../../../assets/images/icon_thumb_down_red_w.png" alt="">
+        </span>
+        No
+      </button>
+    </div>
+  </form>
+</div>

@@ -22,20 +22,18 @@ import { PlansComponent }                   from '../components/home/plans/plans
 import { UpdatePaymentInfoComponent }       from '../components/home/update-payment-info/update-payment-info.component';
 import {ProfileComponent}                   from '../components/home/shared/profile/profile.component';
 import {CancelMembershipComponent}          from '../components/home/cancel-membership/cancel-membership.component';
-
-
 //importing module
 import { MessageModule}                     from '../components/shared/message/message.module'
-
 // importing services
-import { BrandingService } from '../services/branding.service'; // services for branding
-import { CampaignService } from '../services/campaign.service';
-import { StickyReviewService } from '../services/sticky-review.service';
-import { MenuService } from '../services/menu.service';
-import { MediaPlayerModule } from './media-player.module';
-import { MediaPlayerService } from '../services/media-player.service';
-import {ExitPopupService} from '../services/exit-popup.service';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { BrandingService }                  from '../services/branding.service'; // services for branding
+import { CampaignService }                  from '../services/campaign.service';
+import { StickyReviewService }              from '../services/sticky-review.service';
+import { MenuService }                      from '../services/menu.service';
+import { MediaModule }                      from './media.module';
+import { MediaService }                     from '../services/media.service';
+import {ExitPopupService} from '../services/exit-popup.service';
+
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
  * @class HomeModule
@@ -71,16 +69,16 @@ import { ColorPickerModule } from 'ngx-color-picker';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MessageModule,
-    MediaPlayerModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MediaModule,
   ],
   providers: [
     BrandingService,
     CampaignService,
     StickyReviewService,
     MenuService,
-    MediaPlayerService,
     ExitPopupService,
+    MediaService
   ]
 })
 export class HomeModule { }

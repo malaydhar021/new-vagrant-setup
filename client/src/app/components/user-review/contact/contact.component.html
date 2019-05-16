@@ -1,0 +1,36 @@
+<div class="stepReview step_6 active">
+  <message></message>
+  <form [formGroup]="form" class="form_eParent" (ngSubmit)="onSubmit()">
+    <div class="formRow">
+      <label>Your Email</label>
+      <div class="inRowRvw sr-form-field">
+        <input class="sr-form-ctrl" type="email" placeholder="Enter your email" formControlName="email"
+          [ngClass]="{error: isSubmitted && getFormControls.email.errors}" />
+        <div class="error-msg" *ngIf="(
+            isSubmitted
+            && getFormControls.email.errors !== null 
+            && getFormControls.email.errors.required)">
+          Email address is required
+        </div>
+        <div class="error-msg" *ngIf="(
+            isSubmitted
+            && getFormControls.email.errors !== null 
+            && getFormControls.email.errors.email)">
+          Please enter a valid email address
+        </div>
+      </div>
+    </div>
+    <div class="formRow">
+      <label>Phone No (Optional)</label>
+      <div class="inRowRvw sr-form-field">
+        <input class="sr-form-ctrl card" type="tel" digitsOnly placeholder="Enter your phone no"
+          formControlName="phone" />
+        <div class="error-msg"></div>
+      </div>
+    </div>
+
+    <div class="ftReview">
+      <button type="submit" class="btnOutline btnApprove">Save</button>
+    </div>
+  </form>
+</div>
