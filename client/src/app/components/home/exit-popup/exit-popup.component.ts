@@ -8,7 +8,7 @@ import { LoaderService } from '../../../services/loader.service';
 import { ExitPopupModel } from '../../../models/exit-popup.model';
 import { ExitPopupService } from '../../../services/exit-popup.service';
 import {Log} from "../../../helpers/app.helper";
-
+import * as htmlToImage from 'html-to-image';
 
 @Component({
   selector: 'app-exit-popup',
@@ -60,6 +60,7 @@ export class ExitPopupComponent implements OnInit {
   styleId: string = null;
   isEditing: boolean = false;
   exitPopupId: number = null; // property to hold the exitPopUp id
+  imageCode: any = null;
 
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
@@ -171,7 +172,7 @@ export class ExitPopupComponent implements OnInit {
   }
 
   public onSubmit() {
-    console.log(' try to save/update exit popups ... ');
+    // console.log(' try to save/update exit popups ... ');
     this.isSubmitted = true;
     // check if the form does not pass the client side validation
     if (this.form.invalid) {
@@ -201,6 +202,7 @@ export class ExitPopupComponent implements OnInit {
       cta_button_text: this.form.value.exitPopupCtaButtonText,
       cta_button_text_color: this.color7,
       cta_button_background_color: this.color8,
+      popup_preview_img: this.imageCode,
     };
 
     if (this.form.value.hasCampaign === true) {
@@ -237,6 +239,19 @@ export class ExitPopupComponent implements OnInit {
       data.has_sticky_reviews = 0;
       delete data.sticky_reviews;
     }
+    // Make Image
+    // var node = document.getElementById('canvas');
+    //
+    // htmlToImage.toPng(node).then((dataUrl) => {
+    //   // return this.imageCode = dataUrl;
+    //   this.imageCode = dataUrl
+    //   console.log(this.imageCode);
+    //   return dataUrl;
+    // }).catch((error) => {
+    //   console.error('oops, something went wrong!', error);
+    // });
+    
+    // data.popup_preview_img = this.imageCode;
     if (this.isEditing) {
       this.updateExitPopup(data, this.exitPopupId);
     } else {
@@ -537,5 +552,18 @@ export class ExitPopupComponent implements OnInit {
       return optionOne.id === optionTwo.id;
     }
   }
+
+  async makeImage() {
+    console.log('trying to make an Image ');
+    var node = document.getElementById('canvas');
+    htmlToImage.toPng(node).then((dataUrl) => {
+      return dataUrl;
+    }).catch((error) => {
+          console.error('oops, something went wrong!', error);
+        });
+  }
+
+
+
 
 }

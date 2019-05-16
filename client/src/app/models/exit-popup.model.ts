@@ -29,4 +29,5 @@ export class ExitPopupModel {
     cta_button_text?: string;
     cta_button_text_color?: string;
     cta_button_background_color?: string;
+    popup_preview_img?: string;
 }

@@ -33,6 +33,12 @@ class WidgetResource extends JsonResource
                 $exitPopupStyle = null;
             }
 
+            if ($exitPopupDetails->load('stickyReviews') && isset($exitPopupDetails->stickyReviews)) {
+                $exitPopupStickyReviews = StickyReviewResource::collection($exitPopupDetails->stickyReviews)->briefOnly();
+            } else {
+                $exitPopupStickyReviews = null;
+            }
+
             $exitPopup = [
                 'id' => Hashids::encode($exitPopupDetails->id),
                 'style' => $exitPopupStyle,
@@ -48,6 +54,10 @@ class WidgetResource extends JsonResource
                 'button_text_color' => $exitPopupDetails->button_text_color,
                 'button_background_color' => $exitPopupDetails->button_background_color,
                 'has_email_field' => $exitPopupDetails->has_email_field,
+                'sticky_reviews' => $exitPopupStickyReviews,
+                'cta_button_text' => $exitPopupDetails->cta_button_text,
+                'cta_button_text_color' => $exitPopupDetails->cta_button_text_color,
+                'cta_button_background_color' => $exitPopupDetails->cta_button_background_color,
             ];
         } else {
             $exitPopup = null;

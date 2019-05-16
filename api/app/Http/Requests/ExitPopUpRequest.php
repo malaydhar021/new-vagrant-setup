@@ -20,7 +20,7 @@ class ExitPopUpRequest extends FormRequest
      */
     public function getValidatorInstance()
     {
-        \Log::info($this->request->get('sticky_reviews'));
+        \Log::info("Exit popUp".print_r($this->request->all(),true));
 
         $this->merge([
             'has_campaign' => (integer) $this->request->get('has_campaign'),
