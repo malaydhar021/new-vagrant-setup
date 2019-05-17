@@ -16,6 +16,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class ExitPopupsController extends Controller
 {
@@ -58,28 +59,34 @@ class ExitPopupsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $searchParams = \Request::get('searchParams');
-        if($searchParams!=""){
-            $exitPopups = $this->queryBuilder->orderBy('created_at', 'desc')->where('name','LIKE','%' . $searchParams . '%')->paginate();
-            $noOfExitPopups = $this->queryBuilder->count();
-        }else{
-            $exitPopups = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
-            $noOfExitPopups = $this->queryBuilder->count();
+        if ($searchParams = $request->has('searchParams')) {
+            $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%');
         }
+        $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
+
+        if ($request->has('paginate') &&
+            ($request->input('paginate') == false || $request->input('paginate') == 'false')) {
+            $exitPopups = (ExitPopupResource::collection($this->queryBuilder->get()))->briefOnly();
+        } else {
+            $exitPopups = $this->queryBuilder->paginate();
+            ExitPopupResource::collection($stickyReviews);
+        }
+        $noOfExitPopups = $this->queryBuilder->count();
 
         if ($noOfExitPopups) {
             ExitPopupResource::collection($exitPopups);
             return response([
                 'status' => true,
-                'message' => "${noOfExitPopups} exit-poup(s) have found.",
+                'message' => "${noOfExitPopups} exit-popup(s) have found.",
                 'data' => $exitPopups,
             ]);
         } else {
             return response([
                 'status' => true,
-                'message' => "Sorry no exit-poups have found.",
+                'message' => "Sorry no exit-popups have found.",
+                'data' => $exitPopups,
             ]);
         }
     }

@@ -243,8 +243,8 @@
                   <div class="sr-form-field">
                     <select class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignExitPopup.errors}"
-                      formControlName="campaignExitPopup">
-                      <option [ngValue]="style" *ngFor="let style of styles">{{ style.name }}</option>
+                      formControlName="campaignExitPopup" [compareWith]="compareValue">
+                      <option [ngValue]="exitPopup" *ngFor="let exitPopup of exitPopups">{{ exitPopup.name }}</option>
                     </select>
                     <div class="error-msg" *ngIf="(
                       isSubmitted 

@@ -47,9 +47,11 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   defaultWidgetStyle: number = 100; // default widget style is set to rounded
   styles: CampaignStylesInterface[] = [];
   selectedStyle: any = this.styles[0]; // default selected style, Rounded
-  stickyReviews: any = [];
-  brands: any = [];
+  stickyReviews: any = []; // holds all sticky reviews as an array of objects
+  brands: any = []; // holds all brands as an array or objects
   selectedBrands: any = this.brands[0]; // default selected brand, the first one
+  exitPopups: any = []; // holds all exit popups as an array or objects
+  selectedExitPopup: any = this.exitPopups[0]; // default selected exit popup, the first one
 
   /**
    * Constructor method
@@ -72,6 +74,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getAllStyles(); // fetch all campaign styles
     this.getStickyReviews(); // fetch all sticky reviews
     this.getBrands(); // fetch all brands
+    this.getExitPopups(); // fetch all brands
   }
 
   /*
@@ -112,7 +115,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       isBrandingSelected: [false], // add branding
       campaignBrand: [{ value: this.brands[0], disabled: true }], // campaign brand drop down, disabled by default
       isExitPopupSelected: [false], // add exit popup
-      campaignExitPopup: [{ value: null, disabled: true }], // // campaign brand drop down, disabled by default
+      campaignExitPopup: [{ value: this.exitPopups[0], disabled: true }], // // campaign brand drop down, disabled by default
       campaignLoop: [true], // checkbox to set true or false
     });
 
@@ -207,7 +210,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
         // if add exit popup is checked/unchecked then enable/disable select exit popup drop down
         if (isExitPopupSelected) { // if add exit popup is checked
           // set default value to exit popup drop down
-          this.getFormControls.campaignExitPopup.setValue(null, { onlySelf: true });
+          this.getFormControls.campaignExitPopup.setValue(this.exitPopups[0], { onlySelf: true });
           // enable the exit popup drop down attribute
           this.formControlAction('campaignExitPopup', 'enable');
         } else { // if add exit popup is not checked
@@ -492,14 +495,13 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       delay_before_start: this.form.value.campaignDelayBeforeStart * 1000,
       stay_timing: this.form.value.campaignStayTime * 1000,
       exit_pop_up: this.form.value.isExitPopupSelected,
-      exit_pop_up_id: (this.form.value.campaignExitPopup !== undefined) ? this.form.value.campaignExitPopup : null,
+      exit_pop_up_id: (this.form.value.campaignExitPopup !== undefined) ? this.form.value.campaignExitPopup.id : null,
       branding: this.form.value.isBrandingSelected,
       branding_id: (this.form.value.campaignBrand !== undefined) ? this.form.value.campaignBrand.id : null,
       loop: this.form.value.campaignLoop,
       style_id: this.form.value.campaignVisualStyle.id,
       is_active: 1
     };
-    Log.info(this.form.value.campaignVisualStyle.id, "Style id in onSubmit() method");
     if(this.isEditing) {
       // method that will validate and on success it will update the campaign
       // also this will update campaign with selected reviews
@@ -704,7 +706,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Method to fetch all brands with making a api call to server
+   * Method to fetch all brands with making a api call
    * @method getBrands
    * @since Version 1.0.0
    * @returns Void
@@ -713,6 +715,20 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.campaignService.getBrands().subscribe(
       (response: any) => {
         this.brands = response.data;
+      }
+    );
+  }
+
+  /**
+   * Method to fetch all exit popups with making a api call
+   * @method getBrands
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public getExitPopups() {
+    this.campaignService.getExitPopups().subscribe(
+      (response: any) => {
+        this.exitPopups = response.data;
       }
     );
   }
@@ -729,9 +745,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.loaderService.enableLoader();
     const reviews = this.selectedStickyReviews(this.reviewForm);
-    Log.debug(reviews, "Reviews");
     this.syncStickyReviews(reviews);
-    Log.info(this.reviewForm, "Review form submitted");
   }
 
   /**

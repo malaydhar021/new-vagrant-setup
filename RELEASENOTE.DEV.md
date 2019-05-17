@@ -18,6 +18,11 @@
 
 ## Campaign
 
+## V1.1.0
+
+1. Added exit popup to campaign in add/edit a campaign
+
+
 ## V1.0.0
 
 1. Implemented campaign listing feature

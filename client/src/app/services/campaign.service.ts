@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CampaignModel } from '../models/campaign.model';
-import { CampaignApiEndpoints, StickyReviewsApiEndpoints, BrandingApiEndpoints } from '../helpers/api.helper';
+import { CampaignApiEndpoints, StickyReviewsApiEndpoints, BrandingApiEndpoints, ExitPopupApiEndpoints } from '../helpers/api.helper';
 
 /**
  * Service for all campaigns related operations like add, edit, update and delete campaigns
@@ -101,7 +101,7 @@ export class CampaignService {
    */
   public getExitPopups() {
     const params = new HttpParams().set('paginate', 'false');
-    return this.httpClient.get(CampaignApiEndpoints.styles, {params: params});
+    return this.httpClient.get(ExitPopupApiEndpoints.getUserExitPopups, {params: params});
   }
 
   /**
