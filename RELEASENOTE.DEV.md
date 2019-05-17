@@ -153,53 +153,57 @@ operation the user is assigned to basic plan.
 
 ## Configuration
 
-### V0.5
+### V2.0.0
 
-1. Added environments for production, staging, development and local
-2. Added README.md file for setup instruction and other necessary information
+1. Updated environments files dev and stage with updated base urls
 
-### V1.0 stable
+### V1.9.0
 
-1. Changed directory structure for the entire application
+1. Renamed dev-release-note.md file to RELEASENOTE.DEV.md
 
-### V1.1 stable
-
-1. Modified environmnets configurations
-2. Added scripts for prod, stage and dev build
-
-### V1.2 stable
-
-1. Removed api prefix from all api routes
-
-### V1.3 stable
-
-1. Added .gitignore to api root directory
-
-### V1.4 stable
-
-1. Modified app, api and widget urls from dev and stage environments files
-
-### V1.5 stable
-
-1. Remove `node_modules/` from git to track for **client** and **widget**
-
-### V1.6 stable
-
-1. Added new Vue project, Update Angular packages, Update Laravel routes
-2. Added Vagrant support, SETUP.md and Update .gitignore
-
-### V1.7 stable
-
-1. Change Vagrant Private Network.
-2. Created remote user for Vagrant MySQL to access from host.
-3. Updated host-configurer.sh and SETUP.md to reflect changes.
-
-### V1.8 stable
+### V1.8.0
 
 1. Updated client/src/environment.ts to "https"
 2. Updated webroot in SETUP.md.
 3. Secured api and lib root URLIs.
 
-### V1.9 stable
+### V1.7.0
 
-1. Renamed dev-release-note.md file to RELEASENOTE.DEV.md
+1. Change Vagrant Private Network.
+2. Created remote user for Vagrant MySQL to access from host.
+3. Updated host-configurer.sh and SETUP.md to reflect changes.
+
+### V1.6.0
+
+1. Added new Vue project, Update Angular packages, Update Laravel routes
+2. Added Vagrant support, SETUP.md and Update .gitignore
+
+### V1.5.0
+
+1. Remove `node_modules/` from git to track for **client** and **widget**
+
+### V1.4.0
+
+1. Modified app, api and widget urls from dev and stage environments files
+
+### V1.3.0
+
+1. Added .gitignore to api root directory
+
+### V1.2.0
+
+1. Removed api prefix from all api routes
+
+### V1.1.0
+
+1. Modified environmnets configurations
+2. Added scripts for prod, stage and dev build
+
+### V1.0.0
+
+1. Changed directory structure for the entire application
+
+### V0.0.5
+
+1. Added environments for production, staging, development and local
+2. Added README.md file for setup instruction and other necessary information
