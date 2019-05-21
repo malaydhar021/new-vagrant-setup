@@ -98,6 +98,7 @@ Route::middleware(['auth:api', 'subscription'])->group(function () {
         Route::get('slug-status', 'ReviewLinksController@checkSlug')->name('slug.check');
         Route::get('/', 'ReviewLinksController@index')->name('index');
         Route::post('/', 'ReviewLinksController@store')->name('store');
+        Route::post('/validate', 'ReviewLinksController@validateParams')->name('params.validate');
         Route::get('/{id}', 'ReviewLinksController@show')->name('show');
         Route::post('/{id}', 'ReviewLinksController@update')->name('update');
         Route::patch('/{id}', 'ReviewLinksController@update')->name('update');

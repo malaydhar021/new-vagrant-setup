@@ -1,8 +1,16 @@
 # Development Release Notes
 
+## Review Link
+
+### V0.5.0
+
+1. Fixed issue with review link api endpoint
+2. Displayed results in review link listing page
+3. Created an api endpoint to check and validate data from review link form step 1
+
 ## User Review
 
-## V1.0.0
+### V1.0.0
 
 1. Implemented step builder for all the steps in user review
 2. Fixed issue media module during audio|video preview
@@ -12,18 +20,18 @@
 6. Enhanced message module to show all server side validation messages
 7. Fixed issue with validation rules in api endpoints while recording in chrome browser 
 
-## V0.0.1
+### V0.0.1
 
 1. Implemented media module for audio and video player and recorder
 
 ## Campaign
 
-## V1.1.0
+### V1.1.0
 
 1. Added exit popup to campaign in add/edit a campaign
 
 
-## V1.0.0
+### V1.0.0
 
 1. Implemented campaign listing feature
 2. Implemented campaign add feature
@@ -31,21 +39,21 @@
 4. Implemented update sticky reviews from listing and edit modal as well
 5. Implemented copy snippet feature in listing page
 
-## V0.0.3
+### V0.0.3
 
 1. Added client side validations in add a campaign modal
 
-## V0.0.2
+### V0.0.2
 
 1. Modified campaign api endpoints
 
-## V0.0.1
+### V0.0.1
 
 1. Implemented services for campaign
 
 ## Sticky Review
 
-## V2.1.0
+### V2.1.0
 
 1. Fixed style for audio and video preview
 2. Fixed issues with audio and video preview when review type is changed from dropdown
@@ -53,13 +61,13 @@
 4. Fixed minor bugs in add / edit review modal
 5. Enhanced performance
 
-## V2.0.0
+### V2.0.0
 
 1. Added review type with audio and video upload feature
 2. Implemented client side validation for audio/video files
 3. Implemented preview for audio, video and image in add/edit review modal
 
-## V1.0.0
+### V1.0.0
 
 1. Implemented CRUD operation of sticky review feature
 2. Implemented client side validation for adding / editing a review
@@ -67,19 +75,19 @@
 
 ## Branding
 
-## V1.1.0
+### V1.1.0
 
 1. Updated component, helper and service for branding with updated api endpoints
 2. Introduced global loader and messaged to branding to display loader and messages
 
-## V1.0.0
+### V1.0.0
 
 1. Implemented CRUD operation of branding feature
 2. Implemented client side validation for adding / editing a branding
 
 ## Signup
 
-## V1.0.0
+### V1.0.0
 
 1. Implemented signup feature with two step process
 2. Implemented error handling block for client and server side validations
@@ -90,26 +98,26 @@ operation the user is assigned to basic plan.
 
 ## Login
 
-## V1.3.0
+### V1.3.0
 
 1. Implemented forgot password accepting the user email
 2. Implemented reset password
 3. Handled server side validations and displayed the error messages to template
 4. Implemented client side form validation to minimize the http requests call
 
-## V1.2.0
+### V1.2.0
 
 1. Implemented login and logout feature.
 2. Implemented error handling centrally for http error responses from http interceptor.
 3. Introduced a shared service for to update the error messages asynchronously and display it into respective template.
 4. Implemented loader to handle the delay of api responses.
 
-## V1.0.1
+### V1.0.1
 
 1. Fixed issues with CORS while making calls to backend apis adding proper headers
 2. Fixed issues with stickyreviews component adding packages to dashboard module
 
-## V1.0.0
+### V1.0.0
 
 1. Implemented user authentication using user email and password using api
 2. Implemented authentication guard to prevent protected routes
@@ -117,12 +125,6 @@ operation the user is assigned to basic plan.
 4. Enhanced loging form UI for better user experience
 5. Created services, helpers for further application development
 6. Stored and retreved token into localstorage to work with authentication
-
-## UI
-
-- Login V0.9
-- Plan V0.8
-- Signup V0.6
 
 ## API
 

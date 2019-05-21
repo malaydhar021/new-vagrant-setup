@@ -17,7 +17,7 @@ import { WidgetUrl } from '../../../helpers/api.helper';
  * Component to handle all sort of functionalities related to campaign. It's mostly handles
  * CRUD operations for campaign
  * @class CampaignComponent
- * @version 1.0.0
+ * @version 1.1.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -36,7 +36,6 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
   successMessage: string = null; // to show success messages
   validationErrors: any = null; // for showing validation messages
-  subscription: Subscription; // to get the current value updated from error interceptor
   isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
   isSubmittedReviews: boolean = false; // flag to set true if the add / edit form is submitted  
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
@@ -54,14 +53,16 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedExitPopup: any = this.exitPopups[0]; // default selected exit popup, the first one
 
   /**
-   * Constructor method
+   * Constructor method to fetch all required information from api provider
    * @constructor constructor
-   * @param ngxSmartModalService 
-   * @param title 
-   * @param router 
-   * @param formBuilder 
-   * @param campaignService 
-   * @param loaderService 
+   * @since Version 1.0.0
+   * @param ngxSmartModalService NgxSmartModalService instance to execute modal callback events
+   * @param title Title Service instance
+   * @param router Router class instance
+   * @param formBuilder FormBuilder instance
+   * @param campaignService CampaignService instance
+   * @param loaderService LoaderService instance
+   * @returns Void
    */
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -180,7 +181,10 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
+   * Method to act when add brand checkbox has been toggled in campaign add/edit modal page
    * @method onToggleBrand
+   * @since Version 1.0.0
+   * @returns Void
    */
   public onToggleBrand() {
     this.getFormControls.isBrandingSelected.valueChanges.subscribe(
@@ -202,7 +206,10 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
+   * Method to act when exit popup checkbox has been toggled in campaign add/edit modal page
    * @method onToggleExitPopup
+   * @since Version 1.0.0
+   * @returns Void
    */
   public onToggleExitPopup() {
     this.getFormControls.isExitPopupSelected.valueChanges.subscribe(
@@ -722,7 +729,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Method to fetch all exit popups with making a api call
    * @method getBrands
-   * @since Version 1.0.0
+   * @since Version 1.1.0
    * @returns Void
    */
   public getExitPopups() {

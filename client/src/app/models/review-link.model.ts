@@ -7,8 +7,8 @@
  * @license Proprietary
  */
 export class ReviewLinkModel {
-    id?: number;
-    logo?: string;
+    id?: string;
+    logo?: File;
     description?: string;
     name?: string;
     url_slug?: string;

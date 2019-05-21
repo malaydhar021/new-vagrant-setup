@@ -189,4 +189,18 @@ class ReviewLinksController extends Controller
             'message' => "Review link has deleted successfully.",
         ]);
     }
+
+    /**
+     * Validate the review link step 1 form data
+     * @param  \App\Http\Requests\ReviewLinkParamRequest  $request
+     * @param  string  $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function validateParams(ReviewLinkParamRequest $request, $slug)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => "All parameters are valid",
+        ]);
+    }
 }

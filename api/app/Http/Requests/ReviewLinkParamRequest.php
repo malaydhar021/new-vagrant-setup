@@ -73,10 +73,6 @@ class ReviewLinkRequest extends FormRequest
             'positive_review_message' => "required|string",
             'negative_info_review_message_1' => "required|string",
             'negative_info_review_message_2' => "required|string",
-            'page_background' => "required|string",
-            'modal_background' => "required|string",
-            'text_color' => "required|string",
-            'copyright_text' => "nullable|string|min:1|max:255",
             'campaign_id' => "required|exists:campaigns,id",
         ];
     }

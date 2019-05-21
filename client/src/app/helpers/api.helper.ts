@@ -339,7 +339,7 @@ export class StickyReviewsApiEndpoints {
  * ReviewLinkApiEndpoints helper class is holding all static methods for review links api endpoints based on the environment
  * @class ReviewLinkApiEndpoints
  * @author Tier5 LLC `<work@tier5.us>`
- * @version 1.0.0
+ * @version 1.1.0
  * @license Proprietary
  */
 export class ReviewLinkApiEndpoints {
@@ -350,13 +350,15 @@ export class ReviewLinkApiEndpoints {
    * @returns String
    */
   public static get reviewLinks(): string {
-    return apiBaseUrl.concat('/get-all-review-link');
+    return apiBaseUrl.concat('/review-links');
   }
 
   /**
    * addReviewLinks to generate api endpoint to add a review link
+   * ### *DEPRECATED* ###
    * @method addReviewLinks
    * @since Version 1.0.0
+   * @deprecated In version 1.1.0
    * @returns String 
    */
   public static get addReviewLinks(): string {
@@ -365,8 +367,10 @@ export class ReviewLinkApiEndpoints {
 
   /**
    * updateReviewLinks to generate api endpoint to update a review link
+   * ### *DEPRECATED* ###
    * @method updateReviewLinks
    * @since Version 1.0.0
+   * @deprecated In version 1.1.0
    * @returns String 
    */
   public static get updateReviewLinks() : string {
@@ -375,8 +379,10 @@ export class ReviewLinkApiEndpoints {
 
   /**
    * deleteReviewLinks to generate api endpoint to delete a review link
+   * ### *DEPRECATED* ###
    * @method deleteReviewLinks
    * @since Version 1.0.0
+   * @deprecated In version 1.1.0
    * @returns String 
    */
   public static get deleteReviewLinks() : string {
@@ -385,8 +391,10 @@ export class ReviewLinkApiEndpoints {
 
   /**
    * checkDuplicateUrlSlug to generate api endpoint to check duplicate url slug
+   * ### *DEPRECATED* ###
    * @method checkDuplicateUrlSlug
    * @since Version 1.0.0
+   * @deprecated In version 1.1.0
    * @returns String 
    */
   public static get checkDuplicateUrlSlug() : string {
@@ -396,7 +404,7 @@ export class ReviewLinkApiEndpoints {
 
 
 /**
- *  UserApiEndpoints helper class is holding all static methods for user api endpoints based on the environment
+ * UserApiEndpoints helper class is holding all static methods for user api endpoints based on the environment
  * @class UserApiEndpoints
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
