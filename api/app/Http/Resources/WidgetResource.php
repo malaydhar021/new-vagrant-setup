@@ -19,7 +19,7 @@ class WidgetResource extends JsonResource
     {
         $brandingDetails = $this->whenLoaded('brandingDetails');
         if ($brandingDetails) {
-            $brand =[
+            $brand = [
                 'name' => $brandingDetails->name,
                 'url' => $brandingDetails->url,
             ];
@@ -36,7 +36,20 @@ class WidgetResource extends JsonResource
             }
 
             if ($exitPopupDetails->load('stickyReviews') && isset($exitPopupDetails->stickyReviews)) {
-                $exitPopupStickyReviews = StickyReviewResource::collection($exitPopupDetails->stickyReviews)->briefOnly();
+                $exitPopupSRQuery = StickyReview::join(
+                    'exit_pop_up_sticky_review',
+                    'exit_pop_up_sticky_review.sticky_review_id',
+                    '=',
+                    'sticky_reviews.id'
+                )->where('exit_pop_up_sticky_review.exit_pop_up_id', $exitPopupDetails->id);
+
+                if ($exitPopupSRQuery->count()) {
+                    $exitPopupStickyReviews = $exitPopupSRQuery->paginate(5);
+                    (StickyReviewResource::collection($exitPopupStickyReviews))->briefOnly();
+                } else {
+                    $exitPopupStickyReviews = [];
+                }
+//                $exitPopupStickyReviews = StickyReviewResource::collection($exitPopupDetails->stickyReviews)->briefOnly();
             } else {
                 $exitPopupStickyReviews = null;
             }

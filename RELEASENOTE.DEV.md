@@ -92,7 +92,7 @@
 1. Implemented signup feature with two step process
 2. Implemented error handling block for client and server side validations
 3. Added validation for Credit Card and CVC in client side as well to make less http requests
-4. Added stripe api to make preauth to validate card and it can be charged. On successful of preauth
+4. Added stripe api to make pre auth to validate card and it can be charged. On successful of preauth
 operation the user is assigned to basic plan.
 5. Added guard which will not allow to access signup page if the user is already logged in.
 
@@ -124,9 +124,14 @@ operation the user is assigned to basic plan.
 3. Implemented http request interceptor to add some header to each and every request to server
 4. Enhanced loging form UI for better user experience
 5. Created services, helpers for further application development
-6. Stored and retreved token into localstorage to work with authentication
+6. Stored and retrieved token into localstorage to work with authentication
 
 ## API
+
+### V2.0.1
+
+1. Added pagination to exit popup sticky reviews
+2. Added review type to exit popup sticky reviews response 
 
 ### V2.0.0
 
@@ -138,7 +143,7 @@ operation the user is assigned to basic plan.
 
 ### v2.1.0
 
-1. Added new authetication features with Laravel Passport
+1. Added new authentication features with Laravel Passport
 2. Added Subscription support to registration API
 
 ### v2.2.0
