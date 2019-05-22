@@ -165,6 +165,12 @@
             <div class="sr-form-cell-small">
               <label>Define Min. Rating</label>
               <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="min_rating"></bar-rating>
+              <div class="error-msg" *ngIf="(
+                isSubmitted 
+                && getFormControls.min_rating.errors !== null 
+                && getFormControls.min_rating.errors.required)">
+                Min. rating is required
+              </div>
             </div>
             <div class="sr-form-cell-small imageUp">
               <label>Upload an image</label>

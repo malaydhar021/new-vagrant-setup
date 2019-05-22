@@ -23,7 +23,7 @@ import * as ValidationEngine from '../../../helpers/form.helper';
 })
 export class ReviewLinkComponent implements OnInit {
   // defining class properties
-  reviewLinks:Array<ReviewLinkModel> = [] // An array of all review links
+  reviewLinks: Array<ReviewLinkModel> = [] // An array of all review links
   form: FormGroup; // FormGroup to initialize step 1 of add/edit form of a review link
   form2: FormGroup; // FormGroup to initialize step 2 of add/edit form of a review link
   currentStep: number = 1; // default current step is 1 i.e first step of review link add/edit form

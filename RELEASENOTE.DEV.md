@@ -128,6 +128,11 @@ operation the user is assigned to basic plan.
 
 ## API
 
+### V2.0.2
+
+1. Added widget exit popup api for fetching exit popup for a widget campaign
+2. Modified fetch widget api response
+
 ### V2.0.1
 
 1. Added pagination to exit popup sticky reviews

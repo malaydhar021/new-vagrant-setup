@@ -123,16 +123,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.94.0",
+            "version": "3.94.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "fcc8593b3da8465d1181c73689117d13101a1c9a"
+                "reference": "759a565285324d2248b6ee783de541ce65bddd46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fcc8593b3da8465d1181c73689117d13101a1c9a",
-                "reference": "fcc8593b3da8465d1181c73689117d13101a1c9a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/759a565285324d2248b6ee783de541ce65bddd46",
+                "reference": "759a565285324d2248b6ee783de541ce65bddd46",
                 "shasum": ""
             },
             "require": {
@@ -202,7 +202,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-05-20T18:14:09+00:00"
+            "time": "2019-05-21T18:29:47+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -680,16 +680,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.7",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "709f21f92707308cdf8f9bcfa1af4cb26586521e"
+                "reference": "c26463ff9241f27907112fbcd0c86fa670cfef98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/709f21f92707308cdf8f9bcfa1af4cb26586521e",
-                "reference": "709f21f92707308cdf8f9bcfa1af4cb26586521e",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/c26463ff9241f27907112fbcd0c86fa670cfef98",
+                "reference": "c26463ff9241f27907112fbcd0c86fa670cfef98",
                 "shasum": ""
             },
             "require": {
@@ -733,7 +733,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2018-12-04T22:38:24+00:00"
+            "time": "2019-05-16T22:02:54+00:00"
         },
         {
             "name": "erusev/parsedown",

@@ -6,6 +6,7 @@ use App\Campaign;
 use App\Exceptions\PrivilegeViolationException;
 use App\Http\Requests\SubscribedEmailRequest;
 use App\Http\Resources\WidgetResource;
+use App\Http\Resources\WidgetExitPopupResource;
 use App\SubscribedEmail;
 
 use Illuminate\Http\Request;
@@ -35,6 +36,32 @@ class WidgetController extends Controller
             'status' => true,
             'message' => "Widget details fetched successfully.",
             'data' => new WidgetResource($campaign),
+        ]);
+    }
+
+    /**
+     * Get the widget exit popup details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $usid
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function exitPopup(Request $request, $usid)
+    {
+        $campaign = Campaign::where('unique_script_id', $usid)
+            ->with('exitPopUp', 'user')
+            ->firstOrFail();
+
+        if ($campaign->user->subscription_status == 'CANCELLED' ||
+            $campaign->user->subscription_status == 'TERMINATED'
+        ) {
+            throw new PrivilegeViolationException("Your action is forbidden.");
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => "Widget exit popup details fetched successfully.",
+            'data' => new WidgetExitPopupResource($campaign),
         ]);
     }
 

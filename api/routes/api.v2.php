@@ -118,5 +118,6 @@ Route::prefix('user-reviews')->name('user-reviews.')->group(function () {
 
 Route::prefix('widget')->name('widget.')->group(function () {
     Route::get('/{usid}', 'WidgetController@index')->name('index');
+    Route::get('/{usid}/exit-popup', 'WidgetController@exitPopup')->name('exitpopup');
     Route::post('/{usid}/postback', 'WidgetController@postback')->name('postback');
 });
