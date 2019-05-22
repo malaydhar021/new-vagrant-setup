@@ -44,6 +44,7 @@ class StickyReviewResource extends Resource
                 'review' => $review,
                 'image_url' => $this->image_url,
                 'reviewed_at' => Carbon::parse($this->created_at)->toDateTimeString(),
+                'created_by' => (new UserResource($this->user))->briefOnly(),
             ];
         } else {
             return [

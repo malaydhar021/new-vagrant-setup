@@ -8159,6 +8159,27 @@ img {
   }
 }
 
+ngx-smart-modal {
+  &.exitPopup {
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+
+    .overlay {
+      background: transparent !important;
+    }
+
+    &.active {
+      pointer-events: all;
+      opacity: 1;
+    }
+  }
+}
+
 // Exit popup listing
 
 // Video Popup

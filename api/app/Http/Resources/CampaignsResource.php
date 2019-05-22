@@ -28,6 +28,7 @@ class CampaignsResource extends Resource
                 'campaign_name' => $this->campaign_name,
                 'domain_name' => $this->domain_name,
                 'style' => (new CampaignStyleResource($this->whenLoaded('campaignStyle')))->briefOnly(),
+                'style_id' => $this->style_id,
                 'delay' => $this->delay,
                 'delay_before_start' => $this->delay_before_start,
                 'stay_timing' => $this->stay_timing,

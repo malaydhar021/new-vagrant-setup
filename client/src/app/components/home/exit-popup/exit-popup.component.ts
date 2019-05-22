@@ -9,6 +9,7 @@ import { ExitPopupModel } from '../../../models/exit-popup.model';
 import { ExitPopupService } from '../../../services/exit-popup.service';
 import {Log} from "../../../helpers/app.helper";
 import * as htmlToImage from 'html-to-image';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-exit-popup',
@@ -61,7 +62,14 @@ export class ExitPopupComponent implements OnInit {
   isEditing: boolean = false;
   exitPopupId: number = null; // property to hold the exitPopUp id
   imageCode: any = null;
-
+  exitPopupHeaderText: string = '';
+  exitPopupButtonText: string = '';
+  exitPopupParagraphText: string = '';
+  exitPopupButtonUrl: string = '';
+  exitPopupCtaButtonText: string = '';
+  // modalBackgroundColor: string ='';
+  modalActive: string = '';
+  modalName: string = 'exitPopup1';
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
       public title: Title,
@@ -117,6 +125,7 @@ export class ExitPopupComponent implements OnInit {
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
       this.resetForm;
     });
+
   }
 
   public get resetForm() {
@@ -382,13 +391,15 @@ export class ExitPopupComponent implements OnInit {
    * This function will return sticky review style id according to a campaign
    */
   public getCampaignStyles() {
-    this.exitPopupService.getCampaignsStyle(this.form.value.campaign).subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.campaignStickyReviewStyleId = response.data;
+    if (this.form.value.campaign !== null ) {
+      this.exitPopupService.getCampaignsStyle(this.form.value.campaign.id).subscribe(
+          (response: any ) => {
+            if (response.status) {
+              this.campaignStickyReviewStyleId = response.data;
+            }
           }
-        }
-    );
+      );
+    }
   }
 
   public getStickyReviewStyle() {
@@ -402,7 +413,7 @@ export class ExitPopupComponent implements OnInit {
               this.reviewImageUrl = response.data.image_url;
               this.reviewName = response.data.name;
               this.reviewDescription = response.data.review;
-              this.reviewAt = response.data.reviewed_at;
+              this.reviewAt = moment(response.data.reviewed_at).startOf('day').fromNow();
               this.reviewType = response.data.type;
               this.reviewRating = response.data.rating;
             }
@@ -430,22 +441,28 @@ export class ExitPopupComponent implements OnInit {
   }
 
   public deleteExitPopup(id) {
-    this.loaderService.enableLoader();
-    this.exitPopupService.deleteExitPopup(id).subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.successMessage = response.message;
-            this.getUserExitPopups();
-            this.loaderService.disableLoader();
-          } else {
-            this.successMessage = response.message;
-            this.getUserExitPopups();
-            this.loaderService.disableLoader();
+    if (confirm('Are you sure you want to delete this item?')) {
+      this.loaderService.enableLoader();
+      this.exitPopupService.deleteExitPopup(id).subscribe(
+          (response: any ) => {
+            if (response.status) {
+              this.successMessage = response.message;
+              this.getUserExitPopups();
+              this.loaderService.disableLoader();
+            } else {
+              this.successMessage = response.message;
+              this.getUserExitPopups();
+              this.loaderService.disableLoader();
+            }
           }
-        }
-    );
+      );
+    }
   }
 
+  /**
+   * Create exit popup from exit pop data populate to edit modal
+   * @param exitPopup
+   */
   public onEditExitPopup(exitPopup) {
 
     this.showCampaign = false;
@@ -519,6 +536,11 @@ export class ExitPopupComponent implements OnInit {
     this.ngxSmartModalService.getModal('modal1').open();
   }
 
+  /**
+   * Update Exit popup
+   * @param data
+   * @param exitPopupId
+   */
   public updateExitPopup(data, exitPopupId) {
     this.exitPopupService.updateExitPopup(data, exitPopupId).subscribe(
         (response: any ) => {
@@ -537,23 +559,112 @@ export class ExitPopupComponent implements OnInit {
     );
   }
 
+  /**
+   * Function for showing selected options
+   * @param optionOne
+   * @param optionTwo
+   */
   compareFn( optionOne, optionTwo ): boolean {
     if (optionOne && optionTwo) {
       return optionOne.id === optionTwo.id;
     }
   }
 
+  /**
+   * Function to make Image with the exit popup
+   */
   async makeImage() {
     // console.log('trying to make an Image ');
     return new  Promise((resolve, reject) => {
-      var node = document.getElementById('canvas');
+      const node = document.getElementById('canvas');
       htmlToImage.toPng(node).then((dataUrl) => {
         this.imageCode =  dataUrl;
         resolve(dataUrl) ;
       }).catch((error) => {
         console.error('oops, something went wrong!', error);
       });
-    })
+    });
+  }
+
+  public openExitpopUpPreview(exitPopup) {
+    this.getHeaderTextColor(exitPopup.header_text_color);
+    this.getHeaderBackgroundColor(exitPopup.header_background_color);
+    this.getButtonTextColor(exitPopup.button_text_color);
+    this.getButtonBackgroundColor(exitPopup.button_background_color);
+    this.getparagraphTextColor(exitPopup.paragraph_text_color);
+    this.getBodyBackgroundColor(exitPopup.body_background_color);
+    this.getCtaButtonTextColor(exitPopup.cta_button_text_color);
+    this.getCtaButtonBackgroundColor(exitPopup.cta_button_background_color);
+    switch (exitPopup.style_id.type) {
+      case 101:
+        this.showMe = '1';
+        break;
+      case 102:
+        this.showMe = '2';
+        break;
+      case 103:
+        this.showMe = '3';
+        break;
+      case 104:
+        this.showMe = '4';
+        break;
+      case 105:
+        this.showMe = '5';
+        break;
+      default:
+        this.showMe = '1';
+    }
+        this.exitPopupHeaderText = exitPopup.header_text;
+        this.exitPopupButtonText = exitPopup.button_text;
+        this.exitPopupParagraphText = exitPopup.paragraph_text;
+        this.exitPopupButtonUrl = exitPopup.button_url;
+        this.exitPopupCtaButtonText = exitPopup.cta_button_text;
+  if (exitPopup.has_email_field === true) {
+    this.showEmailField = true;
+    } else {
+    this.showEmailField = false;
+  }
+    if (exitPopup.has_campaign === true) {
+      this.campaignStickyReviewStyleId = exitPopup.campaign.style_id;
+    } else {
+      this.campaignStickyReviewStyleId = '1';
+    }
+    if(exitPopup.has_sticky_reviews === true) {
+      this.showStickyReviews = true;
+      // take the 1st sticky review from [0] position
+      this.reviewUserName = exitPopup.sticky_reviews[0].created_by.name;
+      this.reviewImageUrl = exitPopup.sticky_reviews[0].image_url;
+      this.reviewName = exitPopup.sticky_reviews[0].name;
+      this.reviewDescription = exitPopup.sticky_reviews[0].review;
+      this.reviewAt = moment(exitPopup.sticky_reviews[0].reviewed_at).startOf('day').fromNow();
+      this.reviewType = exitPopup.sticky_reviews[0].type;
+      this.reviewRating = exitPopup.sticky_reviews[0].rating;
+    } else {
+      this.showStickyReviews = false;
+    }
+    let modalName = 'exitPopup' + this.showMe;
+    this.ngxSmartModalService.getModal(modalName).onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.modalActive = modalName;
+    });
+
+    this.onModalClose(modalName);
+
+    this.ngxSmartModalService.getModal(modalName).open();
+  }
+
+
+  public onModalClose(modalName) {
+    this.ngxSmartModalService.getModal(modalName).onClose.subscribe((modal: NgxSmartModalComponent) => {
+      this.modalActive = 'false';
+    });
+
+    this.ngxSmartModalService.getModal(modalName).onDismiss.subscribe((modal: NgxSmartModalComponent) => {
+      this.modalActive = 'false';
+    });
+
+    this.ngxSmartModalService.getModal(modalName).onEscape.subscribe((modal: NgxSmartModalComponent) => {
+      this.modalActive = 'false';
+    });
   }
 
 }

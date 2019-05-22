@@ -253,11 +253,14 @@ class CampaignsController extends Controller
         ]);
     }
 
+    /**
+     * Function to find Sticky review style from campaign
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function stickyReviewStyle($id){
         $campaign = $this->queryBuilder->whereId($id)->firstOrFail();
         $campaignStickyReviewStyle = $campaign->style_id;
-
-        \Log::info('Campaign style id --> '.$campaignStickyReviewStyle);
         return response()->json([
             'status' => true,
             'message' => 'Campaign style id found successfully.',
