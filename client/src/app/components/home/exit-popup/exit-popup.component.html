@@ -5,7 +5,7 @@
         <img src="../../../../assets/images/addIcon.png" alt="addIcon"> Add an Exit pop-up</button>
     </div>
     <div class="mainBoxHeaderRight">
-      <input type="text" placeholder="Search ...">
+      <input type="text" placeholder="Search ..." (keyup)="onSearch($event)">
     </div>
   </header>
   <div class="dataTableArea">
@@ -573,7 +573,7 @@
         <input type="button" value="{{this.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
       </form>
 
-      <div class="linkTo">
+      <div class="linkTo" *ngIf="showCtaField">
         <a href="JavaScript:void(0);" class="button-submit"  [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
           {{this.exitPopupCtaButtonText}}
         </a>
@@ -1123,7 +1123,7 @@
         <input type="button" value="{{this.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
       </form>
 
-      <div class="linkTo">
+      <div class="linkTo" *ngIf="showCtaField">
         <a href="JavaScript:void(0);" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
           {{this.exitPopupCtaButtonText}}
         </a>
@@ -1672,7 +1672,7 @@
         <input type="button" value="{{this.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
       </form>
 
-      <div class="linkTo">
+      <div class="linkTo" *ngIf="showCtaField">
         <a href="JavaScript:void(0);" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
           {{this.exitPopupCtaButtonText}}
         </a>
@@ -2221,7 +2221,7 @@
         <input type="button" value="{{this.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
       </form>
 
-      <div class="linkTo">
+      <div class="linkTo" *ngIf="showCtaField">
         <a href="JavaScript:void(0);" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
           {{this.exitPopupCtaButtonText}}
         </a>
@@ -2769,7 +2769,7 @@
       <input type="button" value="{{this.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
     </form>
 
-    <div class="linkTo">
+    <div class="linkTo" *ngIf="showCtaField">
       <a href="JavaScript:void(0);" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
         {{this.exitPopupCtaButtonText}}
       </a>
@@ -2815,6 +2815,10 @@
                 <select class="sr-form-ctrl" formControlName="campaign" (ngModelChange)="getCampaignStyles()" [compareWith]="compareFn">
                   <option *ngFor="let campaign of campaigns;let i = index" [ngValue]="campaign"> {{ campaign.campaign_name }}</option>
                 </select>
+
+<!--                <div class="error-msg" *ngIf="(isSubmitted && form.get('campaign').errors['required'] && !form.get('campaign').valid && form.get('campaign').touched )">-->
+<!--                  Please select a campaign-->
+<!--                </div>-->
               </div>
             </div>
           </div>
@@ -2837,7 +2841,12 @@
 
             </div>
             <div class="sr-form-cell-small exitPopup_paddings">
-              <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>
+<!--              <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>-->
+                <!-- Popup Action -->
+                <label>Exit popup action </label>
+                        <label> <input type="radio" class="tglBtn" formControlName="exitPopupAction" value="1" (change)="addExitpopupAction()"> Add email field </label>
+                        <br>
+                        <label> <input type="radio"  class="tglBtn" formControlName="exitPopupAction" value="2" (change)="addExitpopupAction()"> Add CTA button </label>
             </div>
           </div>
           <div class="sr-form-row">
@@ -2859,7 +2868,7 @@
 
             <div class="sr-form-cell-small" *ngIf="showEmailField">
               <div class="headerInForm">
-                <span>CTA BUTTON</span>
+                <span>EMAIL FIELD BUTTON</span>
               </div>
               <label>Button Text</label>
               <div class="sr-form-field">
@@ -2872,13 +2881,13 @@
                 </div>
               </div>
             </div>
-
-            <div class="sr-form-cell-small">
+              <!-- CTA Button HTML-->
+            <div class="sr-form-cell-small" *ngIf="showCtaField">
               <div class="headerInForm">
                 <span>CTA BUTTON</span>
               </div>
 
-              <label>CTA Button text</label>
+              <label>CTA Button text </label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" formControlName="exitPopupCtaButtonText" [ngClass]="{error: isSubmitted && getFormControls.exitPopupCtaButtonText.errors}" >
                 <div class="error-msg" *ngIf="(
@@ -2902,9 +2911,7 @@
               </div>
             </div>
 
-
-            <!-- CTA Button HTML-->
-            <div class="sr-form-cell-small">
+            <div class="sr-form-cell-small"  *ngIf="showCtaField">
               <div class="inlineRow clearfix">
                 <label>CTA Button Text Color</label>
                 <div class="colorPicker">
@@ -2919,10 +2926,7 @@
                 </div>
               </div>
             </div>
-            <!-- CTA Button HTML-->
-
-
-
+            <!-- CTA Button HTML -->
           </div>
 
           <div class="sr-form-row">
@@ -3000,7 +3004,6 @@
             </div>
 
             <div class="sr-form-cell-small" id="canvas">
-              <!--              background-color: #252525;-->
               <div class="previewpopup exitPopup theme1" [style.background-color]="this.bodyBackgroundColor" style="display: block;" *ngIf="showMe==='1'">
                 <div class="previewComp">
                   <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
@@ -3541,7 +3544,7 @@
                         <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
 
-                      <div class="linkTo">
+                      <div class="linkTo" *ngIf="showCtaField">
                         <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit"  [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
                           {{this.form.value.exitPopupCtaButtonText}}
                         </a>
@@ -3553,7 +3556,7 @@
                   </button>
                 </div>
               </div>
-              <!--              background-color: #8cb5fe-->
+
               <div class="previewpopup exitPopup theme2" [style.background-color]="this.bodyBackgroundColor" style="display: block;" *ngIf="showMe==='2'">
                 <div class="previewComp">
                   <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
@@ -4094,7 +4097,7 @@
                         <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
 
-                      <div class="linkTo">
+                      <div class="linkTo" *ngIf="showCtaField">
                         <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
                           {{this.form.value.exitPopupCtaButtonText}}
                         </a>
@@ -4106,7 +4109,7 @@
                   </button>
                 </div>
               </div>
-              <!--              background-color: #fb8fff;-->
+
               <div class="previewpopup exitPopup theme3" [style.background-color]="this.bodyBackgroundColor" style="display: block;" *ngIf="showMe==='3'">
                 <div class="previewComp">
                   <div class="topSec" [style.background-color]="this.headerBackgroundColor">
@@ -4647,7 +4650,7 @@
                         <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
 
-                      <div class="linkTo">
+                      <div class="linkTo" *ngIf="showCtaField">
                         <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
                           {{this.form.value.exitPopupCtaButtonText}}
                         </a>
@@ -4659,7 +4662,7 @@
                   </button>
                 </div>
               </div>
-              <!--              background-color: #e7e7e4-->
+
               <div class="previewpopup exitPopup theme4" [style.background-color]="this.bodyBackgroundColor"  style="display: block;" *ngIf="showMe==='4'">
                 <div class="previewComp">
                   <div class="topSec" [style.background-color]="this.headerBackgroundColor">
@@ -5200,7 +5203,7 @@
                         <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                       </form>
 
-                      <div class="linkTo">
+                      <div class="linkTo" *ngIf="showCtaField">
                         <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
                           {{this.form.value.exitPopupCtaButtonText}}
                         </a>
@@ -5212,7 +5215,7 @@
                   </button>
                 </div>
               </div>
-              <!--              background-color: #facc00;-->
+
               <div class="previewpopup exitPopup theme5" [style.background-color]="this.bodyBackgroundColor" style="display: block;" *ngIf="showMe==='5'">
                 <div class="previewComp">
                   <div class="topSec" [style.background-color]="this.headerBackgroundColor">
@@ -5751,7 +5754,7 @@
                       <input type="button" value="{{this.form.value.exitPopupButtonText}}" [style.color]="this.buttonTextColor" [style.background-color]="this.buttonBackgroundColor"/>
                     </form>
 
-                    <div class="linkTo">
+                    <div class="linkTo" *ngIf="showCtaField">
                       <a href="{{this.form.value.exitPopupButtonUrl}}" class="button-submit" [style.color]="this.ctaButtonTextColor" [style.background-color]="this.ctaButtonBackgroundColor">
                         {{this.form.value.exitPopupCtaButtonText}}
                       </a>

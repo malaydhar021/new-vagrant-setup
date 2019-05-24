@@ -493,6 +493,10 @@ export class ExitPopupApiEndpoints {
     return apiBaseUrl.concat('/exit-popups/');
   }
 
+  // public static get searchExitPopups(): string {
+  //     return apiBaseUrl.concat('/exit-popups/');
+  // }
+
 }
 
 /**

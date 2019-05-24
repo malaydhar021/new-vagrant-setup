@@ -20,8 +20,6 @@ class ExitPopUpRequest extends FormRequest
      */
     public function getValidatorInstance()
     {
-        \Log::info("Exit popUp".print_r($this->request->all(),true));
-
         $this->merge([
             'has_campaign' => (integer) $this->request->get('has_campaign'),
             'has_sticky_reviews' => (integer) $this->request->get('has_sticky_reviews'),
@@ -44,12 +42,9 @@ class ExitPopUpRequest extends FormRequest
             unset($request['sticky_reviews']);
         }
 
-
-        if ($this->request->has('has_email_field') && $this->request->has('button_url') && $this->request->get('button_url') == null) {
-            unset($request['button_url']);
-        }
-
         $this->request = (new Request())->replace($request);
+
+        \Log::info(print_r($this->request->all(),true));
 
         return parent::getValidatorInstance();
     }
@@ -102,7 +97,7 @@ class ExitPopUpRequest extends FormRequest
             'body_background_color' => "required|string",
             'popup_backdrop_color' => "required|string",
             'button_text' => "required_if:has_email_field,1|string",
-            'button_url' => "required_if:has_email_field,1|url",
+            // 'button_url' => "url",
             'button_text_color' => "required_if:has_email_field,1|string",
             'button_background_color' => "required_if:has_email_field,1|string",
             'style_id' => "required|exists:exit_popup_styles,id",
@@ -151,8 +146,8 @@ class ExitPopUpRequest extends FormRequest
             'popup_backdrop_color.string' => "Popup backdrop color should be a valid string.",
             'button_text.required_if' => "Button text is required.",
             'button_text.string' => "Button text should be a valid string.",
-            'button_url.required_if' => "Button url is required.",
-            'button_url.url' => "Button url should be a valid URL.",
+            // 'button_url.required_if' => "Button url is required.",
+            // 'button_url.url' => "Button url should be a valid URL.",
             'button_text.required_if' => "Button text is required.",
             'button_text.string' => "Button text should be a valid string.",
             'button_text_color.required_if' => "Button text color is required.",

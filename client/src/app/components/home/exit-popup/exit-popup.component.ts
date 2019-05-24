@@ -69,7 +69,8 @@ export class ExitPopupComponent implements OnInit {
   exitPopupCtaButtonText: string = '';
   // modalBackgroundColor: string ='';
   modalActive: string = '';
-  modalName: string = 'exitPopup1';
+  // modalName: string = 'exitPopup1';
+  showCtaField: boolean = false;
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
       public title: Title,
@@ -93,15 +94,16 @@ export class ExitPopupComponent implements OnInit {
       hasCampaign: [false],
       campaign : [null],
       hasStickyReview: [false],
-      hasEmailField: [true],
+      hasEmailField: [false],
       exitPopupHeaderText: ['Take a break, TAKE A LOOK'],
       exitPopupButtonText: ['Subscribe'],
       exitPopupParagraphText: ['Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.'],
       stickyReviews: [null],
-      exitPopupButtonUrl: [null, Validators.required],
+      exitPopupButtonUrl: [null],
       ctaButtonTextColor: [null],
       ctaButtonBackgroundColor: [null],
-      exitPopupCtaButtonText: ['Take me there', Validators.required],
+      exitPopupCtaButtonText: ['Take me there'],
+      exitPopupAction: ['1', Validators.required],
     });
     this.getVisualStyles();
     this.getUserExitPopups();
@@ -114,23 +116,23 @@ export class ExitPopupComponent implements OnInit {
   public modalCallbacks() {
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
     // In this case reset the form when modal is dismissed
     this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
 
   }
 
-  public get resetForm() {
+  public resetForm() {
     this.form.reset(); // reset the form
-    return;
+    // return;
   }
 
   public openAddExitPopupModal() {
@@ -150,15 +152,16 @@ export class ExitPopupComponent implements OnInit {
       hasCampaign: [false],
       campaign : [null],
       hasStickyReview: [false],
-      hasEmailField: [true],
+      hasEmailField: [false],
       exitPopupHeaderText: ['Take a break, TAKE A LOOK', Validators.required],
       exitPopupButtonText: ['Subscribe'],
       exitPopupParagraphText: ['Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.', Validators.required],
       stickyReviews: [null],
-      exitPopupButtonUrl: [null, Validators.required],
+      exitPopupButtonUrl: [null],
       ctaButtonTextColor: [null],
       ctaButtonBackgroundColor: [null],
-      exitPopupCtaButtonText: ['Take me there', Validators.required],
+      exitPopupCtaButtonText: ['Take me there'],
+      exitPopupAction: ['1', Validators.required],
     });
     this.getVisualStyles();
     this.ngxSmartModalService.getModal('modal1').open();
@@ -181,10 +184,11 @@ export class ExitPopupComponent implements OnInit {
   }
 
   public async onSubmit() {
-    // console.log(' try to save/update exit popups ... ');
+     console.log(' try to save/update exit popups ... ');
     this.isSubmitted = true;
     // check if the form does not pass the client side validation
     if (this.form.invalid) {
+      console.log('Get a validation error ');
       return;
     }
 
@@ -196,7 +200,7 @@ export class ExitPopupComponent implements OnInit {
       campaign_id: '',
       has_sticky_reviews: this.form.value.hasStickyReview,
       sticky_reviews: this.form.value.stickyReviews,
-      has_email_field: this.form.value.hasEmailField,
+      has_email_field: false,
       header_text: this.form.value.exitPopupHeaderText,
       header_text_color: this.color1,
       header_background_color: this.color2,
@@ -213,6 +217,7 @@ export class ExitPopupComponent implements OnInit {
       cta_button_text_color: this.color7,
       cta_button_background_color: this.color8,
       popup_preview_img: this.imageCode,
+      popup_action: this.form.value.exitPopupAction,
     };
 
     if (this.form.value.hasCampaign === true) {
@@ -223,14 +228,13 @@ export class ExitPopupComponent implements OnInit {
       data.has_campaign = 0;
       delete data.campaign_id;
     }
-
-    if (this.form.value.hasEmailField === true) {
-      data.has_email_field = 1;
+    if (this.form.value.exitPopupAction === '1') {
+      data.has_email_field = true;
       data.button_text = this.form.value.exitPopupButtonText;
       data.button_text_color = this.color3;
       data.button_background_color = this.color4;
     } else {
-      data.has_email_field = 0;
+      data.has_email_field = false;
       delete data.button_text;
       delete data.button_text_color;
       delete data.button_background_color;
@@ -380,9 +384,11 @@ export class ExitPopupComponent implements OnInit {
 
   public addCampaing() {
     if (this.form.value.hasCampaign === true) {
+      this.form.controls['campaign'].setValidators([Validators.required]);
       this.getCampaignsList();
       this.showCampaign = true;
     } else {
+      this.form.controls['campaign'].clearValidators();
       this.showCampaign = false;
     }
   }
@@ -468,6 +474,7 @@ export class ExitPopupComponent implements OnInit {
     this.showCampaign = false;
     this.showStickyReviews = false;
     this.showEmailField = false;
+    this.showCtaField = false;
 
     this.exitPopupId = exitPopup.id;
     this.isEditing = true;
@@ -490,8 +497,10 @@ export class ExitPopupComponent implements OnInit {
     if (exitPopup.has_email_field === true) {
       this.form.get('hasEmailField').setValue(exitPopup.has_email_field);
       this.showEmailField = true;
+      this.showCtaField = false;
     } else {
       this.showEmailField = false;
+      this.showCtaField = true;
     }
 
     this.getHeaderTextColor(exitPopup.header_text_color);
@@ -531,6 +540,7 @@ export class ExitPopupComponent implements OnInit {
       exitPopupCtaButtonText: exitPopup.cta_button_text,
       campaign: exitPopup.campaign,
       stickyReviews: exitPopup.sticky_reviews,
+      exitPopupAction: exitPopup.popup_action
     };
     this.form.patchValue(data);
     this.ngxSmartModalService.getModal('modal1').open();
@@ -621,8 +631,10 @@ export class ExitPopupComponent implements OnInit {
         this.exitPopupCtaButtonText = exitPopup.cta_button_text;
   if (exitPopup.has_email_field === true) {
     this.showEmailField = true;
+    this.showCtaField = false;
     } else {
     this.showEmailField = false;
+    this.showCtaField = true;
   }
     if (exitPopup.has_campaign === true) {
       this.campaignStickyReviewStyleId = exitPopup.campaign.style_id;
@@ -666,5 +678,28 @@ export class ExitPopupComponent implements OnInit {
       this.modalActive = 'false';
     });
   }
+
+  public onSearch($term) {
+    this.loaderService.enableLoader();
+    this.exitPopupService.searchExitPopups($term.target.value).subscribe(
+        (response: any ) => {
+          if (response.status) {
+            this.exitPopups = response.data.data;
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
+  public addExitpopupAction() {
+    if (this.form.value.exitPopupAction === '1') {
+      this.showEmailField = true;
+      this.showCtaField = false;
+    } else {
+      this.showEmailField = false;
+      this.showCtaField = true;
+    }
+  }
+
 
 }

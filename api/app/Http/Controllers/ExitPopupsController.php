@@ -115,6 +115,7 @@ class ExitPopupsController extends Controller
         $exitPopup->cta_button_text_color = $request->input('cta_button_text_color');
         $exitPopup->cta_button_background_color = $request->input('cta_button_background_color');
         $exitPopup->popup_preview_img = $request->input('popup_preview_img');
+        $exitPopup->popup_action = $request->input('popup_action');
         $exitPopup->created_by = Auth::user()->id;
 
         try {
@@ -210,6 +211,7 @@ class ExitPopupsController extends Controller
         $exitPopup->cta_button_text_color = $request->input('cta_button_text_color');
         $exitPopup->cta_button_background_color = $request->input('cta_button_background_color');
         $exitPopup->popup_preview_img = $request->input('popup_preview_img');
+        $exitPopup->popup_action = $request->input('popup_action');
         $exitPopup->created_by = Auth::user()->id;
 
         try {

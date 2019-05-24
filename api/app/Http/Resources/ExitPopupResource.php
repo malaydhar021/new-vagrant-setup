@@ -28,6 +28,7 @@ class ExitPopupResource extends Resource
                 'campaign' => (new CampaignsResource($this->whenLoaded('campaign'))),
                 'has_sticky_reviews' => $this->has_sticky_reviews,
                 'sticky_reviews' => (StickyReviewResource::collection($this->whenLoaded('stickyReviews')))->briefOnly(),
+                'popup_action' => $this->popup_action,
                 'has_email_field' => $this->has_email_field,
                 'header_text' => $this->header_text,
                 'header_text_color' => $this->header_text_color,

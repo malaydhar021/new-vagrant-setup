@@ -92,4 +92,9 @@ export class ExitPopupService {
     public getEditExitPopup(id: string) {
         return this.httpClient.get(ExitPopupApiEndpoints.getEditExitPopup.concat(id));
     }
+
+    public searchExitPopups(tearm) {
+        return this.httpClient.get(ExitPopupApiEndpoints.getUserExitPopups.concat('/?searchParams=' + tearm));
+    }
+
 }
