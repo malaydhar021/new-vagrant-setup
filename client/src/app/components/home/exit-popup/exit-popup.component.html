@@ -2812,13 +2812,16 @@
             <div class="sr-form-cell-small" *ngIf="showCampaign">
               <label>Attach a Campaign</label>
               <div class="sr-form-field">
-                <select class="sr-form-ctrl" formControlName="campaign" (ngModelChange)="getCampaignStyles()" [compareWith]="compareFn">
+                <select class="sr-form-ctrl" formControlName="campaign" (ngModelChange)="getCampaignStyles()" [compareWith]="compareFn" [ngClass]="{error: isSubmitted && getFormControls.campaign.errors}">
+                    <option value="">Select a campaign</option>
                   <option *ngFor="let campaign of campaigns;let i = index" [ngValue]="campaign"> {{ campaign.campaign_name }}</option>
                 </select>
-
-<!--                <div class="error-msg" *ngIf="(isSubmitted && form.get('campaign').errors['required'] && !form.get('campaign').valid && form.get('campaign').touched )">-->
-<!--                  Please select a campaign-->
-<!--                </div>-->
+                  <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.campaign.errors !== null
+                  && getFormControls.campaign.errors.required)">
+                      Please select a campaign
+                  </div>
               </div>
             </div>
           </div>
@@ -2834,9 +2837,16 @@
 
               <label style="margin-top: 20px;" *ngIf="showStickyReviews">Select Reviews</label>
               <div class="sr-form-field" *ngIf="showStickyReviews">
-                <select class="sr-form-ctrl" formControlName="stickyReviews" multiple (change)="getStickyReviewStyle()"  [compareWith]="compareFn">
+                <select class="sr-form-ctrl" formControlName="stickyReviews" multiple (change)="getStickyReviewStyle()"  [compareWith]="compareFn" [ngClass]="{error: isSubmitted && getFormControls.stickyReviews.errors}">
+                    <option value="">Select atlist one sticky review </option>
                   <option *ngFor="let stickyReview of stickyReviews; let i = index" [ngValue]="stickyReview"> {{ stickyReview.name }} </option>
                 </select>
+                  <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.stickyReviews.errors !== null
+                  && getFormControls.stickyReviews.errors.required)">
+                      Please atlist one stickyReviews
+                  </div>
               </div>
 
             </div>
@@ -2856,13 +2866,9 @@
               </div>
               <label>Header Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupHeaderText"  [ngClass]="{error: isSubmitted && getFormControls.exitPopupHeaderText.errors}" >
-                <div class="error-msg" *ngIf="(
-                  isSubmitted
-                  && getFormControls.exitPopupHeaderText.errors !== null
-                  && getFormControls.exitPopupHeaderText.errors.required)">
-                  Header text is required.
-                </div>
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupHeaderText"  [ngClass]="{error: getFormControls.exitPopupHeaderText.errors || getFormControls.exitPopupHeaderText.errors?.maxlength}">
+                <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupHeaderText.errors !== null && getFormControls.exitPopupHeaderText.errors.required)"> Header text is required.</div>
+                <div class="error-msg"  *ngIf="(getFormControls.exitPopupHeaderText.errors !== null && getFormControls.exitPopupHeaderText.errors?.maxlength)"> Only 25 characters allowed. </div>
               </div>
             </div>
 
@@ -2872,13 +2878,14 @@
               </div>
               <label>Button Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonText" [ngClass]="{error: isSubmitted && getFormControls.exitPopupButtonText.errors}" >
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonText" [ngClass]="{error: getFormControls.exitPopupButtonText.errors || getFormControls.exitPopupButtonText.errors?.maxlength}" >
                 <div class="error-msg" *ngIf="(
                   isSubmitted
-                  && getFormControls.exitPopupButtonText.errors !== null
+                  || getFormControls.exitPopupButtonText.errors !== null
                   && getFormControls.exitPopupButtonText.errors.required)">
                   Button text is required.
                 </div>
+                  <div class="error-msg"  *ngIf="(getFormControls.exitPopupButtonText.errors !== null && getFormControls.exitPopupButtonText.errors?.maxlength)"> Only 15 characters allowed. </div>
               </div>
             </div>
               <!-- CTA Button HTML-->
@@ -2889,25 +2896,29 @@
 
               <label>CTA Button text </label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupCtaButtonText" [ngClass]="{error: isSubmitted && getFormControls.exitPopupCtaButtonText.errors}" >
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupCtaButtonText" [ngClass]="{error: getFormControls.exitPopupCtaButtonText.errors || getFormControls.exitPopupCtaButtonText.errors?.maxlength}" >
                 <div class="error-msg" *ngIf="(
                   isSubmitted
-                  && getFormControls.exitPopupCtaButtonText.errors !== null
+                  || getFormControls.exitPopupCtaButtonText.errors !== null
                   && getFormControls.exitPopupCtaButtonText.errors.required)">
                   CTA button text is required.
                 </div>
+                  <div class="error-msg"  *ngIf="(getFormControls.exitPopupCtaButtonText.errors !== null && getFormControls.exitPopupCtaButtonText.errors?.maxlength)"> Only 40 characters allowed. </div>
               </div>
 
 
               <label>CTA Button URL</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl" [ngClass]="{error: isSubmitted && getFormControls.exitPopupButtonUrl.errors}" >
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl" [ngClass]="{error: getFormControls.exitPopupButtonUrl.errors || getFormControls.exitPopupButtonUrl.errors?.pattern}" >
                 <div class="error-msg" *ngIf="(
                   isSubmitted
-                  && getFormControls.exitPopupButtonUrl.errors !== null
+                  || getFormControls.exitPopupButtonUrl.errors !== null
                   && getFormControls.exitPopupButtonUrl.errors.required)">
                   CTA button URL is required.
                 </div>
+                  <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupButtonUrl.errors?.pattern)">
+                      Please use a valid URL.
+                  </div>
               </div>
             </div>
 
@@ -2915,6 +2926,7 @@
               <div class="inlineRow clearfix">
                 <label>CTA Button Text Color</label>
                 <div class="colorPicker">
+
                   <input [(colorPicker)]="color7" [style.background]="color7" class="colorChosen" formControlName="ctaButtonTextColor" (colorPickerChange)="getCtaButtonTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                 </div>
               </div>
@@ -2970,13 +2982,14 @@
 
               <label>Paragraph Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupParagraphText" [ngClass]="{error: isSubmitted && getFormControls.exitPopupParagraphText.errors}" >
+                <input type="text" class="sr-form-ctrl" formControlName="exitPopupParagraphText" [ngClass]="{error: getFormControls.exitPopupParagraphText.errors || getFormControls.exitPopupParagraphText.errors?.maxlength}" >
                 <div class="error-msg" *ngIf="(
                   isSubmitted
-                  && getFormControls.exitPopupParagraphText.errors !== null
+                  || getFormControls.exitPopupParagraphText.errors !== null
                   && getFormControls.exitPopupParagraphText.errors.required)">
                   Paragraph text is required.
                 </div>
+                  <div class="error-msg"  *ngIf="(getFormControls.exitPopupParagraphText.errors !== null && getFormControls.exitPopupParagraphText.errors?.maxlength)"> Only 100 characters allowed. </div>
               </div>
 
               <div class="inlineRow clearfix">

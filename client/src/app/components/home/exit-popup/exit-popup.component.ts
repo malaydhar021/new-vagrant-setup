@@ -82,6 +82,7 @@ export class ExitPopupComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Stickyreviews :: Exit pop-up(s)');
+    this.isSubmitted = false;
     this.form = this.formBuilder.group({
       exitPopUpName : [null, Validators.required], // exitPopUpName name
       headerTextColor : [null],
@@ -92,12 +93,12 @@ export class ExitPopupComponent implements OnInit {
       bodyBackgroundColor : [null],
       exitPopupVisualStyles : [ this.styleId, Validators.required],
       hasCampaign: [false],
-      campaign : [null],
+      campaign : [''],
       hasStickyReview: [false],
       hasEmailField: [false],
-      exitPopupHeaderText: ['Take a break, TAKE A LOOK'],
-      exitPopupButtonText: ['Subscribe'],
-      exitPopupParagraphText: ['Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.'],
+      exitPopupHeaderText: ['Take a break, TAKE A LOOK', Validators.compose([Validators.required, Validators.maxLength(25)])],
+      exitPopupButtonText: ['Subscribe', Validators.compose([Validators.required, Validators.maxLength(15)])],
+      exitPopupParagraphText: ['Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.', [Validators.required, Validators.maxLength(100)]],
       stickyReviews: [null],
       exitPopupButtonUrl: [null],
       ctaButtonTextColor: [null],
@@ -140,6 +141,7 @@ export class ExitPopupComponent implements OnInit {
     this.showEmailField = true;
     this.showCampaign = false;
     this.isEditing = false;
+    this.isSubmitted = false;
     this.form = this.formBuilder.group({
       exitPopUpName : [null, Validators.required], // exitPopUpName name
       headerTextColor : [null],
@@ -150,12 +152,12 @@ export class ExitPopupComponent implements OnInit {
       bodyBackgroundColor : [null],
       exitPopupVisualStyles : [ this.styleId, Validators.required],
       hasCampaign: [false],
-      campaign : [null],
+      campaign : [''],
       hasStickyReview: [false],
       hasEmailField: [false],
-      exitPopupHeaderText: ['Take a break, TAKE A LOOK', Validators.required],
-      exitPopupButtonText: ['Subscribe'],
-      exitPopupParagraphText: ['Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.', Validators.required],
+      exitPopupHeaderText: ['Take a break, TAKE A LOOK', Validators.compose([Validators.required, Validators.maxLength(25)])],
+      exitPopupButtonText: ['Subscribe',  Validators.compose([Validators.required, Validators.maxLength(15)])],
+      exitPopupParagraphText: ['Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.', Validators.compose([Validators.required, Validators.maxLength(100)])],
       stickyReviews: [null],
       exitPopupButtonUrl: [null],
       ctaButtonTextColor: [null],
@@ -307,9 +309,12 @@ export class ExitPopupComponent implements OnInit {
     if (this.form.value.hasStickyReview === true) {
         this.showStickyReviews = true;
         this.getStickyReviews();
+        this.form.controls['stickyReviews'].setValidators([Validators.required]);
     } else {
+        this.form.controls['stickyReviews'].clearValidators();
       this.showStickyReviews = false;
     }
+      this.form.controls['stickyReviews'].updateValueAndValidity();
   }
 
   public getStickyReviews() {
@@ -391,6 +396,7 @@ export class ExitPopupComponent implements OnInit {
       this.form.controls['campaign'].clearValidators();
       this.showCampaign = false;
     }
+      this.form.controls['campaign'].updateValueAndValidity();
   }
 
   /**
@@ -475,7 +481,7 @@ export class ExitPopupComponent implements OnInit {
     this.showStickyReviews = false;
     this.showEmailField = false;
     this.showCtaField = false;
-
+    this.isSubmitted = false;
     this.exitPopupId = exitPopup.id;
     this.isEditing = true;
     if (exitPopup.has_campaign === true) {
@@ -679,6 +685,10 @@ export class ExitPopupComponent implements OnInit {
     });
   }
 
+    /**
+     * Function to search from exit popup list
+     * @param $term
+     */
   public onSearch($term) {
     this.loaderService.enableLoader();
     this.exitPopupService.searchExitPopups($term.target.value).subscribe(
@@ -691,14 +701,31 @@ export class ExitPopupComponent implements OnInit {
     );
   }
 
+    /**
+     * Function to add remove Email field and CTA button.
+     * Add and remove the validation.
+     */
+
   public addExitpopupAction() {
     if (this.form.value.exitPopupAction === '1') {
       this.showEmailField = true;
       this.showCtaField = false;
+        this.form.controls['exitPopupButtonText'].setValidators([Validators.required, Validators.maxLength(15)]);
+        this.form.controls['exitPopupButtonUrl'].clearValidators();
+        this.form.controls['exitPopupCtaButtonText'].clearValidators();
     } else {
       this.showEmailField = false;
       this.showCtaField = true;
+        this.form.controls['exitPopupButtonText'].clearValidators();
+        this.form.controls['exitPopupButtonUrl'].setValidators([
+            Validators.required,
+            Validators.pattern('https?://.+')
+        ]);
+        this.form.controls['exitPopupCtaButtonText'].setValidators([Validators.required, Validators.maxLength(40)]);
     }
+      this.form.controls['exitPopupButtonUrl'].updateValueAndValidity();
+      this.form.controls['exitPopupCtaButtonText'].updateValueAndValidity();
+      this.form.controls['exitPopupButtonText'].updateValueAndValidity();
   }
 
 

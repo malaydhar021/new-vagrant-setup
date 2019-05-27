@@ -22,9 +22,17 @@
                 </div>
                 <div class="navArea">
                     <ul class="nav">
-                        <li><a href="">How It Works</a></li>
-                        <li><a href="">Pricing</a></li>
-                        <li><a href="register">14 Day Free Trial</a></li>
+                        <li><a href="#howItWorks">How It Works</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <?php $getEnvUrl = $_SERVER['SERVER_NAME'];
+                        if (strpos($getEnvUrl, 'local') !== false) {
+                            $linkUrl = 'local';
+                        } elseif (strpos($getEnvUrl, 'beta') !== false ){
+                            $linkUrl = 'beta';
+                        } else {
+                            $linkUrl = '';
+                        }?>
+                        <li><a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/sign-up" target="_blank">14 Day Free Trial</a></li>
                     </ul>
                     <div class="loginBtn">
                         <a href="">
@@ -147,7 +155,7 @@
         </div>
     </section>
 
-    <section class="newRelease">
+    <section class="newRelease" id="howItWorks">
         <div class="container">
             <h2>
                 <span class="subHeading">STICKY REVIEWS JUST GOT BETTER</span>
@@ -214,7 +222,7 @@
         </div>
     </section>
 
-    <section class="pricingSec">
+    <section class="pricingSec" id="pricing">
         <div class="pricingArea">
             <div class="container">
                 <h2>
