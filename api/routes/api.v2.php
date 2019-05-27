@@ -100,7 +100,8 @@ Route::middleware(['auth:api', 'subscription'])->group(function () {
         Route::post('/', 'ReviewLinksController@store')->name('store');
         Route::post('/validate', 'ReviewLinksController@validateParams')->name('params.validate');
         Route::get('/{id}', 'ReviewLinksController@show')->name('show');
-        Route::post('/{id}', 'ReviewLinksController@update')->name('update');
+        Route::put('/{id}/auto-approve-status', 'ReviewLinksController@updateAutoApproveStatus')->name('update.auto.approve');
+        Route::put('/{id}', 'ReviewLinksController@update')->name('update');
         Route::patch('/{id}', 'ReviewLinksController@update')->name('update');
         Route::delete('/{id}', 'ReviewLinksController@destroy')->name('delete');
     });

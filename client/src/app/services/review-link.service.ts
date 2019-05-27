@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { ReviewLinkApiEndpoints } from '../helpers/api.helper';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ReviewLinkApiEndpoints, CampaignApiEndpoints } from '../helpers/api.helper';
 import { ReviewLinkModel } from '../models/review-link.model';
 
 /**
@@ -19,13 +18,12 @@ export class ReviewLinkService {
    * @constructor constructor
    * @since Version 1.0.0
    * @param httpClient HttpClient instance
-   * @param router Router instance
    * @returns Void
    */
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient) { }
 
   /**
-   * Method to make an api call to get all brands
+   * Method to make an api call to get all review links
    * @method getAllReviewLinks
    * @since Version 1.0.0
    * @returns Observable<Object>
@@ -35,7 +33,7 @@ export class ReviewLinkService {
   }
 
   /**
-   * Method to make an api call to add a brand.
+   * Method to make an api call to add a review link.
    * @method addReviewLink
    * @since Version 1.0.0
    * @param data FormData instance. 
@@ -46,7 +44,7 @@ export class ReviewLinkService {
   }
 
   /**
-   * Method to make an api call to update a brand
+   * Method to make an api call to update a review link
    * @method updateReviewLink
    * @since Version 1.0.0
    * @param id Review link system id
@@ -59,7 +57,7 @@ export class ReviewLinkService {
   }
 
   /**
-   * Method to make an api call to delete a brand
+   * Method to make an api call to delete a review link
    * @method deleteReviewLink
    * @since Version 1.0.0
    * @returns Observable<Object>
@@ -74,7 +72,43 @@ export class ReviewLinkService {
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
-  public checkDuplicateUrlSlug(data: any) {
-    return this.httpClient.post(ReviewLinkApiEndpoints.checkDuplicateUrlSlug, data);
+  public checkDuplicateUrlSlug(slug: string) {
+    const params = new HttpParams().set('url_slug', slug);
+    return this.httpClient.get(ReviewLinkApiEndpoints.reviewLinks.concat("/slug-status"), {params: params});
+  }
+
+  /**
+   * Method to make an api call to validate first step data
+   * @method validateData
+   * @since Version 1.0.0
+   * @param data FormData request payload
+   * @returns Observable<Object>
+   */
+  public validateData(data: FormData) {
+    return this.httpClient.post(ReviewLinkApiEndpoints.reviewLinks.concat("/validate"), data);
+  }
+
+  /**
+   * Method to make an api call to get all campaigns without pagination
+   * @method campaigns
+   * @since Version 1.0.0
+   * @returns Observable<Object>
+   */
+  public get campaigns() {
+    const params = new HttpParams().set('paginate', 'false');
+    return this.httpClient.get(CampaignApiEndpoints.campaigns, {params: params});
+  }
+  
+  /**
+   * Method to make an api call to update auto approve status of a review link
+   * @method updateAutoApproveStatus
+   * @since Version 1.0.0
+   * @param id Review link system id
+   * @param data Request payload data
+   * @returns Observable<Object>
+   */
+  public updateAutoApproveStatus(id: string, data: ReviewLinkModel) {
+    data._method = "PUT";
+    return this.httpClient.post(ReviewLinkApiEndpoints.reviewLinks.concat("/" + id + '/auto-approve-status'), data);
   }
 }

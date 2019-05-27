@@ -2,6 +2,13 @@
 
 ## Review Link
 
+### V1.0.0
+
+1. Implemented CRUD feature for review link
+2. Implemented show More/Less Options in review link listing page
+3. Implemented update auto approve feature from listing page
+4. Implemented real time review link preview in add/edit feature
+
 ### V0.5.0
 
 1. Fixed issue with review link api endpoint

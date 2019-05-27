@@ -273,6 +273,9 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     if(!this.isEditing) {
       this.getFormControls.srImage.setValidators(Validators.required);
       this.getFormControls.srImage.updateValueAndValidity();
+    } else {
+      this.getFormControls.srImage.clearValidators();
+      this.getFormControls.srImage.updateValueAndValidity();
     }
     // if file has been selected
     if(this.image !== null) {

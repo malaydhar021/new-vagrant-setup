@@ -9,7 +9,7 @@ use App\Exceptions\PrivilegeViolationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class ReviewLinkRequest extends FormRequest
+class ReviewLinkParamRequest extends FormRequest
 {
     /**
      * Get the validator instance for the request.
@@ -62,18 +62,19 @@ class ReviewLinkRequest extends FormRequest
         return [
             'name' => "required|string",
             'url_slug' => "required|unique:review_links,id," . $this->route('id'),
-            'logo' => [
-                $this->method() == 'POST' ? "required" : "nullable",
-                "image",
-                "mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp",
-            ],
+            // 'logo' => [
+            //     $this->method() == 'POST' ? "required" : "nullable",
+            //     "image",
+            //     "mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp",
+            // ],
+            'logo' => 'required_if:is_editing,0|image|mimes:gif,jpeg,png,tiff,x-icon,x-ms-bmp,webp',
             'description' => "required|string",
             'auto_approve' => "required|boolean",
             'min_rating' => "required_if:auto_approve,1|integer",
             'positive_review_message' => "required|string",
             'negative_info_review_message_1' => "required|string",
             'negative_info_review_message_2' => "required|string",
-            'campaign_id' => "required|exists:campaigns,id",
+            // 'campaign_id' => "required|exists:campaigns,id",
         ];
     }
 

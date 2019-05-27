@@ -15,9 +15,14 @@ export class ReviewLinkModel {
     campaign_id?: number;
     auto_approve?: number;
     min_rating?: number;
-    negative_info_review_msg_1?: string;
-    negative_info_review_msg_2?: string;
-    positive_review_msg?: string;
+    negative_info_review_message_1?: string;
+    negative_info_review_message_2?: string;
+    positive_review_message?: string;
     created_by?: number;
-    campaign?: any
+    campaign?: any;
+    page_background?: string;
+    modal_background?: string;
+    text_color?: string;
+    copyright_text?: string;
+    _method?: string;
   }
