@@ -19,7 +19,6 @@
                                             :reviews="stickyReviews"
                                             v-if="showWidget"
                                             :script_id="script_id"
-                                            :apiEndpoint="apiEndpoint"
                                             :fromExitPopup="fromExitPopup"></app-main-widget>
                                     </div>
                                 </div>

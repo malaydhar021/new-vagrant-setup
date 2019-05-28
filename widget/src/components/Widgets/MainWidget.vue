@@ -76,8 +76,7 @@ export default {
         data: {},
         reviews: {},
         fromExitPopup: Boolean,
-        script_id: '',
-        apiEndpoint: ''
+        script_id: ''
     },
     name: 'mainwidget',
 

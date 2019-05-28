@@ -1,7 +1,7 @@
 <template>
   <div>
-    <app-main-widget :data="appData" :reviews="stickyReviews" v-if="showWidget" :fromExitPopup="fromExitPopup" :script_id="script_id" :apiEndpoint="apiEndpoint"></app-main-widget>
-    <app-exit-popup :data="appData" :exitPopUpdata="exitPopUpData" v-if="showExitPopUp" :script_id="script_id" :apiEndpoint="apiEndpoint"></app-exit-popup>
+    <app-main-widget :data="appData" :reviews="stickyReviews" v-if="showWidget" :fromExitPopup="fromExitPopup" :script_id="script_id"></app-main-widget>
+    <app-exit-popup :data="appData" :exitPopUpdata="exitPopUpData" v-if="showExitPopUp" :script_id="script_id"></app-exit-popup>
   </div>
 </template>
 
@@ -51,7 +51,7 @@ export default {
       // Call this method to get initial widget data
       try {
 
-        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.myApiId()}`+`?page=${this.curPageNo}`)
+        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.myApiId}`+`?page=${this.curPageNo}`)
 
         if (response.status) {
           this.checkDomainName(response.data)

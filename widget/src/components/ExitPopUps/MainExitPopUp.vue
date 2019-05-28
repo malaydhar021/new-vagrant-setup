@@ -5,35 +5,30 @@
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
-                    :apiEndpoint="apiEndpoint"
                     v-cloak></app-historic-popup>
     <app-home-coming-popup v-if="selectedComponent === 101"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
-                    :apiEndpoint="apiEndpoint"
                     v-cloak></app-home-coming-popup>
     <app-momentum-popup v-if="selectedComponent === 102"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
-                    :apiEndpoint="apiEndpoint"
                     v-cloak></app-momentum-popup>
     <app-fusing-popup v-if="selectedComponent === 103"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
-                    :apiEndpoint="apiEndpoint"
                     v-cloak></app-fusing-popup>
     <app-evolver-popup v-if="selectedComponent === 104"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
-                    :apiEndpoint="apiEndpoint" 
                     v-cloak></app-evolver-popup>
   </div>
 </template>
