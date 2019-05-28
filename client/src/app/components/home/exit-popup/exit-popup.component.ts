@@ -22,8 +22,7 @@ export class ExitPopupComponent implements OnInit {
   form: FormGroup; // for add or edit brand form in modal
   subscription: Subscription; // to get the current value updated from error interceptor
   errorMessage: string = null;
-
-  // selectedColor: string = 'color1';
+  // Default colors for the default them
   color1: string = '#252525';
   color2: string = '#47e3bd';
   color3: string = '#d2d9e9';
@@ -67,10 +66,9 @@ export class ExitPopupComponent implements OnInit {
   exitPopupParagraphText: string = '';
   exitPopupButtonUrl: string = '';
   exitPopupCtaButtonText: string = '';
-  // modalBackgroundColor: string ='';
   modalActive: string = '';
-  // modalName: string = 'exitPopup1';
   showCtaField: boolean = false;
+
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
       public title: Title,
@@ -131,17 +129,24 @@ export class ExitPopupComponent implements OnInit {
 
   }
 
+  /**
+   * Reset the exitpopup form
+   */
   public resetForm() {
     this.form.reset(); // reset the form
-    // return;
   }
 
+  /**
+   * Function for open add Exit popup modal
+   */
   public openAddExitPopupModal() {
     this.showStickyReviews = false;
     this.showEmailField = true;
+    this.showCtaField = false;
     this.showCampaign = false;
     this.isEditing = false;
     this.isSubmitted = false;
+    this.showMe = '1';  // show default modal for the pop up preview
     this.form = this.formBuilder.group({
       exitPopUpName : [null, Validators.required], // exitPopUpName name
       headerTextColor : [null],
@@ -166,6 +171,16 @@ export class ExitPopupComponent implements OnInit {
       exitPopupAction: ['1', Validators.required],
     });
     this.getVisualStyles();
+    // setting default colors for the defualt (theme 1) exit popup theme
+    this.getHeaderTextColor('#252525');
+    this.getHeaderBackgroundColor('#47e3bd');
+    this.getButtonTextColor('#d2d9e9');
+    this.getButtonBackgroundColor('#3a2a98');
+    this.getparagraphTextColor('#252525');
+    this.getBodyBackgroundColor('#252525');
+    this.getCtaButtonTextColor('#d2d9e9');
+    this.getCtaButtonBackgroundColor('#e30b5d');
+    // Open add exit popup modal
     this.ngxSmartModalService.getModal('modal1').open();
   }
 
@@ -387,6 +402,9 @@ export class ExitPopupComponent implements OnInit {
     this.bodyBackgroundColor = $e;
   }
 
+  /**
+   * Function to add the campaign to a exit popup
+   */
   public addCampaing() {
     if (this.form.value.hasCampaign === true) {
       this.form.controls['campaign'].setValidators([Validators.required]);
@@ -414,6 +432,9 @@ export class ExitPopupComponent implements OnInit {
     }
   }
 
+  /**
+   * Function to get a sticky review style
+   */
   public getStickyReviewStyle() {
     if (this.form.value.stickyReviews[0] !== undefined && this.form.value.stickyReviews[0].id !== undefined) {
       // get the [0] position of the array and trit is as the id and send data according to it.
@@ -434,6 +455,10 @@ export class ExitPopupComponent implements OnInit {
     }
   }
 
+  /**
+   * Function to fetch count of review stars
+   * @param rating
+   */
   public getStars(rating) {
     const starts = new Array(1);
     for (let i = 1; i < rating; i++) {
@@ -452,6 +477,10 @@ export class ExitPopupComponent implements OnInit {
     this.ctaButtonBackgroundColor = $e;
   }
 
+  /**
+   * Function for delete a exit popup
+   * @param id
+   */
   public deleteExitPopup(id) {
     if (confirm('Are you sure you want to delete this item?')) {
       this.loaderService.enableLoader();
@@ -550,6 +579,9 @@ export class ExitPopupComponent implements OnInit {
     };
     this.form.patchValue(data);
     this.ngxSmartModalService.getModal('modal1').open();
+    this.addExitpopupAction();
+    this.addCampaing();
+    this.addStickeyReview();
   }
 
   /**
@@ -602,6 +634,10 @@ export class ExitPopupComponent implements OnInit {
     });
   }
 
+  /**
+   * Function for create a exit popup view
+   * @param exitPopup
+   */
   public openExitpopUpPreview(exitPopup) {
     this.getHeaderTextColor(exitPopup.header_text_color);
     this.getHeaderBackgroundColor(exitPopup.header_background_color);
@@ -660,7 +696,7 @@ export class ExitPopupComponent implements OnInit {
     } else {
       this.showStickyReviews = false;
     }
-    let modalName = 'exitPopup' + this.showMe;
+    const modalName = 'exitPopup' + this.showMe;
     this.ngxSmartModalService.getModal(modalName).onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.modalActive = modalName;
     });
