@@ -1,7 +1,7 @@
 <div class="mainBox">
   <header class="mainBoxHeader">
     <div class="mainBoxHeaderLeft">
-      <button type="button" class="addReview" (click)="openModelWithAddOrEdit('add', null)">
+      <button type="button" class="addReview" (click)="onAddReviewLink()">
         <img src="../../../../assets/images/addIcon.png" alt="">
         Add Review Link
       </button>
@@ -11,6 +11,7 @@
     </div>
   </header>
   <div class="dataTableArea">
+    <message [successMessage]="successMessage"></message>
     <div class="table table-col-5 reviewLinkTab">
       <ul class="thead">
         <li>REVIEWS</li>
@@ -20,26 +21,29 @@
         <li>ACTION(S)</li>
       </ul>
       <div class="tbody">
-        <ng-scrollbar [compact]="true">
+        <ng-scrollbar [compact]="true" *ngIf="reviewLinks.length > 0; else noRecords">
           <ul>
-            <li class="row" *ngFor="let review of reviewLinks; let i = index">
-              <a class="rowMoreInfo"><img src="../../../../assets/images/down_double_arrow.png" alt=""> More
+            <li class="row" *ngFor="let link of reviewLinks; let i = index" [ngClass]="{showMore: showMore && rowIndex === i}">
+              <a class="rowMoreInfo" (click)="showMoreOptions(i)"><img src="../../../../assets/images/down_double_arrow.png" alt=""> {{ !showMore || rowIndex != i? "More" : "Less" }}
                 Options</a>
               <div class="rowContainer">
                 <div class="tcol">
                   <div class="userImg">
-                    <img src="../../../../assets/images/User_profile_icon_small.png" alt="">
+                    <img src="{{ link.logo }}" alt="Logo">
                   </div>
                   <div class="userReview">
-                    <h2>{{review.name}} <span class="greenTag">$1 a day</span></h2>
+                    <h2>{{ link.name }}
+                      <!-- <span class="greenTag">$1 a day</span> -->
+                    </h2>
                     <p>
-                      {{review.description}}
+                      {{ link.description }}
                     </p>
                     <div class="reviewLinkinfo">
                       <div class="minRating">
                         <p>Min. Rating: </p>
                         <div class="stars">
-                          <img src="../../../../assets/images/star_active.png" alt="">
+                          <bar-rating [(rate)]="link.min_rating" [max]="5" [theme]="'default'" [readOnly]="true"></bar-rating>
+                          <!-- <img src="../../../../assets/images/star_active.png" alt=""> -->
                           <!-- <img src="../../../../assets/images/star_active.png" alt="">
                           <img src="../../../../assets/images/star_active.png" alt="">
                           <img src="../../../../assets/images/star_active.png" alt="">
@@ -48,83 +52,98 @@
                       </div>
                       <div class="approve">
                         <p>Auto Approve:</p>
-                        <input type="checkbox" class="tglBtn" [(ngModel)]="review.auto_approve"
-                          #review.auto_approve="ngModel" readonly>
+                        <input type="checkbox" class="tglBtn"  [(ngModel)]="link.auto_approve" #autoApproveStatus="ngModel" (change)="onChangeAutoApproveStatus(link.id, autoApproveStatus)">
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="tcol">
-                  <p>{{ review.campaign.campaign_name }}<br>Landing Page</p>
+                  <p>{{ link.campaign.campaign_name }}</p>
+                  <!-- <br>Landing Page</p> -->
                 </div>
                 <div class="tcol">
-                  <p>{{review.url_slug}}</p>
+                  <p>{{ link.url_slug }}</p>
                 </div>
                 <div class="tcol">
-                  <p>{{review.created_at | date:'medium'}}</p>
+                  <p>{{ link.created_at | date:'medium' }}</p>
                 </div>
                 <div class="tcol">
-                  <a class="edit" (click)="openModelWithAddOrEdit('edit', review)"><img
-                      src="../../../../assets/images/icon_edit.png" alt=""></a>
-                  <a href="" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                  <a class="edit" (click)="onEditReviewLink(link)"><img src="../../../../assets/images/icon_edit.png" alt="Edit Review"></a>
+                  <a class="delete" (click)="onDeleteReviewLink(link.id)"><img src="../../../../assets/images/icon_delete_green.png" alt="Delete Review"></a>
                 </div>
               </div>
 
-              <div class="contentMsg">
+              <div class="contentMsg active">
                 <div class="colReviews negativeMsg">
                   <h5>Negative info message #1</h5>
-                  <p>We're sorry that you didn't like our offer, can you please provide your contact information so we
-                    can reach out to you with a better offer.</p>
+                  <p>{{ link.negative_info_review_message_1 }}</p>
                 </div>
 
                 <div class="colReviews negativeMsg">
                   <h5>Negative info message #2</h5>
-                  <p>Thanks for your feedback. Someone will be in touch with you shortly.</p>
+                  <p>{{ link.negative_info_review_message_2 }}</p>
                 </div>
 
                 <div class="colReviews positiveMsg">
                   <h5>Positive Review message</h5>
-                  <p>Thank you so much for your feedback. Email us at <a href="mailto:hello@tier5.us">hello@tier5.us</a>
-                    if there is anything we can help you with!</p>
+                  <p>{{ link.positive_review_message }}</p>
                 </div>
               </div>
             </li>
           </ul>
         </ng-scrollbar>
+        <ng-template #noRecords>
+          <ul>
+            <li class="row">
+              <p class="no-records">Sorry no review links found !</p>
+            </li>
+          </ul>
+        </ng-template>
       </div>
     </div>
   </div>
 </div>
-<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalReview">
+<!-- add/edit modal-->
+<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalReview" [escapable]="false">
   <div class="sr-modal-container">
     <div class="sr-modal-header">
-      <h2>
-        {{reviewLinkForm.get('id').value ? "Edit" : "Add" }} Review Link
-      </h2>
+      <h2>{{ isEditing ? 'Edit' : 'Add'}} Review Link</h2>
     </div>
     <div class="sr-modal-body">
-      <form class="reviewLink_step_1 reviewStep" [formGroup]="reviewLinkForm" (ngSubmit)="onSubmit()">
-        <input type="text" hidden formControlName="id">
+      <message></message>
+      <form *ngIf="currentStep == 1" [formGroup]="form" (ngSubmit)="onSubmitStep1()"
+        class="reviewLink_step_1 reviewStep">
         <div class="sr-form">
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
               <label>Review Link Name</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="name"
-                  [ngClass]="{'error' : !reviewLinkForm.get('name').valid && reviewLinkForm.get('name').touched}">
-                <span class="error-msg">
-                  Required!
-                </span>
+                <input type="text" class="sr-form-ctrl" formControlName="name" (change)="slug"
+                  [ngClass]="{'error' : isSubmittedStep1 && getFormControls.name.errors}">
+                <div class="error-msg" *ngIf="(
+                  isSubmittedStep1 
+                  && getFormControls.name.errors !== null 
+                  && getFormControls.name.errors.required)">
+                  Review name is required
+                </div>
               </div>
             </div>
-            <div class="sr-form-cell-small url-slug">
+            <div class="sr-form-cell-small" [ngClass]="{'url-slug': isValidSlug}">
               <label>URL Slug</label>
               <div class="sr-form-field">
-                <input class="sr-form-ctrl" formControlName="url_slug"
-                  [ngClass]="{'error' : !reviewLinkForm.get('url_slug').valid && reviewLinkForm.get('url_slug').touched}">
-                <span class="error-msg">
-                  Required!
-                </span>
+                <input class="sr-form-ctrl" formControlName="url_slug" (change)="onChangeSlug()"
+                  [ngClass]="{'error' : getFormControls.url_slug.errors && (isSubmittedStep1 || getFormControls.url_slug.errors.isSlugExits)}">
+                <div class="error-msg" *ngIf="(
+                    isSubmittedStep1 
+                    && getFormControls.url_slug.errors !== null 
+                    && getFormControls.url_slug.errors.required)">
+                  Url slug is required
+                </div>
+                <div class="error-msg" *ngIf="(
+                    getFormControls.url_slug.errors !== null 
+                    && getFormControls.url_slug.errors.isSlugExits)">
+                  There is already an url slug exists with same name. Please try another.
+                </div>
               </div>
             </div>
           </div>
@@ -132,14 +151,16 @@
             <div class="sr-form-cell-small">
               <div class="sr-form-field">
                 <label>Auto Approve <a href="javascript:void(0)" class="tooltip">
-                    <img src="../../../../assets/images/icon_info2.png" alt=""></a>
+                  <img src="../../../../assets/images/icon_info2.png" alt=""></a>
                   <input type="checkbox" class="tglBtn" formControlName="auto_approve"></label>
               </div>
             </div>
             <div class="sr-form-cell-small">
               <label>Select Campaign</label>
               <div class="sr-form-field">
-                <select class="sr-form-ctrl" formControlName="campaign_id">
+                <select class="sr-form-ctrl" formControlName="campaign_id" [compareWith]="compareValue">
+                  <option value="null">--- Select a campaign ---</option>
+                  <option [ngValue]="campaign" *ngFor="let campaign of campaigns">{{ campaign.campaign_name }}</option>
                 </select>
               </div>
             </div>
@@ -147,15 +168,36 @@
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
               <label>Define Min. Rating</label>
-
               <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="min_rating"></bar-rating>
+              <div class="error-msg" *ngIf="(
+                isSubmittedStep1 
+                && getFormControls.min_rating.errors !== null 
+                && getFormControls.min_rating.errors.required)">
+                Min. rating is required
+              </div>
             </div>
             <div class="sr-form-cell-small imageUp">
               <label>Upload an image</label>
-
               <div class="sr-form-field">
                 <div class="sr-form-ctrl inputFile">
-                  <input type="file" (change)="uploadFile($event)">
+                  <input type="file" (change)="onChangeFile($event)" formControlName="logo"
+                    [ngClass]="{error: getFormControls.logo.errors}">
+                  <input type="hidden" formControlName="logo">
+                  <div class="error-msg" *ngIf="(
+                          getFormControls.logo.errors !== null 
+                          && getFormControls.logo.errors.required)">
+                    Logo is required
+                  </div>
+                  <div class="error-msg" *ngIf="(
+                          getFormControls.logo.errors !== null 
+                          && getFormControls.logo.errors.invalidFileType)">
+                    Invalid file type. File should be an image
+                  </div>
+                  <div class="error-msg" *ngIf="(
+                          getFormControls.logo.errors !== null 
+                          && getFormControls.logo.errors.invalidFileSize)">
+                    Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
+                  </div>
                   <div class="choseFileArea">
                     <div class="fileImg">
                       <img src="../../../../assets/images/icon_upload_photo.png" alt="">
@@ -164,6 +206,7 @@
                       <span>{{choseFileCtrl}}</span>{{fileName}}
                     </p>
                   </div>
+                  <div class="figureUpld" [style.background-image]="'url('+ imagePreviewUrl +')'"></div>
                 </div>
               </div>
             </div>
@@ -173,20 +216,26 @@
               <label>Enter Description</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" formControlName="description"
-                  [ngClass]="{'error' : !reviewLinkForm.get('description').valid && reviewLinkForm.get('description').touched}">
-                <span class="error-msg">
-                  Required!
-                </span>
+                  [ngClass]="{'error' : isSubmittedStep1 && getFormControls.description.errors}">
+                <div class="error-msg" *ngIf="(
+                  isSubmittedStep1 
+                  && getFormControls.description.errors !== null 
+                  && getFormControls.description.errors.required)">
+                  Description is required
+                </div>
               </div>
             </div>
             <div class="sr-form-cell-small">
               <label>Positive Review Message</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" formControlName="positive_review_msg"
-                  [ngClass]="{'error' : !reviewLinkForm.get('positive_review_msg').valid && reviewLinkForm.get('positive_review_msg').touched}">
-                <span class="error-msg">
-                  Required!
-                </span>
+                  [ngClass]="{'error' : isSubmittedStep1 && getFormControls.positive_review_msg.errors}">
+                <div class="error-msg" *ngIf="(
+                    isSubmittedStep1 
+                    && getFormControls.positive_review_msg.errors !== null 
+                    && getFormControls.positive_review_msg.errors.required)">
+                  Positive Review Message is required
+                </div>
               </div>
             </div>
           </div>
@@ -195,71 +244,69 @@
               <label>Negative Info #1</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_1"
-                  [ngClass]="{'error' : !reviewLinkForm.get('negative_info_review_msg_1').valid && reviewLinkForm.get('negative_info_review_msg_1').touched}">
-                <span class="error-msg">
-                  Required!
-                </span>
+                  [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_1.errors}">
+                <div class="error-msg" *ngIf="(
+                    isSubmittedStep1 
+                    && getFormControls.negative_info_review_msg_1.errors !== null 
+                    && getFormControls.negative_info_review_msg_1.errors.required)">
+                  Negative Info #1 is required
+                </div>
               </div>
             </div>
             <div class="sr-form-cell-small">
               <label>Negative Info #2</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_2"
-                  [ngClass]="{'error' : !reviewLinkForm.get('negative_info_review_msg_2').valid && reviewLinkForm.get('negative_info_review_msg_2').touched}">
-                <span class="error-msg">
-                  Required!
-                </span>
+                  [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_2.errors}">
+                <div class="error-msg" *ngIf="(
+                    isSubmittedStep1 
+                    && getFormControls.negative_info_review_msg_2.errors !== null 
+                    && getFormControls.negative_info_review_msg_2.errors.required)">
+                  Negative Info #2 is required
+                </div>
               </div>
             </div>
           </div>
           <div class="sr-form-row">
             <div class="sr-form-cell ftReviewPop">
-              <!-- <button class="button-submit" type="" [disabled]="!this.reviewLinkForm.valid">
-                <img src="../../../../assets/images/addIcon.png" alt="">
-                {{reviewLinkForm.get('id').value ? "Update" : "Save" }} Review Link
-              </button> -->
-
-              <button class="button-submit">
-                Next Step <span>&gt;</span>
-              </button>
+              <button type="submit" class="button-submit">Next Step <span>&gt;</span></button>
             </div>
           </div>
         </div>
       </form>
 
-      <form class="reviewLink_step_2 reviewStep" [formGroup]="reviewLinkForm" (ngSubmit)="onSubmit()" style="display: none;">
+      <form *ngIf="currentStep == 2" [formGroup]="form2" (ngSubmit)="onSubmitStep2()" class="reviewLink_step_2 reviewStep">
         <div class="sr-form">
-          <div class="reviewPreview" style="background-color: #B8CBEB;">
-            <div class="reviewlinkForm">
+          <div class="reviewPreview" [style.background-color]="pageBackground">
+            <div class="reviewlinkForm" [style.background-color]="modalBackground">
               <header class="reviewLHdr">
-                <div class="figureHeader" style="background-image: url(../../../../assets/images/dp.jpeg);"></div>
+                <div class="figureHeader" [style.background-image]="'url('+ imagePreviewUrl +')'"></div>
                 <div class="headerTxtRvw">
-                  <h3 style="color: #268BFF;">
-                    FHL-PROMO
+                  <h3 [style.color]="textColor">
+                    {{ getFormControls.name.value }}
                   </h3>
-          
-                  <p style="color: #268BFF;">
-                    What did you think about the special Funnel Hacking Live Offer?
+                  <p [style.color]="textColor">
+                    {{ getFormControls.description.value }}
                   </p>
                 </div>
               </header>
               <div class="bodyCreview">
                 <div class="stepReview step_1 active">
-                  <div class="form_eParent" (ngSubmit)="onSubmit()">
-                    <h2 style="color: #268BFF;">
+                  <div class="form_eParent">
+                    <h2 [style.color]="textColor">
                       Would you recommend us?
                     </h2>
-          
+
                     <div class="ftReview">
-                      <button type="submit" class="btnOutline btnApprove">
+                      <button type="button" class="btnOutline btnApprove">
                         <span>
                           <img src="../../../../assets/images/icon_thumb_up_green.png" alt="">
                           <img class="hoverIco" src="../../../../assets/images/icon_thumb_up_green_w.png" alt="">
                         </span>
                         yes
                       </button>
-          
-                      <button type="submit" class="btnOutline btnReject">
+
+                      <button type="button" class="btnOutline btnReject">
                         <span>
                           <img src="../../../../assets/images/icon_thumb_down_red.png" alt="">
                           <img class="hoverIco" src="../../../../assets/images/icon_thumb_down_red_w.png" alt="">
@@ -273,31 +320,61 @@
             </div>
           </div>
           <div class="showpreview">
-            <a href="javascript:void(0)">
+            <!-- <a href="javascript:void(0)">
               <span>
                 <img src="../../../../assets/images/icon_preview_blue.png" alt="">
                 <img class="prevwHvr" src="../../../../assets/images/icon_preview_grey.png" alt="">
               </span>
               Show preview
-            </a>
+            </a> -->
           </div>
           <div class="sr-form-row">
             <div class="sr-form-cell-third">
               <label>Page Background</label>
               <div class="colorPicker">
-                <input type="text" class="colorChosen" style="background-color: #B8CBEB;" readonly >
+                <input 
+                  [(colorPicker)]="pageBackground" 
+                  [style.background]="pageBackground"  
+                  (colorPickerChange)="onChangePageBackgroundColor($event)"                 
+                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" 
+                  [cpOutputFormat]="'hex'"
+                  class="colorChosen" 
+                  formControlName="page_background" 
+                  type="text" 
+                  class="colorChosen"
+                />
               </div>
             </div>
             <div class="sr-form-cell-third">
               <label>Modal Background</label>
               <div class="colorPicker">
-                <input type="text" class="colorChosen" style="background-color: #ffffff;" readonly >
+                <input 
+                  [(colorPicker)]="modalBackground" 
+                  [style.background]="modalBackground" 
+                  (colorPickerChange)="onChangeModalBackgroundColor($event)" 
+                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" 
+                  [cpOutputFormat]="'hex'"
+                  class="colorChosen" 
+                  formControlName="modal_background" 
+                  type="text" 
+                  class="colorChosen"
+                />
               </div>
             </div>
             <div class="sr-form-cell-third">
               <label>Text Colour</label>
               <div class="colorPicker">
-                <input type="text" class="colorChosen" style="background-color: #268BFF;" readonly >
+                <input 
+                  [(colorPicker)]="textColor" 
+                  [style.background]="textColor" 
+                  (colorPickerChange)="onChangeTextColor($event)" 
+                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" 
+                  [cpOutputFormat]="'hex'"
+                  class="colorChosen" 
+                  formControlName="text_color" 
+                  type="text" 
+                  class="colorChosen"
+                />
               </div>
             </div>
           </div>
@@ -306,24 +383,23 @@
             <div class="sr-form-cell">
               <label>Copyright Text</label>
               <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl">
-                <span class="error-msg">
-                  Required!
-                </span>
+                <input type="text" class="sr-form-ctrl" formControlName="copyright_text">
+                <div class="error-msg">
+                  Copyright text is required !
+                </div>
               </div>
             </div>
           </div>
 
           <div class="sr-form-row">
             <div class="sr-form-cell ftReviewPop">
-              <button class="button-submit">
+              <button class="button-submit" type="button" (click)="onClickPreviousStep()">
                 <span>&lt;</span>
                 Previous Step
               </button>
-              
-              <button class="button-submit" type="" [disabled]="!this.reviewLinkForm.valid">
-                <img src="../../../../assets/images/addIcon.png" alt="">
-                {{reviewLinkForm.get('id').value ? "Update" : "Save" }} Review Link
+
+              <button class="button-submit" type="submit">
+                <img src="../../../../assets/images/addIcon.png" alt="">Save Review Link
               </button>
             </div>
           </div>

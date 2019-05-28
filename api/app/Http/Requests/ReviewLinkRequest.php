@@ -76,8 +76,8 @@ class ReviewLinkRequest extends FormRequest
             'page_background' => "required|string",
             'modal_background' => "required|string",
             'text_color' => "required|string",
-            'copyright_text' => "required|string|min:1|max:255",
-            'campaign_id' => "required|exists:campaigns,id",
+            'copyright_text' => "nullable|string|min:1|max:255",
+            // 'campaign_id' => "required|exists:campaigns,id",
         ];
     }
 

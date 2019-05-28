@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReviewLinkRequest;
+use App\Http\Requests\ReviewLinkParamRequest;
 use App\Http\Resources\ReviewLinkResource;
 use App\ReviewLink;
 
@@ -114,7 +115,7 @@ class ReviewLinksController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => "Review link has created successfully.",
+            'message' => "Review link has been created successfully.",
             'data' => new ReviewLinkResource($reviewLink),
         ]);
     }
@@ -131,7 +132,7 @@ class ReviewLinksController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => "Review link details has fetched successfully.",
+            'message' => "Review link details has been fetched successfully.",
             'data' => new ReviewLinkResource($reviewLink),
         ]);
     }
@@ -168,7 +169,7 @@ class ReviewLinksController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => "Review link details has updated successfully.",
+            'message' => "Review link details has been updated successfully.",
             'data' => new ReviewLinkResource($reviewLink),
         ]);
     }
@@ -186,7 +187,45 @@ class ReviewLinksController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => "Review link has deleted successfully.",
+            'message' => "Review link has been deleted successfully.",
+        ]);
+    }
+
+    /**
+     * Validate the review link step 1 form data
+     * @param  \App\Http\Requests\ReviewLinkParamRequest  $request
+     * @param  string  $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function validateParams(ReviewLinkParamRequest $request)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => "All data are valid",
+        ]);
+    }
+
+    /**
+     * Update auto approve status for a review link.
+     * @param  Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateAutoApproveStatus(Request $request, $id) {
+        $validatedData = $request->validate([
+            'auto_approve' => 'required|boolean'
+        ]);
+        $reviewLink = $this->queryBuilder->where('id', $id)->firstOrFail();
+        $reviewLink->auto_approve = $request->auto_approve;
+
+        $reviewLink->update();
+
+        $reviewLink->load('campaign', 'user');
+
+        return response()->json([
+            'status' => true,
+            'message' => "Review link auto approve status has been updated successfully.",
+            'data' => new ReviewLinkResource($reviewLink),
         ]);
     }
 }

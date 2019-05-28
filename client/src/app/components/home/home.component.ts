@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
       this.title.setTitle('Stickyreviews :: Home');
-      this.subscriptionService.checkSubscription();
+      // this.subscriptionService.checkSubscription();
   }
 
 }

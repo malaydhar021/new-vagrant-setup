@@ -9,7 +9,6 @@ import { LoaderService } from '../../../services/loader.service';
 import { BrandingModel } from '../../../models/branding.model';
 import { Log } from '../../../helpers/app.helper';
 
-
 /**
  * BrandingComponent is responsible for showing, adding, updating and deleting brands
  * @class BrandingComponent
@@ -70,9 +69,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.loaderService.enableLoader();
     // set the page title
     this.title.setTitle('Stickyreviews :: Branding');
-    // making an api call to get all brandings  
+    // making an api call to get all branding  
     this.getBrandings();
-    // initialize the fombuilder for add / edit a brand form
+    // initialize the form builder for add / edit a brand form
     this.form = this.formBuilder.group({
       brandName : [null, Validators.required], // brand name
       brandUrl : [null, Validators.required] // brand url 
@@ -122,7 +121,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
         Log.success(response);
         if (response.status) {
           // update the brands array with latest api response data
-          this.brands = response.data;
+          this.brands = response.data.data;          
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -242,7 +241,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings(); 
         } else {
-          // show the error message to user in case there is any error from api respose
+          // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
           // hide the loader
           this.loaderService.disableLoader();
@@ -252,8 +251,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * onEditBranding method will display currently selected row informatoin into
-   * the modal form so that user can update thsoe
+   * onEditBranding method will display currently selected row information into
+   * the modal form so that user can update those
    * @method onEditBranding
    * @since Version 1.0.0
    * @param brand BrandingModel
@@ -301,7 +300,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings(); 
         } else {
-          // show the error message to user in case there is any error from api respose
+          // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
           // hide the loader
           this.loaderService.disableLoader();

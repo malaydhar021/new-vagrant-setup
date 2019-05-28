@@ -20,6 +20,7 @@ class Campaign extends Model
         'campaign_name',
         'domain_name',
         'styles',
+        'style_id',
         'delay',
         'delay_before_start',
         'stay_timing',

@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
-import { CampaignApiEndpoints } from '../helpers/api.helper';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { CampaignModel } from '../models/campaign.model';
+import { CampaignApiEndpoints, StickyReviewsApiEndpoints, BrandingApiEndpoints, ExitPopupApiEndpoints } from '../helpers/api.helper';
 
 /**
  * Service for all campaigns related operations like add, edit, update and delete campaigns
  * @class CampaignService
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
- * @license Proprietery
+ * @license Proprietary
  */
 @Injectable()
 export class CampaignService {
@@ -47,8 +47,9 @@ export class CampaignService {
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
-  public updateCampaign(data: CampaignModel) {
-    return this.httpClient.put(CampaignApiEndpoints.campaigns, data);
+  public updateCampaign(id: string, data: CampaignModel) {
+    data._method = "PUT";
+    return this.httpClient.post(CampaignApiEndpoints.campaigns.concat("/" + id), data);
   }
 
   /**
@@ -57,17 +58,60 @@ export class CampaignService {
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
-  public deleteCampaign(id: number) {
+  public deleteCampaign(id: string) {
     return this.httpClient.delete(CampaignApiEndpoints.campaigns.concat('/' + id));
   }
 
   /**
-   * Method to make an api call to delete a campaign
-   * @method deleteCampaign
+   * Method to make an api call to update
+   * @method syncStickyReviews
+   * @since Version 1.0.0
+   * @returns Observable<Object>
+   */
+  public syncStickyReviews(id: string, data: string[]) {
+    return this.httpClient.post(CampaignApiEndpoints.campaigns.concat('/' + id + '/sticky-reviews'), {_method: "PATCH", sticky_reviews: data});
+  }
+
+  /**
+   * Method to make an api call to fetch all campaign styles
+   * @method getStyles
    * @since Version 1.0.0
    * @returns Observable<Object>
    */
   public getStyles() {
     return this.httpClient.get(CampaignApiEndpoints.styles);
+  }
+
+  /**
+   * Method to make an api call to fetch all sticky reviews
+   * @method getStickyReviews
+   * @since Version 1.0.0
+   * @returns Observable<Object>
+   */
+  public getStickyReviews() {
+    const params = new HttpParams().set('paginate', 'false');
+    return this.httpClient.get(StickyReviewsApiEndpoints.stickyReviews, {params: params});
+  }
+
+  /**
+   * Method to make an api call to fetch all exit popups
+   * @method getExitPopups
+   * @since Version 1.0.0
+   * @returns Observable<Object>
+   */
+  public getExitPopups() {
+    const params = new HttpParams().set('paginate', 'false');
+    return this.httpClient.get(ExitPopupApiEndpoints.getUserExitPopups, {params: params});
+  }
+
+  /**
+   * Method to make an api call to fetch all brands
+   * @method getBrands
+   * @since Version 1.0.0
+   * @returns Observable<Object>
+   */
+  public getBrands() {
+    const params = new HttpParams().set('paginate', 'false');
+    return this.httpClient.get(BrandingApiEndpoints.brands, {params: params});
   }
 }

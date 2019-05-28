@@ -59,7 +59,7 @@ trait FileStorage
             Log::error("Audio Conversion Error: ", $exception->getTrace());
 
             throw new FileStoringException(
-                "An error occured during uploading the image, either check the file is valid or please try again later."
+                "An error occurred during uploading the image, either check the file is valid or please try again later."
             );
         }
     }
@@ -93,7 +93,7 @@ trait FileStorage
             $this->deleteAudioFile($originalFileName);
 
             throw new FileStoringException(
-                "An error occured during uploading the audio, either check the file is valid or please try again later."
+                "An error occurred during uploading the audio, either check the file is valid or please try again later."
             );
         }
     }
@@ -127,7 +127,7 @@ trait FileStorage
             $this->deleteAudioFile($originalFileName);
 
             throw new FileStoringException(
-                "An error occured during uploading the video, either check the file is valid or please try again later."
+                "An error occurred during uploading the video, either check the file is valid or please try again later."
             );
         }
     }

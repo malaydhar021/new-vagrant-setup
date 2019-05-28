@@ -30,7 +30,7 @@ class CampaignsResource extends Resource
                 'style' => (new CampaignStyleResource($this->whenLoaded('campaignStyle')))->briefOnly(),
                 'style_id' => $this->style_id,
                 'delay' => $this->delay,
-                'delay_before_start' => $this->delay_before_start,
+                'delay_before_start' => (!is_null($this->delay_before_start)) ? $this->delay_before_start : null,
                 'stay_timing' => $this->stay_timing,
                 'loop' => $this->loop,
                 'exit_pop_up' => (new ExitPopupResource($this->whenLoaded('exitPopUp')))->briefOnly(),

@@ -98,8 +98,10 @@ Route::middleware(['auth:api', 'subscription'])->group(function () {
         Route::get('slug-status', 'ReviewLinksController@checkSlug')->name('slug.check');
         Route::get('/', 'ReviewLinksController@index')->name('index');
         Route::post('/', 'ReviewLinksController@store')->name('store');
+        Route::post('/validate', 'ReviewLinksController@validateParams')->name('params.validate');
         Route::get('/{id}', 'ReviewLinksController@show')->name('show');
-        Route::post('/{id}', 'ReviewLinksController@update')->name('update');
+        Route::put('/{id}/auto-approve-status', 'ReviewLinksController@updateAutoApproveStatus')->name('update.auto.approve');
+        Route::put('/{id}', 'ReviewLinksController@update')->name('update');
         Route::patch('/{id}', 'ReviewLinksController@update')->name('update');
         Route::delete('/{id}', 'ReviewLinksController@destroy')->name('delete');
     });
@@ -117,5 +119,6 @@ Route::prefix('user-reviews')->name('user-reviews.')->group(function () {
 
 Route::prefix('widget')->name('widget.')->group(function () {
     Route::get('/{usid}', 'WidgetController@index')->name('index');
+    Route::get('/{usid}/exit-popup', 'WidgetController@exitPopup')->name('exitpopup');
     Route::post('/{usid}/postback', 'WidgetController@postback')->name('postback');
 });

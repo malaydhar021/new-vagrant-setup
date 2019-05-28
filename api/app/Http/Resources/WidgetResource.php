@@ -19,7 +19,7 @@ class WidgetResource extends JsonResource
     {
         $brandingDetails = $this->whenLoaded('brandingDetails');
         if ($brandingDetails) {
-            $brand =[
+            $brand = [
                 'name' => $brandingDetails->name,
                 'url' => $brandingDetails->url,
             ];
@@ -29,38 +29,7 @@ class WidgetResource extends JsonResource
 
         $exitPopupDetails = $this->whenLoaded('exitPopUp');
         if ($exitPopupDetails) {
-            if ($exitPopupDetails->load('style') && isset($exitPopupDetails->style)) {
-                $exitPopupStyle = $exitPopupDetails->style->type;
-            } else {
-                $exitPopupStyle = null;
-            }
-
-            if ($exitPopupDetails->load('stickyReviews') && isset($exitPopupDetails->stickyReviews)) {
-                $exitPopupStickyReviews = StickyReviewResource::collection($exitPopupDetails->stickyReviews)->briefOnly();
-            } else {
-                $exitPopupStickyReviews = null;
-            }
-
-            $exitPopup = [
-                'id' => Hashids::encode($exitPopupDetails->id),
-                'style' => $exitPopupStyle,
-                'header_text' => $exitPopupDetails->header_text,
-                'header_text_color' => $exitPopupDetails->header_text_color,
-                'header_background_color' => $exitPopupDetails->header_background_color,
-                'paragraph_text' => $exitPopupDetails->paragraph_text,
-                'paragraph_text_color' => $exitPopupDetails->paragraph_text_color,
-                'body_background_color' => $exitPopupDetails->body_background_color,
-                'popup_backdrop_color' => $exitPopupDetails->popup_backdrop_color,
-                'button_text' => $exitPopupDetails->button_text,
-                'button_url' => $exitPopupDetails->button_url,
-                'button_text_color' => $exitPopupDetails->button_text_color,
-                'button_background_color' => $exitPopupDetails->button_background_color,
-                'has_email_field' => $exitPopupDetails->has_email_field,
-                'sticky_reviews' => $exitPopupStickyReviews,
-                'cta_button_text' => $exitPopupDetails->cta_button_text,
-                'cta_button_text_color' => $exitPopupDetails->cta_button_text_color,
-                'cta_button_background_color' => $exitPopupDetails->cta_button_background_color,
-            ];
+            $exitPopup = true;
         } else {
             $exitPopup = null;
         }
@@ -91,7 +60,8 @@ class WidgetResource extends JsonResource
             'is_brand_on' => $this->is_brand_on,
             'brand' => $brand,
             'sticky_reviews' => $stickyReviews,
-            'exit_pop_up' => $exitPopup,
+            'has_exit_pop_up' => $exitPopup ? true : false,
+            'exit_pop_up' => $exitPopup, // will be deprecated in next release
         ];
     }
 }
