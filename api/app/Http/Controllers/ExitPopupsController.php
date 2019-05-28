@@ -71,7 +71,7 @@ class ExitPopupsController extends Controller
             $exitPopups = (ExitPopupResource::collection($this->queryBuilder->get()))->briefOnly();
         } else {
             $exitPopups = $this->queryBuilder->paginate();
-            ExitPopupResource::collection($stickyReviews);
+            // ExitPopupResource::collection($stickyReviews);
         }
         $noOfExitPopups = $this->queryBuilder->count();
 

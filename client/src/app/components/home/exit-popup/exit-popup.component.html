@@ -18,7 +18,7 @@
                       <img src="{{exitPopup.popup_preview_img}}" alt="thumb5">
                     </div>
                     <div class="popupCtrl">
-                      <p>{{ exitPopup.name }}</p>
+                      <p>{{ exitPopup.name |  slice:0:30 }}</p>
 
                       <div class="crtlRight">
                         <a (click)="onEditExitPopup(exitPopup)"><img src="../../../../assets/images/icon_edit.png" alt="iconEdit"></a>
