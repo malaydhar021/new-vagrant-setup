@@ -52,6 +52,6 @@ export class RecommendationComponent implements OnInit, OnDestroy {
       recommendation: value
     };
     this.userReviewService.updateReview(data);
-    this.userReviewService.updateCurrentStep('review');
+    this.userReviewService.nextStep('review');
   }
 }

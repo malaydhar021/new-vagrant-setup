@@ -23,6 +23,8 @@ import { UserReviewModel } from 'src/app/models/user-review.model';
 export class UserReviewComponent implements OnInit, OnDestroy {
   // step builder for each step
   stepBuilder: any
+  // review property to hold the entire review data provided by user
+  review: UserReviewModel = {};
   // property to hold the current slug of the review link
   slug: any = null;
   step: boolean = null;
@@ -52,6 +54,13 @@ export class UserReviewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.title.setTitle('Stickyreviews :: User Review');
+    // subscribe to review to get the latest update data from review
+    this.reviewSubscription = this.userReviewService.review$.subscribe(
+      (review: UserReviewModel) => {
+        Log.info(review, "Log the updated review in UserReviewComponent");
+        this.review = review;
+      }
+    );
     // subscribe to the step builder to get the update step builder object
     this.subscription = this.userReviewService.currentStep$.subscribe(
       (step: any) => {
@@ -97,8 +106,12 @@ export class UserReviewComponent implements OnInit, OnDestroy {
       (response: any) => {
         // Log.info(response, "Log the api response");
         this.urlInfo = response.data;
-        const data = {
-          review_link_id: response.data.id
+        const data: UserReviewModel = {
+          review_link_id: response.data.id,
+          review_link_slug: slug,
+          negative_review_message_1: response.data.negative_info_review_message_1,
+          negative_review_message_2: response.data.negative_info_review_message_2,
+          positive_review_message: response.data.positive_review_message,
         }
         this.userReviewService.updateReview(data);
         // Log.debug(this.urlInfo, "log the url info");

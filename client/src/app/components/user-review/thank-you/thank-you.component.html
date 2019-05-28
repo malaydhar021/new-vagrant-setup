@@ -3,7 +3,7 @@
     <img src="../../../../assets/images/smiley_success.png" alt="">
   </div>
   <h2>
-    Thank you very much for your feedback
+    {{ (review.positive_review_message !== null && review.positive_review_message !== '' ) ? review.positive_review_message : "Thank you very much for your feedback"}}
   </h2>
 </div>
 <!-- Thank you screen for negative review -->
@@ -12,6 +12,6 @@
     <img src="../../../../assets/images/smiley_success.png" alt="">
   </div>
   <h2>
-    Thank you very much for your feedback. We take action on and appreciate all feedback
+    {{ (review.negative_review_message_2 !== null && review.negative_review_message_2 !== '' ) ? review.negative_review_message_2 : "Thank you very much for your feedback. We take action on and appreciate all feedback"}}
   </h2>
 </div>

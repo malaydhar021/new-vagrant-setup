@@ -17,6 +17,12 @@
 
 ## User Review
 
+### V1.1.0
+
+1. Implemented save user review functionality
+2. Displayed negative review and positive review messages in proper places
+3. Refractor code to enhance the performance
+
 ### V1.0.0
 
 1. Implemented step builder for all the steps in user review

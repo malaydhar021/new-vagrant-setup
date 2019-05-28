@@ -42,18 +42,33 @@ export class PermissionComponent implements OnInit, OnDestroy {
    */
   public ngOnInit() {}
 
+  /**
+   * @method ngOnDestroy
+   * @since Version 1.0.0
+   * @returns Void
+   */
   public ngOnDestroy() {}
 
+  /**
+   * Method to update the review data based on user selection for permission screen
+   * @method isPermitted
+   * @since Version 1.0.0
+   * @param value Boolean Yes|No|Skip
+   * @returns Void
+   */
   public isPermitted(value: boolean) {
-    Log.info(value, "log value in Recommendation component");
+    // prepare the data based on the input
     const data = {
       grant_review_use: value
     };
+    // update review data
     this.userReviewService.updateReview(data);
     if(value) {
+      // ask user to provide the dp which will be used to show their review
       this.userReviewService.updateCurrentStep('displayPicture');
     } else {
-      this.userReviewService.updateCurrentStep('thankYou');
+      // store the data and show the thank you message
+      this.userReviewService.storeUserReview();
     }
   }
 }

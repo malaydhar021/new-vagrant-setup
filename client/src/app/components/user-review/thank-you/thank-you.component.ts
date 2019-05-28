@@ -1,10 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { UserReviewModel } from 'src/app/models/user-review.model';
-import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
-import { UserReviewService } from 'src/app/services/user-review.service';
-import { Log } from 'src/app/helpers/app.helper';
+import { Subscription } from 'rxjs';
+import { UserReviewService } from '../../../services/user-review.service';
+import { UserReviewModel } from '../../../models/user-review.model';
+import { Log } from '../../../helpers/app.helper';
 
+/**
+ * Component to show the thank you screen in user review and it will save the user
+ * review data making an api call
+ * @class ThankYouComponent
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 @Component({
   selector: 'app-thank-you',
   templateUrl: './thank-you.component.html',
@@ -28,7 +36,7 @@ export class ThankYouComponent implements OnInit {
     private userReviewService: UserReviewService
   ) 
   { 
-    this.title.setTitle('Stickyreviews :: Contact Information');
+    this.title.setTitle('Stickyreviews :: Thank you');
     // subscribe to review to get the latest update data from review
     this.subscription = this.userReviewService.review$.subscribe(
       (review: UserReviewModel) => {

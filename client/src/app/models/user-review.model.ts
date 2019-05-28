@@ -6,16 +6,20 @@
  * @license Proprietary
  */
 export class UserReviewModel {
-  recommendation?: boolean;
+  recommendation?: any;
   review_title?: string;
-  review_type?: number;
+  review_type?: any;
   review_text?: string;
   review_audio?: File;
   review_video?: File;
-  rating?: number;
+  rating?: any;
   email?: string;
-  phone_number?: number;
-  grant_review_use?: boolean;
+  phone_number?: any;
+  grant_review_use?: any;
   profile_picture?: File;
   review_link_id?: string;
+  review_link_slug?: string;
+  negative_review_message_1?: string;
+  negative_review_message_2?: string;
+  positive_review_message?: string;
 }
