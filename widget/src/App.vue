@@ -53,8 +53,8 @@ export default {
 
         let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.myApiId}`+`?page=${this.curPageNo}`)
 
-        if (response.status) {
-          this.checkDomainName(response.data)
+        if (response.data.status) {
+          this.checkDomainName(response.data.data)
         } else {
           console.log("SR script is not enabled for this domain!");
         }
@@ -68,10 +68,10 @@ export default {
       // Call this method to get initial popup data
       try {
 
-        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`exit-popup?page=${this.curPopPageNo}`)
+        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPopPageNo}`)
 
-        if (response.status) {
-          this.pageLeft(response.data)
+        if (response.data.status) {
+          this.pageLeft(response.data.data)
         } else {
           console.log("SR script is not enabled for this domain!");
         }
@@ -90,7 +90,7 @@ export default {
       let vm = this
       vm.appData = dataresponse
       if (dataresponse.is_active) {
-        if (window.location.origin === dataresponse.domain_name) {
+        if (window.location.host === dataresponse.domain_name) {
           // checking if any review is there or not. if there are then generate review popups
           if (dataresponse.sticky_reviews && dataresponse.sticky_reviews.data.length) {
             // Waiting time before start...

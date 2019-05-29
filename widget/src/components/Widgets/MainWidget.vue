@@ -118,11 +118,11 @@ export default {
                 let vm = this
                 let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`?page=${this.curPageNo}`)
 
-                if (response.status && !vm.stickyData.length) {
-                    vm.stickyData = response.data.sticky_reviews.data
+                if (response.data.status && !vm.stickyData.length) {
+                    vm.stickyData = response.data.data.sticky_reviews.data
                     this.showPopUps()
-                } else if (response.status && vm.stickyData.length) {
-                    response.data.sticky_reviews.data.forEach(function (v, i) {
+                } else if (response.data.status && vm.stickyData.length) {
+                    response.data.data.sticky_reviews.data.forEach(function (v, i) {
                         vm.stickyData.push(v)
                     })
                 } else {
@@ -140,11 +140,11 @@ export default {
                 let vm = this
                 let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`)
 
-                if (response.status && !vm.stickyData.length) {
-                    vm.stickyData = response.data.sticky_reviews.data
+                if (response.data.status && !vm.stickyData.length) {
+                    vm.stickyData = response.data.data.sticky_reviews.data
                     this.showPopUps()
-                } else if (response.status && vm.stickyData.length) {
-                    response.data.sticky_reviews.data.forEach(function (v, i) {
+                } else if (response.data.status && vm.stickyData.length) {
+                    response.data.data.sticky_reviews.data.forEach(function (v, i) {
                         vm.stickyData.push(v)
                     })
                 } else {
@@ -175,7 +175,7 @@ export default {
                     }, vm.srStayTime)
                 }
 
-                if (vm.counter === vm.stickyData.length-2) {
+                if ((vm.counter === vm.stickyData.length-2) || (vm.counter === vm.stickyData.length) ) {
                     vm.getNewPageData(vm.data.loop)
                 }
             }, (intervalTime))
