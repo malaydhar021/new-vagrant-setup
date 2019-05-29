@@ -460,7 +460,7 @@ a {
 }
 
 
-//  review theme css 
+//  review theme css
 .review-box {
   width: 350px;
   height: 98px;
@@ -1522,6 +1522,16 @@ a {
               float: left;
 
               &:first-child {
+                .userImg {
+                  width: 50px;
+                  height: 50px;
+                  padding: 5px;
+                  border-radius: 50%;
+                  background-size: 80%;
+                  background-position: center center;
+                  background-repeat: no-repeat;
+                }
+
                 @media (max-width: 991px) {
                   -webkit-box-flex: 0;
                   -ms-flex: 0 0 70%;
@@ -1558,6 +1568,13 @@ a {
                   text-align: center;
                   padding-top: 3px;
                   opacity: 0;
+                  cursor: pointer;
+
+                  &.previewRLink {
+                    img {
+                      width: 14px;
+                    }
+                  }
 
                   img {
                     width: 10px;
@@ -1620,7 +1637,7 @@ a {
                         margin-right: 14px;
 
                         @media (max-width: 575px) {
-                            @include mr(8px);
+                          @include mr(8px);
                         }
                       }
 
@@ -1630,7 +1647,7 @@ a {
                         font-size: 16px;
 
                         @media (max-width: 575px) {
-                            font-size: 13px;
+                          font-size: 13px;
                         }
                       }
 
@@ -1640,7 +1657,7 @@ a {
                     }
 
                     @media (max-width: 575px) {
-                        @include mt(8px);
+                      @include mt(8px);
                     }
                   }
 
@@ -1656,7 +1673,9 @@ a {
                   @media (max-width: 575px) {
                     width: auto;
                     max-width: 300px;
+                    -webkit-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
                     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+                    -webkit-box-sizing: border-box;
                     box-sizing: border-box;
                     padding: 10px;
                     border-radius: 10px 0 10px 10px;
@@ -1804,6 +1823,8 @@ a {
           -webkit-box-pack: center;
           -ms-flex-pack: center;
           justify-content: center;
+          background-size: cover;
+          padding: 0;
         }
 
         .userReview {
@@ -2032,6 +2053,58 @@ a {
         font-weight: 600;
         padding: 5px 10px 7px;
         margin-top: 10px;
+        position: relative;
+        cursor: pointer;
+
+        .copypop {
+          position: absolute;
+          width: 420px;
+          background: #fff;
+          padding: 10px 5px;
+          border-radius: 8px;
+          top: 100%;
+          margin-top: 20px;
+          box-shadow: 0 0 15px rgba(0,0,0,0.1);
+          z-index: 2;
+          display: none;
+
+          h5 {
+            font-size: 16px;
+            font-weight: normal;
+            color: #333;
+            padding: 0 0 8px 0;
+            margin-bottom: 5px;
+          }
+
+          .bodyPopSnippet {
+            font-size: 11px;
+            font-weight: normal;
+            line-height: 16px;
+            padding: 8px;
+            color: #ffffff;
+            background: #f5f5f5;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+
+            pre {
+              white-space: normal;
+              word-break: break-word;
+              background: #282c34;
+              padding: 8px;
+              border-radius: 5px;
+            }
+          }
+
+          @media (max-width: 575px) {
+            width: 250px;
+          }
+        }
+
+        &:hover {
+          .copypop {
+            display: block;
+          }
+        }
 
         img {
           float: left;
@@ -2067,11 +2140,18 @@ a {
                   p {
                     float: left;
                     font-size: 12px;
-                    margin: 3px 7px 0 0;
+                    margin: 0 7px 0 0;
                   }
 
                   .stars {
                     float: left;
+                    @include mt(2px);
+
+                    .br-unit {
+                      width: 15px;
+                      height: 15px;
+                      background-size: contain;
+                    }
 
                     img {
                       width: 12px;
@@ -2094,6 +2174,16 @@ a {
                   @media (max-width: 1199px) {
                     @include ml(0);
                   }
+                }
+
+                &:after {
+                  clear: both;
+                }
+
+                &:after,
+                &:before {
+                  content: '';
+                  display: table;
                 }
 
                 @media (max-width: 1365px) {
@@ -3751,6 +3841,11 @@ a {
               }
             }
 
+            .option-list {
+              max-height: 150px;
+              overflow: auto;
+            }
+
             .option-list ul {
               li {
                 padding-bottom: 14px;
@@ -3797,6 +3892,12 @@ a {
             &:nth-child(2) {
               padding-left: 20px;
               padding-right: 0;
+
+              &.solo-Cell {
+                @media (min-width: 1365px) {
+                  margin: 45px 0 0 0;
+                }
+              }
 
               @media (max-width: 575px) {
                 padding-left: 0;
@@ -4961,6 +5062,43 @@ body.sign-upPage {
 .tooltip {
   display: inline-block;
   vertical-align: middle;
+  position: relative;
+  font-size: 0;
+  margin-left: 8px;
+  z-index: 9;
+  cursor: pointer;
+}
+
+.tooltip[data-title] {
+  &:hover:before {
+    content: attr(data-title);
+    position: absolute;
+    top: 100%;
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 2px;
+    background: #000;
+    color: #fff;
+    font-size: 11px;
+    left: 0;
+    max-width: 160px;
+    margin-top: 9px;
+    -webkit-transition: all ease 0.4s;
+    transition: all ease 0.4s;
+  }
+
+  &:hover:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    display: inline-block;
+    color: #fff;
+    border: 8px solid transparent;
+    border-bottom: 8px solid #000;
+    left: 0;
+    -webkit-transition: all ease 0.4s;
+    transition: all ease 0.4s;
+  }
 }
 
 .modalReview {
@@ -5072,11 +5210,56 @@ body.sign-upPage {
 
 
       .reviewStep {
-        .choseFileArea {
-          left: 50%;
-          right: auto;
-          -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+        .sr-form-cell-small:after {
+          clear: both;
+        }
+
+        .sr-form-cell-small:after,
+        .sr-form-cell-small:before {
+          content: '';
+          display: table;
+        }
+
+        &.reviewLink_step_1{
+          .sr-form {
+            .sr-form-row{
+              .sr-form-cell {
+                &.imageUp{
+                  .sr-form-field {
+                      .sr-form-ctrl {
+                        &.inputFile{
+                          .figureUpld {
+                            -webkit-transform: none;
+                            transform: none;
+                            // background-image: url('./assets/images/default_logo_image_sr.png');
+                          }
+
+                          .choseFileArea {
+                            left: 50%;
+                            right: auto;
+                            -webkit-transform: translate(-50%, -50%);
+                            transform: translate(-50%, -50%);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+        bar-rating+.error-msg {
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          padding: 5px 15px 7px 30px;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 100%;
+          color: #fff;
+          background: #ff5d5d;
+          border-radius: 0 0 7px 40px;
+          float: right;
         }
       }
 
@@ -5714,6 +5897,8 @@ body.sign-upPage {
         // width: calc(100% - 82px);
         // height: 195px;
         padding: 5px 12px;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 calc(100% - 82px);
         flex: 0 0 calc(100% - 82px);
         width: auto;
         height: inherit;
@@ -6619,7 +6804,7 @@ body.sign-upPage {
 
 // Sign up form UI changes
 
-// Forgot/Reset Password 
+// Forgot/Reset Password
 .text-right {
   text-align: right;
 }
@@ -6691,7 +6876,7 @@ body.sign-upPage {
   }
 }
 
-// Forgot/Reset Password 
+// Forgot/Reset Password
 
 // Change Picture / password
 .profileImg {

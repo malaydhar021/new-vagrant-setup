@@ -24,8 +24,8 @@
             <li class="row" *ngFor="let review of reviews">
               <div class="rowContainer">
                 <div class="tcol">
-                  <div class="userImg">
-                    <img src="{{ review.image_url }}" alt="" class="sticky-review-image">
+                  <div class="userImg" [style.background-image]="'url('+ review.image_url +')'">
+                    <!-- <img src="{{ review.image_url }}" alt="" class="sticky-review-image"> -->
                   </div>
                   <div class="userReview">
                     <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null && review.tags !== ''">{{ review.tags }}</span>
@@ -85,22 +85,22 @@
                   <input type="text" class="sr-form-ctrl"
                     [ngClass]="{error: isSubmitted && getFormControls.srName.errors}" formControlName="srName">
                   <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.srName.errors !== null 
+                      isSubmitted
+                      && getFormControls.srName.errors !== null
                       && getFormControls.srName.errors.required)">
                     Review link name is required
                   </div>
                   <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.srName.errors !== null 
+                      isSubmitted
+                      && getFormControls.srName.errors !== null
                       && getFormControls.srName.errors.maxlength)">
                     Review link name should be maximum 25 characters
                   </div>
                 </div>
               </div>
               <div class="sr-form-cell-small">
-                <label>Tags (optional)<img src="../../../../assets/images/icon_info2.png" class="infos_imgs"
-                    alt="infos"></label>
+                <label>Tags (optional)<a href="javascript:void(0)" class="tooltip" data-title="Add tags for better Classification!">
+                    <img src="../../../../assets/images/icon_info2.png" alt=""></a></label>
                 <div class="sr-form-field">
                   <input type="text" class="sr-form-ctrl" formControlName="srTags">
                 </div>
@@ -111,8 +111,8 @@
                 <label>Rate your review</label>
                 <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="srRating"></bar-rating>
                 <div class="error-msg" *ngIf="(
-                    isSubmitted 
-                    && getFormControls.srRating.errors !== null 
+                    isSubmitted
+                    && getFormControls.srRating.errors !== null
                     && getFormControls.srRating.errors.required)">
                   Review rating is required
                 </div>
@@ -143,20 +143,20 @@
                     <textarea class="sr-form-ctrl description_textarea"
                       [ngClass]="{error: isSubmitted && getFormControls.sr.errors}" formControlName="sr"></textarea>
                     <div class="error-msg" *ngIf="(
-                          isSubmitted 
-                          && getFormControls.sr.errors !== null 
+                          isSubmitted
+                          && getFormControls.sr.errors !== null
                           && getFormControls.sr.errors.required)">
                       Review is required
                     </div>
                     <div class="error-msg" *ngIf="(
-                          isSubmitted 
-                          && getFormControls.sr.errors !== null 
+                          isSubmitted
+                          && getFormControls.sr.errors !== null
                           && getFormControls.sr.errors.maxlength)">
                       Review should be maximum {{ allowedMaxTextReviewChars }} characters
                     </div>
                   </div>
                 </div>
-                <!-- End of textual review --> 
+                <!-- End of textual review -->
                 <!-- Audio review type file upload -->
                 <div class="sr-form-cell reviewopt opt_Video audio_upd active" *ngIf="selectedReivewType == 2">
                   <label>Upload an audio file</label>
@@ -180,20 +180,20 @@
                     </div>
                   </div>
                   <div class="error-msg" *ngIf="(
-                        isSubmitted 
-                        && getFormControls.sr.errors !== null 
+                        isSubmitted
+                        && getFormControls.sr.errors !== null
                         && getFormControls.sr.errors.required)">
                     Audio file is required
                   </div>
                   <div class="error-msg" *ngIf="(
-                        isSubmitted 
-                        && getFormControls.sr.errors !== null 
+                        isSubmitted
+                        && getFormControls.sr.errors !== null
                         && getFormControls.sr.errors.invalidFileType)">
                     Invalid file type. File should be an audio file
                   </div>
                   <div class="error-msg" *ngIf="(
-                        isSubmitted 
-                        && getFormControls.sr.errors !== null 
+                        isSubmitted
+                        && getFormControls.sr.errors !== null
                         && getFormControls.sr.errors.invalidFileSize)">
                     Invalid file size. File size should be maximum {{allowedMaxAudioFileSize}} {{unit}}
                   </div>
@@ -224,20 +224,20 @@
                     </div>
                   </div>
                   <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.sr.errors !== null 
+                      isSubmitted
+                      && getFormControls.sr.errors !== null
                       && getFormControls.sr.errors.required)">
                     Video is required
                   </div>
                   <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.sr.errors !== null 
+                      isSubmitted
+                      && getFormControls.sr.errors !== null
                       && getFormControls.sr.errors.invalidFileType)">
                     Invalid file type. File should be an video
                   </div>
                   <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.sr.errors !== null 
+                      isSubmitted
+                      && getFormControls.sr.errors !== null
                       && getFormControls.sr.errors.invalidFileSize)">
                     Invalid file size. File size should be maximum {{ allowedMaxVideoFileSize }} {{ unit }}
                   </div>
@@ -254,20 +254,20 @@
                     <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
                       [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
                       <div class="error-msg" *ngIf="(
-                            isSubmitted 
-                            && getFormControls.srImage.errors !== null 
+                            isSubmitted
+                            && getFormControls.srImage.errors !== null
                             && getFormControls.srImage.errors.required)">
                         Image is required
                       </div>
                       <div class="error-msg" *ngIf="(
-                            isSubmitted 
-                            && getFormControls.srImage.errors !== null 
+                            isSubmitted
+                            && getFormControls.srImage.errors !== null
                             && getFormControls.srImage.errors.invalidFileType)">
                         Invalid file type. File should be an image
                       </div>
                       <div class="error-msg" *ngIf="(
-                            isSubmitted 
-                            && getFormControls.srImage.errors !== null 
+                            isSubmitted
+                            && getFormControls.srImage.errors !== null
                             && getFormControls.srImage.errors.invalidFileSize)">
                         Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
                       </div>

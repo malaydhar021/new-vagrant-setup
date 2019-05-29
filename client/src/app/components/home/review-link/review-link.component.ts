@@ -38,7 +38,7 @@ export class ReviewLinkComponent implements OnInit {
     'image/bmp',
     'image/gif'
   ];
-  imagePreviewUrl: any = 'assets/images/user.png'; // default image preview url
+  imagePreviewUrl: any = 'assets/images/default_logo_image_sr.png'; // default image preview url
   unit: string = "MB"; // legal values are GB|MB|KB
   reviewLinkId: string = null; // database unique id of review link
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
@@ -46,7 +46,7 @@ export class ReviewLinkComponent implements OnInit {
   validationErrors: any = null; // for showing validation messages
   isSubmittedStep1: boolean = false; // flag to set true if the add / edit form is submitted for step 1
   isSubmittedStep2: boolean = false; // flag to set true if the add / edit form is submitted for step 2
-  isSubmittedStep1Reviews: boolean = false; // flag to set true if the add / edit form is submitted  
+  isSubmittedStep1Reviews: boolean = false; // flag to set true if the add / edit form is submitted
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   isValidSlug: boolean = false; // true if url slug is unique, false if not
@@ -59,7 +59,7 @@ export class ReviewLinkComponent implements OnInit {
 
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
-   * value of defined variable. 
+   * value of defined variable.
    * @constructor constructor
    * @since Version 1.0.0
    * @param title Title service instance
@@ -79,9 +79,9 @@ export class ReviewLinkComponent implements OnInit {
     // first fetch all campaigns for add or edit page
     this.getCampaigns();
   }
-  
+
    /**
-   * ngOnInit method initialize angular reactive form object for add / edit form of a brand. 
+   * ngOnInit method initialize angular reactive form object for add / edit form of a brand.
    * Also it set the title of the page. Also it defines client side validations.
    * @method ngOnInit
    * @since Version 1.0.0
@@ -120,7 +120,7 @@ export class ReviewLinkComponent implements OnInit {
     });
   }
 
-  /** 
+  /**
    * Method to initialize add/edit review link form step 2
    * @method formStep2
    * @since Version 1.0.0
@@ -211,7 +211,7 @@ export class ReviewLinkComponent implements OnInit {
   }
 
   /**
-   * Method to change value of `textColor` when user picks a color from color picker 
+   * Method to change value of `textColor` when user picks a color from color picker
    * @method onChangeTextColor
    * @since Version 1.0.0
    * @returns Void
@@ -313,7 +313,7 @@ export class ReviewLinkComponent implements OnInit {
    */
   public compareValue(option, current) {
     if((option !== null && option !== undefined) && ( current !== null && current !== undefined)) {
-        return option.id === current.id;  
+        return option.id === current.id;
     }
   }
 
@@ -366,10 +366,10 @@ export class ReviewLinkComponent implements OnInit {
       // set the image file data to `image` property
       this.image = event.target.files[0];
       let reader = new FileReader();
-      
+
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       // called once readAsDataURL is completed
-      reader.onload = (e) => { 
+      reader.onload = (e) => {
         this.imagePreviewUrl = reader.result.toString();
       }
     }
@@ -381,7 +381,7 @@ export class ReviewLinkComponent implements OnInit {
    * @since Version 1.0.0
    * @returns Void
    */
-  public get slug() {    
+  public get slug() {
     if(this.getFormControls.name.value == '' || this.getFormControls.name.value === null) return;
     // this.isValidSlug = false;
     const slug = (this.getFormControls.url_slug.value !== null) ? this.getFormControls.url_slug.value : Utilities.generateSlug(this.getFormControls.name.value);
@@ -389,7 +389,7 @@ export class ReviewLinkComponent implements OnInit {
     this.getFormControls.url_slug.patchValue(slug);
     if(this.hasUrlSlugChanged) {
       this.checkUrlSlug(slug);
-    } 
+    }
     return;
   }
 
@@ -399,12 +399,12 @@ export class ReviewLinkComponent implements OnInit {
    * @since Version 1.0.0
    * @returns Void
    */
-  public onChangeSlug() {    
+  public onChangeSlug() {
     const slug = (this.getFormControls.url_slug.value !== null) ? this.getFormControls.url_slug.value : Utilities.generateSlug(this.getFormControls.name.value);
     Log.info(this.hasUrlSlugChanged, "Has slug changed?");
     if(this.hasUrlSlugChanged) {
       this.checkUrlSlug(slug);
-    } 
+    }
     return;
   }
 
@@ -413,7 +413,7 @@ export class ReviewLinkComponent implements OnInit {
    * @since Version 1.0.0
    * @param slug Slug to check
    */
-  public checkUrlSlug(slug: string) {    
+  public checkUrlSlug(slug: string) {
     this.reviewLinkService.checkDuplicateUrlSlug(slug).subscribe(
       (response: any) => {
         Log.info(response, "Response from slug checker");
@@ -550,7 +550,7 @@ export class ReviewLinkComponent implements OnInit {
           // show the next step form
           this.currentStep = 2;
           this.loaderService.disableLoader();
-        } 
+        }
       }
     );
   }
@@ -666,10 +666,10 @@ export class ReviewLinkComponent implements OnInit {
     formData.append('url_slug', this.getFormControls.url_slug.value); // append review type
     formData.append('campaign_id', this.getFormControls.campaign_id.value !== null ? this.getFormControls.campaign_id.value.id : null); // append review type
     formData.append('auto_approve', this.getFormControls.auto_approve.value ? '1' : '0'); // append rating
-    formData.append('min_rating', this.getFormControls.min_rating.value); // append date to show 
-    formData.append('negative_info_review_message_1', this.getFormControls.negative_info_review_msg_1.value); // append date to show 
-    formData.append('negative_info_review_message_2', this.getFormControls.negative_info_review_msg_2.value); // append date to show 
-    formData.append('positive_review_message', this.getFormControls.positive_review_msg.value); // append date to show 
+    formData.append('min_rating', this.getFormControls.min_rating.value); // append date to show
+    formData.append('negative_info_review_message_1', this.getFormControls.negative_info_review_msg_1.value); // append date to show
+    formData.append('negative_info_review_message_2', this.getFormControls.negative_info_review_msg_2.value); // append date to show
+    formData.append('positive_review_message', this.getFormControls.positive_review_msg.value); // append date to show
     if(this.image !== null) {
       formData.append('logo', this.image, this.image.name); // append image to formData
     }
@@ -709,9 +709,9 @@ export class ReviewLinkComponent implements OnInit {
     formData.append('negative_info_review_message_2', this.getFormControls.negative_info_review_msg_2.value); // append negative review message 2
     formData.append('positive_review_message', this.getFormControls.positive_review_msg.value); //append positive review message
     formData.append('page_background', this.pageBackground); // append page back ground
-    formData.append('modal_background', this.modalBackground); // append modal background 
+    formData.append('modal_background', this.modalBackground); // append modal background
     formData.append('text_color', this.textColor); // append text color
-    formData.append('copyright_text', this.getForm2Controls.copyright_text.value); // append copy write text 
+    formData.append('copyright_text', this.getForm2Controls.copyright_text.value); // append copy write text
     if(this.image !== null) {
       formData.append('logo', this.image, this.image.name); // append logo to formData
     }
@@ -735,10 +735,10 @@ export class ReviewLinkComponent implements OnInit {
    * @returns Void
    */
   public postResponseActivities(
-    message: string, 
-    closeModal: boolean = true, 
-    fetchLists: boolean = true, 
-    hideLoader: boolean = true, 
+    message: string,
+    closeModal: boolean = true,
+    fetchLists: boolean = true,
+    hideLoader: boolean = true,
     error: boolean = false
   ) {
     if (closeModal) this.ngxSmartModalService.getModal('modal1').close(); // close the modal

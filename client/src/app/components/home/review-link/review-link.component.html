@@ -28,8 +28,8 @@
                 Options</a>
               <div class="rowContainer">
                 <div class="tcol">
-                  <div class="userImg">
-                    <img src="{{ link.logo }}" alt="Logo">
+                  <div class="userImg" [style.background-image]="'url('+ link.logo +')'">
+                    <!-- <img src="{{ link.logo }}" alt="Logo"> -->
                   </div>
                   <div class="userReview">
                     <h2>{{ link.name }}
@@ -69,6 +69,7 @@
                 </div>
                 <div class="tcol">
                   <a class="edit" (click)="onEditReviewLink(link)"><img src="../../../../assets/images/icon_edit.png" alt="Edit Review"></a>
+                  <a class="previewRLink"> <img src="../../../../assets/images/eye_open.png" alt=""> </a>
                   <a class="delete" (click)="onDeleteReviewLink(link.id)"><img src="../../../../assets/images/icon_delete_green.png" alt="Delete Review"></a>
                 </div>
               </div>
@@ -121,8 +122,8 @@
                 <input type="text" class="sr-form-ctrl" formControlName="name" (change)="slug"
                   [ngClass]="{'error' : isSubmittedStep1 && getFormControls.name.errors}">
                 <div class="error-msg" *ngIf="(
-                  isSubmittedStep1 
-                  && getFormControls.name.errors !== null 
+                  isSubmittedStep1
+                  && getFormControls.name.errors !== null
                   && getFormControls.name.errors.required)">
                   Review name is required
                 </div>
@@ -134,13 +135,13 @@
                 <input class="sr-form-ctrl" formControlName="url_slug" (change)="onChangeSlug()"
                   [ngClass]="{'error' : getFormControls.url_slug.errors && (isSubmittedStep1 || getFormControls.url_slug.errors.isSlugExits)}">
                 <div class="error-msg" *ngIf="(
-                    isSubmittedStep1 
-                    && getFormControls.url_slug.errors !== null 
+                    isSubmittedStep1
+                    && getFormControls.url_slug.errors !== null
                     && getFormControls.url_slug.errors.required)">
                   Url slug is required
                 </div>
                 <div class="error-msg" *ngIf="(
-                    getFormControls.url_slug.errors !== null 
+                    getFormControls.url_slug.errors !== null
                     && getFormControls.url_slug.errors.isSlugExits)">
                   There is already an url slug exists with same name. Please try another.
                 </div>
@@ -150,12 +151,24 @@
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
               <div class="sr-form-field">
-                <label>Auto Approve <a href="javascript:void(0)" class="tooltip">
+                <label>Auto Approve <a href="javascript:void(0)" class="tooltip" data-title="Check this to switch Auto-improve on!">
                   <img src="../../../../assets/images/icon_info2.png" alt=""></a>
                   <input type="checkbox" class="tglBtn" formControlName="auto_approve"></label>
               </div>
             </div>
             <div class="sr-form-cell-small">
+              <label>Define Min. Rating</label>
+              <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="min_rating"></bar-rating>
+              <div class="error-msg" *ngIf="(
+                isSubmittedStep1
+                && getFormControls.min_rating.errors !== null
+                && getFormControls.min_rating.errors.required)">
+                Min. rating is required
+              </div>
+            </div>
+          </div>
+          <div class="sr-form-row">
+            <div class="sr-form-cell">
               <label>Select Campaign</label>
               <div class="sr-form-field">
                 <select class="sr-form-ctrl" formControlName="campaign_id" [compareWith]="compareValue">
@@ -166,35 +179,28 @@
             </div>
           </div>
           <div class="sr-form-row">
-            <div class="sr-form-cell-small">
-              <label>Define Min. Rating</label>
-              <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="min_rating"></bar-rating>
-              <div class="error-msg" *ngIf="(
-                isSubmittedStep1 
-                && getFormControls.min_rating.errors !== null 
-                && getFormControls.min_rating.errors.required)">
-                Min. rating is required
-              </div>
-            </div>
-            <div class="sr-form-cell-small imageUp">
+            <div class="sr-form-cell imageUp">
               <label>Upload an image</label>
               <div class="sr-form-field">
                 <div class="sr-form-ctrl inputFile">
                   <input type="file" (change)="onChangeFile($event)" formControlName="logo"
-                    [ngClass]="{error: getFormControls.logo.errors}">
-                  <input type="hidden" formControlName="logo">
+                    [ngClass]="{error: isSubmittedStep1 && getFormControls.logo.errors}">
+                  <input type="hidden" formControlName="logo" [ngClass]="{error: isSubmittedStep1 && getFormControls.logo.errors}">
                   <div class="error-msg" *ngIf="(
-                          getFormControls.logo.errors !== null 
+                    isSubmittedStep1
+                          && getFormControls.logo.errors !== null
                           && getFormControls.logo.errors.required)">
                     Logo is required
                   </div>
                   <div class="error-msg" *ngIf="(
-                          getFormControls.logo.errors !== null 
+                    isSubmittedStep1
+                    && getFormControls.logo.errors !== null
                           && getFormControls.logo.errors.invalidFileType)">
                     Invalid file type. File should be an image
                   </div>
                   <div class="error-msg" *ngIf="(
-                          getFormControls.logo.errors !== null 
+                    isSubmittedStep1
+                    && getFormControls.logo.errors !== null
                           && getFormControls.logo.errors.invalidFileSize)">
                     Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
                   </div>
@@ -210,6 +216,7 @@
                 </div>
               </div>
             </div>
+
           </div>
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
@@ -218,8 +225,8 @@
                 <input type="text" class="sr-form-ctrl" formControlName="description"
                   [ngClass]="{'error' : isSubmittedStep1 && getFormControls.description.errors}">
                 <div class="error-msg" *ngIf="(
-                  isSubmittedStep1 
-                  && getFormControls.description.errors !== null 
+                  isSubmittedStep1
+                  && getFormControls.description.errors !== null
                   && getFormControls.description.errors.required)">
                   Description is required
                 </div>
@@ -231,8 +238,8 @@
                 <input type="text" class="sr-form-ctrl" formControlName="positive_review_msg"
                   [ngClass]="{'error' : isSubmittedStep1 && getFormControls.positive_review_msg.errors}">
                 <div class="error-msg" *ngIf="(
-                    isSubmittedStep1 
-                    && getFormControls.positive_review_msg.errors !== null 
+                    isSubmittedStep1
+                    && getFormControls.positive_review_msg.errors !== null
                     && getFormControls.positive_review_msg.errors.required)">
                   Positive Review Message is required
                 </div>
@@ -246,8 +253,8 @@
                 <input type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_1"
                   [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_1.errors}">
                 <div class="error-msg" *ngIf="(
-                    isSubmittedStep1 
-                    && getFormControls.negative_info_review_msg_1.errors !== null 
+                    isSubmittedStep1
+                    && getFormControls.negative_info_review_msg_1.errors !== null
                     && getFormControls.negative_info_review_msg_1.errors.required)">
                   Negative Info #1 is required
                 </div>
@@ -259,8 +266,8 @@
                 <input type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_2"
                   [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_2.errors}">
                 <div class="error-msg" *ngIf="(
-                    isSubmittedStep1 
-                    && getFormControls.negative_info_review_msg_2.errors !== null 
+                    isSubmittedStep1
+                    && getFormControls.negative_info_review_msg_2.errors !== null
                     && getFormControls.negative_info_review_msg_2.errors.required)">
                   Negative Info #2 is required
                 </div>
@@ -332,15 +339,15 @@
             <div class="sr-form-cell-third">
               <label>Page Background</label>
               <div class="colorPicker">
-                <input 
-                  [(colorPicker)]="pageBackground" 
-                  [style.background]="pageBackground"  
-                  (colorPickerChange)="onChangePageBackgroundColor($event)"                 
-                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" 
+                <input
+                  [(colorPicker)]="pageBackground"
+                  [style.background]="pageBackground"
+                  (colorPickerChange)="onChangePageBackgroundColor($event)"
+                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']"
                   [cpOutputFormat]="'hex'"
-                  class="colorChosen" 
-                  formControlName="page_background" 
-                  type="text" 
+                  class="colorChosen"
+                  formControlName="page_background"
+                  type="text"
                   class="colorChosen"
                 />
               </div>
@@ -348,15 +355,15 @@
             <div class="sr-form-cell-third">
               <label>Modal Background</label>
               <div class="colorPicker">
-                <input 
-                  [(colorPicker)]="modalBackground" 
-                  [style.background]="modalBackground" 
-                  (colorPickerChange)="onChangeModalBackgroundColor($event)" 
-                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" 
+                <input
+                  [(colorPicker)]="modalBackground"
+                  [style.background]="modalBackground"
+                  (colorPickerChange)="onChangeModalBackgroundColor($event)"
+                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']"
                   [cpOutputFormat]="'hex'"
-                  class="colorChosen" 
-                  formControlName="modal_background" 
-                  type="text" 
+                  class="colorChosen"
+                  formControlName="modal_background"
+                  type="text"
                   class="colorChosen"
                 />
               </div>
@@ -364,15 +371,15 @@
             <div class="sr-form-cell-third">
               <label>Text Colour</label>
               <div class="colorPicker">
-                <input 
-                  [(colorPicker)]="textColor" 
-                  [style.background]="textColor" 
-                  (colorPickerChange)="onChangeTextColor($event)" 
-                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" 
+                <input
+                  [(colorPicker)]="textColor"
+                  [style.background]="textColor"
+                  (colorPickerChange)="onChangeTextColor($event)"
+                  [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']"
                   [cpOutputFormat]="'hex'"
-                  class="colorChosen" 
-                  formControlName="text_color" 
-                  type="text" 
+                  class="colorChosen"
+                  formControlName="text_color"
+                  type="text"
                   class="colorChosen"
                 />
               </div>
