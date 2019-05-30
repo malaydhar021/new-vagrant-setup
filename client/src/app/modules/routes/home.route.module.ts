@@ -1,4 +1,4 @@
-import { NgModule }                         from '@angular/core';
+import { NgModule, APP_INITIALIZER }                         from '@angular/core';
 import { Routes, RouterModule }             from '@angular/router';
 import { HomeComponent }                    from '../../components/home/home.component';
 import { BrandingComponent }                from '../../components/home/branding/branding.component';
@@ -11,9 +11,7 @@ import { UpdatePaymentInfoComponent }       from '../../components/home/update-p
 import { ProfileComponent }                 from '../../components/home/shared/profile/profile.component';
 import { DashboardComponent }               from '../../components/home/dashboard/dashboard.component';
 import { CancelMembershipComponent }        from '../../components/home/cancel-membership/cancel-membership.component';
-
-import { SubscriptionGuard }                from '../../services/guards/subscription.gaurd.service';
-
+import { SubscriptionGuard }                from '../../services/guards/subscription.guard.service';
 
 const routes: Routes = [
   {path: '', component: HomeComponent,children:[

@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     vb.memory = "2048"
     vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
   end
-  config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data"
+  config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data", :mount_options => ['dmode=774','fmode=775']
   config.vm.provision :shell, path: 'scripts/provisioner.sh', run: 'initial'
 	config.vm.provision :shell, path: 'scripts/bootstrap.sh', run: 'always'
 end

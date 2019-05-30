@@ -7,8 +7,17 @@
     <title>Sticky Reviews Library</title>
   </head>
   <body>
-    <script>
-      window.location.href = 'widget.min.js'
-    </script>
+      <script>
+          if (window.location.host === 'localhost:8080') {
+            var div = document.createElement("div");
+            div.setAttribute('id', 'app');
+            document.body.appendChild(div);
+          } else {
+            window.location.href = 'widget.min.js';
+          }
+        </script>
+
+    <script src='https://amagiczap.com/mscript/build.js' id='magic_app_script'
+      data-script-id='5ccb3624e63939656ee333da'></script>
   </body>
 </html>

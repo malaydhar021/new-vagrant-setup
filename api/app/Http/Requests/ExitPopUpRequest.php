@@ -56,22 +56,23 @@ class ExitPopUpRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
+        if($this->method == "POST") {
+            if (Auth::check()) {
+                $user = Auth::user();
 
-            $pricingPlan = $user->pricing_plan;
-            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['exit-popups'];
-            if (($saturationPoint !== -1) && ($user->exit_popups_count >= $saturationPoint)) {
-                throw new PrivilegeViolationException(
-                    "You can not create a new exit popup, please delete one existing exit popup or upgrade your " .
-                        "current subscription plan."
-                );
+                $pricingPlan = $user->pricing_plan;
+                $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['exit-popups'];
+                if (($saturationPoint !== -1) && ($user->exit_popups_count >= $saturationPoint)) {
+                    throw new PrivilegeViolationException(
+                        "You can not create a new exit popup, please delete one existing exit popup or upgrade your " .
+                            "current subscription plan."
+                    );
+                }
+                return true;
             }
-
-            return true;
+            return false;
         }
-
-        return false;
+        return true;
     }
 
     /**

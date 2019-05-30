@@ -140,24 +140,39 @@ export class DisplayPictureComponent implements OnInit {
   }
 
   /**
+   * Method to handle store review api response if review data passes the 
+   * validation.
    * @method onSubmit
    * @since Version 1.0.0
    * @returns Void
    */
-  onSubmit() {
+  public onSubmit() {
+    // set this flag to true
     this.isSubmitted = true;
+    // don't do anything if the data does not pass the client side validation
     if(this.form.invalid) {
       return;
     }
+    // add profile to review data if the picture has been updated
+    if(this.image !== null) {
+      // add profile picture if it has been provided
+      const data: UserReviewModel = {
+        profile_picture: this.image
+      }
+      // update the review model data
+      this.userReviewService.updateReview(data);
+    }
+    // store the review data
+    this.userReviewService.storeUserReview();
 
     // showing the loader
     // this.loaderService.enableLoader();
     // creating an instance of `FormData` class
-    const formData = new FormData();
+    // const formData = new FormData();
     // add request payload to formData object
-    if(this.image !== null) {
-      formData.append('image', this.image, this.image.name); // append image to formData
-    }
+    // if(this.image !== null) {
+    //   formData.append('image', this.image, this.image.name); // append image to formData
+    // }
     /*
     // lets make an api call to validate the user data so far
     this.userReviewService.validateUserReview(this.slug, formData).subscribe(
@@ -175,7 +190,6 @@ export class DisplayPictureComponent implements OnInit {
     );
     */
     // for debugging and UI fixing 
-    this.userReviewService.updateCurrentStep('thankYou');
+    // this.userReviewService.updateCurrentStep('thankYou');
   }
-
 }

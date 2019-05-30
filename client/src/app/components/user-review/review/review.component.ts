@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/core';
 import { UserReviewModel } from 'src/app/models/user-review.model';
 import { Subscription } from 'rxjs';
-import { Log } from 'src/app/helpers/app.helper';
 import { UserReviewService } from 'src/app/services/user-review.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { StickyReviewTypesModel } from 'src/app/models/sticky-review.model';
@@ -9,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { LoaderService } from 'src/app/services/loader.service';
 import { MediaService } from 'src/app/services/media.service';
 import * as ValidationEngine from '../../../helpers/form.helper';
+import { Log } from '../../../helpers/app.helper';
 
 /**
  * Component to handle all sort of operations regarding video / audio / textual review and rating.
@@ -33,8 +33,8 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
   validationErrors: any = null; // for showing validation messages
   isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
   allowedMaxReviewTitle: number = 25; // max chars for text review
-  allowedMaxAudioFileSize:number = 1; // max file size for review type audio
-  allowedMaxVideoFileSize:number = 1; // max file size for review type video
+  allowedMaxAudioFileSize:number = 20; // max file size for review type audio
+  allowedMaxVideoFileSize:number = 30; // max file size for review type video
   unit: string = "MB";
   allowedMaxTextReviewChars: number = 60; // max chars for text review
   // allowed file types for audio file
@@ -82,7 +82,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   ];
   // default selected value to show which review field will be shown
-  selectedReviewType: number = 2; // 1. Textual 2. Audio 3. Video
+  selectedReviewType: number = 1; // 1. Textual 2. Audio 3. Video
   //default selected value to show which action will be selected 
   selectedReviewTypeAction: number = 1; // 1. Upload 2. Record
   // review file name
@@ -133,14 +133,17 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.form = this.formBuilder.group({
       name : [null, [Validators.required, Validators.maxLength(this.allowedMaxReviewTitle)]], // user review name
       review : [null], // formControl for text / audio / video review type file upload
-      reviewType : [2], // Review type 1. Textual 2. Audio 3. Video
+      reviewType : [1], // Review type 1. Textual 2. Audio 3. Video
       reviewTypeAction : [1], // Review type action for audio / video review 1. Upload 2. Record
       rating : [null, Validators.required], // User review rating
     });
   }
 
   /**
+   * Method to execute when dom is ready
    * @method ngAfterViewInit
+   * @since Version 1.0.0
+   * @returns Void
    */
   public ngAfterViewInit() {
     // Listen to the valueChanges observable
@@ -323,10 +326,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     if(this.form.invalid) return;
 
     // showing the loader.
-    /**
-     * uncomment below line for final release
-     */
-    // this.loaderService.enableLoader();
+    this.loaderService.enableLoader();
 
     // creating an instance of `FormData` class
     const formData = new FormData();
@@ -343,18 +343,11 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if(this.selectedReviewType == 3 && this.reviewAsFile !== null) { // video
       formData.append('review_video', this.reviewAsFile, this.reviewAsFile.name);
     }
-
-    /**
-     * Below block of commented code will be enabled for final release
-     */
-
-    /*
     // lets make an api call to validate the user data so far
     this.userReviewService.validateUserReview(this.slug, formData).subscribe(
       (response : any) => {
         Log.notice(response, "Notice the response from api");
         this.loaderService.disableLoader();
-        
         if(response.status) {
           const data = {
             review_title: this.form.value.name,
@@ -371,25 +364,12 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
           this.userReviewService.updateReview(data);
           // set the next step based on recommendation
           if(this.review.recommendation) {
-            // if recommended
-            this.userReviewService.nextStep('permission');
+            this.userReviewService.nextStep('permission'); // if recommended
           } else {
-            // if not recommended
-            this.userReviewService.nextStep('contact');
+            this.userReviewService.nextStep('contact'); // if not recommended
           }
         }
       }
     );
-    */
-
-    // for debugging and UI fixing 
-    if(this.review.recommendation) {
-      // if recommended
-      this.userReviewService.nextStep('permission');
-    } else {
-      // if not recommended
-      this.userReviewService.nextStep('contact');
-    }
-    
   }
 }

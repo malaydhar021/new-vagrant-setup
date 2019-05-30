@@ -19,13 +19,14 @@ sudo sed -i '0,/user = www-data/s/user = www-data/user = vagrant/' /etc/php/7.3/
 sudo sed -i '0,/group = www-data/s/group = www-data/group = vagrant/' /etc/php/7.3/fpm/pool.d/www.conf
 
 echo -e "\nCreating symlinks and re-configuring permissions...\n"
-sudo mkdir -p /var/log/nginx/api /var/log/nginx/app /var/log/nginx/lib /var/log/nginx/www
+sudo mkdir -p /var/log/nginx/api /var/log/nginx/app /var/log/nginx/lib /var/log/nginx/www /var/log/nginx/hook /var/log/nginx/ngrok
 sudo chown www-data:adm -R /var/log/nginx/
 sudo rm /etc/nginx/sites-enabled/*
 sudo ln -sf /vagrant/config/nginx/api.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/config/nginx/app.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/config/nginx/lib.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/config/nginx/www.conf /etc/nginx/sites-enabled/
+sudo ln -sf /vagrant/config/nginx/hook.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/config/nginx/ngrok.conf /etc/nginx/sites-enabled/
 sudo ln -sf /vagrant/ /var/www/
 sudo usermod -a -G www-data $USER
@@ -38,8 +39,7 @@ sudo chmod a+w -R bootstrap/cache storage
 composer install
 sudo cp -f .env.example .env
 sed -i -e 's/APP_NAME=Laravel/APP_NAME="Sticky Reveiws"/g' .env
-sed -i -e 's/APP_URL=http:\/\/localhost\/api/APP_URL=https:\/\/api.local.usestickyreviews.com/g' .env
-sed -i -e 's/REDIRECT_URL=http://localhost/REDIRECT_URL=https:\/\/app.local.usestickyreviews.com/g' .env
+sed -i -e 's/APP_HOST=localhost/APP_HOST=local.usestickyreviews.com/g' .env
 sed -i -e 's/DB_DATABASE=homestead/DB_DATABASE=stickyreviews/g' .env
 sed -i -e 's/DB_USERNAME=homestead/DB_USERNAME=root/g' .env
 sed -i -e 's/DB_PASSWORD=secret/DB_PASSWORD='$db_pwd'/g' .env

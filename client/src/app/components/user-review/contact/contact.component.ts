@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
-import { UserReviewService } from 'src/app/services/user-review.service';
-import { UserReviewModel } from 'src/app/models/user-review.model';
-import { Log } from 'src/app/helpers/app.helper';
+import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoaderService } from 'src/app/services/loader.service';
+import { UserReviewService } from '../../../services/user-review.service';
+import { UserReviewModel } from '../../../models/user-review.model';
+import { Log } from '../../../helpers/app.helper';
 
 /**
  * Component to handle user contact details with client side and server side validations
@@ -36,8 +35,7 @@ export class ContactComponent implements OnInit {
   constructor(
     private title: Title,
     private formBuilder: FormBuilder,
-    private userReviewService: UserReviewService,
-    private loaderService: LoaderService
+    private userReviewService: UserReviewService
   ) { 
     this.title.setTitle('Stickyreviews :: Contact Information');
     // subscribe to review to get the latest update data from review
@@ -73,6 +71,7 @@ export class ContactComponent implements OnInit {
   }
 
   /**
+   * Method to execute when contact form has been submitted
    * @method onSubmit
    * @since Version 1.0.0
    * @returns Void
@@ -82,15 +81,26 @@ export class ContactComponent implements OnInit {
     if(this.form.invalid) {
       return;
     }
+    // prepare data to store into review
+    const data: UserReviewModel = {
+      email: this.form.value.email
+    }
+    // add phone_number to data if the value is not null
+    if(this.form.value.phone !== null) {
+      data.phone_number = this.form.value.phone
+    }
+    // update the model data
+    this.userReviewService.updateReview(data);
+    // store the review data
+    this.userReviewService.storeUserReview();
 
-    this.loaderService.enableLoader();
+    /*
     // creating an instance of `FormData` class
     const formData = new FormData();
     formData.append('email', this.form.value.email); // append email to formData
     if(this.form.value.phone !== null) {
       formData.append('phone_number', this.form.value.phone); // append image to formData
     }
-    /* 
     // lets make an api call to validate the user data so far
     this.userReviewService.validateUserReview(this.slug, formData).subscribe(
       (response : any) => {
@@ -102,14 +112,12 @@ export class ContactComponent implements OnInit {
             phone_number: this.form.value.phone
           }
           // update the model data
-          this.userReviewService.updateReview(data);
+          this.userReviewService.updateReview(data);          
           // set next step to thankyou
           this.userReviewService.updateCurrentStep('thankYou');
         }
       }
     );
     */
-    // for debugging and UI fixing 
-    this.userReviewService.updateCurrentStep('thankYou');
   }
 }

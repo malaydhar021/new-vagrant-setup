@@ -39,13 +39,19 @@ To set up this project please follow the procedures below.
     mysql -u root stickyreviews -p < sql/stickyreviews.sql
     ```
 
-5. From host run `host-configurer.sh` to finalise the setup and link guest with host
+5. Run the following command in api direcotry in guest
+
+    ```bash
+    php artisan passport:install
+    ```
+
+6. From host run `host-configurer.sh` to finalise the setup and link guest with host
 
     ```bash
     scripts/host-configurer.sh
     ```
 
-6. Now everything is set up and you are ready to code. To acess the landing page, application, widget and API open the following links in your host machine's web browser and make sure everything is working properly.
+7. Now everything is set up and you are ready to code. To acess the landing page, application, widget and API open the following links in your host machine's web browser and make sure everything is working properly.
 
 - [api.local.usestickyreviews.com](https://api.local.usestickyreviews.com)
 - [app.local.usestickyreviews.com](https://app.local.usestickyreviews.com)

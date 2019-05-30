@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Resolve } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { SubscriptionApiEndpoints } from '../helpers/api.helper';
 import { Log } from '../helpers/app.helper';
 
@@ -17,19 +16,29 @@ import { Log } from '../helpers/app.helper';
 export class SubscriptionService {
   // declare properties
   private userSubscription = new Subject<any>();
+  public isSubscribed$: BehaviorSubject<any> = new BehaviorSubject<any>(null); // true if user is subscribed, false if not
+
+  /**
+   * Constructor method to load instances of different services when this class got initialized
+   * @constructor constructor
+   * @since Version 1.0.0
+   * @param router Router instance
+   * @param httpClient HttpClient instance
+   * @returns Void
+   */
   constructor(private router: Router, private httpClient: HttpClient) { }
 
   /**
    * checkSubscription method will check the user subscription has subscription
    * @method checkSubscription
-   * @since 1.0.0
-   * @returns void
+   * @since Version 1.0.0
+   * @returns Void
    */
-  checkSubscription() {
+  public checkSubscription() {
     this.getCurrentSubscription().subscribe(
       (response: any) => {
-        this.setUserSubscription(response.subscription)
-        Log.info(response.subscription, "check the subscription data");
+        this.setUserSubscription(response.subscription);
+        this.isSubscribed$.next(response);
         if (response.subscription.status !== 'ACTIVE') {
           this.router.navigate(['/home/plans']);
         }
@@ -39,8 +48,8 @@ export class SubscriptionService {
 
   /**
    * getUserSubscription$ method will get the user subscription
-   * @method setUserSubscription$
-   * @since 1.0.0
+   * @method getUserSubscription$
+   * @since Version 1.0.0
    * @returns void
    */
   public getUserSubscription$() {
@@ -50,70 +59,75 @@ export class SubscriptionService {
   /**
    * setUserSubscription method will set the user subscription
    * @method setUserSubscription
-   * @since 1.0.0
+   * @since Version 1.0.0
+   * @param data Subscription data
    * @returns void
    */
-  setUserSubscription(data: any) {
+  public setUserSubscription(data: any) {
     this.userSubscription.next(data);
   }
 
   /**
    * getCurrentSubscription method will make an api request get a user subscription information
    * @method getCurrentSubscription
-   * @since 1.0.0
+   * @since Version 1.0.0
    * @returns Observable<Object>
    */
-  getCurrentSubscription() {
+  public getCurrentSubscription() {
     return this.httpClient.get(SubscriptionApiEndpoints.subscription);
   }
 
   /**
    * addSubscription method will make an api request add a user subscription
    * @method addSubscription
-   * @since 1.0.0
+   * @since Version 1.0.0
+   * @param data Request payload data to add subscription
    * @returns Observable<Object>
    */
-  addSubscription(data: any) {
+  public addSubscription(data: any) {
     return this.httpClient.post(SubscriptionApiEndpoints.subscription, data);
   }
 
   /**
    * updateSubscription method will make an api request update a user subscription
-   * @method addSubscription
-   * @since 1.0.0
+   * @method updateSubscription
+   * @since Version 1.0.0
+   * @param data Request payload data to update subscription
    * @returns Observable<Object>
    */
-  updateSubscription(data: any) {
+  public updateSubscription(data: any) {
     return this.httpClient.put(SubscriptionApiEndpoints.subscription, data);
   }
 
   /**
    * deleteSubscription method will make an api request delete a user subscription
-   * @method addSubscription
-   * @since 1.0.0
+   * @method deleteSubscription
+   * @since Version 1.0.0
+   * @param data Request payload
    * @returns Observable<Object>
    */
-  deleteSubscription(data: any) {
+  public deleteSubscription(data: any) {
     return this.httpClient.post(SubscriptionApiEndpoints.subscription, data);
   }
 
   /**
    * getCardDetails method will make an api request delete a user subscription
    * @method getCardDetails
-   * @since 1.0.0
+   * @since Version 1.0.0
    * @returns Observable<Object>
    */
-  getCardDetails() {
+  public getCardDetails() {
     return this.httpClient.get(SubscriptionApiEndpoints.cards);
   }
 
   /**
    * updateCardDetails method will make an api request delete a user subscription
    * @method updateCardDetails
-   * @since 1.0.0
+   * @since Version 1.0.0
+   * @param data Request payload data to update card details
    * @returns Observable<Object>
    */
-  updateCardDetails(data: any) {
+  public updateCardDetails(data: any) {
     return this.httpClient.put(SubscriptionApiEndpoints.cards, data);
   }
 }

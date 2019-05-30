@@ -13,7 +13,12 @@
     "build:prod": "npm run build --mode production"
   },
   "dependencies": {
-    "vue": "^2.6.6"
+    "@liripeng/vue-audio-player": "^1.0.3",
+    "axios": "^0.18.0",
+    "moment-timezone": "^0.5.25",
+    "vue": "^2.6.6",
+    "vue-moment": "^4.0.0",
+    "vue-video-player": "^5.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",

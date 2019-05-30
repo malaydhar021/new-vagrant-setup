@@ -16,22 +16,23 @@ class CampaignRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            $pricingPlan = $user->pricing_plan;
-            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['campaigns'];
-            if (($saturationPoint !== -1) && ($user->campaigns_count >= $saturationPoint)) {
-                throw new PrivilegeViolationException(
-                    "You can not create a new campaign, please delete one existing campaign or upgrade your " .
-                        "current subscription plan."
-                );
+        if($this->method == "POST") {
+            if (Auth::check()) {
+                $user = Auth::user();
+    
+                $pricingPlan = $user->pricing_plan;
+                $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['campaigns'];
+                if (($saturationPoint !== -1) && ($user->campaigns_count >= $saturationPoint)) {
+                    throw new PrivilegeViolationException(
+                        "You can not create a new campaign, please delete one existing campaign or upgrade your " .
+                            "current subscription plan."
+                    );
+                }
+                return true;
             }
-
-            return true;
-        }
-
-        return false;
+            return false;
+        } 
+        return true;
     }
 
     /**

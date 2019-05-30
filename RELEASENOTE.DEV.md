@@ -1,5 +1,16 @@
 # Development Release Notes
 
+## Subscription
+
+### V2.0.0
+
+1. Fixed issue with user subscription state management
+
+### V1.0.0
+
+1. Implemented add, update, downgrade and cancel subscription
+2. Implemented add a card to user account.
+
 ## Review Link
 
 ### V1.0.0
@@ -16,6 +27,12 @@
 3. Created an api endpoint to check and validate data from review link form step 1
 
 ## User Review
+
+### V1.1.0
+
+1. Implemented save user review functionality
+2. Displayed negative review and positive review messages in proper places
+3. Refractor code to enhance the performance
 
 ### V1.0.0
 
@@ -129,7 +146,7 @@ operation the user is assigned to basic plan.
 1. Implemented user authentication using user email and password using api
 2. Implemented authentication guard to prevent protected routes
 3. Implemented http request interceptor to add some header to each and every request to server
-4. Enhanced loging form UI for better user experience
+4. Enhanced login form UI for better user experience
 5. Created services, helpers for further application development
 6. Stored and retrieved token into localstorage to work with authentication
 

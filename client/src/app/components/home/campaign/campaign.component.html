@@ -29,7 +29,18 @@
                     <h2>{{ campaign.campaign_name }} <span class="redTag" *ngIf="campaign.is_active">ACTIVE</span></h2>
                     <p>{{ campaign.domain_name }}</p>
                   </div>
-                  <a (copy)="onCopySnippet()" [context]="prepareContext(campaign)" class="copyBtn" copyToClipboard><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet</a>
+                  <a (copy)="onCopySnippet()" [context]="prepareContext(campaign)" class="copyBtn" copyToClipboard><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet
+                    <div class="copypop">
+                      <h5>Copy Code Snippet</h5>
+                      <div class="bodyPopSnippet">
+                        <code>
+                          <pre>
+                              &lt;script src="https://lib.local.usestickyreviews.com/widget.min.js" data-token="emv_ubuntu5c73c8073b2b01551091719" data-name="_emv" async&gt;&lt;/script&gt;
+                          </pre>
+                        </code>
+                      </div>
+                    </div>
+                  </a>
                 </div>
                 <div class="tcol">
                   <div class="reviewTheme">
@@ -112,8 +123,8 @@
                       [ngClass]="{error: isSubmitted && getFormControls.campaignName.errors}"
                       formControlName="campaignName">
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignName.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignName.errors !== null
                       && getFormControls.campaignName.errors.required)">
                       Campaign name is required
                     </div>
@@ -126,14 +137,14 @@
                       [ngClass]="{error: isSubmitted && getFormControls.campaignDomainName.errors}"
                       formControlName="campaignDomainName">
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignDomainName.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignDomainName.errors !== null
                       && getFormControls.campaignDomainName.errors.required)">
                       Domain name is required
                     </div>
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignDomainName.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignDomainName.errors !== null
                       && getFormControls.campaignDomainName.errors.pattern)">
                       Please provide a valid domain name
                     </div>
@@ -150,8 +161,8 @@
                       <option [ngValue]="style" *ngFor="let style of styles">{{ style.name }}</option>
                     </select>
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignVisualStyle.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignVisualStyle.errors !== null
                       && getFormControls.campaignVisualStyle.errors.required)">
                       Visual style is required
                     </div>
@@ -180,8 +191,8 @@
                       [ngClass]="{error: isSubmitted && getFormControls.campaignDelayBeforeStart.errors}"
                       formControlName="campaignDelayBeforeStart">
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignDelayBeforeStart.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignDelayBeforeStart.errors !== null
                       && getFormControls.campaignDelayBeforeStart.errors.required)">
                       Delay before start is required
                     </div>
@@ -192,8 +203,8 @@
                   <div class="sr-form-field">
                     <input type="text" digitsOnly class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.campaignStayTime.errors}" formControlName="campaignStayTime">
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignStayTime.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignStayTime.errors !== null
                       && getFormControls.campaignStayTime.errors.required)">
                       Stay timing is required
                     </div>
@@ -201,23 +212,21 @@
                 </div>
               </div>
               <div class="sr-form-row">
-                <div class="sr-form-cell">
+                <div class="sr-form-cell-small">
                   <label>Interval Between Reviews <span>(in seconds)</span></label>
-                  <div class="sr-form-field small">
+                  <div class="sr-form-field">
                     <input type="text" digitsOnly class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignDelayBetweenTwoReview.errors}"
                       formControlName="campaignDelayBetweenTwoReview">
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignDelayBetweenTwoReview.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignDelayBetweenTwoReview.errors !== null
                       && getFormControls.campaignDelayBetweenTwoReview.errors.required)">
                       Interval Between Reviews is required
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell-small">
+                <div class="sr-form-cell-small solo-Cell">
                   <label>Loop sticky reviews <input type="checkbox" class="tglBtn" formControlName="campaignLoop"></label>
                 </div>
               </div>
@@ -231,8 +240,8 @@
                       <option [ngValue]="brand" *ngFor="let brand of brands">{{ brand.name }}</option>
                     </select>
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignBrand.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignBrand.errors !== null
                       && getFormControls.campaignBrand.errors.required)">
                       Please select a branding
                     </div>
@@ -247,8 +256,8 @@
                       <option [ngValue]="exitPopup" *ngFor="let exitPopup of exitPopups">{{ exitPopup.name }}</option>
                     </select>
                     <div class="error-msg" *ngIf="(
-                      isSubmitted 
-                      && getFormControls.campaignExitPopup.errors !== null 
+                      isSubmitted
+                      && getFormControls.campaignExitPopup.errors !== null
                       && getFormControls.campaignExitPopup.errors.required)">
                       Please select an exit popup
                     </div>

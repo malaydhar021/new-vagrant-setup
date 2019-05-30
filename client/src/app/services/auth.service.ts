@@ -5,10 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthModel } from '../models/auth.model';
 import { ForgotPasswordModel } from '../models/forgot-password.model';
 import { AuthApiEndPoints } from '../helpers/api.helper';
-import { Log } from '../helpers/app.helper';
-import { Observable, of } from 'rxjs';
 import { ResetPasswordModel } from '../models/reset-password.model';
-
 
 /**
  * This service will handle all operations related to user login and authentication
@@ -46,10 +43,10 @@ export class AuthService {
   }
 
   /**
-   * Function to get the token from localstorage
-   *
-   * @since 1.0.0
-   * @returns boolean
+   * Method to get the token from localstorage
+   * @method getToken
+   * @since Version 1.0.0
+   * @returns Boolean
    */
   public get getToken() {
     let data = null;
@@ -74,8 +71,8 @@ export class AuthService {
 
   /**
    * Function that returns the api endpoing with query string to validate a token
-   *
-   * @since 1.0.0
+   * @method validateToken
+   * @since Version 1.0.0
    * @param token string
    * @returns Observable<Object>
    */
@@ -86,7 +83,7 @@ export class AuthService {
   /**
    * Function to make a post request to logout the user
    * @method doLogout
-   * @since versoin 1.0.0
+   * @since Version 1.0.0
    * @param token string
    * @returns Observable<Object>
    */
@@ -97,7 +94,7 @@ export class AuthService {
   /**
    * Method to remove sessionStorage/localStorage data from browser
    * @method removeStorageData
-   * @since version 1.0.0
+   * @since Version 1.0.0
    * @returns void
    */
   public removeStorageData() {
@@ -109,7 +106,7 @@ export class AuthService {
   /**
    * This method will post the email to forgot password api
    * @method forgotPassword
-   * @since 1.0.0
+   * @since Version 1.0.0
    * @returns Observable<Object>
    */
   public forgotPassword(data: ForgotPasswordModel) {
@@ -119,7 +116,7 @@ export class AuthService {
   /**
    * This method accept the token which needs to be verified and make an api call to api route
    * @method resetPasswordValidateToken
-   * @since version 1.0.0
+   * @since Version 1.0.0
    * @param token (string) The token to verify
    * @returns Observable<Object>
    */
@@ -130,7 +127,7 @@ export class AuthService {
   /**
    * This method accept the token which needs to be verified and make an api call to api route
    * @method resetPasswordValidateToken
-   * @since version 1.0.0
+   * @since Version 1.0.0
    * @param token (string) The token to verify
    * @returns Observable<Object>
    */

@@ -16,22 +16,22 @@ class BrandRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            $pricingPlan = $user->pricing_plan;
-            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['brands'];
-            if (($saturationPoint !== -1) && ($user->brands_count >= $saturationPoint)) {
-                throw new PrivilegeViolationException(
-                    "You can not create a new brand, please delete one existing brand or upgrade your " .
-                    "current subscription plan."
-                );
+        if($this->method == "POST") {
+            if (Auth::check()) {
+                $user = Auth::user();
+                $pricingPlan = $user->pricing_plan;
+                $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['brands'];
+                if (($saturationPoint !== -1) && ($user->brands_count >= $saturationPoint)) {
+                    throw new PrivilegeViolationException(
+                        "You can not create a new brand, please delete one existing brand or upgrade your " .
+                        "current subscription plan."
+                    );
+                }
+                return true;
             }
-
-            return true;
+            return false;
         }
-
-        return false;
+        return true;
     }
 
     /**

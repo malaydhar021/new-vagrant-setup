@@ -2,7 +2,7 @@
 
 cd client
 npm i
-npm run build:dev
+npm run build:local
 cd ../widget
 npm i
 npm run build:dev
