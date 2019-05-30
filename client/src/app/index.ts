@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, APP_INITIALIZER } from '@angular/core';
 import { NgxMaskModule } from 'ngx-mask';
 import { ReactiveFormsModule } from '@angular/forms';
 // Custom imports
@@ -27,14 +27,14 @@ import { UserService } from './services/user.service';
 import { ReviewLinkTypeComponent } from './components/home/review-link-type/review-link-type.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MessageModule } from './components/shared/message/message.module';
-import { SubscriptionGuard } from './services/guards/subscription.gaurd.service';
+import { SubscriptionGuard } from './services/guards/subscription.guard.service';
 import { MediaModule } from './modules/media.module';
 import { MediaService } from './services/media.service';
 
 /**
- * AppComponent is the first component which loads when the applicatoin is getting bootstraped.
- * In this component only the ```<router-outlet></router-outlet>``` angular routing hook whchi is
- * responsible for displaying html content based on the url route, is persent. It is recommemnded
+ * AppComponent is the first component which loads when the application is getting bootstrapped.
+ * In this component only the ```<router-outlet></router-outlet>``` angular routing hook which is
+ * responsible for displaying html content based on the url route, is present. It is recommended
  * @class AppComponent
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
@@ -92,7 +92,7 @@ export class AppComponent { }
     SubscriptionService,
     SubscriptionGuard,
     MediaService,
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

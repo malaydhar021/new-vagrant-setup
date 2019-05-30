@@ -1,4 +1,4 @@
-import { NgModule }                                       from '@angular/core';
+import { NgModule, APP_INITIALIZER }                                       from '@angular/core';
 import { CommonModule }                                   from '@angular/common';
 import { ReactiveFormsModule, FormsModule }               from '@angular/forms';
 import { NgxMaskModule }                                  from 'ngx-mask';
@@ -84,7 +84,7 @@ import { CopyToClipboardDirective }         from '../directives/copy-to-clipboar
     StickyReviewService,
     MenuService,
     ExitPopupService,
-    MediaService
+    MediaService,
   ]
 })
 export class HomeModule { }

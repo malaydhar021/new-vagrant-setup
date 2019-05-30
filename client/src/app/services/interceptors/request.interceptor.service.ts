@@ -59,14 +59,11 @@ export class RequestInterceptor implements HttpInterceptor {
   /**
    * Function to handle http error responses
    * @method handleHttpError
-   * @since version 1.1.0
+   * @since Version 1.1.0
    * @param error HttpErrorResponse
    * @returns Observable<String>
    */
   private handleHttpError(error: HttpErrorResponse): Observable<any> {
-
-    //this.loaderService.disableLoader();
-
     // handle your auth error or rethrow
     switch (error.status) {
 
@@ -98,7 +95,7 @@ export class RequestInterceptor implements HttpInterceptor {
       case 404: // Not Found
         // update the error messaged based on message object in http response
         const errorMessage404 = this.updateErrorMessage(error);
-        // redirect user to loging page
+        // redirect user to login page
         // this.router.navigate(['/login']);
         // return observable as string
         return of(errorMessage404);
@@ -109,7 +106,7 @@ export class RequestInterceptor implements HttpInterceptor {
         // return observable as string
         return of(errorMessage405);
 
-      case 413: // Requset entity is too long
+      case 413: // Request entity is too long
         // update the error messaged based on message object in http response
         const errorMessage413 = this.updateErrorMessage(error);
         // return observable as string

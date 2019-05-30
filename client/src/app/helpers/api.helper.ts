@@ -412,7 +412,7 @@ export class ReviewLinkApiEndpoints {
  */
 export class UserApiEndpoints {
   /**
-   * getAuthUserInfo to generate api endpoint to get authenticated user informations
+   * getAuthUserInfo to generate api endpoint to get authenticated user information
    * @method getAuthUserInfo
    * @since Version 1.0.0
    * @returns String 

@@ -16,22 +16,22 @@ class StickyReviewRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            $pricingPlan = $user->pricing_plan;
-            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['sticky-reviews'];
-            if (($saturationPoint !== -1) && ($user->sticky_reviews_count >= $saturationPoint)) {
-                throw new PrivilegeViolationException(
-                    "You can not create a new sticky review, please delete one existing sticky review or upgrade " .
-                        "your current subscription plan."
-                );
+        if($this->method == "POST") {
+            if (Auth::check()) {
+                $user = Auth::user();
+                $pricingPlan = $user->pricing_plan;
+                $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['sticky-reviews'];
+                if (($saturationPoint !== -1) && ($user->sticky_reviews_count >= $saturationPoint)) {
+                    throw new PrivilegeViolationException(
+                        "You can not create a new sticky review, please delete one existing sticky review or upgrade " .
+                            "your current subscription plan."
+                    );
+                }
+                return true;
             }
-
-            return true;
+            return false;
         }
-
-        return false;
+        return true;
     }
 
     /**
