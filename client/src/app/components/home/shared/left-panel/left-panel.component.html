@@ -7,15 +7,31 @@
       <ul>
         <li><a :[routerLink]="['/home/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Dashboard</a></li>
         <li><a :[routerLink]="['/home/branding']" routerLinkActive="active">Branding</a></li>
-        <li><a  :[routerLink]="['/home/campaign']" routerLinkActive="active">Campaign(s)</a></li>
+        <li><a :[routerLink]="['/home/campaign']" routerLinkActive="active">Campaign(s)</a></li>
         <li><a :[routerLink]="['/home/sticky-reviews']" routerLinkActive="active">Sticky Review(s)</a></li>
         <li><a :[routerLink]="['/home/review-link']" routerLinkActive="active">Review Link(s)</a></li>
         <li><a :[routerLink]="['/home/exit-popup']" routerLinkActive="active">Exit pop-up(s)</a></li>
       </ul>
     </div>
   </div>
+
   <div class="footer">
+
       &copy; 2018 All rights reserved.<br>
       Tier5 LLC.
     </div>
+  </div>
+
+<!-- cookies -->
+<div class="cookieCompliance showCookie" *ngIf="showCookie">
+  <div class="container">
+    <p>
+      We use cookies to offer you a better experience and analyze site traffic. By continuing to use this
+      website, you consent to the use of cookies
+    </p>
+
+    <button class="closeCookie" (click)="closeCookie()">
+      Accept
+    </button>
+  </div>
 </div>

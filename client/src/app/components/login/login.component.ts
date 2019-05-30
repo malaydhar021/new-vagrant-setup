@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     error : string = null; // to display error message if any
     loader = false; // for show/hide loader
     subscription : Subscription; // used for load error message set from different places and assign to error property asynchronously
-
+    showCookie: boolean = false;
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
@@ -72,6 +72,10 @@ export class LoginComponent implements OnInit {
             password : [null, Validators.required],
             rememberMe : [null]
         });
+
+        if (!this.cookieService.get('readSite')) {
+            this.showCookie = true;
+        }
     }
 
     /**
@@ -180,5 +184,14 @@ export class LoginComponent implements OnInit {
             default :
                 break;
         }
+    }
+
+    /**
+     * Function to  set cookie and close the cookie notification
+     */
+    public closeCookie() {
+        console.log('Some value');
+        this.cookieService.set('readSite', '1');
+        this.showCookie = false;
     }
 }

@@ -1145,10 +1145,186 @@ body {
         transform: scale(0.68) translateX(-49%);
     }
 }
+/**
+css for go to top button
+ */
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+}
 
+#myBtn:hover {
+    background-color: #555;
+}
 
+/* Cookie policy */
+.cookieCompliance {
+    padding: 15px;
+    background: #333;
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transition: -webkit-transform ease-in-out 0.4s;
+    transition: -webkit-transform ease-in-out 0.4s;
+    transition: transform ease-in-out 0.4s;
+    transition: transform ease-in-out 0.4s, -webkit-transform ease-in-out 0.4s;
+    -webkit-transform: translateY(200%);
+    transform: translateY(200%);
+}
 
+.showCookie {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+}
 
+.cookieCompliance .container {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1205px;
+    margin: 0 auto;
+}
+
+.cookieCompliance p {
+    font-size: 13px;
+    color: #fff;
+    line-height: 18px;
+}
+
+.cookieCompliance p a {
+    color: #fff;
+    margin-left: 3px;
+}
+
+/*
+Cookie notification css
+*/
+.cookieCompliance p a:hover {
+    color: rgba(16, 128, 242, 0.9);
+}
+
+.closeCookie {
+    font-size: 15px;
+    color: #fff;
+    line-height: 32px;
+    padding: 0 15px;
+    border-radius: 3px;
+    border: none;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.cookieCompliance .closeCookie {
+    margin-left: 30px;
+    background: rgba(16, 128, 242, 0.9);
+}
+
+.cookieCompliance .closeCookie:hover {
+    color: #333;
+    background-color: #fff;
+}
+
+/**
+Tearms-and-conditons
+ */
+
+.ppTacPage {
+    color: #2f2f2f;
+    font-family: 'Segoe UI Web (West European)';
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5 {
+    font-family: 'Segoe UI Web (West European)';
+}
+.ppTacPage h1 {
+    color: #2f2f2f;
+}
+.container {
+    width: 100%;
+    max-width: 1205px;
+    margin: 80px auto;
+    padding: 0;
+}
+.ppTacPage p {
+    font-size: 13px;
+    line-height: 18px;
+    margin-bottom: 10px;
+    color: #2f2f2f;
+    font-family: 'Segoe UI Web (West European)';
+}
+.ppTacPage .listUnderH2 li {
+    list-style: disc;
+    list-style-position: outside;
+}
+.ppTacPage a {
+    text-decoration: underline !important;
+}
+
+/**
+Privacy-policy
+ */
+
+.ppTacPage {
+    color: #2f2f2f;
+    font-family: 'Segoe UI Web (West European)';
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5 {
+    font-family: 'Segoe UI Web (West European)';
+}
+.ppTacPage h1 {
+    color: #2f2f2f;
+}
+.ppTacPage h3,
+.ppTacPage h4 {
+    color: #2f2f2f;
+}
+.container {
+    width: 100%;
+    max-width: 1205px;
+    margin: 80px auto;
+    padding: 0;
+}
+.ppTacPage p {
+    font-size: 13px;
+    line-height: 18px;
+    margin-bottom: 10px;
+    color: #2f2f2f;
+    font-family: 'Segoe UI Web (West European)';
+}
+.ppTacPage .listUnderH2 li,
+.ppTacPage .listUnderH4 li,
+.ppTacPage .listUnderH3 li {
+    list-style: disc;
+    list-style-position: outside;
+}
+.ppTacPage a {
+    text-decoration: underline !important;
+}
 
 
 

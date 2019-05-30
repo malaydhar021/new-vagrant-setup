@@ -57,3 +57,20 @@
     <div class="loaderShadow"></div>
   </div>
 </div>
+
+<!-- Place for the cookie script -->
+<!-- cookies -->
+<div class="cookieCompliance showCookie" *ngIf="showCookie">
+  <div class="container">
+    <p>
+      We use cookies to offer you a better experience and analyze site traffic. By continuing to use this
+      website, you consent to the use of cookies
+    </p>
+
+    <button class="closeCookie" (click)="closeCookie()">
+      Accept
+    </button>
+  </div>
+</div>
+
+
