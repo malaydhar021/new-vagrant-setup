@@ -68,6 +68,11 @@ export class LoginComponent implements OnInit {
             password: [null, Validators.required],
             rememberMe: [null]
         });
+
+        if (!this.cookieService.get('readSite')) {
+            this.showCookie = true;
+        }
+
     }
 
     /**
