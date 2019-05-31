@@ -36,6 +36,7 @@ import { ExitPopupService }                 from '../services/exit-popup.service
 import { WidgetStylesModule }               from './widget-styles.module';
 import { DigitsOnlyDirective }              from '../directives/digits-only.directive';
 import { CopyToClipboardDirective }         from '../directives/copy-to-clipboard.directive';
+import { ClickOutsideDirective }            from '../directives/click-outside.directive';
 
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
@@ -60,7 +61,8 @@ import { CopyToClipboardDirective }         from '../directives/copy-to-clipboar
     ProfileComponent,
     CancelMembershipComponent,
     DigitsOnlyDirective,
-    CopyToClipboardDirective
+    CopyToClipboardDirective,
+    ClickOutsideDirective
   ],
   imports: [
     CommonModule,

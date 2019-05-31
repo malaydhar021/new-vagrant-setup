@@ -105,18 +105,20 @@ class User extends Authenticatable
 
     public function setPricingPlanAttribute($value)
     {
-        switch ($value) {
-            case 1:
-                $value = 'lowset';
-                break;
-            case 2:
-                $value = 'modest';
-                break;
-            case 3:
-                $value = 'highest';
-                break;
-            default:
-                $value = 'lowset';
+        if ($value >= 1 && $value <= 3) {
+            switch ($value) {
+                case 1:
+                    $value = 'lowest';
+                    break;
+                case 2:
+                    $value = 'modest';
+                    break;
+                case 3:
+                    $value = 'highest';
+                    break;
+                default:
+                    $value = 'lowest';
+            }
         }
 
         return $this->attributes['pricing_plan'] = $value;
