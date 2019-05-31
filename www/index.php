@@ -44,9 +44,11 @@ if (strpos($getEnvUrl, 'local') !== false) {
                         <li><a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/sign-up" target="_blank">14 Day Free Trial</a></li>
                     </ul>
                     <div class="loginBtn">
-                        <a href="">
-                            <img src="images/icon_menu_login.png" alt="">
-                        </a>
+<!--                        <a href=""> OLD IMAGE -->
+<!--                            <img src="images/icon_menu_login.png" alt="">-->
+<!--                        </a>-->
+                        <span id="loginBtn"> <a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/"> Login</a></span>
+                        <span id="dashboard"> <a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/home/dashboard"> Dashboard</a></span>
                     </div>
                 </div>
                 <div class="responsiveNav">
@@ -317,8 +319,9 @@ if (strpos($getEnvUrl, 'local') !== false) {
 
         <div class="container">
             <p class="billed">*Billed monthly, <a href="">no set up fee.</a></p>
-            <p class="copyright">© 2018 All rights reserved. <strong>Tier5 LLC </strong> | <a href="terms-and-conditions.php"> Terms and Conditions </a> | <a href="privacy-policy.php">Privacy Policy </a> | <a href="support.php">Contact Support</a> </p>
+            <p class="copyright">© 2018 All rights reserved. <strong>Tier5 LLC </strong> | <a href="terms-and-conditions.php" target="_blank"> Terms and Conditions </a> | <a href="privacy-policy.php" target="_blank">Privacy Policy </a> | <a href="support.php" target="_blank">Contact Support</a> </p>
         </div>
+        <iframe src="https://app.local.usestickyreviews.com/" class="iframe-div" style="display: none" id="opIFrame"></iframe>
     </footer>
 
 
@@ -409,6 +412,14 @@ if (strpos($getEnvUrl, 'local') !== false) {
         $('.cookieCompliance').removeClass('showCookie');
         $.cookie('readSite', 1);
     };
+
+     if($.cookie('_loginUser')) {
+        $('#loginBtn').hide();
+        $('#dashboard').show();
+     } else {
+         $('#loginBtn').show();
+         $('#dashboard').hide();
+     }
 </script>
 
 

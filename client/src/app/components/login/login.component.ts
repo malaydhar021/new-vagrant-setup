@@ -128,6 +128,8 @@ export class LoginComponent implements OnInit {
                     }
                     // redirect to home
                     this.router.navigate(['/home']);
+                    // setting a cookie in main domain when user login
+                    this.cookieService.set('_loginUser', '1', 450, '/', 'usestickyreviews.com');
                 } else {
                     this.error = response.message;
                 }
@@ -187,7 +189,6 @@ export class LoginComponent implements OnInit {
      * Function to  set cookie and close the cookie notification
      */
     public closeCookie() {
-        console.log('Some value');
         this.cookieService.set('readSite', '1');
         this.showCookie = false;
     }

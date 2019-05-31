@@ -126,6 +126,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.authService.removeStorageData();
         this.loader = false;
         this.errorService.updateMessage(response.message);
+        // delete cookie from main domain,
+        if (this.cookieService.get('_loginUser')) {
+          this.cookieService.delete('_loginUser', '/', 'usestickyreviews.com');
+        }
         this.router.navigate(['/login']);
       },
       (err: any) => {
