@@ -213,7 +213,7 @@ trait Subscription
     /**
      * Cancel the subscription
      *
-     * @param  string  $reason       The reason to cancel the subcription
+     * @param  string  $reason       The reason to cancel the subscription
      * @param  string  $description  Description of cancellation in details
      * @return void
      */

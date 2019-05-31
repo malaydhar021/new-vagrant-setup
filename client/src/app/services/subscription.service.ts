@@ -39,7 +39,7 @@ export class SubscriptionService {
       (response: any) => {
         this.setUserSubscription(response.subscription);
         this.isSubscribed$.next(response);
-        if (response.subscription.status !== 'ACTIVE') {
+        if (response.subscription.status !== 'ACTIVE' && response.subscription.status !== 'NA') {
           this.router.navigate(['/home/plans']);
         }
       }

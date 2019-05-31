@@ -34,22 +34,25 @@ class ReviewLinkRequest extends FormRequest
      */
     public function authorize()
     {
-        if($this->method == "POST") {
-            if (Auth::check()) {
-                $user = Auth::user();
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if($this->method == "POST") {
                 $pricingPlan = $user->pricing_plan;
                 $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['review-links'];
+
                 if (($saturationPoint !== -1) && ($user->review_links_count >= $saturationPoint)) {
                     throw new PrivilegeViolationException(
                         "You can not create a new review link, please delete one existing review link or upgrade your " .
                             "current subscription plan."
                     );
                 }
-                return true;
             }
-            return false;
+
+            return true;
         }
-        return true;
+
+        return false;
     }
 
     /**

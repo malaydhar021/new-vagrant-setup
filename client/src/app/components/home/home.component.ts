@@ -37,6 +37,5 @@ export class HomeComponent implements OnInit {
    */
   public ngOnInit() {
     this.title.setTitle('Stickyreviews :: Home');
-    // this.subscriptionService.checkSubscription();
   }
 }

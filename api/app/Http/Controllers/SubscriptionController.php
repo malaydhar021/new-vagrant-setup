@@ -79,7 +79,7 @@ class SubscriptionController extends Controller
         $newPlan = array_search($request->input('pricing_plan_type'), $this->allowedPlanNames);
         $wannaDowngrade = $currentPlan > $newPlan;
 
-        $newPlanPriviledges = config('pricing.plans.' . $request->input('pricing_plan_type') . '.privileges');
+        $newPlanPrivileges = config('pricing.plans.' . $request->input('pricing_plan_type') . '.privileges');
 
         if ($wannaDowngrade) {
             if ($user->is_third_party) {
@@ -92,24 +92,24 @@ class SubscriptionController extends Controller
             }
 
             $limitExceeds = [];
-            if (($newPlanPriviledges['brands'] !== -1) && ($user->brands_count > $newPlanPriviledges['brands'])) {
-                $limitExceeds['brands'] = $user->brands_count - $newPlanPriviledges['brands'];
+            if (($newPlanPrivileges['brands'] !== -1) && ($user->brands_count > $newPlanPrivileges['brands'])) {
+                $limitExceeds['brands'] = $user->brands_count - $newPlanPrivileges['brands'];
             }
-            if (($newPlanPriviledges['campaigns'] !== -1) &&
-                ($user->campaigns_count > $newPlanPriviledges['campaigns'])) {
-                $limitExceeds['campaigns'] = $user->campaigns_count - $newPlanPriviledges['campaigns'];
+            if (($newPlanPrivileges['campaigns'] !== -1) &&
+                ($user->campaigns_count > $newPlanPrivileges['campaigns'])) {
+                $limitExceeds['campaigns'] = $user->campaigns_count - $newPlanPrivileges['campaigns'];
             }
-            if (($newPlanPriviledges['review-links'] !== -1) &&
-                ($user->review_links_count > $newPlanPriviledges['review-links'])) {
-                $limitExceeds['review-links'] = $user->review_links_count - $newPlanPriviledges['review-links'];
+            if (($newPlanPrivileges['review-links'] !== -1) &&
+                ($user->review_links_count > $newPlanPrivileges['review-links'])) {
+                $limitExceeds['review-links'] = $user->review_links_count - $newPlanPrivileges['review-links'];
             }
-            if (($newPlanPriviledges['sticky-reviews'] !== -1) &&
-                ($user->sticky_reviews_count > $newPlanPriviledges['sticky-reviews'])) {
-                $limitExceeds['sticky-reviews'] = $user->sticky_reviews_count - $newPlanPriviledges['sticky-reviews'];
+            if (($newPlanPrivileges['sticky-reviews'] !== -1) &&
+                ($user->sticky_reviews_count > $newPlanPrivileges['sticky-reviews'])) {
+                $limitExceeds['sticky-reviews'] = $user->sticky_reviews_count - $newPlanPrivileges['sticky-reviews'];
             }
-            if (($newPlanPriviledges['exit-popups'] !== -1) &&
-                ($user->exit_popups_count > $newPlanPriviledges['exit-popups'])) {
-                $limitExceeds['exit-popups'] = $user->exit_popups_count - $newPlanPriviledges['exit-popups'];
+            if (($newPlanPrivileges['exit-popups'] !== -1) &&
+                ($user->exit_popups_count > $newPlanPrivileges['exit-popups'])) {
+                $limitExceeds['exit-popups'] = $user->exit_popups_count - $newPlanPrivileges['exit-popups'];
             }
 
             if (! empty($limitExceeds)) {

@@ -2,6 +2,12 @@
 
 ## Subscription
 
+### V2.0.1
+
+1. Fixed issue with user subscription upgrade/downgrade api
+2. Fixed issue with membership box and profile box in header
+3. Refractor codebase for subscription state management
+
 ### V2.0.0
 
 1. Fixed issue with user subscription state management

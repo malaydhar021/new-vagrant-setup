@@ -11,7 +11,7 @@ import { UserService }                          from 'src/app/services/user.serv
 
 /**
  * This component is responsible for handling all sort of operations in application header
- * after user is logged in including logout functionlity.
+ * after user is logged in including logout functionality.
  * @class HeaderComponent
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
@@ -20,10 +20,10 @@ import { UserService }                          from 'src/app/services/user.serv
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
+  // defining class properties
   loader = false;
   tglFlag = false;
   tglProfile = false;
@@ -38,51 +38,87 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userImageUrlSubscription: Subscription;
   userImageUrl: string 
 
-  
+  /**
+   * Constructor method to load services first so that those can be used as required
+   * @constructor constructor
+   * @since Version 1.0.0
+   * @param router Router instance
+   * @param authService AuthService instance
+   * @param errorService ErrorService Instance
+   * @param menuService MenuService Instance
+   * @param subscriptionService SubscriptionService instance
+   * @param userService UserService instance
+   * @returns Void
+   */
   constructor(
     private router: Router,
-    private cookieService: CookieService,
     private authService: AuthService,
     private errorService: ErrorsService,
     private menuService: MenuService,
     private subscriptionService: SubscriptionService,
     private userService: UserService
-
   ) {
-    // subscription to upate the error property to disaply in template
-    this.subscription = this.errorService.error$.subscribe(
-      errMsg => {
-        this.loader = false;
-        this.error = errMsg;
-      }
-    );
-    
+    // subscription to update the error property to display in template
+    // this.subscription = this.errorService.error$.subscribe(
+    //   errMsg => {
+    //     this.loader = false;
+    //     this.error = errMsg;
+    //   }
+    // );
+
+    // subscription to menu to service active menu to enable or disable a class
     this.menuSubscription = this.menuService.activeMenu$.subscribe(
       status => {
         this.isActive = status;
       }
     );
-
+    // User subscription service for get the user plan info
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
       this.userPlanDetails = userPlan;
-      userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias && (this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase())
+      Log.info(this.userPlanDetails, "Lets check user in header");
+      // userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias && (this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase())
       if(userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias){
         this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase()
       }
     })
-
-    this.userImageUrlSubscription = this.userService.userImageUrl$.subscribe(url =>{
+    // subscription to user profile image url and update it once the url got updated from profile section
+    // else default or current profile image url will be returned
+    this.userImageUrlSubscription = this.userService.userImageUrl$.subscribe(url => {
       this.userImageUrl = url;
     })
-    
   }
 
   /**
-   * 
+   * Method to close membership box when someone clicks on outside of the div
+   * @method closeBox
+   * @since Version 1.0.0
+   * @param event Mouse event
+   * @returns Void
+   */
+  public closeMembershipBox(event) {
+    this.tglFlag = false;
+  }
+
+  /**
+   * Method to close profile box when someone clicks on outside of the div
+   * @method closeProfileBox
+   * @since Version 1.0.0
+   * @param event Mouse event
+   * @returns Void
+   */
+  public closeProfileBox(event) {
+    this.tglProfile = false;
+  }
+
+  /**
+   * Method to execute when this component got initialized
+   * @method ngOnInit
+   * @since Version 1.0.0
+   * @returns Void
    */
   public ngOnInit() {
     this.userService.getAuthUserInfo().subscribe(
-      (response:any)=>{
+      (response:any) => {
         if (response.data.image){
           this.userService.setUserImage(response.data.image)
         }
@@ -90,6 +126,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     )
    }
 
+   /**
+    * 
+    */
   public ngOnDestroy() {
     this.subscription.unsubscribe();
     this.menuSubscription.unsubscribe();
@@ -102,9 +141,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public tglSetting() {
     this.tglFlag = !this.tglFlag;
   }
+
+  /**
+   * 
+   */
   public tglProfileMenu() {
     this.tglProfile = !this.tglProfile;
   }
+
+  /**
+   * 
+   */
   public tglSideMenu() {
     // this.isActive = !this.isActive;
     this.menuService.updateStatus(!this.isActive);

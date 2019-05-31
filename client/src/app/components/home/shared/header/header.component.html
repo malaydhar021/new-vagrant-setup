@@ -9,19 +9,19 @@
 
 <header class="rightPanHeader">
   <div class="headerLeft" [ngClass]="tglFlag ? 'active' : ''">
-    <a class="gear" (click)="tglSetting()"></a>
+    <a class="gear" (click)="tglSetting()" (clickOutside)="closeMembershipBox($event)"></a>
 
     <div class="settingDrop">
       <div class="topSec">
-        <h2 *ngIf=" userPlanDetails && userPlanDetails.status === 'ACTIVE'">
+        <h2 *ngIf="userPlanDetails && userPlanDetails.status === 'ACTIVE'">
           <span>Your current</span>
           membership plan
         </h2>
-        <h2 *ngIf=" userPlanDetails && userPlanDetails.status !== 'ACTIVE'">
+        <h2 *ngIf="userPlanDetails && userPlanDetails.status !== 'ACTIVE'">
           <span>Your current</span>
             You haven't subscribe
         </h2>
-        <div class="planName" *ngIf=" userPlanDetails && userPlanDetails.status === 'ACTIVE'">
+        <div class="planName" *ngIf="userPlanDetails && userPlanDetails.status === 'ACTIVE'">
           {{currentPlanName}} 
         </div>
         <a [routerLink]="['/home/plans']" class="upgrade">{{(userPlanDetails && userPlanDetails.status !== 'ACTIVE') ? 'Add' : 'Update'}} Now</a>
@@ -35,7 +35,7 @@
 
   </div>
   <div class="headerRight" [ngClass]="tglProfile ? 'active' : ''">
-      <a class="hdrProfile" (click)="tglProfileMenu()" [style.background-image]="'url('+ userImageUrl +')'"></a>
+      <a class="hdrProfile" (click)="tglProfileMenu()" (clickOutside)="closeProfileBox($event)" [style.background-image]="'url('+ userImageUrl +')'"></a>
       <div class="settingDrop">
         <ul>
           <li><a [routerLink]="['/home/profile']" routerLinkActive="active">Edit Profile</a></li>

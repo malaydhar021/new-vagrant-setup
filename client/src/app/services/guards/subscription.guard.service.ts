@@ -38,11 +38,11 @@ export class SubscriptionGuard implements CanActivate {
     return this.subscriptionService.getCurrentSubscription().pipe(map((plan: any) => {
       this.subscriptionService.isSubscribed$.next(plan);
       this.loaderService.disableLoader();
-      if (plan.subscription.status !== 'ACTIVE') {
+      if (plan.subscription.status === 'ACTIVE' || plan.subscription.status === 'NA') {
+        return true;
+      } else {
         this.router.navigate(['/home/plans']);
         return false;
-      } else {
-        return true;
       }
     }));
   }
