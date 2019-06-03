@@ -17,7 +17,7 @@ import { WidgetUrl } from '../../../helpers/api.helper';
  * Component to handle all sort of functionalities related to campaign. It's mostly handles
  * CRUD operations for campaign
  * @class CampaignComponent
- * @version 1.1.0
+ * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -51,6 +51,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedBrands: any = this.brands[0]; // default selected brand, the first one
   exitPopups: any = []; // holds all exit popups as an array or objects
   selectedExitPopup: any = this.exitPopups[0]; // default selected exit popup, the first one
+  showCopySnippetBox: boolean = false; // flag to set true to show copy snippet box
 
   /**
    * Constructor method to fetch all required information from api provider
@@ -228,6 +229,14 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     );
+  }
+
+  /**
+   * @method closeCopySnippetBox
+   * @since Version 
+   */
+  public closeCopySnippetBox() {
+    this.showCopySnippetBox = false;
   }
 
   /**

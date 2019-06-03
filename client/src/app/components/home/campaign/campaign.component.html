@@ -29,13 +29,14 @@
                     <h2>{{ campaign.campaign_name }} <span class="redTag" *ngIf="campaign.is_active">ACTIVE</span></h2>
                     <p>{{ campaign.domain_name }}</p>
                   </div>
-                  <a (copy)="onCopySnippet()" [context]="prepareContext(campaign)" class="copyBtn" copyToClipboard><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet
-                    <div class="copypop">
+                  <a (copy)="onCopySnippet()" (clickOutside)="closeCopySnippetBox($event)" [context]="prepareContext(campaign)" class="copyBtn" [ngClass]="{copyNow: showCopySnippetBox && i == rowIndex}" (mouseover)="showCopySnippetBox = true; rowIndex = i" copyToClipboard><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet
+                    <div class="copypop" (mouseout)="showCopySnippetBox = false; rowIndex = i" >
                       <h5>Copy Code Snippet</h5>
                       <div class="bodyPopSnippet">
                         <code>
                           <pre>
-                              &lt;script src="https://lib.local.usestickyreviews.com/widget.min.js" data-token="emv_ubuntu5c73c8073b2b01551091719" data-name="_emv" async&gt;&lt;/script&gt;
+                              <!-- &lt;script src="{{ prepareContext(campaign) }}" data-token="{{ campaign.unique_script_id }}" data-name="_emv" async&gt;&lt;/script&gt; -->
+                              {{ prepareContext(campaign) }}
                           </pre>
                         </code>
                       </div>

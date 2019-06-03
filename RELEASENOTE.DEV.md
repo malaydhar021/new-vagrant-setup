@@ -56,10 +56,13 @@
 
 ## Campaign
 
+### V2.0.0
+
+1. Added copy snippet box on over on copy snippet button to copy the code snippet manually
+
 ### V1.1.0
 
 1. Added exit popup to campaign in add/edit a campaign
-
 
 ### V1.0.0
 
