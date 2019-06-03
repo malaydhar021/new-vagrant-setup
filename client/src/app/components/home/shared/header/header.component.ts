@@ -55,9 +55,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private errorService: ErrorsService,
     private menuService: MenuService,
+    private cookieService: CookieService,
     private subscriptionService: SubscriptionService,
     private userService: UserService,
-    private cookieService: CookieService,
   ) {
     // subscription to update the error property to display in template
     // this.subscription = this.errorService.error$.subscribe(
