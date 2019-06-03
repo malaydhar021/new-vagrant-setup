@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="images/favicon.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <title>Stickyreviews</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+</head>
+
+<body class="bodyDesign">
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+<?php
+/* get the env url and set urls */
+ $getEnvUrl = $_SERVER['SERVER_NAME'];
+
+if (strpos($getEnvUrl, 'local') !== false) {
+    $linkUrl = 'local.usestickyreviews.com';
+} elseif (strpos($getEnvUrl, 'beta') !== false ){
+    $linkUrl = 'beta.usestickyreviews.com';
+} else {
+    $linkUrl = 'usestickyreviews.com';
+}
+
+?>
+<header class="headerArea homeHeader">
+    <div class="container">
+        <div class="logo">
+            <a href="/"><img src="images/logo.png" alt=""></a>
+        </div>
+        <div class="navArea">
+            <ul class="nav">
+                <li><a href="https://www.<?php echo $linkUrl; ?>/#howItWorks">How It Works</a></li>
+                <li><a href="https://www.<?php echo $linkUrl; ?>/#pricing">Pricing</a></li>
+                <li><a href="https://app.<?php echo $linkUrl; ?>/sign-up" target="_blank"> 14 Day Free Trial</a></li>
+            </ul>
+            <div class="loginBtn">
+                <!--                        <a href=""> OLD IMAGE -->
+                <!--                            <img src="images/icon_menu_login.png" alt="">-->
+                <!--                        </a>-->
+                <span id="loginBtn"> <a href="https://app.<?php echo $linkUrl; ?>" target="_blank"> <img src="images/icon_menu_login.png" alt="login"></a></span>
+
+                <span id="dashboard"> <a href="https://app.<?php echo $linkUrl; ?>/home/dashboard" target="_blank"> <img src="images/icon_dashboard_2.png" alt="dashboard"> </a></span>
+            </div>
+        </div>
+        <div class="responsiveNav">
+            <span></span>
+        </div>
+        <div class="fogLayer"></div>
+    </div>
+</header>

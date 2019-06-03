@@ -45,8 +45,21 @@ body {
     background: #fff;
 }
 
+.bodyDesign {
+    background: url(images/graphic_top_right.png) no-repeat right top;
+}
 
 
+.spacingheader {
+    padding-top: 178px !important;
+}
+.supportPg {
+    padding-top: 100px !important;
+}
+.supportContent {
+    height: 100vh !important;
+    position: relative !important;
+}
 .bannerArea {
     background: url("images/graphic_top_right.png") no-repeat right top;
 }
@@ -54,6 +67,13 @@ body {
     display: inline-block;
     width: 100%;
     margin-bottom: 100px;
+}
+.homeHeader {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin-bottom: 0;
 }
 .headerArea .container {
     max-width: 1514px;

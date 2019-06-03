@@ -1,62 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="images/favicon.png">
-    <link rel="shortcut icon" href="images/favicon.ico">
-
-    <title>Stickyreviews</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
-</head>
-
-<body>
-<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-
-<?php $getEnvUrl = $_SERVER['SERVER_NAME'];
-if (strpos($getEnvUrl, 'local') !== false) {
-    $linkUrl = 'local';
-} elseif (strpos($getEnvUrl, 'beta') !== false ){
-    $linkUrl = 'beta';
-} else {
-    $linkUrl = '';
-}
-?>
-
-<section class="bannerArea">
-        <header class="headerArea">
-            <div class="container">
-                <div class="logo">
-                    <a href="/"><img src="images/logo.png" alt=""></a>
-                </div>
-                <div class="navArea">
-                    <ul class="nav">
-                        <li><a href="#howItWorks">How It Works</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/sign-up" target="_blank">14 Day Free Trial</a></li>
-                    </ul>
-                    <div class="loginBtn">
-<!--                        <a href=""> OLD IMAGE -->
-<!--                            <img src="images/icon_menu_login.png" alt="">-->
-<!--                        </a>-->
-                        <span id="loginBtn"> <a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/"> Login</a></span>
-                        <span id="dashboard"> <a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/home/dashboard"> Dashboard</a></span>
-                    </div>
-                </div>
-                <div class="responsiveNav">
-                    <span></span>
-                </div>
-                <div class="fogLayer"></div>
-            </div>
-        </header>
+<!-- header -->
+<?php include("header.php"); ?>
+<section class="bannerArea spacingheader">
         <div class="bannerMid">
             <div class="container">
                 <h1>
@@ -66,7 +10,7 @@ if (strpos($getEnvUrl, 'local') !== false) {
                 <p>
                     Sticky Reviews makes increasing conversions simple. It's super simple to set up and takes only around 10 minutes to get started.
                 </p>
-                <a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/sign-up" target="_blank" class="freeTrialBtn">Start 14 days FREE trial</a>
+                <a href="https://app.<?php echo $linkUrl; ?>/sign-up" target="_blank" class="freeTrialBtn">Start 14 days FREE trial</a>
             </div>
         </div>
         <div class="featureArea">
@@ -240,7 +184,7 @@ if (strpos($getEnvUrl, 'local') !== false) {
                     Pricing After Your 14 Day FREE Trial!
                     <span>Save over 50% when compared to our competitors!</span>
                 </h2>
-                <a href="https://app.<?php echo $linkUrl; ?>.usestickyreviews.com/sign-up" target="_blank" class="freeTrialBtn">Start 14 days FREE trial</a>
+                <a href="https://app.<?php echo $linkUrl; ?>/sign-up" target="_blank" class="freeTrialBtn">Start 14 days FREE trial</a>
                 <div class="plan">
                     <div class="planCell">
                         <div class="planHead">
@@ -300,130 +244,5 @@ if (strpos($getEnvUrl, 'local') !== false) {
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <!-- cookies -->
-        <div class="cookieCompliance">
-            <div class="container">
-                <p>
-                    We use cookies to offer you a better experience and analyze site traffic. By continuing to use this
-                    website, you consent to the use of cookies
-                </p>
-
-                <button class="closeCookie" onclick="closeCookie()">
-                    Accept
-                </button>
-            </div>
-        </div>
-
-
-        <div class="container">
-            <p class="billed">*Billed monthly, <a href="">no set up fee.</a></p>
-            <p class="copyright">© 2018 All rights reserved. <strong>Tier5 LLC </strong> | <a href="terms-and-conditions.php" target="_blank"> Terms and Conditions </a> | <a href="privacy-policy.php" target="_blank">Privacy Policy </a> | <a href="support.php" target="_blank">Contact Support</a> </p>
-        </div>
-        <iframe src="https://app.local.usestickyreviews.com/" class="iframe-div" style="display: none" id="opIFrame"></iframe>
-    </footer>
-
-
-
-    <script>
-        $(document).ready(function() {
-            var slideCount = 0;
-            var slideDuration = 5000;
-            var slide = [];
-            var slideNavFlag = [];
-            var slideNav = $(".sliderNav span");
-
-            $(".slide").each(function() {
-                slide.push($(this));
-            });
-            $(slideNav).each(function() {
-                slideNavFlag.push($(this));
-            });
-
-            slideNav.click(function() {
-                $(".slide").removeClass("active");
-                slide[$(this).index()].addClass("active");
-
-                slideNav.removeClass("active");
-                $(this).addClass("active");
-            });
-
-            slide[slideCount].addClass("active");
-            slideNavFlag[slideCount].addClass("active");
-            setInterval(function() {
-                slideCount = slideCount + 1;
-                if (slideCount == 3) {
-                    slideCount = 0;
-                }
-                $(".slide").removeClass("active");
-                slide[slideCount].addClass("active");
-                slideNav.removeClass("active");
-                slideNavFlag[slideCount].addClass("active");
-            }, slideDuration);
-
-
-            $(".responsiveNav").click(function() {
-                if ($(this).hasClass("active")) {
-                    $(this).removeClass("active");
-                    $(".navArea").removeClass("active");
-                    $(".fogLayer").removeClass("active");
-                } else {
-                    $(this).addClass("active");
-                    $(".navArea").addClass("active");
-                    $(".fogLayer").addClass("active");
-                }
-            });
-
-        })
-
-        window.onscroll = function() {scrollFunction()};
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("myBtn").style.display = "block";
-            } else {
-                document.getElementById("myBtn").style.display = "none";
-            }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
-
-<!-- scripts -->
-<script>
-    var cookiePage = $.cookie('readSite');
-
-    $(document).ready(function () {
-        if (cookiePage) {
-            $('.cookieCompliance').removeClass('showCookie');
-        } else {
-            setTimeout(() => {
-                $('.cookieCompliance').addClass('showCookie');
-            }, 200);
-        }
-    });
-
-    function closeCookie() {
-        $('.cookieCompliance').removeClass('showCookie');
-        $.cookie('readSite', 1);
-    };
-
-     if($.cookie('_loginUser')) {
-        $('#loginBtn').hide();
-        $('#dashboard').show();
-     } else {
-         $('#loginBtn').show();
-         $('#dashboard').hide();
-     }
-</script>
-
-
-</body>
-
-
-</html> 
+    <!-- footer -->
+    <?php include("footer.php")?>
