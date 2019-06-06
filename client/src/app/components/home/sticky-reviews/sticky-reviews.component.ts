@@ -100,6 +100,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   ];
   selectedReivewType: number = 1; // default selected value to show which review field will be shown
   imagePreviewUrl: string = 'assets/images/user.png'; // default image preview url
+  config: any;  // config for pagination
 
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -144,10 +145,14 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         this.reviewFileName = 'or drag & drop your image here';
         this.reviewAsFile = null;
         // assign current value of review type a class property
-        this.selectedReivewType = value;       
+        this.selectedReivewType = value;
         Log.debug(this.selectedReivewType);
       }
     );
+    this.config = {
+      itemsPerPage: 15,
+      currentPage: 1,
+    };
   }
 
   /**
@@ -223,6 +228,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         Log.success(response);
         if (response.status) {
           // update the reviews array with latest api response data
+          this.config.totalItems = response.data.total;
           this.reviews = response.data.data;
           Log.debug(this.reviews.length, "Checking the length of the reviews property");
           // hide the loader
@@ -626,4 +632,22 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  public pageChanged(pgNum) {
+    this.config.currentPage = pgNum;
+    this.loaderService.enableLoader();
+    this.stickyReviewService.getAllPaginatedStickyReviews(pgNum).subscribe(
+        (response: any) => {
+          Log.success(response);
+          if (response.status) {
+            // update the reviews array with latest api response data
+            this.reviews = response.data.data;
+            // Log.debug(this.reviews.length, "Checking the length of the reviews property");
+            // hide the loader
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
 }

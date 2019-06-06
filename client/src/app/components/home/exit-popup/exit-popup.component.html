@@ -13,7 +13,7 @@
     <div class="popupListContainer">
       <ng-scrollbar [compact]="true">
                 <ul class="popupList">
-                  <li *ngFor="let exitPopup of exitPopups;let i = index">
+                  <li *ngFor="let exitPopup of exitPopups | paginate: config; let i = index">
                     <div class="popupThubm" (click)="openExitpopUpPreview(exitPopup)">
                       <img src="{{exitPopup.popup_preview_img}}" alt="thumb5">
                     </div>
@@ -30,7 +30,8 @@
                 </ul>
       </ng-scrollbar>
     </div>
-
+    <!-- Pagination -->
+    <pagination-controls [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
 </div>
 <!--[ngStyle]="{ 'color-overlay' : '#ff1616' }"-->

@@ -23,7 +23,7 @@
       <div class="tbody">
         <ng-scrollbar [compact]="true" *ngIf="reviewLinks.length > 0; else noRecords">
           <ul>
-            <li class="row" *ngFor="let link of reviewLinks; let i = index" [ngClass]="{showMore: showMore && rowIndex === i}">
+            <li class="row" *ngFor="let link of reviewLinks | paginate: config; let i = index" [ngClass]="{showMore: showMore && rowIndex === i}">
               <a class="rowMoreInfo" (click)="showMoreOptions(i)"><img src="../../../../assets/images/down_double_arrow.png" alt=""> {{ !showMore || rowIndex != i? "More" : "Less" }}
                 Options</a>
               <div class="rowContainer">
@@ -102,6 +102,8 @@
         </ng-template>
       </div>
     </div>
+    <!-- Pagination -->
+    <pagination-controls [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
 </div>
 <!-- add/edit modal-->

@@ -97,4 +97,8 @@ export class ExitPopupService {
         return this.httpClient.get(ExitPopupApiEndpoints.getUserExitPopups.concat('/?searchParams=' + tearm));
     }
 
+    public getUserPaginatedExitPopups(pgNum) {
+        return this.httpClient.get(ExitPopupApiEndpoints.getUserExitPopups.concat('?page=' + pgNum));
+    }
+
 }

@@ -64,4 +64,8 @@ export class StickyReviewService {
     return this.httpClient.post(StickyReviewsApiEndpoints.stickyReviews, data);
   }
 
+  public getAllPaginatedStickyReviews(pgNum) {
+    return this.httpClient.get(StickyReviewsApiEndpoints.stickyReviews.concat('?page=' + pgNum));
+  }
+
 }

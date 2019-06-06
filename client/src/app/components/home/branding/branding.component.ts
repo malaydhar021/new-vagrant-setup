@@ -21,6 +21,9 @@ import { Log } from '../../../helpers/app.helper';
   templateUrl: './branding.component.html',
   styleUrls: ['./branding.component.scss']
 })
+
+
+
 export class BrandingComponent implements OnInit, OnDestroy {
   // declaring class properties
   form: FormGroup; // for add or edit brand form in modal
@@ -34,18 +37,19 @@ export class BrandingComponent implements OnInit, OnDestroy {
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   brandId: number = null; // property to hold the brand id
+  config: any;  // config for pagination
 
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
-   * value of defined variable. 
+   * value of defined variable.
    * @constructor constructor
    * @since Version 1.0.0
-   * @param ngxSmartModalService 
-   * @param title 
-   * @param router 
-   * @param formBuilder 
-   * @param errorService 
-   * @param brandingService 
+   * @param ngxSmartModalService
+   * @param title
+   * @param router
+   * @param formBuilder
+   * @param errorService
+   * @param brandingService
    * @returns Void
    */
   constructor(
@@ -55,10 +59,10 @@ export class BrandingComponent implements OnInit, OnDestroy {
     private errorService: ErrorsService,
     private brandingService: BrandingService,
     private loaderService: LoaderService,
-  ) {}
+  ) { }
 
   /**
-   * ngOnInit method initialize angular reactive form object for add / edit form of a brand. 
+   * ngOnInit method initialize angular reactive form object for add / edit form of a brand.
    * Also it set the title of the page. Also it defines client side validations.
    * @method ngOnInit
    * @since Version 1.0.0
@@ -69,13 +73,18 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.loaderService.enableLoader();
     // set the page title
     this.title.setTitle('Stickyreviews :: Branding');
-    // making an api call to get all branding  
+    // making an api call to get all branding
     this.getBrandings();
     // initialize the form builder for add / edit a brand form
     this.form = this.formBuilder.group({
       brandName : [null, Validators.required], // brand name
-      brandUrl : [null, Validators.required] // brand url 
+      brandUrl : [null, Validators.required] // brand url
     });
+    // pagination controls
+    this.config = {
+      itemsPerPage: 15,
+      currentPage: 1,
+    };
   }
 
   /**
@@ -121,7 +130,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
         Log.success(response);
         if (response.status) {
           // update the brands array with latest api response data
-          this.brands = response.data.data;          
+          this.brands = response.data.data;
+          this.config.totalItems = response.data.total,
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -206,7 +216,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // reset the form
           this.resetForm;
           // making an api call to get all brandings along with the newly added branding
-          this.getBrandings(); 
+          this.getBrandings();
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
@@ -227,7 +237,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public editBrand(data: BrandingModel, id: number) {
     // let's make an api call to add this brand
     this.brandingService.updateBranding(data, id).subscribe(
-      (response : any ) => {
+      (response: any ) => {
         Log.info(response, 'edit a brand response');
         if(response.status) {
           // once getting the response and status is true close the modal
@@ -239,7 +249,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // reset the form
           this.resetForm;
           // making an api call to get all brandings along with the newly added branding
-          this.getBrandings(); 
+          this.getBrandings();
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
@@ -298,7 +308,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           // show the success message to user in brand listing page
           this.successMessage = response.message;
           // making an api call to get all brandings along with the newly added branding
-          this.getBrandings(); 
+          this.getBrandings();
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
@@ -308,4 +318,22 @@ export class BrandingComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  pageChanged(pgNum) {
+    this.config.currentPage = pgNum;
+    this.loaderService.enableLoader();
+    this.brandingService.getPaginatedBrands(pgNum).subscribe(
+        (response: any) => {
+          Log.success(response);
+          if (response.status) {
+            // update the brands array with latest api response data
+            this.brands = response.data.data;
+            // hide the loader
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
+
 }

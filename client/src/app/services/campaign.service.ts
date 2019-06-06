@@ -114,4 +114,9 @@ export class CampaignService {
     const params = new HttpParams().set('paginate', 'false');
     return this.httpClient.get(BrandingApiEndpoints.brands, {params: params});
   }
+
+  public getAllPaginatedCampaigns(pgNum) {
+    return this.httpClient.get(CampaignApiEndpoints.campaigns.concat('?page=' + pgNum));
+  }
+
 }

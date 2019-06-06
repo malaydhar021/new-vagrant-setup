@@ -52,7 +52,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   exitPopups: any = []; // holds all exit popups as an array or objects
   selectedExitPopup: any = this.exitPopups[0]; // default selected exit popup, the first one
   showCopySnippetBox: boolean = false; // flag to set true to show copy snippet box
-
+  config: any;  // paginate config
   /**
    * Constructor method to fetch all required information from api provider
    * @constructor constructor
@@ -125,6 +125,11 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.reviewForm = this.formBuilder.group({
       campaignReviews: new FormArray([], MinimumCheckedCheckboxes(1)), // array form field for sticky reviews
     });
+    // pagination controls
+    this.config = {
+      itemsPerPage: 15,
+      currentPage: 1,
+    };
   }
 
   /**
@@ -333,6 +338,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
           // update the campaign array with latest api response data
           // if there is no data object then assign empty array i.e no records found
           this.campaigns = response.data.data;
+          this.config.totalItems = response.data.total
           // hide the loader
           this.loaderService.disableLoader();
         } else {
@@ -774,4 +780,30 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   public prepareContext(campaign: CampaignInterface) {
     return '<script src="' + WidgetUrl  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async></script>';
   }
+
+  /**
+   * Pagination controls
+   * @param pgNum
+   */
+  pageChanged(pgNum) {
+    this.config.currentPage = pgNum;
+    this.loaderService.enableLoader();
+    this.campaignService.getAllPaginatedCampaigns(pgNum).subscribe(
+        (response: any) => {
+          Log.success(response);
+          if (response.status) {
+            // update the campaign array with latest api response data
+            // if there is no data object then assign empty array i.e no records found
+            this.campaigns = response.data.data;
+            // hide the loader
+            this.loaderService.disableLoader();
+          } else {
+            this.errorMessage = response.messages;
+            // hide the loader
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
 }

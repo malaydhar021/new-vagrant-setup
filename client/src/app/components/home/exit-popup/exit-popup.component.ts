@@ -68,6 +68,7 @@ export class ExitPopupComponent implements OnInit {
   exitPopupCtaButtonText: string = '';
   modalActive: string = '';
   showCtaField: boolean = false;
+  config: any;  // config for pagination
 
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
@@ -106,6 +107,11 @@ export class ExitPopupComponent implements OnInit {
     });
     this.getVisualStyles();
     this.getUserExitPopups();
+    // pagination controls
+    this.config = {
+      itemsPerPage: 15,
+      currentPage: 1,
+    };
   }
 
   public ngAfterViewInit() {
@@ -194,6 +200,7 @@ export class ExitPopupComponent implements OnInit {
         (response: any ) => {
           if (response.status) {
             this.exitPopups = response.data.data;
+            this.config.totalItems = response.data.total,
             this.loaderService.disableLoader();
           }
         }
@@ -762,6 +769,19 @@ export class ExitPopupComponent implements OnInit {
       this.form.controls['exitPopupButtonUrl'].updateValueAndValidity();
       this.form.controls['exitPopupCtaButtonText'].updateValueAndValidity();
       this.form.controls['exitPopupButtonText'].updateValueAndValidity();
+  }
+
+  pageChanged(pgNum) {
+    this.config.currentPage = pgNum;
+    this.loaderService.enableLoader();
+    this.exitPopupService.getUserPaginatedExitPopups(pgNum).subscribe(
+        (response: any ) => {
+          if (response.status) {
+            this.exitPopups = response.data.data;
+            this.loaderService.disableLoader();
+          }
+        }
+    );
   }
 
 

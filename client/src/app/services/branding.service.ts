@@ -60,4 +60,8 @@ export class BrandingService {
   public deleteBranding(id: number) {
     return this.httpClient.delete(BrandingApiEndpoints.brands.concat('/' + id));
   }
+
+  public getPaginatedBrands(pgNum) {
+    return this.httpClient.get(BrandingApiEndpoints.brands.concat('?page=' + pgNum));
+  }
 }

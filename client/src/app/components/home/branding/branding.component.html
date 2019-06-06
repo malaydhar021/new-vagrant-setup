@@ -24,7 +24,7 @@
       <div class="tbody">
         <ng-scrollbar [compact]="true" *ngIf="brands.length > 0; else noRecords">
           <ul>
-            <li class="row" *ngFor="let brand of brands">
+            <li class="row" *ngFor="let brand of brands | paginate: config">
               <div class="rowContainer">
                 <div class="tcol">
                   <h2>{{ brand.name }}</h2>
@@ -41,6 +41,7 @@
             </li>
           </ul>
         </ng-scrollbar>
+
         <ng-template #noRecords>
             <ul>
               <li class="row">
@@ -54,6 +55,8 @@
         </ng-template>
       </div>
     </div>
+    <!-- Pagination -->
+    <pagination-controls [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
 </div>
 

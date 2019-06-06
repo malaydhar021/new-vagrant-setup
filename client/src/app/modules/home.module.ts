@@ -37,6 +37,7 @@ import { WidgetStylesModule }               from './widget-styles.module';
 import { DigitsOnlyDirective }              from '../directives/digits-only.directive';
 import { CopyToClipboardDirective }         from '../directives/copy-to-clipboard.directive';
 import { ClickOutsideDirective }            from '../directives/click-outside.directive';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
@@ -62,7 +63,7 @@ import { ClickOutsideDirective }            from '../directives/click-outside.di
     CancelMembershipComponent,
     DigitsOnlyDirective,
     CopyToClipboardDirective,
-    ClickOutsideDirective
+    ClickOutsideDirective,
   ],
   imports: [
     CommonModule,
@@ -78,7 +79,8 @@ import { ClickOutsideDirective }            from '../directives/click-outside.di
     MessageModule,
     ColorPickerModule,
     MediaModule,
-    WidgetStylesModule
+    WidgetStylesModule,
+    NgxPaginationModule,
   ],
   providers: [
     BrandingService,

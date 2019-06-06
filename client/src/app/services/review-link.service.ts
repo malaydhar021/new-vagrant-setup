@@ -111,4 +111,9 @@ export class ReviewLinkService {
     data._method = "PUT";
     return this.httpClient.post(ReviewLinkApiEndpoints.reviewLinks.concat("/" + id + '/auto-approve-status'), data);
   }
+
+  public getAllPaginatedReviewLinks(pgNum) {
+    return this.httpClient.get(ReviewLinkApiEndpoints.reviewLinks.concat('?page=' + pgNum));
+  }
+
 }

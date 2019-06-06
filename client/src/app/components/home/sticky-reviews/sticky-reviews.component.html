@@ -21,7 +21,7 @@
       <div class="tbody">
         <ng-scrollbar [compact]="true" *ngIf="reviews.length > 0; else noRecords">
           <ul>
-            <li class="row" *ngFor="let review of reviews">
+            <li class="row" *ngFor="let review of reviews | paginate: config">
               <div class="rowContainer">
                 <div class="tcol">
                   <div class="userImg" [style.background-image]="'url('+ review.image_url +')'">
@@ -62,6 +62,8 @@
         </ng-template>
       </div>
     </div>
+    <!-- Pagination -->
+    <pagination-controls [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
 </div>
 

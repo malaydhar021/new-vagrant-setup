@@ -56,7 +56,7 @@ export class ReviewLinkComponent implements OnInit {
   textColor: string = '#268BFF'; // Backdrop color of modal or page background
   showMore: boolean = false; // flag to set true to show more and false to show less
   rowIndex: number = null; // row index of each row for review link list page
-
+  config: any;  // config for pagination
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -96,6 +96,10 @@ export class ReviewLinkComponent implements OnInit {
     this.formStep1();
     // initialize the form builder for add/edit action for step 2
     this.formStep2();
+     this.config = {
+       itemsPerPage: 15,
+       currentPage: 1,
+     };
   }
 
   /**
@@ -436,12 +440,13 @@ export class ReviewLinkComponent implements OnInit {
    */
   public getAllReviewLinks() {
     // Enable the loader for an ajax call
-    this.loaderService.enableLoader()
+    this.loaderService.enableLoader();
     // Service to to get all the Review Links
     this.reviewLinkService.getAllReviewLinks().subscribe(
       (response: any) => {
         Log.info(response, "List: response");
         if(response.status) {
+          this.config.totalItems = response.data.total;
           this.reviewLinks = response.data.data;
           // hide the loader
           this.loaderService.disableLoader();
@@ -451,7 +456,7 @@ export class ReviewLinkComponent implements OnInit {
           this.loaderService.disableLoader();
         }
       }
-    )
+    );
   }
 
   /**
@@ -755,4 +760,26 @@ export class ReviewLinkComponent implements OnInit {
       this.loaderService.disableLoader()
     }
   }
+
+  public pageChanged(pgNum) {
+    this.config.currentPage = pgNum;
+    // Enable the loader for an ajax call
+    this.loaderService.enableLoader();
+    // Service to to get all the Review Links
+    this.reviewLinkService.getAllPaginatedReviewLinks(pgNum).subscribe(
+        (response: any) => {
+          Log.info(response, "List: response");
+          if (response.status) {
+            this.reviewLinks = response.data.data;
+            // hide the loader
+            this.loaderService.disableLoader();
+          } else {
+            this.errorMessage = response.messages;
+            // hide the loader
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
 }
