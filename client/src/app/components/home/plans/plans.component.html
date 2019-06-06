@@ -69,7 +69,7 @@
           </div>
         </div>
         <div>
-          <message></message>
+          <message [successMessage]="successMessage" [showMessage]="showError"></message>
         </div>
         <div class="planNote text-center">
           <p>
@@ -92,7 +92,7 @@
       </h2>
     </div>
     <div class="sr-modal-body"> 
-      <message></message>
+      <message [successMessage]="successMessage" [showMessage]="showError"></message>
       <form [formGroup]="cardForm" (ngSubmit)="add()">
         <div class="cardForm updateCardModal">
           <h2>Credit Card Information</h2>

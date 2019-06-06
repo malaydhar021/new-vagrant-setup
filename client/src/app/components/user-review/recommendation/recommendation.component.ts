@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserReviewService } from '../../../services/user-review.service';
-import { UserReviewModel } from '../../../models/user-review.model';
-import { Log } from '../../../helpers/app.helper';
-import { Subscription } from 'rxjs';
-import { Title } from '@angular/platform-browser';
+import { Component, OnInit, OnDestroy }     from '@angular/core';
+import { Title }                            from '@angular/platform-browser';
+import { Subscription }                     from 'rxjs';
+import { UserReviewService }                from '../../../services/user-review.service';
+import { UserReviewModel }                  from '../../../models/user-review.model';
+import { Log }                              from '../../../helpers/app.helper';
+import { ErrorsService }                    from '../../../services/errors.service';
 
 /**
  * Class to capture whether user wants to recommend or not and store that data into a model
@@ -19,26 +20,49 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./recommendation.component.scss']
 })
 export class RecommendationComponent implements OnInit, OnDestroy {
+  // defining class properties
   subscription: Subscription;
-  constructor(private userReviewService: UserReviewService, private title: Title) {
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
+
+  /**
+   * Constructor method to load required services at the very first
+   * @constructor constructor
+   * @since Version 1.0.0
+   * @param userReviewService UserReviewService instance
+   * @param title Title service instance
+   * @param errorService ErrorService instance
+   * @returns Void
+   */
+  constructor(private userReviewService: UserReviewService, private title: Title, private errorService: ErrorsService) {
     this.title.setTitle('Stickyreviews :: Recommendation');
     // subscribe to review to get the latest update data from review
     this.subscription = this.userReviewService.review$.subscribe(
-      (review: UserReviewModel) => {
-        Log.info(review, "Log the updated review in RecommendationComponent");
+      (review: UserReviewModel) => {}
+    );
+    // error service subscription to catch api side error and show it into template
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
 
   /**
    * @method ngOnInit
+   * @since Version 1.0.0
+   * @returns Void
    */
   public ngOnInit() {}
 
   /**
    * @method ngOnDestroy
+   * @since Version 1.0.0
+   * @returns Void
    */
-  public ngOnDestroy() {}
+  public ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
+  }
 
   /**
    * Method to capture the value of first screen from user

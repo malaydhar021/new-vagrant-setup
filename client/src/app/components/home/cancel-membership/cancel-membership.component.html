@@ -3,10 +3,10 @@
     <div class="ico">
       <img src="../../../../assets/images/logo_iconography.png" alt="">
     </div>
-    <h2 *ngIf="showCancelationForm">Cancellation of Sticky Reviews Membership</h2>
-    <p *ngIf="showCancelationForm">We are so sad to see you go. We would like you to tell us the reason of cancellation of your membership. This would help us to serve the community better experience.</p>
+    <h2 *ngIf="showCancellationForm">Cancellation of Sticky Reviews Membership</h2>
+    <p *ngIf="showCancellationForm">We are so sad to see you go. We would like you to tell us the reason of cancellation of your membership. This would help us to serve the community better experience.</p>
 
-    <div class="formCancellation" *ngIf="showCancelationForm">
+    <div class="formCancellation" *ngIf="showCancellationForm">
       <form [formGroup]="cancellationForm" (ngSubmit)="cancelMembership()" *ngIf="subscriptionStatus === 'ACTIVE'">
           <div class="sr-form-row">
             <div class="sr-form-cell">
@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-  <div class="cancellationConfirmation" *ngIf="!showCancelationForm">
+  <div class="cancellationConfirmation" *ngIf="!showCancellationForm">
       <figure>
         <img src="../../../../assets/images/icon_tick_confirmation.png" alt="">
       </figure>

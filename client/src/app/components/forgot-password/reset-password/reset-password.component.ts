@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ErrorsService } from '../../../services/errors.service';
 import { Log } from '../../../helpers/app.helper';
 import * as ValidationEngine from '../../../helpers/form.helper';
+import { LoaderService } from 'src/app/services/loader.service';
 
 /**
  * This component will handle all sort of operations related to reset password
@@ -22,7 +23,7 @@ import * as ValidationEngine from '../../../helpers/form.helper';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
-
+  // class properties
   form: FormGroup;
   isSubmitted = false;
   error: any = null;
@@ -31,12 +32,30 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   email: string = null;
   token: string = null;
   validationErrors : any = null;
+  successMessage: string = null;
+  errorMessage: string = null;
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
+  /**
+   * Constructor method to load every required services and class at the very first when this component is initialized
+   * @constructor constructor
+   * @since Version 1.0.0
+   * @param renderer Renderer2 class instance
+   * @param formBuilder FormBuilder class instance
+   * @param authService AuthService instance
+   * @param errorService ErrorService class instance
+   * @param router Router class instance
+   * @param title Title service instance
+   * @param route Route class instance
+   * @returns Void
+   */
   constructor(
     private renderer: Renderer2,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private errorService: ErrorsService,
+    private loaderService: LoaderService,
     private router: Router,
     private title: Title,
     private route: ActivatedRoute
@@ -45,42 +64,34 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // add `loginPage` class to reset password template body
     this.renderer.addClass(document.body, 'loginPage'); 
-    this.subscription = this.errorService.error$.subscribe(
-      errMsg => {
-        this.loader = false;
-        this.error = errMsg;
-      }
-    );
-    this.subscription = this.errorService.validationErrors$.subscribe(
-      validationErrMsg => {
-        Log.info(validationErrMsg, 'component error subscription');
-        this.loader = false;
-        this.validationErrors = validationErrMsg;
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
 
   /**
    * Function to initialize angular reactive form object.
-   *
-   * @since 1.0.0
-   * @returns void
+   * @method ngOnInit
+   * @since Version 1.0.0
+   * @returns Void
    */
   public ngOnInit() {
     // check if the user is logged in or not. if logged in then redirect to home
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Reset Password');
-    this.loader = true; // show loader
-    // get the token from last urlsegment from the current route
+    this.loaderService.enableLoader(); // show loader
+    // get the token from last url segment from the current route
     const token = this.route.snapshot.url[1].path;
     // check the token is valid or not
     this.authService.resetPasswordValidateToken(token).subscribe(
       (response: any) => {
-        Log.info(response, 'Loggin the response in ngOnInit');
         this.email = response.data.email;
         this.token = response.data.token;
-        this.loader = false;
+        // this.loader = false;
+        this.loaderService.disableLoader();
       }
     );
 
@@ -97,18 +108,18 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   /**
    * Function to execute when this component is going to destroy by the browser.
    * This will unsubscribe the subscription
-   *
-   * @since 1.0.0
-   * @returns void
+   * @method ngOnDestroy
+   * @since Version 1.0.0
+   * @returns Void
    */
   public ngOnDestroy() {
     this.renderer.removeClass(document.body, 'loginPage');
-    this.subscription.unsubscribe();
+    this.errorSubscription.unsubscribe();
   }
 
   /**
    * Getter method to access the reset password form fields
-   * 
+   * @member resetPasswordFormControls
    * @since 1.0.0
    * @returns void
    */
@@ -127,15 +138,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   public onSubmit() {
     Log.info(this.form.invalid, 'is invalid');
     this.isSubmitted = true;
-    this.validationErrors = null;
-    this.error = null;
     if (this.form.invalid) {
       return false;
     }
 
-    Log.info("show me when validation is passed");
-
-    this.loader = true; // show loader
+    this.loaderService.enableLoader(); // show loader
 
     const data = {
       email: this.email,
@@ -147,13 +154,19 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this.authService.resetPassword(data).subscribe(
       (response: any) => {
         Log.info(response, 'response for forgot password');
-        this.error = response.message;
-        this.validationErrors = null;
-        this.errorService.updateMessage("Password has been successfully reset. Please loging with updated password");
-        this.loader = false; // hide loader
-        this.router.navigate(['/login']);
+        if(response.status) {
+          this.errorService.updateMessage("Password has been successfully reset. Please loging with updated password");
+          this.loaderService.disableLoader(); // hide the loader
+          this.successMessage = response.message;
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000);
+          this.router.navigate(['/login']);
+        } else {
+          this.loaderService.disableLoader();
+          this.errorMessage = response.message;
+        }
       }
     );
   }
-
 }

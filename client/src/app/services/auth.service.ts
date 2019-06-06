@@ -14,15 +14,14 @@ import { ResetPasswordModel } from '../models/reset-password.model';
  * @version 1.0.0
  * @license Proprietary
  */
-
 @Injectable()
 export class AuthService {
   constructor(private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
 
   /**
    * This method will make an api request and authenticate a user
-   *
-   * @since 1.0.0
+   * @method doLogin
+   * @since Version 1.0.0
    * @param auth authModel<Object>
    * @returns Observable<Object>
    */
@@ -32,8 +31,8 @@ export class AuthService {
 
   /**
    * Function to determine whether a user is loggedIn or not
-   *
-   * @since 1.0.0
+   * @method isAuthenticated
+   * @since Version 1.0.0
    * @returns boolean
    */
   public get isAuthenticated() {
@@ -49,19 +48,7 @@ export class AuthService {
    * @returns Boolean
    */
   public get getToken() {
-    let data = null;
-    switch (this.cookieService.get('_rm')) {
-      case 'on':
-        data = localStorage.getItem('_sr') ? JSON.parse(localStorage.getItem('_sr')) : null;
-        break;
-      case 'off':
-        data = sessionStorage.getItem('_sr') ? JSON.parse(sessionStorage.getItem('_sr')) : null;
-        break;
-      default:
-        data = localStorage.getItem('_sr') ? JSON.parse(localStorage.getItem('_sr')) : null;
-        break;
-    }
-
+    let data = localStorage.getItem('_sr') ? JSON.parse(localStorage.getItem('_sr')) : null;
     if (data !== null && data.token !== '' && data.token !== null && typeof data.token !== 'undefined') {
       return data.token;
     } else {
@@ -70,7 +57,7 @@ export class AuthService {
   }
 
   /**
-   * Function that returns the api endpoing with query string to validate a token
+   * Function that returns the api endpoint with query string to validate a token
    * @method validateToken
    * @since Version 1.0.0
    * @param token string
@@ -99,7 +86,6 @@ export class AuthService {
    */
   public removeStorageData() {
     localStorage.removeItem('_sr');
-    sessionStorage.removeItem('_sr');
     this.cookieService.delete('_rm');
   }
 

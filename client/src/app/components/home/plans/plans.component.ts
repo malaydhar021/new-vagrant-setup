@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../services/subscription.service';
 import { LoaderService } from '../../../services/loader.service';
+import { ErrorsService } from 'src/app/services/errors.service';
 
 /**
  * PlansComponent is responsible for handling user subscriptions 
@@ -17,18 +18,20 @@ import { LoaderService } from '../../../services/loader.service';
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.scss']
 })
-export class PlansComponent implements OnInit {
+export class PlansComponent implements OnInit, OnDestroy {
   scrollTrigger: any = false;
   userPlanSubscription: Subscription;
-  userPlanDetails: any
+  userPlanDetails: any;
   pricingPlanType: string = null;
   years: any = [];
   cardForm: FormGroup;
   currentYear: Number;
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
 /**
  * Constructor to inject required service. It also subscribe to a observable which emits the current
- * value of defined variable. 
+ * value of defined variable
  * @constructor constructor
  * @since Version 1.0.0
  * @param subscriptionService SubscriptionService instance
@@ -41,11 +44,17 @@ export class PlansComponent implements OnInit {
     private subscriptionService: SubscriptionService,
     private loaderService: LoaderService,
     private ngxSmartModalService: NgxSmartModalService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private errorService: ErrorsService
   ) {
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
       this.userPlanDetails = userPlan;
-    })
+    });
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
+      }
+    );
   }
 
   /**
@@ -55,6 +64,15 @@ export class PlansComponent implements OnInit {
     this.getCurrentSubscription();
     this.createYearArray();
     this.createCardForm();
+  }
+
+  /**
+   * @method ngOnDestroy
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public ngOnDestroy() {
+
   }
 
   /**

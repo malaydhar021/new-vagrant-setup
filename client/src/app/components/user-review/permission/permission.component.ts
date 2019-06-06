@@ -4,6 +4,7 @@ import { Log } from 'src/app/helpers/app.helper';
 import { UserReviewService } from 'src/app/services/user-review.service';
 import { Subscription } from 'rxjs';
 import { UserReviewModel } from 'src/app/models/user-review.model';
+import { ErrorsService } from 'src/app/services/errors.service';
 
 /**
  * Component to handle user permission input to show this review into user's website or not
@@ -19,18 +20,30 @@ import { UserReviewModel } from 'src/app/models/user-review.model';
 })
 export class PermissionComponent implements OnInit, OnDestroy {
   subscription: Subscription;
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
+
   /**
-   * Constructor method
+   * Constructor method to load required services at the very first
    * @constructor constructor
+   * @since Version 1.0.0
    * @param title Instance of Title service
    * @param userReviewService UserReviewService instance
+   * @param errorService ErrorsService instance
+   * @returns Void
    */
-  constructor(private title: Title, private userReviewService: UserReviewService) {
+  constructor(private title: Title, private userReviewService: UserReviewService, private errorService: ErrorsService) {
     this.title.setTitle('Stickyreviews :: Permission');
     // subscribe to review to get the latest update data from review
     this.subscription = this.userReviewService.review$.subscribe(
       (review: UserReviewModel) => {
         Log.info(review, "Log the updated review in RecommendationComponent");
+      }
+    );
+    // error service subscription to catch api side error and show it into template
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
@@ -47,7 +60,9 @@ export class PermissionComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public ngOnDestroy() {}
+  public ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
+  }
 
   /**
    * Method to update the review data based on user selection for permission screen

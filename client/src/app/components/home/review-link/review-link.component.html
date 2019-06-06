@@ -11,7 +11,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <message [successMessage]="successMessage"></message>
+    <message [successMessage]="successMessage" [showMessage]="showError"></message>
     <div class="table table-col-5 reviewLinkTab">
       <ul class="thead">
         <li>REVIEWS</li>
@@ -111,7 +111,7 @@
       <h2>{{ isEditing ? 'Edit' : 'Add'}} Review Link</h2>
     </div>
     <div class="sr-modal-body">
-      <message></message>
+      <message [successMessage]="successMessage" [showMessage]="showError"></message>
       <form *ngIf="currentStep == 1" [formGroup]="form" (ngSubmit)="onSubmitStep1()"
         class="reviewLink_step_1 reviewStep">
         <div class="sr-form">

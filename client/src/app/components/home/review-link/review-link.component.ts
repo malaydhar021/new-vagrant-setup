@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgxSmartModalService, NgxSmartModalComponent } from 'ngx-smart-modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReviewLinkService } from '../../../services/review-link.service';
@@ -7,6 +7,8 @@ import { Log, Utilities } from '../../../helpers/app.helper';
 import { LoaderService } from '../../../services/loader.service';
 import { Title } from '@angular/platform-browser';
 import * as ValidationEngine from '../../../helpers/form.helper';
+import { Subscription } from 'rxjs';
+import { ErrorsService } from 'src/app/services/errors.service';
 
 /**
  * ReviewLinkComponent is responsible for showing, adding, updating and deleting review links
@@ -20,7 +22,7 @@ import * as ValidationEngine from '../../../helpers/form.helper';
   templateUrl: './review-link.component.html',
   styleUrls: ['./review-link.component.scss']
 })
-export class ReviewLinkComponent implements OnInit {
+export class ReviewLinkComponent implements OnInit, OnDestroy {
   // defining class properties
   reviewLinks: Array<ReviewLinkModel> = [] // An array of all review links
   campaigns: any = []; // all campaigns array
@@ -56,6 +58,8 @@ export class ReviewLinkComponent implements OnInit {
   textColor: string = '#268BFF'; // Backdrop color of modal or page background
   showMore: boolean = false; // flag to set true to show more and false to show less
   rowIndex: number = null; // row index of each row for review link list page
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -75,9 +79,15 @@ export class ReviewLinkComponent implements OnInit {
     private ngxSmartModalService: NgxSmartModalService,
     private reviewLinkService : ReviewLinkService,
     private loaderService: LoaderService,
+    private errorService: ErrorsService
   ) {
     // first fetch all campaigns for add or edit page
     this.getCampaigns();
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
+      }
+    );
   }
 
    /**
@@ -96,6 +106,15 @@ export class ReviewLinkComponent implements OnInit {
     this.formStep1();
     // initialize the form builder for add/edit action for step 2
     this.formStep2();
+  }
+
+  /**
+   * @method ngOnDestroy
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
   }
 
   /**
@@ -251,6 +270,10 @@ export class ReviewLinkComponent implements OnInit {
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
       this.resetForm;
+    });
+    // set showError to false when the modal is being opened
+    this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.errorService.updateShowMessageStatus(false);
     });
   }
 
@@ -743,6 +766,10 @@ export class ReviewLinkComponent implements OnInit {
   ) {
     if (closeModal) this.ngxSmartModalService.getModal('modal1').close(); // close the modal
     error ? this.errorMessage = message : this.successMessage = message; // set message
+    setTimeout(() => {
+      this.errorMessage = null;
+      this.successMessage = null;
+    }, 3000);
     this.isSubmittedStep1 = false; // change the flag for form submit
     this.isSubmittedStep2 = false; // change the flag for form submit
     this.isEditing = false; // set it to false

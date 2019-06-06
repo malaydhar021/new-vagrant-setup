@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+import { NgxSmartModalService, NgxSmartModalComponent } from 'ngx-smart-modal';
 import { BrandingService } from '../../../services/branding.service';
 import { ErrorsService } from '../../../services/errors.service';
 import { LoaderService } from '../../../services/loader.service';
@@ -21,7 +21,7 @@ import { Log } from '../../../helpers/app.helper';
   templateUrl: './branding.component.html',
   styleUrls: ['./branding.component.scss']
 })
-export class BrandingComponent implements OnInit, OnDestroy {
+export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   // declaring class properties
   form: FormGroup; // for add or edit brand form in modal
   loader: boolean = false; // for loader
@@ -34,6 +34,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   brandId: number = null; // property to hold the brand id
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -55,7 +57,13 @@ export class BrandingComponent implements OnInit, OnDestroy {
     private errorService: ErrorsService,
     private brandingService: BrandingService,
     private loaderService: LoaderService,
-  ) {}
+  ) {
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
+      }
+    );
+  }
 
   /**
    * ngOnInit method initialize angular reactive form object for add / edit form of a brand. 
@@ -79,6 +87,42 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Method to call modal callback events when add/edit modal will be closed or opened
+   * @method ngAfterViewInit
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public ngAfterViewInit() {
+    this.modalCallbacks();
+  }
+
+  /**
+   * Method to perform ngx-smart-modal event callbacks
+   * @method modalCallbacks
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public modalCallbacks() {
+    // do stuffs when modal has been closed. In this case reset the form when modal is closed
+    this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
+      this.resetForm;
+    });
+    // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
+    // In this case reset the form when modal is dismissed
+    this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
+      this.resetForm;
+    });
+    // reset form when modal has been closed by esc key
+    this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
+      this.resetForm;
+    });
+    // set showError to false when the modal is being opened
+    this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.errorService.updateShowMessageStatus(false);
+    });
+  }
+
+  /**
    * Method to get all the controls for formGroup named `form`
    * @method getFormControls
    * @since Version 1.0.0
@@ -95,7 +139,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public ngOnDestroy() {}
+  public ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
+  }
 
   /**
    * resetForm method is just reset the form after successfully
@@ -201,6 +247,10 @@ export class BrandingComponent implements OnInit, OnDestroy {
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user in brand listing page
           this.successMessage = response.message;
+          // remove the success message after 3 seconds
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000);
           // change the flag for form submit
           this.isSubmitted = false;
           // reset the form
@@ -210,6 +260,10 @@ export class BrandingComponent implements OnInit, OnDestroy {
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
+          // remove the error message after 3 seconds
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000);
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -234,15 +288,23 @@ export class BrandingComponent implements OnInit, OnDestroy {
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user in brand listing page
           this.successMessage = response.message;
+          // remove the success message after 3 seconds
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000);
           // change the flag for form submit
           this.isSubmitted = false;
           // reset the form
           this.resetForm;
-          // making an api call to get all brandings along with the newly added branding
+          // making an api call to get all branding along with the newly added branding
           this.getBrandings(); 
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
+          // remove the error message after 3 seconds
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000);
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -297,11 +359,19 @@ export class BrandingComponent implements OnInit, OnDestroy {
         if(response.status) {
           // show the success message to user in brand listing page
           this.successMessage = response.message;
+          // remove the success message after 3 seconds
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000);
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings(); 
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
+          // remove the error message after 3 seconds
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000);
           // hide the loader
           this.loaderService.disableLoader();
         }

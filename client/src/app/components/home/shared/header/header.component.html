@@ -1,12 +1,3 @@
-<div class="loaderOuter" *ngIf="loader">
-  <div class="loaderContainer">
-      <div class="loader">
-          <img src="../../../../assets/images/face_icon.png" alt="">
-      </div>
-      <div class="loaderShadow"></div>
-  </div>
-</div>
-
 <header class="rightPanHeader">
   <div class="headerLeft" [ngClass]="tglFlag ? 'active' : ''">
     <a class="gear" (click)="tglSetting()" (clickOutside)="closeMembershipBox($event)"></a>

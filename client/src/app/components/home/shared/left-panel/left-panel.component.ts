@@ -2,6 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MenuService } from '../../../../services/menu.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ErrorsService } from '../../../../services/errors.service';
+
+/**
+ * Component to show left panel menus and their actions
+ * @class LeftPanelComponent
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 @Component({
   selector: 'app-left-panel',
   templateUrl: './left-panel.component.html',
@@ -12,8 +21,10 @@ export class LeftPanelComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   isActive: boolean = false;
   showCookie: boolean = false;
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
-  constructor( private menuService: MenuService, private cookieService: CookieService) {
+  constructor(private menuService: MenuService, private cookieService: CookieService, private errorService: ErrorsService) {
     this.allRoute = {
       '' : ['/home'],
       'dashboard' : ['/home/dashboard'],
@@ -31,6 +42,11 @@ export class LeftPanelComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
+      }
+    );
    }
 
   ngOnInit() {

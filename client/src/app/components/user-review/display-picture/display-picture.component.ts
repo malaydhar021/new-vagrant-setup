@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UserReviewService } from 'src/app/services/user-review.service';
-import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
-import { UserReviewModel } from 'src/app/models/user-review.model';
-import { Log } from 'src/app/helpers/app.helper';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as ValidationEngine from '../../../helpers/form.helper';
-import { LoaderService } from 'src/app/services/loader.service';
+import { Component, OnInit, Input, OnDestroy }  from '@angular/core';
+import { Title }                                from '@angular/platform-browser';
+import { FormGroup, FormBuilder, Validators }   from '@angular/forms';
+import { Subscription }                         from 'rxjs';
+import { UserReviewService }                    from '../../../services/user-review.service';
+import { UserReviewModel }                      from '../../../models/user-review.model';
+import { Log }                                  from '../../../helpers/app.helper';
+import * as ValidationEngine                    from '../../../helpers/form.helper';
+import { ErrorsService }                        from '../../../services/errors.service';
 
 /**
  * Component class to handle and validate the user display picture during user review
@@ -20,7 +20,7 @@ import { LoaderService } from 'src/app/services/loader.service';
   templateUrl: './display-picture.component.html',
   styleUrls: ['./display-picture.component.scss']
 })
-export class DisplayPictureComponent implements OnInit {
+export class DisplayPictureComponent implements OnInit, OnDestroy {
   // define class properties
   @Input() slug: string = null;
   subscription: Subscription;
@@ -42,25 +42,36 @@ export class DisplayPictureComponent implements OnInit {
     'image/gif'
   ];
   imagePreviewUrl: string = 'assets/images/user.png'; // default image preview url
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
   /**
    * Constructor method
    * @constructor constructor
+   * @since Version 1.0.0
    * @param title Instance of Title service
+   * @param formBuilder Instance of FormBuilder
    * @param userReviewService Instance of UserReviewService
+   * @param errorService Instance of ErrorsService
    * @returns Void
    */
   constructor(
     private title: Title,
     private formBuilder: FormBuilder,
     private userReviewService: UserReviewService,
-    private loaderService: LoaderService,
+    private errorService: ErrorsService,
   ) { 
     this.title.setTitle('Stickyreviews :: Display Picture');
     // subscribe to review to get the latest update data from review
     this.subscription = this.userReviewService.review$.subscribe(
       (review: UserReviewModel) => {
         Log.info(review, "Log the updated review in DisplayPictureComponent");
+      }
+    );
+    // error service subscription to catch api side error and show it into template
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
@@ -75,6 +86,10 @@ export class DisplayPictureComponent implements OnInit {
     this.form = this.formBuilder.group({
       dp : [null, Validators.required], // display picture 
     });
+  }
+
+  public ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
   }
 
   /**
@@ -164,32 +179,5 @@ export class DisplayPictureComponent implements OnInit {
     }
     // store the review data
     this.userReviewService.storeUserReview();
-
-    // showing the loader
-    // this.loaderService.enableLoader();
-    // creating an instance of `FormData` class
-    // const formData = new FormData();
-    // add request payload to formData object
-    // if(this.image !== null) {
-    //   formData.append('image', this.image, this.image.name); // append image to formData
-    // }
-    /*
-    // lets make an api call to validate the user data so far
-    this.userReviewService.validateUserReview(this.slug, formData).subscribe(
-      (response : any) => {
-        Log.notice(response, "Notice the response from api");
-        this.loaderService.disableLoader();
-        if(response.status) {
-          const data = {
-            profile_picture: this.image
-          }
-          this.userReviewService.updateReview(data);
-          this.userReviewService.updateCurrentStep('thankYou');
-        }
-      }
-    );
-    */
-    // for debugging and UI fixing 
-    // this.userReviewService.updateCurrentStep('thankYou');
   }
 }

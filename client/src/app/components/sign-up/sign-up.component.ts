@@ -8,6 +8,7 @@ import { ErrorsService } from '../../services/errors.service';
 import { SignupService } from '../../services/signup.service';
 import { Log } from '../../helpers/app.helper';
 import * as ValidationEngine from '../../helpers/form.helper';
+import { LoaderService } from 'src/app/services/loader.service';
 
 /**
  * SignUpComponent class handles all operations related to user signup. It also handles the two step
@@ -33,6 +34,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
   isSubmittedStep1: boolean = false; // flag to set to true if the signup form step 1 has been submitted
   isSubmittedStep2: boolean = false; // flag to set to true if the signpu form step 2 has been submitted
   validationErrors : any = null; // to display server side validation errors into component template
+  successMessage: string = null;
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
+  years: any = []; // holds all years within an array
+  currentYear: number = null; // holds the current year
 
   /**
    * Constructor method which initialize few angular services and few custom services to serve a certain purpose
@@ -43,7 +49,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
    * @param router Angular router to handle route operations like redirect to one route by programme
    * @param formBuilder Angular reactive form builder to handle forms
    * @param authService AuthService is a custom service to handle actions related to user authentication
-   * @param errorService ErrorsService is a custom service to handle all sort of server side erros along with all validation error messages
+   * @param errorService ErrorsService is a custom service to handle all sort of server side errors along with all validation error messages
    * @param signupService SignupService is a custom service only for signup to make api calls mainly
    * @returns Void
    */
@@ -54,22 +60,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private errorService: ErrorsService,
-    private signupService: SignupService
+    private signupService: SignupService,
+    private loaderService: LoaderService
   ) {
     // if user is already logged in then redirect the user to home
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     this.renderer.addClass(document.body, 'sign-upPage');
-    this.subscription = this.errorService.error$.subscribe(
-      errMsg => {
-        this.loader = false;
-        this.errorMessage = errMsg;
-      }
-    );
-    this.subscription = this.errorService.validationErrors$.subscribe(
-      validationErrMsg => {
-        Log.info(validationErrMsg, 'validation errors');
-        this.loader = false;
-        this.validationErrors = validationErrMsg;
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
@@ -88,18 +87,20 @@ export class SignUpComponent implements OnInit, OnDestroy {
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Sign Up');
-    // initialize the fombuilder for signup form step 1 
+    // get all years
+    this.yearsToDisplay();
+    // initialize the form builder for signup form step 1 
     this.signupFormStep1 = this.formBuilder.group({
       name : [null, [Validators.required]], // full name
       email : [null, [Validators.required, Validators.email]],
-      password : [null, [Validators.required, Validators.minLength(8)]]
+      password : [null, [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]]
     });
-    // initialize the fombuilder for signup form step 2
+    // initialize the form builder for signup form step 2
     this.signupFormStep2 = this.formBuilder.group({
       card : [null, Validators.required], // card number
       cvc : [null, Validators.required], // CVC number
-      expMonth : [null, Validators.required], // expiry month
-      expYear: [null, Validators.required] // expiry year
+      expMonth : [1, Validators.required], // expiry month
+      expYear: [this.currentYear, Validators.required] // expiry year
     }, {
       validators: [
         ValidationEngine.IsNumeric('card'), // in house validation method to check if the card number is number
@@ -120,7 +121,22 @@ export class SignUpComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy() {
     this.renderer.removeClass(document.body, 'sign-upPage');
-    this.subscription.unsubscribe();
+    this.errorSubscription.unsubscribe();
+  }
+
+  /**
+   * Method to generate years from current to upcoming 25 years
+   * @method yearsToDisplay
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public yearsToDisplay() {
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    this.currentYear = currentYear
+    for (let i = 0; i < 20; i++) {
+      this.years.push(currentYear + i);
+    }
   }
 
   /**
@@ -181,7 +197,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       return false;
     }
     // lets show the loader to user to perform some api calls
-    this.loader = true;
+    this.loaderService.enableLoader();
     // prepare the request data
     const data = {
       email: this.signupFormStep1.value.email,
@@ -192,7 +208,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       (response : any) => {
         Log.info(response, 'Checking api response');
         // hide the loader
-        this.loader = false;
+        this.loaderService.disableLoader();
         if(response.status) {
           // if email and password are valid then show next step form to user
           this.nextStep();
@@ -221,7 +237,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     }
     Log.info("Show this when client validation is passed in signup form 2");
     // if the form is valid then show the loader
-    this.loader = true;
+    this.loaderService.enableLoader();
     // prepare the data to make api call to signup the user
     const data = {
       name: this.signupFormStep1.value.name,
@@ -240,7 +256,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.signupService.doSignup(data).subscribe(
       (response: any) => {
         Log.info(response, 'Log the response for signup');
-        this.loader = false;
+        this.loaderService.disableLoader();
         this.errorService.updateMessage("You have successfully signed up. Please login to continue");
         this.router.navigate(['/login']);
       }

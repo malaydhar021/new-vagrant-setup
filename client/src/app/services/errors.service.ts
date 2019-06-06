@@ -27,6 +27,10 @@ export class ErrorsService {
   private validationErrorsSubject: BehaviorSubject<any> = new BehaviorSubject<any>('');
   validationErrors$: Observable<any> = this.validationErrorsSubject.asObservable();
 
+  // declaring varient of Subject for validation error messages
+  private showMessageSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  showMessage$: Observable<boolean> = this.showMessageSubject.asObservable();
+
   /**
    * Method to update the error message from http request asynchronously
    * @method updateMessage
@@ -35,8 +39,8 @@ export class ErrorsService {
    * @returns Observable<String>
    */
   public updateMessage(message: string) {
-    Log.notice(message, 'Message from error service');
     this.errorSubject.next(message);
+    this.updateShowMessageStatus(true);
   }
 
   /**
@@ -47,8 +51,19 @@ export class ErrorsService {
    * @returns Observable<Any>
    */
   public updateValidationMessage(validationMessages: any) {
-    Log.notice(validationMessages, 'Validation messages from error service');
     this.validationErrorsSubject.next(validationMessages);
+    this.updateShowMessageStatus(true);
+  }
+
+  /**
+   * Method to update show error message status from anywhere
+   * @method updateShowMessageStatus
+   * @since Version 2.0.0
+   * @param status Current status of show message
+   * @returns Observable<boolean>
+   */
+  public updateShowMessageStatus(status: boolean = false) {
+    this.showMessageSubject.next(status);
   }
 
   /**

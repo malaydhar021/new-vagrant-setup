@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 
 import { ErrorsService } from '../../../services/errors.service';
 import { LoaderService } from '../../../services/loader.service';
-import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * MessageComponent is responsible for showing messages when a server sends an error message
@@ -27,6 +26,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   // This property is bound using its original name.
   @Input() successMessage?: string = '';
   @Input() warningMessage?: string = '';
+  @Input() showMessage?: string = '';
 
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -46,9 +46,9 @@ export class MessageComponent implements OnInit, OnDestroy {
         // Assign the error message to the error message template string variable
         this.loaderService.disableLoader();
         this.errorMessage = errMsg;
-        // setTimeout(() => {
-        //   this.errorMessage = ''
-        // }, 3000)
+        setTimeout(() => {
+          this.errorMessage = ''
+        }, 3000)
       }
     );
 
@@ -57,6 +57,9 @@ export class MessageComponent implements OnInit, OnDestroy {
       validationErrMsg => {
         this.loaderService.disableLoader();
         this.validationErrorMessages = Object.values(validationErrMsg);
+        setTimeout(() => {
+          this.validationErrorMessages = [];
+        }, 3000)
       }
     );
   }
