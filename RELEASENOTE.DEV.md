@@ -1,5 +1,11 @@
 # Development Release Notes
 
+## 404 Page Not Found
+
+### V1.0.0
+
+1. Implemented page not found page to the application
+
 ## Global Message
 
 ### V1.0.0
