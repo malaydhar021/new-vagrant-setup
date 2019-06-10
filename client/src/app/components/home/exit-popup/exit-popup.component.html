@@ -5,7 +5,7 @@
         <img src="../../../../assets/images/addIcon.png" alt="addIcon"> Add an Exit pop-up</button>
     </div>
     <div class="mainBoxHeaderRight">
-      <input type="text" placeholder="Search ..." (keyup)="onSearch($event)">
+      <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" (blur)="onSearch($event)">
     </div>
   </header>
   <div class="dataTableArea">
