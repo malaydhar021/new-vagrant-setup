@@ -660,6 +660,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Function to handle pagination from campaign listing
+   * @param pgNum
+   */
   public pageChanged(pgNum) {
     this.config.currentPage = pgNum;
     this.loaderService.enableLoader();
@@ -671,6 +675,22 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
             this.reviews = response.data.data;
             // Log.debug(this.reviews.length, "Checking the length of the reviews property");
             // hide the loader
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
+  /**
+   * Function for search the sticky reviews
+   * @param $term
+   */
+  public onSearch($term) {
+    this.loaderService.enableLoader();
+    this.stickyReviewService.searchStickyReview($term.target.value).subscribe(
+        (response: any ) => {
+          if (response.status) {
+            this.reviews = response.data.data;
             this.loaderService.disableLoader();
           }
         }

@@ -47,7 +47,8 @@ class StickyReviewsController extends Controller
      */
     public function index(Request $request)
     {
-        if ($searchParams = $request->has('searchParams')) {
+        if ($request->has('searchParams')) {
+            $searchParams = $request->get('searchParams');
             $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%');
         }
         $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');

@@ -65,8 +65,20 @@ export class StickyReviewService {
     return this.httpClient.delete(StickyReviewsApiEndpoints.stickyReviews.concat("/" + id));
   }
 
+  /**
+   * Function for getting all sticky review in paginated manner
+   * @param pgNum
+   */
   public getAllPaginatedStickyReviews(pgNum) {
     return this.httpClient.get(StickyReviewsApiEndpoints.stickyReviews.concat('?page=' + pgNum));
+  }
+
+  /**
+   * Method for search sticky review
+   * @param term
+   */
+  public searchStickyReview(term) {
+    return this.httpClient.get(StickyReviewsApiEndpoints.stickyReviews.concat('?searchParams=' + term));
   }
 
 }

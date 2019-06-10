@@ -112,8 +112,20 @@ export class ReviewLinkService {
     return this.httpClient.post(ReviewLinkApiEndpoints.reviewLinks.concat("/" + id + '/auto-approve-status'), data);
   }
 
+  /**
+   * Method to get all the review links with pagination
+   * @param pgNum
+   */
   public getAllPaginatedReviewLinks(pgNum) {
     return this.httpClient.get(ReviewLinkApiEndpoints.reviewLinks.concat('?page=' + pgNum));
+  }
+
+  /**
+   * Method for searching review links from the review link list
+   * @param term
+   */
+  public searchReviewLink(term) {
+    return this.httpClient.get(ReviewLinkApiEndpoints.reviewLinks.concat('?searchParams=' + term));
   }
 
 }

@@ -6,7 +6,7 @@
       </button>
     </div>
     <div class="mainBoxHeaderRight">
-      <input type="text" placeholder="Search ..." [(ngModel)]="keyword">
+      <input type="text" placeholder="Search ..." (keyup)="onSearch($event)">
     </div>
   </header>
   <div class="dataTableArea">

@@ -354,7 +354,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
           // update the campaign array with latest api response data
           // if there is no data object then assign empty array i.e no records found
           this.campaigns = response.data.data;
-          this.config.totalItems = response.data.total
+          this.config.totalItems = response.data.total;
           // hide the loader
           this.loaderService.disableLoader();
         } else {
@@ -820,6 +820,18 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.errorMessage = response.messages;
             // hide the loader
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
+  onSearch($term) {
+    this.loaderService.enableLoader();
+    this.campaignService.searchCampaign($term.target.value).subscribe(
+        (response: any ) => {
+          if (response.status) {
+            this.campaigns = response.data.data;
             this.loaderService.disableLoader();
           }
         }

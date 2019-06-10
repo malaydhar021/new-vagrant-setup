@@ -809,4 +809,20 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Function for search the sticky reviews
+   * @param $term
+   */
+  public onSearch($term) {
+    this.loaderService.enableLoader();
+    this.reviewLinkService.searchReviewLink($term.target.value).subscribe(
+        (response: any ) => {
+          if (response.status) {
+            this.reviewLinks = response.data.data;
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
 }

@@ -388,6 +388,10 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
+  /**
+   * Function for handle pagination
+   * @param pgNum
+   */
   pageChanged(pgNum) {
     this.config.currentPage = pgNum;
     this.loaderService.enableLoader();
@@ -398,6 +402,22 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
             // update the brands array with latest api response data
             this.brands = response.data.data;
             // hide the loader
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
+  /**
+   * Function to search from branding list
+   * @param $term
+   */
+  public onSearch($term) {
+    this.loaderService.enableLoader();
+    this.brandingService.searchBrands($term.target.value).subscribe(
+        (response: any ) => {
+          if (response.status) {
+            this.brands = response.data.data;
             this.loaderService.disableLoader();
           }
         }

@@ -115,8 +115,20 @@ export class CampaignService {
     return this.httpClient.get(BrandingApiEndpoints.brands, {params: params});
   }
 
+  /**
+   * Method for getting all the campaigns with pagination
+   * @param pgNum
+   */
   public getAllPaginatedCampaigns(pgNum) {
     return this.httpClient.get(CampaignApiEndpoints.campaigns.concat('?page=' + pgNum));
+  }
+
+  /**
+   * Method for searching a campaign
+   * @param term
+   */
+  public searchCampaign(term)  {
+    return this.httpClient.get(CampaignApiEndpoints.campaigns.concat('?searchParams=' + term));
   }
 
 }

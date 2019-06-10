@@ -61,7 +61,19 @@ export class BrandingService {
     return this.httpClient.delete(BrandingApiEndpoints.brands.concat('/' + id));
   }
 
+  /**
+   * Method for getting the paginated data of brand listing
+   * @param pgNum
+   */
   public getPaginatedBrands(pgNum) {
     return this.httpClient.get(BrandingApiEndpoints.brands.concat('?page=' + pgNum));
+  }
+
+  /**
+   * Method to search a brand from the brand list
+   * @param tearm
+   */
+  public searchBrands(tearm) {
+    return this.httpClient.get(BrandingApiEndpoints.brands.concat('?searchParams=' + tearm));
   }
 }
