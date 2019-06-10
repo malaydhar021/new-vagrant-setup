@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserReviewService } from '../../../services/user-review.service';
-import { UserReviewModel } from '../../../models/user-review.model';
-import { Log } from '../../../helpers/app.helper';
+import { Component, OnInit, Input, OnDestroy }    from '@angular/core';
+import { Title }                                  from '@angular/platform-browser';
+import { Subscription }                           from 'rxjs';
+import { FormGroup, FormBuilder, Validators }     from '@angular/forms';
+import { UserReviewService }                      from '../../../services/user-review.service';
+import { UserReviewModel }                        from '../../../models/user-review.model';
+import { ErrorsService }                          from '../../../services/errors.service';
 
 /**
  * Component to handle user contact details with client side and server side validations
@@ -18,36 +18,46 @@ import { Log } from '../../../helpers/app.helper';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, OnDestroy {
   @Input() slug: string = null;
   review: UserReviewModel = {};
   subscription: Subscription;
   form: FormGroup; // form to handle inputs
   isSubmitted: boolean = false; // flag to set to true if form has been submitted
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
   /**
-   * Constructor method
+   * Constructor method to load required services at the very first
    * @constructor constructor
    * @param title Title service instance
-   * @param userReviewService UserReviewService service instance
+   * @param userReviewService UserReviewService instance
+   * @param errorService ErrorsService instance
    * @returns Void
    */
   constructor(
     private title: Title,
     private formBuilder: FormBuilder,
-    private userReviewService: UserReviewService
+    private userReviewService: UserReviewService,
+    private errorService: ErrorsService
   ) { 
     this.title.setTitle('Stickyreviews :: Contact Information');
     // subscribe to review to get the latest update data from review
     this.subscription = this.userReviewService.review$.subscribe(
       (review: UserReviewModel) => {
-        Log.info(review, "Log the updated review in ContactComponent");
         this.review = review;
+      }
+    );
+    // error service subscription to catch api side error and show it into template
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
 
   /**
+   * Method to initialize the form to take contact information
    * @method ngOnInit
    * @since Version 1.0.0
    * @returns Void
@@ -58,6 +68,15 @@ export class ContactComponent implements OnInit {
       email : [null, [Validators.required, Validators.email]], // email input // 
       phone: [null] // phone number input
     });
+  }
+
+  /**
+   * @method ngOnDestroy
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
   }
 
   /**
@@ -93,31 +112,5 @@ export class ContactComponent implements OnInit {
     this.userReviewService.updateReview(data);
     // store the review data
     this.userReviewService.storeUserReview();
-
-    /*
-    // creating an instance of `FormData` class
-    const formData = new FormData();
-    formData.append('email', this.form.value.email); // append email to formData
-    if(this.form.value.phone !== null) {
-      formData.append('phone_number', this.form.value.phone); // append image to formData
-    }
-    // lets make an api call to validate the user data so far
-    this.userReviewService.validateUserReview(this.slug, formData).subscribe(
-      (response : any) => {
-        Log.notice(response, "Notice the response from api");
-        this.loaderService.disableLoader();
-        if(response.status) {
-          const data = {
-            email: this.form.value.email,
-            phone_number: this.form.value.phone
-          }
-          // update the model data
-          this.userReviewService.updateReview(data);          
-          // set next step to thankyou
-          this.userReviewService.updateCurrentStep('thankYou');
-        }
-      }
-    );
-    */
   }
 }

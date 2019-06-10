@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {NgxSmartModalComponent, NgxSmartModalService} from 'ngx-smart-modal';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,16 +7,16 @@ import { ErrorsService } from '../../../services/errors.service';
 import { LoaderService } from '../../../services/loader.service';
 import { ExitPopupModel } from '../../../models/exit-popup.model';
 import { ExitPopupService } from '../../../services/exit-popup.service';
-import {Log} from "../../../helpers/app.helper";
 import * as htmlToImage from 'html-to-image';
 import * as moment from 'moment';
+import { Log } from 'src/app/helpers/app.helper';
 
 @Component({
   selector: 'app-exit-popup',
   templateUrl: './exit-popup.component.html',
   styleUrls: ['./exit-popup.component.scss']
 })
-export class ExitPopupComponent implements OnInit {
+export class ExitPopupComponent implements OnInit, OnDestroy {
 
   isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
   form: FormGroup; // for add or edit brand form in modal
@@ -69,6 +69,8 @@ export class ExitPopupComponent implements OnInit {
   modalActive: string = '';
   showCtaField: boolean = false;
   config: any;  // config for pagination
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
@@ -76,10 +78,17 @@ export class ExitPopupComponent implements OnInit {
       private formBuilder: FormBuilder,
       private errorService: ErrorsService,
       private loaderService: LoaderService,
-      private exitPopupService: ExitPopupService) { }
+      private exitPopupService: ExitPopupService
+  ) {
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
+      }
+    );
+  }
 
 
-  ngOnInit() {
+  public ngOnInit() {
     this.title.setTitle('Stickyreviews :: Exit pop-up(s)');
     this.isSubmitted = false;
     this.form = this.formBuilder.group({
@@ -114,6 +123,15 @@ export class ExitPopupComponent implements OnInit {
     };
   }
 
+  /**
+   * @method ngOnDestroy
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
+  }
+
   public ngAfterViewInit() {
     this.modalCallbacks(); // modal callbacks i.e onClose, onDismiss, onEscape
   }
@@ -132,7 +150,10 @@ export class ExitPopupComponent implements OnInit {
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
       this.resetForm();
     });
-
+    // set showError to false when the modal is being opened
+    this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.errorService.updateShowMessageStatus(false);
+    });
   }
 
   /**
@@ -208,11 +229,11 @@ export class ExitPopupComponent implements OnInit {
   }
 
   public async onSubmit() {
-     console.log(' try to save/update exit popups ... ');
+     Log.info(' try to save/update exit popups ... ');
     this.isSubmitted = true;
     // check if the form does not pass the client side validation
     if (this.form.invalid) {
-      console.log('Get a validation error ');
+      Log.info('Get a validation error ');
       return;
     }
 
@@ -295,10 +316,16 @@ export class ExitPopupComponent implements OnInit {
             this.form.reset();
             this.ngxSmartModalService.getModal('modal1').close();
             this.successMessage = response.message;
+            setTimeout(() => {
+              this.successMessage = null;
+            });
             this.getUserExitPopups();
           } else {
             this.loaderService.disableLoader();
             this.successMessage = response.message;
+            setTimeout(() => {
+              this.successMessage = null;
+            });
             this.getUserExitPopups();
           }
         }
@@ -448,7 +475,6 @@ export class ExitPopupComponent implements OnInit {
       this.exitPopupService.getstickyReviewInfo(this.form.value.stickyReviews[0].id).subscribe(
           (response: any ) => {
             if (response.status) {
-              // console.log(response.data.created_by.name);
               this.reviewUserName = response.data.created_by.name;
               this.reviewImageUrl = response.data.image_url;
               this.reviewName = response.data.name;
@@ -629,14 +655,13 @@ export class ExitPopupComponent implements OnInit {
    * Function to make Image with the exit popup
    */
   async makeImage() {
-    // console.log('trying to make an Image ');
     return new  Promise((resolve, reject) => {
       const node = document.getElementById('canvas');
       htmlToImage.toPng(node).then((dataUrl) => {
         this.imageCode =  dataUrl;
         resolve(dataUrl) ;
       }).catch((error) => {
-        console.error('oops, something went wrong!', error);
+        Log.info('oops, something went wrong!', error);
       });
     });
   }

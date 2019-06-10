@@ -9,43 +9,7 @@
     </div>
     
     <div class="formArea cardForm">
-      <!-- ERROR BLOCK -->
-      <div class="errorMsgSign" *ngIf="errorMessage !== null"><span><div class="log-stat_msg log_Failed">{{ errorMessage }}</div></span></div>
-      <!-- Displaying server side validation errors -->
-      <div class="formValidationTips" *ngIf="validationErrors !== null">
-        <!-- Name validation errors -->
-        <div *ngIf="validationErrors.name !== undefined">
-          <span *ngIf="validationErrors.name.message !== undefined">{{ validationErrors.name.message }}</span>
-        </div>
-        <!-- Email validation errors -->
-        <div *ngIf="validationErrors.email !== undefined">
-          <span *ngIf="validationErrors.email.message !== undefined">{{ validationErrors.email.message }}</span>
-        </div>
-        <!-- Password validation errors-->
-        <div *ngIf="validationErrors.password !== undefined">
-          <span *ngIf="validationErrors.password.message !== undefined">{{ validationErrors.password.message }}</span>
-          <ul *ngIf="validationErrors.password.rules !== undefined && validationErrors.password.rules.length > 0">
-              <li *ngFor="let rule of validationErrors.password.rules">{{ rule }}</li>
-          </ul>
-        </div>
-        <!-- Credit card number validation errors -->
-        <div *ngIf="validationErrors.card_number !== undefined">
-          <span *ngIf="validationErrors.card_number.message !== undefined">{{ validationErrors.card_number.message }}</span>
-        </div>
-        <!-- CVC number validation errors -->
-        <div *ngIf="validationErrors.cvc_number !== undefined">
-          <span *ngIf="validationErrors.cvc_number.message !== undefined">{{ validationErrors.cvc_number.message }}</span>
-        </div>
-        <!-- Expiry month validation errors -->
-        <div *ngIf="validationErrors.expiry_month !== undefined">
-          <span *ngIf="validationErrors.expiry_month.message !== undefined">{{ validationErrors.expiry_month.message }}</span>
-        </div>
-        <!-- Expiry year validation errors -->
-        <div *ngIf="validationErrors.expiry_year !== undefined">
-          <span *ngIf="validationErrors.expiry_year.message !== undefined">{{ validationErrors.expiry_year.message }}</span>
-        </div>
-      </div>
-      
+      <message [successMessage]="successMessage" [showMessage]="showError"></message>
       <!-- Client side errors for sign up form step 1 -->
       <div class="formValidationTips" *ngIf="(
         isSubmittedStep1 
@@ -65,7 +29,7 @@
         isSubmittedStep1 
         && signupFormStep1FormControls.email.errors !== null 
         && signupFormStep1FormControls.email.errors.email)">
-        Please provide a valid emaill
+        Please provide a valid email
       </div>
 
       <div class="formValidationTips" *ngIf="(
@@ -80,6 +44,13 @@
         && signupFormStep1FormControls.password.errors !== null 
         && signupFormStep1FormControls.password.errors.minlength)">
         Password should be at least 8 characters long
+      </div>
+
+      <div class="formValidationTips" *ngIf="(
+        isSubmittedStep1 
+        && signupFormStep1FormControls.password.errors !== null 
+        && signupFormStep1FormControls.password.errors.pattern)">
+        Password should contains one english uppercase characters (A–Z), one english lowercase characters (a–z), one numeric value (0–9) and one special characters (!, $, #, or %)
       </div>
       <!-- End -->
 
@@ -181,30 +152,13 @@
               <div class="formCol5">
                 <label>Expiry Month</label>
                 <select class="formCtrl" formControlName="expMonth">
-                  <option value="01">01</option>
-                  <option value="02">02</option>
-                  <option value="03">03</option>
-                  <option value="04">04</option>
-                  <option value="05">05</option>
-                  <option value="06">06</option>
-                  <option value="07">07</option>
-                  <option value="08">08</option>
-                  <option value="09">09</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
+                  <option [value]="month" *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]; let y = index">{{month}}</option>
                 </select>
               </div>
               <div class="formCol5">
                 <label>Expiry Year</label>
                 <select class="formCtrl" formControlName="expYear">
-                  <option value="2019">2019</option>
-                  <option value="2020">2020</option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                  <option value="2025">2025</option>
+                  <option [value]="year" *ngFor="let year of years">{{ year }}</option>
                 </select>
               </div>
             </div>
@@ -216,7 +170,7 @@
       </div>
       <div class="loginLink">
           Already have an account? <a [routerLink]="['/login']">Login Now!</a>
-        </div>
+      </div>
     </div>
   </div>
 
@@ -241,14 +195,5 @@
         <span><img src="../../../assets/images/s_badge02.png" alt=""></span>
       </div>
     </div>
-  </div>
-</div>
-<!-- Loader -->
-<div class="loaderOuter" *ngIf="loader">
-  <div class="loaderContainer">
-    <div class="loader">
-      <img src="../../../assets/images/face_icon.png" alt="">
-    </div>
-    <div class="loaderShadow"></div>
   </div>
 </div>

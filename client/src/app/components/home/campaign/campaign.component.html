@@ -9,7 +9,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <message [successMessage]="successMessage"></message>
+    <message [successMessage]="successMessage" [showMessage]="showError"></message>
     <div class="table table-col-5">
       <ul class="thead">
         <li>CAMPAIGN NAME & URL</li>
@@ -117,7 +117,7 @@
         <div class="sr-form">
           <div class="sr-form-content" #mainScreen [ngClass]="{'activeScroll': scrollTrigger}">
             <ng-scrollbar [compact]="true" class="formScroll">
-              <message></message>
+              <message [successMessage]="successMessage" [showMessage]="showError"></message>
               <div class="sr-form-row">
                 <div class="sr-form-cell-small">
                   <label>Campaign Name</label>

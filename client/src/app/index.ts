@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, Component, APP_INITIALIZER } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { NgxMaskModule } from 'ngx-mask';
 import { ReactiveFormsModule } from '@angular/forms';
 // Custom imports
@@ -26,7 +26,7 @@ import { SubscriptionService } from './services/subscription.service';
 import { UserService } from './services/user.service';
 import { ReviewLinkTypeComponent } from './components/home/review-link-type/review-link-type.component';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { MessageModule } from './components/shared/message/message.module';
+import { MessageModule } from './modules/message.module';
 import { SubscriptionGuard } from './services/guards/subscription.guard.service';
 import { MediaModule } from './modules/media.module';
 import { MediaService } from './services/media.service';

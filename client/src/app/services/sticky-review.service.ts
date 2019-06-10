@@ -58,10 +58,11 @@ export class StickyReviewService {
    * @method deleteStickyReview
    * @since Version 1.0.0
    * @param data StickyReviewModel object params
+   * @param id Sticky review system id
    * @returns Observable<Object>
    */
-  public deleteStickyReview(data: StickyReviewModel) {
-    return this.httpClient.post(StickyReviewsApiEndpoints.stickyReviews, data);
+  public deleteStickyReview(id: string) {
+    return this.httpClient.delete(StickyReviewsApiEndpoints.stickyReviews.concat("/" + id));
   }
 
   public getAllPaginatedStickyReviews(pgNum) {

@@ -23,7 +23,7 @@ import { UpdatePaymentInfoComponent }       from '../components/home/update-paym
 import {ProfileComponent}                   from '../components/home/shared/profile/profile.component';
 import {CancelMembershipComponent}          from '../components/home/cancel-membership/cancel-membership.component';
 //importing module
-import { MessageModule}                     from '../components/shared/message/message.module'
+import { MessageModule}                     from './message.module'
 // importing services
 import { ColorPickerModule }                from 'ngx-color-picker';
 import { BrandingService }                  from '../services/branding.service'; // services for branding

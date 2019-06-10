@@ -10,7 +10,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <message [successMessage]="successMessage"></message>
+    <message [successMessage]="successMessage" [showMessage]="showError"></message>
     <div class="table table-col-4">
       <ul class="thead">
         <li>REVIEWS</li>
@@ -77,7 +77,7 @@
     </div>
     <div class="sr-modal-body">
       <div class="sr-form">
-        <message></message>
+        <message [showMessage]="showError"></message>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="sr-form-content">
             <div class="sr-form-row">

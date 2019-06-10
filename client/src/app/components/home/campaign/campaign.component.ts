@@ -12,6 +12,8 @@ import { CampaignStylesInterface } from '../../../interfaces/campaign-styles.int
 import { CampaignInterface } from '../../../interfaces/campaign.interface';
 import { MinimumCheckedCheckboxes } from '../../../helpers/form.helper';
 import { WidgetUrl } from '../../../helpers/api.helper';
+import { ErrorsService } from 'src/app/services/errors.service';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 /**
  * Component to handle all sort of functionalities related to campaign. It's mostly handles
@@ -53,6 +55,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedExitPopup: any = this.exitPopups[0]; // default selected exit popup, the first one
   showCopySnippetBox: boolean = false; // flag to set true to show copy snippet box
   config: any;  // paginate config
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
   /**
    * Constructor method to fetch all required information from api provider
    * @constructor constructor
@@ -71,12 +75,18 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private campaignService: CampaignService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private errorService: ErrorsService
   ) {
     this.getAllStyles(); // fetch all campaign styles
     this.getStickyReviews(); // fetch all sticky reviews
     this.getBrands(); // fetch all brands
     this.getExitPopups(); // fetch all brands
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
+      }
+    );
   }
 
   /*
@@ -138,7 +148,9 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @since Version 1.0.0
    * @returns Void
    */
-  public ngOnDestroy() { }
+  public ngOnDestroy() { 
+    this.errorSubscription.unsubscribe();
+  }
 
   /**
    * Method to execute when dom document is ready
@@ -172,6 +184,10 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
       this.resetForm;
+    });
+    // set showError to false when the modal is being opened
+    this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.errorService.updateShowMessageStatus(false);
     });
   }
 
@@ -629,6 +645,10 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     if (closeModal) this.ngxSmartModalService.getModal('modal1').close(); // close the modal
     error ? this.errorMessage = message : this.successMessage = message; // set message
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 3000);
     this.isSubmitted = false; // change the flag for form submit
     this.isEditing = false; // set it to false
     this.isDeleting = false; // set it to false
@@ -638,7 +658,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     if (fetchCampaigns) {
       this.getCampaigns(); // fetch campaigns
     } else if(hideLoader) {
-      this.loaderService.disableLoader()
+      this.loaderService.disableLoader();
     }
   }
 

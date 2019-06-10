@@ -12,7 +12,7 @@ import { ThankYouComponent } from '../components/user-review/thank-you/thank-you
 import { UserReviewService } from '../services/user-review.service';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MessageModule } from '../components/shared/message/message.module';
+import { MessageModule } from './message.module';
 import { DigitsOnlyDirective } from '../directives/digits-only.directive';
 
 /**

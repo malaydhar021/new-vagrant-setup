@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ErrorsService } from '../../services/errors.service';
 import { Log } from 'src/app/helpers/app.helper';
+import { LoaderService } from 'src/app/services/loader.service';
 
 /**
  * This component will handle all sort of operations related to forgot password
@@ -19,38 +20,61 @@ import { Log } from 'src/app/helpers/app.helper';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })
-
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
-
+  // defining class properties
   form: FormGroup;
   isSubmitted = false;
   error: string = null;
   loader = false;
   subscription: Subscription;
+  successMessage: string = null; // hold the success message
+  errorMessage: string = null; // hold the errorMessage message
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
+  /**
+   * Constructor method to load services at the very first when this component is initialized
+   * @constructor Constructor
+   * @since Version 1.0.0
+   * @param formBuilder FormBuilder instance
+   * @param authService AuthService instance
+   * @param errorService ErrorService instance
+   * @param loaderService LoaderService instance
+   * @param router Router instance
+   * @param title Title service instance
+   * @param renderer Renderer service instance
+   */
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private errorService: ErrorsService,
+    private loaderService: LoaderService,
     private router: Router,
     private title: Title,
     private renderer: Renderer2
   ) {
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     this.renderer.addClass(document.body, 'loginPage');
-    this.subscription = this.errorService.error$.subscribe(
-      errMsg => {
-        this.loader = false;
-        this.error = errMsg;
+
+    // this.subscription = this.errorService.error$.subscribe(
+    //   errMsg => {
+    //     this.loader = false;
+    //     this.error = errMsg;
+    //   }
+    // );
+
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
 
   /**
    * Function to initialize angular reactive form object.
-   *
-   * @since 1.0.0
-   * @returns void
+   * @method ngOnInit
+   * @since Version 1.0.0
+   * @returns Void
    */
   public ngOnInit() {
     // check if the user is logged in or not. if logged in then redirect to home
@@ -67,39 +91,47 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
    * Function to execute when this component is going to destroy by the browser.
    * This will unsubscribe the subscription.
    * @method ngOnDestroy
-   * @since 1.0.0
+   * @since Version 1.0.0
    * @returns void
    */
   public ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
+    this.errorSubscription.unsubscribe();
     this.renderer.removeClass(document.body, 'loginPage');
   }
 
   /**
    * This method will handle the forgot password form when it is submitted
    * @method onSubmit
-   * @since 1.0.0
+   * @since Version 1.0.0
    * @returns void
    */
   public onSubmit() {
-    Log.info('Forgot password form is submitted !');
-    Log.info(this.form.value.email);
     this.isSubmitted = true;
     if (this.form.invalid) {
       return false;
     }
     // show loader
-    this.loader = true;
-
+    this.loaderService.enableLoader();
     const data = { email: this.form.value.email };
-
     this.authService.forgotPassword(data).subscribe(
       (response: any) => {
-        this.form.reset();
-        Log.info(response, 'response for forgot password');
-        // hide loader
-        this.loader = false;
-        this.error = response.message;
+        if(response.status) {
+          this.form.reset();
+          Log.info(response, 'response for forgot password');
+          // hide loader
+          this.loaderService.disableLoader();
+          this.successMessage = response.message;
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000);
+        } else {
+          this.loaderService.disableLoader();
+          this.errorMessage = response.message;
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000);
+        }
       }
     );
   }

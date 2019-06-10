@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { UserReviewService } from '../../services/user-review.service';
-import { Log } from '../../helpers/app.helper';
-import { LoaderService } from '../../services/loader.service';
-import { UserReviewLinkInfo } from '../../interfaces/user-review.interface';
-import { UserReviewModel } from 'src/app/models/user-review.model';
+import { Title }                        from '@angular/platform-browser';
+import { ActivatedRoute }               from '@angular/router';
+import { Subscription }                 from 'rxjs';
+import { UserReviewService }            from '../../services/user-review.service';
+import { Log }                          from '../../helpers/app.helper';
+import { LoaderService }                from '../../services/loader.service';
+import { UserReviewLinkInfo }           from '../../interfaces/user-review.interface';
+import { UserReviewModel }              from '../../models/user-review.model';
+import { ErrorsService }                from '../../services/errors.service';
 
 /**
  * Component to load the first screen of user review link with proper info
@@ -39,6 +40,8 @@ export class UserReviewComponent implements OnInit, OnDestroy {
     text_color: null,
     copyright_text: null
   };
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
   /**
    * Constructor method of UserReviewComponent
@@ -51,6 +54,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
     private title: Title,
     private userReviewService: UserReviewService,
     private loaderService: LoaderService,
+    private errorService: ErrorsService,
     private route: ActivatedRoute
   ) {
     this.title.setTitle('Stickyreviews :: User Review');
@@ -65,6 +69,12 @@ export class UserReviewComponent implements OnInit, OnDestroy {
     this.subscription = this.userReviewService.currentStep$.subscribe(
       (step: any) => {
         this.stepBuilder = step;
+      }
+    );
+    // error subscription for catching all error messages
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
@@ -91,6 +101,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.subscription.unsubscribe();
     this.reviewSubscription.unsubscribe();
+    this.errorSubscription.unsubscribe();
   }
 
   /**

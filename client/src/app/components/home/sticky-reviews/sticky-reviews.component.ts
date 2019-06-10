@@ -9,6 +9,7 @@ import { LoaderService } from '../../../services/loader.service';
 import { StickyReviewService } from '../../../services/sticky-review.service';
 import { MediaService } from '../../../services/media.service';
 import { Log } from '../../../helpers/app.helper';
+import { ErrorsService } from 'src/app/services/errors.service';
 
 /**
  * StickyReviewsComponent class will handle all required action to meet the functionalities of 
@@ -39,6 +40,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   successMessage: string = null; // to show success messages
   validationErrors: any = null; // for showing validation messages
   subscription: Subscription; // to get the current value updated from error interceptor
+  errorSubscription: Subscription; // to get the current value of showError property
   isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
@@ -101,6 +103,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   selectedReivewType: number = 1; // default selected value to show which review field will be shown
   imagePreviewUrl: string = 'assets/images/user.png'; // default image preview url
   config: any;  // config for pagination
+  showError: boolean = false; // flag to show error message
 
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -108,8 +111,15 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
     private stickyReviewService: StickyReviewService,
-    private mediaService: MediaService
-  ) {}
+    private mediaService: MediaService,
+    private errorService: ErrorsService
+  ) {
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
+      }
+    );
+  }
 
   /**
    * ngOnInit method initialize angular reactive form object for add / edit sticky review. 
@@ -162,9 +172,12 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public ngOnDestroy(): void {}
+  public ngOnDestroy(): void {
+    this.errorSubscription.unsubscribe();
+  }
 
   /**
+   * Method that executes once the dom is loaded to browser
    * @method ngAfterViewInit
    * @since Version 2.0.0
    * @returns Void
@@ -182,6 +195,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
       this.resetForm;
+    });
+    // set showError to false when the modal is being opened
+    this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.errorService.updateShowMessageStatus(false);
     });
   }
 
@@ -554,6 +571,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
           this.getStickyReviews(); 
+          // hide the success message after 3 seconds
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000)
         } else {
           // show the error message to user
           this.errorMessage = response.message;
@@ -585,7 +606,11 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           // change the flag for form submit
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
-          this.getStickyReviews(); 
+          this.getStickyReviews();
+          // hide the success message after 3 seconds
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000);
         } else {
           // show the error message to user
           this.errorMessage = response.message;
@@ -603,7 +628,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @param reviewId (Number) Sticky review id
    * @returns Void
    */
-  public onDeleteStickyReview(reviewId: number) {
+  public onDeleteStickyReview(reviewId: string) {
     // setting to true as user wants to delete a brand
     this.isDeleting = true;
     // lets get the confirmation from user. if user cancel it then it's not doing anything
@@ -612,17 +637,19 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     }
     // show loader
     this.loaderService.enableLoader();
-    // prepare data to make a delete request
-    const data = {id: reviewId};
     // make a api call to delete the brand
-    this.stickyReviewService.deleteStickyReview(data).subscribe(
+    this.stickyReviewService.deleteStickyReview(reviewId).subscribe(
       (response: any) => {
         Log.info(response, 'delete api response');
         if(response.status) {
           // show the success message to user in review listing page
           this.successMessage = response.message;
           // making an api call to get all reviews along with the newly added sticky review
-          this.getStickyReviews(); 
+          this.getStickyReviews();
+          // hide the success message after 3 seconds
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000) 
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;

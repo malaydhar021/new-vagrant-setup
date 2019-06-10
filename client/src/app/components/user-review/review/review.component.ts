@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/core';
-import { UserReviewModel } from 'src/app/models/user-review.model';
-import { Subscription } from 'rxjs';
-import { UserReviewService } from 'src/app/services/user-review.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { StickyReviewTypesModel } from 'src/app/models/sticky-review.model';
-import { Title } from '@angular/platform-browser';
-import { LoaderService } from 'src/app/services/loader.service';
-import { MediaService } from 'src/app/services/media.service';
-import * as ValidationEngine from '../../../helpers/form.helper';
-import { Log } from '../../../helpers/app.helper';
+import { Title }                                              from '@angular/platform-browser';
+import { FormGroup, FormBuilder, Validators }                 from '@angular/forms';
+import { Subscription }                                       from 'rxjs';
+import { UserReviewModel }                                    from '../../../models/user-review.model';
+import { UserReviewService }                                  from '../../../services/user-review.service';
+import { StickyReviewTypesModel }                             from '../../../models/sticky-review.model';
+import { LoaderService }                                      from '../../../services/loader.service';
+import { MediaService }                                       from '../../../services/media.service';
+import * as ValidationEngine                                  from '../../../helpers/form.helper';
+import { Log }                                                from '../../../helpers/app.helper';
+import { ErrorsService }                                      from '../../../services/errors.service';
 
 /**
  * Component to handle all sort of operations regarding video / audio / textual review and rating.
@@ -91,10 +92,18 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
   reviewAsFile: File = null;
   showMedia: boolean = false;
   reviewFileAsBlob: Blob = null;
+  errorSubscription: Subscription; // to get the current value of showError property
+  showError: boolean = false; // flag to show error message
 
   /**
+   * Constructor method to load required services at the very first
    * @constructor constructor
    * @param userReviewService UserReviewService instance
+   * @param title Title instance
+   * @param formBuilder FormBuilder instance
+   * @param loaderService LoaderService instance
+   * @param mediaService MediaService instance
+   * @param errorService ErrorService instance
    * @returns Void
    */
   constructor(
@@ -103,6 +112,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
     private mediaService: MediaService,
+    private errorService: ErrorsService,
   ) { 
     this.title.setTitle('Stickyreviews :: Review');
     // subscribe to review to get the latest update data from review
@@ -118,6 +128,12 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
         if(recordedFile !== null) {
           this.reviewAsFile = recordedFile;
         }
+      }
+    );
+    // error service subscription to catch api side error and show it into template
+    this.errorSubscription = this.errorService.showMessage$.subscribe(
+      (status: boolean) => {
+        this.showError = status;
       }
     );
   }
@@ -191,6 +207,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.errorSubscription.unsubscribe();
   }
 
   /**

@@ -6,8 +6,9 @@ import { AuthService }                          from '../../../../services/auth.
 import { ErrorsService }                        from '../../../../services/errors.service';
 import { MenuService }                          from '../../../../services/menu.service';
 import { Log }                                  from '../../../../helpers/app.helper';
-import { SubscriptionService}                   from '../../../../services/subscription.service';
+import { SubscriptionService }                   from '../../../../services/subscription.service';
 import { UserService }                          from 'src/app/services/user.service';
+import { LoaderService } from 'src/app/services/loader.service';
 
 /**
  * This component is responsible for handling all sort of operations in application header
@@ -58,15 +59,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private cookieService: CookieService,
     private subscriptionService: SubscriptionService,
     private userService: UserService,
+    private loaderService: LoaderService
   ) {
-    // subscription to update the error property to display in template
-    // this.subscription = this.errorService.error$.subscribe(
-    //   errMsg => {
-    //     this.loader = false;
-    //     this.error = errMsg;
-    //   }
-    // );
-
     // subscription to menu to service active menu to enable or disable a class
     this.menuSubscription = this.menuService.activeMenu$.subscribe(
       status => {
@@ -125,33 +119,44 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     )
-   }
+  }
 
-   /**
-    * 
-    */
+  /**
+  * Method to unsubscribe all active subscription while this component is destroyed
+  * @method ngOnDestroy
+  * @since Version 1.0.0
+  * @returns Void
+  */
   public ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
     this.menuSubscription.unsubscribe();
     this.userPlanSubscription.unsubscribe();
   }
 
   /**
-   * 
+   * Method to toggle membership settings box on click on the card icon in left header corner
+   * @method tglSetting
+   * @since Version 1.0.0
+   * @returns Void
    */
   public tglSetting() {
     this.tglFlag = !this.tglFlag;
   }
 
   /**
-   * 
+   * @method tglProfileMenu
+   * @since Version 1.0.0
+   * @returns Void
    */
   public tglProfileMenu() {
     this.tglProfile = !this.tglProfile;
   }
 
   /**
-   * 
+   * Method to toggle the navigation menu for small devices
+   * @method tglSideMenu
+   * @since Version 1.0.0
+   * @returns Void
    */
   public tglSideMenu() {
     // this.isActive = !this.isActive;
@@ -167,24 +172,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onLogout() {
-    this.loader = true;
-    Log.info('I am in onLogout method');
+    this.loaderService.enableLoader();
     this.authService.doLogout.subscribe(
       (response: any) => {
-        this.authService.removeStorageData();
-        this.loader = false;
-        this.errorService.updateMessage(response.message);
-        // delete cookie from main domain,
-        if (this.cookieService.get('_loginUser')) {
-          this.cookieService.delete('_loginUser', '/', 'usestickyreviews.com');
+        if(response.status) {
+          this.authService.removeStorageData();
+          this.loaderService.disableLoader();
+          this.errorService.updateMessage(response.message);
+          // delete cookie from main domain,
+          if (this.cookieService.get('_loginUser')) {
+            this.cookieService.delete('_loginUser', '/', 'usestickyreviews.com');
+          }
+          this.router.navigate(['/login']);
+        } else {
+          Log.info(response, "Logout Response")
         }
-        this.router.navigate(['/login']);
-      },
-      (err: any) => {
-        this.loader = false;
-        Log.error(err, 'Some error occured');
       }
     );
   }
-
 }

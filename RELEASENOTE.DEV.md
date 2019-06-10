@@ -1,5 +1,11 @@
 # Development Release Notes
 
+## Global Message
+
+### V1.0.0
+
+1. Implemented global message to show error or success messages through out the application
+
 ## Subscription
 
 ### V2.0.1

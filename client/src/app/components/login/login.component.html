@@ -10,11 +10,12 @@
       <span>Login to continue using Sticky Reviews</span>
     </h1>
     <div class="formArea">
-      <div *ngIf="error !== null">
+      <!-- <div *ngIf="error !== null">
         <span>
           <div class="log-stat_msg log_Failed">{{ error }}</div>
         </span>
-      </div>
+      </div> -->
+      <message [successMessage]="successMessage" [showMessage]="showError"></message>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="formRow"
@@ -31,7 +32,7 @@
         </div>
         <div class="formRow2">
           <div class="rememberMe">
-            <input type="checkbox" formControlName="rememberMe"> Remember me
+            <input type="checkbox" formControlName="rememberMe" [value]="false"> Remember me
           </div>
           <a [routerLink]="['/forgot-password']" class="forgotPass">Forgot your Password?</a>
           <div class="clear"></div>
@@ -49,14 +50,14 @@
   </div>
 </div>
 <!-- Loader -->
-<div class="loaderOuter" *ngIf="loader">
+<!-- <div class="loaderOuter" *ngIf="loader">
   <div class="loaderContainer">
     <div class="loader">
       <img src="../../../assets/images/face_icon.png" alt="">
     </div>
     <div class="loaderShadow"></div>
   </div>
-</div>
+</div> -->
 
 <!-- Place for the cookie script -->
 <!-- cookies -->

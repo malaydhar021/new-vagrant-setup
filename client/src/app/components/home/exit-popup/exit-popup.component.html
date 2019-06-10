@@ -9,7 +9,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <message [successMessage]="successMessage"></message>
+    <message [successMessage]="successMessage" [showMessage]="showError"></message>
     <div class="popupListContainer">
       <ng-scrollbar [compact]="true">
                 <ul class="popupList">
@@ -19,15 +19,14 @@
                     </div>
                     <div class="popupCtrl">
                       <p>{{ exitPopup.name |  slice:0:30 }}</p>
+              <div class="crtlRight">
+                <a (click)="onEditExitPopup(exitPopup)"><img src="../../../../assets/images/icon_edit.png" alt="iconEdit"></a>
+                <a (click)="deleteExitPopup(exitPopup.id)"><img src="../../../../assets/images/icon_delete_red.png" alt="iconDelete"></a>
+              </div>
 
-                      <div class="crtlRight">
-                        <a (click)="onEditExitPopup(exitPopup)"><img src="../../../../assets/images/icon_edit.png" alt="iconEdit"></a>
-                        <a (click)="deleteExitPopup(exitPopup.id)"><img src="../../../../assets/images/icon_delete_red.png" alt="iconDelete"></a>
-                      </div>
-
-                    </div>
-                  </li>
-                </ul>
+            </div>
+          </li>
+        </ul>
       </ng-scrollbar>
     </div>
     <!-- Pagination -->
@@ -2787,7 +2786,7 @@
       </h2>
     </div>
     <div class="sr-modal-body">
-      <div *ngIf="errorMessage!==''"> {{this.errorMessage}} </div>
+      <message [successMessage]="successMessage" [showMessage]="showError"></message>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="sr-form">
           <div class="sr-form-row">
