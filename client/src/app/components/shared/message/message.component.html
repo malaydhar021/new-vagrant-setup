@@ -1,12 +1,17 @@
-<!-- ERROR MESSAGES -->
+<!-- HTTP ERROR MESSAGES -->
 <span>
-  <div class="log-stat_msg log_Failed" *ngIf="showMessage">{{ errorMessage }}</div>
+  <div class="log-stat_msg log_Failed" *ngIf="showMessage">{{ errMsg }}</div>
   <div class="log-stat_msg log_Failed" *ngFor="let error of validationErrorMessages">
     {{ error }}
   </div>
 </span>
 <!-- END -->
 
+<!-- Error MESSAGE -->
+<span *ngIf="errorMessage">
+  <div class="log-stat_msg log_Failed">{{ errorMessage }}</div>
+</span>
+<!-- END -->
 
 <!-- SUCCESS MESSAGE -->
 <span *ngIf="successMessage">

@@ -69,6 +69,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+        Log.info(this.showError);
       }
     );
   }

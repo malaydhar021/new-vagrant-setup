@@ -1,5 +1,12 @@
 # Development Release Notes
 
+## Optimization
+
+### V1.0.0
+
+1. Lazy loaded signup module
+2. Lazy loaded forgot password and reset password module
+
 ## Production Build
 
 ### V1.0.0

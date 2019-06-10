@@ -18,12 +18,13 @@ import { LoaderService } from '../../../services/loader.service';
 })
 export class MessageComponent implements OnInit, OnDestroy {
   // declaring class properties
-  errorMessage: string = null; // Error Message for the MessageComponent
+  errMsg: string = null; // Error Message for the MessageComponent
   validationErrorMessages: string[] = []; // Error Message for the MessageComponent 
   subscription: Subscription;  // Subscription Variable to create server side error message subscriptions 
   validationSubscription: Subscription;  // Subscription Variable to create server side validation error message subscriptions 
 
   // This property is bound using its original name.
+  @Input() errorMessage?: string = '';
   @Input() successMessage?: string = '';
   @Input() warningMessage?: string = '';
   @Input() showMessage?: string = '';
@@ -45,9 +46,9 @@ export class MessageComponent implements OnInit, OnDestroy {
       errMsg => {
         // Assign the error message to the error message template string variable
         this.loaderService.disableLoader();
-        this.errorMessage = errMsg;
+        this.errMsg = errMsg;
         setTimeout(() => {
-          this.errorMessage = ''
+          this.errMsg = ''
         }, 3000)
       }
     );

@@ -8,8 +8,7 @@
       </div>
     </div>
     
-    <div class="formArea cardForm">
-      <message [successMessage]="successMessage" [showMessage]="showError"></message>
+    <div class="formArea cardForm">      
       <!-- Client side errors for sign up form step 1 -->
       <div class="formValidationTips" *ngIf="(
         isSubmittedStep1 
@@ -111,8 +110,12 @@
         Expiry year is required
       </div>
       <!-- End -->
-
       <!-- End of ERROR BLOCK -->
+
+      <!-- Api Errors-->
+      <message [successMessage]="successMessage" [showMessage]="showError"></message>
+      <!-- End of api errors -->
+
       <div class="formContainer" #formContainer [ngClass]="{secondStep : isStep2}">
         <form [formGroup]="signupFormStep1" (ngSubmit)="onSubmitStep1()">
           <div class="formStep">

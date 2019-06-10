@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @deprecated in version 1.0.0
- * @license Proprietery
+ * @license Proprietary
  */
 @Injectable()
 

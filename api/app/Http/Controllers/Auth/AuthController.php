@@ -60,8 +60,9 @@ class AuthController extends Controller
         if ($exists) {
             return response()->json([
                 'status' => false,
-                'message' => "Email already exists. Please try with another email",
-            ]);
+                'message' => "Please make sure your input matches all the following conditions",
+                'errors' => ["email" => "Email already exists. Please try with another email"],
+            ], 400);
         } else {
             return response()->json([
                 'status' => true,

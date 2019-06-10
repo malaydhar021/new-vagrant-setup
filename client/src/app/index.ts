@@ -11,20 +11,15 @@ import { AppRoutingModule } from './modules/routes/app.route.module';
 import { AuthGuard } from './services/guards/auth.guard.service';
 import { AuthService } from './services/auth.service';
 import { ErrorsService } from './services/errors.service';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { GlobalService } from './services/global.service';
 import { LoginComponent } from './components/login/login.component';
 import { LoaderModule } from './components/shared/loader/loader.module';
 import { LoaderService } from './services/loader.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ResetPasswordComponent } from './components/forgot-password/reset-password/reset-password.component';
 import { RequestInterceptor } from './services/interceptors/request.interceptor.service';
 import { ReviewLinkService } from './services/review-link.service';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SignupService } from './services/signup.service';
 import { SubscriptionService } from './services/subscription.service';
 import { UserService } from './services/user.service';
-import { ReviewLinkTypeComponent } from './components/home/review-link-type/review-link-type.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MessageModule } from './modules/message.module';
 import { SubscriptionGuard } from './services/guards/subscription.guard.service';
@@ -44,7 +39,7 @@ import { MediaService } from './services/media.service';
   selector: 'app-root',
   template: `<app-loader></app-loader><router-outlet></router-outlet>`
 })
-export class AppComponent { }
+export class AppComponent {}
 
 /**
  * This module is entry point to this application. AppComponent is the first component when the application
@@ -59,11 +54,7 @@ export class AppComponent { }
   declarations: [
     AppComponent,
     LoginComponent,
-    SignUpComponent,
-    ForgotPasswordComponent,
-    ResetPasswordComponent,
-    NotFoundComponent,
-    ReviewLinkTypeComponent
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +73,6 @@ export class AppComponent { }
     Title,
     AuthService,
     AuthGuard,
-    GlobalService,
     CookieService,
     ErrorsService,
     SignupService,
@@ -96,4 +86,4 @@ export class AppComponent { }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
