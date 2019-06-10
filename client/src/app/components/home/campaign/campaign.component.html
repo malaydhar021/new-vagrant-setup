@@ -70,9 +70,9 @@
                       <!-- End of preview style -->
                       <div class="review-options">
                         <div class="log-stat_msg log_Failed" *ngIf="isSubmittedReviews && reviewForm.invalid">Please select at least one review</div>
-                        <ng-scrollbar [compact]="true" *ngIf="reviewForm.controls.campaignReviews.controls.length > 0; else noStickyReviews">
+                        <ng-scrollbar [compact]="true" *ngIf="reviewFormControls.campaignReviews.length > 0; else noStickyReviews">
                           <ul>
-                            <li formArrayName="campaignReviews" *ngFor="let review of reviewForm.controls.campaignReviews.controls; let i = index">
+                            <li formArrayName="campaignReviews" *ngFor="let review of reviewFormControls.campaignReviews.value; let i = index">
                               <div class="checkbox"><input type="checkbox" class="sr-checkbox" [formControlName]="i"></div>
                               <p>{{ stickyReviews[i].name }}</p>
                               <span class="greenTag" *ngIf="stickyReviews[i].tags !== undefined && stickyReviews[i].tags !== null">{{ stickyReviews[i].tags }}</span>
@@ -115,7 +115,7 @@
       </div>
       <div class="sr-modal-body">
         <div class="sr-form">
-          <div class="sr-form-content" #mainScreen [ngClass]="{'activeScroll': scrollTrigger}">
+          <div class="sr-form-content" #mainScreen>
             <ng-scrollbar [compact]="true" class="formScroll">
               <message [successMessage]="successMessage" [showMessage]="showError"></message>
               <div class="sr-form-row">
@@ -179,7 +179,7 @@
                   <label>Choose Sticky Reviews</label>
                   <div class="option-list">
                     <ul>
-                      <li formArrayName="campaignReviews" *ngFor="let review of form.controls.campaignReviews.controls; let i = index">
+                      <li formArrayName="campaignReviews" *ngFor="let review of getFormControls.campaignReviews.value; let i = index">
                         <input type="checkbox" class="sr-checkbox" [formControlName]="i"><span>{{ stickyReviews[i].name }}</span>
                       </li>
                     </ul>

@@ -15,11 +15,11 @@
         <div class="planName" *ngIf="userPlanDetails && userPlanDetails.status === 'ACTIVE'">
           {{currentPlanName}} 
         </div>
-        <a [routerLink]="['/home/plans']" class="upgrade">{{(userPlanDetails && userPlanDetails.status !== 'ACTIVE') ? 'Add' : 'Update'}} Now</a>
+        <a [routerLink]="['/home/plans']" class="upgrade">{{ (userPlanDetails && userPlanDetails.status !== 'ACTIVE') ? 'Add' : 'Update' }} Now</a>
       </div>
       <div class="bottomSec">
         <ul>
-          <li><a [routerLink]="['/home/update-payment-info']" routerLinkActive="active">{{(userPlanDetails && userPlanDetails.status !== 'ACTIVE') ? 'Add' : Update}} Payment Info</a></li>
+          <li><a [routerLink]="['/home/update-payment-info']" routerLinkActive="active">{{ (userPlanDetails && userPlanDetails.status !== 'ACTIVE') ? 'Add' : 'Update' }} Payment Info</a></li>
         </ul>
       </div>
     </div>

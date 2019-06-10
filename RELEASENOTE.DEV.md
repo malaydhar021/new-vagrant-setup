@@ -1,5 +1,11 @@
 # Development Release Notes
 
+## Production Build
+
+### V1.0.0
+
+1. Fixed issue with components as per angular cli documentation
+
 ## 404 Page Not Found
 
 ### V1.0.0

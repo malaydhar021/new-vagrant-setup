@@ -325,6 +325,16 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
+   * Method to get all the controls for formGroup named `form`
+   * @method getFormControls
+   * @since Version 1.0.0
+   * @returns FormControls
+   */
+  public get reviewFormControls() {
+    return this.reviewForm.controls;
+  }
+
+  /**
    * resetForm method is just reset the form after successfully
    * submission of add or edit form
    * @method resetForm

@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { NgxSmartModalService } from 'ngx-smart-modal';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../services/subscription.service';
-import { LoaderService } from '../../../services/loader.service';
-import { ErrorsService } from 'src/app/services/errors.service';
+import { Component, OnInit, OnDestroy }           from '@angular/core';
+import { Subscription }                           from 'rxjs';
+import { NgxSmartModalService }                   from 'ngx-smart-modal';
+import { FormGroup, FormBuilder, Validators }     from '@angular/forms';
+import { SubscriptionService }                    from '../../../services/subscription.service';
+import { LoaderService }                          from '../../../services/loader.service';
+import { ErrorsService }                          from '../../../services/errors.service';
 
 /**
  * PlansComponent is responsible for handling user subscriptions 
@@ -26,6 +26,7 @@ export class PlansComponent implements OnInit, OnDestroy {
   years: any = [];
   cardForm: FormGroup;
   currentYear: Number;
+  successMessage: string = null; // property to hold the success message
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
 

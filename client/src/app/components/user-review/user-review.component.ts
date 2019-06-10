@@ -42,6 +42,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
   };
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
+  successMessage: string = null; // holds the success message and displays the message to user
 
   /**
    * Constructor method of UserReviewComponent

@@ -24,7 +24,9 @@ import { ErrorsService }                                      from '../../../ser
   styleUrls: ['./review.component.scss']
 })
 export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
+  // defining class properties
   @Input() slug: string;
+  rate: number = 5;
   subscription: Subscription;
   recordedFileSubscription: Subscription;
   review: UserReviewModel = {};

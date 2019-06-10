@@ -6,9 +6,9 @@ import { AuthService }                          from '../../../../services/auth.
 import { ErrorsService }                        from '../../../../services/errors.service';
 import { MenuService }                          from '../../../../services/menu.service';
 import { Log }                                  from '../../../../helpers/app.helper';
-import { SubscriptionService }                   from '../../../../services/subscription.service';
-import { UserService }                          from 'src/app/services/user.service';
-import { LoaderService } from 'src/app/services/loader.service';
+import { SubscriptionService }                  from '../../../../services/subscription.service';
+import { UserService }                          from '../../../../services/user.service';
+import { LoaderService }                        from '../../../../services/loader.service';
 
 /**
  * This component is responsible for handling all sort of operations in application header

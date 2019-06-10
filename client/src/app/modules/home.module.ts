@@ -34,10 +34,10 @@ import { MediaModule }                      from './media.module';
 import { MediaService }                     from '../services/media.service';
 import { ExitPopupService }                 from '../services/exit-popup.service';
 import { WidgetStylesModule }               from './widget-styles.module';
-import { DigitsOnlyDirective }              from '../directives/digits-only.directive';
 import { CopyToClipboardDirective }         from '../directives/copy-to-clipboard.directive';
 import { ClickOutsideDirective }            from '../directives/click-outside.directive';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedModule } from './shared/shared.module';
 
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
@@ -61,7 +61,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UpdatePaymentInfoComponent,
     ProfileComponent,
     CancelMembershipComponent,
-    DigitsOnlyDirective,
     CopyToClipboardDirective,
     ClickOutsideDirective,
   ],
@@ -81,6 +80,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MediaModule,
     WidgetStylesModule,
     NgxPaginationModule,
+    SharedModule
   ],
   providers: [
     BrandingService,

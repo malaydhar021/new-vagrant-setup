@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   showCookie: boolean = false;
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message 
+  successMessage: string = null; // flag to hold the success message
 
   constructor(
     private formBuilder: FormBuilder,

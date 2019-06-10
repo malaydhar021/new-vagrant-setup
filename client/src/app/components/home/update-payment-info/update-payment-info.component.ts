@@ -23,6 +23,7 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
   years:any = [];
   cardForm: FormGroup;
   currentYear: Number;
+  successMessage: string = null; // property to hold the success message
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   
@@ -132,5 +133,15 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
         this.createCardForm(true);
       }
     )
+  }
+
+  /**
+   * Method to open the modal when add/edit card modal has been clicked
+   * @method onClickCardInfo
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public onClickCardInfo() {
+    this.ngxSmartModalService.getModal('modal1').open();
   }
 }

@@ -13,7 +13,7 @@ import { UserReviewService } from '../services/user-review.service';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MessageModule } from './message.module';
-import { DigitsOnlyDirective } from '../directives/digits-only.directive';
+import { SharedModule } from './shared/shared.module';
 
 /**
  * Module to deal with all sort of operations for user review
@@ -31,7 +31,6 @@ import { DigitsOnlyDirective } from '../directives/digits-only.directive';
     DisplayPictureComponent,
     ContactComponent,
     ThankYouComponent,
-    DigitsOnlyDirective
   ],
   imports: [
     CommonModule,
@@ -40,7 +39,8 @@ import { DigitsOnlyDirective } from '../directives/digits-only.directive';
     BarRatingModule,
     UserReviewRoutingModule,
     MediaModule,
-    MessageModule
+    MessageModule,
+    SharedModule
   ],
   providers: [
     UserReviewService
