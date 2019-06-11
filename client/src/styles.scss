@@ -2028,6 +2028,11 @@ a {
             }
           }
 
+          .switcher {
+            text-align: right;
+            @include mt(10px);
+          }
+
           @media (max-width: 1199px) {
             padding-left: 15px;
           }
@@ -2095,7 +2100,11 @@ a {
             }
           }
 
-          @media (max-width: 575px) {
+          @media (max-width: 991px) {
+            right: 0;
+          }
+
+          @media (max-width: 640px) {
             width: 250px;
           }
         }
@@ -4064,10 +4073,6 @@ body.loginPage {
     color: #878787;
     font-weight: 400;
     margin-top: 16px;
-  }
-
-  .formArea input.ng-pristine:not(:empty) + label{
-    top: 0 !important;
   }
 
   .formArea .formRow {
@@ -8442,6 +8447,64 @@ img {
 
   @media (max-width: 480px) {
     padding: 0 10px;
+  }
+}
+
+
+// Custom Checkbox
+.switcher {
+  label {
+    cursor: pointer;
+    font-size: 0;
+    width: 24px;
+    height: 16px;
+    border: none;
+    margin-left: 5px;
+    position: relative;
+    top: -1px;
+    display: inline-block;
+
+    input {
+      display: none;
+    }
+    input + span {
+      position: relative;
+      display: block;
+      height: 100%;
+
+      &:before {
+        content: "";
+        width: 24px;
+        height: 6px;
+        border-radius: 6px;
+        background: #cfcfcf;
+        position: absolute;
+        left: 0;
+        top: 5px;
+        transition: all 0.3s ease 0s;
+      }
+      &:after {
+        content: "";
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: #cfcfcf;
+        border-radius: 12px;
+        position: absolute;
+        left: -1px;
+        top: 2px;
+        transition: all 0.3s ease 0s;
+      }
+    }
+    input:checked + span {
+      &:before {
+        background: #e30b5d;
+      }
+      &:after {
+        left: 13px;
+        background: #e30b5d;
+      }
+    }
   }
 }
 
