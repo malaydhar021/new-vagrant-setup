@@ -1936,12 +1936,12 @@ a {
           width: 12%;
           padding-right: 34px;
 
-          @media (max-width: 1365px) {
-            padding-right: 15px;
+          @media (max-width: 1600px) {
+            white-space: nowrap;
           }
 
-          @media (max-width: 1199px) {
-            white-space: nowrap;
+          @media (max-width: 1365px) {
+            padding-right: 15px;
           }
         }
 
@@ -2703,11 +2703,31 @@ a {
           width: 100%;
           border: none;
         }
+
+        @media (max-width: 640px) {
+          float: none;
+          width: 100%;
+          border: none;
+        }
       }
 
       @media (max-width: 767px) {
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       }
+
+      @media (max-width: 767px) {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .log-stat_msg + .log-stat_msg {
+      margin-top: 5px;
+    }
+
+    @media (max-width: 767px) {
+      width: auto;
+      margin-left: 15px;
+      margin-right: 15px;
     }
 
     .log-stat_msg + .log-stat_msg {
@@ -4100,10 +4120,6 @@ body.loginPage {
     margin-top: 16px;
   }
 
-  .formArea input.ng-pristine:not(:empty) + label{
-    top: 0 !important;
-  }
-
   .formArea .formRow {
     height: 70px;
     position: relative;
@@ -4288,6 +4304,9 @@ body.sign-upPage {
       .leftHeader {
         display: inline-block;
         width: 100%;
+        position: relative;
+        z-index: 2;
+        background-color: #fff;
 
         .logo {
           float: left;
@@ -4601,6 +4620,7 @@ body.sign-upPage {
     margin-bottom: 24px;
     display: inline-block;
     width: 100%;
+    position: relative;
 
     .formCol4,
     .formCol5,
@@ -4731,6 +4751,35 @@ body.sign-upPage {
       @media (max-width: 480px) {
         height: 42px;
         @include border-radius(3px);
+      }
+    }
+
+    &.error {
+      input:not(:focus) {
+        border: 2px solid #ff5d5d !important;
+        border-radius: 5px 5px 0 5px;
+        background: #ffd1d1;
+        color: #955151;
+      }
+
+      label {
+        top: 0 !important;
+      }
+
+      .error {
+        position: absolute;
+        box-sizing: border-box;
+        max-width: calc(100% - 30px);
+        right: 0;
+        top: 100%;
+        padding: 5px 15px 7px 30px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 100%;
+        color: #fff;
+        background: #ff5d5d;
+        border-radius: 0 0 7px 40px;
+        text-align: right;
       }
     }
   }
@@ -5156,6 +5205,7 @@ body.sign-upPage {
     color: #fff;
     font-size: 11px;
     left: 0;
+    width: 1000%;
     max-width: 160px;
     margin-top: 9px;
     -webkit-transition: all ease 0.4s;
