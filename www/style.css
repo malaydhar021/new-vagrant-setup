@@ -1781,6 +1781,23 @@ h5 {
     max-width: 100%;
 }
 
+.ftLinks {
+    display: inline-block;
+}
+
+.ftLinks a {
+    position: relative;
+    margin-left: 15px;
+}
+
+.ftLinks a:before {
+    content: '|';
+    right: 100%;
+    margin-right: 8px;
+    pointer-events: none;
+    color: #ccc;
+}
+
 @media (max-height: 620px) and (orientation: landscape) {
     .errorBody,
     .maintenanceBody {
@@ -1796,6 +1813,22 @@ h5 {
         bottom: 0;
         margin-top: auto;
         margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 1319px) {
+    .bannerArea .container,
+    .featureArea .container,
+    .featureArea2 .container,
+    .newRelease .container,
+    .reviewLooks .container,
+    .pricingArea .container {
+        padding: 0 15px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+    .reviewLooks .reviewTheme {
+        display: block;
     }
 }
 
@@ -1831,10 +1864,36 @@ h5 {
     .maintenanceBody .graphicsError {
         max-width: 250px;
     }
+
+    .ftLinks {
+        display: block;
+        margin-top: 15px;
+        padding: 0 15px;
+        font-size: 0;
+    }
+
+    .ftLinks a:before {
+        margin-right: 5px;
+    }
+
+    .ftLinks a:first-child:before {
+        content: '';
+    }
+    .ftLinks a {
+        font-size: 13px;
+        margin-left: 5px;
+    }
+    .ftLinks a:first-child{
+        margin-left: 0;
+    }
 }
 
 @media (max-width: 480px) {
     .maintainPages .maintainGfx {
         display: none;
+    }
+    .pricingArea .plan .planCell {
+        margin: 0;
+        float: none;
     }
 }
