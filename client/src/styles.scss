@@ -4079,6 +4079,35 @@ body.loginPage {
     height: 70px;
     position: relative;
     margin-top: 70px;
+
+    &.error {
+      input:not(:focus) {
+        border: 2px solid #ff5d5d !important;
+        border-radius: 5px 5px 0 5px;
+        background: #ffd1d1;
+        color: #955151;
+      }
+
+      label {
+        top: 0 !important;
+      }
+
+      .error {
+        position: absolute;
+        box-sizing: border-box;
+        max-width: calc(100% - 30px);
+        right: 0;
+        top: 100%;
+        padding: 5px 15px 7px 30px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 100%;
+        color: #fff;
+        background: #ff5d5d;
+        border-radius: 0 0 7px 40px;
+        text-align: right;
+      }
+    }
   }
 
   .formArea .formRow2 {
@@ -4595,7 +4624,6 @@ body.sign-upPage {
       font-weight: 600;
       display: block;
       margin-bottom: 14px;
-      ;
 
       @media (max-width: 480px) {
         @include mb(8px);
@@ -4657,8 +4685,8 @@ body.sign-upPage {
       transition: all 0.5s ease-out 0s;
 
       &:hover {
-        -webkit-box-shadow: 0 0 30px #7E7B9B;
-        box-shadow: 0 0 30px #7E7B9B;
+        -webkit-box-shadow: 0 0 15px #7E7B9B;
+        box-shadow: 0 0 15px rgb(126, 123, 155);
       }
 
       &.trial {
