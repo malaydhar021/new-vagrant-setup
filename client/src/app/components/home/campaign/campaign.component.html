@@ -28,6 +28,13 @@
                   <div class="userReview">
                     <h2>{{ campaign.campaign_name }} <span class="redTag" *ngIf="campaign.is_active">ACTIVE</span></h2>
                     <p>{{ campaign.domain_name }}</p>
+
+                    <div class="switcher">
+                      <label>
+                        <input type="checkbox">
+                        <span></span>
+                      </label>
+                    </div>
                   </div>
                   <a (copy)="onCopySnippet()" (clickOutside)="closeCopySnippetBox($event)" [context]="prepareContext(campaign)" class="copyBtn" [ngClass]="{copyNow: showCopySnippetBox && i == rowIndex}" (mouseover)="showCopySnippetBox = true; rowIndex = i" copyToClipboard><img src="../../../../assets/images/icon_copy_snippet.png" alt=""> Copy Snippet
                     <div class="copypop" (mouseout)="showCopySnippetBox = false; rowIndex = i" >
