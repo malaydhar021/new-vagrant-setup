@@ -16,7 +16,11 @@
 
     <div class="container">
         <p class="billed">*Billed monthly, <a href="#">no set up fee.</a></p>
-        <p class="copyright">© 2018 All rights reserved. <strong>Tier5 LLC </strong> | <a href="terms-and-conditions" target="_blank"> Terms and Conditions </a> | <a href="privacy-policy" target="_blank">Privacy Policy </a> | <a href="support" target="_blank">Contact Support</a> </p>
+        <p class="copyright">© 2018 All rights reserved. <span class="ftLinks">
+                <a href="terms-and-conditions" target="_blank"> Terms and Conditions </a> 
+                <a href="privacy-policy" target="_blank">Privacy Policy </a> 
+                <a href="support" target="_blank">Contact Support</a>
+            </span> </p>
     </div>
     <iframe src="https://app.local.usestickyreviews.com/" class="iframe-div" style="display: none" id="opIFrame"></iframe>
 </footer>
