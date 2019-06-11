@@ -59,6 +59,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+        Log.info(status);
       }
     );
   }
@@ -94,6 +95,14 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * @method formControls
+   * @since Version 1.0.0
+   */
+  public get formControls() {
+    return this.form.controls;
+  }
+
+  /**
    * This method will handle the forgot password form when it is submitted
    * @method onSubmit
    * @since Version 1.0.0
@@ -101,6 +110,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
    */
   public onSubmit() {
     this.isSubmitted = true;
+    Log.info("check if this is showing or not");
     if (this.form.invalid) {
       return false;
     }
