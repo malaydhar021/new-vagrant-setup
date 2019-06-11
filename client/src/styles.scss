@@ -4100,6 +4100,10 @@ body.loginPage {
     margin-top: 16px;
   }
 
+  .formArea input.ng-pristine:not(:empty) + label{
+    top: 0 !important;
+  }
+
   .formArea .formRow {
     height: 70px;
     position: relative;
