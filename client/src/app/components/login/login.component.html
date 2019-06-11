@@ -10,11 +10,6 @@
       <span>Login to continue using Sticky Reviews</span>
     </h1>
     <div class="formArea">
-      <!-- <div *ngIf="error !== null">
-        <span>
-          <div class="log-stat_msg log_Failed">{{ error }}</div>
-        </span>
-      </div> -->
       <message [successMessage]="successMessage" [showMessage]="showError"></message>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">

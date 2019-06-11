@@ -13,7 +13,6 @@ import { CampaignInterface } from '../../../interfaces/campaign.interface';
 import { MinimumCheckedCheckboxes } from '../../../helpers/form.helper';
 import { WidgetUrl } from '../../../helpers/api.helper';
 import { ErrorsService } from 'src/app/services/errors.service';
-import { NgScrollbar } from 'ngx-scrollbar';
 
 /**
  * Component to handle all sort of functionalities related to campaign. It's mostly handles
