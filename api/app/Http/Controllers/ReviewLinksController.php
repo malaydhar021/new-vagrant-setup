@@ -75,12 +75,13 @@ class ReviewLinksController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => "${noOfReviewLinks} review link(s) have found.",
-                'data' =>$reviewLinks,
+                'data' => $reviewLinks
             ]);
         } else {
             return response()->json([
                 'status' => true,
-                'message' => 'Sorry, no review links have found!'
+                'message' => 'Sorry, no review links have found!',
+                'data' => $reviewLinks
             ]);
         }
     }

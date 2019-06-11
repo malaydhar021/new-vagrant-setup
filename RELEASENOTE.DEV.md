@@ -156,6 +156,13 @@ operation the user is assigned to basic plan.
 
 ## Login
 
+### V2.0.0
+
+1. Fixed issue with loader during login
+2. Added client side validation message in login form
+3. Added client side validation message in forgot password and reset password page
+4. Implemented style for nice looking validation error messages
+
 ### V1.3.0
 
 1. Implemented forgot password accepting the user email

@@ -48,7 +48,7 @@ export class MessageComponent implements OnInit, OnDestroy {
         this.loaderService.disableLoader();
         this.errMsg = errMsg;
         setTimeout(() => {
-          this.errMsg = ''
+          this.errMsg = '';
         }, 3000)
       }
     );

@@ -23,12 +23,30 @@
           <input type="text" class="formCtrl" id="email" formControlName="email" (focus)="onFocus('email', $event)"
             (blur)="onFocusOut('email', $event)" autocomplete="off">
           <label>Email</label>
+          <div class="error" *ngIf="(
+            isSubmitted
+            && loginFormControls.email.errors !== null
+            && loginFormControls.email.errors.required)">
+            Email address is required
+          </div>
+          <div class="error" *ngIf="(
+            isSubmitted
+            && loginFormControls.email.errors !== null
+            && loginFormControls.email.errors.email)">
+            Please enter a valid email address
+          </div>
         </div>
         <div class="formRow"
           [ngClass]="{active : passwordFieldFocused, error : isSubmitted && loginFormControls.password.errors}">
           <input type="password" class="formCtrl" id="password" formControlName="password"
             (focus)="onFocus('password', $event)" (blur)="onFocusOut('password', $event)">
           <label>Password</label>
+          <div class="error" *ngIf="(
+            isSubmitted
+            && loginFormControls.password.errors !== null
+            && loginFormControls.password.errors.required)">
+            Password is required
+          </div>
         </div>
         <div class="formRow2">
           <div class="rememberMe">

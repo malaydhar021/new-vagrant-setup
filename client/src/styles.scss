@@ -2028,6 +2028,11 @@ a {
             }
           }
 
+          .switcher {
+            text-align: right;
+            @include mt(10px);
+          }
+
           @media (max-width: 1199px) {
             padding-left: 15px;
           }
@@ -2095,7 +2100,11 @@ a {
             }
           }
 
-          @media (max-width: 575px) {
+          @media (max-width: 991px) {
+            right: 0;
+          }
+
+          @media (max-width: 640px) {
             width: 250px;
           }
         }
@@ -2595,7 +2604,8 @@ a {
     margin: 40px auto;
 
     .plan {
-      float: left;
+      // float: left;
+      @include mb(15px);
       width: 100%;
       -webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
       box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
@@ -2682,8 +2692,32 @@ a {
             pointer-events: none;
             border-color: #BBB9D1;
           }
+
+          @media (max-width: 640px) {
+            @include mt(15px);
+          }
+        }
+
+        @media (max-width: 640px) {
+          float: none;
+          width: 100%;
+          border: none;
         }
       }
+
+      @media (max-width: 767px) {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .log-stat_msg + .log-stat_msg {
+      margin-top: 5px;
+    }
+
+    @media (max-width: 767px) {
+      width: auto;
+      margin-left: 15px;
+      margin-right: 15px;
     }
   }
 }
@@ -4070,6 +4104,35 @@ body.loginPage {
     height: 70px;
     position: relative;
     margin-top: 70px;
+
+    &.error {
+      input:not(:focus) {
+        border: 2px solid #ff5d5d !important;
+        border-radius: 5px 5px 0 5px;
+        background: #ffd1d1;
+        color: #955151;
+      }
+
+      label {
+        top: 0 !important;
+      }
+
+      .error {
+        position: absolute;
+        box-sizing: border-box;
+        max-width: calc(100% - 30px);
+        right: 0;
+        top: 100%;
+        padding: 5px 15px 7px 30px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 100%;
+        color: #fff;
+        background: #ff5d5d;
+        border-radius: 0 0 7px 40px;
+        text-align: right;
+      }
+    }
   }
 
   .formArea .formRow2 {
@@ -4256,6 +4319,10 @@ body.sign-upPage {
 
           &.secondStep {
             margin-left: -120%;
+
+            @media (max-width: 767px) {
+              margin-left: -100%;
+            }
           }
 
           // padding right added to first form step to contain box-shadow
@@ -4263,9 +4330,23 @@ body.sign-upPage {
             &:first-child {
               .formStep {
                 padding-right: 3%;
+                overflow: hidden;
 
-                @media (max-width: 1600px) {
-                  padding-right: 0;
+                @media (max-width: 767px) {
+                  padding-right: 15px;
+                  padding-left: 15px;
+                }
+              }
+            }
+
+            &:last-child {
+              .formStep {
+                padding-left: 10%;
+                padding-right: 0;
+
+                @media (max-width: 767px) {
+                  padding-right: 15px;
+                  padding-left: 15px;
                 }
               }
             }
@@ -4276,17 +4357,8 @@ body.sign-upPage {
             float: left;
             padding-right: 5%;
 
-            @media (max-width: 1600px) {
+            @media (max-width: 767px) {
               padding-right: 0;
-            }
-
-            &:last-child {
-              padding-left: 5%;
-              padding-right: 0;
-
-              @media (max-width: 1600px) {
-                padding-left: 0;
-              }
             }
           }
 
@@ -4577,7 +4649,6 @@ body.sign-upPage {
       font-weight: 600;
       display: block;
       margin-bottom: 14px;
-      ;
 
       @media (max-width: 480px) {
         @include mb(8px);
@@ -4639,8 +4710,8 @@ body.sign-upPage {
       transition: all 0.5s ease-out 0s;
 
       &:hover {
-        -webkit-box-shadow: 0 0 30px #7E7B9B;
-        box-shadow: 0 0 30px #7E7B9B;
+        -webkit-box-shadow: 0 0 15px #7E7B9B;
+        box-shadow: 0 0 15px rgb(126, 123, 155);
       }
 
       &.trial {
@@ -6617,6 +6688,10 @@ body.sign-upPage {
       cursor: pointer;
     }
   }
+
+  @media (max-width: 640px) {
+    text-align: center;
+  }
 }
 
 // Branding page changes
@@ -8429,6 +8504,64 @@ img {
 
   @media (max-width: 480px) {
     padding: 0 10px;
+  }
+}
+
+
+// Custom Checkbox
+.switcher {
+  label {
+    cursor: pointer;
+    font-size: 0;
+    width: 24px;
+    height: 16px;
+    border: none;
+    margin-left: 5px;
+    position: relative;
+    top: -1px;
+    display: inline-block;
+
+    input {
+      display: none;
+    }
+    input + span {
+      position: relative;
+      display: block;
+      height: 100%;
+
+      &:before {
+        content: "";
+        width: 24px;
+        height: 6px;
+        border-radius: 6px;
+        background: #cfcfcf;
+        position: absolute;
+        left: 0;
+        top: 5px;
+        transition: all 0.3s ease 0s;
+      }
+      &:after {
+        content: "";
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: #cfcfcf;
+        border-radius: 12px;
+        position: absolute;
+        left: -1px;
+        top: 2px;
+        transition: all 0.3s ease 0s;
+      }
+    }
+    input:checked + span {
+      &:before {
+        background: #e30b5d;
+      }
+      &:after {
+        left: 13px;
+        background: #e30b5d;
+      }
+    }
   }
 }
 

@@ -138,7 +138,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('_sr', JSON.stringify(data));
           // setting a cookie in main domain when user login
           this.cookieService.set('_loginUser', '1', 450, '/', 'usestickyreviews.com');
-          this.loaderService.disableLoader();
+          // this.loaderService.disableLoader();
           // redirect to home
           this.router.navigate(['/home']);
         } else {
