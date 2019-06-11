@@ -4066,6 +4066,10 @@ body.loginPage {
     margin-top: 16px;
   }
 
+  .formArea input.ng-pristine:not(:empty) + label{
+    top: 0 !important;
+  }
+
   .formArea .formRow {
     height: 70px;
     position: relative;
@@ -4256,6 +4260,10 @@ body.sign-upPage {
 
           &.secondStep {
             margin-left: -120%;
+
+            @media (max-width: 767px) {
+              margin-left: -100%;
+            }
           }
 
           // padding right added to first form step to contain box-shadow
@@ -4263,9 +4271,23 @@ body.sign-upPage {
             &:first-child {
               .formStep {
                 padding-right: 3%;
+                overflow: hidden;
 
-                @media (max-width: 1600px) {
-                  padding-right: 0;
+                @media (max-width: 767px) {
+                  padding-right: 15px;
+                  padding-left: 15px;
+                }
+              }
+            }
+
+            &:last-child {
+              .formStep {
+                padding-left: 10%;
+                padding-right: 0;
+
+                @media (max-width: 767px) {
+                  padding-right: 15px;
+                  padding-left: 15px;
                 }
               }
             }
@@ -4276,17 +4298,8 @@ body.sign-upPage {
             float: left;
             padding-right: 5%;
 
-            @media (max-width: 1600px) {
+            @media (max-width: 767px) {
               padding-right: 0;
-            }
-
-            &:last-child {
-              padding-left: 5%;
-              padding-right: 0;
-
-              @media (max-width: 1600px) {
-                padding-left: 0;
-              }
             }
           }
 
