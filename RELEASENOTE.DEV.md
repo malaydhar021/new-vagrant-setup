@@ -81,6 +81,10 @@
 
 ## Campaign
 
+### V2.0.2
+
+1. Fixed issue with campaign sticky reviews in add / edit campaign modal which was causing issue in production build
+
 ### V2.0.1
 
 1. Added control to active / inactive status of a campaign
