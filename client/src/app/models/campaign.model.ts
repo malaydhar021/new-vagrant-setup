@@ -19,5 +19,6 @@ export class CampaignModel {
   branding_id: number;
   loop: number;
   style_id: string;
+  is_active?: number;
   _method?: string;
 }

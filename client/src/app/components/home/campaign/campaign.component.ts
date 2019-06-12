@@ -654,10 +654,6 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     if (closeModal) this.ngxSmartModalService.getModal('modal1').close(); // close the modal
     error ? this.errorMessage = message : this.successMessage = message; // set message
-    setTimeout(() => {
-      this.successMessage = null;
-      this.errorMessage = null;
-    }, 3000);
     this.isSubmitted = false; // change the flag for form submit
     this.isEditing = false; // set it to false
     this.isDeleting = false; // set it to false
@@ -844,6 +840,45 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
             this.loaderService.disableLoader();
           }
         }
+    );
+  }
+
+  /**
+   * Method to change the auto approve status from the listing page
+   * @method onChangeActiveStatus
+   * @since Version 1.0.0
+   * @param id Review link system id
+   * @returns Void
+   */
+  public onChangeActiveStatus(id: string, activeStatus) {
+    // set the review link id property
+    this.campaignId = id;
+    const data = {
+      is_active: (activeStatus.value) ? '0' : '1'
+    };
+    this.loaderService.enableLoader();
+    this.updateActiveStatus(data);
+  }
+
+  /**
+   * Method to update a review link auto approve status
+   * @method updateActiveStatus
+   * @since Version 1.0.0
+   * @param data ReviewLinkModel instance. The request payload
+   * @returns Void
+   */
+  public updateActiveStatus(data: any) {
+    this.campaignService.updateActiveStatus(this.campaignId, data).subscribe(
+      (response: any) => {
+        Log.info(response, "Response Update");
+        if(response.status) {
+          // perform post response activities
+          this.postResponseActivities(response.message);
+        } else {
+          // perform post response activities in case any error occurred
+          this.postResponseActivities(response.message, false, false, true, true);
+        }
+      }
     );
   }
 

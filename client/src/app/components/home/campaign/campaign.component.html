@@ -28,10 +28,9 @@
                   <div class="userReview">
                     <h2>{{ campaign.campaign_name }} <span class="redTag" *ngIf="campaign.is_active">ACTIVE</span></h2>
                     <p>{{ campaign.domain_name }}</p>
-
                     <div class="switcher">
                       <label>
-                        <input type="checkbox">
+                        <input type="checkbox" [(ngModel)]="campaign.is_active" #activeStatus="ngModel" (change)="onChangeActiveStatus(campaign.id, activeStatus)">
                         <span></span>
                       </label>
                     </div>

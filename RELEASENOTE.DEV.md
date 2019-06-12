@@ -81,6 +81,10 @@
 
 ## Campaign
 
+### V2.0.1
+
+1. Added control to active / inactive status of a campaign
+
 ### V2.0.0
 
 1. Added copy snippet box on over on copy snippet button to copy the code snippet manually

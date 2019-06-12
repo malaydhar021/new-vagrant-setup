@@ -203,7 +203,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Toggle a speficic campaign active/inactive status
+     * Toggle a specific campaign active/inactive status
      *
      * @param Request $request
      * @param  string  $id
@@ -213,12 +213,12 @@ class CampaignsController extends Controller
     {
         $campaign = $this->queryBuilder->whereId($id)->firstOrFail();
         $campaign->update([
-            'is_active' => $campaign->is_active ? "0" : "1",
+            'is_active' => $request->is_active == 0 ? "0" : "1",
         ]);
 
         return response()->json([
             'status' => true,
-            'message' => 'Successfully ' . ($campaign->is_active ? 'dectivated' : 'activated' ) . ' the campaign.',
+            'message' => 'Successfully ' . ($campaign->is_active ? 'deactivated' : 'activated' ) . ' the campaign.',
             'data' => new CampaignsResource($campaign),
         ]);
     }

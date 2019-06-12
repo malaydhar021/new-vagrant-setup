@@ -131,4 +131,16 @@ export class CampaignService {
     return this.httpClient.get(CampaignApiEndpoints.campaigns.concat('?searchParams=' + term));
   }
 
+  /**
+   * Method to update campaign status to active/inactive
+   * @method updateActiveStatus
+   * @since Version 1.0.0
+   * @param id Campaign Id
+   * @param data Request payload data object
+   * @returns Observable<Object>
+   */
+  public updateActiveStatus(id: string, data: any) {
+    return this.httpClient.patch(CampaignApiEndpoints.campaigns.concat('/' + id + '/status'), data);
+  }
+
 }
