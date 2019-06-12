@@ -11,14 +11,15 @@
   <div class="dataTableArea">
     <message [successMessage]="successMessage" [showMessage]="showError"></message>
     <div class="popupListContainer">
-      <ng-scrollbar [compact]="true">
-                <ul class="popupList">
-                  <li *ngFor="let exitPopup of exitPopups | paginate: config; let i = index">
-                    <div class="popupThubm" (click)="openExitpopUpPreview(exitPopup)">
-                      <img src="{{exitPopup.popup_preview_img}}" alt="thumb5">
-                    </div>
-                    <div class="popupCtrl">
-                      <p>{{ exitPopup.name |  slice:0:30 }}</p>
+      <ng-scrollbar [compact]="true"  *ngIf="exitPopups.length > 0; else noRecords">
+        <ul class="popupList">
+          <li *ngFor="let exitPopup of exitPopups | paginate: config; let i = index">
+            <div class="popupThubm" (click)="openExitpopUpPreview(exitPopup)">
+              <img *ngIf="exitPopup.popup_preview_img !== null " src="{{exitPopup.popup_preview_img}}" alt="thumb5">
+              <img *ngIf="exitPopup.popup_preview_img === null " src="../../../../assets/images/placeholder_popup.png" alt="placeholder_popup">
+            </div>
+            <div class="popupCtrl">
+              <p>{{ exitPopup.name |  slice:0:30 }}</p>
               <div class="crtlRight">
                 <a (click)="onEditExitPopup(exitPopup)"><img src="../../../../assets/images/icon_edit.png" alt="iconEdit"></a>
                 <a (click)="deleteExitPopup(exitPopup.id)"><img src="../../../../assets/images/icon_delete_red.png" alt="iconDelete"></a>
@@ -28,6 +29,13 @@
           </li>
         </ul>
       </ng-scrollbar>
+      <ng-template #noRecords>
+        <ul>
+          <li class="row">
+            <p class="no-records">Sorry no exit popup found !</p>
+          </li>
+        </ul>
+      </ng-template>
     </div>
     <!-- Pagination -->
     <pagination-controls [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
@@ -112,7 +120,7 @@
                 <h6>{{reviewName}}</h6>
                 <p>{{reviewDescription |  slice:0:80 }}</p>
                 <footer class="popupFt">
-                {{ reviewAt }}
+                  {{ reviewAt }}
                   <span><img src="../../../../assets/images/icon_poweredby.png" alt=""></span>
                   by
                   <span>{{reviewUserName |  slice:0:10 }}</span>
@@ -2782,7 +2790,7 @@
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
-          {{ isEditing ? 'Edit': 'Create' }} Exit popup
+        {{ isEditing ? 'Edit': 'Create' }} Exit popup
       </h2>
     </div>
     <div class="sr-modal-body">
@@ -2813,15 +2821,15 @@
               <label>Attach a Campaign</label>
               <div class="sr-form-field">
                 <select class="sr-form-ctrl" formControlName="campaign" (ngModelChange)="getCampaignStyles()" [compareWith]="compareFn" [ngClass]="{error: isSubmitted && getFormControls.campaign.errors}">
-                    <option value="">Select a campaign</option>
+                  <option value="">Select a campaign</option>
                   <option *ngFor="let campaign of campaigns;let i = index" [ngValue]="campaign"> {{ campaign.campaign_name }}</option>
                 </select>
-                  <div class="error-msg" *ngIf="(
+                <div class="error-msg" *ngIf="(
                   isSubmitted
                   && getFormControls.campaign.errors !== null
                   && getFormControls.campaign.errors.required)">
-                      Please select a campaign
-                  </div>
+                  Please select a campaign
+                </div>
               </div>
             </div>
           </div>
@@ -2838,25 +2846,25 @@
               <label style="margin-top: 20px;" *ngIf="showStickyReviews">Select Reviews</label>
               <div class="sr-form-field" *ngIf="showStickyReviews">
                 <select class="sr-form-ctrl" formControlName="stickyReviews" multiple (change)="getStickyReviewStyle()"  [compareWith]="compareFn" [ngClass]="{error: isSubmitted && getFormControls.stickyReviews.errors}">
-                    <option value="">Select atlist one sticky review </option>
+                  <option value="">Select atlist one sticky review </option>
                   <option *ngFor="let stickyReview of stickyReviews; let i = index" [ngValue]="stickyReview"> {{ stickyReview.name }} </option>
                 </select>
-                  <div class="error-msg" *ngIf="(
+                <div class="error-msg" *ngIf="(
                   isSubmitted
                   && getFormControls.stickyReviews.errors !== null
                   && getFormControls.stickyReviews.errors.required)">
-                      Please atlist one stickyReviews
-                  </div>
+                  Please atlist one stickyReviews
+                </div>
               </div>
 
             </div>
             <div class="sr-form-cell-small exitPopup_paddings">
-<!--              <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>-->
-                <!-- Popup Action -->
-                <label>Exit popup action </label>
-                        <label> <input type="radio" class="tglBtn" formControlName="exitPopupAction" value="1" (change)="addExitpopupAction()"> Add email field </label>
-                        <br>
-                        <label> <input type="radio"  class="tglBtn" formControlName="exitPopupAction" value="2" (change)="addExitpopupAction()"> Add CTA button </label>
+              <!--              <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>-->
+              <!-- Popup Action -->
+              <label>Exit popup action </label>
+              <label> <input type="radio" class="tglBtn" formControlName="exitPopupAction" value="1" (change)="addExitpopupAction()"> Add email field </label>
+              <br>
+              <label> <input type="radio"  class="tglBtn" formControlName="exitPopupAction" value="2" (change)="addExitpopupAction()"> Add CTA button </label>
             </div>
           </div>
           <div class="sr-form-row">
@@ -2885,10 +2893,10 @@
                   && getFormControls.exitPopupButtonText.errors.required)">
                   Button text is required.
                 </div>
-                  <div class="error-msg"  *ngIf="(getFormControls.exitPopupButtonText.errors !== null && getFormControls.exitPopupButtonText.errors?.maxlength)"> Only 15 characters allowed. </div>
+                <div class="error-msg"  *ngIf="(getFormControls.exitPopupButtonText.errors !== null && getFormControls.exitPopupButtonText.errors?.maxlength)"> Only 15 characters allowed. </div>
               </div>
             </div>
-              <!-- CTA Button HTML-->
+            <!-- CTA Button HTML-->
             <div class="sr-form-cell-small" *ngIf="showCtaField">
               <div class="headerInForm">
                 <span>CTA BUTTON</span>
@@ -2903,7 +2911,7 @@
                   && getFormControls.exitPopupCtaButtonText.errors.required)">
                   CTA button text is required.
                 </div>
-                  <div class="error-msg"  *ngIf="(getFormControls.exitPopupCtaButtonText.errors !== null && getFormControls.exitPopupCtaButtonText.errors?.maxlength)"> Only 40 characters allowed. </div>
+                <div class="error-msg"  *ngIf="(getFormControls.exitPopupCtaButtonText.errors !== null && getFormControls.exitPopupCtaButtonText.errors?.maxlength)"> Only 40 characters allowed. </div>
               </div>
 
 
@@ -2916,9 +2924,9 @@
                   && getFormControls.exitPopupButtonUrl.errors.required)">
                   CTA button URL is required.
                 </div>
-                  <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupButtonUrl.errors?.pattern)">
-                      Please use a valid URL.
-                  </div>
+                <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupButtonUrl.errors?.pattern)">
+                  Please use a valid URL.
+                </div>
               </div>
             </div>
 
@@ -2989,7 +2997,7 @@
                   && getFormControls.exitPopupParagraphText.errors.required)">
                   Paragraph text is required.
                 </div>
-                  <div class="error-msg"  *ngIf="(getFormControls.exitPopupParagraphText.errors !== null && getFormControls.exitPopupParagraphText.errors?.maxlength)"> Only 100 characters allowed. </div>
+                <div class="error-msg"  *ngIf="(getFormControls.exitPopupParagraphText.errors !== null && getFormControls.exitPopupParagraphText.errors?.maxlength)"> Only 100 characters allowed. </div>
               </div>
 
               <div class="inlineRow clearfix">
@@ -3043,7 +3051,7 @@
                                 <h6>{{reviewName}}</h6>
                                 <p>{{reviewDescription |  slice:0:80 }}</p>
                                 <footer class="popupFt">
-<!--                                  {{reviewAt  | date }} -->
+                                  <!--                                  {{reviewAt  | date }} -->
                                   {{ reviewAt }}
                                   <span><img src="../../../../assets/images/icon_poweredby.png" alt=""></span>
                                   by
@@ -3139,8 +3147,8 @@
                           <div class="popupParent">
                             <div class="popupTxt popup_template_5" style="margin-bottom: 30px;">
                               <div class="figPopup">
-<!--                                <figure style="background-image:url(../../../assets/images/dp.jpeg);"  *ngIf="reviewImageUrl === ''"></figure>-->
-<!--                                <figure style="background-image:url({{reviewImageUrl}});"  *ngIf="reviewImageUrl === ''"></figure>                                                      -->
+                                <!--                                <figure style="background-image:url(../../../assets/images/dp.jpeg);"  *ngIf="reviewImageUrl === ''"></figure>-->
+                                <!--                                <figure style="background-image:url({{reviewImageUrl}});"  *ngIf="reviewImageUrl === ''"></figure>                                                      -->
                                 <figure>
                                   <img src="../../../../assets/images/dp.jpeg" alt="reviewImage" *ngIf="reviewImageUrl === ''">
                                   <img src="{{reviewImageUrl}}" alt="reviewImage" *ngIf="reviewImageUrl !== ''">
@@ -3197,8 +3205,8 @@
                             <div class="popupTxt popup_template_2" style="margin-bottom: 30px;">
                               <div class="figPopup">
                                 <figure>
-                                <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewImageUrl === ''">
-                                <img src="{{reviewImageUrl}}" alt="reviewImage" *ngIf="reviewImageUrl !== ''">
+                                  <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewImageUrl === ''">
+                                  <img src="{{reviewImageUrl}}" alt="reviewImage" *ngIf="reviewImageUrl !== ''">
                                 </figure>
                               </div>
                               <div class="bodyPopup">
@@ -3280,7 +3288,7 @@
                           <div class="popupParent audioParent_5">
                             <div class="popupTxt popup_template_5" style="margin-bottom: 30px;">
                               <div class="figPopup">
-<!--                                <figure style="background-image:url(../../../assets/images/dp.jpeg);"></figure>-->
+                                <!--                                <figure style="background-image:url(../../../assets/images/dp.jpeg);"></figure>-->
                                 <figure>
                                   <img src="../../../../assets/images/dp.jpeg" alt="reviewImage" *ngIf="reviewImageUrl === ''">
                                   <img src="{{reviewImageUrl}}" alt="reviewImage" *ngIf="reviewImageUrl !== ''">

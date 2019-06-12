@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(CampaignStylesTableSeederTypeColumnSeeder::class);
         // $this->call(ExitPopupStyleTableSeeder::class);
         // $this->call(ReviewLinkTableSeeder::class);
+        // $this->call(ExitPopupTableSeeder::class);
     }
 }
