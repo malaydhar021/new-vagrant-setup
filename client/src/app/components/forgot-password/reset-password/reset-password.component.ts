@@ -97,7 +97,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
     // initialize formBuilder with client side validation
     this.form = this.formBuilder.group({
-        password: [null, [Validators.required, Validators.minLength(8)]],
+        password: [null, [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
         confirmPassword: [null, [Validators.required]]
       }, {
         validator: ValidationEngine.MustMatch('password', 'confirmPassword') // custom validator to match with password and confirm password

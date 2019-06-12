@@ -273,7 +273,7 @@ export class CampaignApiEndpoints {
 }
 
 /**
- * StickyReviewsApiEndpoints helper class is holding all static methods for sitiky reviews api endpoints based on the environment
+ * StickyReviewsApiEndpoints helper class is holding all static methods for sticky reviews api endpoints based on the environment
  * @class StickyReviewsApiEndpoints
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`

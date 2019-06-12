@@ -47,9 +47,9 @@ export class MessageComponent implements OnInit, OnDestroy {
         // Assign the error message to the error message template string variable
         this.loaderService.disableLoader();
         this.errMsg = errMsg;
-        setTimeout(() => {
-          this.errMsg = '';
-        }, 3000)
+        // setTimeout(() => {
+        //   this.errMsg = '';
+        // }, 3000)
       }
     );
 
@@ -58,9 +58,9 @@ export class MessageComponent implements OnInit, OnDestroy {
       validationErrMsg => {
         this.loaderService.disableLoader();
         this.validationErrorMessages = Object.values(validationErrMsg);
-        setTimeout(() => {
-          this.validationErrorMessages = [];
-        }, 3000)
+        // setTimeout(() => {
+        //   this.validationErrorMessages = [];
+        // }, 3000)
       }
     );
   }
@@ -74,7 +74,9 @@ export class MessageComponent implements OnInit, OnDestroy {
    * @method ngOnDestroy
    */
   public ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.validationSubscription.unsubscribe();
+    this.errorService.updateMessage('');
+    this.errorService.updateValidationMessage('');
+    // this.subscription.unsubscribe();
+    // this.validationSubscription.unsubscribe();
   }
 }

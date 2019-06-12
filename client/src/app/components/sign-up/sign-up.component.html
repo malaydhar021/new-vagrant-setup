@@ -9,128 +9,59 @@
     </div>
     
     <div class="formArea cardForm">      
-      <!-- Client side errors for sign up form step 1 -->
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep1 
-        && signupFormStep1FormControls.name.errors !== null 
-        && signupFormStep1FormControls.name.errors.required)">
-        Full name is required
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep1 
-        && signupFormStep1FormControls.email.errors !== null 
-        && signupFormStep1FormControls.email.errors.required)">
-        Email Address is required
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep1 
-        && signupFormStep1FormControls.email.errors !== null 
-        && signupFormStep1FormControls.email.errors.email)">
-        Please provide a valid email
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep1 
-        && signupFormStep1FormControls.password.errors !== null 
-        && signupFormStep1FormControls.password.errors.required)">
-        Password is required
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep1 
-        && signupFormStep1FormControls.password.errors !== null 
-        && signupFormStep1FormControls.password.errors.minlength)">
-        Password should be at least 8 characters long
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep1 
-        && signupFormStep1FormControls.password.errors !== null 
-        && signupFormStep1FormControls.password.errors.pattern)">
-        Password should contains one english uppercase characters (A–Z), one english lowercase characters (a–z), one numeric value (0–9) and one special characters (!, $, #, or %)
-      </div>
-      <!-- End -->
-
-      <!-- Client side errors for sign up form step 2 -->
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep2 
-        && signupFormStep2FormControls.card.errors !== null 
-        && signupFormStep2FormControls.card.errors.required)">
-        Credit card number is required
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep2 
-        && signupFormStep2FormControls.card.errors !== null 
-        && signupFormStep2FormControls.card.errors.invalidNumber)">
-        Credit card number is not a valid number
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep2 
-        && signupFormStep2FormControls.card.errors !== null 
-        && signupFormStep2FormControls.card.errors.invalidLength)">
-        Credit card number should be in betweeen 14 to 16 digits depending on provider
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep2 
-        && signupFormStep2FormControls.cvc.errors !== null 
-        && signupFormStep2FormControls.cvc.errors.required)">
-        CVC number is required
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep2 
-        && signupFormStep2FormControls.cvc.errors !== null 
-        && signupFormStep2FormControls.cvc.errors.invalidNumber)">
-        CVC number is not a valid number
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep2 
-        && signupFormStep2FormControls.cvc.errors !== null 
-        && signupFormStep2FormControls.cvc.errors.invalidLength)">
-        CVC number should be in between 3 to 5 digits depending on provider
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep2 
-        && signupFormStep2FormControls.expMonth.errors !== null 
-        && signupFormStep2FormControls.expMonth.errors.required)">
-        Expiry month is required
-      </div>
-
-      <div class="formValidationTips" *ngIf="(
-        isSubmittedStep2 
-        && signupFormStep2FormControls.expYear.errors !== null 
-        && signupFormStep2FormControls.expYear.errors.required)">
-        Expiry year is required
-      </div>
-      <!-- End -->
-      <!-- End of ERROR BLOCK -->
-
-      <!-- Api Errors-->
-      <message [successMessage]="successMessage" [showMessage]="showError"></message>
-      <!-- End of api errors -->
-
+      <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
       <div class="formContainer" #formContainer [ngClass]="{secondStep : isStep2}">
         <form [formGroup]="signupFormStep1" (ngSubmit)="onSubmitStep1()">
           <div class="formStep">
             <h2>Register for Sticky Reviews</h2>
             <div class="formRow">
               <label>Full Name</label>
-              <input type="text" class="formCtrl" formControlName="name">
+              <input type="text" class="formCtrl" formControlName="name" 
+                [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.name.errors}">
+              <div class="error" *ngIf="(
+                isSubmittedStep1 
+                && signupFormStep1FormControls.name.errors !== null 
+                && signupFormStep1FormControls.name.errors.required)">
+                Full name is required
+              </div>
             </div>
             <div class="formRow">
               <label>Email Address</label>
-              <input type="text" class="formCtrl" formControlName="email">
+              <input type="text" class="formCtrl" formControlName="email" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.email.errors}">
+              <div class="error" *ngIf="(
+                isSubmittedStep1 
+                && signupFormStep1FormControls.email.errors !== null 
+                && signupFormStep1FormControls.email.errors.required)">
+                Email Address is required
+              </div>
+              <div class="error" *ngIf="(
+                isSubmittedStep1 
+                && signupFormStep1FormControls.email.errors !== null 
+                && signupFormStep1FormControls.email.errors.email)">
+                Please provide a valid email
+              </div>
             </div>
             <div class="formRow">
               <label>Password</label>
-              <input type="password" class="formCtrl" formControlName="password">
+              <input type="password" class="formCtrl" formControlName="password" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.password.errors}">
+              <div class="error" *ngIf="(
+                isSubmittedStep1 
+                && signupFormStep1FormControls.password.errors !== null 
+                && signupFormStep1FormControls.password.errors.required)">
+                Password is required
+              </div>
+              <div class="error" *ngIf="(
+                isSubmittedStep1 
+                && signupFormStep1FormControls.password.errors !== null 
+                && signupFormStep1FormControls.password.errors.minlength)">
+                Password should be at least 8 characters long
+              </div>
+              <div class="error" *ngIf="(
+                isSubmittedStep1 
+                && signupFormStep1FormControls.password.errors !== null 
+                && signupFormStep1FormControls.password.errors.pattern)">
+                Password should contains one english uppercase characters (A–Z), one english lowercase characters (a–z), one numeric value (0–9) and one special characters (!, $, #, or %)
+              </div>
             </div>
             <div class="formRow">
               <button type="submit" class="redBtn">NEXT</button>
@@ -144,25 +75,74 @@
             <div class="formRow">
               <div class="formCol6">
                 <label>Credit Card Number</label>
-                <input type="text" class="formCtrl card" mask="0000 0000 0000 0000" formControlName="card">
+                <input type="text" class="formCtrl card" mask="0000 0000 0000 0000" formControlName="card" 
+                  [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.card.errors}">
+                <div class="error" *ngIf="(
+                  isSubmittedStep2 
+                  && signupFormStep2FormControls.card.errors !== null 
+                  && signupFormStep2FormControls.card.errors.required)">
+                  Credit card number is required
+                </div>
+                <div class="error" *ngIf="(
+                  isSubmittedStep2 
+                  && signupFormStep2FormControls.card.errors !== null 
+                  && signupFormStep2FormControls.card.errors.invalidNumber)">
+                  Credit card number is not a valid number
+                </div>
+                <div class="error" *ngIf="(
+                  isSubmittedStep2 
+                  && signupFormStep2FormControls.card.errors !== null 
+                  && signupFormStep2FormControls.card.errors.invalidLength)">
+                  Credit card number should be in between 14 to 16 digits depending on provider
+                </div>
               </div>
               <div class="formCol4">
                 <label>CVC Number</label>
-                <input type="password" class="formCtrl" formControlName="cvc">
+                <input type="password" class="formCtrl" formControlName="cvc" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.cvc.errors}">
+                <div class="error" *ngIf="(
+                  isSubmittedStep2 
+                  && signupFormStep2FormControls.cvc.errors !== null 
+                  && signupFormStep2FormControls.cvc.errors.required)">
+                  CVC number is required
+                </div>
+                <div class="error" *ngIf="(
+                  isSubmittedStep2 
+                  && signupFormStep2FormControls.cvc.errors !== null 
+                  && signupFormStep2FormControls.cvc.errors.invalidNumber)">
+                  CVC number is not a valid number
+                </div>
+                <div class="error" *ngIf="(
+                  isSubmittedStep2 
+                  && signupFormStep2FormControls.cvc.errors !== null 
+                  && signupFormStep2FormControls.cvc.errors.invalidLength)">
+                  CVC number should be in between 3 to 5 digits depending on provider
+                </div>
               </div>
             </div>
             <div class="formRow">
               <div class="formCol5">
                 <label>Expiry Month</label>
-                <select class="formCtrl" formControlName="expMonth">
+                <select class="formCtrl" formControlName="expMonth" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.expMonth.errors}">
                   <option [value]="month" *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]; let y = index">{{month}}</option>
                 </select>
+                <div class="error" *ngIf="(
+                  isSubmittedStep2 
+                  && signupFormStep2FormControls.expMonth.errors !== null 
+                  && signupFormStep2FormControls.expMonth.errors.required)">
+                  Expiry month is required
+                </div>
               </div>
               <div class="formCol5">
                 <label>Expiry Year</label>
-                <select class="formCtrl" formControlName="expYear">
+                <select class="formCtrl" formControlName="expYear" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.expYear.errors}">
                   <option [value]="year" *ngFor="let year of years">{{ year }}</option>
                 </select>
+                <div class="error" *ngIf="(
+                  isSubmittedStep2 
+                  && signupFormStep2FormControls.expYear.errors !== null 
+                  && signupFormStep2FormControls.expYear.errors.required)">
+                  Expiry year is required
+                </div>
               </div>
             </div>
             <div class="formRow">

@@ -156,6 +156,11 @@ operation the user is assigned to basic plan.
 
 ## Login
 
+### V2.1.o
+
+1. Fixed issue with client side validation for reset password form and it's style
+2. Fixed issue with global message issue
+
 ### V2.0.0
 
 1. Fixed issue with loader during login
