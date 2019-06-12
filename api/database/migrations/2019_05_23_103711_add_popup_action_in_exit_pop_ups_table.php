@@ -14,7 +14,7 @@ class AddPopupActionInExitPopUpsTable extends Migration
     public function up()
     {
         Schema::table('exit_pop_ups', function (Blueprint $table) {
-            $table->string('popup_action',10)->nullable()->default('1')->after('popup_backdrop_color');
+            $table->string('popup_action',10)->nullable()->after('popup_backdrop_color');
         });
     }
 

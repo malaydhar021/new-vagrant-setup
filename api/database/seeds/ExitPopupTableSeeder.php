@@ -12,7 +12,7 @@ class ExitPopupTableSeeder extends Seeder
      */
     public function run()
     {
-        // fetch aall exit popup and update style_id, popup_action, has_sticky_reviews, has_email_field, cta_button_text, cta_button_text_color, cta_button_background_color, btn_size
+        // fetch all exit popup and update style_id, popup_action, has_sticky_reviews, has_email_field, cta_button_text, cta_button_text_color, cta_button_background_color, btn_size
         foreach (ExitPopUp::all() as $key => $exitPopUp) {
             if (is_null($exitPopUp->style_id)) {
                 $exitPopUp->update(['style_id' => 1]);

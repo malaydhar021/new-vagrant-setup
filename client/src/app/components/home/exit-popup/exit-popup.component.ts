@@ -763,6 +763,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
         (response: any ) => {
           if (response.status) {
             this.exitPopups = response.data.data;
+            this.config.totalItems = response.data.total,
             this.loaderService.disableLoader();
           }
         }
@@ -803,6 +804,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
         (response: any ) => {
           if (response.status) {
             this.exitPopups = response.data.data;
+            this.config.totalItems = response.data.total,
             this.loaderService.disableLoader();
           }
         }
