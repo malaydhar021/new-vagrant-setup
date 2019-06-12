@@ -1,30 +1,30 @@
 <template>
   <div>
-    <app-historic-popup v-if="selectedComponent === 100"
+    <app-historic-popup v-if="selectedComponent === 101"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
                     v-cloak></app-historic-popup>
-    <app-home-coming-popup v-if="selectedComponent === 101"
+    <app-home-coming-popup v-if="selectedComponent === 102"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
                     v-cloak></app-home-coming-popup>
-    <app-momentum-popup v-if="selectedComponent === 102"
+    <app-momentum-popup v-if="selectedComponent === 103"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
                     v-cloak></app-momentum-popup>
-    <app-fusing-popup v-if="selectedComponent === 103"
+    <app-fusing-popup v-if="selectedComponent === 104"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
                     :script_id="script_id"
                     v-cloak></app-fusing-popup>
-    <app-evolver-popup v-if="selectedComponent === 104"
+    <app-evolver-popup v-if="selectedComponent === 105"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"

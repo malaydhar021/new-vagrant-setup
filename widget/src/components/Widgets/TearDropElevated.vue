@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- tear drop widget for text review start -->
-    <div class="popupParent" v-if="data.review_type === 1 && !timeOut">
+    <div class="popupParent" v-if="data.type === 1 && !timeOut">
       <div class="popupTxt popup_template_5">
         <div class="figPopup">
           <figure v-if="data.image_url" v-bind:style="{ backgroundImage: 'url('+data.image_url+')'}"></figure>
@@ -29,7 +29,7 @@
     <!-- tear drop widget for text review end -->
 
     <!-- tear drop widget for audio review start -->
-    <div class="popupParent audioParent_5" v-if="data.review_type === 2 && !timeOut">
+    <div class="popupParent audioParent_5" v-if="data.type === 2 && !timeOut">
       <div class="popupTxt popup_template_5">
         <div class="figPopup">
           <figure v-if="data.image_url" v-bind:style="{ backgroundImage: 'url('+data.image_url+')'}"></figure>
@@ -66,7 +66,7 @@
     <!-- tear drop widget for audio review end -->
 
     <!-- tear drop widget for video review start -->
-    <div class="popupParent vidParent_5" v-if="data.review_type === 3 && !timeOut">
+    <div class="popupParent vidParent_5" v-if="data.type === 3 && !timeOut">
       <div class="vidPop">
         <div class="animateVid">
           <span class="keyF1">

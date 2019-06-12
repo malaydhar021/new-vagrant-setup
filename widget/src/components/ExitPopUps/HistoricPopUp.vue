@@ -13,13 +13,12 @@
                                 <p :style="{color: data.paragraph_text_color}">
                                     {{data.paragraph_text}}
                                 </p>
-                                <div class="exitP exitPg">
+                                <div class="exitP exitPg" v-if="showWidget">
                                     <!-- <div class="popAdd vidPreV_parent"> -->
                                     <div class="popAdd">
                                         <transition name="slide" mode="out-in">
                                             <app-main-widget :data="otherData"
                                                         :reviews="stickyReviews"
-                                                        v-if="showWidget"
                                                         :script_id="script_id"
                                                         :fromExitPopup="fromExitPopup"></app-main-widget>
                                         </transition>
