@@ -118,8 +118,8 @@ export class ExitPopupService {
      * Method for getting all the exit popups with paganation
      * @param pgNum
      */
-    public getUserPaginatedExitPopups(pgNum) {
-        return this.httpClient.get(ExitPopupApiEndpoints.getUserExitPopups.concat('?page=' + pgNum));
+    public getUserPaginatedExitPopups(pgNum, searchKey) {
+        return this.httpClient.get(ExitPopupApiEndpoints.getUserExitPopups.concat('?page=' + pgNum + '&searchParams=' + searchKey));
     }
 
 }

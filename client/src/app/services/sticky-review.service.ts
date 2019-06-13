@@ -69,8 +69,8 @@ export class StickyReviewService {
    * Function for getting all sticky review in paginated manner
    * @param pgNum
    */
-  public getAllPaginatedStickyReviews(pgNum) {
-    return this.httpClient.get(StickyReviewsApiEndpoints.stickyReviews.concat('?page=' + pgNum));
+  public getAllPaginatedStickyReviews(pgNum, searchKey) {
+    return this.httpClient.get(StickyReviewsApiEndpoints.stickyReviews.concat('?page=' + pgNum + '&searchParams=' + searchKey));
   }
 
   /**

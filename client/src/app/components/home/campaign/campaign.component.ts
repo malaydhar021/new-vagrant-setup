@@ -56,6 +56,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   config: any;  // paginate config
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
+  searchKey: string = ''; // search keyword
   /**
    * Constructor method to fetch all required information from api provider
    * @constructor constructor
@@ -147,7 +148,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @since Version 1.0.0
    * @returns Void
    */
-  public ngOnDestroy() { 
+  public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
   }
 
@@ -813,7 +814,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   pageChanged(pgNum) {
     this.config.currentPage = pgNum;
     this.loaderService.enableLoader();
-    this.campaignService.getAllPaginatedCampaigns(pgNum).subscribe(
+    this.campaignService.getAllPaginatedCampaigns(pgNum, this.searchKey).subscribe(
         (response: any) => {
           Log.success(response);
           if (response.status) {
@@ -832,11 +833,13 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSearch($term) {
+    this.config.currentPage = 1;
     this.loaderService.enableLoader();
     this.campaignService.searchCampaign($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.campaigns = response.data.data;
+            this.config.totalItems = response.data.total;
             this.loaderService.disableLoader();
           }
         }

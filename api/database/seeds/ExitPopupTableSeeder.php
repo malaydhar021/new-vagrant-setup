@@ -20,6 +20,9 @@ class ExitPopupTableSeeder extends Seeder
             if (is_null($exitPopUp->popup_action)) {
                 $exitPopUp->update(['popup_action' => 2]);
             }
+            if ($exitPopUp->popup_action == 1) {
+                $exitPopUp->update(['popup_action' => 2]);
+            }
             if (is_null($exitPopUp->has_sticky_reviews)) {
                 $exitPopUp->update(['has_sticky_reviews' => 0]);
             }

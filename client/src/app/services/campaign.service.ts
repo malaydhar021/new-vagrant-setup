@@ -119,8 +119,8 @@ export class CampaignService {
    * Method for getting all the campaigns with pagination
    * @param pgNum
    */
-  public getAllPaginatedCampaigns(pgNum) {
-    return this.httpClient.get(CampaignApiEndpoints.campaigns.concat('?page=' + pgNum));
+  public getAllPaginatedCampaigns(pgNum, searchKey) {
+    return this.httpClient.get(CampaignApiEndpoints.campaigns.concat('?page=' + pgNum + '&searchParams=' + searchKey));
   }
 
   /**

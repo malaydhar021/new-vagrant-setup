@@ -59,8 +59,7 @@ class CampaignsController extends Controller
     {
         if ($request->has('searchParams')) {
             $this->queryBuilder = $this->queryBuilder
-                    ->where('campaign_name', 'LIKE', '%' . $request->get('searchParams') . '%')
-                    ->orWhere('domain_name', 'LIKE', '%' . $request->get('searchParams') . '%');
+                    ->where('campaign_name', 'LIKE', '%' . $request->get('searchParams') . '%');
         }
 
         $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');

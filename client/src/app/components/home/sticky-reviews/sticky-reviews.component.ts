@@ -104,6 +104,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   imagePreviewUrl: string = 'assets/images/user.png'; // default image preview url
   config: any;  // config for pagination
   showError: boolean = false; // flag to show error message
+  searchKey: string = ''; // search keyword
 
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -667,14 +668,11 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   public pageChanged(pgNum) {
     this.config.currentPage = pgNum;
     this.loaderService.enableLoader();
-    this.stickyReviewService.getAllPaginatedStickyReviews(pgNum).subscribe(
+    this.stickyReviewService.getAllPaginatedStickyReviews(pgNum, this.searchKey).subscribe(
         (response: any) => {
           Log.success(response);
           if (response.status) {
-            // update the reviews array with latest api response data
             this.reviews = response.data.data;
-            // Log.debug(this.reviews.length, "Checking the length of the reviews property");
-            // hide the loader
             this.loaderService.disableLoader();
           }
         }
@@ -686,11 +684,13 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @param $term
    */
   public onSearch($term) {
+    this.config.currentPage = 1;
     this.loaderService.enableLoader();
     this.stickyReviewService.searchStickyReview($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.reviews = response.data.data;
+            this.config.totalItems = response.data.total;
             this.loaderService.disableLoader();
           }
         }

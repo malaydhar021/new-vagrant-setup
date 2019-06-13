@@ -116,8 +116,8 @@ export class ReviewLinkService {
    * Method to get all the review links with pagination
    * @param pgNum
    */
-  public getAllPaginatedReviewLinks(pgNum) {
-    return this.httpClient.get(ReviewLinkApiEndpoints.reviewLinks.concat('?page=' + pgNum));
+  public getAllPaginatedReviewLinks(pgNum, searchKey) {
+    return this.httpClient.get(ReviewLinkApiEndpoints.reviewLinks.concat('?page=' + pgNum + '&searchParams=' + searchKey));
   }
 
   /**

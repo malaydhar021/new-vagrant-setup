@@ -39,7 +39,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   config: any;  // config for pagination
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
-
+  searchKey: string = '';
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -176,7 +176,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         if (response.status) {
           // update the brands array with latest api response data
           this.brands = response.data.data;
-          this.config.totalItems = response.data.total,
+          this.config.totalItems = response.data.total;
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -392,10 +392,10 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    * Function for handle pagination
    * @param pgNum
    */
-  pageChanged(pgNum) {
+  pageChanged(pgNum: number) {
     this.config.currentPage = pgNum;
     this.loaderService.enableLoader();
-    this.brandingService.getPaginatedBrands(pgNum).subscribe(
+    this.brandingService.getPaginatedBrands(pgNum, this.searchKey).subscribe(
         (response: any) => {
           Log.success(response);
           if (response.status) {
@@ -413,11 +413,13 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param $term
    */
   public onSearch($term) {
+    this.config.currentPage = 1;
     this.loaderService.enableLoader();
     this.brandingService.searchBrands($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.brands = response.data.data;
+            this.config.totalItems = response.data.total;
             this.loaderService.disableLoader();
           }
         }

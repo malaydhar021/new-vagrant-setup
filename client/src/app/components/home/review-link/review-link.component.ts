@@ -61,6 +61,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   config: any;  // config for pagination
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
+  searchKey: string = ''; // search keyword
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -784,7 +785,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     if (fetchLists) {
       this.getAllReviewLinks(); // fetch campaigns
     } else if(hideLoader) {
-      this.loaderService.disableLoader()
+      this.loaderService.disableLoader();
     }
   }
 
@@ -793,7 +794,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     // Enable the loader for an ajax call
     this.loaderService.enableLoader();
     // Service to to get all the Review Links
-    this.reviewLinkService.getAllPaginatedReviewLinks(pgNum).subscribe(
+    this.reviewLinkService.getAllPaginatedReviewLinks(pgNum, this.searchKey).subscribe(
         (response: any) => {
           Log.info(response, "List: response");
           if (response.status) {
@@ -814,11 +815,13 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @param $term
    */
   public onSearch($term) {
+    this.config.currentPage = 1;
     this.loaderService.enableLoader();
     this.reviewLinkService.searchReviewLink($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.reviewLinks = response.data.data;
+            this.config.totalItems = response.data.total;
             this.loaderService.disableLoader();
           }
         }

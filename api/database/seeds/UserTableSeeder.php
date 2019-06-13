@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
             if ($user->is_active == 1 ) {
                 $user->update(['subscription_status' => 'CANCELLED','pricing_plan'=> null]);
             } else {
-                $user->update(['subscription_status' => 'ACTIVE','pricing_plan'=> 'highest']);
+                $user->update(['subscription_status' => 'NA','pricing_plan'=> null]);
             }
         }
     }

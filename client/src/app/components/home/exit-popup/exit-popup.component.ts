@@ -71,7 +71,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   config: any;  // config for pagination
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
-
+  searchKey: string = '';
   constructor(
       public ngxSmartModalService: NgxSmartModalService,
       public title: Title,
@@ -221,7 +221,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
         (response: any ) => {
           if (response.status) {
             this.exitPopups = response.data.data;
-            this.config.totalItems = response.data.total,
+            this.config.totalItems = response.data.total;
             this.loaderService.disableLoader();
           }
         }
@@ -758,12 +758,13 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
      * @param $term
      */
   public onSearch($term) {
+    this.config.currentPage = 1;
     this.loaderService.enableLoader();
     this.exitPopupService.searchExitPopups($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.exitPopups = response.data.data;
-            this.config.totalItems = response.data.total,
+            this.config.totalItems = response.data.total;
             this.loaderService.disableLoader();
           }
         }
@@ -797,14 +798,13 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       this.form.controls['exitPopupButtonText'].updateValueAndValidity();
   }
 
-  pageChanged(pgNum) {
+  pageChanged(pgNum: number) {
     this.config.currentPage = pgNum;
     this.loaderService.enableLoader();
-    this.exitPopupService.getUserPaginatedExitPopups(pgNum).subscribe(
+    this.exitPopupService.getUserPaginatedExitPopups(pgNum, this.searchKey).subscribe(
         (response: any ) => {
           if (response.status) {
             this.exitPopups = response.data.data;
-            this.config.totalItems = response.data.total,
             this.loaderService.disableLoader();
           }
         }

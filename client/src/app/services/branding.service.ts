@@ -65,8 +65,8 @@ export class BrandingService {
    * Method for getting the paginated data of brand listing
    * @param pgNum
    */
-  public getPaginatedBrands(pgNum) {
-    return this.httpClient.get(BrandingApiEndpoints.brands.concat('?page=' + pgNum));
+  public getPaginatedBrands(pgNum, searchKey) {
+    return this.httpClient.get(BrandingApiEndpoints.brands.concat('?page=' + pgNum + '&searchParams=' + searchKey));
   }
 
   /**

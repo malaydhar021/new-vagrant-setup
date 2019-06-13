@@ -5,7 +5,7 @@
         <img src="../../../../assets/images/addIcon.png" alt="addIcon"> Add an Exit pop-up</button>
     </div>
     <div class="mainBoxHeaderRight">
-      <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" (blur)="onSearch($event)">
+      <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
     </div>
   </header>
   <div class="dataTableArea">
@@ -19,7 +19,7 @@
               <img *ngIf="exitPopup.popup_preview_img === null " src="../../../../assets/images/placeholder_popup.png" alt="placeholder_popup">
             </div>
             <div class="popupCtrl">
-              <p>{{ exitPopup.name |  slice:0:30 }}</p>
+              <p>{{ exitPopup.name |  slice:0:30 }} </p>
               <div class="crtlRight">
                 <a (click)="onEditExitPopup(exitPopup)"><img src="../../../../assets/images/icon_edit.png" alt="iconEdit"></a>
                 <a (click)="deleteExitPopup(exitPopup.id)"><img src="../../../../assets/images/icon_delete_red.png" alt="iconDelete"></a>
@@ -38,7 +38,7 @@
       </ng-template>
     </div>
     <!-- Pagination -->
-    <pagination-controls [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
+    <pagination-controls *ngIf="exitPopups.length > 0" [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"> </pagination-controls>
   </div>
 </div>
 <!--[ngStyle]="{ 'color-overlay' : '#ff1616' }"-->

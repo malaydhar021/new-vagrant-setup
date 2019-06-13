@@ -61,6 +61,7 @@ class ExitPopupsController extends Controller
      */
     public function index(Request $request)
     {
+
         if ($request->has('searchParams')) {
             $searchParams = $request->get('searchParams');
             $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%');

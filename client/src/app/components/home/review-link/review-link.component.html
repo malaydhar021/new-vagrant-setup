@@ -7,7 +7,7 @@
       </button>
     </div>
     <div class="mainBoxHeaderRight">
-      <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" (blur)="onSearch($event)">
+      <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
     </div>
   </header>
   <div class="dataTableArea">
@@ -98,7 +98,7 @@
       </div>
     </div>
     <!-- Pagination -->
-    <pagination-controls [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
+    <pagination-controls *ngIf="reviewLinks.length > 0" [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
 </div>
 <!-- add/edit modal-->
