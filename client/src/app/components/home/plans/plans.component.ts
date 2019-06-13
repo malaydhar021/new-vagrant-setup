@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators }     from '@angular/forms';
 import { SubscriptionService }                    from '../../../services/subscription.service';
 import { LoaderService }                          from '../../../services/loader.service';
 import { ErrorsService }                          from '../../../services/errors.service';
+import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * PlansComponent is responsible for handling user subscriptions 
@@ -29,6 +30,8 @@ export class PlansComponent implements OnInit, OnDestroy {
   successMessage: string = null; // property to hold the success message
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
+  errorMessage: string = null; // flag for error message
+  hasCard: boolean = false; // flag to set true if the user is having card details store into db
 
 /**
  * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -51,6 +54,13 @@ export class PlansComponent implements OnInit, OnDestroy {
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
       this.userPlanDetails = userPlan;
     });
+    this.subscriptionService.getCardDetails().subscribe(
+      (response: any) => {
+        if(response.status && response.card.number) {
+          this.hasCard = true;          
+        }
+      }
+    );
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
@@ -128,12 +138,11 @@ export class PlansComponent implements OnInit, OnDestroy {
    */
   public addUpdatePlan(plan) {
     this.pricingPlanType = plan;
-    if (this.userPlanDetails.status !== "ACTIVE") {
+    if(!this.hasCard) {
       this.ngxSmartModalService.getModal('modal1').open();
-      return
+      return;
     }
     this.update();
-
   }
 
   /**

@@ -27,6 +27,11 @@
 
 ## Subscription
 
+### V2.0.2
+
+1. Fixed issue with webhook user subscription
+2. Disabled user account when a user cancel their subscription
+
 ### V2.0.1
 
 1. Fixed issue with user subscription upgrade/downgrade api

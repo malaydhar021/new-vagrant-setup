@@ -7,6 +7,8 @@ import { LoaderService }                      from '../../../services/loader.ser
 import { UserService }                        from '../../../services/user.service';
 import { Subscription } from 'rxjs';
 import { ErrorsService } from 'src/app/services/errors.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 /**
  * CancelMembershipComponent is responsible for cancelling user membership
@@ -32,6 +34,7 @@ export class CancelMembershipComponent implements OnInit, OnDestroy {
   listOfReasons: string[] = ['Bad Onboarding', 'Buggy Product', 'Bad Support', 'Not A Right Fit', 'Price Is Too High', 'Others'];
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
+  errorMessage: string;
 
    /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -50,7 +53,9 @@ export class CancelMembershipComponent implements OnInit, OnDestroy {
     private loaderService: LoaderService,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private authService: AuthService,
+    private router: Router
   ) { 
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
@@ -140,9 +145,16 @@ export class CancelMembershipComponent implements OnInit, OnDestroy {
     value['_method'] = "DELETE"
     this.loaderService.enableLoader()
     this.subscriptionService.deleteSubscription(value).subscribe(
-      (response : any)=>{
-        this.showCancellationForm = false;
-        this.getUserSubscription();
+      (response : any)=> {
+        // this.showCancellationForm = false;
+        // this.getUserSubscription();
+        if(response.status) {
+          this.authService.removeStorageData();
+          this.errorService.updateMessage(response.message);
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = ''; 
+        }
       }
     )
   }

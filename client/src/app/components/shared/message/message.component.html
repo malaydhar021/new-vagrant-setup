@@ -1,9 +1,11 @@
 <!-- HTTP ERROR MESSAGES -->
 <span>
   <div class="log-stat_msg log_Failed" *ngIf="showMessage">{{ errMsg }}</div>
-  <div class="log-stat_msg log_Failed" *ngFor="let error of validationErrorMessages">
-    {{ error }}
-  </div>
+  <span *ngIf="validationErrorMessages.length > 0">
+    <div class="log-stat_msg log_Failed" *ngFor="let error of validationErrorMessages">
+      {{ error }}
+    </div>
+  </span>
 </span>
 <!-- END -->
 

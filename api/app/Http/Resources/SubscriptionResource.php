@@ -33,7 +33,9 @@ class SubscriptionResource extends Resource
         } else {
             return [
                 'status' => $this->subscription_status,
-                'data' => null,
+                'data' => [
+                    'pricing_plan' => config("pricing.plans.{$this->pricing_plan}")
+                ],
             ];
         }
     }

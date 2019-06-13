@@ -88,6 +88,7 @@ class SubscriptionController extends Controller
                     'message' => "You are not allowed to downgrade. Please contact your sales person or Tier5 partner.",
                     'requested_action' => 'downgrade',
                     'card_required' => false,
+                    'errors' => []
                 ],400);
             }
 
@@ -124,7 +125,7 @@ class SubscriptionController extends Controller
                     'message' => "You can not downgrade at the moment, to downgrade please consider followings.",
                     'requested_action' => 'downgrade',
                     'card_required' => false,
-                    'steps_required' => $exceedMessages,
+                    'errors' => $exceedMessages,
                 ],400);
             }
         }
@@ -135,6 +136,7 @@ class SubscriptionController extends Controller
                 'message' => "Before upgrading your subscription you need to provide your card details.",
                 'requested_action' => 'upgrade',
                 'card_required' => true,
+                'errors' => []
             ], 400);
         } else {
             $user->changeSubscriptionPlan($request->input('pricing_plan_type'));

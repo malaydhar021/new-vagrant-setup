@@ -219,6 +219,7 @@ trait Subscription
      */
     public function cancelSubscription($reason, $description = null, $isTerminated = false)
     {
+        \Log::info($this->subscription('main'));
         $cancelledSubscription = new CancelledSubscription([
             'user_id' => $this->id,
             'subscription_id' => $this->subscription('main')->id,
@@ -240,7 +241,7 @@ trait Subscription
     /**
      * Update card info, if required make as default
      *
-     * @param  string   $stripeToken  Not required if the whole card detials is provided
+     * @param  string   $stripeToken  Not required if the whole card details is provided
      * @param  array    $cardDetails  Card details is not required if the card token is provided
      * @param  boolean  $preAuth      Pre-authorizes a card before starting free trail. Doesn't pre-authorize by default
      * @param  boolean  $makeDefault  Make this card as default in Stripe
