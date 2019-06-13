@@ -27,9 +27,13 @@
 
 ## Subscription
 
+### V2.0.3
+
+1. Fixed issue with message in plan page
+
 ### V2.0.2
 
-1. Fixed issue with webhook user subscription
+1. Fixed issue with web hook user subscription
 2. Disabled user account when a user cancel their subscription
 
 ### V2.0.1

@@ -107,7 +107,7 @@
                 [ngClass]="{'error' : !cardForm.get('card_number').valid && cardForm.get('card_number').touched}">
                 <span class="error-msg" 
                   *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.required">
-                  Required!
+                  Credit card is required!
                 </span>
                 <span class="error-msg" 
                   *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.minlength">
