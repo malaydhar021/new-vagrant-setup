@@ -4749,7 +4749,7 @@ body.sign-upPage {
       }
 
       @media (max-width: 480px) {
-        height: 42px;
+        height: 52px;
         @include border-radius(3px);
       }
     }
@@ -8564,6 +8564,14 @@ img {
 
 // Custom Checkbox
 .switcher {
+  p {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px 0 0;
+    position: relative;
+    top: -5px;
+    line-height: 100%;
+  }
   label {
     cursor: pointer;
     font-size: 0;

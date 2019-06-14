@@ -7,58 +7,57 @@
         </a>
       </div>
     </div>
-    
-    <div class="formArea cardForm">      
+
+    <div class="formArea cardForm">
       <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
       <div class="formContainer" #formContainer [ngClass]="{secondStep : isStep2}">
         <form [formGroup]="signupFormStep1" (ngSubmit)="onSubmitStep1()">
           <div class="formStep">
             <h2>Register for Sticky Reviews</h2>
-            <div class="formRow">
+            <div class="formRow" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.name.errors}">
               <label>Full Name</label>
-              <input type="text" class="formCtrl" formControlName="name" 
-                [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.name.errors}">
+              <input type="text" class="formCtrl" formControlName="name" >
               <div class="error" *ngIf="(
-                isSubmittedStep1 
-                && signupFormStep1FormControls.name.errors !== null 
+                isSubmittedStep1
+                && signupFormStep1FormControls.name.errors !== null
                 && signupFormStep1FormControls.name.errors.required)">
                 Full name is required
               </div>
             </div>
-            <div class="formRow">
+            <div class="formRow" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.email.errors}">
               <label>Email Address</label>
-              <input type="text" class="formCtrl" formControlName="email" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.email.errors}">
+              <input type="text" class="formCtrl" formControlName="email">
               <div class="error" *ngIf="(
-                isSubmittedStep1 
-                && signupFormStep1FormControls.email.errors !== null 
+                isSubmittedStep1
+                && signupFormStep1FormControls.email.errors !== null
                 && signupFormStep1FormControls.email.errors.required)">
                 Email Address is required
               </div>
               <div class="error" *ngIf="(
-                isSubmittedStep1 
-                && signupFormStep1FormControls.email.errors !== null 
+                isSubmittedStep1
+                && signupFormStep1FormControls.email.errors !== null
                 && signupFormStep1FormControls.email.errors.email)">
                 Please provide a valid email
               </div>
             </div>
-            <div class="formRow">
+            <div class="formRow" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.password.errors}">
               <label>Password</label>
-              <input type="password" class="formCtrl" formControlName="password" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.password.errors}">
+              <input type="password" class="formCtrl" formControlName="password">
               <div class="error" *ngIf="(
-                isSubmittedStep1 
-                && signupFormStep1FormControls.password.errors !== null 
+                isSubmittedStep1
+                && signupFormStep1FormControls.password.errors !== null
                 && signupFormStep1FormControls.password.errors.required)">
                 Password is required
               </div>
               <div class="error" *ngIf="(
-                isSubmittedStep1 
-                && signupFormStep1FormControls.password.errors !== null 
+                isSubmittedStep1
+                && signupFormStep1FormControls.password.errors !== null
                 && signupFormStep1FormControls.password.errors.minlength)">
                 Password should be at least 8 characters long
               </div>
               <div class="error" *ngIf="(
-                isSubmittedStep1 
-                && signupFormStep1FormControls.password.errors !== null 
+                isSubmittedStep1
+                && signupFormStep1FormControls.password.errors !== null
                 && signupFormStep1FormControls.password.errors.pattern)">
                 Password should contains one english uppercase characters (A–Z), one english lowercase characters (a–z), one numeric value (0–9) and one special characters (!, $, #, or %)
               </div>
@@ -75,23 +74,23 @@
             <div class="formRow">
               <div class="formCol6">
                 <label>Credit Card Number</label>
-                <input type="text" class="formCtrl card" mask="0000 0000 0000 0000" formControlName="card" 
+                <input type="text" class="formCtrl card" mask="0000 0000 0000 0000" formControlName="card"
                   [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.card.errors}">
                 <div class="error" *ngIf="(
-                  isSubmittedStep2 
-                  && signupFormStep2FormControls.card.errors !== null 
+                  isSubmittedStep2
+                  && signupFormStep2FormControls.card.errors !== null
                   && signupFormStep2FormControls.card.errors.required)">
                   Credit card number is required
                 </div>
                 <div class="error" *ngIf="(
-                  isSubmittedStep2 
-                  && signupFormStep2FormControls.card.errors !== null 
+                  isSubmittedStep2
+                  && signupFormStep2FormControls.card.errors !== null
                   && signupFormStep2FormControls.card.errors.invalidNumber)">
                   Credit card number is not a valid number
                 </div>
                 <div class="error" *ngIf="(
-                  isSubmittedStep2 
-                  && signupFormStep2FormControls.card.errors !== null 
+                  isSubmittedStep2
+                  && signupFormStep2FormControls.card.errors !== null
                   && signupFormStep2FormControls.card.errors.invalidLength)">
                   Credit card number should be in between 14 to 16 digits depending on provider
                 </div>
@@ -100,20 +99,20 @@
                 <label>CVC Number</label>
                 <input type="password" class="formCtrl" formControlName="cvc" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.cvc.errors}">
                 <div class="error" *ngIf="(
-                  isSubmittedStep2 
-                  && signupFormStep2FormControls.cvc.errors !== null 
+                  isSubmittedStep2
+                  && signupFormStep2FormControls.cvc.errors !== null
                   && signupFormStep2FormControls.cvc.errors.required)">
                   CVC number is required
                 </div>
                 <div class="error" *ngIf="(
-                  isSubmittedStep2 
-                  && signupFormStep2FormControls.cvc.errors !== null 
+                  isSubmittedStep2
+                  && signupFormStep2FormControls.cvc.errors !== null
                   && signupFormStep2FormControls.cvc.errors.invalidNumber)">
                   CVC number is not a valid number
                 </div>
                 <div class="error" *ngIf="(
-                  isSubmittedStep2 
-                  && signupFormStep2FormControls.cvc.errors !== null 
+                  isSubmittedStep2
+                  && signupFormStep2FormControls.cvc.errors !== null
                   && signupFormStep2FormControls.cvc.errors.invalidLength)">
                   CVC number should be in between 3 to 5 digits depending on provider
                 </div>
@@ -126,8 +125,8 @@
                   <option [value]="month" *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]; let y = index">{{month}}</option>
                 </select>
                 <div class="error" *ngIf="(
-                  isSubmittedStep2 
-                  && signupFormStep2FormControls.expMonth.errors !== null 
+                  isSubmittedStep2
+                  && signupFormStep2FormControls.expMonth.errors !== null
                   && signupFormStep2FormControls.expMonth.errors.required)">
                   Expiry month is required
                 </div>
@@ -138,8 +137,8 @@
                   <option [value]="year" *ngFor="let year of years">{{ year }}</option>
                 </select>
                 <div class="error" *ngIf="(
-                  isSubmittedStep2 
-                  && signupFormStep2FormControls.expYear.errors !== null 
+                  isSubmittedStep2
+                  && signupFormStep2FormControls.expYear.errors !== null
                   && signupFormStep2FormControls.expYear.errors.required)">
                   Expiry year is required
                 </div>
