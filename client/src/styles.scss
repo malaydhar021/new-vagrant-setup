@@ -1409,7 +1409,6 @@ a {
         .ngx-pagination {
           text-align: right;
           margin-right: 15px;
-          margin-bottom: 0;
 
           li {
             font-size: 13px;
@@ -1432,7 +1431,7 @@ a {
               padding: 0;
               display: inline-block;
               width: auto;
-              height: 100%;
+              height: auto;
 
               &:hover {
                 background: transparent;
@@ -1440,11 +1439,11 @@ a {
             }
 
             &.pagination-next {
-              color: #2B69F3;
+              color: #49E3BE;
             }
 
             &.current {
-              background-color: #2B69F3;
+              background-color: #49E3BE;
               color: #fff;
             }
 
@@ -1457,7 +1456,7 @@ a {
 
             &:last-child:not(.disabled){
               a {
-                color: #2B69F3;
+                color: #49E3BE;
               }
             }
           }
@@ -2662,7 +2661,7 @@ a {
     }
 
     .log-stat_msg {
-      margin: 0 15px;
+      margin: 5px 15px 0;
     }
 
     // 404/Maintenace change for Dashboard area
