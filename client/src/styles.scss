@@ -2120,6 +2120,10 @@ a {
           .switcher {
             text-align: right;
             @include mt(10px);
+
+            @media (max-width: 575px) {
+              text-align: left;
+            }
           }
 
           @media (max-width: 1199px) {
@@ -2813,7 +2817,7 @@ a {
       }
     }
 
-    .log-stat_msg+.log-stat_msg {
+    .log-stat_msg {
       margin-top: 5px;
     }
 
@@ -4920,6 +4924,48 @@ body.sign-upPage {
         @include border-radius(3px);
       }
     }
+    .formCol6,
+    .formCol4,
+    .formCol2 {
+      &.error {
+        position: relative;
+
+        input:not(:focus) {
+          border: 2px solid #ff5d5d !important;
+          border-radius: 5px 5px 0 5px;
+          background: #ffd1d1;
+          color: #955151;
+        }
+
+        .error,
+        .error-msg {
+          position: absolute;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          max-width: calc(100% - 30px);
+          right: 0;
+          top: 100%;
+          padding: 5px 15px 7px 30px;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 100%;
+          color: #fff;
+          background: #ff5d5d;
+          border-radius: 0 0 7px 40px;
+          text-align: right;
+        }
+        &:first-child {
+          .error,
+          .error-msg {
+            right: 20px;
+
+            @media (max-width: 480px) {
+              right: 0;
+            }
+          }
+        }
+      }
+    }
 
     &.error {
       input:not(:focus) {
@@ -5000,6 +5046,11 @@ body.sign-upPage {
         .expDate {
           float: left;
           margin-left: 90px;
+
+          @media (max-width: 575px) {
+            float: right;
+            margin-left: auto;
+          }
         }
 
         span {
@@ -5014,7 +5065,16 @@ body.sign-upPage {
           font-size: 16px;
           font-weight: 600;
         }
+
+        @media (max-width: 575px) {
+          padding-left: 30px;
+          background-position: left 8px center;
+        }
       }
+    }
+
+    @media (max-width: 575px) {
+      width: 100%;
     }
   }
 }
@@ -5027,6 +5087,10 @@ body.sign-upPage {
 
 .updateCardModal {
   padding: 0 32px;
+
+  @media (max-width: 575px) {
+    padding: 0;
+  }
 }
 
 
