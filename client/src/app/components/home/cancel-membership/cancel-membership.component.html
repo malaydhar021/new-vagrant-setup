@@ -1,57 +1,60 @@
-<div class="membershipCancellation text-center d-cell">
-  <div class="cancelReason">
-    <div class="ico">
-      <img src="../../../../assets/images/logo_iconography.png" alt="">
-    </div>
-    <h2 *ngIf="showCancellationForm">Cancellation of Sticky Reviews Membership</h2>
-    <p *ngIf="showCancellationForm">We are so sad to see you go. We would like you to tell us the reason of cancellation of your membership. This would help us to serve the community better experience.</p>
+<div class="mainBox">
+  <div class="membershipCancellation text-center d-cell">
+    <div class="cancelReason">
+      <div class="ico">
+        <img src="../../../../assets/images/logo_iconography.png" alt="">
+      </div>
+      <h2 *ngIf="showCancellationForm">Cancellation of Sticky Reviews Membership</h2>
+      <p *ngIf="showCancellationForm">We are so sad to see you go. We would like you to tell us the reason of cancellation of your membership. This would help us to serve the community better experience.</p>
 
-    <div class="formCancellation" *ngIf="showCancellationForm">
-      <form [formGroup]="cancellationForm" (ngSubmit)="cancelMembership()" *ngIf="subscriptionStatus === 'ACTIVE'">
-          <div class="sr-form-row">
-            <div class="sr-form-cell">
-              <label>Select your Reason</label>
-              <div class="sr-form-field">
-                <select class="sr-form-ctrl customSelect" 
-                      (change)="onChangeReason()" 
-                      formControlName="reason">
-                  <option *ngFor="let reason of listOfReasons; let r= index" [value]="reason">{{reason}}</option>
-                </select>
+      <div class="formCancellation" *ngIf="showCancellationForm">
+        <form [formGroup]="cancellationForm" (ngSubmit)="cancelMembership()" *ngIf="subscriptionStatus === 'ACTIVE'">
+            <div class="sr-form-row">
+              <div class="sr-form-cell">
+                <label>Select your Reason</label>
+                <div class="sr-form-field">
+                  <select class="sr-form-ctrl customSelect"
+                        (change)="onChangeReason()"
+                        formControlName="reason">
+                    <option *ngFor="let reason of listOfReasons; let r= index" [value]="reason">{{reason}}</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="sr-form-row" *ngIf="showDescription">
-            <div class="sr-form-cell">
-              <label>Describe your reason</label>
-              <div class="sr-form-field">
-                <textarea 
-                  class="sr-form-ctrl" 
-                  placeholder="Be as descriptive as possible"
-                  formControlName="description"
-                  [ngClass]="{'error' : !cancellationForm.get('description').valid && cancellationForm.get('description').touched}"
-                  ></textarea>
-                  <span class="error-msg" *ngIf="!cancellationForm.get('description').valid && cancellationForm.get('description').errors.required" class="error-msg">
-                    Required!
-                  </span>
+            <div class="sr-form-row" *ngIf="showDescription">
+              <div class="sr-form-cell">
+                <label>Describe your reason</label>
+                <div class="sr-form-field">
+                  <textarea
+                    class="sr-form-ctrl"
+                    placeholder="Be as descriptive as possible"
+                    formControlName="description"
+                    [ngClass]="{'error' : !cancellationForm.get('description').valid && cancellationForm.get('description').touched}"
+                    ></textarea>
+                    <span class="error-msg" *ngIf="!cancellationForm.get('description').valid && cancellationForm.get('description').errors.required" class="error-msg">
+                      Required!
+                    </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="sr-form-row">
-            <button class="button-submit" type="submit" [disabled]="!cancellationForm.valid">
-              Submit
-            </button>
-          </div>
-      </form>
-      <div class="cancellationConfirmation" *ngIf="subscriptionStatus !=='ACTIVE' ">
-        <p>You don't have an active membership</p>
+            <div class="sr-form-row">
+              <button class="button-submit" type="submit" [disabled]="!cancellationForm.valid">
+                Submit
+              </button>
+            </div>
+        </form>
+        <div class="cancellationConfirmation" *ngIf="subscriptionStatus !=='ACTIVE' ">
+          <p>You don't have an active membership</p>
+        </div>
       </div>
     </div>
+    <div class="cancellationConfirmation" *ngIf="!showCancellationForm">
+        <figure>
+          <img src="../../../../assets/images/icon_tick_confirmation.png" alt="">
+        </figure>
+        <h2>Your subscription has been cancelled successfully.</h2>
+        <p>Hey <span *ngIf="name">{{name}}</span>, Thanks for being a <span *ngIf="plan">{{plan}}</span> user of Sticky Reviews so far. <br>We would be happy to you see back again.</p>
+        <p>Your account has been suspended and you can Subscribe again whenever you want.</p>
+    </div>
   </div>
-  <div class="cancellationConfirmation" *ngIf="!showCancellationForm">
-      <figure>
-        <img src="../../../../assets/images/icon_tick_confirmation.png" alt="">
-      </figure>
-      <h2>Your subscription has been cancelled successfully.</h2>
-      <p>Hey <span *ngIf="name">{{name}}</span>, Thanks for being a <span *ngIf="plan">{{plan}}</span> user of Sticky Reviews so far. <br>We would be happy to you see back again.</p>
-      <p>Your account has been suspended and you can Subscribe again whenever you want.</p>
-  </div>
+</div>

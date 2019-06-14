@@ -1303,6 +1303,8 @@ a {
     &.campaignMain {
       .dataTableArea {
         .table {
+          @include mb(0 !important);
+
           &.table-col-5 {
             .thead {
               li:nth-child(3) {
@@ -1392,6 +1394,93 @@ a {
               }
             }
           }
+
+        }
+
+        message {
+          span:not(:empty) {
+            @media (max-width: 991px) {
+              display: block;
+              @include mb(10px);
+            }
+          }
+        }
+
+        .ngx-pagination {
+          text-align: right;
+          margin-right: 15px;
+          margin-bottom: 0;
+
+          li {
+            font-size: 13px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            line-height: 28px;
+            text-align: center;
+            padding: 0;
+            color: #8f8f8f;
+            @include mr(8px);
+            white-space: nowrap;
+
+            &:hover {
+              background: transparent;
+            }
+
+            a,
+            span {
+              padding: 0;
+              display: inline-block;
+              width: auto;
+              height: 100%;
+
+              &:hover {
+                background: transparent;
+              }
+            }
+
+            &.pagination-next {
+              color: #2B69F3;
+            }
+
+            &.current {
+              background-color: #2B69F3;
+              color: #fff;
+            }
+
+            &:first-child,
+            &:last-child {
+              border-radius: 0;
+              width: auto;
+              height: inherit;
+            }
+
+            &:last-child:not(.disabled){
+              a {
+                color: #2B69F3;
+              }
+            }
+          }
+
+          @media (max-width: 640px) {
+            // text-align: center;
+            // @include mt(-15px);
+            @include mr(0);
+          }
+        }
+      }
+
+      .dataTableArea {
+        .table {
+          margin-bottom: 15px;
+        }
+      }
+    }
+
+    &.brandingMain {
+      .dataTableArea {
+        .log-stat_msg {
+          @include mb(12px);
         }
       }
     }
@@ -1481,7 +1570,7 @@ a {
 
       .tbody {
         display: block;
-        height: calc(100vh - 290px);
+        height: calc(100vh - 300px);
 
         li.row {
           display: inline-block;
@@ -2069,7 +2158,8 @@ a {
           border-radius: 8px;
           top: 100%;
           margin-top: 20px;
-          box-shadow: 0 0 15px rgba(0,0,0,0.1);
+          -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
           z-index: 2;
           display: none;
 
@@ -2182,6 +2272,7 @@ a {
 
                   @media (max-width: 1199px) {
                     @include ml(0);
+                    @include mt(8px);
                   }
                 }
 
@@ -2712,15 +2803,17 @@ a {
       }
 
       @media (max-width: 767px) {
+        -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       }
 
       @media (max-width: 767px) {
+        -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       }
     }
 
-    .log-stat_msg + .log-stat_msg {
+    .log-stat_msg+.log-stat_msg {
       margin-top: 5px;
     }
 
@@ -2730,7 +2823,7 @@ a {
       margin-right: 15px;
     }
 
-    .log-stat_msg + .log-stat_msg {
+    .log-stat_msg+.log-stat_msg {
       margin-top: 5px;
     }
 
@@ -2812,7 +2905,7 @@ a {
           @media (max-width: 480px) {
             float: none;
             text-align: center;
-            @include mt(10px);
+            @include mt(5px);
           }
         }
 
@@ -4139,6 +4232,7 @@ body.loginPage {
 
       .error {
         position: absolute;
+        -webkit-box-sizing: border-box;
         box-sizing: border-box;
         max-width: calc(100% - 30px);
         right: 0;
@@ -4246,12 +4340,20 @@ body.loginPage {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 50px;
+
+    @media (max-width: 480px) {
+      margin-top: 20px;
+    }
   }
 
   .registerLink {
     color: #878787;
     font-size: 16px;
     margin-top: 60px;
+
+    @media (max-width: 480px) {
+      text-align: center;
+    }
   }
 
   .registerLink a {
@@ -4343,6 +4445,61 @@ body.sign-upPage {
           &.secondStep {
             margin-left: -120%;
 
+            .formRow {
+              >.error {
+                position: relative;
+
+                .formCtrl {
+                  border: 2px solid #ff5d5d;
+                  color: #ff5d5d;
+                  border-bottom-right-radius: 0;
+                }
+
+                .error {
+                  position: absolute;
+                  -webkit-box-sizing: border-box;
+                  box-sizing: border-box;
+                  max-width: calc(100% - 15px);
+                  right: 0;
+                  top: 100%;
+                  padding: 5px 15px 7px 30px;
+                  font-size: 12px;
+                  font-weight: 600;
+                  line-height: 100%;
+                  color: #fff;
+                  background: #ff5d5d;
+                  border-radius: 0 0 7px 40px;
+                  text-align: right;
+                }
+
+                &:first-child {
+                  @include mb(30px);
+
+                  .error {
+                    right: 20px;
+
+                    @media (max-width: 991px) {
+                      right: 0;
+                    }
+                  }
+                }
+              }
+
+              .formCol6 {
+                @media (max-width: 991px) {
+                  width: 100%;
+                  padding: 0;
+                  margin-bottom: 15px;
+                }
+              }
+
+              .formCol4 {
+                @media (max-width: 991px) {
+                  width: 100%;
+                }
+              }
+            }
+
             @media (max-width: 767px) {
               margin-left: -100%;
             }
@@ -4359,6 +4516,11 @@ body.sign-upPage {
                   padding-right: 15px;
                   padding-left: 15px;
                 }
+
+                @media (max-width: 480px) {
+                  padding-right: 0;
+                  padding-left: 0;
+                }
               }
             }
 
@@ -4370,6 +4532,11 @@ body.sign-upPage {
                 @media (max-width: 767px) {
                   padding-right: 15px;
                   padding-left: 15px;
+                }
+
+                @media (max-width: 480px) {
+                  padding-right: 0;
+                  padding-left: 0;
                 }
               }
             }
@@ -4768,6 +4935,7 @@ body.sign-upPage {
 
       .error {
         position: absolute;
+        -webkit-box-sizing: border-box;
         box-sizing: border-box;
         max-width: calc(100% - 30px);
         right: 0;
@@ -5345,26 +5513,25 @@ body.sign-upPage {
           display: table;
         }
 
-        &.reviewLink_step_1{
+        &.reviewLink_step_1 {
           .sr-form {
-            .sr-form-row{
+            .sr-form-row {
               .sr-form-cell {
-                &.imageUp{
+                &.imageUp {
                   .sr-form-field {
-                      .sr-form-ctrl {
-                        &.inputFile{
-                          .figureUpld {
-                            -webkit-transform: none;
-                            transform: none;
-                            // background-image: url('./assets/images/default_logo_image_sr.png');
-                          }
+                    .sr-form-ctrl {
+                      &.inputFile {
+                        .figureUpld {
+                          -webkit-transform: none;
+                          transform: none;
+                          // background-image: url('./assets/images/default_logo_image_sr.png');
+                        }
 
-                          .choseFileArea {
-                            left: 50%;
-                            right: auto;
-                            -webkit-transform: translate(-50%, -50%);
-                            transform: translate(-50%, -50%);
-                          }
+                        .choseFileArea {
+                          left: 50%;
+                          right: auto;
+                          -webkit-transform: translate(-50%, -50%);
+                          transform: translate(-50%, -50%);
                         }
                       }
                     }
@@ -5373,6 +5540,7 @@ body.sign-upPage {
               }
             }
           }
+        }
 
         bar-rating+.error-msg {
           -webkit-box-sizing: border-box;
@@ -5737,8 +5905,8 @@ body.sign-upPage {
     }
 
     @media (max-width: 767px) {
-      -webkit-transform: scale(0.8);
-      transform: scale(0.8);
+      -webkit-transform: translate(-50%, -50%) scale(0.8);
+      transform: translate(-50%, -50%) scale(0.8);
     }
   }
 
@@ -6567,6 +6735,7 @@ body.sign-upPage {
       background-position: center center;
       -webkit-transition: all ease-in-out 0.4s;
       transition: all ease-in-out 0.4s;
+      background-image: url('./assets/images/user.png');
     }
 
     input[type=file] {
@@ -6692,6 +6861,10 @@ body.sign-upPage {
         }
       }
     }
+  }
+
+  @media (max-width: 991px) {
+    padding-top: 0;
   }
 }
 
@@ -8572,6 +8745,7 @@ img {
     top: -5px;
     line-height: 100%;
   }
+
   label {
     cursor: pointer;
     font-size: 0;
@@ -8586,7 +8760,8 @@ img {
     input {
       display: none;
     }
-    input + span {
+
+    input+span {
       position: relative;
       display: block;
       height: 100%;
@@ -8600,8 +8775,10 @@ img {
         position: absolute;
         left: 0;
         top: 5px;
+        -webkit-transition: all 0.3s ease 0s;
         transition: all 0.3s ease 0s;
       }
+
       &:after {
         content: "";
         content: "";
@@ -8612,13 +8789,16 @@ img {
         position: absolute;
         left: -1px;
         top: 2px;
+        -webkit-transition: all 0.3s ease 0s;
         transition: all 0.3s ease 0s;
       }
     }
-    input:checked + span {
+
+    input:checked+span {
       &:before {
         background: #e30b5d;
       }
+
       &:after {
         left: 13px;
         background: #e30b5d;
@@ -9447,4 +9627,3 @@ Cookie notification css
   color: #333;
   background-color: #fff;
 }
-

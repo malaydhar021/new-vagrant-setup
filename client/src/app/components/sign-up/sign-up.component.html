@@ -72,10 +72,9 @@
             <button type="button" class="goBack" (click)="goBack()">GO BACK</button>
             <h2>Credit Card Information</h2>
             <div class="formRow">
-              <div class="formCol6">
+              <div class="formCol6" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.card.errors}">
                 <label>Credit Card Number</label>
-                <input type="text" class="formCtrl card" mask="0000 0000 0000 0000" formControlName="card"
-                  [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.card.errors}">
+                <input type="text" class="formCtrl card" mask="0000 0000 0000 0000" formControlName="card">
                 <div class="error" *ngIf="(
                   isSubmittedStep2
                   && signupFormStep2FormControls.card.errors !== null
@@ -95,9 +94,9 @@
                   Credit card number should be in between 14 to 16 digits depending on provider
                 </div>
               </div>
-              <div class="formCol4">
+              <div class="formCol4" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.cvc.errors}">
                 <label>CVC Number</label>
-                <input type="password" class="formCtrl" formControlName="cvc" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.cvc.errors}">
+                <input type="password" class="formCtrl" formControlName="cvc">
                 <div class="error" *ngIf="(
                   isSubmittedStep2
                   && signupFormStep2FormControls.cvc.errors !== null
