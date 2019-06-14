@@ -128,6 +128,11 @@
 
 ## Sticky Review
 
+### V2.1.1
+
+1. Fixed null value issue with review date and time
+2. Fixed null value issue with tags
+
 ### V2.1.0
 
 1. Fixed style for audio and video preview

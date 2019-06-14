@@ -87,7 +87,7 @@ class StickyReviewsController extends Controller
     {
         $stickyReview = new StickyReview();
         $stickyReview->name = $request->input('name');
-        $stickyReview->tags = trim($request->input('tags'));
+        $stickyReview->tags = (is_null($request->input('tags')) || $request->input('tags') === 'null') ? null : trim($request->input('tags'));
         $stickyReview->rating = $request->input('rating');
         $stickyReview->type = $request->input('type');
 
@@ -112,11 +112,15 @@ class StickyReviewsController extends Controller
                     $stickyReview->description = $request->input('description');
                 }
         }
+        \Log::info($request->all());
 
-        if ($request->has('reviewd_at') && strlen(trim($request->input('reviewd_at')))) {
+        if ($request->has('reviewd_at') && !is_null($request->input('reviewd_at')) && $request->input('reviewd_at') !== 'null' && strlen(trim($request->input('reviewd_at')))) {
             $datetime = Carbon::createFromFormat('D M d Y H:i:s e+', $request->input('reviewd_at'));
             $stickyReview->created_at = $datetime->format('Y-m-d H:i:s');
             $stickyReview->updated_at = $datetime->format('Y-m-d H:i:s');
+        } else {
+            $stickyReview->created_at = Carbon::now();
+            $stickyReview->updated_at = Carbon::now();
         }
 
         if ($request->has('image')) {

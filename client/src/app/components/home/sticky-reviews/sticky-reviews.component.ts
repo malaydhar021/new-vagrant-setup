@@ -148,7 +148,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       srType: [1], // sticky review type textual | audio | video
     });
     // subscribe to `valueChanges` method which emits current value of formControlName.
-    // In this case onchange of review type `selectedReivewType` propety value has been
+    // In this case onchange of review type `selectedReivewType` property value has been
     // changed to current selected value of review type select box
     this.getFormControls.srType.valueChanges.subscribe(
       (value : number) => {
@@ -200,6 +200,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.errorService.updateShowMessageStatus(false);
+      this.errorMessage = null;
+      this.successMessage = null;
     });
   }
 
@@ -572,10 +574,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
           this.getStickyReviews(); 
-          // hide the success message after 3 seconds
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000)
         } else {
           // show the error message to user
           this.errorMessage = response.message;
@@ -608,10 +606,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
           this.getStickyReviews();
-          // hide the success message after 3 seconds
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000);
         } else {
           // show the error message to user
           this.errorMessage = response.message;
@@ -647,10 +641,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           this.successMessage = response.message;
           // making an api call to get all reviews along with the newly added sticky review
           this.getStickyReviews();
-          // hide the success message after 3 seconds
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000) 
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
