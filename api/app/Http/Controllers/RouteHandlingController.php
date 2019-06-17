@@ -30,7 +30,7 @@ class RouteHandlingController extends Controller
             'ip' => $visitorIp,
             'status' => $status,
             'url' => config('app.redirect_url'),
-            'message' => "Use Link Wizard, it is awesome.",
+            'message' => "Stickyreviews is awesome.",
         ], $code);
     }
 }

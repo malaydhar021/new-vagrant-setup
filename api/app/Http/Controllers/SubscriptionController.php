@@ -6,8 +6,10 @@ use App\Exceptions\HttpBadRequestException;
 use App\Http\Requests\SubscriptionRequest;
 use App\Http\Resources\SubscriptionResource;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class SubscriptionController extends Controller
 {
@@ -73,8 +75,8 @@ class SubscriptionController extends Controller
      */
     public function update(SubscriptionRequest $request)
     {
-        $user = Auth::user();
 
+        $user = Auth::user();
         $currentPlan = array_search($user->pricing_plan, $this->allowedPlanNames);
         $newPlan = array_search($request->input('pricing_plan_type'), $this->allowedPlanNames);
         $wannaDowngrade = $currentPlan > $newPlan;
@@ -130,7 +132,8 @@ class SubscriptionController extends Controller
             }
         }
 
-        if (!$wannaDowngrade && $user->is_third_party && !$user->card_last_four) {    // Wanna upgrade but don't have card info
+        if (!$wannaDowngrade && $user->is_third_party && !$user->card_last_four) {
+            // Wanna upgrade but don't have card info
             return response()->json([
                 'status' => false,
                 'message' => "Before upgrading your subscription you need to provide your card details.",
@@ -140,6 +143,16 @@ class SubscriptionController extends Controller
             ], 400);
         } else {
             $user->changeSubscriptionPlan($request->input('pricing_plan_type'));
+            // call the API depending on the affiliate_id and if the sale id is null/recording the sale in affiliate platform
+            if($user->affiliate_id != null && $user->sale_id == null ){
+                // $this->callAffiliateApiForAdd($user, $request->input('pricing_plan_type'));
+                $this->CallAffiliateAction(1, $user, $request->input('pricing_plan_type'));
+            }
+            // call the API for update the sails in affiliate platform
+            if($user->affiliate_id != null && $user->sale_id != null ){
+                // $this->callAffiliateApiForUpdate($user, $request->input('pricing_plan_type'));
+                $this->CallAffiliateAction(2, $user, $request->input('pricing_plan_type'));
+            }
         }
 
         return response()->json([
@@ -161,11 +174,127 @@ class SubscriptionController extends Controller
 
         $user = Auth::user();
         $user->cancelSubscription($request->input('reason'), $request->input('description'));
-
+        // call Affiliate Api for Deactive the user
+        if($user->affiliate_id != null && $user->sale_id != null){
+            // $this->CallAffiliateAction(3, $user, null);
+            $this->callAffiliateApiForDeactive($user->sale_id, 0);
+        }
         return response()->json([
             'status' => true,
             'message' => "You have cancelled your subscription successfully.",
             'subscription' => new SubscriptionResource($user),
         ]);
     }
+
+    /**
+     * Call affiliate API for add, update and delete a sale
+     * @param $actionType
+     * action of the api 1 => add ,2 => update ,3 => active / deactive / cancel
+     * @param $user
+     * @param $pricingPlanType
+     */
+    public function CallAffiliateAction($actionType, $user, $pricingPlanType) {
+
+        $getPlanInfo = config('pricing.plans.'.$pricingPlanType); // get all data from the plans config
+        if ($getPlanInfo != null) {
+            if ($getPlanInfo['type'] == 'recurring') {
+                $paymentType = 1;
+            } else {
+                $paymentType = 0;
+            }
+            if ($getPlanInfo['trial'] != null) {
+                $trialPeriod = $getPlanInfo['trial'];
+            } else {
+                $trialPeriod = 0;
+            }
+            $currentDate = Carbon::now();    // getting current date
+            /* calling the API with require date */
+        }
+        $body= [];
+        switch ($actionType){
+            case 1:
+                // some case 1 add body of the request for add a sale
+                $body = [
+                    'product_name'      =>  'Sticky Reviews',
+                    'ammount'  	 	    =>  $getPlanInfo['amount'],
+                    'payment_type' 	    =>  $paymentType,
+                    'trial_period' 	    =>  $trialPeriod,
+                    'date_registered' 	=>  $currentDate->toDateString(),
+                    'affiliateId' 	    =>  $user->affiliate_id,
+                    'email' 	        =>  $user->email
+                ];
+            break;
+
+            case 2:
+                //some case 2 add body of the request for update a sale
+                $body = [
+                    'product_name'      =>  'Sticky Reviews',
+                    'ammount'  	 	    =>  $getPlanInfo['amount'],
+                    'payment_type' 	    =>  $paymentType,
+                    'saleId' 	        =>  $user->sale_id
+                ];
+             break;
+            default:
+        }
+
+        \Log::info("data of Body ". print_r($body,true));
+
+        $client = new \GuzzleHttp\Client();
+        $res = $client->post('https://api-affiliate.tier5.us/hooks/sales', [  'form_params'=> $body ]);
+        if($res->getStatusCode() == 200 && $actionType == 1 ){
+            $response  = json_decode($res->getBody());
+            $updateUserSaleId = User::find($user->id);
+            if($updateUserSaleId){
+                $updateUserSaleId->sale_id = $response->payload->saleId;
+                $updateUserSaleId->save();
+            }else{
+                \Log::info("not found the user !");
+            }
+        }else{
+            // something went wrong
+            \Log::info("Something went wrong !");
+        }
+
+        if($res->getStatusCode() == 200 && $actionType == 2 ){
+            $response  = json_decode($res->getBody());
+            \Log::info('response from the update sales ...  ' .print_r($response,true));
+        }else{
+            // something went wrong
+            \Log::info("Something went wrong !");
+        }
+    }
+
+    /**
+     * Call to affiliate api for active / deactive an user
+     * @param $saleId
+     * @param $isActive
+     */
+    public function callAffiliateApiForDeactive($saleId, $isActive) {
+        \Log::info("saleId".$saleId. "isActive ".$isActive);
+        $client = new \GuzzleHttp\Client();
+
+        if($isActive == 0){
+            $isActive = false;
+        }else{
+            $isActive = true;
+        }
+
+        $body = [
+            'saleId' 	        =>  $saleId,
+            'is_active'         =>  $isActive,
+        ];
+
+        \Log::info("BODY of the Request : ".print_r($body,true));
+
+        $res = $client->post('https://api-affiliate.tier5.us/hooks/sales', [  'json'=> $body ]);
+        if($res->getStatusCode() == 200){
+            $response  = json_decode($res->getBody());
+            \Log::info('response from the update sales ...  ' .print_r($response,true));
+        }else{
+            // something went wrong
+            \Log::info("Something went wrong !");
+        }
+    }
+
+
 }

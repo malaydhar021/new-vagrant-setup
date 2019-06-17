@@ -114,7 +114,9 @@ class ThirdPartyWebhooksController extends Controller
 
             $user = User::where('email', $request->input('email'))->firstOrFail();
             $user->delete();
-
+            if($user->affiliate_id != null &&  $user->sale_id != null){
+                $this->callAffiliateApiForDeactive($user->sale_id, false);
+            }
             return response()->json([
                 'data' => [
                     'http_code' => 200,
@@ -178,6 +180,15 @@ class ThirdPartyWebhooksController extends Controller
             $user->update();
 
             $status = $user->is_active ? "deactived" : "actived";
+            // call to the API
+            if($user->affiliate_id != null &&  $user->sale_id != null){
+                if($request->input('suspend') == 0){
+                    $isActive = false;
+                }else{
+                    $isActive = true;
+                }
+                $this->callAffiliateApiForDeactive($user->sale_id, $isActive);
+            }
 
             return response()->json([
                 'data' => [
@@ -214,6 +225,29 @@ class ThirdPartyWebhooksController extends Controller
                     ],
                 ],
             ]);
+        }
+    }
+
+    /**
+     * Call to affiliate api for active / deactive an user
+     * @param $saleId
+     * @param $isActive
+     */
+    public function callAffiliateApiForDeactive($saleId, $isActive) {
+        \Log::info("saleId  ->".$saleId."   isActive->  ".$isActive);
+        $client = new \GuzzleHttp\Client();
+        $body = [
+            'saleId' 	        =>  $saleId,
+            'is_active'         =>  $isActive,
+        ];
+        \Log::info("BODY of the Request : ".print_r($body,true));
+        $res = $client->post('https://api-affiliate.tier5.us/hooks/sales', [  'json'=> $body ]);
+        if($res->getStatusCode() == 200){
+            $response  = json_decode($res->getBody());
+            \Log::info('response from the update sales ...  ' .print_r($response,true));
+        }else{
+            // something went wrong
+            \Log::info("Something went wrong !");
         }
     }
 }
