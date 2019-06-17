@@ -6,34 +6,35 @@ $(document).ready(function() {
     var slideNavFlag = [];
     var slideNav = $(".sliderNav span");
 
-    $(".slide").each(function() {
-        slide.push($(this));
-    });
-    $(slideNav).each(function() {
-        slideNavFlag.push($(this));
-    });
+    if($(".slide").length>0){
+        $(".slide").each(function() {
+            slide.push($(this));
+        });
+        $(slideNav).each(function() {
+            slideNavFlag.push($(this));
+        });
 
-    slideNav.click(function() {
-        $(".slide").removeClass("active");
-        slide[$(this).index()].addClass("active");
+        slideNav.click(function() {
+            $(".slide").removeClass("active");
+            slide[$(this).index()].addClass("active");
 
-        slideNav.removeClass("active");
-        $(this).addClass("active");
-    });
+            slideNav.removeClass("active");
+            $(this).addClass("active");
+        });
 
-    slide[slideCount].addClass("active");
-    slideNavFlag[slideCount].addClass("active");
-    setInterval(function() {
-        slideCount = slideCount + 1;
-        if (slideCount == 3) {
-            slideCount = 0;
-        }
-        $(".slide").removeClass("active");
         slide[slideCount].addClass("active");
-        slideNav.removeClass("active");
         slideNavFlag[slideCount].addClass("active");
-    }, slideDuration);
-
+        setInterval(function() {
+            slideCount = slideCount + 1;
+            if (slideCount == 3) {
+                slideCount = 0;
+            }
+            $(".slide").removeClass("active");
+            slide[slideCount].addClass("active");
+            slideNav.removeClass("active");
+            slideNavFlag[slideCount].addClass("active");
+        }, slideDuration);
+    }
 
     $(".responsiveNav").click(function() {
         if ($(this).hasClass("active")) {

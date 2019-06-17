@@ -1940,6 +1940,11 @@ h5 {
         padding-top: 30px !important;
     }
     
+
+    div#root>iframe {
+        width: calc(100% - 30px) !important;
+        margin: 0 15px;
+    }
 }
 
 @media screen and (max-width: 530px) {
