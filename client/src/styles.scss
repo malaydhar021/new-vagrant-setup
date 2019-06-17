@@ -3823,7 +3823,7 @@ a {
       }
 
       @media (max-width: 767px) {
-        padding: 0 15px;
+        padding: 0 20px 0 0;
       }
     }
 
@@ -4123,6 +4123,10 @@ a {
 
     img {
       display: none;
+    }
+
+    @media (max-width:480px) {
+      right: 12px;
     }
   }
 }
@@ -6703,7 +6707,7 @@ body.sign-upPage {
   padding: 9px 14px;
   @include border-radius(5px);
   // @include mb(16px);
-  @include mt(16px);
+  @include mt(8px);
   display: block;
 
   &.log_Failed {
