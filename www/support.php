@@ -31,7 +31,7 @@
         </style>
         <div id="root" class="supportContent">
             <iframe src="https://stickyreviews.nolt.io/" class="iframe-div"></iframe>
-            <div class="container">
+            <div class="container inSupport">
                 <p>
                     For any product related support please click on the messenger button showing on the right bottom
                     corner of this page and connect with us.
