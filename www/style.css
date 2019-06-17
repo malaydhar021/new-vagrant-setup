@@ -663,7 +663,6 @@ body {
 .pricingArea h2 {
     color: #fff;
     font-weight: 700;
-    font-style: 30px;
     text-align: center;
     padding-bottom: 37px;
 }
@@ -832,6 +831,7 @@ body {
 .responsiveNav {
     display: none;
 }
+
 /**
 css for go to top button
  */
@@ -1209,11 +1209,14 @@ h5 {
     border-radius: 15px;
     padding: 30px 15px;
     background-color: #fff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
+
 .ppTacPage h1 {
     margin-bottom: 30px;
 }
+
 .ppTacPage h2,
 .ppTacPage h3,
 .ppTacPage h4,
@@ -1221,6 +1224,7 @@ h5 {
 .ppTacPage h6 {
     margin-bottom: 12px;
 }
+
 .ppTacPage h2 {
     margin-top: 50px;
 }
@@ -1230,7 +1234,7 @@ h5 {
     line-height: 24px;
 }
 
-.ppTacPage li > strong {
+.ppTacPage li>strong {
     display: block;
 }
 
@@ -1242,21 +1246,33 @@ h5 {
     font-size: 14px;
 }
 
-.ppTacPage ul li + li {
+.ppTacPage ul li+li {
     margin-top: 15px;
 }
 
 .inSupport {
     background-color: #fff;
     padding: 15px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
+
 .inSupport p {
     margin-top: 0;
 }
 
 .ppTacPage p a {
     word-break: break-all;
+}
+
+.introExitPopup .container:after {
+    clear: both;
+}
+
+.introExitPopup .container:after,
+.introExitPopup .container:before {
+    content: '';
+    display: table;
 }
 
 
@@ -1316,6 +1332,7 @@ h5 {
 @media screen and (max-width: 1400px) {
     .bannerArea {
         background-size: 400px;
+        background-image: none;
     }
 
     .bannerMid .container {
@@ -1399,10 +1416,12 @@ h5 {
         font-size: 14px;
         line-height: 20px;
     }
+
     .footer .container {
         margin-top: 0;
         margin-bottom: 0;
     }
+
     .ppTacPage {
         margin-bottom: 30px;
     }
@@ -1435,6 +1454,15 @@ h5 {
     .maintainPages .maintainGfx:before {
         width: 104px;
         height: 102px;
+    }
+
+    .featureArea2,
+    .newRelease {
+        padding: 30px 0;
+    }
+
+    .bodyDesign {
+        background-size: 40%;
     }
 }
 
@@ -1584,6 +1612,32 @@ h5 {
         font-size: 14px;
         line-height: 26px;
     }
+
+    .newFeatures {
+        max-width: 100%;
+    }
+
+    .introExitPopup .content {
+        width: 45%;
+        margin-right: 0;
+    }
+
+    .pricingArea .plan .planCell {
+        padding: 30px 15px;
+    }
+
+    .pricingArea .plan .planCell ul li {
+        font-size: 13px;
+        padding-bottom: 15px;
+    }
+
+    .pricingArea .plan .planCell .price {
+        font-size: 32px;
+    }
+
+    .pricingSec {
+        min-height: 787px;
+    }
 }
 
 @media screen and (max-width: 840px) {
@@ -1704,6 +1758,28 @@ h5 {
 
     .ftLinks a:first-child {
         margin-left: 0;
+    }
+
+    .pricingArea .container {
+        margin: 0;
+    }
+
+    .pricingArea .plan {
+        margin: 30px 0 0 0;
+    }
+
+    .pricingArea h2 {
+        padding-bottom: 20px;
+    }
+
+    .pricingArea,
+    .introExitPopup {
+        padding: 30px 0;
+    }
+
+    .newFeatures li h3 {
+        font-size: 15px;
+        margin-bottom: 10px;
     }
 }
 
@@ -1917,33 +1993,126 @@ h5 {
     .ppTacPage {
         margin-top: 30px;
     }
+
     .ppTacPage h2 {
         margin-top: 30px;
         font-size: 22px;
     }
-    .ppTacPage ul li + li {
+
+    .ppTacPage ul li+li {
         margin-top: 10px;
     }
-    
+
     .ppTacPage ul li,
     .supportContent p {
         font-size: 13px;
     }
+
     .ppTacPage h3 {
         font-size: 17px;
     }
+
     .footer .copyright {
         font-size: 13px;
         margin-top: 30px;
     }
+
     .spacingheader {
         padding-top: 30px !important;
     }
-    
+
 
     div#root>iframe {
         width: calc(100% - 30px) !important;
         margin: 0 15px;
+    }
+
+    .bannerMid h1 {
+        font-size: 19px;
+        line-height: 26px;
+    }
+
+    .bannerMid p {
+        font-size: 15px;
+        line-height: 22px;
+    }
+
+    .bannerMid .freeTrialBtn {
+        margin: 30px 0 0;
+        font-size: 13px;
+    }
+
+    .featureArea {
+        margin: 60px 0;
+    }
+
+    .featureArea h2 {
+        font-size: 15px;
+    }
+
+    .featureArea ul li p,
+    .newFeatures li p {
+        font-size: 14px;
+    }
+
+    .featureArea ul li h3 {
+        font-size: 16px;
+        padding: 25px 0 10px;
+    }
+
+    .newFeatures li,
+    .newFeatures li:nth-child(2),
+    .newFeatures li:last-child {
+        margin-top: 30px;
+    }
+
+    .introExitPopup .content h2 {
+        font-size: 18px;
+    }
+
+    .introExitPopup .content p {
+        margin-top: 20px;
+        font-size: 14px;
+        line-height: normal;
+    }
+
+    .reviewLooks .heading h2 {
+        font-size: 30px;
+        padding: 90px 0;
+    }
+
+    .reviewLooks .heading h2 span {
+        font-size: 14px;
+    }
+
+    .reviewLooks .heading {
+        width: 250px;
+        background-size: contain;
+    }
+
+    .reviewLooks .heading {
+        margin-bottom: 0;
+    }
+
+    .reviewLooks .reviewTheme .review1 {
+        margin: 70px auto 0;
+    }
+
+    .newFeatures,
+    .newRelease h2 {
+        max-width: 100%;
+    }
+
+    .bannerArea {
+        background-size: 30%;
+    }
+
+    .bannerMid p {
+        font-size: 14px;
+    }
+
+    .featureArea h2 {
+        margin-bottom: 30px;
     }
 }
 
@@ -1987,12 +2156,15 @@ h5 {
         margin-top: 20px;
         font-size: 17px;
     }
+
     .ppTacPage h4 {
         font-size: 15px;
     }
+
     .ppTacPage h3 {
         font-size: 16px;
     }
+
     .ppTacPage h1 {
         margin-bottom: 20px;
         font-size: 22px;
@@ -2012,6 +2184,7 @@ h5 {
         -webkit-transform: scale(0.68) translateX(-49%);
         transform: scale(0.68) translateX(-49%);
     }
+
     .maintainPages .maintainGfx {
         display: none;
     }
@@ -2019,5 +2192,82 @@ h5 {
     .pricingArea .plan .planCell {
         margin: 0;
         float: none;
+    }
+
+    .featureArea2 .sliderContainer .slide .slideLeft .videoArea .videoAreainner,
+    .featureArea2 .sliderContainer .slide .slideLeft .videoArea {
+        height: 110px;
+        width: 180px;
+    }
+
+    .featureArea2 .sliderContainer .slide .slideLeft {
+        width: 230px;
+        height: 215px;
+    }
+
+    .featureArea2 .sliderContainer .slide .slideLeft .blueRing {
+        left: 32px;
+        width: 38px;
+        height: 38px;
+        bottom: 38px;
+    }
+
+    .featureArea2 .sliderContainer .slide.active .slideLeft .blueRing {
+        bottom: 120px;
+    }
+
+    .featureArea2 .sliderContainer {
+        height: 500px;
+    }
+
+    .featureArea2 {
+        padding-top: 80px;
+    }
+
+    /* .reviewTheme img {
+        max-width: 100%;
+    }
+    .reviewLooks .reviewTheme .review4, 
+    .reviewLooks .reviewTheme .review5, 
+    .reviewLooks .reviewTheme .review1, 
+    .reviewLooks .reviewTheme .review2, 
+    .reviewLooks .reviewTheme .review3 {
+        width: 100%;
+        text-align: center;
+        transform: scale(1);
+        margin: 25px auto 0;
+        padding: 0;
+        top: auto;
+    } */
+    .pricingArea h2 {
+        padding-bottom: 15px;
+        font-size: 16px;
+    }
+
+    .pricingArea .freeTrialBtn,
+    .bannerMid .freeTrialBtn {
+        width: 100%;
+    }
+
+    .pricingArea .freeTrialBtn {
+        font-size: 14px;
+    }
+
+    .pricingArea .plan .planCell .planHead .planImg {
+        height: inherit;
+    }
+
+    .pricingArea .plan .planCell .planHead .planImg img {
+        position: relative;
+        -webkit-transform: none;
+        transform: none;
+    }
+
+    .newRelease h2 {
+        font-size: 20px;
+    }
+
+    .newRelease h2 .subHeading2 {
+        font-size: 13px;
     }
 }

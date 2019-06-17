@@ -9657,6 +9657,19 @@ Cookie notification css
   -webkit-transform: translateY(200%);
   transform: translateY(200%);
   z-index: 9999;
+
+  @media (max-width: 767px) {
+    padding-left: 0;
+    padding-right: 0;
+
+    .container {
+      display: block;
+
+      .closeCookie {
+        margin: 15px 0 0 0;
+      }
+    }
+  }
 }
 
 .showCookie {
