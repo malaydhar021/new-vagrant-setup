@@ -4339,6 +4339,10 @@ body.loginPage {
       display: inline-block;
       vertical-align: middle;
     }
+
+    @media (max-width: 480px) {
+        float: none;
+    }
   }
 
   .forgotPass {
@@ -4347,6 +4351,11 @@ body.loginPage {
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
+
+    @media (max-width: 480px) {
+        float: none;
+        margin-top: 8px;
+    }
   }
 
   .loginBtn {
@@ -4374,6 +4383,7 @@ body.loginPage {
 
     @media (max-width: 480px) {
       text-align: center;
+      display: block;
     }
   }
 
