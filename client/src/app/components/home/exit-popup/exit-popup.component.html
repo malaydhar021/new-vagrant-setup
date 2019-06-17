@@ -3014,8 +3014,8 @@
                 </div>
               </div>
 
-              <label>Choose Visual Appearance<img src="../../../../assets/images/icon_info2.png" class="infos_imgs"
-                                                  alt="infos"></label>
+              <label>Choose Visual Appearance<a href="javascript:void(0)" class="tooltip" data-title="Choose the visual style for the exit popupts!">
+                  <img src="../../../../assets/images/icon_info2.png" alt=""></a></label>
               <div class="sr-form-field">
                 <select class="sr-form-ctrl" formControlName="exitPopupVisualStyles" (change)="setPopupVisualStyle()"  [compareWith]="compareFn">
                   <option *ngFor="let style of visualStyles; let i = index" [ngValue]="style"> {{ style.name }}</option>
