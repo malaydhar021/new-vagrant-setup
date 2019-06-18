@@ -134,6 +134,10 @@
 
 ## Sticky Review
 
+### V2.1.2
+
+1. Fixed issue with edit a sticky review for audio / video review
+
 ### V2.1.1
 
 1. Fixed null value issue with review date and time

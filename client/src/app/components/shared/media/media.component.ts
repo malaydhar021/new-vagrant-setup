@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Log } from '../../../helpers/app.helper';
 
 /**
  * Class component to handle all sort of options for audio / video records

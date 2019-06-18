@@ -1,4 +1,4 @@
-<div class="stepReview step_4 active" *ngIf="review.recommendation">
+<div class="stepReview step_4 active" *ngIf="review.recommendation === '1'">
   <div class="figReview">
     <img src="../../../../assets/images/smiley_success.png" alt="">
   </div>
@@ -7,7 +7,7 @@
   </h2>
 </div>
 <!-- Thank you screen for negative review -->
-<div class="stepReview step_7 active" *ngIf="!review.recommendation">
+<div class="stepReview step_7 active" *ngIf="review.recommendation === '0'">
   <div class="figReview">
     <img src="../../../../assets/images/smiley_success.png" alt="">
   </div>

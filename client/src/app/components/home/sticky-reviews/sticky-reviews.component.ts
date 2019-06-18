@@ -105,6 +105,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   config: any;  // config for pagination
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
+  reviewSource: string = ""; // 
 
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -386,8 +387,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onEditStickyReview(review : StickyReviewModel) {
-    Log.info(review);
-    Log.debug(review.review);
     // set review id which is currently being edited
     this.reviewId = review.id;
     // set `isEditing` to true once the edit icon has been clicked
@@ -410,15 +409,19 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         patchDateTime.getSeconds()
       )
     };
-    // let update media player src based on reivew type
+    // let update media player src based on review type
     if(review.type == 2) {
-      this.mediaService.updateAudioSrc(null);
-      // update audio player scr to play the audio
-      this.mediaService.updateAudioSrc(review.review);  
+      setTimeout(() => {
+        this.mediaService.updateAudioSrc(null);
+        // update audio player scr to play the audio
+        this.mediaService.updateAudioSrc(review.review);  
+      }, 1000);
     } else if (review.type == 3) {
-      this.mediaService.updateVideoSrc(null);
-      // update video player scr to play the video
-      this.mediaService.updateVideoSrc(review.review);
+      setTimeout(() => {
+        this.mediaService.updateVideoSrc(null);
+        // update video player scr to play the video
+        this.mediaService.updateVideoSrc(review.review);
+      }, 1000);
     }
     // set image preview for existing image
     this.imagePreviewUrl = review.image_url;
