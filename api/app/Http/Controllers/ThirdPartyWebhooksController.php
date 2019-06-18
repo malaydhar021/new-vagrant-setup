@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\HttpBadRequestException;
 use App\User;
-
+use App\Subscription;
 use Exception;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -114,6 +114,7 @@ class ThirdPartyWebhooksController extends Controller
 
             $user = User::where('email', $request->input('email'))->firstOrFail();
             $user->delete();
+
             if($user->affiliate_id != null &&  $user->sale_id != null){
                 $this->callAffiliateApiForDeactive($user->sale_id, false);
             }
@@ -180,16 +181,6 @@ class ThirdPartyWebhooksController extends Controller
             $user->update();
 
             $status = $user->is_active ? "deactived" : "actived";
-            // call to the API
-            if($user->affiliate_id != null &&  $user->sale_id != null){
-                if($request->input('suspend') == 0){
-                    $isActive = false;
-                }else{
-                    $isActive = true;
-                }
-                $this->callAffiliateApiForDeactive($user->sale_id, $isActive);
-            }
-
             return response()->json([
                 'data' => [
                     'http_code' => 200,
@@ -234,13 +225,11 @@ class ThirdPartyWebhooksController extends Controller
      * @param $isActive
      */
     public function callAffiliateApiForDeactive($saleId, $isActive) {
-        \Log::info("saleId  ->".$saleId."   isActive->  ".$isActive);
         $client = new \GuzzleHttp\Client();
         $body = [
             'saleId' 	        =>  $saleId,
             'is_active'         =>  $isActive,
         ];
-        \Log::info("BODY of the Request : ".print_r($body,true));
         $res = $client->post('https://api-affiliate.tier5.us/hooks/sales', [  'json'=> $body ]);
         if($res->getStatusCode() == 200){
             $response  = json_decode($res->getBody());
