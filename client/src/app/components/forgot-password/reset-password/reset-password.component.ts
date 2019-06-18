@@ -36,7 +36,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   errorMessage: string = null;
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
-  emailFieldFocused = false; // true if the email field is focused
+  passwordFieldFocused:boolean = false; // true if the password field is focused
+  confirmPasswordFieldFocused: boolean = false; // true if confirm password field is focused
 
   /**
    * Constructor method to load every required services and class at the very first when this component is initialized
@@ -83,7 +84,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Reset Password');
-    this.loaderService.enableLoader(); // show loader
+    // this.loaderService.enableLoader(); // show loader
+    /*
     // get the token from last url segment from the current route
     const token = this.route.snapshot.url[1].path;
     // check the token is valid or not
@@ -95,7 +97,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.loaderService.disableLoader();
       }
     );
-
+    */
     // initialize formBuilder with client side validation
     this.form = this.formBuilder.group({
         password: [null, [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
@@ -180,8 +182,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
    */
   public onFocus(field: string, event: any) {
     switch (field) {
-      case 'email':
-        this.emailFieldFocused = ((<HTMLInputElement>event.target).value === '') ? true : (((<HTMLInputElement>event.target).value === '') ? false : true);
+      case 'password':
+        this.passwordFieldFocused = ((<HTMLInputElement>event.target).value === '') ? true : (((<HTMLInputElement>event.target).value === '') ? false : true);
+        break;
+      case 'confirmPassword':
+        this.confirmPasswordFieldFocused = ((<HTMLInputElement>event.target).value === '') ? true : (((<HTMLInputElement>event.target).value === '') ? false : true);
         break;
       default:
         break;
@@ -197,8 +202,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
    */
   public onFocusOut(field: string, event: any) {
     switch (field) {
-      case 'email':
-        this.emailFieldFocused = ((<HTMLInputElement>event.target).value === '') ? false : true;
+      case 'password':
+        this.passwordFieldFocused = ((<HTMLInputElement>event.target).value === '') ? false : true;
+        break;
+      case 'confirmPassword':
+        this.confirmPasswordFieldFocused = ((<HTMLInputElement>event.target).value === '') ? false : true;
         break;
       default:
         break;
