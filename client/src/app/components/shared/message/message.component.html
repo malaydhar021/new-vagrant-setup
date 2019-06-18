@@ -4,6 +4,12 @@
   <span *ngIf="validationErrorMessages.length > 0">
     <div class="log-stat_msg log_Failed" *ngFor="let error of validationErrorMessages">
       {{ error }}
+
+      <span class="closePup">
+        <i>
+
+        </i>
+      </span>
     </div>
   </span>
 </span>
@@ -11,19 +17,37 @@
 
 <!-- Error MESSAGE -->
 <span *ngIf="errorMessage">
-  <div class="log-stat_msg log_Failed">{{ errorMessage }}</div>
+  <div class="log-stat_msg log_Failed">{{ errorMessage }}
+
+    <span class="closePup">
+      <i>
+
+      </i>
+    </span></div>
 </span>
 <!-- END -->
 
 <!-- SUCCESS MESSAGE -->
 <span *ngIf="successMessage">
-  <div class="log-stat_msg log_Success">{{ successMessage }}</div>
+  <div class="log-stat_msg log_Success">{{ successMessage }}
+
+    <span class="closePup">
+      <i>
+
+      </i>
+    </span></div>
 </span>
 <!-- END -->
 
 
 <!-- WARNING MESSAGE -->
 <span *ngIf="warningMessage">
-  <div class="log-stat_msg log_Warning">{{ warningMessage }}</div>
+  <div class="log-stat_msg log_Warning">{{ warningMessage }}
+
+    <span class="closePup">
+      <i>
+
+      </i>
+    </span></div>
 </span>
 <!-- END -->

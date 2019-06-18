@@ -1464,7 +1464,7 @@ a {
               height: inherit;
             }
 
-            &:last-child:not(.disabled){
+            &:last-child:not(.disabled) {
               a {
                 color: #49E3BE;
               }
@@ -1490,6 +1490,51 @@ a {
       .dataTableArea {
         .log-stat_msg {
           @include mb(12px);
+        }
+      }
+    }
+
+    &.stickyMain {
+      .dataTableArea {
+        .table {
+          &.table-col-4{
+          .rowContainer {
+            .tcol {
+              &:first-child {
+                font-size: 0;
+
+                .userReview, .userImg {
+                  float: none;
+                  display: inline-block;
+                  vertical-align: middle;
+                }
+
+                .userReview {
+                  h2 {
+                    padding-bottom: 0;
+                  }
+
+                  .greenTag {
+                    @media (max-width: 991px) {
+                        @include ml(12px);
+                        @include mt(3px);
+                        @include mb(3px);
+                    }
+                  }
+
+                  @media (max-width: 1365px) {
+                    @include ml(8px);
+                    width: calc(100% - 48px) !important;
+                  }
+
+                  @media (max-width: 991px) {
+                    padding-right: 10px;
+                  }
+                }
+              }
+            }
+          }
+          }
         }
       }
     }
@@ -4341,7 +4386,7 @@ body.loginPage {
     }
 
     @media (max-width: 480px) {
-        float: none;
+      float: none;
     }
   }
 
@@ -4353,8 +4398,8 @@ body.loginPage {
     text-decoration: none;
 
     @media (max-width: 480px) {
-        float: none;
-        margin-top: 8px;
+      float: none;
+      margin-top: 8px;
     }
   }
 
@@ -4951,6 +4996,7 @@ body.sign-upPage {
         @include border-radius(3px);
       }
     }
+
     .formCol6,
     .formCol4,
     .formCol2 {
@@ -4981,7 +5027,9 @@ body.sign-upPage {
           border-radius: 0 0 7px 40px;
           text-align: right;
         }
+
         &:first-child {
+
           .error,
           .error-msg {
             right: 20px;
@@ -5708,6 +5756,9 @@ body.sign-upPage {
     padding: 45px 0 27px;
     margin: 0 35px;
     pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 
     .reviewlinkForm {
@@ -5893,6 +5944,9 @@ body.sign-upPage {
   justify-content: center;
   position: relative;
   pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 
   img {
@@ -6721,6 +6775,52 @@ body.sign-upPage {
   @include mt(8px);
   display: block;
 
+  .closePup {
+    float: right;
+
+    i {
+      font-style: normal;
+      position: relative;
+      width: 20px;
+      height: 20px;
+      display: block;
+      background-color: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      -webkit-transition: all ease 0.4s;
+      transition: all ease 0.4s;
+      -webkit-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+
+      &:after {
+        -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+
+      &:before {
+        -webkit-transform: translate(-50%, -50%) rotate(45deg);
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      &:after,
+      &:before {
+        position: absolute;
+        content: '';
+        width: 10px;
+        height: 2px;
+        background-color: rgb(187, 81, 81);
+        border-radius: 3px;
+        left: 50%;
+        top: 50%;
+      }
+
+      &:hover {
+        -webkit-box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
   &.log_Failed {
     background-color: #FFD8D8;
     border: 1px solid #F5C6C6;
@@ -6750,6 +6850,16 @@ body.sign-upPage {
 
   &:empty {
     display: none;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  &:after,
+  &:before {
+    content: '';
+    display: table;
   }
 }
 
