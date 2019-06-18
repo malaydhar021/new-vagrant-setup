@@ -41,7 +41,7 @@ class UserReviewParamRequest extends FormRequest
                 "video/mpeg,video/ogg,video/quicktime,video/webm,video/x-flv,video/x-msvideo,video/x-ms-wmv",
             'rating' => "sometimes|required|integer|digits:1|min:1|max:5",
             'email' => "sometimes|required|email",
-            'phone_number' => "sometimes|nullable|phone:AUTO",
+            'phone_number' => "sometimes|nullable", // |phone:AUTO
             'profile_picture' => "sometimes|required|image|mimes:gif,jpeg,png,webp",
         ];
     }

@@ -76,6 +76,7 @@ export class PermissionComponent implements OnInit, OnDestroy {
     const data = {
       grant_review_use: value
     };
+    Log.info(value);
     // update review data
     this.userReviewService.updateReview(data);
     if(value) {

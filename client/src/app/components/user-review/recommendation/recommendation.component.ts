@@ -73,7 +73,7 @@ export class RecommendationComponent implements OnInit, OnDestroy {
   public isRecommended(value: boolean) {
     Log.info(value, "log value in Recommendation component");
     const data = {
-      recommendation: value
+      recommendation: value? '1' : '0'
     };
     this.userReviewService.updateReview(data);
     this.userReviewService.nextStep('review');

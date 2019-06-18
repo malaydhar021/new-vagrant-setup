@@ -382,10 +382,13 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           this.userReviewService.updateReview(data);
           // set the next step based on recommendation
-          if(this.review.recommendation) {
+          if(this.review.recommendation === '1') {
             this.userReviewService.nextStep('permission'); // if recommended
-          } else {
+          } else if(this.review.recommendation === '0') {
             this.userReviewService.nextStep('contact'); // if not recommended
+          } else {
+            // do something
+            Log.info(this.review.recommendation, "Recommendation is neither yes not no");
           }
         }
       }

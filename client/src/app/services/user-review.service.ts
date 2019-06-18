@@ -6,6 +6,7 @@ import { UserReviewLinkInfo } from '../interfaces/user-review.interface';
 import { UserReviewModel } from '../models/user-review.model';
 import { LoaderService } from './loader.service';
 import { Log } from '../helpers/app.helper';
+import { ErrorsService } from './errors.service';
 
 /**
  * Service to deal with all sort of actions for user review including client / server side
@@ -49,7 +50,7 @@ export class UserReviewService {
    * @param httpClient HttpClient instance
    * @returns Void
    */
-  constructor(private httpClient: HttpClient, private loaderService: LoaderService) {}
+  constructor(private httpClient: HttpClient, private loaderService: LoaderService, private errorsService: ErrorsService) {}
 
   /**
    * Method to get all details of a user review link like modal color, backdrop color, text, short description etc
@@ -108,6 +109,8 @@ export class UserReviewService {
    * @returns Void
    */
   public nextStep(step: string) {
+    this.errorsService.updateMessage('');
+    this.errorsService.updateValidationMessage('');
     this._nextStep = step; 
     this.currentStepSubject.next(this.updateDefaultStepBuilder);   
   }

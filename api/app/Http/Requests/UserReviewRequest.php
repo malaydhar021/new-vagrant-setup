@@ -57,7 +57,7 @@ class UserReviewRequest extends FormRequest
                 "video/mpeg,video/ogg,video/quicktime,video/webm,video/x-flv,video/x-msvideo,video/x-ms-wmv",
             'rating' => "required|integer|digits:1|min:1|max:5",
             'email' => "required_if:recommendation,0|email",
-            'phone_number' => "sometimes|nullable|phone:AUTO",
+            'phone_number' => "sometimes|nullable", // |phone:AUTO
             'grant_review_use' => "required_if:recommendation,1|nullable",
             'profile_picture' => "required_if:grant_review_use,1|image|mimes:gif,jpeg,png,webp",
             'review_link_id' => "required|exists:review_links,id",

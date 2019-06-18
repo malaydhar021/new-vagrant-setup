@@ -177,7 +177,7 @@
                       </div>
                       <div class="figureUpld">
                         <!-- for audio  player-->
-                        <app-media [player]="'audio'"></app-media>
+                        <app-media [player]="'audio'" *ngIf="getFormControls.sr.valid"></app-media>
                       </div>
                     </div>
                   </div>

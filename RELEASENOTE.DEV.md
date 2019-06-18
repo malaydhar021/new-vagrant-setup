@@ -68,6 +68,11 @@
 
 ## User Review
 
+### V1.1.1
+
+1. Fixed issue with recommendation value 
+2. Fixed issue with phone number validation in store user review api
+
 ### V1.1.0
 
 1. Implemented save user review functionality
@@ -125,6 +130,7 @@
 ### V0.0.1
 
 1. Implemented services for campaign
+
 
 ## Sticky Review
 
