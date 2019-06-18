@@ -36,6 +36,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   errorMessage: string = null;
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
+  emailFieldFocused = false; // true if the email field is focused
 
   /**
    * Constructor method to load every required services and class at the very first when this component is initialized
@@ -63,7 +64,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     // if user is already logged in then redirect the user to home
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // add `loginPage` class to reset password template body
-    this.renderer.addClass(document.body, 'loginPage'); 
+    this.renderer.addClass(document.body, 'loginPage');
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
@@ -131,7 +132,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
    * onSubmit method will handle all actions when reset password form has been submitted.
    * This handles validation as well. If the form does not pass the validation then thid method
    * with simply stop the execution of remaining code by retuning false on top.
-   * 
+   *
    * @since 1.0.0
    * @returns void
    */
@@ -168,5 +169,39 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  /**
+   * Function to append some class based on some input value when login form fields are focused
+   * @since 1.0.0
+   * @param field string
+   * @param event any
+   * @returns void
+   */
+  public onFocus(field: string, event: any) {
+    switch (field) {
+      case 'email':
+        this.emailFieldFocused = ((<HTMLInputElement>event.target).value === '') ? true : (((<HTMLInputElement>event.target).value === '') ? false : true);
+        break;
+      default:
+        break;
+    }
+  }
+
+  /**
+   * Function to append some class based on some input value when login form fields are out of focused
+   * @since 1.0.0
+   * @param field string
+   * @param event any
+   * @returns void
+   */
+  public onFocusOut(field: string, event: any) {
+    switch (field) {
+      case 'email':
+        this.emailFieldFocused = ((<HTMLInputElement>event.target).value === '') ? false : true;
+        break;
+      default:
+        break;
+    }
   }
 }
