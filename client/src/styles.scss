@@ -1497,43 +1497,44 @@ a {
     &.stickyMain {
       .dataTableArea {
         .table {
-          &.table-col-4{
-          .rowContainer {
-            .tcol {
-              &:first-child {
-                font-size: 0;
+          &.table-col-4 {
+            .rowContainer {
+              .tcol {
+                &:first-child {
+                  font-size: 0;
 
-                .userReview, .userImg {
-                  float: none;
-                  display: inline-block;
-                  vertical-align: middle;
-                }
-
-                .userReview {
-                  h2 {
-                    padding-bottom: 0;
+                  .userReview,
+                  .userImg {
+                    float: none;
+                    display: inline-block;
+                    vertical-align: middle;
                   }
 
-                  .greenTag {
-                    @media (max-width: 991px) {
+                  .userReview {
+                    h2 {
+                      padding-bottom: 0;
+                    }
+
+                    .greenTag {
+                      @media (max-width: 991px) {
                         @include ml(12px);
                         @include mt(3px);
                         @include mb(3px);
+                      }
                     }
-                  }
 
-                  @media (max-width: 1365px) {
-                    @include ml(8px);
-                    width: calc(100% - 48px) !important;
-                  }
+                    @media (max-width: 1365px) {
+                      @include ml(8px);
+                      width: calc(100% - 48px) !important;
+                    }
 
-                  @media (max-width: 991px) {
-                    padding-right: 10px;
+                    @media (max-width: 991px) {
+                      padding-right: 10px;
+                    }
                   }
                 }
               }
             }
-          }
           }
         }
       }
@@ -7588,13 +7589,19 @@ img {
     }
 
     h2 {
-      font-size: 26px;
+      font-size: 24px;
       color: #000000;
       line-height: 37px;
       text-align: center;
       font-weight: 600;
       font-family: 'SegoeUI';
       letter-spacing: normal;
+      word-break: break-all;
+
+      a,
+      span {
+        word-break: break-all;
+      }
 
       @media (max-width: 575px) {
         font-size: 18px;
