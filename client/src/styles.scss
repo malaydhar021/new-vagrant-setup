@@ -2911,6 +2911,7 @@ a {
       }
 
       .popupThubm img {
+        width: 100%;
         max-width: 100%;
         cursor: pointer;
       }
@@ -6322,6 +6323,7 @@ body.sign-upPage {
 
         h2 {
           font-size: 10px;
+          text-align: left;
         }
 
         img {
@@ -6482,6 +6484,13 @@ body.sign-upPage {
         height: 20px;
       }
     }
+  }
+}
+
+.canvasCapture {
+  .previewpopup {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 }
 
