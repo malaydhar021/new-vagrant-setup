@@ -106,12 +106,9 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   config: any;  // config for pagination
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
-<<<<<<< HEAD
-  reviewSource: string = ""; // 
-=======
+  reviewSource: string = "";
   showBrands: boolean = false; // flag to show/hide brands
   brands: [] = [];  // holds all the brands
->>>>>>> Add branding to sticky review v1.0
 
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -396,13 +393,9 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-<<<<<<< HEAD
-  public onEditStickyReview(review : StickyReviewModel) {
-=======
   public onEditStickyReview(review: StickyReviewModel) {
     Log.info(review);
     Log.debug(review.review);
->>>>>>> Add branding to sticky review v1.0
     // set review id which is currently being edited
     this.reviewId = review.id;
     // set `isEditing` to true once the edit icon has been clicked
