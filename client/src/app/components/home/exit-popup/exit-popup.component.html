@@ -2814,7 +2814,6 @@
               <label>Campaign <input type="checkbox" class="tglBtn" formControlName="hasCampaign" (ngModelChange)='addCampaing()'></label>
 
               <div class="campaignAdd" *ngIf="showCampaign">
-                <label>Attach a Campaign</label>
                 <div class="sr-form-field">
                   <select class="sr-form-ctrl" formControlName="campaign" (ngModelChange)="getCampaignStyles()" [compareWith]="compareFn" [ngClass]="{error: isSubmitted && getFormControls.campaign.errors}">
                     <option value="">Select a campaign</option>
