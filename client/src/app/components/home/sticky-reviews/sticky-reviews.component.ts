@@ -10,6 +10,7 @@ import { StickyReviewService } from '../../../services/sticky-review.service';
 import { MediaService } from '../../../services/media.service';
 import { Log } from '../../../helpers/app.helper';
 import { ErrorsService } from 'src/app/services/errors.service';
+import { BrandingService } from '../../../services/branding.service';
 
 /**
  * StickyReviewsComponent class will handle all required action to meet the functionalities of 
@@ -105,7 +106,12 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   config: any;  // config for pagination
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
+<<<<<<< HEAD
   reviewSource: string = ""; // 
+=======
+  showBrands: boolean = false; // flag to show/hide brands
+  brands: [] = [];  // holds all the brands
+>>>>>>> Add branding to sticky review v1.0
 
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -114,7 +120,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     private loaderService: LoaderService,
     private stickyReviewService: StickyReviewService,
     private mediaService: MediaService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private brandingService: BrandingService,
   ) {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
@@ -147,6 +154,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       srDateTime : [null], // sticky review date and time
       srImage : [null], // sticky review image
       srType: [1], // sticky review type textual | audio | video
+      hasBrand : [null],
+      stickyReviewBrand : [''], // Brands for the sticky review
     });
     // subscribe to `valueChanges` method which emits current value of formControlName.
     // In this case onchange of review type `selectedReivewType` property value has been
@@ -345,12 +354,12 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
      */
     if(this.selectedReivewType == 3) {
       if(!this.isEditing) {
-        // set validation for video review type when it's being created 
+        // set validation for video review type when it's being created
         this.getFormControls.sr.setValidators([Validators.required]);
         this.getFormControls.sr.updateValueAndValidity();
       }
       // if file has been uploaded
-      if(this.reviewAsFile !== null) { 
+      if(this.reviewAsFile !== null) {
         // file mime type validation.
         this.form.setValidators(ValidationEngine.FileType('sr', this.reviewAsFile, this.allowedVideoFileTypes));
         this.form.updateValueAndValidity();
@@ -377,6 +386,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // setting false if someone after deleting decide to add a review
     this.isDeleting = false;
     // now open the modal with empty form to add a sticky review
+    this.showBrands = false;
     this.ngxSmartModalService.getModal('modal1').open();
   }
 
@@ -386,7 +396,13 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
+<<<<<<< HEAD
   public onEditStickyReview(review : StickyReviewModel) {
+=======
+  public onEditStickyReview(review: StickyReviewModel) {
+    Log.info(review);
+    Log.debug(review.review);
+>>>>>>> Add branding to sticky review v1.0
     // set review id which is currently being edited
     this.reviewId = review.id;
     // set `isEditing` to true once the edit icon has been clicked
@@ -400,6 +416,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       srRating: review.rating,
       srType: review.type,
       srImageUrl: review.image_url,
+      hasBrand: review.has_brand,
+      stickyReviewBrand: review.brands,
       srDateTime: new Date(
         patchDateTime.getFullYear(),
         patchDateTime.getMonth(),
@@ -427,6 +445,12 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.imagePreviewUrl = review.image_url;
     // set values into the form of currently selected row
     this.form.patchValue(data);
+    // console.log(review.brands);
+    if (review.has_brand === 1) {
+      this.showBrands = true;
+      this.getBrands();
+    }
+
     // now open the model to show the form into the model to user
     this.ngxSmartModalService.getModal('modal1').open();
   }
@@ -450,10 +474,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       // set the image file data to `image` property
       this.image = event.target.files[0];
       let reader = new FileReader();
-      
+
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       // called once readAsDataURL is completed
-      reader.onload = (e) => { 
+      reader.onload = (e) => {
         this.imagePreviewUrl = reader.result.toString();
       }
     }
@@ -481,17 +505,17 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       // set filename to hidden field to handle angular ractive form HTMLInputElement error
       this.getFormControls.sr.setValue(this.reviewAsFile !== null ? this.reviewAsFile.name : '');
       let reader = new FileReader();
-      
+
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       // called once readAsDataURL is completed
-      reader.onload = (e) => { 
+      reader.onload = (e) => {
         if(this.selectedReivewType == 2) {
           this.mediaService.updateVideoSrc(null);
           this.mediaService.updateAudioSrc(reader.result.toString());
         } else if(this.selectedReivewType == 3) {
           this.mediaService.updateAudioSrc(null);
           this.mediaService.updateVideoSrc(reader.result.toString());
-        }        
+        }
       }
     }
   }
@@ -526,7 +550,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     formData.append('tags', this.form.value.srTags); // append tags
     formData.append('type', this.form.value.srType); // append review type
     formData.append('rating', this.form.value.srRating); // append rating
-    formData.append('reviewd_at', this.form.value.srDateTime); // append date to show 
+    formData.append('reviewd_at', this.form.value.srDateTime); // append date to show
     if(this.image !== null) {
       formData.append('image', this.image, this.image.name); // append image to formData
     }
@@ -538,19 +562,25 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     } else if(this.selectedReivewType == 3 && this.reviewAsFile !== null) { // video
       formData.append('review_video', this.reviewAsFile, this.reviewAsFile.name);
     }
+    if (this.form.value.hasBrand === true || this.form.value.hasBrand === 1) {
+      formData.append('brand_id', this.form.value.stickyReviewBrand.id); // append date to show
+      formData.append('has_brand', '1'); // append date to show
+    } else {
+      formData.append('has_brand', '0'); // append date to show
+    }
     // checking if user is editing
     if(this.isEditing) {
-      formData.append('is_creating', '0'); 
+      formData.append('is_creating', '0');
       // adding id to selected row to update
-      formData.append('id', this.reviewId); 
+      formData.append('id', this.reviewId);
       // set _method to PUT
       formData.append('_method', 'PUT');
-      // calling this member function to make an api call to update the data 
+      // calling this member function to make an api call to update the data
       // and handle response including exceptions if any
       this.updateStickyReview(formData, this.reviewId);
     } else {
-      formData.append('is_creating', '1'); 
-      // calling this member function to make an api call to store the data 
+      formData.append('is_creating', '1');
+      // calling this member function to make an api call to store the data
       // and handle response including exceptions if any
       this.addStickyReview(formData);
     }
@@ -576,14 +606,14 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           // change the flag for form submit
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
-          this.getStickyReviews(); 
+          this.getStickyReviews();
         } else {
           // show the error message to user
           this.errorMessage = response.message;
           // hide the loader
           this.loaderService.disableLoader();
         }
-      } 
+      }
     );
   }
 
@@ -615,7 +645,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           // hide the loader
           this.loaderService.disableLoader();
         }
-      } 
+      }
     );
   }
 
@@ -689,5 +719,50 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         }
     );
   }
+
+  /**
+   * Function to add brand droupdown
+   */
+  public addBrand() {
+    if (this.form.value.hasBrand === true) {
+      this.showBrands = true;
+      this.form.controls['stickyReviewBrand'].setValidators([Validators.required]);
+      this.getBrands();
+    } else {
+      this.showBrands = false;
+      this.form.controls['stickyReviewBrand'].clearValidators();
+    }
+    this.form.controls['stickyReviewBrand'].updateValueAndValidity();
+  }
+
+  /**
+   * Function to get the user brand and show it to the droupdown
+   */
+  public getBrands() {
+    this.loaderService.enableLoader();
+    this.brandingService.getAllBrandings().subscribe(
+        (response: any) => {
+          Log.success(response);
+          if (response.status) {
+            // update the brands array with latest api response data
+            this.brands = response.data.data;
+            this.loaderService.disableLoader();
+          }
+        }
+    );
+  }
+
+  /**
+   * Function for showing selected options
+   * @param optionOne
+   * @param optionTwo
+   */
+  compareFn( optionOne, optionTwo ): boolean {
+    if (optionOne && optionTwo) {
+      return optionOne.id === optionTwo.id;
+    }
+  }
+
+
 
 }

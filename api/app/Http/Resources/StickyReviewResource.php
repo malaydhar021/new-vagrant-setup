@@ -44,6 +44,8 @@ class StickyReviewResource extends Resource
                 'review' => $review,
                 'review_type' => $this->review_type,
                 'image_url' => $this->image_url,
+                'has_brand' => $this->has_brand,
+                'brands' =>  (new BrandResource($this->whenLoaded('brands')))->briefOnly(),
                 'reviewed_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'created_by' => (new UserResource($this->user))->briefOnly(),
             ];
@@ -63,6 +65,8 @@ class StickyReviewResource extends Resource
                 'reviewed_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
+                'has_brand' => $this->has_brand,
+                'brands' =>  (new BrandResource($this->whenLoaded('brands')))->briefOnly(),
             ];
         }
     }

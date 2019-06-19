@@ -134,6 +134,23 @@
                   </select>
                 </div>
               </div>
+              <!-- HTML for add brand  -->
+              <div class="sr-form-cell-small">
+                <label> <input type="checkbox" class="tglBtn" formControlName="hasBrand" (ngModelChange)="addBrand()"> Add Brand</label>
+                <div class="sr-form-field" *ngIf="showBrands">
+                    <select class="sr-form-ctrl" formControlName="stickyReviewBrand"  [ngClass]="{ error: isSubmitted && getFormControls.stickyReviewBrand.errors }" [compareWith]="compareFn">
+                      <option value="">Select a brand </option>
+                      <option *ngFor="let brand of brands; let i = index" [ngValue]="brand"> {{ brand.name }} </option>
+                    </select>
+                  <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.stickyReviewBrand.errors !== null
+                  && getFormControls.stickyReviewBrand.errors.required)">
+                    Please select a brand
+                  </div>
+                </div>
+              </div>
+              <!-- HTML for add brand -->
             </div>
 
             <div class="sr-form-row">

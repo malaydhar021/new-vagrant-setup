@@ -261,4 +261,9 @@ class StickyReview extends Model
     {
         return $this->belongsTo(ReviewLink::class);
     }
+
+    public function brands()
+    {
+        return $this->hasOne(Branding::class, 'id', 'brand_id');
+    }
 }

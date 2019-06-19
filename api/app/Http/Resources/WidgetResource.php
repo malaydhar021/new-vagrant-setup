@@ -39,7 +39,7 @@ class WidgetResource extends JsonResource
             'campaign_sticky_review.sticky_review_id',
             '=',
             'sticky_reviews.id'
-        )->where('campaign_sticky_review.campaign_id', $this->id);
+        )->with('brands')->where('campaign_sticky_review.campaign_id', $this->id);
 
         if ($srQuery->count()) {
             $stickyReviews = $srQuery->paginate(5);

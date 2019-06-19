@@ -21,6 +21,9 @@ export class StickyReviewModel {
     image?: File;
     image_url?: string;
     created_at?: string;
+    has_brand?: number;
+    brand_id?: string;
+    brands?: any;
 }
 
 /**

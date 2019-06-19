@@ -34,7 +34,7 @@ class StickyReviewsController extends Controller
                     ->orWhereIn('review_link_id', function ($q) use ($userId) {
                         $q->select('id')->from('review_links')->where('created_by', $userId);
                     });
-            })->with('campaigns', 'negativeReviews', 'reviewLink');
+            })->with('campaigns', 'negativeReviews', 'reviewLink', 'brands');
 
             return $next($request);
         });
@@ -90,6 +90,8 @@ class StickyReviewsController extends Controller
         $stickyReview->tags = (is_null($request->input('tags')) || $request->input('tags') === 'null') ? null : trim($request->input('tags'));
         $stickyReview->rating = $request->input('rating');
         $stickyReview->type = $request->input('type');
+        $stickyReview->has_brand = $request->input('has_brand');
+        $stickyReview->brand_id = $request->input('brand_id');
 
         switch ($request->input('type')) {
             case 1:
@@ -165,12 +167,17 @@ class StickyReviewsController extends Controller
      */
     public function update(StickyReviewRequest $request, $id)
     {
+        \Log::info("From the Controller update function ".print_r($request->all(),true));
+
         $stickyReview = $this->queryBuilder->where('id', $id)->firstOrFail();
+        \Log::info("stickyReview Object ->  ".print_r($stickyReview,true));
 
         $stickyReview->name = $request->input('name');
         $stickyReview->tags = trim($request->input('tags'));
         $stickyReview->rating = $request->input('rating');
         $stickyReview->type = $request->input('type');
+        $stickyReview->has_brand = $request->input('has_brand');
+        $stickyReview->brand_id = $request->input('brand_id');
 
         switch ($request->input('type')) {
             case 1:

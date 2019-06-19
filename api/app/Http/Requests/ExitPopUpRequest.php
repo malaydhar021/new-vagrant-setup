@@ -41,11 +41,7 @@ class ExitPopUpRequest extends FormRequest
         if ($this->request->has('has_sticky_reviews') && $this->request->has('sticky_reviews') && $this->request->get('sticky_reviews') == null) {
             unset($request['sticky_reviews']);
         }
-
         $this->request = (new Request())->replace($request);
-
-        \Log::info(print_r($this->request->all(),true));
-
         return parent::getValidatorInstance();
     }
 

@@ -4,11 +4,29 @@ namespace App\Http\Requests;
 
 use App\Exceptions\PrivilegeViolationException;
 
+use App\Helpers\Hashids;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 class StickyReviewRequest extends FormRequest
 {
+
+    /**
+     * Get the validator instance for the request.
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function getValidatorInstance()
+    {
+        if ($this->request->has('has_brand') && $this->request->has('has_brand')) {
+            if ($this->request->get('brand_id')) {
+                $this->merge([
+                    'brand_id' => Hashids::decode($this->request->get('brand_id')),
+                ]);
+            }
+        }
+        return parent::getValidatorInstance();
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,6 +34,7 @@ class StickyReviewRequest extends FormRequest
      */
     public function authorize()
     {
+        \Log::info("Some Text from Request  ! ");
         if (Auth::check()) {
             $user = Auth::user();
 
