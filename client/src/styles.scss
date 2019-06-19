@@ -1227,6 +1227,34 @@ a {
     margin-bottom: 20px;
     // adjustment made for height issue
 
+    .noContent {
+      min-height: calc(100vh - 230px);
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      background-color: #f7f6f6;
+
+      h2 {
+        color: #3a3a3a;
+      }
+
+      h5 {
+        font-weight: normal;
+        margin-top: 10px;
+        color: #bcbcbc;
+      }
+    }
+
     .mainBoxHeader {
       padding: 25px 32px;
       display: inline-block;
