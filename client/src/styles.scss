@@ -1859,7 +1859,8 @@ a {
                   }
 
                   @media (max-width: 420px) {
-                    right: 0;
+                    right: 5px;
+                    max-width: 280px;
                   }
                 }
 
