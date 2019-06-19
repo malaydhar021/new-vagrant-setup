@@ -2812,10 +2812,26 @@
             </div>
             <div class="sr-form-cell-small">
               <label>Campaign <input type="checkbox" class="tglBtn" formControlName="hasCampaign" (ngModelChange)='addCampaing()'></label>
+
+              <div class="campaignAdd" *ngIf="showCampaign">
+                <label>Attach a Campaign</label>
+                <div class="sr-form-field">
+                  <select class="sr-form-ctrl" formControlName="campaign" (ngModelChange)="getCampaignStyles()" [compareWith]="compareFn" [ngClass]="{error: isSubmitted && getFormControls.campaign.errors}">
+                    <option value="">Select a campaign</option>
+                    <option *ngFor="let campaign of campaigns;let i = index" [ngValue]="campaign"> {{ campaign.campaign_name }}</option>
+                  </select>
+                  <div class="error-msg" *ngIf="(
+                    isSubmitted
+                    && getFormControls.campaign.errors !== null
+                    && getFormControls.campaign.errors.required)">
+                    Please select a campaign
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="sr-form-row">
+          <!-- <div class="sr-form-row">
             <div class="sr-form-cell-small"></div>
             <div class="sr-form-cell-small" *ngIf="showCampaign">
               <label>Attach a Campaign</label>
@@ -2832,7 +2848,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
