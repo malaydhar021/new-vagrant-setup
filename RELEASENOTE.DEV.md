@@ -188,6 +188,10 @@ operation the user is assigned to basic plan.
 
 ## Login
 
+### V2.1.2
+
+1. Fixed issue with reset password token checking api service
+
 ### V2.1.1
 
 1. Fixed issue with field focus in password and confirm password filed in reset password form

@@ -84,8 +84,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Reset Password');
-    // this.loaderService.enableLoader(); // show loader
-    /*
+    this.loaderService.enableLoader(); // show loader
     // get the token from last url segment from the current route
     const token = this.route.snapshot.url[1].path;
     // check the token is valid or not
@@ -97,7 +96,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.loaderService.disableLoader();
       }
     );
-    */
     // initialize formBuilder with client side validation
     this.form = this.formBuilder.group({
         password: [null, [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
