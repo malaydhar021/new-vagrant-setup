@@ -6825,14 +6825,17 @@ body.sign-upPage {
   color: #343434;
   // line-height: 28px;
   line-height: normal;
-  padding: 9px 14px;
+  padding: 9px 30px 9px 14px;
   @include border-radius(5px);
   // @include mb(16px);
   @include mt(8px);
   display: block;
+  position: relative;
 
   .closePup {
-    float: right;
+    position: absolute;
+    right: 5px;
+    top: 10px;
 
     i {
       font-style: normal;
@@ -7102,6 +7105,12 @@ body.sign-upPage {
 
         .sr-form-field {
           position: relative;
+        }
+
+        .tagsInp {
+          .sr-form-ctrl {
+            text-transform: lowercase;
+          }
         }
 
         label {
@@ -8918,6 +8927,9 @@ img {
         flex: 1 1 100%;
         padding: 0;
         @include mt(5px);
+      }
+      @media (max-width: 640px) {
+        @include mt(0);
       }
     }
 
