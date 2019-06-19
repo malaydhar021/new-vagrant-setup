@@ -112,12 +112,15 @@ class ThirdPartyWebhooksController extends Controller
                 throw new HttpBadRequestException("'email' is required.");
             }
 
+
             $user = User::where('email', $request->input('email'))->firstOrFail();
-            $user->delete();
 
             if($user->affiliate_id != null &&  $user->sale_id != null){
                 $this->callAffiliateApiForDeactive($user->sale_id, false);
             }
+
+            $user->delete();
+
             return response()->json([
                 'data' => [
                     'http_code' => 200,

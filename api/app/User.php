@@ -17,14 +17,16 @@ use App\Subscription as LocalSubscription;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Laravel\Passport\HasApiTokens;
 use Laravel\Cashier\Billable;
 use App\Notifications\SubscriptionTerminated;
 
+
 class User extends Authenticatable
 {
-    use Billable, FileStorage, HasApiTokens, Notifiable, Subscription;
+    use Billable, FileStorage, HasApiTokens, Notifiable, Subscription, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -66,6 +68,12 @@ class User extends Authenticatable
         'pricing_plan',
         'api_token',
     ];
+
+    /**
+     * Added soft delete to the deleted_at field
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * Set the user's password.
