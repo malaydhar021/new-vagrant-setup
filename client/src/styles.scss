@@ -4173,6 +4173,19 @@ a {
             }
           }
 
+          bar-rating+.error-msg {
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 100%;
+            color: #fff;
+            background: #ff5d5d;
+            padding: 5px 15px 7px;
+            border-radius: 0 0 7px 40px;
+            text-align: right;
+            text-align: right;
+            margin-top: 8px;
+          }
+
           &:last-child {
 
             .sr-form-cell,
