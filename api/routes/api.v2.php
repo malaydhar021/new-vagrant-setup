@@ -43,6 +43,12 @@ Route::prefix('user')->name('user.')->middleware('auth:api')->group(function () 
         Route::put('/', 'SubscriptionController@update')->name('update');
         Route::delete('/', 'SubscriptionController@destroy')->name('destroy');
     });
+
+    Route::prefix('zapier')->name('zapier.')->group(function () {
+        Route::post('/create-token', 'UserController@createUserZapierToken')->name('create-token');
+        Route::delete('/delete-token/{id}', 'UserController@deleteUserZapierToken')->name('delete-token');
+    });
+
 });
 
 Route::get('pricing-plans', 'PricingPlansController@index')->name('pricing-plans.index');

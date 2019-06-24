@@ -19,4 +19,13 @@ Route::prefix('web')->middleware('web')->name('web.')->group(function () {
         Route::post('/delete', 'ThirdPartyWebhooksController@destroy')->name('destroy');
         Route::post('/status', 'ThirdPartyWebhooksController@alterStatus')->name('status.alter');
     });
+
+    Route::prefix('zapier')->name('zapier.')->group(function () {
+        Route::any('/send-user-data', 'ZapierWebhooksController@sendUserData')->name('send-user-data');
+        Route::any('/send-user-review-links', 'ZapierWebhooksController@sendUserReviewLinkData')->name('send-user-review-links');
+        Route::any('/get-review-link', 'ZapierWebhooksController@getReviewLink')->name('get-review-link');
+        Route::any('/send-user-exit-popups', 'ZapierWebhooksController@sendUserExitPopupData')->name('send-user-exit-popups');
+        Route::any('/get-exit-popup', 'ZapierWebhooksController@getExitPopup')->name('get-exit-popup');
+
+    });
 });

@@ -262,6 +262,10 @@ class StickyReview extends Model
         return $this->belongsTo(ReviewLink::class);
     }
 
+    /**
+     * Brands with sticky reviews
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function brands()
     {
         return $this->hasOne(Branding::class, 'id', 'brand_id');
