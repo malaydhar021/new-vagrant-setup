@@ -164,9 +164,9 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         this.reviewAsFile = null;
         // assign current value of review type a class property
         this.selectedReivewType = value;
-        Log.debug(this.selectedReivewType);
       }
     );
+    // set pagination config
     this.config = {
       itemsPerPage: 15,
       currentPage: 1,
@@ -495,7 +495,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       this.reviewChoseFileCtrl = 'Change file';
       // set the image file data to `image` property
       this.reviewAsFile = event.target.files[0];
-      // set filename to hidden field to handle angular ractive form HTMLInputElement error
+      // set filename to hidden field to handle angular reactive form HTMLInputElement error
       this.getFormControls.sr.setValue(this.reviewAsFile !== null ? this.reviewAsFile.name : '');
       let reader = new FileReader();
 

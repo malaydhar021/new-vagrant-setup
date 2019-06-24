@@ -19,6 +19,15 @@ export const apiBaseUrl: string = environment.API_BASE_URL;
 export const WidgetUrl: string = environment.WIDGET_BASE_URL;
 
 /**
+ * AppBaseUrl constant holds the app base url based on the environment
+ * @constant AppBaseUrl
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export const AppBaseUrl: string = environment.APP_BASE_URL;
+
+/**
  * AuthApiEndPoints helper is holding all auth related api endpoints based on the environment
  * @class AuthApiEndPoints
  * @author Tier5 LLC `<work@tier5.us>`

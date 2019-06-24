@@ -120,7 +120,7 @@ class Handler extends ExceptionHandler
             if ($exception instanceof SubscriptionException) {
                 return response()->json([
                     'status' => false,
-                    'message' => "Oops !! Something went wrong",
+                    'message' => "API ERROR: Please check the errors below",
                     'errors' => ['api_response' => $exception->getMessage()]
                 ], 400);
             }
@@ -138,6 +138,10 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'status' => false,
                     'message' => $exception->getMessage(),
+                    'errors' => [
+                        'error_message' => $exception->getMessage(),
+                        'error_trace' => config('app.debug') ? $exception->getTrace() : null,
+                    ]
                 ], 500);
             }
 

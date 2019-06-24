@@ -80,7 +80,7 @@ class ReviewLinkRequest extends FormRequest
             'modal_background' => "required|string",
             'text_color' => "required|string",
             'copyright_text' => "nullable|string|min:1|max:255",
-            // 'campaign_id' => "required|exists:campaigns,id",
+            'campaign_id' => "required|exists:campaigns,id",
         ];
     }
 
@@ -97,7 +97,7 @@ class ReviewLinkRequest extends FormRequest
             'url_slug.unique' => "URL slug should be unique.",
             'logo.required' => "Logo is required.",
             'logo.image' => "Logo is not a valid image",
-            'logo.mimes' => "Logo should be type of jpg, jpeg, png, bmp, gif, ico or webp." .
+            'logo.mimes' => "Logo should be type of jpg, jpeg, png, gif" .
                 "No other file format is currently supported.",
             'description.required' => "Description is required.",
             'auto_approve.required' => "Please turn on or off auto approve switch.",

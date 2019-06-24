@@ -9,6 +9,7 @@ import { Title } from '@angular/platform-browser';
 import * as ValidationEngine from '../../../helpers/form.helper';
 import { Subscription } from 'rxjs';
 import { ErrorsService } from 'src/app/services/errors.service';
+import { AppBaseUrl } from 'src/app/helpers/api.helper';
 
 /**
  * ReviewLinkComponent is responsible for showing, adding, updating and deleting review links
@@ -37,7 +38,6 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   allowedImageFileTypes: string[] = [
     'image/jpeg',
     'image/png',
-    'image/bmp',
     'image/gif'
   ];
   imagePreviewUrl: any = 'assets/images/default_logo_image_sr.png'; // default image preview url
@@ -62,6 +62,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
+  isModalOpened: boolean = false; // set to true if the modal is opened
+
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -87,6 +89,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+        Log.info(status, "check showError status in review link component");
       }
     );
   }
@@ -130,17 +133,16 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    */
   public formStep1() {
     this.form = this.formBuilder.group({
-      myLogo: [null],
-      name: [null, Validators.required],
-      description: [null, Validators.required],
+      name: ['', Validators.required],
+      description: ['', Validators.required], 
       url_slug: [null, Validators.required],
       logo: [null], // review link logo
-      campaign_id: [null],
+      campaign_id: ['', Validators.required],
       auto_approve: [false],
       min_rating: [null, Validators.required],
-      negative_info_review_msg_1: [null, Validators.required],
-      negative_info_review_msg_2: [null, Validators.required],
-      positive_review_msg: [null, Validators.required]
+      negative_info_review_msg_1: ['', Validators.required],
+      negative_info_review_msg_2: ['', Validators.required],
+      positive_review_msg: ['', Validators.required]
     });
   }
 
@@ -252,7 +254,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onClickPreviousStep() {
-    // show step 1 form to user
+    // show step 1 form to user    
+    this.destroyMessage();    
     this.currentStep = 1;
   }
 
@@ -278,7 +281,10 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.isModalOpened = true;
       this.errorService.updateShowMessageStatus(false);
+      this.successMessage = '';
+      this.errorMessage = '';
     });
   }
 
@@ -310,9 +316,18 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public get resetForm() {
-    this.form.reset(); // reset the form
-    // set default image to preview image area
-    this.imagePreviewUrl = 'assets/images/user.png';
+    this.form.reset(); // reset the form    
+    this.imagePreviewUrl = 'assets/images/user.png'; // set default image to preview image area
+    this.image = null;
+    this.currentStep = 1;
+    this.isModalOpened = false; // set it to false as the modal has been closed
+    this.isSubmittedStep1 = false; // set it to false to hide client side form validation messages
+    this.isSubmittedStep2 = false; // set it to false to hide client side form validation messages
+    this.isValidSlug = false; // set to false to reset valid slug flag
+    this.getFormControls.campaign_id.setValue(''); // set it to blank to show default selected campaign
+    this.choseFileCtrl = 'Browse from your computer';
+    this.fileName = 'or drag & drop your image here';
+    this.destroyMessage();
     return;
   }
 
@@ -393,6 +408,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       this.choseFileCtrl = 'Change file';
       // set the image file data to `image` property
       this.image = event.target.files[0];
+      this.getFormControls.logo.setValue(this.image !== null ? this.image.name : '');
       let reader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]); // read file as data url
@@ -576,6 +592,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       (response: any) => {
         Log.info(response, "Response Validate Params");
         if(response.status) {
+          this.destroyMessage();
           // show the next step form
           this.currentStep = 2;
           this.loaderService.disableLoader();
@@ -771,17 +788,15 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     error: boolean = false
   ) {
     if (closeModal) this.ngxSmartModalService.getModal('modal1').close(); // close the modal
-    error ? this.errorMessage = message : this.successMessage = message; // set message
-    setTimeout(() => {
-      this.errorMessage = null;
-      this.successMessage = null;
-    }, 3000);
+    error ? setTimeout(() => {this.errorService.setMessage({type: 'error', message: message})}, 100) : setTimeout(() => {this.errorService.setMessage({type: 'success', message: message})}, 100); // set message
+    // error ? this.errorMessage = message : this.successMessage = message; // set message
     this.isSubmittedStep1 = false; // change the flag for form submit
     this.isSubmittedStep2 = false; // change the flag for form submit
     this.isEditing = false; // set it to false
     this.isDeleting = false; // set it to false
     this.isSubmittedStep1Reviews = false; // set it to false
     this.reviewLinkId = null; // set campaign id to null
+    this.currentStep = 1; // reset the current step to first step    
     if (fetchLists) {
       this.getAllReviewLinks(); // fetch campaigns
     } else if(hideLoader) {
@@ -789,6 +804,12 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Method to generate records for certain page
+   * @method pageChanged
+   * @param pgNum Page number
+   * @returns Void
+   */
   public pageChanged(pgNum) {
     this.config.currentPage = pgNum;
     // Enable the loader for an ajax call
@@ -802,7 +823,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
             // hide the loader
             this.loaderService.disableLoader();
           } else {
-            this.errorMessage = response.messages;
+            // set error message
+            this.errorService.setMessage({type: 'error', message: response.message});
             // hide the loader
             this.loaderService.disableLoader();
           }
@@ -828,4 +850,37 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * @method destroyMessage
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public destroyMessage() {
+    this.errorService.clearMessage();
+    this.successMessage = '';
+    this.errorMessage = '';
+  }
+
+  /**
+   * @method prepareContext
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public prepareContext(slug: string) {
+    return AppBaseUrl + '/user-review/' + slug;
+  }
+  
+  /**
+   * @method onClickCopyLink
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public onClickCopyLink() {
+    Log.info("copy button has been clicked");
+    const message = {
+      type: 'success',
+      message: 'Review link has been copied to clipboard'
+    };
+    this.errorService.setMessage(message);
+  }
 }

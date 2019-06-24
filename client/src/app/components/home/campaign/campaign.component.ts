@@ -57,6 +57,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
+  isModalOpened: boolean = false; // set to true if the modal is opened
+
   /**
    * Constructor method to fetch all required information from api provider
    * @constructor constructor
@@ -188,6 +190,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.errorService.updateShowMessageStatus(false);
+      this.isModalOpened = true; // set it to true as modal is about to open. This is form show server side messages into modal but not in listing page
     });
   }
 
@@ -346,6 +349,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getFormControls.campaignVisualStyle.setValue(this.styles[0]); // again set default value to visual style i.e Rounded
     this.getFormControls.isBrandingSelected.setValue(false); // set default value to add brand checkbox
     this.getFormControls.isExitPopupSelected.setValue(false); // set default value to add exit popup checkbox
+    this.isModalOpened = false; // set to false as modal has been closed
     return;
   }
 
@@ -449,10 +453,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns Void
    */
   public onCopySnippet() {
-    this.successMessage = "Script has been copied to clipboard";
-    setTimeout(() => {
-      this.successMessage = null;
-    }, 2000);
+    this.errorService.setMessage({type: 'success', message: "Script has been copied to clipboard"});
   }
 
   /**
@@ -654,7 +655,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     error: boolean = false
   ) {
     if (closeModal) this.ngxSmartModalService.getModal('modal1').close(); // close the modal
-    error ? this.errorMessage = message : this.successMessage = message; // set message
+    error ? setTimeout(() => {this.errorService.setMessage({type: 'error', message: message})}, 100) : setTimeout(() => {this.errorService.setMessage({type: 'success', message: message})}, 100); // set message
     this.isSubmitted = false; // change the flag for form submit
     this.isEditing = false; // set it to false
     this.isDeleting = false; // set it to false

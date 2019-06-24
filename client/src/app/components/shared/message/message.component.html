@@ -1,53 +1,38 @@
-<!-- HTTP ERROR MESSAGES -->
-<span>
-  <div class="log-stat_msg log_Failed" *ngIf="showMessage">{{ errMsg }}</div>
-  <span *ngIf="validationErrorMessages.length > 0">
-    <div class="log-stat_msg log_Failed" *ngFor="let error of validationErrorMessages">
-      {{ error }}
-
-      <span class="closePup">
-        <i>
-
-        </i>
-      </span>
-    </div>
-  </span>
+<!-- PRIMARY ERROR MESSAGES -->
+<span *ngIf="showMessage && errMsg !== ''">
+  <div class="log-stat_msg log_Failed">{{ errMsg }}
+    <span class="closePup" (click)="onClose('PM')"><i></i></span>
+  </div>
+</span>
+<!-- VALIDATION ERROR MESSAGES -->
+<span *ngIf="showMessage && validationErrorMessages.length > 0">
+  <div class="log-stat_msg log_Failed" *ngFor="let error of validationErrorMessages; let i = index">
+    {{ error }}
+    <span class="closePup" (click)="onClose('VM', error)"><i></i></span>
+  </div>
 </span>
 <!-- END -->
 
-<!-- Error MESSAGE -->
-<span *ngIf="errorMessage">
+<!-- ERROR MESSAGES -->
+<span *ngIf="errorMessage && (errorMessage !== '' || errorMessage !== null)">
   <div class="log-stat_msg log_Failed">{{ errorMessage }}
-
-    <span class="closePup">
-      <i>
-
-      </i>
-    </span></div>
+    <span class="closePup" (click)="onClose('EM')"><i></i></span>
+  </div>
 </span>
 <!-- END -->
 
-<!-- SUCCESS MESSAGE -->
-<span *ngIf="successMessage">
+<!-- SUCCESS MESSAGES -->
+<span *ngIf="successMessage && (successMessage !== '' || successMessage !== null)">
   <div class="log-stat_msg log_Success">{{ successMessage }}
-
-    <span class="closePup">
-      <i>
-
-      </i>
-    </span></div>
+    <span class="closePup" (click)="onClose('SM')"><i></i></span>
+  </div>
 </span>
 <!-- END -->
 
-
-<!-- WARNING MESSAGE -->
-<span *ngIf="warningMessage">
+<!-- WARNING MESSAGES -->
+<span *ngIf="warningMessage && (warningMessage !== '' || warningMessage !== null)">
   <div class="log-stat_msg log_Warning">{{ warningMessage }}
-
-    <span class="closePup">
-      <i>
-
-      </i>
-    </span></div>
+    <span class="closePup" (click)="onClose('WM')"><i></i></span>
+  </div>
 </span>
 <!-- END -->

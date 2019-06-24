@@ -51,7 +51,13 @@
 1. Implemented add, update, downgrade and cancel subscription
 2. Implemented add a card to user account.
 
+
 ## Review Link
+
+### V2.0.0
+
+1. Added two new actions like preview review link and copy review link in review link listing page
+2. Fixed issue with global message in review link add, edit and delete and copy feature
 
 ### V1.0.0
 

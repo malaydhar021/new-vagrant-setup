@@ -31,6 +31,10 @@ export class ErrorsService {
   private showMessageSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   showMessage$: Observable<boolean> = this.showMessageSubject.asObservable();
 
+  // declaring varient of Subject for message like success, warning and error
+  private messageSubject: BehaviorSubject<any> = new BehaviorSubject<string>(null);
+  message$: Observable<any> = this.messageSubject.asObservable();
+
   /**
    * Method to update the error message from http request asynchronously
    * @method updateMessage
@@ -64,6 +68,31 @@ export class ErrorsService {
    */
   public updateShowMessageStatus(status: boolean = false) {
     this.showMessageSubject.next(status);
+  }
+
+  /**
+   * Method to update success, error and warning messages
+   * @method setMessage
+   * @since Version 2.0.0
+   * @param data Message object. Ex. {type: "error|success|waring", message: "message to show to user"}
+   * @returns Observable<boolean>
+   */
+  public setMessage(data: any) {
+    const status = (data !== '' || data !== null) ? true : false; 
+    this.messageSubject.next(data);
+    this.updateShowMessageStatus(status);
+  }
+
+  /**
+   * @method clearMessage
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public clearMessage() {
+    this.updateMessage('');
+    this.updateValidationMessage('');
+    this.setMessage(null);
+    this.updateShowMessageStatus(false);
   }
 
   /**

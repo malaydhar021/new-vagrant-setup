@@ -11,10 +11,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <!-- <div *ngIf="successMessage !== null">{{ successMessage }}</div>
-    <div *ngIf="errorMessage !== null">{{ errorMessage }}</div>
-    <div *ngIf="(isDeleting && errorMessage !== null)">{{ errorMessage }}</div> -->
-    <message [successMessage]="successMessage" [showMessage]="showError"></message>
+    <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="table">
       <ul class="thead">
         <li>BRAND NAME & URL</li>
@@ -68,7 +65,7 @@
       </h2>
     </div>
     <div class="sr-modal-body">
-      <message [successMessage]="successMessage" [showMessage]="showError"></message>
+      <message *ngIf="isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="sr-form">
           <div class="sr-form-row">

@@ -11,7 +11,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <message [successMessage]="successMessage" [showMessage]="showError"></message>
+    <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="table table-col-5 reviewLinkTab">
       <ul class="thead">
         <li>REVIEWS</li>
@@ -23,8 +23,11 @@
       <div class="tbody">
         <ng-scrollbar [compact]="true" *ngIf="reviewLinks.length > 0; else noRecords">
           <ul>
-            <li class="row" *ngFor="let link of reviewLinks | paginate: config; let i = index" [ngClass]="{showMore: showMore && rowIndex === i}">
-              <a class="rowMoreInfo" (click)="showMoreOptions(i)"><img src="../../../../assets/images/down_double_arrow.png" alt=""> {{ !showMore || rowIndex != i? "More" : "Less" }}
+            <li class="row" *ngFor="let link of reviewLinks | paginate: config; let i = index"
+              [ngClass]="{showMore: showMore && rowIndex === i}">
+              <a class="rowMoreInfo" (click)="showMoreOptions(i)"><img
+                  src="../../../../assets/images/down_double_arrow.png" alt="">
+                {{ !showMore || rowIndex != i? "More" : "Less" }}
                 Options</a>
               <div class="rowContainer">
                 <div class="tcol">
@@ -42,12 +45,14 @@
                       <div class="minRating">
                         <p>Min. Rating: </p>
                         <div class="stars">
-                          <bar-rating [(rate)]="link.min_rating" [max]="5" [theme]="'default'" [readOnly]="true"></bar-rating>
+                          <bar-rating [(rate)]="link.min_rating" [max]="5" [theme]="'default'" [readOnly]="true">
+                          </bar-rating>
                         </div>
                       </div>
                       <div class="approve">
                         <p>Auto Approve:</p>
-                        <input type="checkbox" class="tglBtn"  [(ngModel)]="link.auto_approve" #autoApproveStatus="ngModel" (change)="onChangeAutoApproveStatus(link.id, autoApproveStatus)">
+                        <input type="checkbox" class="tglBtn" [(ngModel)]="link.auto_approve"
+                          #autoApproveStatus="ngModel" (change)="onChangeAutoApproveStatus(link.id, autoApproveStatus)">
                       </div>
                     </div>
                   </div>
@@ -64,7 +69,8 @@
                 </div>
                 <div class="tcol">
                   <a class="edit" (click)="onEditReviewLink(link)"><img src="../../../../assets/images/icon_edit.png" alt="Edit Review"></a>
-                  <a class="previewRLink"> <img src="../../../../assets/images/eye_open.png" alt=""> </a>
+                  <a class="previewRLink" :[routerLink]="['/user-review', link.url_slug]" target="_blank"><img src="../../../../assets/images/eye_open.png" alt="Preview review link"> </a>
+                  <a class="previewRLink" (copy)="onClickCopyLink()" [context]="prepareContext(link.url_slug)" copyToClipboard><img src="../../../../assets/images/icon_copy_snippet.png" alt="Copy review link"> </a>
                   <a class="delete" (click)="onDeleteReviewLink(link.id)"><img src="../../../../assets/images/icon_delete_green.png" alt="Delete Review"></a>
                 </div>
               </div>
@@ -98,7 +104,8 @@
       </div>
     </div>
     <!-- Pagination -->
-    <pagination-controls *ngIf="reviewLinks.length > 0" [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
+    <pagination-controls *ngIf="reviewLinks.length > 0" [autoHide]="true" [responsive]="true"
+      (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
 </div>
 <!-- add/edit modal-->
@@ -108,7 +115,7 @@
       <h2>{{ isEditing ? 'Edit' : 'Add'}} Review Link</h2>
     </div>
     <div class="sr-modal-body">
-      <message [successMessage]="successMessage" [showMessage]="showError"></message>
+      <message *ngIf="isModalOpened" [successMessage]="successMessage" [showMessage]="showError"></message>
       <form *ngIf="currentStep == 1" [formGroup]="form" (ngSubmit)="onSubmitStep1()"
         class="reviewLink_step_1 reviewStep">
         <div class="sr-form">
@@ -132,14 +139,14 @@
                 <input class="sr-form-ctrl" formControlName="url_slug" (change)="onChangeSlug()"
                   [ngClass]="{'error' : getFormControls.url_slug.errors && (isSubmittedStep1 || getFormControls.url_slug.errors.isSlugExits)}">
                 <div class="error-msg" *ngIf="(
-                    isSubmittedStep1
-                    && getFormControls.url_slug.errors !== null
-                    && getFormControls.url_slug.errors.required)">
+                  isSubmittedStep1
+                  && getFormControls.url_slug.errors !== null
+                  && getFormControls.url_slug.errors.required)">
                   Url slug is required
                 </div>
                 <div class="error-msg" *ngIf="(
-                    getFormControls.url_slug.errors !== null
-                    && getFormControls.url_slug.errors.isSlugExits)">
+                  getFormControls.url_slug.errors !== null
+                  && getFormControls.url_slug.errors.isSlugExits)">
                   There is already an url slug exists with same name. Please try another.
                 </div>
               </div>
@@ -148,8 +155,9 @@
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
               <div class="sr-form-field">
-                <label>Auto Approve <a href="javascript:void(0)" class="tooltip" data-title="Check this to switch Auto-improve on!">
-                  <img src="../../../../assets/images/icon_info2.png" alt=""></a>
+                <label>Auto Approve <a href="javascript:void(0)" class="tooltip"
+                    data-title="Check this to switch Auto-improve on!">
+                    <img src="../../../../assets/images/icon_info2.png" alt=""></a>
                   <input type="checkbox" class="tglBtn" formControlName="auto_approve"></label>
               </div>
             </div>
@@ -168,10 +176,17 @@
             <div class="sr-form-cell">
               <label>Select Campaign</label>
               <div class="sr-form-field">
-                <select class="sr-form-ctrl" formControlName="campaign_id" [compareWith]="compareValue">
-                  <option value="null">--- Select a campaign ---</option>
+                <select class="sr-form-ctrl" formControlName="campaign_id" [compareWith]="compareValue"
+                  [ngClass]="{error: isSubmittedStep1 && getFormControls.campaign_id.errors}">
+                  <option value="">--- Select a campaign ---</option>
                   <option [ngValue]="campaign" *ngFor="let campaign of campaigns">{{ campaign.campaign_name }}</option>
                 </select>
+                <div class="error-msg" *ngIf="(
+                  isSubmittedStep1
+                  && getFormControls.campaign_id.errors !== null
+                  && getFormControls.campaign_id.errors.required)">
+                  Please select a campaign
+                </div>
               </div>
             </div>
           </div>
@@ -180,25 +195,24 @@
               <label>Upload an image</label>
               <div class="sr-form-field">
                 <div class="sr-form-ctrl inputFile">
-                  <input type="file" (change)="onChangeFile($event)" formControlName="logo"
-                    [ngClass]="{error: isSubmittedStep1 && getFormControls.logo.errors}">
+                  <input type="file" (change)="onChangeFile($event)" [ngClass]="{error: isSubmittedStep1 && getFormControls.logo.errors}">
                   <input type="hidden" formControlName="logo" [ngClass]="{error: isSubmittedStep1 && getFormControls.logo.errors}">
                   <div class="error-msg" *ngIf="(
                     isSubmittedStep1
-                          && getFormControls.logo.errors !== null
-                          && getFormControls.logo.errors.required)">
+                    && getFormControls.logo.errors !== null
+                    && getFormControls.logo.errors.required)">
                     Logo is required
                   </div>
                   <div class="error-msg" *ngIf="(
                     isSubmittedStep1
                     && getFormControls.logo.errors !== null
-                          && getFormControls.logo.errors.invalidFileType)">
-                    Invalid file type. File should be an image
+                    && getFormControls.logo.errors.invalidFileType)">
+                    Invalid file type. Allowed file types are jpg, jpeg, png, gif
                   </div>
                   <div class="error-msg" *ngIf="(
                     isSubmittedStep1
                     && getFormControls.logo.errors !== null
-                          && getFormControls.logo.errors.invalidFileSize)">
+                    && getFormControls.logo.errors.invalidFileSize)">
                     Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
                   </div>
                   <div class="choseFileArea">
@@ -213,7 +227,6 @@
                 </div>
               </div>
             </div>
-
           </div>
           <div class="sr-form-row">
             <div class="sr-form-cell-small">
@@ -250,9 +263,9 @@
                 <input type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_1"
                   [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_1.errors}">
                 <div class="error-msg" *ngIf="(
-                    isSubmittedStep1
-                    && getFormControls.negative_info_review_msg_1.errors !== null
-                    && getFormControls.negative_info_review_msg_1.errors.required)">
+                  isSubmittedStep1
+                  && getFormControls.negative_info_review_msg_1.errors !== null
+                  && getFormControls.negative_info_review_msg_1.errors.required)">
                   Negative Info #1 is required
                 </div>
               </div>
@@ -279,7 +292,8 @@
         </div>
       </form>
 
-      <form *ngIf="currentStep == 2" [formGroup]="form2" (ngSubmit)="onSubmitStep2()" class="reviewLink_step_2 reviewStep">
+      <form *ngIf="currentStep == 2" [formGroup]="form2" (ngSubmit)="onSubmitStep2()"
+        class="reviewLink_step_2 reviewStep">
         <div class="sr-form">
           <div class="reviewPreview" [style.background-color]="pageBackground">
             <div class="reviewlinkForm" [style.background-color]="modalBackground">
@@ -336,49 +350,31 @@
             <div class="sr-form-cell-third">
               <label>Page Background</label>
               <div class="colorPicker">
-                <input
-                  [(colorPicker)]="pageBackground"
-                  [style.background]="pageBackground"
+                <input [(colorPicker)]="pageBackground" [style.background]="pageBackground"
                   (colorPickerChange)="onChangePageBackgroundColor($event)"
                   [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']"
-                  [cpOutputFormat]="'hex'"
-                  class="colorChosen"
-                  formControlName="page_background"
-                  type="text"
-                  class="colorChosen"
-                />
+                  [cpOutputFormat]="'hex'" class="colorChosen" formControlName="page_background" type="text"
+                  class="colorChosen" />
               </div>
             </div>
             <div class="sr-form-cell-third">
               <label>Modal Background</label>
               <div class="colorPicker">
-                <input
-                  [(colorPicker)]="modalBackground"
-                  [style.background]="modalBackground"
+                <input [(colorPicker)]="modalBackground" [style.background]="modalBackground"
                   (colorPickerChange)="onChangeModalBackgroundColor($event)"
                   [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']"
-                  [cpOutputFormat]="'hex'"
-                  class="colorChosen"
-                  formControlName="modal_background"
-                  type="text"
-                  class="colorChosen"
-                />
+                  [cpOutputFormat]="'hex'" class="colorChosen" formControlName="modal_background" type="text"
+                  class="colorChosen" />
               </div>
             </div>
             <div class="sr-form-cell-third">
               <label>Text Colour</label>
               <div class="colorPicker">
-                <input
-                  [(colorPicker)]="textColor"
-                  [style.background]="textColor"
+                <input [(colorPicker)]="textColor" [style.background]="textColor"
                   (colorPickerChange)="onChangeTextColor($event)"
                   [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']"
-                  [cpOutputFormat]="'hex'"
-                  class="colorChosen"
-                  formControlName="text_color"
-                  type="text"
-                  class="colorChosen"
-                />
+                  [cpOutputFormat]="'hex'" class="colorChosen" formControlName="text_color" type="text"
+                  class="colorChosen" />
               </div>
             </div>
           </div>

@@ -40,6 +40,8 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   searchKey: string = '';
+  isModalOpened: boolean = false; // set to true if the modal is opened
+
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -126,6 +128,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.isModalOpened = true;
       this.errorService.updateShowMessageStatus(false);
     });
   }
@@ -159,7 +162,10 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns Void
    */
   public get resetForm() {
-    return this.form.reset();
+    this.errorService.updateShowMessageStatus(false);
+    this.isModalOpened = false;
+    this.form.reset();
+    return;
   }
 
   /**
@@ -177,6 +183,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           // update the brands array with latest api response data
           this.brands = response.data.data;
           this.config.totalItems = response.data.total;
+          Log.info("before closing the loader");
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -256,10 +263,6 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user in brand listing page
           this.successMessage = response.message;
-          // remove the success message after 3 seconds
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000);
           // change the flag for form submit
           this.isSubmitted = false;
           // reset the form
@@ -269,10 +272,6 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
-          // remove the error message after 3 seconds
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 3000);
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -297,10 +296,6 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user in brand listing page
           this.successMessage = response.message;
-          // remove the success message after 3 seconds
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000);
           // change the flag for form submit
           this.isSubmitted = false;
           // reset the form
@@ -310,10 +305,6 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
-          // remove the error message after 3 seconds
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 3000);
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -368,19 +359,11 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response.status) {
           // show the success message to user in brand listing page
           this.successMessage = response.message;
-          // remove the success message after 3 seconds
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000);
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings();
         } else {
           // show the error message to user in case there is any error from api response
           this.errorMessage = response.message;
-          // remove the error message after 3 seconds
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 3000);
           // hide the loader
           this.loaderService.disableLoader();
         }

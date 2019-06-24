@@ -28,11 +28,11 @@ return [
             'type' => 'recurring',              // Billing type 'recurring'
             'interval' => 30,                   // No of days if type is recurring
             'privileges' => [
-                'brands' => 5,
-                'campaigns' => 10,
-                'sticky-reviews' => 50,
-                'review-links' => 5,
-                'exit-popups' => 0,              // No exit pop-ups
+                'brands' => 2,
+                'campaigns' => 2,
+                'sticky-reviews' => 5,
+                'review-links' => 2,
+                'exit-popups' => 2,              // No exit pop-ups
             ],
         ],
 
@@ -45,11 +45,11 @@ return [
             'type' => 'recurring',
             'interval' => 30,
             'privileges' => [
-                'brands' => 10,
-                'campaigns' => 50,
-                'sticky-reviews' => 500,
-                'review-links' => 100,
-                'exit-popups' => 50,
+                'brands' => 3,
+                'campaigns' => 3,
+                'sticky-reviews' => 10,
+                'review-links' => 3,
+                'exit-popups' => 3,
             ],
         ],
 
