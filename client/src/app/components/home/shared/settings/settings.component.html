@@ -1,0 +1,59 @@
+<div class="mainBox brandingMain">
+    <br/>
+    <br/>
+    <h2>Settings</h2>
+
+    <div class="dataTableArea">
+        <div class="table">
+            <ul class="thead">
+                <li>Token name </li>
+                <li>Token </li>
+                <li>Action </li>
+            </ul>
+            <div class="tbody">
+                <ul>
+                    <li class="row" *ngFor="let tokenData of token">
+                        <div class="rowContainer">
+                            <div class="tcol">
+                                <h3>{{tokenData.token_name}}</h3>
+                            </div>
+                            <div class="tcol">
+                                <p>{{tokenData.token}}</p>
+                            </div>
+                            <div class="tcol">
+                                <a class="copyBtn" (click)="copyText(tokenData.token)"> <img src="../../../../assets/images/icon_copy_snippet.png" alt="copy token"> </a>
+                                <a class="delete" (click)="onDeleteToken(tokenData.id)"><img src="../../../../assets/images/icon_delete_green.png" alt="Delete"></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="edit-info-user">
+        <div class="formChangepass">
+            <span><message [successMessage] = 'successMessage'></message></span>
+            <h2>Generate zapier api token </h2>
+            <form [formGroup]="userZapierTokenForm" (ngSubmit)="onCreateToken()">
+                <div class="sr-form-row">
+                    <div class="sr-form-cell-small">
+                        <label>Token Name</label>
+                        <div class="sr-form-field">
+                            <input type="text" formControlName="tokenName" class="sr-form-ctrl" [ngClass]="{'error' : !userZapierTokenForm.get('tokenName').valid && userZapierTokenForm.get('tokenName').touched}">
+                            <span class="error-msg" *ngIf="!userZapierTokenForm.get('tokenName').valid && userZapierTokenForm.get('tokenName').errors.required" class="error-msg">Token name is required !</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sr-form-row">
+                    <button class="button-submit" type="submit" [disabled]="!userZapierTokenForm.valid">
+                        <img src="../../../../assets/images/addIcon.png" alt="">
+                        Generate
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>

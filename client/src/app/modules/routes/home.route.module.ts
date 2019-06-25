@@ -12,9 +12,10 @@ import { ProfileComponent }                 from '../../components/home/shared/p
 import { DashboardComponent }               from '../../components/home/dashboard/dashboard.component';
 import { CancelMembershipComponent }        from '../../components/home/cancel-membership/cancel-membership.component';
 import { SubscriptionGuard }                from '../../services/guards/subscription.guard.service';
+import { SettingsComponent }                 from '../../components/home/shared/settings/settings.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent,children:[
+  {path: '', component: HomeComponent, children: [
     {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
 
     {path: 'plans',               component: PlansComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
     {path: 'campaign',        canActivate: [SubscriptionGuard], component: CampaignComponent},
     {path: 'exit-popup',      canActivate: [SubscriptionGuard], component: ExitPopupComponent},
     {path: 'review-link',     canActivate: [SubscriptionGuard], component: ReviewLinkComponent},
+    {path: 'settings', canActivate: [SubscriptionGuard], component: SettingsComponent},
   ]}
 ];
 

@@ -38,7 +38,7 @@ import { CopyToClipboardDirective }         from '../directives/copy-to-clipboar
 import { ClickOutsideDirective }            from '../directives/click-outside.directive';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from './shared/shared.module';
-
+import {SettingsComponent}                   from '../components/home/shared/settings/settings.component';
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
  * @class HomeModule
@@ -63,6 +63,7 @@ import { SharedModule } from './shared/shared.module';
     CancelMembershipComponent,
     CopyToClipboardDirective,
     ClickOutsideDirective,
+    SettingsComponent,
   ],
   imports: [
     CommonModule,

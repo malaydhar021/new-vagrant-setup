@@ -449,6 +449,28 @@ export class UserApiEndpoints {
   public static get user() : string {
     return apiBaseUrl.concat('/user');
   }
+
+  /**
+   * This method will return the api route for create zapier token
+   */
+  public static get createToken(): string {
+    return apiBaseUrl.concat('/user/zapier/create-token');
+  }
+
+  /**
+   * This method will return the api route for show user zapier token
+   */
+  public static get showToken(): string {
+    return apiBaseUrl.concat('/user/zapier/show-token');
+  }
+
+  /**
+   * This method will return api route for delete a zapier token
+   */
+  public static get deleteToken(): string {
+    return apiBaseUrl.concat('/user/zapier/delete-token');
+  }
+
 }
 
 

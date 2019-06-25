@@ -210,6 +210,16 @@ class UserController extends Controller
             }
     }
 
-
-
+    public function getUserZapierToken() {
+        $user = Auth::user();
+        $getTokenInfo = UserZapierTokens::where('created_by',$user->id)->get();
+            return response()->json([
+                'data' => [
+                    'data' => $getTokenInfo,
+                    'http_code' => 200,
+                    'status' => true,
+                    'message' => "User zapier token retrive.",
+                ],
+            ]);
+    }
 }

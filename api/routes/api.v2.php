@@ -45,6 +45,7 @@ Route::prefix('user')->name('user.')->middleware('auth:api')->group(function () 
     });
 
     Route::prefix('zapier')->name('zapier.')->group(function () {
+        Route::get('/show-token', 'UserController@getUserZapierToken')->name('show-token');
         Route::post('/create-token', 'UserController@createUserZapierToken')->name('create-token');
         Route::delete('/delete-token/{id}', 'UserController@deleteUserZapierToken')->name('delete-token');
     });

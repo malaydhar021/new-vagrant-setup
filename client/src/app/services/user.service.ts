@@ -63,4 +63,28 @@ export class UserService {
   setUserImage(url){
     this.userImageUrl$.next(url);
   }
+
+  /**
+   * This method is used to call a service to create zapier token
+   * @param data
+   */
+  public createToken(data) {
+    return this.httpClient.post(UserApiEndpoints.createToken, data);
+  }
+
+  /**
+   * This method is used to call a service to show user zapier tokens
+   */
+  public showToken() {
+    return this.httpClient.get(UserApiEndpoints.showToken);
+  }
+
+  /**
+   * This method is used to call a service to delete a user zapier token
+   * @param tokenId
+   */
+  public deleteToken(tokenId) {
+    return this.httpClient.delete(UserApiEndpoints.deleteToken.concat('/' + tokenId));
+  }
+
 }
