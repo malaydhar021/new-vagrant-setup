@@ -124,7 +124,7 @@ class ZapierWebhooksController extends Controller
 
             if($getAllReviewLinkData != null){
                 foreach($getAllReviewLinkData as $linkKey => $linkData){
-                    $getReviewLinkData[$linkKey]['id'] = $linkData->id;
+                    // $getReviewLinkData[$linkKey]['id'] = $linkData->id;
                     $getReviewLinkData[$linkKey]['review_link_name'] = $linkData->name;
                     $getReviewLinkData[$linkKey]['review_link_description'] = $linkData->description;
                     $getReviewLinkData[$linkKey]['review_link'] = 'app.'.$linkUrl.'/user-review/'.$linkData->url_slug;
@@ -144,7 +144,7 @@ class ZapierWebhooksController extends Controller
                             $getReviewLinkData[$stickyKey]['sticky_reviews_tags'] = $stickyData->tags;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_rating'] = $stickyData->rating;
                             if($stickyData->negativeReviews != null ){
-                                $getReviewLinkData[$stickyKey]['id']    = $stickyData->negativeReviews['id'];
+                                // $getReviewLinkData[$stickyKey]['id']    = $stickyData->negativeReviews['id'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_email'] = $stickyData->negativeReviews['email'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_phone'] = $stickyData->negativeReviews['phone'];
                             }
@@ -179,7 +179,7 @@ class ZapierWebhooksController extends Controller
                 $getExitPopupData[$exitPopupKey]['exit_popup_name'] = $exitPopupData->name;
                 if($exitPopupData->subscribedEmail != null ){
                     foreach($exitPopupData->subscribedEmail as $subscribedEmailKey => $subscribedEmailData){
-                        $getExitPopupData[$subscribedEmailKey]['id'] = $subscribedEmailData->id;
+                        // $getExitPopupData[$subscribedEmailKey]['id'] = $subscribedEmailData->id;
                         $getExitPopupData[$subscribedEmailKey]['exit_popup_subscribe_email']    = $subscribedEmailData->email;
                     }
                 }
