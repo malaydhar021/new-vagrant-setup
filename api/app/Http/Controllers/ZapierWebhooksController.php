@@ -130,12 +130,21 @@ class ZapierWebhooksController extends Controller
                     $getReviewLinkData[$linkKey]['review_link'] = 'app.'.$linkUrl.'/user-review/'.$linkData->url_slug;
                     if($linkData->stickyReviews != null ){
                         foreach($linkData->stickyReviews as $stickyKey => $stickyData){
+                            $getReviewLinkData[$linkKey]['sticky_reviews_id'] = $stickyData->id;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_name'] = $stickyData->name;
-                            $getReviewLinkData[$stickyKey]['sticky_reviews_type'] = $stickyData->type;
+                            if($stickyData->type == 1){
+                                $type = 'Textual';
+                            }elseif ($stickyData->type == 2){
+                                $type = 'Audio';
+                            }else{
+                                $type = 'Video';
+                            }
+                            $getReviewLinkData[$stickyKey]['sticky_reviews_type'] = $type;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_description'] = $stickyData->description;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_tags'] = $stickyData->tags;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_rating'] = $stickyData->rating;
                             if($stickyData->negativeReviews != null ){
+                                $getReviewLinkData[$stickyKey]['negative_reviews_id']    = $stickyData->negativeReviews['id'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_email'] = $stickyData->negativeReviews['email'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_phone'] = $stickyData->negativeReviews['phone'];
                             }
@@ -170,7 +179,8 @@ class ZapierWebhooksController extends Controller
                 $getExitPopupData[$exitPopupKey]['exit_popup_name'] = $exitPopupData->name;
                 if($exitPopupData->subscribedEmail != null ){
                     foreach($exitPopupData->subscribedEmail as $subscribedEmailKey => $subscribedEmailData){
-                        $getExitPopupData[$subscribedEmailKey]['exit_popup_subscribe_email'] = $subscribedEmailData->email;
+                        $getExitPopupData[$subscribedEmailKey]['exit_popup_subscribe_email_id'] = $subscribedEmailData->id;
+                        $getExitPopupData[$subscribedEmailKey]['exit_popup_subscribe_email']    = $subscribedEmailData->email;
                     }
                 }
             }
