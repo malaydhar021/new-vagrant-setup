@@ -76,7 +76,8 @@ class ZapierWebhooksController extends Controller
      */
     public function sendUserExitPopupData(Request $request) {
         if($request->api_key != ''){
-            $checkAndFetchUserDataWithApiKey = UserZapierTokens::where('token', $request->api_key)->with('exitPopups')->get();
+            $checkAndFetchUserData = UserZapierTokens::where('token', $request->api_key)->first();
+            $checkAndFetchUserDataWithApiKey = ExitPopUp::where('created_by', $checkAndFetchUserData->created_by)->where('popup_action', 1)->get();
             $userData = array();
             if($checkAndFetchUserDataWithApiKey) {
                 // create set of data
