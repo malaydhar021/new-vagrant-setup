@@ -144,13 +144,25 @@ class ZapierWebhooksController extends Controller
                             $getReviewLinkData[$stickyKey]['sticky_reviews_tags'] = $stickyData->tags;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_rating'] = $stickyData->rating;
                             if($stickyData->negativeReviews != null ){
-                                // $getReviewLinkData[$stickyKey]['id']    = $stickyData->negativeReviews['id'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_email'] = $stickyData->negativeReviews['email'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_phone'] = $stickyData->negativeReviews['phone'];
                             }
                         }
                     }
                 }
+            } else {
+                $getReviewLinkData[0]['id'] = 21542;
+                $getReviewLinkData[0]['review_link_name'] = 'Random data';
+                $getReviewLinkData[0]['review_link_description'] = 'This is a test data to help you out with the zapier intregration';
+                $getReviewLinkData[0]['review_link'] = 'https://app.beta.usestickyreviews.com/user-review/test-review-zapier';
+                $getReviewLinkData[0]['id'] = 365;
+                $getReviewLinkData[0]['sticky_reviews_name'] = 'Test Review data';
+                $getReviewLinkData[0]['sticky_reviews_type'] = 'Textual';
+                $getReviewLinkData[0]['sticky_reviews_description'] = 'this is awsome!';
+                $getReviewLinkData[0]['sticky_reviews_tags'] = 'Sticky review ';
+                $getReviewLinkData[0]['sticky_reviews_rating'] = '5';
+                $getReviewLinkData[0]['negative_reviews_email'] = 'email@example.com';
+                $getReviewLinkData[0]['negative_reviews_phone'] = '6539865452';
             }
             return $getReviewLinkData;
         }else{
@@ -174,16 +186,24 @@ class ZapierWebhooksController extends Controller
                 $getAllExitPopupData = ExitPopUp::where('id', $request->exit_popup_id)->where('popup_action', 1)->with('subscribedEmail')->get();
             }
             $getExitPopupData = [];
-            foreach($getAllExitPopupData as $exitPopupKey => $exitPopupData){
-                $getExitPopupData[$exitPopupKey]['id'] = $exitPopupData->id;
-                $getExitPopupData[$exitPopupKey]['exit_popup_name'] = $exitPopupData->name;
-                if($exitPopupData->subscribedEmail != null ){
-                    foreach($exitPopupData->subscribedEmail as $subscribedEmailKey => $subscribedEmailData){
-                        $getExitPopupData[$subscribedEmailKey]['id'] = $subscribedEmailData->id;
-                        $getExitPopupData[$subscribedEmailKey]['exit_popup_subscribe_email']    = $subscribedEmailData->email;
+            if($getAllExitPopupData != null ){
+                foreach($getAllExitPopupData as $exitPopupKey => $exitPopupData){
+                    $getExitPopupData[$exitPopupKey]['id'] = $exitPopupData->id;
+                    $getExitPopupData[$exitPopupKey]['exit_popup_name'] = $exitPopupData->name;
+                    if($exitPopupData->subscribedEmail != null ){
+                        foreach($exitPopupData->subscribedEmail as $subscribedEmailKey => $subscribedEmailData){
+                            $getExitPopupData[$subscribedEmailKey]['id'] = $subscribedEmailData->id;
+                            $getExitPopupData[$subscribedEmailKey]['exit_popup_subscribe_email']    = $subscribedEmailData->email;
+                        }
                     }
                 }
+            } else {
+                $getExitPopupData[0]['id'] = 1542;
+                $getExitPopupData[0]['exit_popup_name'] = 'My Demo data for exit popup';
+                $getExitPopupData[0]['id'] = 4512;
+                $getExitPopupData[0]['exit_popup_subscribe_email'] = 'email@example.com';
             }
+
             return $getExitPopupData;
         }else{
             return $this->prepareResponse(false, "Exit popup not found.");
