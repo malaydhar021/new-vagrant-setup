@@ -147,7 +147,8 @@ class ZapierWebhooksController extends Controller
                                 $getReviewLinkData[$stickyKey]['negative_reviews_phone'] = $stickyData->negativeReviews['phone'];
                             }
                         }
-                    } else {
+                    }
+                    if(count($linkData->stickyReviews) == 0){
                         $getReviewLinkData[$linkKey]['sticky_reviews_name'] = 'Test Review data';
                         $getReviewLinkData[$linkKey]['sticky_reviews_type'] = 'Textual';
                         $getReviewLinkData[$linkKey]['sticky_reviews_description'] = 'this is awsome!';
@@ -192,17 +193,20 @@ class ZapierWebhooksController extends Controller
             }else{
                 $getAllExitPopupData = ExitPopUp::where('id', $request->exit_popup_id)->where('popup_action', 1)->with('subscribedEmail')->get();
             }
+
             $getExitPopupData = [];
             if($getAllExitPopupData != null ){
                 foreach($getAllExitPopupData as $exitPopupKey => $exitPopupData){
                     $getExitPopupData[$exitPopupKey]['id'] = $exitPopupData->id;
                     $getExitPopupData[$exitPopupKey]['exit_popup_name'] = $exitPopupData->name;
-                    if($exitPopupData->subscribedEmail != null ){
+
+                    if($exitPopupData->subscribedEmail != null){
                         foreach($exitPopupData->subscribedEmail as $subscribedEmailKey => $subscribedEmailData){
                             $getExitPopupData[$subscribedEmailKey]['id'] = $subscribedEmailData->id;
                             $getExitPopupData[$subscribedEmailKey]['exit_popup_subscribe_email']    = $subscribedEmailData->email;
                         }
-                    } else {
+                    }
+                    if(count($exitPopupData->subscribedEmail) == 0 ){
                         $getExitPopupData[$exitPopupKey]['exit_popup_subscribe_email']    = 'email@example.com';
                     }
                 }
@@ -212,7 +216,6 @@ class ZapierWebhooksController extends Controller
                 $getExitPopupData[0]['id'] = 4512;
                 $getExitPopupData[0]['exit_popup_subscribe_email'] = 'email@example.com';
             }
-
             return $getExitPopupData;
         }else{
             return $this->prepareResponse(false, "Exit popup not found.");
