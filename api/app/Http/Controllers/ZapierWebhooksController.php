@@ -81,11 +81,9 @@ class ZapierWebhooksController extends Controller
             $userData = array();
             if($checkAndFetchUserDataWithApiKey) {
                 // create set of data
-                foreach($checkAndFetchUserDataWithApiKey as $key => $data) {
-                        foreach($data->exitPopups as $exitPopupKey=> $exitPopup) {
-                        $userData[$exitPopupKey]['id'] = $exitPopup->id;
-                        $userData[$exitPopupKey]['exit_popup_name'] = $exitPopup->name;
-                    }
+                foreach($checkAndFetchUserDataWithApiKey as $key => $exitPopup) {
+                        $userData[$key]['id'] = $exitPopup->id;
+                        $userData[$key]['exit_popup_name'] = $exitPopup->name;
                 } // main foreach ends
                 $allValues = ['id' => 'EP', 'exit_popup_name'=> 'All'];
                 array_push($userData, $allValues);
