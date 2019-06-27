@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ExitPopUp;
 use App\ReviewLink;
 use App\UserZapierTokens;
+use App\UserZapierWebhooks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -219,6 +220,37 @@ class ZapierWebhooksController extends Controller
             return $getExitPopupData;
         }else{
             return $this->prepareResponse(false, "Exit popup not found.");
+        }
+    }
+
+    public function subscribeReviewLink(Request $request){
+        \Log::info("ReQuest from the webhook ".print_r($request->all(),true));
+        // save user zapier webhook data
+        // hookUrl, api_key, review_link_id, trigger_type = 1  for review links
+        // if exit popup  than store hookUrl, api_key, exit_popup_id, trigger_type = 2
+        //  Table User_zapier_webhooks id, created_by, trigger_type, hook_url, exit_popup_id,  review_link_id , create, delete, update
+        // UserZapierWebhooks
+        if($request->api_key != '' && $request->hookUrl){
+            $getUserInfo = UserZapierTokens::where('token', $request->api_key)->first();
+            if($getUserInfo != null ){
+                $saveUserZapierWebhook = new UserZapierWebhooks;
+                $saveUserZapierWebhook->created_by = $getUserInfo->created_by;
+                $saveUserZapierWebhook->hook_url = $request->hookUrl;
+                $saveUserZapierWebhook->trigger_type = $request->trigger_type;
+                if($request->trigger_type == 1 ){
+                    $saveUserZapierWebhook->review_link_id = $request->review_link_id;
+                } else {
+                    $saveUserZapierWebhook->exit_popup_id = $request->exit_popup_id;
+                }
+                if($saveUserZapierWebhook->save()){
+                    \Log::info("Webhook created : ");
+                    return $this->prepareResponse(true, "Webhook created.", $saveUserZapierWebhook->hook_url);
+                }else{
+                    \Log::info("Webhook not created : ");
+                }
+            }
+        } else{
+            \Log::info("Cant store this informations webhook and user api key not found !");
         }
     }
 

@@ -6,10 +6,11 @@ use App\Traits\FileStorage;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\ZapierWebhook;
 
 class StickyReview extends Model
 {
-    use FileStorage, SoftDeletes;
+    use FileStorage, SoftDeletes, ZapierWebhook;
 
     /**
      * Indicates if the model should be timestamped.
@@ -269,5 +270,11 @@ class StickyReview extends Model
     public function brands()
     {
         return $this->hasOne(Branding::class, 'id', 'brand_id');
+    }
+
+    public function setIdAttribute ($value) {
+        $this->attributes['id'] = $value;
+        $this->checkAndSendStickyReviewDataToZapier($value);
+        \Log::info('I am inserting you ! '.$value);
     }
 }
