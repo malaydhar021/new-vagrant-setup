@@ -147,6 +147,14 @@ class ZapierWebhooksController extends Controller
                                 $getReviewLinkData[$stickyKey]['negative_reviews_phone'] = $stickyData->negativeReviews['phone'];
                             }
                         }
+                    } else {
+                        $getReviewLinkData[$linkKey]['sticky_reviews_name'] = 'Test Review data';
+                        $getReviewLinkData[$linkKey]['sticky_reviews_type'] = 'Textual';
+                        $getReviewLinkData[$linkKey]['sticky_reviews_description'] = 'this is awsome!';
+                        $getReviewLinkData[$linkKey]['sticky_reviews_tags'] = 'Sticky review ';
+                        $getReviewLinkData[$linkKey]['sticky_reviews_rating'] = '5';
+                        $getReviewLinkData[$linkKey]['negative_reviews_email'] = 'email@example.com';
+                        $getReviewLinkData[$linkKey]['negative_reviews_phone'] = '6539865452';
                     }
                 }
             } else {
@@ -194,6 +202,8 @@ class ZapierWebhooksController extends Controller
                             $getExitPopupData[$subscribedEmailKey]['id'] = $subscribedEmailData->id;
                             $getExitPopupData[$subscribedEmailKey]['exit_popup_subscribe_email']    = $subscribedEmailData->email;
                         }
+                    } else {
+                        $getExitPopupData[$exitPopupKey]['exit_popup_subscribe_email']    = 'email@example.com';
                     }
                 }
             } else {
