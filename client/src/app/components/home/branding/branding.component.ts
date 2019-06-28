@@ -21,9 +21,7 @@ import { Log } from '../../../helpers/app.helper';
   templateUrl: './branding.component.html',
   styleUrls: ['./branding.component.scss']
 })
-
 export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
-
   // declaring class properties
   form: FormGroup; // for add or edit brand form in modal
   loader: boolean = false; // for loader

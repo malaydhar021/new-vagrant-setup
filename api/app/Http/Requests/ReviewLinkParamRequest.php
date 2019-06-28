@@ -37,13 +37,16 @@ class ReviewLinkParamRequest extends FormRequest
         if (Auth::check()) {
             $user = Auth::user();
 
-            $pricingPlan = $user->pricing_plan;
-            $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['review-links'];
-            if (($saturationPoint !== -1) && ($user->review_links_count >= $saturationPoint)) {
-                throw new PrivilegeViolationException(
-                    "You can not create a new review link, please delete one existing review link or upgrade your " .
-                        "current subscription plan."
-                );
+            if($this->method == "POST") {
+                $pricingPlan = $user->pricing_plan;
+                $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['review-links'];
+
+                if (($saturationPoint !== -1) && ($user->review_links_count >= $saturationPoint)) {
+                    throw new PrivilegeViolationException(
+                        "You can not create a new review link, please delete one existing review link or upgrade your " .
+                            "current subscription plan."
+                    );
+                }
             }
 
             return true;
@@ -59,9 +62,11 @@ class ReviewLinkParamRequest extends FormRequest
      */
     public function rules()
     {
+        \Log::info($this->route('id'));
         return [
             'name' => "required|string",
-            'url_slug' => "required|unique:review_links,id," . $this->route('id'),
+            // 'url_slug' => "required|unique:review_links,id," . $this->route('id'),
+            'url_slug' => "required|unique:review_links,url_slug,{$this->route('id')},id,deleted_at,NULL",
             // 'logo' => [
             //     $this->method() == 'POST' ? "required" : "nullable",
             //     "image",

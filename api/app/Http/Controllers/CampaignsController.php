@@ -217,7 +217,7 @@ class CampaignsController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Successfully ' . ($campaign->is_active ? 'deactivated' : 'activated' ) . ' the campaign.',
+            'message' => 'Successfully ' . ($campaign->is_active ? 'activated' : 'deactivated' ) . ' the campaign.',
             'data' => new CampaignsResource($campaign),
         ]);
     }

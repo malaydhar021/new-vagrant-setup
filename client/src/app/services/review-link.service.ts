@@ -81,11 +81,14 @@ export class ReviewLinkService {
    * Method to make an api call to validate first step data
    * @method validateData
    * @since Version 1.0.0
+   * @param id Review link id
    * @param data FormData request payload
    * @returns Observable<Object>
    */
-  public validateData(data: FormData) {
-    return this.httpClient.post(ReviewLinkApiEndpoints.reviewLinks.concat("/validate"), data);
+  public validateData(id: string, data: FormData) {
+    // for addition id will be null but for edit id has to be some value
+    const reviewLinkId = id !== null ? '/' + id : '';
+    return this.httpClient.post(ReviewLinkApiEndpoints.reviewLinks.concat("/validate" + reviewLinkId), data);
   }
 
   /**

@@ -61,7 +61,7 @@
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
-        Add Branding
+        {{ isEditing ? 'Edit' : 'Add' }} Branding
       </h2>
     </div>
     <div class="sr-modal-body">
@@ -108,5 +108,4 @@
       </form>
     </div>
   </div>
-  <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>

@@ -48,7 +48,7 @@ return [
                 'brands' => 3,
                 'campaigns' => 3,
                 'sticky-reviews' => 10,
-                'review-links' => 3,
+                'review-links' => 10,
                 'exit-popups' => 3,
             ],
         ],

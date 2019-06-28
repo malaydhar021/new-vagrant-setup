@@ -64,7 +64,8 @@ class ReviewLinkRequest extends FormRequest
     {
         return [
             'name' => "required|string",
-            'url_slug' => "required|unique:review_links,id," . $this->route('id'),
+            // 'url_slug' => "required|unique:review_links,id," . $this->route('id'),
+            'url_slug' => "required|unique:review_links,url_slug,{$this->route('id')},id,deleted_at,NULL",
             'logo' => [
                 $this->method() == 'POST' ? "required" : "nullable",
                 "image",

@@ -588,7 +588,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public validateReviewLinkStep1(data: FormData) {
-    this.reviewLinkService.validateData(data).subscribe(
+    this.reviewLinkService.validateData(this.reviewLinkId, data).subscribe(
       (response: any) => {
         Log.info(response, "Response Validate Params");
         if(response.status) {

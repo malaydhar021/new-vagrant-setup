@@ -613,7 +613,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           // once getting the response and status is true close the modal
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user
-          this.successMessage = response.message;
+          this.errorService.setMessage({type: 'success', message: response.message});
           // change the flag for form submit
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
@@ -645,7 +645,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           // once getting the response and status is true close the modal
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user
-          this.successMessage = response.message;
+          this.errorService.setMessage({type: 'success', message: response.message});
           // change the flag for form submit
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
@@ -682,7 +682,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         Log.info(response, 'delete api response');
         if(response.status) {
           // show the success message to user in review listing page
-          this.successMessage = response.message;
+          this.errorService.setMessage({type: 'success', message: response.message});
           // making an api call to get all reviews along with the newly added sticky review
           this.getStickyReviews();
         } else {
