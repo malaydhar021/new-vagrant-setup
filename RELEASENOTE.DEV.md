@@ -140,6 +140,11 @@
 
 ## Sticky Review
 
+### V2.1.3
+
+1. Fixed issue with video upload during add/edit a sticky review
+2. Modified client side validation for review files and sticky reviews image
+
 ### V2.1.2
 
 1. Fixed issue with edit a sticky review for audio / video review

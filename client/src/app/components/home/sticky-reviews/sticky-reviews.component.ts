@@ -47,7 +47,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   allowedMaxImageFileSize:number = 1; // max file size for sticky review image
   allowedMaxAudioFileSize:number = 20; // max file size for review type audio
-  allowedMaxVideoFileSize:number = 30; // max file size for review type video
+  allowedMaxVideoFileSize:number = 3; // max file size for review type video
   unit: string = "MB"; // legal values are GB|MB|KB
   allowedMaxTextReviewChars: number = 60; // max chars for text review
   // allowed file types for sticky review image
@@ -164,6 +164,9 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         this.reviewAsFile = null;
         // assign current value of review type a class property
         this.selectedReivewType = value;
+        if(value !== 1) {
+          this.mediaService.disposePlayer();
+        }
       }
     );
     // set pagination config
@@ -497,8 +500,16 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       this.reviewAsFile = event.target.files[0];
       // set filename to hidden field to handle angular reactive form HTMLInputElement error
       this.getFormControls.sr.setValue(this.reviewAsFile !== null ? this.reviewAsFile.name : '');
+      Log.debug(this.reviewAsFile, "check the latest video file");
+      // check the uploaded file is validated or not
+      this.runtimeValidations();
+      // check whether `sr` formControl has got any error or not
+      if(this.getFormControls.sr.invalid) {
+        this.mediaService.disposePlayer();
+        return;
+      }
+      // lets initialize the FileReader class
       let reader = new FileReader();
-
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       // called once readAsDataURL is completed
       reader.onload = (e) => {
@@ -508,6 +519,13 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         } else if(this.selectedReivewType == 3) {
           this.mediaService.updateAudioSrc(null);
           this.mediaService.updateVideoSrc(reader.result.toString());
+        }
+        // check again the uploaded file is validated or not
+        this.runtimeValidations();
+        // check whether `sr` formControl has got any error or not
+        if(this.getFormControls.sr.invalid) {
+          this.mediaService.disposePlayer();
+          return;
         }
       }
     }

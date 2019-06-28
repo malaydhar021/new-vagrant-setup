@@ -82,7 +82,7 @@
           <div class="sr-form-content">
             <div class="sr-form-row">
               <div class="sr-form-cell-small">
-                <label>Review Link Name</label>
+                <label>Sticky Review Name</label>
                 <div class="sr-form-field">
                   <input type="text" class="sr-form-ctrl"
                     [ngClass]="{error: isSubmitted && getFormControls.srName.errors}" formControlName="srName">
@@ -90,13 +90,13 @@
                       isSubmitted
                       && getFormControls.srName.errors !== null
                       && getFormControls.srName.errors.required)">
-                    Review link name is required
+                    Sticky review name is required
                   </div>
                   <div class="error-msg" *ngIf="(
                       isSubmitted
                       && getFormControls.srName.errors !== null
                       && getFormControls.srName.errors.maxlength)">
-                    Review link name should be maximum 25 characters
+                    Sticky review name should be maximum 25 characters
                   </div>
                 </div>
               </div>
@@ -225,7 +225,7 @@
                   <div class="sr-form-field">
                     <div class="sr-form-ctrl inputFile">
                       <input type="file" (change)="onChangeReviewFile($event)"
-                        [ngClass]="{error: isSubmitted && getFormControls.sr.errors}">
+                        [ngClass]="{error: getFormControls.sr.errors}">
                       <input type="hidden" name="hiddenFileName" formControlName="sr">
                       <div class="choseFileArea">
                         <div class="fileImg">
@@ -243,20 +243,17 @@
                     </div>
                   </div>
                   <div class="error-msg" *ngIf="(
-                      isSubmitted
-                      && getFormControls.sr.errors !== null
+                      getFormControls.sr.errors !== null
                       && getFormControls.sr.errors.required)">
                     Video is required
                   </div>
                   <div class="error-msg" *ngIf="(
-                      isSubmitted
-                      && getFormControls.sr.errors !== null
+                      getFormControls.sr.errors !== null
                       && getFormControls.sr.errors.invalidFileType)">
                     Invalid file type. File should be an video
                   </div>
                   <div class="error-msg" *ngIf="(
-                      isSubmitted
-                      && getFormControls.sr.errors !== null
+                      getFormControls.sr.errors !== null
                       && getFormControls.sr.errors.invalidFileSize)">
                     Invalid file size. File size should be maximum {{ allowedMaxVideoFileSize }} {{ unit }}
                   </div>
@@ -271,22 +268,19 @@
                 <div class="sr-form-field">
                   <div class="sr-form-ctrl inputFile">
                     <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
-                      [ngClass]="{error: isSubmitted && getFormControls.srImage.errors}">
+                      [ngClass]="{error: getFormControls.srImage.errors}">
                       <div class="error-msg" *ngIf="(
-                            isSubmitted
-                            && getFormControls.srImage.errors !== null
+                            getFormControls.srImage.errors !== null
                             && getFormControls.srImage.errors.required)">
                         Image is required
                       </div>
                       <div class="error-msg" *ngIf="(
-                            isSubmitted
-                            && getFormControls.srImage.errors !== null
+                            getFormControls.srImage.errors !== null
                             && getFormControls.srImage.errors.invalidFileType)">
                         Invalid file type. File should be an image
                       </div>
                       <div class="error-msg" *ngIf="(
-                            isSubmitted
-                            && getFormControls.srImage.errors !== null
+                            getFormControls.srImage.errors !== null
                             && getFormControls.srImage.errors.invalidFileSize)">
                         Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
                       </div>
