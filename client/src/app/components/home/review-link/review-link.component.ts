@@ -89,7 +89,6 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
-        Log.info(status, "check showError status in review link component");
       }
     );
   }
@@ -123,6 +122,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**
@@ -283,8 +283,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.isModalOpened = true;
       this.errorService.updateShowMessageStatus(false);
-      this.successMessage = '';
-      this.errorMessage = '';
+      this.errorService.setMessage(null);      
     });
   }
 
@@ -490,8 +489,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
           this.reviewLinks = response.data.data;
           // hide the loader
           this.loaderService.disableLoader();
-        } else {
-          this.errorMessage = response.messages;
+        } else {          
+          this.errorService.setMessage({type: 'error', message: response.message});
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -856,9 +855,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public destroyMessage() {
-    this.errorService.clearMessage();
-    this.successMessage = '';
-    this.errorMessage = '';
+    this.errorService.clearMessage();    
+    this.errorService.setMessage(null);
   }
 
   /**
@@ -871,12 +869,12 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   }
   
   /**
+   * Method to show a message once user has clicked to copy review link
    * @method onClickCopyLink
    * @since Version 1.0.0
    * @returns Void
    */
   public onClickCopyLink() {
-    Log.info("copy button has been clicked");
     const message = {
       type: 'success',
       message: 'Review link has been copied to clipboard'

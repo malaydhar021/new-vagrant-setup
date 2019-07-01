@@ -90,6 +90,7 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**

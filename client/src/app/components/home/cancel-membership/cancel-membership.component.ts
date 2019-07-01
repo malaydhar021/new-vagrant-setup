@@ -99,6 +99,7 @@ export class CancelMembershipComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**
@@ -153,7 +154,7 @@ export class CancelMembershipComponent implements OnInit, OnDestroy {
           this.errorService.updateMessage(response.message);
           this.router.navigate(['/login']);
         } else {
-          this.errorMessage = ''; 
+          this.errorService.setMessage(null);
         }
       }
     )

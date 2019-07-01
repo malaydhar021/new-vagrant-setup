@@ -10,7 +10,7 @@
       <span>Login to continue using Sticky Reviews</span>
     </h1>
     <div class="formArea">
-      <message [successMessage]="successMessage" [showMessage]="showError"></message>
+      <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="formRow"

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy }       from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgxSmartModalService }               from 'ngx-smart-modal';
+import { NgxSmartModalService, NgxSmartModalComponent }               from 'ngx-smart-modal';
 import { Subscription }                       from 'rxjs';
 import { SubscriptionService }                from '../../../services/subscription.service';
 import { LoaderService }                      from '../../../services/loader.service';
@@ -9,7 +9,7 @@ import { ErrorsService }                      from '../../../services/errors.ser
 /**
  * Component to update user card details
  * @class UpdatePaymentInfoComponent
- * @version 1.0.0
+ * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -26,6 +26,7 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
   successMessage: string = null; // property to hold the success message
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
+  isModalOpened: boolean = false; // set to true if the modal is opened
   
   /**
    * Constructor to load required services at the very first
@@ -70,6 +71,56 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
+  }
+
+  /**
+   * Method to execute when dom document is ready
+   * @method ngAfterViewInit
+   * @since Version 2.0.0
+   * @returns Void
+   */
+  public ngAfterViewInit() {
+    this.modalCallbacks(); // modal callbacks i.e onClose, onDismiss, onEscape
+  }
+
+  /**
+   * Method to perform ngx-smart-modal event callbacks
+   * @method modalCallbacks
+   * @since Version 2.0.0
+   * @returns Void
+   */
+  public modalCallbacks() {
+    // do stuffs when modal has been closed. In this case reset the form when modal is closed
+    this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
+      this.resetForm;
+    });
+    // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
+    // In this case reset the form when modal is dismissed
+    this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
+      this.resetForm;
+    });
+    // reset form when modal has been closed by esc key
+    this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
+      this.resetForm;
+    });
+    // set showError to false when the modal is being opened
+    this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      this.errorService.updateShowMessageStatus(false);
+      this.isModalOpened = true; // set it to true as modal is about to open. This is form show server side messages into modal but not in listing page
+    });
+  }
+
+  /**
+   * Method to reset card update form which will be called once the modal is closed or escaped or dismissed
+   * @method resetForm
+   * @since Version 1.0.0
+   * @returns Void
+   */
+  public get resetForm() {
+    this.cardForm.reset();
+    this.isModalOpened = false;
+    return;
   }
 
   /**
@@ -108,14 +159,13 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
    * @param reset 
    * @returns Void
    */
-  createCardForm(reset= false) {
+  public createCardForm(reset = false) {
     this.cardForm = this.formBuilder.group({
       card_number: [null, Validators.compose([Validators.required, Validators.minLength(14)])],
       cvc_number:[null, Validators.compose([Validators.required, Validators.minLength(3)])],
       expiry_month:[1, Validators.required],
       expiry_year: [this.currentYear, Validators.required]
     })
-    reset && this.cardForm.reset();
   }
 
   /**
@@ -123,14 +173,21 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  add() {
+  public add() {
     this.loaderService.enableLoader();
     this.subscriptionService.updateCardDetails(this.cardForm.value).subscribe(
       (response: any)=> {
+        // hide the loader
         this.loaderService.disableLoader();
-        this.card = response.card;
-        this.ngxSmartModalService.getModal('modal1').close();
-        this.createCardForm(true);
+        if(response.status) {
+          this.card = response.card;
+          this.ngxSmartModalService.getModal('modal1').close();
+          // set the success message to show to user. 100 ms delay has been set as the onClose modal event should execute first
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
+        } else {
+          // if the any error occurred the show the error message to user as well with 100 ms delay
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
+        }
       }
     )
   }

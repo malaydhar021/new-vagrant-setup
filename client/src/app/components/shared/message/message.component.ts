@@ -67,7 +67,6 @@ export class MessageComponent implements OnInit, OnDestroy {
     // update message set from mostly from different components for 200 http status response
     this.messageSubscription = this.errorService.message$.subscribe(
       message => {
-        Log.info(message, "log message into message component");
         if(message === null || message === '') return;
         // this.loaderService.disableLoader();
         switch(message.type){
@@ -115,7 +114,6 @@ export class MessageComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onClose(messageType: string, removeMessage: string = null) {
-    Log.info(messageType, 'Type of error message');
     // do nothing if no message type has been provided
     if(messageType === null || messageType === '') return;
     switch(messageType) {

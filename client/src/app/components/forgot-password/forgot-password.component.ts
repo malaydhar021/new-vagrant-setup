@@ -59,7 +59,6 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
-        Log.info(status);
       }
     );
   }
@@ -92,6 +91,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     // this.subscription.unsubscribe();
     this.errorSubscription.unsubscribe();
     this.renderer.removeClass(document.body, 'loginPage');
+    this.errorService.clearMessage();
   }
 
   /**
@@ -124,16 +124,10 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
           Log.info(response, 'response for forgot password');
           // hide loader
           this.loaderService.disableLoader();
-          this.successMessage = response.message;
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000);
+          this.errorService.setMessage({type: 'success', message: response.message});
         } else {
           this.loaderService.disableLoader();
-          this.errorMessage = response.message;
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 3000);
+          this.errorService.setMessage({type: 'error', message: response.message});
         }
       }
     );

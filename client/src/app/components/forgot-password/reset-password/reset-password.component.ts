@@ -116,6 +116,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.renderer.removeClass(document.body, 'loginPage');
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**
@@ -158,14 +159,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         if(response.status) {
           this.errorService.updateMessage("Password has been successfully reset. Please loging with updated password");
           this.loaderService.disableLoader(); // hide the loader
-          this.successMessage = response.message;
-          setTimeout(() => {
-            this.successMessage = null;
-          }, 3000);
+          this.errorService.setMessage({type: 'success', message: response.message}); // set the success message
           this.router.navigate(['/login']);
         } else {
           this.loaderService.disableLoader();
-          this.errorMessage = response.message;
+          this.errorService.setMessage({type: 'error', message: response.message}); // set the error message
         }
       }
     );

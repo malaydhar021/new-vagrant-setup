@@ -69,7 +69,9 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
+   * @method ngOnInit
+   * @since Version 1.0.0
+   * @returns Void
    */
   public ngOnInit() {
     this.getCurrentSubscription();
@@ -83,7 +85,8 @@ export class PlansComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public ngOnDestroy() {
-
+    this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**

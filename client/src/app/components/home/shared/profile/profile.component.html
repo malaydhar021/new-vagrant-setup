@@ -5,10 +5,10 @@
   
     <div class="userInfo text-center" *ngIf="userInfo">
         <div class="userDisplay">
-          <span class="showDisplay" [ngStyle]="{'background-image': 'url(' + userInfo.image + ')'}"></span>
+          <span class="showDisplay" [ngStyle]="{'background-image': 'url(' + imagePreviewUrl + ')'}"></span>
         </div>
-        <h5>{{userInfo.name}}</h5>
-        <p>{{userInfo.email}}</p>
+        <h5>{{ userInfo.name }}</h5>
+        <p>{{ userInfo.email }}</p>
         <div class="editInfoHd">
           <a href="javascript:void(0)" (click)="openUserProfileUpdateForm()">
             <img src="../../../../assets/images/icon_edit_black.png" alt="">
@@ -17,9 +17,9 @@
     </div>
   
     <div class="formChangepass">
-      <span><message [successMessage] = 'successMessage'></message></span>
+      <span><message *ngIf="!isModalOpened" [successMessage]="successMessage" [showMessage]="showError"></message></span>
       <h2>Change password</h2>
-      <p>We reccommend to change your password in every 1 or 2 months to keep your account safe & secured.</p>
+      <p>We recommend to change your password in every 1 or 2 months to keep your account safe & secured.</p>
   
       <form [formGroup]="userPasswordUpdateForm" (ngSubmit)="onUpdatePassword()">
         <div class="sr-form-row">
@@ -86,7 +86,7 @@
       </h2>
     </div>
     <div class="sr-modal-body profileImg">
-        <message></message>
+        <message *ngIf="isModalOpened" [showMessage]="showError"></message>
         <form [formGroup]="userProfileUpdateForm" (ngSubmit)="onUserProfileUpdate()">
             <div class="sr-form">
               <div class="sr-form-row">
@@ -129,20 +129,15 @@
                   <label>Upload an image</label>
                   <div class="sr-form-field">
                     <div class="sr-form-ctrl inputFile">
-                      <input 
-                          type="file"
-                          class="sr-form-ctrl"
-                          
-                          (change)="onFileChange($event)"
-                          [ngClass]="{'error' : !userProfileUpdateForm.get('image').valid}"
-                          >
-                          <!-- invalidFileType invalidFileSize -->
-                          <span class="error-msg" *ngIf="!userProfileUpdateForm.get('image').valid && userProfileUpdateForm.get('image').errors.invalidFileType">
-                            Invalide File Type
-                          </span>
-                          <span class="error-msg" *ngIf="!userProfileUpdateForm.get('image').valid && userProfileUpdateForm.get('image').errors.invalidFileSize">
-                              Invalide File Size
-                            </span>
+                      <input type="file" class="sr-form-ctrl" (change)="onFileChange($event)"
+                          [ngClass]="{'error' : !userProfileUpdateForm.get('image').valid}">
+                      <!-- invalidFileType invalidFileSize -->
+                      <span class="error-msg" *ngIf="!userProfileUpdateForm.get('image').valid && userProfileUpdateForm.get('image').errors.invalidFileType">
+                        Invalid File Type
+                      </span>
+                      <span class="error-msg" *ngIf="!userProfileUpdateForm.get('image').valid && userProfileUpdateForm.get('image').errors.invalidFileSize">
+                          Invalid File Size
+                      </span>
                       <div class="choseFileArea">
                         <div class="fileImg">
                           <img src="../../../../assets/images/icon_upload_photo.png" alt="">

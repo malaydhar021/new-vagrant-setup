@@ -1,4 +1,3 @@
-
 <div class="mainBox">
   <div class="updatePaymentInfo">
     <h1>
@@ -7,6 +6,7 @@
       <span>You have added following card information with your account</span>
     </h1>
     <div class="cards">
+      <message *ngIf="!isModalOpened" [successMessage]="successMessage" [showMessage]="showError"></message>
       <ul *ngIf="card">
         <li>
           <div class="cardNumber">
@@ -36,7 +36,7 @@
       </h2>
     </div>
     <div class="sr-modal-body">
-      <message [successMessage]="successMessage" [showMessage]="showError"></message>
+      <message *ngIf="isModalOpened" [successMessage]="successMessage" [showMessage]="showError"></message>
       <form [formGroup]="cardForm" (ngSubmit)="add()">
         <div class="cardForm updateCardModal">
           <h2>Credit Card Information</h2>

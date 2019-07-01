@@ -27,6 +27,10 @@
 
 ## Subscription
 
+### V2.0.4
+
+1. Fixed issue with messages update card info page
+
 ### V2.0.3
 
 1. Fixed issue with message in plan page

@@ -96,6 +96,7 @@ export class LoginComponent implements OnInit {
     this.renderer.removeClass(document.body, 'loginPage');
     // this.subscription.unsubscribe();
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**

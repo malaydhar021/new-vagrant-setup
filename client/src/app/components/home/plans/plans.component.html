@@ -21,10 +21,7 @@
               <li><strong>No Review Links</strong></li>
             </ul>
             <p class="price">$15</p>
-            <button
-              type="button"
-              class="planBtn"
-              [ngClass]="{'current': buttonText('Starter')== 'CURRENT' }" 
+            <button type="button" class="planBtn" [ngClass]="{'current': buttonText('Starter')== 'CURRENT' }"
               (click)="addUpdatePlan('lowest')">{{buttonText('Starter')}}</button>
           </div>
           <div class="planCell">
@@ -41,15 +38,13 @@
               <li><strong>5 Review Links</strong></li>
             </ul>
             <p class="price">$25</p>
-            <button
-              type="button"
-              class="planBtn"
-              [ngClass]="{'current': buttonText('Premium')== 'CURRENT' }"
+            <button type="button" class="planBtn" [ngClass]="{'current': buttonText('Premium')== 'CURRENT' }"
               (click)="addUpdatePlan('modest')">{{buttonText('Premium')}}</button>
           </div>
           <div class="planCell">
             <div class="planHead">
-              <div class="planImg"><img src="../../../../assets/images/icon_price_plan_agency.png" alt="" class="acencyImg"></div>
+              <div class="planImg"><img src="../../../../assets/images/icon_price_plan_agency.png" alt=""
+                  class="acencyImg"></div>
               <h2>AGENCY</h2>
             </div>
             <ul class="features">
@@ -61,24 +56,22 @@
               <li><strong>Unlimited Review Links</strong></li>
             </ul>
             <p class="price">$47</p>
-            <button
-              type="button"
-              class="planBtn"
-              [ngClass]="{'current': buttonText('Agency') == 'CURRENT' }"
+            <button type="button" class="planBtn" [ngClass]="{'current': buttonText('Agency') == 'CURRENT' }"
               (click)="addUpdatePlan('highest')">{{buttonText('Agency')}}</button>
           </div>
         </div>
         <div>
-          <message [successMessage]="successMessage" [showMessage]="showError"></message>
+          <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
         </div>
         <div class="planNote text-center">
           <p>
-              *Billed monthly, <span class="link-inline">no set up fee.</span>
+            *Billed monthly, <span class="link-inline">no set up fee.</span>
           </p>
         </div>
 
         <div class="cancelReg">
-          <p>I want to <a href="javascript:void(0)" class="link-inline" [routerLink]="['/home/cancel-membership']">Cancel my membership.</a></p>
+          <p>I want to <a href="javascript:void(0)" class="link-inline"
+              [routerLink]="['/home/cancel-membership']">Cancel my membership.</a></p>
         </div>
       </div>
     </div>
@@ -91,73 +84,59 @@
         Add Credit Card Info
       </h2>
     </div>
-    <div class="sr-modal-body"> 
-      <message [successMessage]="successMessage" [showMessage]="showError"></message>
+    <div class="sr-modal-body">
+      <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
       <form [formGroup]="cardForm" (ngSubmit)="add()">
         <div class="cardForm updateCardModal">
           <h2>Credit Card Information</h2>
           <div class="formRow">
-            <div class="formCol6" >
+            <div class="formCol6">
               <label>Credit Card Number</label>
-              <input 
-                type="text" 
-                class="formCtrl card sr-form-ctrl" 
-                mask="0000 0000 0000 0000"
+              <input type="text" class="formCtrl card sr-form-ctrl" mask="0000 0000 0000 0000"
                 formControlName="card_number"
                 [ngClass]="{'error' : !cardForm.get('card_number').valid && cardForm.get('card_number').touched}">
-                <span class="error-msg" 
-                  *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.required">
-                  Credit card is required!
-                </span>
-                <span class="error-msg" 
-                  *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.minlength">
-                  Minimum length 14
-                </span>
+              <span class="error-msg"
+                *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.required">
+                Credit card is required!
+              </span>
+              <span class="error-msg"
+                *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.minlength">
+                Minimum length 14
+              </span>
             </div>
             <div class="formCol4">
               <label>CVC Number</label>
-              <input 
-                type="password" 
-                class="formCtrl"
-                mask="0000"
-                formControlName="cvc_number"
-                [ngClass]="{'error' : !cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched}"
-                >
-                <span class="error-msg" 
-                  *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched && cardForm.get('cvc_number').errors.required" class="error-msg">
-                  Required!
-                </span>
-                <span class="error-msg" 
-                *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched && cardForm.get('cvc_number').errors.minlength" class="error-msg">
-                  Minimum length 3
-                </span>
+              <input type="password" class="formCtrl" mask="0000" formControlName="cvc_number"
+                [ngClass]="{'error' : !cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched}">
+              <span class="error-msg"
+                *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched && cardForm.get('cvc_number').errors.required"
+                class="error-msg">
+                Required!
+              </span>
+              <span class="error-msg"
+                *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched && cardForm.get('cvc_number').errors.minlength"
+                class="error-msg">
+                Minimum length 3
+              </span>
             </div>
           </div>
           <div class="formRow">
             <div class="formCol5">
               <label>Expiry Month</label>
-              <select 
-                class="formCtrl"
-                formControlName="expiry_month"
-                >
-                <option [value]="month" *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]; let y = index">{{month}}</option>
-               
+              <select class="formCtrl" formControlName="expiry_month">
+                <option [value]="month" *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]; let y = index">
+                  {{month}}</option>
               </select>
             </div>
             <div class="formCol5">
               <label>Expiry Year</label>
-              <select 
-                class="formCtrl"
-                formControlName="expiry_year">
+              <select class="formCtrl" formControlName="expiry_year">
                 <option [value]="year" *ngFor="let year of years; let y = index">{{year}}</option>
               </select>
             </div>
           </div>
           <div class="formRow">
-            <button
-              type="submit"
-              class="UpdateCardBtn"
-              [disabled]="!cardForm.valid">
+            <button type="submit" class="UpdateCardBtn" [disabled]="!cardForm.valid">
               Subscribe
             </button>
           </div>
@@ -165,5 +144,4 @@
       </form>
     </div>
   </div>
-  <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>

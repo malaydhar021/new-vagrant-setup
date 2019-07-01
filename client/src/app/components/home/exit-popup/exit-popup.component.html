@@ -9,7 +9,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <message [successMessage]="successMessage" [showMessage]="showError"></message>
+    <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="popupListContainer">
       <ng-scrollbar [compact]="true"  *ngIf="exitPopups.length > 0; else noRecords">
         <ul class="popupList">
@@ -2794,7 +2794,7 @@
       </h2>
     </div>
     <div class="sr-modal-body">
-      <message [successMessage]="successMessage" [showMessage]="showError"></message>
+      <message *ngIf="isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="sr-form">
           <div class="sr-form-row">
@@ -2861,20 +2861,20 @@
               <label style="margin-top: 20px;" *ngIf="showStickyReviews">Select Reviews</label>
               <div class="sr-form-field" *ngIf="showStickyReviews">
                 <select class="sr-form-ctrl" formControlName="stickyReviews" multiple (change)="getStickyReviewStyle()"  [compareWith]="compareFn" [ngClass]="{error: isSubmitted && getFormControls.stickyReviews.errors}">
-                  <option value="">Select atlist one sticky review </option>
+                  <option value="">Select at least one sticky review </option>
                   <option *ngFor="let stickyReview of stickyReviews; let i = index" [ngValue]="stickyReview"> {{ stickyReview.name }} </option>
                 </select>
                 <div class="error-msg" *ngIf="(
                   isSubmitted
                   && getFormControls.stickyReviews.errors !== null
                   && getFormControls.stickyReviews.errors.required)">
-                  Please atlist one stickyReviews
+                  Please at least one stickyReviews
                 </div>
               </div>
 
             </div>
             <div class="sr-form-cell-small exitPopup_paddings">
-              <!--              <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>-->
+              <!-- <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>-->
               <!-- Popup Action -->
               <label>Exit popup action </label>
               <label> <input type="radio" class="tglBtn" formControlName="exitPopupAction" value="1" (change)="addExitpopupAction()"> Add email field </label>
@@ -3029,7 +3029,7 @@
                 </div>
               </div>
 
-              <label>Choose Visual Appearance<a href="javascript:void(0)" class="tooltip" data-title="Choose the visual style for the exit popupts!">
+              <label>Choose Visual Appearance<a href="javascript:void(0)" class="tooltip" data-title="Choose the visual style for the exit popups!">
                   <img src="../../../../assets/images/icon_info2.png" alt=""></a></label>
               <div class="sr-form-field">
                 <select class="sr-form-ctrl" formControlName="exitPopupVisualStyles" (change)="setPopupVisualStyle()"  [compareWith]="compareFn">

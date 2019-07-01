@@ -4,6 +4,7 @@
     <h2>Settings</h2>
 
     <div class="dataTableArea">
+        <message [successMessage]="successMessage" [showMessage]="showError"></message>
         <div class="table">
             <ul class="thead">
                 <li>Token name </li>
@@ -33,7 +34,7 @@
 
     <div class="edit-info-user">
         <div class="formChangepass">
-            <span><message [successMessage] = 'successMessage'></message></span>
+            <span><message [successMessage]='successMessage' [showMessage]="showError"></message></span>
             <h2>Generate zapier api token </h2>
             <form [formGroup]="userZapierTokenForm" (ngSubmit)="onCreateToken()">
                 <div class="sr-form-row">

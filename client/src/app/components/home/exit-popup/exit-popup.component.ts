@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {NgxSmartModalComponent, NgxSmartModalService} from 'ngx-smart-modal';
+import { NgxSmartModalComponent, NgxSmartModalService } from 'ngx-smart-modal';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -11,13 +11,20 @@ import * as htmlToImage from 'html-to-image';
 import * as moment from 'moment';
 import { Log } from 'src/app/helpers/app.helper';
 
+/**
+ * Component to deal with all sort of functionalities related to exit popup create, update, delete and listing.
+ * @class ExitPopupComponent
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
 @Component({
   selector: 'app-exit-popup',
   templateUrl: './exit-popup.component.html',
   styleUrls: ['./exit-popup.component.scss']
 })
 export class ExitPopupComponent implements OnInit, OnDestroy {
-
+  // defining class properties
   isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
   form: FormGroup; // for add or edit brand form in modal
   subscription: Subscription; // to get the current value updated from error interceptor
@@ -72,13 +79,24 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   searchKey: string = '';
+  isModalOpened: boolean = false; // set to true if the modal is opened
+
+  /**
+   * 
+   * @param ngxSmartModalService 
+   * @param title 
+   * @param formBuilder 
+   * @param errorService 
+   * @param loaderService 
+   * @param exitPopupService 
+   */
   constructor(
-      public ngxSmartModalService: NgxSmartModalService,
-      public title: Title,
-      private formBuilder: FormBuilder,
-      private errorService: ErrorsService,
-      private loaderService: LoaderService,
-      private exitPopupService: ExitPopupService
+    public ngxSmartModalService: NgxSmartModalService,
+    public title: Title,
+    private formBuilder: FormBuilder,
+    private errorService: ErrorsService,
+    private loaderService: LoaderService,
+    private exitPopupService: ExitPopupService
   ) {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
@@ -87,21 +105,25 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     );
   }
 
-
+  /**
+   * @method ngOnInit
+   * @since Version 1.0.0
+   * @returns Void
+   */
   public ngOnInit() {
     this.title.setTitle('Stickyreviews :: Exit pop-up(s)');
     this.isSubmitted = false;
     this.form = this.formBuilder.group({
-      exitPopUpName : [null, Validators.required], // exitPopUpName name
-      headerTextColor : [null],
-      headerBackgroundColor : [null],
-      buttonTextColor : [null],
-      buttonBackgroundColor : [null],
-      paragraphTextColor : [null],
-      bodyBackgroundColor : [null],
-      exitPopupVisualStyles : [ this.styleId, Validators.required],
+      exitPopUpName: [null, Validators.required], // exitPopUpName name
+      headerTextColor: [null],
+      headerBackgroundColor: [null],
+      buttonTextColor: [null],
+      buttonBackgroundColor: [null],
+      paragraphTextColor: [null],
+      bodyBackgroundColor: [null],
+      exitPopupVisualStyles: [this.styleId, Validators.required],
       hasCampaign: [false],
-      campaign : [''],
+      campaign: [''],
       hasStickyReview: [false],
       hasEmailField: [false],
       exitPopupHeaderText: ['Take a break, TAKE A LOOK', Validators.compose([Validators.required, Validators.maxLength(25)])],
@@ -130,12 +152,24 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
+  /**
+   * @method ngAfterViewInit
+   * @since Version 1.0.0
+   * @returns Void
+   */
   public ngAfterViewInit() {
     this.modalCallbacks(); // modal callbacks i.e onClose, onDismiss, onEscape
   }
 
+  /**
+   * Method to reset form and clear messages when the add/edit modal has been opened or closed
+   * @method modalCallbacks
+   * @since Version 1.0.0
+   * @returns Void
+   */
   public modalCallbacks() {
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
@@ -153,6 +187,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.errorService.updateShowMessageStatus(false);
+      this.isModalOpened = true; // set it to true as modal is about to open. This is form show server side messages into modal but not in listing page
     });
   }
 
@@ -161,6 +196,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
    */
   public resetForm() {
     this.form.reset(); // reset the form
+    this.isModalOpened = false; // set to false as modal has been closed
   }
 
   /**
@@ -175,20 +211,20 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.isSubmitted = false;
     this.showMe = '1';  // show default modal for the pop up preview
     this.form = this.formBuilder.group({
-      exitPopUpName : [null, Validators.required], // exitPopUpName name
-      headerTextColor : [null],
-      headerBackgroundColor : [null],
-      buttonTextColor : [null],
-      buttonBackgroundColor : [null],
-      paragraphTextColor : [null],
-      bodyBackgroundColor : [null],
-      exitPopupVisualStyles : [ this.styleId, Validators.required],
+      exitPopUpName: [null, Validators.required], // exitPopUpName name
+      headerTextColor: [null],
+      headerBackgroundColor: [null],
+      buttonTextColor: [null],
+      buttonBackgroundColor: [null],
+      paragraphTextColor: [null],
+      bodyBackgroundColor: [null],
+      exitPopupVisualStyles: [this.styleId, Validators.required],
       hasCampaign: [false],
-      campaign : [''],
+      campaign: [''],
       hasStickyReview: [false],
       hasEmailField: [false],
       exitPopupHeaderText: ['Take a break, TAKE A LOOK', Validators.compose([Validators.required, Validators.maxLength(25)])],
-      exitPopupButtonText: ['Subscribe',  Validators.compose([Validators.required, Validators.maxLength(15)])],
+      exitPopupButtonText: ['Subscribe', Validators.compose([Validators.required, Validators.maxLength(15)])],
       exitPopupParagraphText: ['Curabitur blandit velit non eros bibendum tincidunt. Integer tincidunt massa sed laoreet lacinia.', Validators.compose([Validators.required, Validators.maxLength(100)])],
       stickyReviews: [null],
       exitPopupButtonUrl: [null],
@@ -218,26 +254,31 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   public getUserExitPopups() {
     this.loaderService.enableLoader();
     this.exitPopupService.getUserExitPopups().subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.exitPopups = response.data.data;
-            this.config.totalItems = response.data.total;
-            this.loaderService.disableLoader();
-          }
+      (response: any) => {
+        if (response.status) {
+          this.exitPopups = response.data.data;
+          this.config.totalItems = response.data.total;
+          this.loaderService.disableLoader();
         }
+      }
     );
   }
 
+  /**
+   * @method onSubmit
+   * @since Version 1.0.0
+   * @returns Void
+   */
   public async onSubmit() {
-     Log.info(' try to save/update exit popups ... ');
+    Log.info(' try to save/update exit popups ... ');
     this.isSubmitted = true;
     // check if the form does not pass the client side validation
     if (this.form.invalid) {
       Log.info('Get a validation error ');
       return;
     }
-
-    let someOp =  await this.makeImage();
+    this.isSubmitted = false;
+    let someOp = await this.makeImage();
     this.loaderService.enableLoader();
     const data = {
       name: this.form.value.exitPopUpName,
@@ -298,81 +339,78 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       data.has_sticky_reviews = 0;
       delete data.sticky_reviews;
     }
-
     data.popup_preview_img = this.imageCode;
     if (this.isEditing) {
       this.updateExitPopup(data, this.exitPopupId);
     } else {
       this.addExitPopUp(data);
     }
-
   }
 
+  /**
+   * Method to create an exit popup
+   * @method addExitPopUp
+   * @since Version 1.0.0
+   * @param data ExitPopupModel instance
+   * @returns Void
+   */
   public addExitPopUp(data: ExitPopupModel) {
     this.exitPopupService.addExitPopup(data).subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.loaderService.disableLoader();
-            this.form.reset();
-            this.ngxSmartModalService.getModal('modal1').close();
-            this.successMessage = response.message;
-            setTimeout(() => {
-              this.successMessage = null;
-            });
-            this.getUserExitPopups();
-          } else {
-            this.loaderService.disableLoader();
-            this.successMessage = response.message;
-            setTimeout(() => {
-              this.successMessage = null;
-            });
-            this.getUserExitPopups();
-          }
+      (response: any) => {
+        this.loaderService.disableLoader();
+        if (response.status) {
+          this.ngxSmartModalService.getModal('modal1').close();
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
+          this.getUserExitPopups();
+        } else {
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
+          this.getUserExitPopups();
         }
+      }
     );
   }
 
   public getVisualStyles() {
     this.exitPopupService.getVisualStyles().subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.styleId = response.data[0];
-            this.form.get('exitPopupVisualStyles').setValue(this.styleId);
-            this.visualStyles = response.data;
-          }
+      (response: any) => {
+        if (response.status) {
+          this.styleId = response.data[0];
+          this.form.get('exitPopupVisualStyles').setValue(this.styleId);
+          this.visualStyles = response.data;
         }
+      }
     );
   }
 
   public getCampaignsList() {
     this.exitPopupService.getCampaignsList().subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.campaigns = response.data;
-          }
+      (response: any) => {
+        if (response.status) {
+          this.campaigns = response.data;
         }
+      }
     );
   }
 
   public addStickeyReview() {
     if (this.form.value.hasStickyReview === true) {
-        this.showStickyReviews = true;
-        this.getStickyReviews();
-        this.form.controls['stickyReviews'].setValidators([Validators.required]);
+      this.showStickyReviews = true;
+      this.getStickyReviews();
+      this.form.controls['stickyReviews'].setValidators([Validators.required]);
     } else {
-        this.form.controls['stickyReviews'].clearValidators();
+      this.form.controls['stickyReviews'].clearValidators();
       this.showStickyReviews = false;
     }
-      this.form.controls['stickyReviews'].updateValueAndValidity();
+    this.form.controls['stickyReviews'].updateValueAndValidity();
   }
 
   public getStickyReviews() {
     this.exitPopupService.getStickyReviews().subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.stickyReviews = response.data;
-          }
+      (response: any) => {
+        if (response.status) {
+          this.stickyReviews = response.data;
         }
+      }
     );
   }
 
@@ -394,7 +432,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
         break;
       case 103:
         return this.showMe = '3';
-      break;
+        break;
       case 104:
         return this.showMe = '4';
         break;
@@ -448,20 +486,20 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       this.form.controls['campaign'].clearValidators();
       this.showCampaign = false;
     }
-      this.form.controls['campaign'].updateValueAndValidity();
+    this.form.controls['campaign'].updateValueAndValidity();
   }
 
   /**
    * This function will return sticky review style id according to a campaign
    */
   public getCampaignStyles() {
-    if (this.form.value.campaign !== null ) {
+    if (this.form.value.campaign !== null) {
       this.exitPopupService.getCampaignsStyle(this.form.value.campaign.id).subscribe(
-          (response: any ) => {
-            if (response.status) {
-              this.campaignStickyReviewStyleId = response.data;
-            }
+        (response: any) => {
+          if (response.status) {
+            this.campaignStickyReviewStyleId = response.data;
           }
+        }
       );
     }
   }
@@ -473,17 +511,17 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     if (this.form.value.stickyReviews[0] !== undefined && this.form.value.stickyReviews[0].id !== undefined) {
       // get the [0] position of the array and trit is as the id and send data according to it.
       this.exitPopupService.getstickyReviewInfo(this.form.value.stickyReviews[0].id).subscribe(
-          (response: any ) => {
-            if (response.status) {
-              this.reviewUserName = response.data.created_by.name;
-              this.reviewImageUrl = response.data.image_url;
-              this.reviewName = response.data.name;
-              this.reviewDescription = response.data.review;
-              this.reviewAt = moment(response.data.reviewed_at).startOf('day').fromNow();
-              this.reviewType = response.data.type;
-              this.reviewRating = response.data.rating;
-            }
+        (response: any) => {
+          if (response.status) {
+            this.reviewUserName = response.data.created_by.name;
+            this.reviewImageUrl = response.data.image_url;
+            this.reviewName = response.data.name;
+            this.reviewDescription = response.data.review;
+            this.reviewAt = moment(response.data.reviewed_at).startOf('day').fromNow();
+            this.reviewType = response.data.type;
+            this.reviewRating = response.data.rating;
           }
+        }
       );
     }
   }
@@ -518,17 +556,16 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     if (confirm('Are you sure you want to delete this item?')) {
       this.loaderService.enableLoader();
       this.exitPopupService.deleteExitPopup(id).subscribe(
-          (response: any ) => {
-            if (response.status) {
-              this.successMessage = response.message;
-              this.getUserExitPopups();
-              this.loaderService.disableLoader();
-            } else {
-              this.successMessage = response.message;
-              this.getUserExitPopups();
-              this.loaderService.disableLoader();
-            }
+        (response: any) => {
+          this.loaderService.disableLoader();
+          if (response.status) {            
+            setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
+            this.getUserExitPopups();
+          } else {            
+            setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
+            this.getUserExitPopups();
           }
+        }
       );
     }
   }
@@ -624,19 +661,17 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
    */
   public updateExitPopup(data, exitPopupId) {
     this.exitPopupService.updateExitPopup(data, exitPopupId).subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.loaderService.disableLoader();
-            this.form.reset();
-            this.ngxSmartModalService.getModal('modal1').close();
-            this.successMessage = response.message;
-            this.getUserExitPopups();
-          } else {
-            this.loaderService.disableLoader();
-            this.successMessage = response.message;
-            this.getUserExitPopups();
-          }
+      (response: any) => {
+        this.loaderService.disableLoader();
+        if (response.status) {
+          this.ngxSmartModalService.getModal('modal1').close();          
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
+          this.getUserExitPopups();
+        } else {
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
+          this.getUserExitPopups();
         }
+      }
     );
   }
 
@@ -645,7 +680,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
    * @param optionOne
    * @param optionTwo
    */
-  compareFn( optionOne, optionTwo ): boolean {
+  compareFn(optionOne, optionTwo): boolean {
     if (optionOne && optionTwo) {
       return optionOne.id === optionTwo.id;
     }
@@ -655,11 +690,11 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
    * Function to make Image with the exit popup
    */
   async makeImage() {
-    return new  Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const node = document.getElementById('canvas');
       htmlToImage.toPng(node).then((dataUrl) => {
-        this.imageCode =  dataUrl;
-        resolve(dataUrl) ;
+        this.imageCode = dataUrl;
+        resolve(dataUrl);
       }).catch((error) => {
         Log.info('oops, something went wrong!', error);
       });
@@ -698,24 +733,24 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       default:
         this.showMe = '1';
     }
-        this.exitPopupHeaderText = exitPopup.header_text;
-        this.exitPopupButtonText = exitPopup.button_text;
-        this.exitPopupParagraphText = exitPopup.paragraph_text;
-        this.exitPopupButtonUrl = exitPopup.button_url;
-        this.exitPopupCtaButtonText = exitPopup.cta_button_text;
-  if (exitPopup.has_email_field === true) {
-    this.showEmailField = true;
-    this.showCtaField = false;
+    this.exitPopupHeaderText = exitPopup.header_text;
+    this.exitPopupButtonText = exitPopup.button_text;
+    this.exitPopupParagraphText = exitPopup.paragraph_text;
+    this.exitPopupButtonUrl = exitPopup.button_url;
+    this.exitPopupCtaButtonText = exitPopup.cta_button_text;
+    if (exitPopup.has_email_field === true) {
+      this.showEmailField = true;
+      this.showCtaField = false;
     } else {
-    this.showEmailField = false;
-    this.showCtaField = true;
-  }
+      this.showEmailField = false;
+      this.showCtaField = true;
+    }
     if (exitPopup.has_campaign === true) {
       this.campaignStickyReviewStyleId = exitPopup.campaign.style_id;
     } else {
       this.campaignStickyReviewStyleId = '1';
     }
-    if(exitPopup.has_sticky_reviews === true) {
+    if (exitPopup.has_sticky_reviews === true) {
       this.showStickyReviews = true;
       // take the 1st sticky review from [0] position
       this.reviewUserName = exitPopup.sticky_reviews[0].created_by.name;
@@ -732,13 +767,14 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.ngxSmartModalService.getModal(modalName).onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.modalActive = modalName;
     });
-
     this.onModalClose(modalName);
-
     this.ngxSmartModalService.getModal(modalName).open();
   }
 
-
+  /**
+   * 
+   * @param modalName 
+   */
   public onModalClose(modalName) {
     this.ngxSmartModalService.getModal(modalName).onClose.subscribe((modal: NgxSmartModalComponent) => {
       this.modalActive = 'false';
@@ -753,63 +789,61 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     });
   }
 
-    /**
-     * Function to search from exit popup list
-     * @param $term
-     */
+  /**
+   * Function to search from exit popup list
+   * @param $term
+   */
   public onSearch($term) {
     this.config.currentPage = 1;
     this.loaderService.enableLoader();
     this.exitPopupService.searchExitPopups($term.target.value).subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.exitPopups = response.data.data;
-            this.config.totalItems = response.data.total;
-            this.loaderService.disableLoader();
-          }
+      (response: any) => {
+        if (response.status) {
+          this.exitPopups = response.data.data;
+          this.config.totalItems = response.data.total;
+          this.loaderService.disableLoader();
         }
+      }
     );
   }
 
-    /**
-     * Function to add remove Email field and CTA button.
-     * Add and remove the validation.
-     */
+  /**
+   * Function to add remove Email field and CTA button.
+   * Add and remove the validation.
+   */
 
   public addExitpopupAction() {
     if (this.form.value.exitPopupAction === '1') {
       this.showEmailField = true;
       this.showCtaField = false;
-        this.form.controls['exitPopupButtonText'].setValidators([Validators.required, Validators.maxLength(15)]);
-        this.form.controls['exitPopupButtonUrl'].clearValidators();
-        this.form.controls['exitPopupCtaButtonText'].clearValidators();
+      this.form.controls['exitPopupButtonText'].setValidators([Validators.required, Validators.maxLength(15)]);
+      this.form.controls['exitPopupButtonUrl'].clearValidators();
+      this.form.controls['exitPopupCtaButtonText'].clearValidators();
     } else {
       this.showEmailField = false;
       this.showCtaField = true;
-        this.form.controls['exitPopupButtonText'].clearValidators();
-        this.form.controls['exitPopupButtonUrl'].setValidators([
-            Validators.required,
-            Validators.pattern('https?://.+')
-        ]);
-        this.form.controls['exitPopupCtaButtonText'].setValidators([Validators.required, Validators.maxLength(40)]);
+      this.form.controls['exitPopupButtonText'].clearValidators();
+      this.form.controls['exitPopupButtonUrl'].setValidators([
+        Validators.required,
+        Validators.pattern('https?://.+')
+      ]);
+      this.form.controls['exitPopupCtaButtonText'].setValidators([Validators.required, Validators.maxLength(40)]);
     }
-      this.form.controls['exitPopupButtonUrl'].updateValueAndValidity();
-      this.form.controls['exitPopupCtaButtonText'].updateValueAndValidity();
-      this.form.controls['exitPopupButtonText'].updateValueAndValidity();
+    this.form.controls['exitPopupButtonUrl'].updateValueAndValidity();
+    this.form.controls['exitPopupCtaButtonText'].updateValueAndValidity();
+    this.form.controls['exitPopupButtonText'].updateValueAndValidity();
   }
 
   pageChanged(pgNum: number) {
     this.config.currentPage = pgNum;
     this.loaderService.enableLoader();
     this.exitPopupService.getUserPaginatedExitPopups(pgNum, this.searchKey).subscribe(
-        (response: any ) => {
-          if (response.status) {
-            this.exitPopups = response.data.data;
-            this.loaderService.disableLoader();
-          }
+      (response: any) => {
+        if (response.status) {
+          this.exitPopups = response.data.data;
+          this.loaderService.disableLoader();
         }
+      }
     );
   }
-
-
 }

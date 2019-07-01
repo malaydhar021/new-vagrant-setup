@@ -123,6 +123,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.renderer.removeClass(document.body, 'sign-upPage');
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**
@@ -215,7 +216,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
           this.nextStep();
         } else {
           // if email is already exists then show the message to user
-          this.errorMessage = response.message;
+          this.errorService.setMessage({type: 'error', message: response.message});
         }
       }
     );

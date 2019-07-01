@@ -152,6 +152,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**
@@ -196,6 +197,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /**
    * @method onChangeVisualStyle
+   * @since Version 1.0.0
+   * @returns Void
    */
   public onChangeVisualStyle() {
     this.getFormControls.campaignVisualStyle.valueChanges.subscribe(
@@ -372,7 +375,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
           // hide the loader
           this.loaderService.disableLoader();
         } else {
-          this.errorMessage = response.messages;
+          this.errorService.setMessage({type: 'error', message: response.message});
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -825,7 +828,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
             // hide the loader
             this.loaderService.disableLoader();
           } else {
-            this.errorMessage = response.messages;
+            this.errorService.setMessage({type: 'error', message: response.messages})
             // hide the loader
             this.loaderService.disableLoader();
           }
