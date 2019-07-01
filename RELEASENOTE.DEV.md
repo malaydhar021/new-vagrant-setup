@@ -208,6 +208,10 @@ operation the user is assigned to basic plan.
 
 ## Login
 
+### V2.1.3
+
+1. Fixed issue with error message to show to user if any
+
 ### V2.1.2
 
 1. Fixed issue with reset password token checking api service

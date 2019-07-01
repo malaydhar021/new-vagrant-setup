@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message 
   successMessage: string = null; // flag to hold the success message
+  errorMessage: string = null; // to show error messages mainly from when some exception has been caught
 
   constructor(
     private formBuilder: FormBuilder,
