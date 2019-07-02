@@ -1578,10 +1578,24 @@ a {
         .table.table-col-5 {
           ul {
             &.thead {
+              width: calc(100% + 15px);
+
+              @media (min-width: 1200px) and (max-width: 1439px) {
+                padding-right: 30px;
+              }
+
+              @media (min-width: 992px) and (max-width: 1199px) {
+                padding-right: 70px;
+              }
+
               li {
                 &:first-child {
                   padding-left: 15px;
                   width: 40%;
+
+                  &:after {
+                    left: 15px;
+                  }
                 }
 
                 &:nth-child(3) {
@@ -1599,8 +1613,9 @@ a {
             ul {
               li {
                 @media (min-width: 992px) and (max-width: 1439px) {
-                  padding-right:35px;
+                  padding-right: 35px;
                 }
+
                 &.row {
                   .rowContainer {
                     .tcol {
@@ -1608,10 +1623,11 @@ a {
                         padding-left: 15px;
                         width: 40%;
 
-                        .minRating{
+                        .minRating {
                           &:after {
                             clear: both;
                           }
+
                           &:after,
                           &:before {
                             content: '';
@@ -1720,8 +1736,6 @@ a {
                     }
 
                     @media (max-width: 520px) {
-                      padding-bottom: 0;
-
                       .tcol {
                         margin-top: 0;
                         margin-bottom: 10px;
@@ -3967,7 +3981,6 @@ a {
       background-image: url(#{$imgUrl}/icon_mmail_v.png);
       background-repeat: no-repeat;
       background-position: left 13px center;
-      ;
     }
 
     input[type="text"]::-webkit-input-placeholder {
@@ -4093,6 +4106,8 @@ a {
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
       padding-bottom: 15px;
+      max-height: calc(100vh - 200px);
+      overflow: auto;
 
       .sr-form {
         margin-top: 10px;
@@ -8306,9 +8321,9 @@ img {
       }
     }
 
-    @media (max-width: 575px) {
-      display: block;
-    }
+    // @media (max-width: 575px) {
+    //   display: block;
+    // }
   }
 
   .headerTxtRvw,
@@ -8330,12 +8345,13 @@ img {
   }
 
   @media (max-width: 575px) {
-    width: auto;
+    width: 100%;
     margin: 0 15px 50px;
     min-height: 1px;
     position: static;
     -webkit-transform: none;
     transform: none;
+    max-width: 300px;
   }
 }
 

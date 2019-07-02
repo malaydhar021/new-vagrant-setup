@@ -183,6 +183,24 @@
                     <div class="sr-form-ctrl inputFile">
                       <input type="file" (change)="onChangeReviewFile($event)"
                         [ngClass]="{error: isSubmitted && getFormControls.sr.errors}">
+                        <div class="error-msg" *ngIf="(
+                              isSubmitted
+                              && getFormControls.sr.errors !== null
+                              && getFormControls.sr.errors.required)">
+                          Audio file is required
+                        </div>
+                        <div class="error-msg" *ngIf="(
+                              isSubmitted
+                              && getFormControls.sr.errors !== null
+                              && getFormControls.sr.errors.invalidFileType)">
+                          Invalid file type. File should be an audio file
+                        </div>
+                        <div class="error-msg" *ngIf="(
+                              isSubmitted
+                              && getFormControls.sr.errors !== null
+                              && getFormControls.sr.errors.invalidFileSize)">
+                          Invalid file size. File size should be maximum {{allowedMaxAudioFileSize}} {{unit}}
+                        </div>
                       <input type="hidden" name="hiddenFileName" formControlName="sr">
                       <div class="choseFileArea">
                         <div class="fileImg">
@@ -198,24 +216,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="error-msg" *ngIf="(
-                        isSubmitted
-                        && getFormControls.sr.errors !== null
-                        && getFormControls.sr.errors.required)">
-                    Audio file is required
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                        isSubmitted
-                        && getFormControls.sr.errors !== null
-                        && getFormControls.sr.errors.invalidFileType)">
-                    Invalid file type. File should be an audio file
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                        isSubmitted
-                        && getFormControls.sr.errors !== null
-                        && getFormControls.sr.errors.invalidFileSize)">
-                    Invalid file size. File size should be maximum {{allowedMaxAudioFileSize}} {{unit}}
-                  </div>
                 </div>
                 <!-- End of audio file upload -->
                 <!-- <app-media [player]="'video'"></app-media> -->
@@ -226,6 +226,21 @@
                     <div class="sr-form-ctrl inputFile">
                       <input type="file" (change)="onChangeReviewFile($event)"
                         [ngClass]="{error: getFormControls.sr.errors}">
+                        <div class="error-msg" *ngIf="(
+                            getFormControls.sr.errors !== null
+                            && getFormControls.sr.errors.required)">
+                          Video is required
+                        </div>
+                        <div class="error-msg" *ngIf="(
+                            getFormControls.sr.errors !== null
+                            && getFormControls.sr.errors.invalidFileType)">
+                          Invalid file type. File should be an video
+                        </div>
+                        <div class="error-msg" *ngIf="(
+                            getFormControls.sr.errors !== null
+                            && getFormControls.sr.errors.invalidFileSize)">
+                          Invalid file size. File size should be maximum {{ allowedMaxVideoFileSize }} {{ unit }}
+                        </div>
                       <input type="hidden" name="hiddenFileName" formControlName="sr">
                       <div class="choseFileArea">
                         <div class="fileImg">
@@ -241,21 +256,6 @@
                         <app-media [player]="'video'" *ngIf="getFormControls.sr.valid"></app-media>
                       </div>
                     </div>
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                      getFormControls.sr.errors !== null
-                      && getFormControls.sr.errors.required)">
-                    Video is required
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                      getFormControls.sr.errors !== null
-                      && getFormControls.sr.errors.invalidFileType)">
-                    Invalid file type. File should be an video
-                  </div>
-                  <div class="error-msg" *ngIf="(
-                      getFormControls.sr.errors !== null
-                      && getFormControls.sr.errors.invalidFileSize)">
-                    Invalid file size. File size should be maximum {{ allowedMaxVideoFileSize }} {{ unit }}
                   </div>
                 </div>
                 <!-- End of video file upload -->

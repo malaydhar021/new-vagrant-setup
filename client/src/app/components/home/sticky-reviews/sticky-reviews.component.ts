@@ -13,7 +13,7 @@ import { ErrorsService } from 'src/app/services/errors.service';
 import { BrandingService } from '../../../services/branding.service';
 
 /**
- * StickyReviewsComponent class will handle all required action to meet the functionalities of 
+ * StickyReviewsComponent class will handle all required action to meet the functionalities of
  * sticky review feature. It includes CRUD operation
  * @class StickyReviewsComponent
  * @version 2.0.0
@@ -42,7 +42,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   validationErrors: any = null; // for showing validation messages
   subscription: Subscription; // to get the current value updated from error interceptor
   errorSubscription: Subscription; // to get the current value of showError property
-  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
+  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   allowedMaxImageFileSize:number = 1; // max file size for sticky review image
@@ -128,8 +128,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * ngOnInit method initialize angular reactive form object for add / edit sticky review. 
-   * Also it set the title of the page. Also it defines all client side validation for add 
+   * ngOnInit method initialize angular reactive form object for add / edit sticky review.
+   * Also it set the title of the page. Also it defines all client side validation for add
    * or edit form of sticky reviews
    * @method ngOnInit
    * @since Version 1.0.0
@@ -283,7 +283,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       Log.notice("check in if it coming here");
       this.getFormControls.srImage.setValidators(Validators.required);
       this.getFormControls.srImage.updateValueAndValidity();
-      
+
     }
     // setting validation if file is uploaded and it's not an image
     if(this.image !== null) {
@@ -326,7 +326,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
      * Textual review validations for add / edit sticky review
      */
     if(this.selectedReivewType == 1) {
-      // set validation for textual review type when it's created / updated 
+      // set validation for textual review type when it's created / updated
       this.getFormControls.sr.setValidators([Validators.required, Validators.maxLength(this.allowedMaxTextReviewChars)]);
       this.getFormControls.sr.updateValueAndValidity();
     }
@@ -335,7 +335,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
      */
     if(this.selectedReivewType == 2) {
       if(!this.isEditing) {
-        // set validation for audio review type when it's being created 
+        // set validation for audio review type when it's being created
         this.getFormControls.sr.setValidators([Validators.required]);
         this.getFormControls.sr.updateValueAndValidity();
       }
@@ -428,7 +428,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.mediaService.updateAudioSrc(null);
         // update audio player scr to play the audio
-        this.mediaService.updateAudioSrc(review.review);  
+        this.mediaService.updateAudioSrc(review.review);
       }, 1000);
     } else if (review.type == 3) {
       setTimeout(() => {
@@ -481,7 +481,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
 
   /**
    * Method to change the text in audio / video file upload box. Also assign uploaded file to
-   * `reviewAsFile` filetype property for future use. There is a bug with angular file upload 
+   * `reviewAsFile` filetype property for future use. There is a bug with angular file upload
    * with reactive form approach which is handled by a hidden field here.
    * @method onChangeReviewFile
    * @since Version 1.0.0
