@@ -149,6 +149,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
    */
   public nextStep() {
     this.isStep2 = true;
+    this.errorService.clearMessage();
   }
 
   /**
@@ -159,6 +160,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
    */
   public goBack() {
     this.isStep2 = false;
+    this.errorService.clearMessage();
   }
 
   /**

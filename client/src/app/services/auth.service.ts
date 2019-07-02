@@ -6,17 +6,19 @@ import { AuthModel } from '../models/auth.model';
 import { ForgotPasswordModel } from '../models/forgot-password.model';
 import { AuthApiEndPoints } from '../helpers/api.helper';
 import { ResetPasswordModel } from '../models/reset-password.model';
+import { ErrorsService } from './errors.service';
+import { Log } from '../helpers/app.helper';
 
 /**
  * This service will handle all operations related to user login and authentication
  * @class AuthService
  * @author Tier5 LLC `<work@tier5.us>`
- * @version 1.0.0
+ * @version 2.0.0
  * @license Proprietary
  */
 @Injectable()
 export class AuthService {
-  constructor(private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private httpClient: HttpClient, private router: Router, private cookieService: CookieService, private errorService: ErrorsService) { }
 
   /**
    * This method will make an api request and authenticate a user
@@ -119,5 +121,31 @@ export class AuthService {
    */
   public resetPassword(data : ResetPasswordModel) {
     return this.httpClient.put(AuthApiEndPoints.resetPassword, data);
+  }
+
+  /**
+   * Method to logout a user and redirect to login with a user friendly message
+   * @method logout
+   * @since Version 2.0.0
+   * @param message User friendly message to show to user
+   * @returns Void
+   */
+  public loggingOut(message: string = null) {
+    this.doLogout.subscribe(
+      (response: any) => {
+        if(response.status) {
+          this.removeStorageData();
+          const showMessage = message === null ? response.message : message
+          this.errorService.setMessage({type: 'error', message: showMessage});
+          // delete cookie from main domain,
+          if (this.cookieService.get('_loginUser')) {
+            this.cookieService.delete('_loginUser', '/', 'usestickyreviews.com');
+          }
+          this.router.navigate(['/login']);
+        } else {
+          Log.info(response, "Logout Response");
+        }
+      }
+    );
   }
 }

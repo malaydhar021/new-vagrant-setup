@@ -68,6 +68,7 @@ export class RequestInterceptor implements HttpInterceptor {
     switch (error.status) {
 
       case 401: // Unauthorized
+        Log.debug(error, "Log error in interceptor");
         // update the error messaged based on message object in http response
         const errorMessage401 = this.updateErrorMessage(error);
         // logging out the user

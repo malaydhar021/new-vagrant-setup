@@ -165,7 +165,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function to logout the user from the application by removing logcalStorage and sessionStorage 
+   * Function to logout the user from the application by removing localStorage and sessionStorage 
    * data and redirect user to login page
    * @method onLogout
    * @since Version 1.0.0

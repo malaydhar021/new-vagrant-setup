@@ -35,6 +35,13 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->subscription_status !== 'ACTIVE' && Auth::user()->subscription_status !== 'NA') {
+            return response()->json([
+                'status' => true,
+                'message' => "Your account does not have any active subscription plan. Please contact to support for more details.",
+                'subscription' => new SubscriptionResource(Auth::user()),
+            ], 401);    
+        }
         return response()->json([
             'status' => true,
             'message' => "Your subscription info fetched successfully.",
@@ -174,7 +181,7 @@ class SubscriptionController extends Controller
 
         $user = Auth::user();
         $user->cancelSubscription($request->input('reason'), $request->input('description'));
-        // call Affiliate Api for Deactive the user
+        // call Affiliate Api for Deactivate the user
         if($user->affiliate_id != null && $user->sale_id != null){
             // $this->CallAffiliateAction(3, $user, null);
             $this->callAffiliateApiForDeactive($user->sale_id, 0);

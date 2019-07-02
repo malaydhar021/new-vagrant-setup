@@ -45,9 +45,9 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
-  allowedMaxImageFileSize:number = 1; // max file size for sticky review image
+  allowedMaxImageFileSize:number = 2; // max file size for sticky review image
   allowedMaxAudioFileSize:number = 20; // max file size for review type audio
-  allowedMaxVideoFileSize:number = 3; // max file size for review type video
+  allowedMaxVideoFileSize:number = 30; // max file size for review type video
   unit: string = "MB"; // legal values are GB|MB|KB
   allowedMaxTextReviewChars: number = 60; // max chars for text review
   // allowed file types for sticky review image

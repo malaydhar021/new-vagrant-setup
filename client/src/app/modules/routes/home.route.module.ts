@@ -19,10 +19,10 @@ const routes: Routes = [
     {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
 
     {path: 'plans',               component: PlansComponent},
-    {path: 'profile',             component: ProfileComponent},
-    {path: 'update-payment-info', component: UpdatePaymentInfoComponent},
-    {path: 'cancel-membership',   component: CancelMembershipComponent},
-    {path: 'dashboard',           component: DashboardComponent},
+    {path: 'profile',             component: ProfileComponent, canActivate: [SubscriptionGuard]},
+    {path: 'update-payment-info', component: UpdatePaymentInfoComponent, canActivate: [SubscriptionGuard]},
+    {path: 'cancel-membership',   component: CancelMembershipComponent, canActivate: [SubscriptionGuard]},
+    {path: 'dashboard',           component: DashboardComponent, canActivate: [SubscriptionGuard]},
 
     {path: 'sticky-reviews',  canActivate: [SubscriptionGuard], component: StickyReviewsComponent},
     {path: 'branding',        canActivate: [SubscriptionGuard], component: BrandingComponent},

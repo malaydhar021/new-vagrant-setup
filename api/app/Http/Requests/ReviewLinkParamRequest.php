@@ -37,7 +37,7 @@ class ReviewLinkParamRequest extends FormRequest
         if (Auth::check()) {
             $user = Auth::user();
 
-            if($this->method == "POST") {
+            if (request()->isMethod('post')) {
                 $pricingPlan = $user->pricing_plan;
                 $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['review-links'];
 

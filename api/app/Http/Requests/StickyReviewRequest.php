@@ -38,7 +38,7 @@ class StickyReviewRequest extends FormRequest
         if (Auth::check()) {
             $user = Auth::user();
 
-            if($this->method == "POST") {
+            if($this->method() == "POST") {
                 $pricingPlan = $user->pricing_plan;
                 $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['sticky-reviews'];
 

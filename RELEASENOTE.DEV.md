@@ -27,6 +27,12 @@
 
 ## Subscription
 
+### V2.1.0
+
+1. Fixed issue with plan limitations for each features
+2. Fixed issue existing user's plan and subscription and new user's subscriptions
+3. Fixed issue with messages
+
 ### V2.0.4
 
 1. Fixed issue with messages update card info page

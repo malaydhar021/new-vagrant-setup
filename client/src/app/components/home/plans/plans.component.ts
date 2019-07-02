@@ -5,7 +5,6 @@ import { FormGroup, FormBuilder, Validators }     from '@angular/forms';
 import { SubscriptionService }                    from '../../../services/subscription.service';
 import { LoaderService }                          from '../../../services/loader.service';
 import { ErrorsService }                          from '../../../services/errors.service';
-import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * PlansComponent is responsible for handling user subscriptions 
@@ -112,7 +111,7 @@ export class PlansComponent implements OnInit, OnDestroy {
   public buttonText(plan) {
     let currentPlan = null, text = null;
     if (this.userPlanDetails && this.userPlanDetails.data && this.userPlanDetails.data.pricing_plan) {
-      currentPlan = this.userPlanDetails.data.pricing_plan.alias;
+      currentPlan = (this.userPlanDetails.status !== "ACTIVE" && this.userPlanDetails.status !== "NA") ? null : this.userPlanDetails.data.pricing_plan.alias;
     }
     if (!currentPlan) { return "ADD" };
     if (plan == currentPlan) { return 'CURRENT' };

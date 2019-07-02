@@ -61,7 +61,7 @@ class StripeWebhookController extends CashierController
                 'card_last_four' => null,
                 'card_exp_month' => null,
                 'card_exp_year' => null,
-                'subscription_status' => "NA",
+                'subscription_status' => "TERMINATED",
                 'trial_ends_at' => null,
             ]);
         }

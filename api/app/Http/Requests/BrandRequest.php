@@ -18,10 +18,10 @@ class BrandRequest extends FormRequest
     {
         if (Auth::check()) {
             $user = Auth::user();
-
-            if ($this->method == "POST") {
+            if ($this->method() == "POST") {
                 $pricingPlan = $user->pricing_plan;
                 $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['brands'];
+                \Log::info($saturationPoint);
 
                 if (($saturationPoint !== -1) && ($user->brands_count >= $saturationPoint)) {
                     throw new PrivilegeViolationException(

@@ -126,8 +126,8 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
-      this.isModalOpened = true;
       this.errorService.updateShowMessageStatus(false);
+      this.isModalOpened = true;
     });
   }
 
@@ -160,7 +160,6 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns Void
    */
   public get resetForm() {
-    this.errorService.updateShowMessageStatus(false);
     this.isModalOpened = false;
     this.form.reset();
     return;
@@ -260,7 +259,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           // once getting the response and status is true close the modal
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user in brand listing page
-          this.successMessage = response.message;
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
           // change the flag for form submit
           this.isSubmitted = false;
           // reset the form
@@ -269,7 +268,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           this.getBrandings();
         } else {
           // show the error message to user in case there is any error from api response
-          this.errorMessage = response.message;
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -293,7 +292,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           // once getting the response and status is true close the modal
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user in brand listing page
-          this.successMessage = response.message;
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
           // change the flag for form submit
           this.isSubmitted = false;
           // reset the form
@@ -302,7 +301,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           this.getBrandings();
         } else {
           // show the error message to user in case there is any error from api response
-          this.errorMessage = response.message;
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -356,12 +355,12 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         Log.info(response, 'delete api response');
         if(response.status) {
           // show the success message to user in brand listing page
-          this.successMessage = response.message;
+          this.errorService.setMessage({type: 'success', message: response.message});
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings();
         } else {
           // show the error message to user in case there is any error from api response
-          this.errorMessage = response.message;
+          this.errorService.setMessage({type: 'error', message: response.message});
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -406,6 +405,4 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     );
   }
-
-
 }

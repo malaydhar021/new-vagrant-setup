@@ -138,7 +138,7 @@ class AuthController extends Controller
                         'message' => "Your account is temporarily suspended. Please contact to support."
                     ], 401);
                 }
-                if (Auth::user()->subscription_status !== "ACTIVE") {
+                if (Auth::user()->subscription_status !== "ACTIVE" && Auth::user()->subscription_status !== "NA") {
                     return response()->json([
                         'status' => false,
                         'message' => "Your account does not have any active subscription plan. Please contact to support for more details."
