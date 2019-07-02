@@ -27,6 +27,10 @@
 
 ## Subscription
 
+### V2.1.1
+
+1. Fixed plan limitations issue with new subscription when a user is trying to downgrade to a plan
+
 ### V2.1.0
 
 1. Fixed issue with plan limitations for each features

@@ -303,5 +303,70 @@ class SubscriptionController extends Controller
         }
     }
 
+    /**
+     * 
+     */
+    public function validatePlanPrivileges(Request $request) {
+        $user = Auth::user();
+        $currentPlan = array_search($user->pricing_plan, $this->allowedPlanNames);
+        $newPlan = array_search($request->input('pricing_plan_type'), $this->allowedPlanNames);
+        $wannaDowngrade = $currentPlan > $newPlan;
+
+        $newPlanPrivileges = config('pricing.plans.' . $request->input('pricing_plan_type') . '.privileges');
+
+        if ($wannaDowngrade) {
+            if ($user->is_third_party) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "You are not allowed to downgrade. Please contact your sales person or Tier5 partner.",
+                    'requested_action' => 'downgrade',
+                    'card_required' => false,
+                    'errors' => []
+                ],400);
+            }
+
+            $limitExceeds = [];
+            if (($newPlanPrivileges['brands'] !== -1) && ($user->brands_count > $newPlanPrivileges['brands'])) {
+                $limitExceeds['brands'] = $user->brands_count - $newPlanPrivileges['brands'];
+            }
+            if (($newPlanPrivileges['campaigns'] !== -1) &&
+                ($user->campaigns_count > $newPlanPrivileges['campaigns'])) {
+                $limitExceeds['campaigns'] = $user->campaigns_count - $newPlanPrivileges['campaigns'];
+            }
+            if (($newPlanPrivileges['review-links'] !== -1) &&
+                ($user->review_links_count > $newPlanPrivileges['review-links'])) {
+                $limitExceeds['review-links'] = $user->review_links_count - $newPlanPrivileges['review-links'];
+            }
+            if (($newPlanPrivileges['sticky-reviews'] !== -1) &&
+                ($user->sticky_reviews_count > $newPlanPrivileges['sticky-reviews'])) {
+                $limitExceeds['sticky-reviews'] = $user->sticky_reviews_count - $newPlanPrivileges['sticky-reviews'];
+            }
+            if (($newPlanPrivileges['exit-popups'] !== -1) &&
+                ($user->exit_popups_count > $newPlanPrivileges['exit-popups'])) {
+                $limitExceeds['exit-popups'] = $user->exit_popups_count - $newPlanPrivileges['exit-popups'];
+            }
+
+            if (! empty($limitExceeds)) {
+                $exceedMessages = [];
+                foreach ($limitExceeds as $unit => $exceed) {
+                    $exceedMessages[] = "You need to delete " . $exceed . " "
+                        . ucwords(str_replace('_', ' ', $unit)) . "(s) to be able to downgrade.";
+                }
+
+                return response()->json([
+                    'status' => false,
+                    'message' => "You can not downgrade at the moment, to downgrade please consider followings.",
+                    'requested_action' => 'downgrade',
+                    'card_required' => false,
+                    'errors' => $exceedMessages,
+                ],400);
+            }
+        }
+        return response()->json([
+            'status' => true,
+            'message' => "You are good to downgrade your plan",
+            'requested_action' => 'downgrade'
+        ]);
+    }
 
 }

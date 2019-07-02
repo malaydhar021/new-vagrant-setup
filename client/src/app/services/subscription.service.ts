@@ -89,6 +89,17 @@ export class SubscriptionService {
   }
 
   /**
+   * addSubscription method will make an api request add a user subscription
+   * @method validateSubscription
+   * @since Version 1.0.0
+   * @param data Request payload data to validate subscription
+   * @returns Observable<Object>
+   */
+  public validateSubscription(data: any) {
+    return this.httpClient.post(SubscriptionApiEndpoints.subscription.concat("/validate"), data);
+  }
+
+  /**
    * updateSubscription method will make an api request update a user subscription
    * @method updateSubscription
    * @since Version 1.0.0

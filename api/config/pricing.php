@@ -22,7 +22,7 @@ return [
         'lowest' => [
             'id' => "starter-monthly",          // Stripe plan ID
             'name' => "Starter Monthly",        // Stripe plan name
-            'alias' => "Starter",               // Defined by you to show in fronetend
+            'alias' => "Starter",               // Defined by you to show in frontend
             'amount' => 15.00,
             'trial' => 14,                      // Trial periods in days
             'type' => 'recurring',              // Billing type 'recurring'
@@ -48,7 +48,7 @@ return [
                 'brands' => 3,
                 'campaigns' => 3,
                 'sticky-reviews' => 10,
-                'review-links' => 10,
+                'review-links' => 3,
                 'exit-popups' => 3,
             ],
         ],

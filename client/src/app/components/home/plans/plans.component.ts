@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators }     from '@angular/forms';
 import { SubscriptionService }                    from '../../../services/subscription.service';
 import { LoaderService }                          from '../../../services/loader.service';
 import { ErrorsService }                          from '../../../services/errors.service';
+import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * PlansComponent is responsible for handling user subscriptions 
@@ -139,12 +140,21 @@ export class PlansComponent implements OnInit, OnDestroy {
    * @param plan 
    */
   public addUpdatePlan(plan) {
+    this.errorService.clearMessage();
     this.pricingPlanType = plan;
     if(!this.hasCard) {
-      this.ngxSmartModalService.getModal('modal1').open();
-      return;
+      this.loaderService.enableLoader();
+      let data = {pricing_plan_type: this.pricingPlanType};
+      this.subscriptionService.validateSubscription(data).subscribe(
+        (response: any) => {
+          Log.info(response, "during downgrade");
+          this.loaderService.disableLoader();
+          this.ngxSmartModalService.getModal('modal1').open(); 
+        }
+      );
+    } else {
+      this.update();
     }
-    this.update();
   }
 
   /**

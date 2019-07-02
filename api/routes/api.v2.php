@@ -40,6 +40,7 @@ Route::prefix('user')->name('user.')->middleware('auth:api')->group(function () 
     Route::prefix('subscription')->name('subscription.')->group(function () {
         Route::get('/', 'SubscriptionController@index')->name('index');
         Route::post('/', 'SubscriptionController@store')->name('store');
+        Route::post('/validate', 'SubscriptionController@validatePlanPrivileges')->name('validate');
         Route::put('/', 'SubscriptionController@update')->name('update');
         Route::delete('/', 'SubscriptionController@destroy')->name('destroy');
     });
