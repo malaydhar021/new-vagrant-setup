@@ -282,7 +282,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.isModalOpened = true;
-      this.errorService.updateShowMessageStatus(false);
+      this.errorService.clearMessage();
       this.errorService.setMessage(null);      
     });
   }

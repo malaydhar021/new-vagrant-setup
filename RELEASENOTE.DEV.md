@@ -21,6 +21,10 @@
 
 ## Global Message
 
+### V2.0.0
+
+1. Fixed bugs in global message for all features and modals as well
+
 ### V1.0.0
 
 1. Implemented global message to show error or success messages through out the application

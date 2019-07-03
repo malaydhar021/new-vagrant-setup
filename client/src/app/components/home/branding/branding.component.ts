@@ -126,7 +126,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
-      this.errorService.updateShowMessageStatus(false);
+      this.errorService.clearMessage();
       this.isModalOpened = true;
     });
   }
@@ -150,6 +150,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**

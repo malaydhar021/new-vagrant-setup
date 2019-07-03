@@ -209,7 +209,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
-      this.errorService.updateShowMessageStatus(false);
+      this.errorService.clearMessage();
       this.errorMessage = null;
       this.successMessage = null;
     });

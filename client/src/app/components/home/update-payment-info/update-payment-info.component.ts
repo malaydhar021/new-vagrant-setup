@@ -106,7 +106,7 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
-      this.errorService.updateShowMessageStatus(false);
+      this.errorService.clearMessage();
       this.isModalOpened = true; // set it to true as modal is about to open. This is form show server side messages into modal but not in listing page
     });
   }
