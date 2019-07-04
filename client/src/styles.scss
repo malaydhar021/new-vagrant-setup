@@ -5344,9 +5344,11 @@ body.sign-upPage {
 
   .cards {
     width: 484px;
-    margin: 60px auto 0;
+    margin: 60px auto 15px;
 
     ul {
+      @include mt(12px);
+
       li {
         border: 2px solid color(sr-blue);
         -webkit-box-sizing: border-box;
