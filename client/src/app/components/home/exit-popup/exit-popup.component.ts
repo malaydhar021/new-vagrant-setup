@@ -197,6 +197,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   public resetForm() {
     this.form.reset(); // reset the form
     this.isModalOpened = false; // set to false as modal has been closed
+    this.errorService.clearMessage();
   }
 
   /**

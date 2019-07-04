@@ -30,7 +30,7 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   // video.js configuration
   config = {
     controls: true,
-    autoplay: true,
+    autoplay: false,
     fluid: false,
     loop: false,
     width: 320,
@@ -109,15 +109,15 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Method to initialize player with the help of media service
+   * Method to initialize player with the help of media service.
    * @method initVideoPlayer
    * @since Version 1.0.0
    * @returns Void
    */
   public initVideoPlayer() {
     if(this.url !== null || this.source !== null) {
-      this.config.autoplay = (this.source !== null) ? false : true;
-      Log.info(this.config.autoplay, "log autoplay in config");
+      // uncomment the below line if video autoplay needed to be enabled
+      // this.config.autoplay = (this.source !== null) ? false : true;
       if(this.height !== null) {
         this.config.height = this.height;
       }

@@ -120,6 +120,7 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
   public resetForm() {
     this.cardForm.reset();
     this.isModalOpened = false;
+    this.errorService.clearMessage();
   }
 
   /**

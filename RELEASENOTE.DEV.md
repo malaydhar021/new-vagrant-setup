@@ -169,6 +169,12 @@
 
 ## Sticky Review
 
+### V2.1.4
+
+1. Fixed issue with edit a video review where video was not showing into edit modal screen
+2. Fixed issue with sticky reviews current date time which was taking GMT time if no date time was provided
+3. Fixed issue with global message in sticky reviews while creating or updating sticky reviews.
+
 ### V2.1.3
 
 1. Fixed issue with video upload during add/edit a sticky review

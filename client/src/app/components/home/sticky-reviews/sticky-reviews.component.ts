@@ -109,7 +109,19 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   reviewSource: string = "";
   showBrands: boolean = false; // flag to show/hide brands
   brands: [] = [];  // holds all the brands
+  isModalOpened: boolean = false; // set to true if the modal is opened
 
+  /**
+   * 
+   * @param ngxSmartModalService 
+   * @param title 
+   * @param formBuilder 
+   * @param loaderService 
+   * @param stickyReviewService 
+   * @param mediaService 
+   * @param errorService 
+   * @param brandingService 
+   */
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
     private title: Title,
@@ -159,13 +171,25 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // changed to current selected value of review type select box
     this.getFormControls.srType.valueChanges.subscribe(
       (value : number) => {
+        Log.info(value, "check the review type");
         this.reviewChoseFileCtrl = 'Browse from your computer';
         this.reviewFileName = 'or drag & drop your image here';
-        this.reviewAsFile = null;
         // assign current value of review type a class property
         this.selectedReivewType = value;
-        if(value !== 1) {
-          this.mediaService.disposePlayer();
+        // this.getFormControls.sr.setValue(null);
+        Log.notice(this.isEditing, "Check the edit status in review type onchange");
+        if(!this.isEditing) {
+          this.reviewAsFile = null;
+          this.mediaService.updateAudioSrc(null);
+          this.mediaService.updateVideoSrc(null);
+          this.getFormControls.sr.setValue(null);
+        }
+        if(this.isEditing) {
+          if(value == 2) {
+            this.mediaService.updateAudioSrc(null);
+          } else if (value == 3) {
+            this.mediaService.updateVideoSrc(null);
+          }
         }
       }
     );
@@ -185,6 +209,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy(): void {
     this.errorSubscription.unsubscribe();
+    this.errorService.clearMessage();
   }
 
   /**
@@ -210,6 +235,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.errorService.clearMessage();
+      this.isModalOpened = true; // set it to true as modal is about to open. This is form show server side messages into modal but not in listing page
       this.errorMessage = null;
       this.successMessage = null;
     });
@@ -242,6 +268,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.getFormControls.srType.setValue(1);
     this.mediaService.updateAudioSrc(null);
     this.mediaService.updateVideoSrc(null);
+    this.isModalOpened = false; // set to false as modal has been closed
+    this.errorService.clearMessage();
   }
 
   /**
@@ -386,6 +414,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.isDeleting = false;
     // now open the modal with empty form to add a sticky review
     this.showBrands = false;
+    // open the modal to add a sticky review
     this.ngxSmartModalService.getModal('modal1').open();
   }
 
@@ -396,8 +425,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onEditStickyReview(review: StickyReviewModel) {
-    Log.info(review);
-    Log.debug(review.review);
     // set review id which is currently being edited
     this.reviewId = review.id;
     // set `isEditing` to true once the edit icon has been clicked
@@ -425,13 +452,13 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // let update media player src based on review type
     if(review.type == 2) {
       setTimeout(() => {
-        this.mediaService.updateAudioSrc(null);
+        this.mediaService.updateVideoSrc(null);
         // update audio player scr to play the audio
         this.mediaService.updateAudioSrc(review.review);
       }, 1000);
     } else if (review.type == 3) {
       setTimeout(() => {
-        this.mediaService.updateVideoSrc(null);
+        this.mediaService.updateAudioSrc(null);
         // update video player scr to play the video
         this.mediaService.updateVideoSrc(review.review);
       }, 1000);
@@ -551,6 +578,17 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     if(this.form.invalid) {
       return;
     }
+    // create an instance of Date class
+    const currentDateTime = new Date();
+    // prepare current date time
+    const currentSrDateTime = new Date(
+      currentDateTime.getFullYear(),
+      currentDateTime.getMonth(),
+      currentDateTime.getDate(),
+      currentDateTime.getHours(),
+      currentDateTime.getMinutes(),
+      currentDateTime.getSeconds()
+    )
     // showing the loader
     this.loaderService.enableLoader();
     // creating an instance of `FormData` class
@@ -560,7 +598,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     formData.append('tags', this.form.value.srTags); // append tags
     formData.append('type', this.form.value.srType); // append review type
     formData.append('rating', this.form.value.srRating); // append rating
-    formData.append('reviewd_at', this.form.value.srDateTime); // append date to show
+    formData.append('reviewd_at', this.form.value.srDateTime === null ? currentSrDateTime : this.form.value.srDateTime); // append date to show
     if(this.image !== null) {
       formData.append('image', this.image, this.image.name); // append image to formData
     }
@@ -612,14 +650,14 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           // once getting the response and status is true close the modal
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user
-          this.errorService.setMessage({type: 'success', message: response.message});
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})},100);
           // change the flag for form submit
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
           this.getStickyReviews();
         } else {
           // show the error message to user
-          this.errorMessage = response.message;
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})},100);
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -644,14 +682,14 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           // once getting the response and status is true close the modal
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user
-          this.errorService.setMessage({type: 'success', message: response.message});
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})},100);
           // change the flag for form submit
           this.isSubmitted = false;
           // making an api call to get all sticky reviews along with the newly added review
           this.getStickyReviews();
         } else {
           // show the error message to user
-          this.errorMessage = response.message;
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})},100);
           // hide the loader
           this.loaderService.disableLoader();
         }
@@ -681,12 +719,12 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         Log.info(response, 'delete api response');
         if(response.status) {
           // show the success message to user in review listing page
-          this.errorService.setMessage({type: 'success', message: response.message});
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})},100);
           // making an api call to get all reviews along with the newly added sticky review
           this.getStickyReviews();
         } else {
           // show the error message to user in case there is any error from api response
-          this.errorMessage = response.message;
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})},100);
           // hide the loader
           this.loaderService.disableLoader();
         }

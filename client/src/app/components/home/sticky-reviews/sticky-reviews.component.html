@@ -10,7 +10,7 @@
     </div>
   </header>
   <div class="dataTableArea">
-    <message [successMessage]="successMessage" [showMessage]="showError"></message>
+    <message *ngIf="!isModalOpened" [successMessage]="successMessage" [showMessage]="showError"></message>
     <div class="table table-col-4">
       <ul class="thead">
         <li>REVIEWS</li>
@@ -77,7 +77,7 @@
     </div>
     <div class="sr-modal-body">
       <div class="sr-form">
-        <message [showMessage]="showError" [successMessage]="successMessage"></message>
+        <message *ngIf="isModalOpened" [showMessage]="showError" [successMessage]="successMessage"></message>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="sr-form-content">
             <div class="sr-form-row">
@@ -182,22 +182,19 @@
                   <div class="sr-form-field">
                     <div class="sr-form-ctrl inputFile">
                       <input type="file" (change)="onChangeReviewFile($event)"
-                        [ngClass]="{error: isSubmitted && getFormControls.sr.errors}">
+                        [ngClass]="{error: getFormControls.sr.errors}">
                         <div class="error-msg" *ngIf="(
-                              isSubmitted
-                              && getFormControls.sr.errors !== null
+                              getFormControls.sr.errors !== null
                               && getFormControls.sr.errors.required)">
                           Audio file is required
                         </div>
                         <div class="error-msg" *ngIf="(
-                              isSubmitted
-                              && getFormControls.sr.errors !== null
+                              getFormControls.sr.errors !== null
                               && getFormControls.sr.errors.invalidFileType)">
                           Invalid file type. File should be an audio file
                         </div>
                         <div class="error-msg" *ngIf="(
-                              isSubmitted
-                              && getFormControls.sr.errors !== null
+                              getFormControls.sr.errors !== null
                               && getFormControls.sr.errors.invalidFileSize)">
                           Invalid file size. File size should be maximum {{allowedMaxAudioFileSize}} {{unit}}
                         </div>
@@ -270,8 +267,9 @@
                     <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
                       [ngClass]="{error: getFormControls.srImage.errors}">
                       <div class="error-msg" *ngIf="(
-                            getFormControls.srImage.errors !== null
-                            && getFormControls.srImage.errors.required)">
+                          isSubmitted  
+                          && getFormControls.srImage.errors !== null
+                          && getFormControls.srImage.errors.required)">
                         Image is required
                       </div>
                       <div class="error-msg" *ngIf="(

@@ -163,6 +163,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   public resetForm() {
     this.form.reset();
     this.isModalOpened = false;
+    this.errorService.clearMessage();
   }
 
   /**

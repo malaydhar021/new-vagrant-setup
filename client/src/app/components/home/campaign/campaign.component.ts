@@ -381,6 +381,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getFormControls.isBrandingSelected.setValue(false); // set default value to add brand checkbox
     this.getFormControls.isExitPopupSelected.setValue(false); // set default value to add exit popup checkbox
     this.isModalOpened = false; // set to false as modal has been closed
+    this.errorService.clearMessage();
   }
 
   /**
