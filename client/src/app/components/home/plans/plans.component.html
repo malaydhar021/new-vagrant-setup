@@ -90,11 +90,10 @@
         <div class="cardForm updateCardModal">
           <h2>Credit Card Information</h2>
           <div class="formRow">
-            <div class="formCol6">
+            <div class="formCol6" [ngClass]="{'error' : !cardForm.get('card_number').valid && cardForm.get('card_number').touched}">
               <label>Credit Card Number</label>
               <input type="text" class="formCtrl card sr-form-ctrl" mask="0000 0000 0000 0000"
-                formControlName="card_number"
-                [ngClass]="{'error' : !cardForm.get('card_number').valid && cardForm.get('card_number').touched}">
+                formControlName="card_number">
               <span class="error-msg"
                 *ngIf="!cardForm.get('card_number').valid && cardForm.get('card_number').touched && cardForm.get('card_number').errors.required">
                 Credit card is required!
@@ -104,10 +103,9 @@
                 Minimum length 14
               </span>
             </div>
-            <div class="formCol4">
+            <div class="formCol4" [ngClass]="{'error' : !cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched}">
               <label>CVC Number</label>
-              <input type="password" class="formCtrl" mask="0000" formControlName="cvc_number"
-                [ngClass]="{'error' : !cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched}">
+              <input type="password" class="formCtrl" mask="0000" formControlName="cvc_number">
               <span class="error-msg"
                 *ngIf="!cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched && cardForm.get('cvc_number').errors.required"
                 class="error-msg">
