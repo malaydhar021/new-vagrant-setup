@@ -19,7 +19,13 @@
 
 1. Implemented page not found page to the application
 
+
+
 ## Global Message
+
+### V2.0.1
+
+1. Fixed issue with production build for global message
 
 ### V2.0.0
 

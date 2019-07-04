@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "build:prod": "ng build --prod --extra-webpack-config webpack.partial.js",
     "build:stage": "ng build --prod -c staging --extra-webpack-config webpack.partial.js",
-    "build:dev": "ng build -c development --extra-webpack-config webpack.partial.js"
+    "build:dev": "ng build -c development --extra-webpack-config webpack.partial.js",
+    "build:local": "ng build --prod -c local --extra-webpack-config webpack.partial.js"
   },
   "private": true,
   "dependencies": {

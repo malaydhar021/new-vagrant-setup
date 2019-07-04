@@ -175,24 +175,52 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns Void
    */
   public modalCallbacks() {
+    
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
     // In this case reset the form when modal is dismissed
     this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.errorService.clearMessage();
       this.isModalOpened = true; // set it to true as modal is about to open. This is form show server side messages into modal but not in listing page
     });
+  }
+
+  /**
+   * Method will be executed when modal will will be closed.
+   * ### *DEPRECATED* ###
+   * @method modalCallbackOnClose
+   * @since Version 1.0.0
+   * @deprecated In version 1.0.0
+   * @returns Void
+   */
+  public modalCallbackOnClose() {
+    Log.info("in modalCallbackOnClose()");
+    this.resetForm();
+  }
+
+  /**
+   * Method will be executed when modal will will be opened.
+   * ### *DEPRECATED* ###
+   * @method modalCallbackOnOpen
+   * @since Version 1.0.0
+   * @deprecated In version 1.0.0
+   * @returns Void
+   */
+  public modalCallbackOnOpen() {
+    Log.info("in modalCallbackOnOpen()");
+    this.errorService.clearMessage();
+    this.isModalOpened = true; // set it to true as modal is about to open. This is form show server side messages into modal but not in listing page
   }
 
   /**
@@ -347,13 +375,12 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @since Version 1.0.0
    * @returns Void
    */
-  public get resetForm() {
+  public resetForm() {
     this.form.reset(); // reset the form
     this.getFormControls.campaignVisualStyle.setValue(this.styles[0]); // again set default value to visual style i.e Rounded
     this.getFormControls.isBrandingSelected.setValue(false); // set default value to add brand checkbox
     this.getFormControls.isExitPopupSelected.setValue(false); // set default value to add exit popup checkbox
     this.isModalOpened = false; // set to false as modal has been closed
-    return;
   }
 
   /**

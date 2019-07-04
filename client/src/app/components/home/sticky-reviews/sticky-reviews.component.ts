@@ -196,16 +196,16 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   public ngAfterViewInit() {
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
     // In this case reset the form when modal is dismissed
     this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
@@ -233,7 +233,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public get resetForm() {
+  public resetForm() {
     // reset the form
     this.form.reset();
     // set default image to preview image area
@@ -242,7 +242,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.getFormControls.srType.setValue(1);
     this.mediaService.updateAudioSrc(null);
     this.mediaService.updateVideoSrc(null);
-    return;
   }
 
   /**

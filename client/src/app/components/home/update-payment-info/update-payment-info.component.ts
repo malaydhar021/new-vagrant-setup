@@ -93,16 +93,16 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
   public modalCallbacks() {
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
     // In this case reset the form when modal is dismissed
     this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
@@ -117,10 +117,9 @@ export class UpdatePaymentInfoComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public get resetForm() {
+  public resetForm() {
     this.cardForm.reset();
     this.isModalOpened = false;
-    return;
   }
 
   /**

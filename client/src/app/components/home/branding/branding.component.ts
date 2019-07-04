@@ -113,16 +113,16 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   public modalCallbacks() {
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // do stuffs when modal has been dismissed i.e when the modal is closed clicking in backdrop.
     // In this case reset the form when modal is dismissed
     this.ngxSmartModalService.getModal('modal1').onDismiss.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // reset form when modal has been closed by esc key
     this.ngxSmartModalService.getModal('modal1').onEscape.subscribe((modal: NgxSmartModalComponent) => {
-      this.resetForm;
+      this.resetForm();
     });
     // set showError to false when the modal is being opened
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
@@ -160,10 +160,9 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    * @since Version 1.0.0
    * @returns Void
    */
-  public get resetForm() {
+  public resetForm() {
     this.form.reset();
     this.isModalOpened = false;
-    return;
   }
 
   /**
@@ -199,7 +198,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public onAddBrand() {
     // reset the form if someone click on edit and close the modal and decide to add one
-    this.resetForm;
+    this.resetForm();
     // set the id to null again
     this.brandId = null;
     // setting false if someone after doing the edit click on add brand
@@ -264,7 +263,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           // change the flag for form submit
           this.isSubmitted = false;
           // reset the form
-          this.resetForm;
+          this.resetForm();
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings();
         } else {
@@ -297,7 +296,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           // change the flag for form submit
           this.isSubmitted = false;
           // reset the form
-          this.resetForm;
+          this.resetForm();
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings();
         } else {
