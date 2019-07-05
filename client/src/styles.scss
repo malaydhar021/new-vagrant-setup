@@ -1354,6 +1354,10 @@ a {
                       @media (max-width: 1199px) {
                         padding-left: 0;
                       }
+
+                      @media (max-width: 767px) {
+                        @include ml(10px);
+                      }
                     }
 
                     &:nth-child(3) {
@@ -1390,7 +1394,7 @@ a {
                       }
                     }
 
-                    @media (max-width: 575px) {
+                    @media (max-width: 640px) {
                       &:first-child {
                         width: 100%;
                         -webkit-box-flex: 1;
@@ -2946,6 +2950,10 @@ a {
 
     .log-stat_msg {
       margin: 5px 15px 0;
+
+      @media (max-width: 990px) {
+        margin: 5px 5px 0;
+      }
     }
 
     // 404/Maintenace change for Dashboard area
@@ -7048,7 +7056,7 @@ body.sign-upPage {
 
   .closePup {
     position: absolute;
-    right: 5px;
+    right: 8px;
     top: 10px;
 
     i {
