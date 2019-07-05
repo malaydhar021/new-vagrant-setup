@@ -78,6 +78,10 @@
 
 ## Review Link
 
+### V2.0.2
+
+1. Fixed issue review link when there is no campaign attached with a review link
+
 ### V2.0.1
 
 1. Fixed issues on edit review link step 1 plan limitation
@@ -173,7 +177,7 @@
 
 1. Fixed issue with edit a video review where video was not showing into edit modal screen
 2. Fixed issue with sticky reviews current date time which was taking GMT time if no date time was provided
-3. Fixed issue with global message in sticky reviews while creating or updating sticky reviews.
+3. Fixed issue with global message in sticky reviews while creating or updating sticky reviews
 
 ### V2.1.3
 

@@ -32,7 +32,6 @@
               <div class="rowContainer">
                 <div class="tcol">
                   <div class="userImg" [style.background-image]="'url('+ link.logo +')'">
-                    <!-- <img src="{{ link.logo }}" alt="Logo"> -->
                   </div>
                   <div class="userReview">
                     <h2>{{ link.name }}
@@ -58,7 +57,7 @@
                   </div>
                 </div>
                 <div class="tcol">
-                  <p>{{ link.campaign.campaign_name }}</p>
+                  <p>{{ link.campaign !== null ? link.campaign.campaign_name : 'No Campaign Selected' }}</p>
                   <!-- <br>Landing Page</p> -->
                 </div>
                 <div class="tcol">
