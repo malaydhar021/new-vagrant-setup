@@ -1224,7 +1224,8 @@ a {
     // adjustment made for height issue
     // height: calc(100vh - 115px);
     min-height: calc(100vh - 115px);
-    margin-bottom: 20px;
+    // margin-bottom: 20px; Commented out to make space for Privacy policy
+    margin-bottom: 70px;
     // adjustment made for height issue
 
     .noContent {
@@ -4345,6 +4346,22 @@ a {
 
             label {
               margin-bottom: 12px;
+            }
+
+            .inFormCell+.inFormCell {
+              margin-top: 20px;
+
+              label {
+                margin-top: 49px;
+
+                @media (max-width: 560px) {
+                  @include mt(15px);
+                }
+              }
+
+              @media (max-width: 560px) {
+                @include mt(0);
+              }
             }
 
             @media (max-width: 575px) {
