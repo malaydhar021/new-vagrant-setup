@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\ZapierWebhook;
 
 class SubscribedEmail extends Model
 {
+    use ZapierWebhook;
     /**
      * The attributes that are mass assignable.
      *
@@ -21,5 +23,11 @@ class SubscribedEmail extends Model
     public function exitPopup()
     {
         return $this->belongsTo(ExitPopUp::class, 'exit_pop_up_id', 'id');
+    }
+
+    public function setIdAttribute ($value) {
+        $this->attributes['id'] = $value;
+        $this->checkAndSendStickyExitpopupDataToZapier($value);
+        \Log::info('I am inserting you ! '.$value);
     }
 }

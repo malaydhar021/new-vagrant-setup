@@ -27,6 +27,8 @@ Route::prefix('web')->middleware('web')->name('web.')->group(function () {
         Route::any('/send-user-exit-popups', 'ZapierWebhooksController@sendUserExitPopupData')->name('send-user-exit-popups');
         Route::any('/get-exit-popup', 'ZapierWebhooksController@getExitPopup')->name('get-exit-popup');
         Route::any('/subscribe-review-link', 'ZapierWebhooksController@subscribeReviewLink')->name('subscribe-review-link');
+        Route::any('/subscribe-exit-popup', 'ZapierWebhooksController@subscribeExitPopup')->name('subscribe-exit-popup');
+
 
 
     });
