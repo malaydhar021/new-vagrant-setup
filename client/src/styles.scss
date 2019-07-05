@@ -1453,68 +1453,6 @@ a {
             }
           }
         }
-
-        .ngx-pagination {
-          text-align: right;
-          margin-right: 15px;
-
-          li {
-            font-size: 13px;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            line-height: 28px;
-            text-align: center;
-            padding: 0;
-            color: #8f8f8f;
-            @include mr(8px);
-            white-space: nowrap;
-
-            &:hover {
-              background: transparent;
-            }
-
-            a,
-            span {
-              padding: 0;
-              display: inline-block;
-              width: auto;
-              height: auto;
-
-              &:hover {
-                background: transparent;
-              }
-            }
-
-            &.pagination-next {
-              color: #49E3BE;
-            }
-
-            &.current {
-              background-color: #49E3BE;
-              color: #fff;
-            }
-
-            &:first-child,
-            &:last-child {
-              border-radius: 0;
-              width: auto;
-              height: inherit;
-            }
-
-            &:last-child:not(.disabled) {
-              a {
-                color: #49E3BE;
-              }
-            }
-          }
-
-          @media (max-width: 640px) {
-            // text-align: center;
-            // @include mt(-15px);
-            @include mr(0);
-          }
-        }
       }
 
       .dataTableArea {
@@ -2146,6 +2084,70 @@ a {
             padding-right: 0;
           }
         }
+      }
+    }
+
+
+
+    .ngx-pagination {
+      text-align: right;
+      margin-right: 15px;
+
+      li {
+        font-size: 13px;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        line-height: 28px;
+        text-align: center;
+        padding: 0;
+        color: #8f8f8f;
+        @include mr(8px);
+        white-space: nowrap;
+
+        &:hover {
+          background: transparent;
+        }
+
+        a,
+        span {
+          padding: 0;
+          display: inline-block;
+          width: auto;
+          height: auto;
+
+          &:hover {
+            background: transparent;
+          }
+        }
+
+        &.pagination-next {
+          color: #49E3BE;
+        }
+
+        &.current {
+          background-color: #49E3BE;
+          color: #fff;
+        }
+
+        &:first-child,
+        &:last-child {
+          border-radius: 0;
+          width: auto;
+          height: inherit;
+        }
+
+        &:last-child:not(.disabled) {
+          a {
+            color: #49E3BE;
+          }
+        }
+      }
+
+      @media (max-width: 640px) {
+        // text-align: center;
+        // @include mt(-15px);
+        @include mr(0);
       }
     }
 
