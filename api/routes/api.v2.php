@@ -123,6 +123,7 @@ Route::prefix('user-reviews')->name('user-reviews.')->group(function () {
     Route::get('{slug}', 'UserReviewsController@show')->name('show');
     Route::post('{slug}/validate', 'UserReviewsController@validateParams')->name('params.validate');
     Route::post('{slug}', 'UserReviewsController@store')->name('store');
+    Route::get('/show-sticky-review/{id}', 'StickyReviewsController@showReview')->name('show-sticky-review');
 });
 
 Route::prefix('widget')->name('widget.')->group(function () {

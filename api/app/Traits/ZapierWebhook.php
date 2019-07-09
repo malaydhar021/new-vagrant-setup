@@ -18,6 +18,15 @@ trait ZapierWebhook
      */
     public function checkAndSendStickyReviewDataToZapier($id) {
         try{
+            $getEnvUrl = $_SERVER['SERVER_NAME'];
+            if (strpos($getEnvUrl, 'local') !== false) {
+                $linkUrl = 'local.usestickyreviews.com';
+            } elseif (strpos($getEnvUrl, 'beta') !== false ){
+                $linkUrl = 'beta.usestickyreviews.com';
+            } else {
+                $linkUrl = 'usestickyreviews.com';
+            }
+
             $getStickyReviewInfo = StickyReview::where('id', $id)->with('negativeReviews')->first();
             if($getStickyReviewInfo != null && $getStickyReviewInfo->review_link_id != null ){
                 $fetchWebhookInfo = UserZapierWebhooks::where('review_link_id', $getStickyReviewInfo->review_link_id)->get();
@@ -28,13 +37,16 @@ trait ZapierWebhook
                     $sendZapData['sticky_reviews_name'] = $getStickyReviewInfo->name;
                     if($getStickyReviewInfo->type == 3){
                         $type = 'Video';
+                        $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$getStickyReviewInfo->description;
                     }elseif ($getStickyReviewInfo->type == 2){
                         $type = 'Audio';
+                        $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$getStickyReviewInfo->description;
                     }else{
                         $type = 'Textual';
+                        $reviewDescription = $getStickyReviewInfo->description;
                     }
                     $sendZapData['sticky_reviews_type'] = $type;
-                    $sendZapData['sticky_reviews_description'] = $getStickyReviewInfo->description;
+                    $sendZapData['sticky_reviews_description'] = $reviewDescription;
                     $sendZapData['sticky_reviews_tags'] = $getStickyReviewInfo->tags;
                     $sendZapData['sticky_reviews_rating'] = $getStickyReviewInfo->rating;
                     if($getStickyReviewInfo->negativeReviews != null ){
@@ -84,13 +96,16 @@ trait ZapierWebhook
                         $sendZapData['sticky_reviews_name'] = $getStickyReviewInfo->name;
                         if($getStickyReviewInfo->type == 3){
                             $type = 'Video';
+                            $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$getStickyReviewInfo->description;
                         }elseif ($getStickyReviewInfo->type == 2){
                             $type = 'Audio';
+                            $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$getStickyReviewInfo->description;
                         }else{
                             $type = 'Textual';
+                            $reviewDescription = $getStickyReviewInfo->description;
                         }
                         $sendZapData['sticky_reviews_type'] = $type;
-                        $sendZapData['sticky_reviews_description'] = $getStickyReviewInfo->description;
+                        $sendZapData['sticky_reviews_description'] = $reviewDescription;
                         $sendZapData['sticky_reviews_tags'] = $getStickyReviewInfo->tags;
                         $sendZapData['sticky_reviews_rating'] = $getStickyReviewInfo->rating;
                         if($getStickyReviewInfo->negativeReviews != null ){
