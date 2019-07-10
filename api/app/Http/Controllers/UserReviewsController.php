@@ -8,11 +8,13 @@ use App\Http\Resources\ReviewLinkResource;
 use App\NegativeReview;
 use App\ReviewLink;
 use App\StickyReview as UserReview;
-
+use App\StickyReview;
+use App\UserZapierTokens;
 use Carbon\Carbon;
 
 use Exception;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
@@ -159,5 +161,60 @@ class UserReviewsController extends Controller
             'status' => true,
             'message' => "Thank you for reviewing us.",
         ]);
+    }
+
+    /**
+     * Function to check passkey and show user review
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkPasskey(Request $request){
+        $passKey = trim($request->passKey);
+        $stickyId = base64_decode($request->stickyId);
+        $checkPasskey = UserZapierTokens::where('passkey', $passKey)->first();
+        if($checkPasskey != null ){
+            // show the review
+             $stickyReviewData = StickyReview::where('id', $stickyId)->first();
+            return response()->json([
+                'status' => true,
+                'data'  =>  $stickyReviewData,
+                'message' => "Sticky review found !",
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'data'  =>  [],
+                'message' => "Sorry wrong passkey entered !",
+            ]);
+        }
+    }
+
+    public function reviewAction(Request $request) {
+        $stickyId = base64_decode($request->stickyId);
+        $updateStickyReview = StickyReview::where('id', $stickyId)->first();
+        if($updateStickyReview != null ){
+            $updateStickyReview->is_accept = $request->reviewAction;
+            if($updateStickyReview->save()){
+                if($request->reviewAction == 1){
+                    $message ='User review accepted !';
+                }else{
+                    $message ='User review rejected !';
+                }
+                return response()->json([
+                    'status' => true,
+                    'message' => $message,
+                ]);
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Something went wrong while saving, Please try again !',
+                ]);
+            }
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Sorry user review not found !',
+            ]);
+        }
     }
 }

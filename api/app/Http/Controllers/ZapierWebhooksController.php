@@ -127,7 +127,7 @@ class ZapierWebhooksController extends Controller
                     $getReviewLinkData[$linkKey]['id'] = $linkData->id;
                     $getReviewLinkData[$linkKey]['review_link_name'] = $linkData->name;
                     $getReviewLinkData[$linkKey]['review_link_description'] = $linkData->description;
-                    $getReviewLinkData[$linkKey]['review_link'] = 'app.'.$linkUrl.'/user-review/'.$linkData->url_slug;
+                    $getReviewLinkData[$linkKey]['review_link'] = 'https://app.'.$linkUrl.'/user-review/'.$linkData->url_slug;
                     if($linkData->stickyReviews != null ){
                         foreach($linkData->stickyReviews as $stickyKey => $stickyData){
                             $getReviewLinkData[$stickyKey]['id'] = $stickyData->id;
@@ -146,6 +146,7 @@ class ZapierWebhooksController extends Controller
                             $getReviewLinkData[$stickyKey]['sticky_reviews_description'] = $reviewDescription;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_tags'] = $stickyData->tags;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_rating'] = $stickyData->rating;
+                            $getReviewLinkData[$stickyKey]['view_sticky_review'] = 'https://app.'.$linkUrl.'/show-user-review/'.base64_encode($stickyData->id);
                             if($stickyData->negativeReviews != null ){
                                 $getReviewLinkData[$stickyKey]['negative_reviews_email'] = $stickyData->negativeReviews['email'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_phone'] = $stickyData->negativeReviews['phone'];
@@ -158,6 +159,7 @@ class ZapierWebhooksController extends Controller
                         $getReviewLinkData[$linkKey]['sticky_reviews_description'] = 'this is awsome!';
                         $getReviewLinkData[$linkKey]['sticky_reviews_tags'] = 'Sticky review ';
                         $getReviewLinkData[$linkKey]['sticky_reviews_rating'] = '5';
+                        $getReviewLinkData[$linkKey]['view_sticky_review'] = 'https://app.'.$linkUrl.'/show-user-review/=87md21';
                         $getReviewLinkData[$linkKey]['negative_reviews_email'] = 'email@example.com';
                         $getReviewLinkData[$linkKey]['negative_reviews_phone'] = '6539865452';
                     }
@@ -173,6 +175,7 @@ class ZapierWebhooksController extends Controller
                 $getReviewLinkData[0]['sticky_reviews_description'] = 'this is awsome!';
                 $getReviewLinkData[0]['sticky_reviews_tags'] = 'Sticky review ';
                 $getReviewLinkData[0]['sticky_reviews_rating'] = '5';
+                $getReviewLinkData[0]['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/=87md21';
                 $getReviewLinkData[0]['negative_reviews_email'] = 'email@example.com';
                 $getReviewLinkData[0]['negative_reviews_phone'] = '6539865452';
             }

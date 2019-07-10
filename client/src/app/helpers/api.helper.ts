@@ -342,6 +342,7 @@ export class StickyReviewsApiEndpoints {
   public static get assignCampaignToStickyReview() : string {
     return apiBaseUrl.concat('/assign-campaign-to-sticky-review');
   }
+
 }
 
 /**
@@ -562,4 +563,23 @@ export class UserReviewApiEndpoints {
   public static get userReviewLinkInfo(): string {
     return apiBaseUrl.concat('/user-reviews');
   }
+
+  /**
+   * @method checkPasskey
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get checkPasskey(): string {
+    return apiBaseUrl.concat('/check-passkey');
+  }
+
+  /**
+   * @method reviewAction
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get reviewAction(): string {
+    return apiBaseUrl.concat('/review-action');
+  }
+
 }

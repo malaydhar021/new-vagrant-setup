@@ -1,8 +1,9 @@
 <div class="mainBox brandingMain">
     <br/>
     <br/>
-    <h2>Settings</h2>
-
+    <h2> Settings</h2>
+    <br>
+    <h3> Zapier user token </h3>
     <div class="dataTableArea">
         <message [successMessage]="successMessage" [showMessage]="showError"></message>
         <div class="table">
@@ -24,6 +25,31 @@
                             <div class="tcol">
                                 <a class="copyBtn" (click)="copyText(tokenData.token)"> <img src="../../../../assets/images/icon_copy_snippet.png" alt="copy token"> </a>
                                 <a class="delete" (click)="onDeleteToken(tokenData.id)"><img src="../../../../assets/images/icon_delete_green.png" alt="Delete"></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h3> User review passkey </h3><h5> Use the passkey for accept or reject a sticky review </h5>
+
+    <div class="dataTableArea">
+        <div class="table">
+            <ul class="thead">
+                <li>Passkey </li>
+                <li>Action </li>
+            </ul>
+            <div class="tbody">
+                <ul>
+                    <li class="row" *ngFor="let tokenData of token">
+                        <div class="rowContainer">
+                            <div class="tcol">
+                                <p>{{tokenData.passkey}}</p>
+                            </div>
+                            <div class="tcol">
+                                <a class="copyBtn" (click)="copyText(tokenData.passkey)"> <img src="../../../../assets/images/icon_copy_snippet.png" alt="copy token"> </a>
                             </div>
                         </div>
                     </li>

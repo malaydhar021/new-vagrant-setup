@@ -81,4 +81,8 @@ export class StickyReviewService {
     return this.httpClient.get(StickyReviewsApiEndpoints.stickyReviews.concat('?searchParams=' + term));
   }
 
+  // public showStickyReviews(data: FormData) {
+  //   return this.httpClient.post(StickyReviewsApiEndpoints.showStickyReview, data);
+  // }
+
 }

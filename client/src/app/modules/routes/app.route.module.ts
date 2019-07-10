@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'sign-up', loadChildren: '../signup.module#SignupModule' },
   { path: 'forgot-password', loadChildren: '../forgot-password.module#ForgotPasswordModule' },
   { path: 'user-review/:slug', loadChildren: '../user-review.module#UserReviewModule' },
-  { path: 'show-user-review', loadChildren: '../show-user-review.module#ShowUserReviewModule' },
+  { path: 'show-user-review/:id', loadChildren: '../show-user-review.module#ShowUserReviewModule' },
   { path: 'home', canLoad: [AuthGuard], loadChildren: '../home.module#HomeModule' },
   { path: '**', component: NotFoundComponent }
 ];

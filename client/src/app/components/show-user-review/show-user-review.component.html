@@ -1,1 +1,53 @@
-<h1> i am in this page ! </h1>
+<h1> page to show review  </h1>
+
+<div *ngIf="showMe">
+    <form [formGroup]="passkeyForm" (ngSubmit)="onSubmit()">
+    <label for="">Enter passkey to view the review </label>
+    <input type="password" formControlName="passkey">
+        <button type="submit">OK</button>
+    </form>
+</div>
+
+<div *ngIf="showReview">
+    <span> Sticky review name : {{reviewName }}</span>
+    <br>
+    <span> Sticky review image : {{reviewImage }}</span>
+    <br>
+    <span> Sticky review rating : {{reviewRating }}</span>
+    <br>
+    <span> Sticky review type : {{reviewType }}</span>
+    <br>
+    <span> Sticky review description : {{reviewDescription }}</span>
+    <br>
+    <span> Sticky review date : {{reviewDate }}</span>
+    <br>
+    <span> Sticky review status : {{reviewStatus }}</span>
+    <br>
+    <button (click)="acceptReview()"> Accept</button> &nbsp; &nbsp;
+    <button (click)="rejectReview()"> Reject</button>
+
+</div>
+
+<div *ngIf="showMessage">
+    <span>{{message}}</span>
+</div>
+
+
+
+<!-- Test html template -->
+
+<!--<div class="hover_bkgr_fricc">-->
+<!--    <span class="helper"></span>-->
+<!--    <div>-->
+<!--&lt;!&ndash;        <div class="popupCloseButton">X</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>Add any HTML content<br />inside the popup box!</p>&ndash;&gt;-->
+<!--        <form [formGroup]="passkeyForm" (ngSubmit)="onSubmit()">-->
+<!--            <label for="">Enter passkey to view the review </label>-->
+<!--            <input type="password" formControlName="passkey">-->
+<!--            <br>-->
+<!--            <button class="saveBtn">OK</button>-->
+<!--        </form>-->
+
+
+<!--    </div>-->
+<!--</div>-->

@@ -273,8 +273,5 @@ class StickyReviewsController extends Controller
         ]);
     }
 
-    public function showReview($id){
-        // i have got the id now show the page with a modal
-        // when modal submited then hit another function with the id
-    }
+
 }

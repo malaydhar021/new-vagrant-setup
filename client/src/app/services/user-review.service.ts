@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { UserReviewApiEndpoints } from '../helpers/api.helper';
+import {StickyReviewsApiEndpoints, UserReviewApiEndpoints} from '../helpers/api.helper';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserReviewLinkInfo } from '../interfaces/user-review.interface';
 import { UserReviewModel } from '../models/user-review.model';
@@ -219,4 +219,13 @@ export class UserReviewService {
       }
     );
   }
+
+  public checkPasskey(data: FormData) {
+    return this.httpClient.post(UserReviewApiEndpoints.checkPasskey, data);
+  }
+
+  public reviewAction(data: FormData) {
+    return this.httpClient.post(UserReviewApiEndpoints.reviewAction, data);
+  }
+
 }

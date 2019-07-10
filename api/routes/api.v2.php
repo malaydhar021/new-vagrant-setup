@@ -123,8 +123,10 @@ Route::prefix('user-reviews')->name('user-reviews.')->group(function () {
     Route::get('{slug}', 'UserReviewsController@show')->name('show');
     Route::post('{slug}/validate', 'UserReviewsController@validateParams')->name('params.validate');
     Route::post('{slug}', 'UserReviewsController@store')->name('store');
-    Route::get('/show-sticky-review/{id}', 'StickyReviewsController@showReview')->name('show-sticky-review');
 });
+
+Route::post('check-passkey', 'UserReviewsController@checkPasskey')->name('check-passkey');
+Route::post('review-action', 'UserReviewsController@reviewAction')->name('review-action');
 
 Route::prefix('widget')->name('widget.')->group(function () {
     Route::get('/{usid}', 'WidgetController@index')->name('index');
