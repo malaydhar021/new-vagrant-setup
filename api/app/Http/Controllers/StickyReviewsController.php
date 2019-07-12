@@ -117,7 +117,9 @@ class StickyReviewsController extends Controller
         \Log::info($request->all());
 
         if ($request->has('reviewd_at') && !is_null($request->input('reviewd_at')) && $request->input('reviewd_at') !== 'null' && strlen(trim($request->input('reviewd_at')))) {
-            $datetime = Carbon::createFromFormat('D M d Y H:i:s e+', $request->input('reviewd_at'));
+            // $datetime = Carbon::now('UTC');
+            // \Log::info('1'.$datetime);
+            $datetime = Carbon::createFromFormat('D M d Y H:i:s e+', $request->input('reviewd_at'))->setTimezone('UTC');
             $stickyReview->created_at = $datetime->format('Y-m-d H:i:s');
             $stickyReview->updated_at = $datetime->format('Y-m-d H:i:s');
         } else {
@@ -206,7 +208,7 @@ class StickyReviewsController extends Controller
         }
  
         if ($request->has('reviewd_at') && strlen(trim($request->input('reviewd_at')))) {
-            $datetime = Carbon::createFromFormat('D M d Y H:i:s e+', $request->input('reviewd_at'));
+            $datetime = Carbon::createFromFormat('D M d Y H:i:s e+', $request->input('reviewd_at'))->setTimezone('UTC');
             $createdAt = $datetime->format('Y-m-d H:i:s');
             $updatedAt = $datetime->format('Y-m-d H:i:s');
         } else {

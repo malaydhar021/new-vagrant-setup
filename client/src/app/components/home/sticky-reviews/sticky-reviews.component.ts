@@ -11,8 +11,7 @@ import { MediaService } from '../../../services/media.service';
 import { Log } from '../../../helpers/app.helper';
 import { ErrorsService } from 'src/app/services/errors.service';
 import { BrandingService } from '../../../services/branding.service';
-import {formatDate} from '@angular/common';
-
+import * as moment from 'moment';
 /**
  * StickyReviewsComponent class will handle all required action to meet the functionalities of
  * sticky review feature. It includes CRUD operation
@@ -111,7 +110,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   showBrands: boolean = false; // flag to show/hide brands
   brands: [] = [];  // holds all the brands
   isModalOpened: boolean = false; // set to true if the modal is opened
-  max = new Date(2019, 7, 11, 18, 40);
+  max = null;
   /**
    *
    * @param ngxSmartModalService
@@ -199,15 +198,25 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       itemsPerPage: 15,
       currentPage: 1,
     };
-    const dateTimeNow = new Date();
-    this.max = new Date(
-        dateTimeNow.getFullYear(),
-        dateTimeNow.getMonth(),
-        dateTimeNow.getDate(),
-        dateTimeNow.getHours(),
-        dateTimeNow.getMinutes(),
-        dateTimeNow.getSeconds()
-    );
+    // const dateTimeNow = new Date();
+    //
+    // // console.log('on nginit');
+    // // console.log(dateTimeNow.getFullYear(),
+    // //     dateTimeNow.getMonth(),
+    // //     dateTimeNow.getDate(),
+    // //     dateTimeNow.getHours(),
+    // //     dateTimeNow.getMinutes(),
+    // //     dateTimeNow.getSeconds());
+    // //
+    // //
+    // // this.max = new Date(
+    // //     dateTimeNow.getFullYear(),
+    // //     dateTimeNow.getMonth(),
+    // //     dateTimeNow.getDate(),
+    // //     dateTimeNow.getHours(),
+    // //     dateTimeNow.getMinutes(),
+    // //     dateTimeNow.getSeconds()
+    // // );
   }
 
   /**
@@ -426,6 +435,15 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.showBrands = false;
     // open the modal to add a sticky review
     this.ngxSmartModalService.getModal('modal1').open();
+    const dateTimeNow = new Date();
+    this.max = new Date(
+        dateTimeNow.getFullYear(),
+        dateTimeNow.getMonth(),
+        dateTimeNow.getDate(),
+        dateTimeNow.getHours(),
+        dateTimeNow.getMinutes() + 1,
+        dateTimeNow.getSeconds()
+    );
   }
 
   /**
@@ -439,7 +457,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.reviewId = review.id;
     // set `isEditing` to true once the edit icon has been clicked
     this.isEditing = true;
-    const patchDateTime = new Date(review.created_at);
+    console.log(review.created_at);
+    console.log(moment.utc(review.created_at).local().format('YYYY-MM-DD h:m:s A'));
+      const patchDateTime = new Date(moment.utc(review.created_at).local().format('YYYY-MM-DD h:m:s A'));
+    // const patchDateTime = new Date(moment.utc(review.created_at).local().format('MMMM DD, LT'));
     // prepare data object with the selected sticky review row
     const data = {
       srName: review.name,
@@ -482,6 +503,17 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       this.showBrands = true;
       this.getBrands();
     }
+    
+    const dateTimeNow = new Date();
+    this.max = new Date(
+        dateTimeNow.getFullYear(),
+        dateTimeNow.getMonth(),
+        dateTimeNow.getDate(),
+        dateTimeNow.getHours(),
+        dateTimeNow.getMinutes() + 1,
+        dateTimeNow.getSeconds()
+    );
+
 
     // now open the model to show the form into the model to user
     this.ngxSmartModalService.getModal('modal1').open();
@@ -586,6 +618,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.runtimeValidations();
     // check if `form` is valid or not
     if(this.form.invalid) {
+      console.log('form invalid ');
       return;
     }
     // create an instance of Date class
@@ -598,7 +631,11 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       currentDateTime.getHours(),
       currentDateTime.getMinutes(),
       currentDateTime.getSeconds()
-    )
+    );
+    console.log('CUrrent Time when submit -> ');
+    console.log(currentSrDateTime);
+    console.log('srDateTime -> ');
+    console.log(this.form.value.srDateTime);
     // showing the loader
     this.loaderService.enableLoader();
     // creating an instance of `FormData` class
@@ -608,7 +645,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     formData.append('tags', this.form.value.srTags); // append tags
     formData.append('type', this.form.value.srType); // append review type
     formData.append('rating', this.form.value.srRating); // append rating
-    formData.append('reviewd_at', this.form.value.srDateTime === null ? currentSrDateTime : this.form.value.srDateTime); // append date to show
+    // formData.append('reviewd_at', this.form.value.srDateTime === null ? currentSrDateTime : this.form.value.srDateTime); // append date to show
+    formData.append('reviewd_at', this.form.value.srDateTime); // append date to show
     if(this.image !== null) {
       formData.append('image', this.image, this.image.name); // append image to formData
     }
@@ -820,6 +858,11 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       return optionOne.id === optionTwo.id;
     }
   }
+
+  getLocalTime(reviewAt) {
+    return moment.utc(reviewAt).local().format('MMMM DD, LT');
+  }
+
 
 
 

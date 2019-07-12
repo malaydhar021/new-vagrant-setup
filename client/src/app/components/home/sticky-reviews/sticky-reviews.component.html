@@ -41,7 +41,7 @@
                   </div>
                 </div>
                 <div class="tcol">
-                  <p>{{ review.created_at | date : 'medium' }}</p>
+                  <p>{{ getLocalTime(review.created_at) }}</p>
                 </div>
                 <div class="tcol">
                   <a (click)="onEditStickyReview(review)" class="edit"><img
@@ -128,7 +128,7 @@
                     </label>
                   </div> Add Brand</label>
                   <div class="sr-form-field" *ngIf="showBrands">
-                      <select class="sr-form-ctrl" formControlName="stickyReviewBrand"  [ngClass]="{ error: isSubmitted && getFormControls.stickyReviewBrand.errors }" [compareWith]="compareFn">
+                      <select class="sr-form-ctrl" formControlName="stickyReviewBrand" [ngClass]="{ error: isSubmitted && getFormControls.stickyReviewBrand.errors }" [compareWith]="compareFn">
                         <option value="">Select a brand </option>
                         <option *ngFor="let brand of brands; let i = index" [ngValue]="brand"> {{ brand.name }} </option>
                       </select>
@@ -146,9 +146,16 @@
                     <label>Select Date and Time (Optional)</label>
                     <div class="sr-form-field">
                       <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" class="sr-form-ctrl dateTime"
-                        formControlName="srDateTime" [max]="max">
+                        formControlName="srDateTime" [max]="max" [ngClass]="{ error: isSubmitted && getFormControls.srDateTime.errors }">
+                      <div class="error-msg" *ngIf="(
+                    isSubmitted
+                    && getFormControls.srDateTime.errors !== null
+                    && getFormControls.srDateTime.errors)">
+                        Please select a valid date/time
+                      </div>
                     </div>
                     <owl-date-time #dt1></owl-date-time>
+
                   </div>
                   <div class="inFormCell">
                     <label style="margin-top: 20px;">Select Review Type:</label>
