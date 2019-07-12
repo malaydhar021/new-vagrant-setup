@@ -773,8 +773,8 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @param modalName 
+   *
+   * @param modalName
    */
   public onModalClose(modalName) {
     this.ngxSmartModalService.getModal(modalName).onClose.subscribe((modal: NgxSmartModalComponent) => {

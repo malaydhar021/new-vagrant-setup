@@ -11,6 +11,7 @@ import { MediaService } from '../../../services/media.service';
 import { Log } from '../../../helpers/app.helper';
 import { ErrorsService } from 'src/app/services/errors.service';
 import { BrandingService } from '../../../services/branding.service';
+import {formatDate} from '@angular/common';
 
 /**
  * StickyReviewsComponent class will handle all required action to meet the functionalities of
@@ -110,17 +111,17 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   showBrands: boolean = false; // flag to show/hide brands
   brands: [] = [];  // holds all the brands
   isModalOpened: boolean = false; // set to true if the modal is opened
-
+  max = new Date(2019, 7, 11, 18, 40);
   /**
-   * 
-   * @param ngxSmartModalService 
-   * @param title 
-   * @param formBuilder 
-   * @param loaderService 
-   * @param stickyReviewService 
-   * @param mediaService 
-   * @param errorService 
-   * @param brandingService 
+   *
+   * @param ngxSmartModalService
+   * @param title
+   * @param formBuilder
+   * @param loaderService
+   * @param stickyReviewService
+   * @param mediaService
+   * @param errorService
+   * @param brandingService
    */
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -198,6 +199,15 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       itemsPerPage: 15,
       currentPage: 1,
     };
+    const dateTimeNow = new Date();
+    this.max = new Date(
+        dateTimeNow.getFullYear(),
+        dateTimeNow.getMonth(),
+        dateTimeNow.getDate(),
+        dateTimeNow.getHours(),
+        dateTimeNow.getMinutes(),
+        dateTimeNow.getSeconds()
+    );
   }
 
   /**
