@@ -61,12 +61,12 @@ class StickyReviewResource extends Resource
                 'review_type' => $this->review_type,
                 'review_link' => (new ReviewLinkResource($this->whenLoaded('reviewLink')))->briefOnly(),
                 'campaigns' => (CampaignsResource::collection($this->whenLoaded('campaigns')))->briefOnly(),
+                'has_brand' => $this->has_brand,
+                'brands' =>  (new BrandResource($this->whenLoaded('brands')))->briefOnly(),
                 'created_by' => (new UserResource($this->user))->briefOnly(),
                 'reviewed_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
-                'has_brand' => $this->has_brand,
-                'brands' =>  (new BrandResource($this->whenLoaded('brands')))->briefOnly(),
             ];
         }
     }

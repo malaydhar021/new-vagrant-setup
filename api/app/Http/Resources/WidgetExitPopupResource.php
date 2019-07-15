@@ -31,7 +31,7 @@ class WidgetExitPopupResource extends JsonResource
                     'exit_pop_up_sticky_review.sticky_review_id',
                     '=',
                     'sticky_reviews.id'
-                )->where('exit_pop_up_sticky_review.exit_pop_up_id', $exitPopupDetails->id);
+                )->with('brands')->where('exit_pop_up_sticky_review.exit_pop_up_id', $exitPopupDetails->id);
 
                 if ($exitPopupSRQuery->count()) {
                     $exitPopupStickyReviews = $exitPopupSRQuery->paginate(5);
