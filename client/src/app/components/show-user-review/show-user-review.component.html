@@ -34,20 +34,27 @@
 
 
 
-<!-- Test html template -->
+<div class="reviewLinkBody">
+    <div class="reviewlinkForm">
+        <!-- Header -->
+        <header class="reviewLHdr">
+                {{reviewRating}}
+                <div *ngIf="reviewImage !== null" class="figureHeader" [style.background-image]="'url('+  reviewImage  +')'"></div>
+            <div class="headerTxtRvw">
+                <h3> Some Name </h3>
+                <p> Description </p>
+                <p>Some negative message </p>
+            </div>
+        </header>
+        <!-- Different screens -->
+        <div class="bodyCreview">
+            <!-- Show api error/success messages -->
+            Some Text for the body
 
-<!--<div class="hover_bkgr_fricc">-->
-<!--    <span class="helper"></span>-->
-<!--    <div>-->
-<!--&lt;!&ndash;        <div class="popupCloseButton">X</div>&ndash;&gt;-->
-<!--&lt;!&ndash;        <p>Add any HTML content<br />inside the popup box!</p>&ndash;&gt;-->
-<!--        <form [formGroup]="passkeyForm" (ngSubmit)="onSubmit()">-->
-<!--            <label for="">Enter passkey to view the review </label>-->
-<!--            <input type="password" formControlName="passkey">-->
-<!--            <br>-->
-<!--            <button class="saveBtn">OK</button>-->
-<!--        </form>-->
-
-
-<!--    </div>-->
-<!--</div>-->
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footerCopy">
+        <p> footer text </p>
+    </footer>
+</div>

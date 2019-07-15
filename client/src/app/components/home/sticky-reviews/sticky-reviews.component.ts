@@ -503,7 +503,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       this.showBrands = true;
       this.getBrands();
     }
-    
+
     const dateTimeNow = new Date();
     this.max = new Date(
         dateTimeNow.getFullYear(),
