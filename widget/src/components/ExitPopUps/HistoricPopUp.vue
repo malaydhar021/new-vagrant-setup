@@ -8,7 +8,7 @@
                             <img src="../../assets/images/icon_mic_white.png" alt="">
                             <h2 :style="{color: data.header_text_color}">{{data.header_text}}</h2>
                         </div>
-                        <div class="rightSec" v-bind:class="{ popupPresent: showWidget }" :style="{background: data.body_background_color}">
+                        <div class="rightSec" v-bind:class="{ popupPresent: showWidget }">
                             <div class="rightSecContainer">
                                 <p :style="{color: data.paragraph_text_color}">
                                     {{data.paragraph_text}}
@@ -24,15 +24,19 @@
                                         </transition>
                                     </div>
                                 </div>
-                                <form v-if="data.has_email_field">
-                                    <input type="email" placeholder="Enter your email">
-                                    <button :style="{color: data.button_text_color, background: data.button_background_color}">{{data.button_text.charAt(0).toUpperCase()+data.button_text.slice(1)}}</button>
+                                <form v-if="data.has_email_field && !showMessage">
+                                    <input type="email" placeholder="Enter your email" v-model="subscribe_email">
+                                    <button :style="{color: data.button_text_color, background: data.button_background_color}" @click="subscribeMe" type="button">{{data.button_text.charAt(0).toUpperCase()+data.button_text.slice(1)}}</button>
                                 </form>
 
-                                <div class="linkTo" v-else>
-                                    <a href="javascript:void(0)" class="button-submit" :style="{color: data.cta_button_text_color, background: data.cta_button_background_color}">
+                                <div class="linkTo" v-if="!data.has_email_field && !showMessage">
+                                    <a :href=data.button_url target="_blank" class="button-submit" :style="{color: data.cta_button_text_color, background: data.cta_button_background_color}">
                                     {{data.cta_button_text}}
                                     </a>
+                                </div>
+
+                                <div class="linkTo" v-if="showMessage">
+                                    {{showDetails.message}}
                                 </div>
                             </div>
                         </div>
@@ -51,13 +55,16 @@ import '../../assets/css/exit-popup.css'
 import MainWidget from '../Widgets/MainWidget.vue'
 
 import Vue from 'vue'
+import { constants } from 'fs';
 
 export default {
     props: {
         data: {},
         otherData: {},
+        showDetails: {},
         script_id: '',
-        apiEndpoint: ''
+        showMessage: Boolean,
+        method: { type: Function }
     },
     
     name: "historicpopup",
@@ -68,7 +75,8 @@ export default {
             stickyReviews: {},
             exitPopData: {},
             showWidget: false,
-            fromExitPopup: true
+            fromExitPopup: true,
+            subscribe_email: ''
         }
     },
 
@@ -90,6 +98,21 @@ export default {
                 vm.showWidget = true
                 vm.stickyReviews = vm.data.sticky_reviews
             }
+        },
+
+        validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        },
+
+        subscribeMe () {
+            let vm = this
+            if(vm.validateEmail(vm.subscribe_email) && vm.subscribe_email) {
+                this.$emit('submit-email', vm.subscribe_email)
+            } else {
+                console.log("need to show validation error message")
+            }
+            // console.log(this.subscribe_email)
         }
     },
 

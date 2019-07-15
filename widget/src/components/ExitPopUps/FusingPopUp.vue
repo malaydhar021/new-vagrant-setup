@@ -7,7 +7,7 @@
                         <div class="topSec" :style="{backgroundColor: data.header_background_color}">
                             <p><img src="../../assets/images/icon_mic_colored_1.png" alt=""></p>
                         </div>
-                        <div class="bottomSec" v-bind:class="{ popupPresent: showWidget }" :style="{background: data.body_background_color}">
+                        <div class="bottomSec" v-bind:class="{ popupPresent: showWidget }">
                             <div class="rightSecContainer">
                                 <h2 :style="{color: data.header_text_color}">{{data.header_text}}</h2>
                                 <p :style="{color: data.paragraph_text_color}">

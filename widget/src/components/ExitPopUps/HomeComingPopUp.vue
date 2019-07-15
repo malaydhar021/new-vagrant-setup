@@ -8,7 +8,7 @@
                 <img src="../../assets/images/icon_mic_white.png" alt="">
                 <h2 :style="{color: data.header_text_color}">{{data.header_text}}</h2>
               </div>
-              <div class="rightSec" v-bind:class="{ popupPresent: showWidget }" :style="{background: data.body_background_color}">
+              <div class="rightSec" v-bind:class="{ popupPresent: showWidget }" >
                 <div class="rightSecContainer">
                   <p :style="{color: data.paragraph_text_color}">
                     {{data.paragraph_text}}

@@ -4,7 +4,10 @@
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
+                    @submit-email="submitEmail"
                     :script_id="script_id"
+                    :showDetails="show_details"
+                    :showMessage="show_message"
                     v-cloak></app-historic-popup>
     <app-home-coming-popup v-if="selectedComponent === 102"
                     :data="appData"
@@ -39,6 +42,8 @@ import HomeComingPopup from './HomeComingPopUp.vue'
 import MomentumPopup from './MomentumPopUp.vue'
 import FusingPopup from './FusingPopUp.vue'
 import EvolverPopup from './EvolverPopUp.vue'
+import { constants } from 'fs';
+import { setTimeout } from 'timers';
 
 export default {
   props: {
@@ -53,6 +58,8 @@ export default {
   data: function () {
     return {
       selectedComponent: '',
+      show_details: {},
+      show_message: false,
       appData: {},
       otherData: {}
     }
@@ -80,7 +87,35 @@ export default {
       this.appData = this.exitPopUpdata
       this.selectedComponent = this.appData.style !== null ? this.appData.style : 101
       this.otherData = this.data
-    }
+    },
+
+    /**
+     * this function is to send email for subscription
+     * @param {object} emaildata
+     * @param {string} email
+     */
+
+    async submitEmail (value) {
+      if (value) {
+        // Call this method to get initial widget data
+        try {
+          let payload = {
+            "email": value, 
+            "exit_popup_id": this.appData.id
+          }
+
+          // let response = await this.axios.post(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/postback`)
+          let response  = await this.axios.post(`https://api.beta.usestickyreviews.com/v2/widget/emv_ubuntu5c35c4d3e2c661547027667/postback`, payload)
+
+          this.show_details = response.data
+          this.show_message = true
+        } catch (error) {
+            console.log(error)
+        }
+      } else {
+        console.log("Email field can't be blank")
+      }
+    },
   },
 
   mounted () {

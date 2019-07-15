@@ -388,3 +388,8 @@ operation the user is assigned to basic plan.
 
 1. Added environments for production, staging, development and local
 2. Added README.md file for setup instruction and other necessary information
+
+
+### V0.0.6
+
+1. Merged Widget and Exit Popup modifications

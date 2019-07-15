@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="btmSec" :style="{background: data.body_background_color}">
+                        <div class="btmSec">
                             <form v-if="data.has_email_field">
                                 <input type="text" placeholder="Enter your email">
                                 <button :style="{color: data.button_text_color, background: data.button_background_color}">{{data.button_text.charAt(0).toUpperCase()+data.button_text.slice(1)}}</button>

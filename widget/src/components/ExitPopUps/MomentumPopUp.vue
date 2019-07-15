@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bottomSec" :style="{background: data.body_background_color}">
+                        <div class="bottomSec" :style="{background: 'rgb(254,144,250)'}">
                             <div class="rightSecContainer">
                                 <form v-if="data.has_email_field">
                                     <input type="email" placeholder="Enter your email">
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="nsm-dialog-btn-close" type="button" :style="{background: data.body_background_color}" @click="popupClosed">
+                    <button class="nsm-dialog-btn-close" type="button" :style="{background: 'rgb(254,144,250)'}" @click="popupClosed">
                         <img src="../../assets/images/close.svg" alt="">
                     </button>
                 </div>

@@ -17,7 +17,7 @@
           <footer class="popupFt">
             <span class="timePop">{{ data.created_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
             <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-            <a :href="brandingData.url" target="_blank" v-if="isBranded">{{brandingData.name}}</a>
+            <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
 
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
               <i :class="index+1 <= data.rating ? 'star': 'star inactive'">
@@ -50,15 +50,14 @@
                         :show-prev-button="false"
                         :show-next-button="false"
                         @play="onPlayerPlay($event)"
-                        @pause="onPlayerPause($event)"
-                        @ended="onPlayerEnded($event)">
+                        @pause="onPlayerPause($event)">
             </AudioPlayer>
           </div>
 
           <footer class="popupFt">
             <span class="timePop">{{ data.created_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
             <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-            <a :href="brandingData.url" target="_blank" v-if="isBranded">{{brandingData.name}}</a>
+            <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
 
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
               <i :class="index+1 <= data.rating ? 'star': 'star inactive'">
@@ -101,8 +100,7 @@
               :options="videoPlayerOptions"
               :playsinline="false"
               @play="onPlayerPlay($event)"
-              @pause="onPlayerPause($event)"
-              @ended="onPlayerEnded($event)"></video-player>
+              @pause="onPlayerPause($event)"></video-player>
         </div>
       </div>
       <div class="popupTxt popup_template_1">
@@ -119,7 +117,7 @@
           <footer class="popupFt">
             <span class="timePop">{{ data.created_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
             <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-            <a :href="brandingData.url" target="_blank" v-if="isBranded">{{brandingData.name}}</a>
+            <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
 
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
               <i :class="index+1 <= data.rating ? 'star': 'star inactive'">
