@@ -104,8 +104,7 @@ export default {
             "exit_popup_id": this.appData.id
           }
 
-          // let response = await this.axios.post(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/postback`)
-          let response  = await this.axios.post(`https://api.beta.usestickyreviews.com/v2/widget/emv_ubuntu5c35c4d3e2c661547027667/postback`, payload)
+          let response = await this.axios.post(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/postback`, payload)
 
           this.show_details = response.data
           this.show_message = true
