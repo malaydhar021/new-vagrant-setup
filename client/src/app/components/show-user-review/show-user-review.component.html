@@ -23,6 +23,8 @@
     <br>
     <span> Sticky review status : {{reviewStatus }}</span>
     <br>
+    <span> Sticky review style id : {{reviewStyle}}</span>
+    <br>
     <button (click)="acceptReview()"> Accept</button> &nbsp; &nbsp;
     <button (click)="rejectReview()"> Reject</button>
 
@@ -49,7 +51,8 @@
         <!-- Different screens -->
         <div class="bodyCreview">
             <!-- Show api error/success messages -->
-            Some Text for the body
+            Some Text for the body i need to confuiger the views
+            <app-rounded [reviewData]="reviewData"> </app-rounded>
 
         </div>
     </div>

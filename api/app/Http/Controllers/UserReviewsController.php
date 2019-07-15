@@ -174,7 +174,7 @@ class UserReviewsController extends Controller
         $checkPasskey = UserZapierTokens::where('passkey', $passKey)->first();
         if($checkPasskey != null ){
             // show the review
-             $stickyReviewData = StickyReview::where('id', $stickyId)->first();
+             $stickyReviewData = StickyReview::where('id', $stickyId)->with('campaigns')->first();
             return response()->json([
                 'status' => true,
                 'data'  =>  $stickyReviewData,

@@ -8,7 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MessageModule } from './message.module';
 import { SharedModule } from './shared/shared.module';
 import { ShowUserReviewComponent } from '../components/show-user-review/show-user-review.component';
-
+import { RoundedComponent } from '../components/show-user-review/sticky-review-styles/rounded/rounded.component';
 /**
  * Module to deal with all sort of operations for user review
  * @module UserReviewModule
@@ -18,8 +18,8 @@ import { ShowUserReviewComponent } from '../components/show-user-review/show-use
  */
 @NgModule({
     declarations: [
-        ShowUserReviewComponent
-
+        ShowUserReviewComponent,
+        RoundedComponent
     ],
     imports: [
         CommonModule,
@@ -29,7 +29,7 @@ import { ShowUserReviewComponent } from '../components/show-user-review/show-use
         ShowUserReviewRoutingModule,
         MediaModule,
         MessageModule,
-        SharedModule
+        SharedModule,
     ],
     providers: [
         UserReviewService

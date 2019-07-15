@@ -1,0 +1,23 @@
+<!-- Add pop_small class to popup parent elements OR popupParent's parent element when parent space is less than 320px -->
+<div class="popupParent pop_small">
+    <div class="popupTxt popup_template_1" style="margin-bottom: 30px;">
+        <div class="figPopup">
+            <figure>
+                <img src="../../../../../../assets/images/face_icon.png" alt="">
+            </figure>
+        </div>
+        <div class="bodyPopup">
+            <h6>{{reviewData.name}}</h6>
+            <p>{{reviewData.description}} </p>
+            <footer class="popupFt">
+                <span class="timePop">{{getReviewTimeFormated(reviewData.created_at)}}</span>
+                <span class="pwBy"><img src="../../../../../../assets/images/icon_poweredby.png" alt="">by</span>
+                <a href="javascript:void(0)">{{reviewData.created_by?.name}}</a>
+                <figure *ngFor="let rating of getStars(reviewData.rating)">
+                    <img src="../../../../assets/images/small_star_active.png" alt="">
+                </figure>
+            </footer>
+        </div>
+        <a href="javascript:void(0)" class="closePopup"></a>
+    </div>
+</div>

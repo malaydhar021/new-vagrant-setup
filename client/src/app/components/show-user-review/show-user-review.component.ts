@@ -37,8 +37,10 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
     reviewType: string = '';
     reviewStatus: string = '';
     showReview: boolean = false;
+    reviewStyle: string = '';
     message: string = '';
     showMessage: boolean = false;
+    reviewData:[] =[];
     // do something
     constructor(
         private title: Title,
@@ -83,6 +85,7 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
                     this.loaderService.disableLoader();
                     this.showMe = false;
                     this.showReview = true;
+                    this.reviewData = response.data;
                     this.reviewImage = response.data.image;
                     this.reviewName = response.data.name;
                     this.reviewRating = response.data.rating;
@@ -90,6 +93,12 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
                     this.reviewDate = response.data.created_at;
                     this.reviewType = response.data.type;
                     this.reviewStatus = response.data.is_accept;
+                    console.log(response.data.campaigns);
+                    if (response.data.campaigns.length !== 0) {
+                        this.reviewStyle = response.data.campaigns[0].style_id;
+                    } else {
+                        this.reviewStyle = '1'; // defualt sticky review style
+                    }
                 } else {
                     this.loaderService.disableLoader();
                 }
