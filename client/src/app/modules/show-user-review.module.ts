@@ -9,6 +9,11 @@ import { MessageModule } from './message.module';
 import { SharedModule } from './shared/shared.module';
 import { ShowUserReviewComponent } from '../components/show-user-review/show-user-review.component';
 import { RoundedComponent } from '../components/show-user-review/sticky-review-styles/rounded/rounded.component';
+import { SquareComponent } from '../components/show-user-review/sticky-review-styles/square/square.component';
+import { SquareElevatedComponent } from '../components/show-user-review/sticky-review-styles/square-elevated/square-elevated.component';
+import { TearDropComponent } from '../components/show-user-review/sticky-review-styles/tear-drop/tear-drop.component';
+import { TearDropElevatedComponent } from '../components/show-user-review/sticky-review-styles/tear-drop-elevated/tear-drop-elevated.component';
+
 /**
  * Module to deal with all sort of operations for user review
  * @module UserReviewModule
@@ -19,7 +24,11 @@ import { RoundedComponent } from '../components/show-user-review/sticky-review-s
 @NgModule({
     declarations: [
         ShowUserReviewComponent,
-        RoundedComponent
+        RoundedComponent,
+        SquareComponent,
+        SquareElevatedComponent,
+        TearDropComponent,
+        TearDropElevatedComponent,
     ],
     imports: [
         CommonModule,

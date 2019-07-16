@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ExitPopUp;
 use App\ReviewLink;
+use App\StickyReview;
 use App\UserZapierTokens;
 use App\UserZapierWebhooks;
 use Illuminate\Http\Request;
@@ -46,22 +47,26 @@ class ZapierWebhooksController extends Controller
      */
     public function sendUserReviewLinkData(Request $request) {
         if($request->api_key != ''){
-            // api key found no do some shit !
-            $checkAndFetchUserDataWithApiKey = UserZapierTokens::where('token', $request->api_key)->with('reviewLinks')->get();
-            $userData = array();
-            if($checkAndFetchUserDataWithApiKey) {
-                // create set of data
-                foreach($checkAndFetchUserDataWithApiKey as $key => $data) {
-                    foreach($data->reviewLinks as $reviewLinkKey=> $reviewLink) {
-                        $userData[$reviewLinkKey]['id'] = $reviewLink->id;
-                        $userData[$reviewLinkKey]['review_link_name'] = $reviewLink->name;
-                    }
-                } // main foreach ends
-                $allValues = ['id' => 'RL', 'review_link_name'=> 'All'];
-                array_push($userData, $allValues);
-                return $userData;
-            } else {
-                return $this->prepareResponse(false, "No data found.");
+            // api key found now do some shit !
+            $getUser = UserZapierTokens::where('token', $request->api_key)->select('created_by')->first();
+            if($getUser){
+                $checkAndFetchUserDataWithApiKey = ReviewLink::where('created_by',  $getUser->created_by)->whereNotNull('campaign_id')->get();
+                $userData = array();
+                if($checkAndFetchUserDataWithApiKey) {
+                    // create set of data
+                    foreach($checkAndFetchUserDataWithApiKey as $key => $data) {
+                            $userData[$key]['id'] = $data->id;
+                            $userData[$key]['review_link_name'] = $data->name;
+                    } // main foreach ends
+                    $allValues = ['id' => 'RL', 'review_link_name'=> 'All'];
+                    array_push($userData, $allValues);
+                    return $userData;
+                } else {
+                    return $this->prepareResponse(false, "No data found.");
+                }
+            }else{
+                // user not found
+                return $this->prepareResponse(false, "No data found with the api key .");
             }
         } else {
             // api key not found
@@ -130,6 +135,7 @@ class ZapierWebhooksController extends Controller
                     $getReviewLinkData[$linkKey]['review_link'] = 'https://app.'.$linkUrl.'/user-review/'.$linkData->url_slug;
                     if($linkData->stickyReviews != null ){
                         foreach($linkData->stickyReviews as $stickyKey => $stickyData){
+                            $getReviewToken = $this->generateReviewToken($stickyData->id); // send sticky review id to generate a review token
                             $getReviewLinkData[$stickyKey]['id'] = $stickyData->id;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_name'] = $stickyData->name;
                             if($stickyData->type == 3){
@@ -146,7 +152,7 @@ class ZapierWebhooksController extends Controller
                             $getReviewLinkData[$stickyKey]['sticky_reviews_description'] = $reviewDescription;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_tags'] = $stickyData->tags;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_rating'] = $stickyData->rating;
-                            $getReviewLinkData[$stickyKey]['view_sticky_review'] = 'https://app.'.$linkUrl.'/show-user-review/'.base64_encode($stickyData->id);
+                            $getReviewLinkData[$stickyKey]['view_sticky_review'] = 'https://app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.base64_encode($stickyData->id);
                             if($stickyData->negativeReviews != null ){
                                 $getReviewLinkData[$stickyKey]['negative_reviews_email'] = $stickyData->negativeReviews['email'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_phone'] = $stickyData->negativeReviews['phone'];
@@ -159,7 +165,7 @@ class ZapierWebhooksController extends Controller
                         $getReviewLinkData[$linkKey]['sticky_reviews_description'] = 'this is awsome!';
                         $getReviewLinkData[$linkKey]['sticky_reviews_tags'] = 'Sticky review ';
                         $getReviewLinkData[$linkKey]['sticky_reviews_rating'] = '5';
-                        $getReviewLinkData[$linkKey]['view_sticky_review'] = 'https://app.'.$linkUrl.'/show-user-review/=87md21';
+                        $getReviewLinkData[$linkKey]['view_sticky_review'] = 'https://app.'.$linkUrl.'/show-user-review/hyghtfh6ytghfg/=87md21';
                         $getReviewLinkData[$linkKey]['negative_reviews_email'] = 'email@example.com';
                         $getReviewLinkData[$linkKey]['negative_reviews_phone'] = '6539865452';
                     }
@@ -175,7 +181,7 @@ class ZapierWebhooksController extends Controller
                 $getReviewLinkData[0]['sticky_reviews_description'] = 'this is awsome!';
                 $getReviewLinkData[0]['sticky_reviews_tags'] = 'Sticky review ';
                 $getReviewLinkData[0]['sticky_reviews_rating'] = '5';
-                $getReviewLinkData[0]['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/=87md21';
+                $getReviewLinkData[0]['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/hyghtfh6ytghfg/=87md21';
                 $getReviewLinkData[0]['negative_reviews_email'] = 'email@example.com';
                 $getReviewLinkData[0]['negative_reviews_phone'] = '6539865452';
             }
@@ -300,6 +306,45 @@ class ZapierWebhooksController extends Controller
             'response' => $data,
             'message'  => $message,
         ),200);
+    }
+
+    /**
+     * Function to generate and save a review token for a review
+     * @param $id
+     * @return bool|string
+     */
+    public function generateReviewToken($id){
+        $createAndSaveToken = StickyReview::where('id', $id)->first();
+        if($createAndSaveToken){
+            if($createAndSaveToken->review_token == null ){
+                // generate and save the token
+                $token = $this->generateRandomString(14);
+                $createAndSaveToken->review_token = $token;
+                $createAndSaveToken->save();
+                return $token;
+            }else{
+                // pass the token
+                return $createAndSaveToken->review_token;
+            }
+        }else{
+            \Log::info('Token not generated !');
+            return false;
+        }
+    }
+
+    /**
+     * Function to generate zapier token
+     * @param $length
+     * @return string
+     */
+    function generateRandomString($length) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
 

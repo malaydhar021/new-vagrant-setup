@@ -3,38 +3,30 @@ import { Title }                        from '@angular/platform-browser';
 import { ActivatedRoute }               from '@angular/router';
 import { Subscription }                 from 'rxjs';
 import { UserReviewService }            from '../../services/user-review.service';
-import { Log }                          from '../../helpers/app.helper';
 import { LoaderService }                from '../../services/loader.service';
-import { UserReviewLinkInfo }           from '../../interfaces/user-review.interface';
-import { UserReviewModel }              from '../../models/user-review.model';
 import { ErrorsService }                from '../../services/errors.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl, Form } from '@angular/forms';
-import { StickyReviewService } from '../../services/sticky-review.service';
 
 /**
- * Component to load the first screen of user review link with proper info
+ * Component to load the first screen of show user review with proper info
  * @class ShowUserReviewComponent
  * @version 1.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
+
 @Component({
     selector: 'app-show-user-review',
     templateUrl: './show-user-review.component.html',
     styleUrls: ['./show-user-review.component.scss']
 })
+
 export class ShowUserReviewComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
-    passkeyForm: FormGroup; // for update reviews from listing page for each campaign
     id: any = null;
+    token: any = null;
     showMe: boolean = true;
-    reviewImage: string = '';
-    reviewName: string = '';
-    reviewDescription: string = '';
-    reviewRating: string = '';
-    reviewDate: string = '';
-    reviewType: string = '';
     reviewStatus: string = '';
     showReview: boolean = false;
     reviewStyle: string = '';
@@ -48,37 +40,30 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
         private loaderService: LoaderService,
         private errorService: ErrorsService,
         private route: ActivatedRoute,
-        private formBuilder: FormBuilder
     ) {
         this.title.setTitle('Stickyreviews :: Show User Review');
-        // subscribe to review to get the latest update data from review
     }
 
     public ngOnInit() {
-        // do something
         this.route.params.subscribe(params => {
             this.id = params.id;
+            this.token = params.token;
         });
-        this.passkeyForm = this.formBuilder.group({
-            passkey: [null, Validators.required], // campaign name
-        });
+        this.getReviewInfo();
     }
 
     public ngOnDestroy() {
         this.subscription.unsubscribe();
     }
 
-    public onSubmit() {
-        // check if the form is valid or not. if invalid then do nothing
-        if (this.passkeyForm.invalid) {
-            return;
-        }
+    /**
+     * Function to get a review information
+     */
+    public getReviewInfo() {
         const formData = new FormData();
-        formData.append('passKey', this.passkeyForm.value.passkey); // append name
-        formData.append('stickyId', this.id); // append tags
-
+            formData.append('stickyId', this.id); // append tags
+            formData.append('reviewToken', this.token); // append tags
         this.loaderService.enableLoader();
-
         this.userReviewService.checkPasskey(formData).subscribe(
             (response: any) => {
                 if (response.status) {
@@ -86,16 +71,9 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
                     this.showMe = false;
                     this.showReview = true;
                     this.reviewData = response.data;
-                    this.reviewImage = response.data.image;
-                    this.reviewName = response.data.name;
-                    this.reviewRating = response.data.rating;
-                    this.reviewDescription = response.data.description;
-                    this.reviewDate = response.data.created_at;
-                    this.reviewType = response.data.type;
                     this.reviewStatus = response.data.is_accept;
-                    console.log(response.data.campaigns);
-                    if (response.data.campaigns.length !== 0) {
-                        this.reviewStyle = response.data.campaigns[0].style_id;
+                    if (response.data.review_link.campaign.style_id !== 0) {
+                        this.reviewStyle = response.data.review_link.campaign.style_id;
                     } else {
                         this.reviewStyle = '1'; // defualt sticky review style
                     }
@@ -105,20 +83,34 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
             });
     }
 
+    /**
+     * Function to accept a review
+     */
     public acceptReview() {
+        if (confirm('Are you sure you want to accept this review ?')) {
         const formData = new FormData();
         formData.append('reviewAction', '1');
         formData.append('stickyId', this.id);
         this.reviewAction(formData);
+        }
     }
 
+    /**
+     * Function to reject a review
+     */
     public rejectReview() {
-        const formData = new FormData();
-        formData.append('reviewAction', '0');
-        formData.append('stickyId', this.id);
-        this.reviewAction(formData);
+        if (confirm('Are you sure you want to reject this review ?')) {
+            const formData = new FormData();
+            formData.append('reviewAction', '0');
+            formData.append('stickyId', this.id);
+            this.reviewAction(formData);
+        }
     }
 
+    /**
+     * Function to assign an action (accept/reject) to a review
+     * @param formData
+     */
     public reviewAction(formData) {
         this.userReviewService.reviewAction(formData).subscribe(
             (response: any) => {

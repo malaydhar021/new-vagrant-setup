@@ -1,63 +1,28 @@
-<h1> page to show review  </h1>
-
-<div *ngIf="showMe">
-    <form [formGroup]="passkeyForm" (ngSubmit)="onSubmit()">
-    <label for="">Enter passkey to view the review </label>
-    <input type="password" formControlName="passkey">
-        <button type="submit">OK</button>
-    </form>
-</div>
-
-<div *ngIf="showReview">
-    <span> Sticky review name : {{reviewName }}</span>
-    <br>
-    <span> Sticky review image : {{reviewImage }}</span>
-    <br>
-    <span> Sticky review rating : {{reviewRating }}</span>
-    <br>
-    <span> Sticky review type : {{reviewType }}</span>
-    <br>
-    <span> Sticky review description : {{reviewDescription }}</span>
-    <br>
-    <span> Sticky review date : {{reviewDate }}</span>
-    <br>
-    <span> Sticky review status : {{reviewStatus }}</span>
-    <br>
-    <span> Sticky review style id : {{reviewStyle}}</span>
-    <br>
-    <button (click)="acceptReview()"> Accept</button> &nbsp; &nbsp;
-    <button (click)="rejectReview()"> Reject</button>
-
-</div>
-
-<div *ngIf="showMessage">
-    <span>{{message}}</span>
-</div>
-
-
-
 <div class="reviewLinkBody">
     <div class="reviewlinkForm">
         <!-- Header -->
-        <header class="reviewLHdr">
-                {{reviewRating}}
-                <div *ngIf="reviewImage !== null" class="figureHeader" [style.background-image]="'url('+  reviewImage  +')'"></div>
-            <div class="headerTxtRvw">
-                <h3> Some Name </h3>
-                <p> Description </p>
-                <p>Some negative message </p>
-            </div>
-        </header>
+        <header class="reviewLHdr"> <p>Review</p> </header>
         <!-- Different screens -->
         <div class="bodyCreview">
-            <!-- Show api error/success messages -->
-            Some Text for the body i need to confuiger the views
-            <app-rounded [reviewData]="reviewData"> </app-rounded>
-
+            <!-- Show sticky review based on the style -->
+            <app-rounded *ngIf="this.reviewStyle == 1" [reviewData]="reviewData"> </app-rounded>
+            <app-square  *ngIf="this.reviewStyle == 2" [reviewData]="reviewData"> </app-square>
+            <app-tear-drop *ngIf="this.reviewStyle == 3" [reviewData]="reviewData"></app-tear-drop>
+            <app-square-elevated *ngIf="this.reviewStyle == 4" [reviewData]="reviewData"></app-square-elevated>
+            <app-tear-drop-elevated *ngIf="this.reviewStyle == 5" [reviewData]="reviewData"></app-tear-drop-elevated>
+        </div>
+        <!-- Accept/Reject button -->
+        <div *ngIf="reviewStatus === null">
+                <button (click)="acceptReview()"> Accept</button> &nbsp; &nbsp;
+                <button (click)="rejectReview()"> Reject</button>
+        </div>
+        <!-- Error/Success message -->
+        <div *ngIf="showMessage">
+            <span>{{message}}</span>
         </div>
     </div>
     <!-- Footer -->
     <footer class="footerCopy">
-        <p> footer text </p>
+        <p>  </p>
     </footer>
 </div>

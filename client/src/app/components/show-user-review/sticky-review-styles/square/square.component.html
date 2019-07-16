@@ -1,21 +1,20 @@
-<!-- Rounded sticky review -->
-<!-- Add pop_small class to popup parent elements OR popupParent's parent element when parent space is less than 320px -->
-<div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_1':''" *ngIf="reviewData.type !== 3">
-    <div class="popupTxt popup_template_1" style="margin-bottom: 30px;">
+<!-- Square -->
+<!-- Add pop_small class to popupparent elements OR popupParent's parent element when parent space is less than 320px -->
+<div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_2':''" *ngIf="reviewData.type !== 3">
+    <div class="popupTxt popup_template_2" style="margin-bottom: 30px;">
         <div class="figPopup">
             <figure>
-                <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === ''">
+                <img src="../../../../../../assets/images/face_icon.png" alt="face_icon" *ngIf="reviewData.image === ''">
                 <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== ''">
             </figure>
         </div>
         <div class="bodyPopup">
-            <h6>{{reviewData.name}}</h6>
+            <h6>{{reviewData.name}} </h6>
             <p *ngIf="reviewData.type === 1">{{reviewData.description}} </p>
             <!-- Audio Type review -->
             <div class="audioRv" *ngIf="reviewData.type === 2">
                 <audio src="https://{{reviewData.url_link}}/storage/audios/{{reviewData.description }}" controls></audio>
             </div>
-            <!-- video type review -->
             <footer class="popupFt">
                 <span class="timePop">{{getReviewTimeFormated(reviewData.created_at)}}</span>
                 <span class="pwBy"><img src="../../../../../../assets/images/icon_poweredby.png" alt="">by</span>
@@ -30,8 +29,11 @@
 </div>
 
 
+<!-- video review -->
+
+
 <div style="display: block;" class="popAdd vidPreV_parent" *ngIf="reviewData.type === 3">
-    <div class="popupParent vidParent_1">
+    <div class="popupParent vidParent_2">
         <div class="vidPop">
             <div class="animateVid">
                                 <span class="keyF1">
@@ -60,7 +62,7 @@
                 </video>
             </div>
         </div>
-        <div class="popupTxt popup_template_1" style="margin-bottom: 30px;">
+        <div class="popupTxt popup_template_2" style="margin-bottom: 30px;">
             <div class="figPopup">
                 <figure>
                     <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === ''">
@@ -68,9 +70,10 @@
                 </figure>
             </div>
             <div class="bodyPopup">
-                <h6>{{reviewData.name}}</h6>
+                <h6>{{reviewData.name}} </h6>
+
                 <footer class="popupFt">
-                    {{ getReviewTimeFormated(reviewData.created_at) }}
+                    {{getReviewTimeFormated(reviewData.created_at)}}
                     <span><img src="../../../../assets/images/icon_poweredby.png" alt=""></span>
                     by
                     <span>{{reviewData.created_by?.name |  slice:0:10 }}</span>

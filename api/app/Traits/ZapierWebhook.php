@@ -31,6 +31,7 @@ trait ZapierWebhook
             if($getStickyReviewInfo != null && $getStickyReviewInfo->review_link_id != null ){
                 $fetchWebhookInfo = UserZapierWebhooks::where('review_link_id', $getStickyReviewInfo->review_link_id)->get();
                 if($fetchWebhookInfo != null && count($fetchWebhookInfo) != 0 ){
+                    $getReviewToken = $this->generateReviewToken($getStickyReviewInfo->id); // send sticky review id to generate a review token
                     // get the webhook now try to send some data
                     $sendZapData = [];
                     $sendZapData['id'] = $getStickyReviewInfo->id;
@@ -49,7 +50,7 @@ trait ZapierWebhook
                     $sendZapData['sticky_reviews_description'] = $reviewDescription;
                     $sendZapData['sticky_reviews_tags'] = $getStickyReviewInfo->tags;
                     $sendZapData['sticky_reviews_rating'] = $getStickyReviewInfo->rating;
-                    $sendZapData['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/'.base64_encode($getStickyReviewInfo->id);
+                    $sendZapData['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.base64_encode($getStickyReviewInfo->id);
                     if($getStickyReviewInfo->negativeReviews != null ){
                         $sendZapData['negative_reviews_email'] = $getStickyReviewInfo->negativeReviews['email'];
                         $sendZapData['negative_reviews_phone'] = $getStickyReviewInfo->negativeReviews['phone'];
@@ -91,6 +92,7 @@ trait ZapierWebhook
                     $reviewLinkUserId = ReviewLink::where('id', $getStickyReviewInfo->review_link_id)->select('created_by')->first();
                     $fetchAllReviewLinkInfo = UserZapierWebhooks::where('review_link_id', 'RL')->where('created_by', $reviewLinkUserId->created_by)->get();
                     if($fetchAllReviewLinkInfo != null && count($fetchAllReviewLinkInfo) != 0) {
+                        $getReviewToken = $this->generateReviewToken($getStickyReviewInfo->id); // send sticky review id to generate a review token
                         // get the webhook now try to send some data
                         $sendZapData = [];
                         $sendZapData['id'] = $getStickyReviewInfo->id;
@@ -109,7 +111,7 @@ trait ZapierWebhook
                         $sendZapData['sticky_reviews_description'] = $reviewDescription;
                         $sendZapData['sticky_reviews_tags'] = $getStickyReviewInfo->tags;
                         $sendZapData['sticky_reviews_rating'] = $getStickyReviewInfo->rating;
-                        $sendZapData['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/'.base64_encode($getStickyReviewInfo->id);
+                        $sendZapData['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.base64_encode($getStickyReviewInfo->id);
                         if($getStickyReviewInfo->negativeReviews != null ){
                             $sendZapData['negative_reviews_email'] = $getStickyReviewInfo->negativeReviews['email'];
                             $sendZapData['negative_reviews_phone'] = $getStickyReviewInfo->negativeReviews['phone'];
@@ -163,7 +165,7 @@ trait ZapierWebhook
      * @param $id
      * @return bool
      */
-    public function checkAndSendStickyExitpopupDataToZapier($id){
+    public function checkAndSendExitpopupDataToZapier($id){
         try{
             $geSubscribedEmailsInfo = SubscribedEmail::where('id', $id)->first();
             if($geSubscribedEmailsInfo != null && $geSubscribedEmailsInfo->exit_pop_up_id != null ){
@@ -253,6 +255,45 @@ trait ZapierWebhook
         } catch(Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * Function to generate and save a review token for a review
+     * @param $id
+     * @return bool|string
+     */
+    public function generateReviewToken($id){
+        $createAndSaveToken = StickyReview::where('id', $id)->first();
+        if($createAndSaveToken){
+            if($createAndSaveToken->review_token == null ){
+                // generate and save the token
+                $token = $this->generateRandomString(14);
+                $createAndSaveToken->review_token = $token;
+                $createAndSaveToken->save();
+                return $token;
+            }else{
+                // pass the token
+                return $createAndSaveToken->review_token;
+            }
+        }else{
+            \Log::info('Token not generated !');
+            return false;
+        }
+    }
+
+    /**
+     * Function to generate zapier token
+     * @param $length
+     * @return string
+     */
+    function generateRandomString($length) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
 

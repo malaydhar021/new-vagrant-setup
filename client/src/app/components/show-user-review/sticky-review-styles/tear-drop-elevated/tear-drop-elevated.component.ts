@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 @Component({
-    selector: 'app-rounded',
-    templateUrl: './rounded.component.html',
-    styleUrls: ['./rounded.component.scss']
+    selector: 'app-tear-drop-elevated',
+    templateUrl: './tear-drop-elevated.component.html',
+    styleUrls: ['./tear-drop-elevated.component.scss']
 })
-export class RoundedComponent implements OnInit {
+export class TearDropElevatedComponent implements OnInit {
     @Input() reviewData?: number = 100; // default style is set to Rounded
     reviewByUser: string = '';
     constructor() { }

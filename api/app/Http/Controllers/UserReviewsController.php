@@ -169,24 +169,33 @@ class UserReviewsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function checkPasskey(Request $request){
-        $passKey = trim($request->passKey);
+        \Log::info($request->all());
         $stickyId = base64_decode($request->stickyId);
-        $checkPasskey = UserZapierTokens::where('passkey', $passKey)->first();
-        if($checkPasskey != null ){
-            // show the review
-             $stickyReviewData = StickyReview::where('id', $stickyId)->with('campaigns')->first();
-            return response()->json([
-                'status' => true,
-                'data'  =>  $stickyReviewData,
-                'message' => "Sticky review found !",
-            ]);
-        }else{
-            return response()->json([
-                'status' => false,
-                'data'  =>  [],
-                'message' => "Sorry wrong passkey entered !",
-            ]);
+        $reviewToken = $request->reviewToken;
+        $getEnvUrl = $_SERVER['SERVER_NAME'];
+        if (strpos($getEnvUrl, 'local') !== false) {
+            $linkUrl = 'api.local.usestickyreviews.com';
+        } elseif (strpos($getEnvUrl, 'beta') !== false ){
+            $linkUrl = 'api.beta.usestickyreviews.com';
+        } else {
+            $linkUrl = 'api.usestickyreviews.com';
         }
+            // show the review
+             $stickyReviewData = StickyReview::where('id', $stickyId)->where('review_token', $reviewToken)->with('reviewLink.campaign')->first();
+             $stickyReviewData['url_link'] = $linkUrl;
+             if($stickyReviewData){
+                 return response()->json([
+                     'status' => true,
+                     'data'  =>  $stickyReviewData,
+                     'message' => "Sticky review found !",
+                 ]);
+             }else{
+                return response()->json([
+                    'status' => false,
+                    'data'  =>  [],
+                    'message' => "Sticky review not found !",
+                ]);
+             }
     }
 
     public function reviewAction(Request $request) {
@@ -194,6 +203,7 @@ class UserReviewsController extends Controller
         $updateStickyReview = StickyReview::where('id', $stickyId)->first();
         if($updateStickyReview != null ){
             $updateStickyReview->is_accept = $request->reviewAction;
+            $updateStickyReview->review_token = null;
             if($updateStickyReview->save()){
                 if($request->reviewAction == 1){
                     $message ='User review accepted !';
