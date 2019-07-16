@@ -13,25 +13,37 @@
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
+                    @submit-email="submitEmail"
                     :script_id="script_id"
+                    :showDetails="show_details"
+                    :showMessage="show_message"
                     v-cloak></app-home-coming-popup>
     <app-momentum-popup v-if="selectedComponent === 103"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
+                    @submit-email="submitEmail"
                     :script_id="script_id"
+                    :showDetails="show_details"
+                    :showMessage="show_message"
                     v-cloak></app-momentum-popup>
     <app-fusing-popup v-if="selectedComponent === 104"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
+                    @submit-email="submitEmail"
                     :script_id="script_id"
+                    :showDetails="show_details"
+                    :showMessage="show_message"
                     v-cloak></app-fusing-popup>
     <app-evolver-popup v-if="selectedComponent === 105"
                     :data="appData"
                     :otherData="otherData"
                     @popupClosed="selectedComponent = ''"
+                    @submit-email="submitEmail"
                     :script_id="script_id"
+                    :showDetails="show_details"
+                    :showMessage="show_message"
                     v-cloak></app-evolver-popup>
   </div>
 </template>

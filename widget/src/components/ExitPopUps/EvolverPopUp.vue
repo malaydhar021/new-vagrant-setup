@@ -19,20 +19,24 @@
                             </div>
                         </div>
                         <div class="btmSec">
-                            <form v-if="data.has_email_field">
-                                <input type="text" placeholder="Enter your email">
-                                <button :style="{color: data.button_text_color, background: data.button_background_color}">{{data.button_text.charAt(0).toUpperCase()+data.button_text.slice(1)}}</button>
+                            <form v-bind:class="[formError ? 'error' : '']" v-if="data.has_email_field && !showMessage">
+                                <input type="email" placeholder="Enter your email" v-model="subscribe_email" @change="checkEmail">
+                                    <span class="msgError" v-if="formError">Please check your email</span>
+                                <button :style="{color: data.button_text_color, background: data.button_background_color}" @click="subscribeMe" type="button">{{data.button_text.charAt(0).toUpperCase()+data.button_text.slice(1)}}</button>
                             </form>
 
-                            <div class="linkTo" v-else>
-                                <a href="javascript:void(0)" class="button-submit" :style="{color: data.cta_button_text_color, background: data.cta_button_background_color}">
-                                    {{data.cta_button_text}}
+                            <div class="linkTo" v-if="!data.has_email_field && !showMessage">
+                                <a :href=data.button_url target="_blank" class="button-submit" :style="{color: data.cta_button_text_color, background: data.cta_button_background_color}">
+                                {{data.cta_button_text}}
                                 </a>
                             </div>
+
+                                <div :style="{color: data.button_background_color}" class="linkTo statMsg_f" v-if="showMessage">
+                                    <span>&#10004;</span> {{showDetails.message}}
+                                </div>
                         </div>
                     </div>
                     <button class="nsm-dialog-btn-close" type="button" @click="popupClosed" :style="{background: data.header_background_color}">
-                        <img src="../../assets/images/close.svg" alt="">
                     </button>
                 </div>
             </div>
@@ -47,13 +51,16 @@ import '../../assets/css/exit-popup.css'
 import MainWidget from '../Widgets/MainWidget.vue'
 
 import Vue from 'vue'
+import { constants } from 'fs';
 
 export default {
     props: {
         data: {},
         otherData: {},
+        showDetails: {},
         script_id: '',
-        apiEndpoint: ''
+        showMessage: Boolean,
+        method: { type: Function }
     },
     
     name: "evolverpopup",
@@ -64,7 +71,9 @@ export default {
             stickyReviews: {},
             exitPopData: {},
             showWidget: false,
-            fromExitPopup: true
+            fromExitPopup: true,
+            subscribe_email: '',
+            formError: false
         }
     },
 
@@ -85,6 +94,31 @@ export default {
             if (vm.data.sticky_reviews.data.length) {
                 vm.showWidget = true
                 vm.stickyReviews = vm.data.sticky_reviews
+            }
+        },
+        
+        validateEmail (email) {
+            console.log("email :: ", email)
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        },
+
+        subscribeMe () {
+            let vm = this
+            if (!vm.formError && vm.subscribe_email) {
+                this.$emit('submit-email', vm.subscribe_email)
+            } else {
+                console.log("coming here")
+                vm.checkEmail()
+            }
+        },
+
+        checkEmail () {
+            let vm = this
+            if (vm.validateEmail(vm.subscribe_email)) {
+                vm.formError = false
+            } else {
+                vm.formError = true
             }
         }
     },

@@ -26,7 +26,6 @@ export default {
       showExitPopUp: false,
       showWidget: false,
       curPageNo: 1,
-      curPopPageNo: 1,
       fromExitPopup: false
     }
   },

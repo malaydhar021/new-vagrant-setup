@@ -24,8 +24,9 @@
                                         </transition>
                                     </div>
                                 </div>
-                                <form v-if="data.has_email_field && !showMessage">
-                                    <input type="email" placeholder="Enter your email" v-model="subscribe_email">
+                                <form v-bind:class="[formError ? 'error' : '']" v-if="data.has_email_field && !showMessage">
+                                    <input type="email" placeholder="Enter your email" v-model="subscribe_email" @change="checkEmail">
+                                    <span class="msgError" v-if="formError">Please check your email</span>
                                     <button :style="{color: data.button_text_color, background: data.button_background_color}" @click="subscribeMe" type="button">{{data.button_text.charAt(0).toUpperCase()+data.button_text.slice(1)}}</button>
                                 </form>
 
@@ -35,13 +36,13 @@
                                     </a>
                                 </div>
 
-                                <div class="linkTo" v-if="showMessage">
-                                    {{showDetails.message}}
+                                <div :style="{color: data.button_background_color}" class="linkTo statMsg_f" v-if="showMessage">
+                                    <span>&#10004;</span> {{showDetails.message}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button class="nsm-dialog-btn-close" type="button" :style="{background: data.header_background_color}" @click="popupClosed"><img src="../../assets/images/close.svg" alt=""></button>
+                    <button class="nsm-dialog-btn-close" type="button" :style="{background: data.header_background_color}" @click="popupClosed"></button>
                 </div>
             </div>
         </div>
@@ -76,7 +77,8 @@ export default {
             exitPopData: {},
             showWidget: false,
             fromExitPopup: true,
-            subscribe_email: ''
+            subscribe_email: '',
+            formError: false
         }
     },
 
@@ -107,12 +109,20 @@ export default {
 
         subscribeMe () {
             let vm = this
-            if(vm.validateEmail(vm.subscribe_email) && vm.subscribe_email) {
+            if (!vm.formError && vm.subscribe_email) {
                 this.$emit('submit-email', vm.subscribe_email)
             } else {
-                console.log("need to show validation error message")
+                vm.checkEmail()
             }
-            // console.log(this.subscribe_email)
+        },
+
+        checkEmail () {
+            let vm = this
+            if (vm.validateEmail(vm.subscribe_email)) {
+                vm.formError = false
+            } else {
+                vm.formError = true
+            }
         }
     },
 

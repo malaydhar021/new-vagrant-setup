@@ -394,6 +394,11 @@ operation the user is assigned to basic plan.
 
 1. Merged Widget and Exit Popup modifications
 
-### v0.0.7
+### V0.0.7
 
 1. Api links modified
+
+
+### V0.0.8
+
+1. Widget and Exit popup modifications
