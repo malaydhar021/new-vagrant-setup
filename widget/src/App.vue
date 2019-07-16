@@ -67,7 +67,7 @@ export default {
       // Call this method to get initial popup data
       try {
 
-        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPopPageNo}`)
+        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`)
 
         if (response.data.status) {
           this.pageLeft(response.data.data)
@@ -128,7 +128,7 @@ export default {
 
       window.addEventListener ('mouseout', function (e) {
         mouseY = e.clientY
-        if (mouseY < topValue) {
+        if (mouseY < topValue || mouseY === topValue) {
           vm.showExitPopUp = true
           vm.exitPopUpData = pageData
         }

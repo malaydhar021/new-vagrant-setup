@@ -402,3 +402,8 @@ operation the user is assigned to basic plan.
 ### V0.0.8
 
 1. Widget and Exit popup modifications
+
+
+### V0.0.9
+
+1. Fixed bugs for Edge and opera browser for widget and exitpopup
