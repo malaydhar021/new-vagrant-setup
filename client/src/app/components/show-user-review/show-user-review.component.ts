@@ -68,8 +68,7 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
             (response: any) => {
                 if (response.status) {
                     this.loaderService.disableLoader();
-                    this.showMe = false;
-                    this.showReview = true;
+                    console.log(response.data);
                     this.reviewData = response.data;
                     this.reviewStatus = response.data.is_accept;
                     if (response.data.review_link.campaign.style_id !== 0) {
@@ -116,11 +115,10 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
             (response: any) => {
                 if (response.status) {
                     this.loaderService.disableLoader();
-                    this.showMe = false;
-                    this.showReview = false;
                     this.showMessage = true;
                     this.message = response.message;
                 } else {
+                    this.showMessage = true;
                     this.loaderService.disableLoader();
                     this.message = response.message;
                 }

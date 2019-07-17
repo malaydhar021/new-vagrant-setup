@@ -61,7 +61,6 @@ class StickyReviewsController extends Controller
             StickyReviewResource::collection($stickyReviews);
         }
         $noOfStickyReviews = $this->queryBuilder->count();
-
         if ($noOfStickyReviews) {
             return response()->json([
                 'status' => true,
@@ -152,7 +151,6 @@ class StickyReviewsController extends Controller
     public function show($id)
     {
         $stickyReview = $this->queryBuilder->where('id', $id)->firstOrFail();
-
         return response()->json([
             'status' => true,
             'message' => "Sticky Review details has fetched successfully.",

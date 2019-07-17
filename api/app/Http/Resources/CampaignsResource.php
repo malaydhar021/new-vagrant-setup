@@ -40,6 +40,7 @@ class CampaignsResource extends Resource
                 'created_by' => (new UserResource($this->whenLoaded('user')))->briefOnly(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
+                'has_branding' => $this->branding,
             ];
         }
     }

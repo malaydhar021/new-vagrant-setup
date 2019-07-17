@@ -4,17 +4,19 @@
         <header class="reviewLHdr"> <p>Review</p> </header>
         <!-- Different screens -->
         <div class="bodyCreview">
-            <!-- Show sticky review based on the style -->
-            <app-rounded *ngIf="this.reviewStyle == 1" [reviewData]="reviewData"> </app-rounded>
-            <app-square  *ngIf="this.reviewStyle == 2" [reviewData]="reviewData"> </app-square>
-            <app-tear-drop *ngIf="this.reviewStyle == 3" [reviewData]="reviewData"></app-tear-drop>
-            <app-square-elevated *ngIf="this.reviewStyle == 4" [reviewData]="reviewData"></app-square-elevated>
-            <app-tear-drop-elevated *ngIf="this.reviewStyle == 5" [reviewData]="reviewData"></app-tear-drop-elevated>
-        </div>
-        <!-- Accept/Reject button -->
-        <div *ngIf="reviewStatus === null">
-                <button (click)="acceptReview()"> Accept</button> &nbsp; &nbsp;
-                <button (click)="rejectReview()"> Reject</button>
+            <div class="showStyleP">
+                <!-- Show sticky review based on the style -->
+                <app-rounded *ngIf="this.reviewStyle == 1" [reviewData]="reviewData"> </app-rounded>
+                <app-square  *ngIf="this.reviewStyle == 2" [reviewData]="reviewData"> </app-square>
+                <app-tear-drop *ngIf="this.reviewStyle == 3" [reviewData]="reviewData"></app-tear-drop>
+                <app-square-elevated *ngIf="this.reviewStyle == 4" [reviewData]="reviewData"></app-square-elevated>
+                <app-tear-drop-elevated *ngIf="this.reviewStyle == 5" [reviewData]="reviewData"></app-tear-drop-elevated>
+            </div>
+            <!-- Accept/Reject button -->
+            <div class="btnStyles" *ngIf="reviewStatus === null">
+                <button class="stAccpt" (click)="acceptReview()"> Accept</button> &nbsp; &nbsp;
+                <button class="stReject" (click)="rejectReview()"> Reject</button>
+            </div>
         </div>
         <!-- Error/Success message -->
         <div *ngIf="showMessage">

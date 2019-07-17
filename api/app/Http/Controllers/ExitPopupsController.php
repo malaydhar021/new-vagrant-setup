@@ -34,8 +34,7 @@ class ExitPopupsController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->queryBuilder = ExitPopup::where('created_by', Auth::user()->id)
-                ->with('style', 'campaign', 'stickyReviews', 'user');
-
+                ->with('style', 'campaign', 'stickyReviews', 'user', 'campaign.brandingDetails', 'stickyReviews.brands');
             return $next($request);
         });
     }
@@ -61,7 +60,6 @@ class ExitPopupsController extends Controller
      */
     public function index(Request $request)
     {
-
         if ($request->has('searchParams')) {
             $searchParams = $request->get('searchParams');
             $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%');
@@ -73,7 +71,6 @@ class ExitPopupsController extends Controller
             $exitPopups = (ExitPopupResource::collection($this->queryBuilder->get()))->briefOnly();
         } else {
             $exitPopups = $this->queryBuilder->paginate();
-            // ExitPopupResource::collection($stickyReviews);
         }
         $noOfExitPopups = $this->queryBuilder->count();
 

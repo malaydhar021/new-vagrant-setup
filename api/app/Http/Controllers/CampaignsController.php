@@ -259,12 +259,16 @@ class CampaignsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function stickyReviewStyle($id){
+        $campaignInfo = [];
         $campaign = $this->queryBuilder->whereId($id)->firstOrFail();
-        $campaignStickyReviewStyle = $campaign->style_id;
+        $campaignInfo['style_id'] = $campaign->style_id;
+        if($campaign->branding == 1) {
+            $campaignInfo['brand_name'] = $campaign->brandingDetails->brand_name;
+        }
         return response()->json([
             'status' => true,
             'message' => 'Campaign style id found successfully.',
-            'data' => $campaignStickyReviewStyle,
+            'data' => $campaignInfo,
         ]);
     }
 }

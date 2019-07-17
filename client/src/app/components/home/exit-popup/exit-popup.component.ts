@@ -80,7 +80,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   showError: boolean = false; // flag to show error message
   searchKey: string = '';
   isModalOpened: boolean = false; // set to true if the modal is opened
-
+  reviewBrandName: string = '';
   /**
    * 
    * @param ngxSmartModalService 
@@ -498,7 +498,8 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       this.exitPopupService.getCampaignsStyle(this.form.value.campaign.id).subscribe(
         (response: any) => {
           if (response.status) {
-            this.campaignStickyReviewStyleId = response.data;
+            this.campaignStickyReviewStyleId = response.data.style_id;
+            this.reviewBrandName = response.data.brand_name;
           }
         }
       );
@@ -514,7 +515,11 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       this.exitPopupService.getstickyReviewInfo(this.form.value.stickyReviews[0].id).subscribe(
         (response: any) => {
           if (response.status) {
-            this.reviewUserName = response.data.created_by.name;
+            if (response.data.has_brand && response.data.has_brand === 1) {
+              this.reviewUserName = response.data.brands.name;
+            } else {
+              this.reviewUserName = this.reviewBrandName;
+            }
             this.reviewImageUrl = response.data.image_url;
             this.reviewName = response.data.name;
             this.reviewDescription = response.data.review;
@@ -576,7 +581,6 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
    * @param exitPopup
    */
   public onEditExitPopup(exitPopup) {
-
     this.showCampaign = false;
     this.showStickyReviews = false;
     this.showEmailField = false;
@@ -596,6 +600,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       this.form.get('hasStickyReview').setValue(exitPopup.has_sticky_reviews);
       this.getStickyReviews();
       this.showStickyReviews = true;
+      this.setStickyReviewStyle(exitPopup);
     } else {
       this.showStickyReviews = false;
     }
@@ -653,6 +658,23 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.addExitpopupAction();
     this.addCampaing();
     this.addStickeyReview();
+  }
+
+
+  public setStickyReviewStyle(exitPopup) {
+    // show the 1st selected review in the exitpopup preview
+    if (exitPopup.sticky_reviews && exitPopup.sticky_reviews[0].has_brand === 1) {
+      this.reviewUserName = exitPopup.sticky_reviews[0].brands.name;
+    }
+    if(exitPopup.campaign && exitPopup.campaign.has_branding === 1) {
+      this.reviewUserName = exitPopup.campaign.branding.name;
+    }
+    this.reviewImageUrl = exitPopup.sticky_reviews[0].image_url;
+    this.reviewName = exitPopup.sticky_reviews[0].name;
+    this.reviewDescription = exitPopup.sticky_reviews[0].review;
+    this.reviewAt = moment(exitPopup.sticky_reviews[0].reviewed_at).startOf('day').fromNow();
+    this.reviewType = exitPopup.sticky_reviews[0].type;
+    this.reviewRating = exitPopup.sticky_reviews[0].rating;
   }
 
   /**
@@ -753,14 +775,15 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     }
     if (exitPopup.has_sticky_reviews === true) {
       this.showStickyReviews = true;
+      this.setStickyReviewStyle(exitPopup);
       // take the 1st sticky review from [0] position
-      this.reviewUserName = exitPopup.sticky_reviews[0].created_by.name;
-      this.reviewImageUrl = exitPopup.sticky_reviews[0].image_url;
-      this.reviewName = exitPopup.sticky_reviews[0].name;
-      this.reviewDescription = exitPopup.sticky_reviews[0].review;
-      this.reviewAt = moment(exitPopup.sticky_reviews[0].reviewed_at).startOf('day').fromNow();
-      this.reviewType = exitPopup.sticky_reviews[0].type;
-      this.reviewRating = exitPopup.sticky_reviews[0].rating;
+      // this.reviewUserName = exitPopup.sticky_reviews[0].created_by.name;
+      // this.reviewImageUrl = exitPopup.sticky_reviews[0].image_url;
+      // this.reviewName = exitPopup.sticky_reviews[0].name;
+      // this.reviewDescription = exitPopup.sticky_reviews[0].review;
+      // this.reviewAt = moment(exitPopup.sticky_reviews[0].reviewed_at).startOf('day').fromNow();
+      // this.reviewType = exitPopup.sticky_reviews[0].type;
+      // this.reviewRating = exitPopup.sticky_reviews[0].rating;
     } else {
       this.showStickyReviews = false;
     }

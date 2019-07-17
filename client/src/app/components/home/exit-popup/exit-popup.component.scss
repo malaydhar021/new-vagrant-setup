@@ -1,7 +1,35 @@
-
 ng-scrollbar {
     --scrollbar-size: 8px;
     --scrollbar-thumb-color: #7df0dc;
     --scrollbar-thumb-hover-color: #47e3bd;
     --scrollbar-border-radius: 4px;
   }
+
+/*
+Audio tag fixed
+ */
+.popupTxt .bodyPopup .audioRv audio {
+  height: 54px;
+}
+.theme1.exitPopup:not(.previewpopup) .audioParent_1 .popupTxt,
+.theme1.exitPopup:not(.previewpopup) .audioParent_2 .popupTxt,
+.theme1.exitPopup:not(.previewpopup) .audioParent_3 .popupTxt,
+.theme1.exitPopup:not(.previewpopup) .audioParent_4 .popupTxt,
+.theme1.exitPopup:not(.previewpopup) .audioParent_5 .popupTxt,
+.theme2.exitPopup:not(.previewpopup) .audioParent_1 .popupTxt,
+.theme2.exitPopup:not(.previewpopup) .audioParent_2 .popupTxt,
+.theme2.exitPopup:not(.previewpopup) .audioParent_3 .popupTxt,
+.theme2.exitPopup:not(.previewpopup) .audioParent_4 .popupTxt,
+.theme2.exitPopup:not(.previewpopup) .audioParent_5 .popupTxt,
+.theme3.exitPopup:not(.previewpopup) .audioParent_1 .popupTxt,
+.theme3.exitPopup:not(.previewpopup) .audioParent_2 .popupTxt,
+.theme3.exitPopup:not(.previewpopup) .audioParent_3 .popupTxt,
+.theme3.exitPopup:not(.previewpopup) .audioParent_4 .popupTxt,
+.theme3.exitPopup:not(.previewpopup) .audioParent_5 .popupTxt,
+.theme4.exitPopup:not(.previewpopup) .audioParent_4 .popupTxt,
+.theme4.exitPopup:not(.previewpopup) .audioParent_5 .popupTxt,
+.theme4.exitPopup:not(.previewpopup) .audioParent_3 .popupTxt,
+.theme4.exitPopup:not(.previewpopup) .audioParent_2 .popupTxt,
+.theme4.exitPopup:not(.previewpopup) .audioParent_1 .popupTxt {
+  top: -15px !important;
+}

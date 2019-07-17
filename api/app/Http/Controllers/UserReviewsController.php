@@ -169,7 +169,6 @@ class UserReviewsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function checkPasskey(Request $request){
-        \Log::info($request->all());
         $stickyId = base64_decode($request->stickyId);
         $reviewToken = $request->reviewToken;
         $getEnvUrl = $_SERVER['SERVER_NAME'];
@@ -181,7 +180,7 @@ class UserReviewsController extends Controller
             $linkUrl = 'api.usestickyreviews.com';
         }
             // show the review
-             $stickyReviewData = StickyReview::where('id', $stickyId)->where('review_token', $reviewToken)->with('reviewLink.campaign')->first();
+             $stickyReviewData = StickyReview::where('id', $stickyId)->where('review_token', $reviewToken)->with('reviewLink.campaign', 'brands' ,'reviewLink.campaign.brandingDetails' )->first();
              $stickyReviewData['url_link'] = $linkUrl;
              if($stickyReviewData){
                  return response()->json([
