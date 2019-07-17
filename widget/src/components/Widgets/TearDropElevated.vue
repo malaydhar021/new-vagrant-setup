@@ -12,7 +12,7 @@
           <p>{{data.review}}</p>
 
           <footer class="popupFt">
-            <span class="timePop">{{ data.created_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
+            <span class="timePop">{{ data.reviewed_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
             <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby-white.png" alt="">by</span>
             <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
 
@@ -48,7 +48,7 @@
           </div>
 
           <footer class="popupFt">
-            <span class="timePop">{{ data.created_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
+            <span class="timePop">{{ data.reviewed_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
             <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby-white.png" alt="">by</span>
             <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
 
@@ -105,7 +105,7 @@
           <h6>{{data.name}}</h6>
 
           <footer class="popupFt">
-            <span class="timePop">{{ data.created_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
+            <span class="timePop">{{ data.reviewed_at | moment('timezone', timezone, 'YYYY-MM-DDTHH:mm')  | moment("from") }}</span>
             <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby-white.png" alt="">by</span>
             <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
 
