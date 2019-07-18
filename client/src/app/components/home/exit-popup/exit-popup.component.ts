@@ -523,7 +523,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
             this.reviewImageUrl = response.data.image_url;
             this.reviewName = response.data.name;
             this.reviewDescription = response.data.review;
-            this.reviewAt = moment(response.data.reviewed_at).startOf('day').fromNow();
+            this.reviewAt = moment.utc(response.data.reviewed_at).local().startOf('day').fromNow();
             this.reviewType = response.data.type;
             this.reviewRating = response.data.rating;
           }
@@ -672,7 +672,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.reviewImageUrl = exitPopup.sticky_reviews[0].image_url;
     this.reviewName = exitPopup.sticky_reviews[0].name;
     this.reviewDescription = exitPopup.sticky_reviews[0].review;
-    this.reviewAt = moment(exitPopup.sticky_reviews[0].reviewed_at).startOf('day').fromNow();
+    this.reviewAt = moment.utc(exitPopup.sticky_reviews[0].reviewed_at).local().startOf('day').fromNow();
     this.reviewType = exitPopup.sticky_reviews[0].type;
     this.reviewRating = exitPopup.sticky_reviews[0].rating;
   }
@@ -776,14 +776,6 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     if (exitPopup.has_sticky_reviews === true) {
       this.showStickyReviews = true;
       this.setStickyReviewStyle(exitPopup);
-      // take the 1st sticky review from [0] position
-      // this.reviewUserName = exitPopup.sticky_reviews[0].created_by.name;
-      // this.reviewImageUrl = exitPopup.sticky_reviews[0].image_url;
-      // this.reviewName = exitPopup.sticky_reviews[0].name;
-      // this.reviewDescription = exitPopup.sticky_reviews[0].review;
-      // this.reviewAt = moment(exitPopup.sticky_reviews[0].reviewed_at).startOf('day').fromNow();
-      // this.reviewType = exitPopup.sticky_reviews[0].type;
-      // this.reviewRating = exitPopup.sticky_reviews[0].rating;
     } else {
       this.showStickyReviews = false;
     }

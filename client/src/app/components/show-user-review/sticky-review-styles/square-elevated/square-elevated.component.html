@@ -18,7 +18,8 @@
             <footer class="popupFt">
                 <span class="timePop">{{getReviewTimeFormated(reviewData.created_at)}}</span>
                 <span class="pwBy"><img src="../../../../../../assets/images/icon_poweredby.png" alt="">by</span>
-                <a href="javascript:void(0)">{{reviewData.created_by?.name |  slice:0:10 }}</a>
+                <span *ngIf="reviewData.has_brand === 1"> {{reviewData.brands.name  |  slice:0:10 }}</span>
+                <span *ngIf="reviewData.review_link.campaign.branding === 1"> {{reviewData.review_link.campaign.branding_details.brand_name  |  slice:0:10 }}</span>
                 <figure *ngFor="let rating of getStars(reviewData.rating)">
                     <img src="../../../../assets/images/small_star_active.png" alt="">
                 </figure>
@@ -74,7 +75,8 @@
                     {{getReviewTimeFormated(reviewData.created_at)}}
                     <span><img src="../../../../assets/images/icon_poweredby.png" alt=""></span>
                     by
-                    <span>{{reviewData.created_by?.name |  slice:0:10 }}</span>
+                    <span *ngIf="reviewData.has_brand === 1"> {{reviewData.brands.name  |  slice:0:10 }}</span>
+                    <span *ngIf="reviewData.review_link.campaign.branding === 1"> {{reviewData.review_link.campaign.branding_details.brand_name  |  slice:0:10 }}</span>
                     <figure *ngFor="let rating of getStars(reviewData.rating)">
                         <img src="../../../../assets/images/small_star_active.png" alt="">
                     </figure>
