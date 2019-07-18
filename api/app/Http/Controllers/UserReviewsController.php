@@ -181,8 +181,8 @@ class UserReviewsController extends Controller
         }
             // show the review
              $stickyReviewData = StickyReview::where('id', $stickyId)->where('review_token', $reviewToken)->with('reviewLink.campaign', 'brands' ,'reviewLink.campaign.brandingDetails' )->first();
-             $stickyReviewData['url_link'] = $linkUrl;
              if($stickyReviewData){
+                 $stickyReviewData['url_link'] = $linkUrl;
                  return response()->json([
                      'status' => true,
                      'data'  =>  $stickyReviewData,

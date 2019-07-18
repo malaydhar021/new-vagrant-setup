@@ -67,9 +67,8 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
         this.loaderService.enableLoader();
         this.userReviewService.checkPasskey(formData).subscribe(
             (response: any) => {
-                if (response.status) {
+                if (response.status && response.data) {
                     this.loaderService.disableLoader();
-                    console.log(response.data);
                     this.reviewData = response.data;
                     this.reviewStatus = response.data.is_accept;
                     if (response.data.review_link.campaign.style_id !== 0) {
@@ -79,6 +78,8 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
                     }
                 } else {
                     this.loaderService.disableLoader();
+                    this.showMessage = true;
+                    this.message = 'This link is expired !';
                 }
             });
     }
@@ -118,6 +119,7 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
                     this.loaderService.disableLoader();
                     this.showMessage = true;
                     this.message = response.message;
+                    this.showMe = false;
                 } else {
                     this.showMessage = true;
                     this.loaderService.disableLoader();

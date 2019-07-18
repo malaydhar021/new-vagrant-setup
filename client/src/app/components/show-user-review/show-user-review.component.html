@@ -1,7 +1,10 @@
 <div class="reviewLinkBody">
     <div class="reviewlinkForm">
         <!-- Header -->
-        <header class="reviewLHdr"> <p>Review</p> </header>
+        <header class="reviewLHdr">
+            <message *ngIf="showMessage" [successMessage]="message"> </message>
+            <p>Review</p>
+        </header>
         <!-- Different screens -->
         <div class="bodyCreview">
             <div class="showStyleP">
@@ -13,14 +16,10 @@
                 <app-tear-drop-elevated *ngIf="this.reviewStyle == '5'" [reviewData]="reviewData"></app-tear-drop-elevated>
             </div>
             <!-- Accept/Reject button -->
-            <div class="btnStyles" *ngIf="reviewStatus === null">
+            <div class="btnStyles" *ngIf="reviewStatus === null && showMe">
                 <button class="stAccpt" (click)="acceptReview()"> Accept</button> &nbsp; &nbsp;
                 <button class="stReject" (click)="rejectReview()"> Reject</button>
             </div>
-        </div>
-        <!-- Error/Success message -->
-        <div *ngIf="showMessage">
-            <span>{{message}}</span>
         </div>
     </div>
     <!-- Footer -->
