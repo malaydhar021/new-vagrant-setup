@@ -1,6 +1,6 @@
 <!-- Square -->
 <!-- Add pop_small class to popupparent elements OR popupParent's parent element when parent space is less than 320px -->
-<div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_2':''" *ngIf="reviewData.type !== 3">
+<div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_2':''" *ngIf="reviewData.type !== '3'">
     <div class="popupTxt popup_template_2" style="margin-bottom: 30px;">
         <div class="figPopup">
             <figure>
@@ -12,7 +12,7 @@
             <h6>{{reviewData.name}} </h6>
             <p *ngIf="reviewData.type === 1">{{reviewData.description}} </p>
             <!-- Audio Type review -->
-            <div class="audioRv" *ngIf="reviewData.type === 2">
+            <div class="audioRv" *ngIf="reviewData.type === '2'">
                 <audio src="https://{{reviewData.url_link}}/storage/audios/{{reviewData.description }}" controls></audio>
             </div>
             <footer class="popupFt">
@@ -33,7 +33,7 @@
 <!-- video review -->
 
 
-<div style="display: block;" class="popAdd vidPreV_parent" *ngIf="reviewData.type === 3">
+<div style="display: block;" class="popAdd vidPreV_parent" *ngIf="reviewData.type === '3'">
     <div class="popupParent vidParent_2">
         <div class="vidPop">
             <div class="animateVid">

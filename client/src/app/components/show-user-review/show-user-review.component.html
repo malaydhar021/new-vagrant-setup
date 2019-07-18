@@ -6,11 +6,11 @@
         <div class="bodyCreview">
             <div class="showStyleP">
                 <!-- Show sticky review based on the style -->
-                <app-rounded *ngIf="this.reviewStyle == 1" [reviewData]="reviewData"> </app-rounded>
-                <app-square  *ngIf="this.reviewStyle == 2" [reviewData]="reviewData"> </app-square>
-                <app-tear-drop *ngIf="this.reviewStyle == 3" [reviewData]="reviewData"></app-tear-drop>
-                <app-square-elevated *ngIf="this.reviewStyle == 4" [reviewData]="reviewData"></app-square-elevated>
-                <app-tear-drop-elevated *ngIf="this.reviewStyle == 5" [reviewData]="reviewData"></app-tear-drop-elevated>
+                <app-rounded *ngIf="this.reviewStyle == '1'" [reviewData]="reviewData"> </app-rounded>
+                <app-square  *ngIf="this.reviewStyle == '2'" [reviewData]="reviewData"> </app-square>
+                <app-tear-drop *ngIf="this.reviewStyle == '3'" [reviewData]="reviewData"></app-tear-drop>
+                <app-square-elevated *ngIf="this.reviewStyle == '4'" [reviewData]="reviewData"></app-square-elevated>
+                <app-tear-drop-elevated *ngIf="this.reviewStyle == '5'" [reviewData]="reviewData"></app-tear-drop-elevated>
             </div>
             <!-- Accept/Reject button -->
             <div class="btnStyles" *ngIf="reviewStatus === null">

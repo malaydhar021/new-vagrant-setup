@@ -1,6 +1,6 @@
 <!-- Tear droup sticky review style -->
 <!-- Add pop_small class to popupparent elements OR popupParent's parent element when parent space is less than 320px -->
-<div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_3':''" *ngIf="reviewData.type !== 3">
+<div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_3':''" *ngIf="reviewData.type !== '3'">
     <div class="popupTxt popup_template_3" style="margin-bottom: 30px;">
         <div class="figPopup">
             <figure>
@@ -31,7 +31,7 @@
 
 <!-- Video Review -->
 
-<div style="display: block;" class="popAdd vidPreV_parent" *ngIf="reviewData.type === 3">
+<div style="display: block;" class="popAdd vidPreV_parent" *ngIf="reviewData.type === '3'">
     <div class="popupParent vidParent_3">
         <div class="vidPop">
             <div class="animateVid">
