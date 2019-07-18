@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Helpers\Hashids;
 use App\StickyReview;
+use App\CampaignStickyReview;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -34,12 +35,9 @@ class WidgetResource extends JsonResource
             $exitPopup = null;
         }
 
-        $srQuery = StickyReview::join(
-            'campaign_sticky_review',
-            'campaign_sticky_review.sticky_review_id',
-            '=',
-            'sticky_reviews.id'
-        )->with('brands')->where('campaign_sticky_review.campaign_id', $this->id);
+        $getStickyReviewsIds =  CampaignStickyReview::where('campaign_id', $this->id)->with('stickyReviews')->pluck('sticky_review_id');
+
+        $srQuery = StickyReview::whereIn('id', $getStickyReviewsIds)->with('brands');
 
         if ($srQuery->count()) {
             $stickyReviews = $srQuery->paginate(5);
