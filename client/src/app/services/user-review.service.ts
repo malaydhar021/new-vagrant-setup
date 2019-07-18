@@ -97,8 +97,8 @@ export class UserReviewService {
    * @returns Void
    */
   public updateCurrentStep(step: string) {
-    this.currentStep = step; 
-    this.currentStepSubject.next(this.updateStepBuilder);   
+    this.currentStep = step;
+    this.currentStepSubject.next(this.updateStepBuilder);
   }
 
   /**
@@ -111,8 +111,8 @@ export class UserReviewService {
   public nextStep(step: string) {
     this.errorsService.updateMessage('');
     this.errorsService.updateValidationMessage('');
-    this._nextStep = step; 
-    this.currentStepSubject.next(this.updateDefaultStepBuilder);   
+    this._nextStep = step;
+    this.currentStepSubject.next(this.updateDefaultStepBuilder);
   }
 
   /**

@@ -6,7 +6,7 @@ import * as moment from 'moment';
     styleUrls: ['./tear-drop-elevated.component.scss']
 })
 export class TearDropElevatedComponent implements OnInit {
-    @Input() reviewData?: number = 100; // default style is set to Rounded
+    @Input() reviewData?: any = ''; // default style is set to Rounded
     reviewByUser: string = '';
     constructor() { }
 

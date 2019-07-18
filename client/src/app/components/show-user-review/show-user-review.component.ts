@@ -6,6 +6,7 @@ import { UserReviewService }            from '../../services/user-review.service
 import { LoaderService }                from '../../services/loader.service';
 import { ErrorsService }                from '../../services/errors.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl, Form } from '@angular/forms';
+import { ReviewDataInterface } from '../../interfaces/review-data.interface';
 
 /**
  * Component to load the first screen of show user review with proper info
@@ -32,7 +33,7 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
     reviewStyle: string = '';
     message: string = '';
     showMessage: boolean = false;
-    reviewData:[] =[];
+    reviewData: [] = [];
     // do something
     constructor(
         private title: Title,
