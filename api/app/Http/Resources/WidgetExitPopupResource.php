@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\CampaignStickyReview;
 use App\Helpers\Hashids;
 use App\StickyReview;
-
+use App\ExitPopUpStickyReview;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class WidgetExitPopupResource extends JsonResource
