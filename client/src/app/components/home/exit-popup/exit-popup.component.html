@@ -2811,7 +2811,13 @@
               </div>
             </div>
             <div class="sr-form-cell-small">
-              <label>Campaign <input type="checkbox" class="tglBtn" formControlName="hasCampaign" (ngModelChange)='addCampaing()'></label>
+              <label>Campaign
+                <div class="switcher switchInForm">
+                  <label>
+                    <input type="checkbox" class="tglBtn" formControlName="hasCampaign" (ngModelChange)='addCampaing()'>
+                    <span></span>
+                  </label>
+                </div></label>
 
               <div class="campaignAdd" *ngIf="showCampaign">
                 <div class="sr-form-field">
@@ -2855,7 +2861,12 @@
                 <span>POPUP CONTENT</span>
               </div>
               <label>Add Sticky Reviews
-                <input type="checkbox" class="tglBtn" formControlName="hasStickyReview" (ngModelChange)='addStickeyReview()'>
+                <div class="switcher switchInForm">
+                  <label>
+                    <input type="checkbox" class="tglBtn" formControlName="hasStickyReview" (ngModelChange)='addStickeyReview()'>
+                    <span></span>
+                  </label>
+                </div>
               </label>
 
               <label style="margin-top: 20px;" *ngIf="showStickyReviews">Select Reviews</label>
@@ -2877,9 +2888,19 @@
               <!-- <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>-->
               <!-- Popup Action -->
               <label>Exit popup action </label>
-              <label> <input type="radio" class="tglBtn" formControlName="exitPopupAction" value="1" (change)="addExitpopupAction()"> Add email field </label>
+              <label> <div class="switcher switchInForm">
+                <label>
+                  <input type="radio" class="tglBtn" formControlName="exitPopupAction" value="1" (change)="addExitpopupAction()">
+                  <span></span>
+                </label>
+              </div> Add email field </label>
               <br>
-              <label> <input type="radio"  class="tglBtn" formControlName="exitPopupAction" value="2" (change)="addExitpopupAction()"> Add CTA button </label>
+              <label> <div class="switcher switchInForm">
+                <label>
+                  <input type="radio"  class="tglBtn" formControlName="exitPopupAction" value="2" (change)="addExitpopupAction()">
+                  <span></span>
+                </label>
+              </div> Add CTA button </label>
             </div>
           </div>
           <div class="sr-form-row">

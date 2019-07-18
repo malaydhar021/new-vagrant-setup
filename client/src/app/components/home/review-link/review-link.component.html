@@ -50,8 +50,14 @@
                       </div>
                       <div class="approve">
                         <p>Auto Approve:</p>
-                        <input type="checkbox" class="tglBtn" [(ngModel)]="link.auto_approve"
+
+                          <div class="switcher switchInForm">
+                            <label>
+                              <input type="checkbox" class="tglBtn" [(ngModel)]="link.auto_approve"
                           #autoApproveStatus="ngModel" (change)="onChangeAutoApproveStatus(link.id, autoApproveStatus)">
+                              <span></span>
+                            </label>
+                          </div>
                       </div>
                     </div>
                   </div>
@@ -157,7 +163,13 @@
                   <label>Auto Approve <a href="javascript:void(0)" class="tooltip"
                       data-title="Check this to switch Auto-improve on!">
                       <img src="../../../../assets/images/icon_info2.png" alt=""></a>
-                    <input type="checkbox" class="tglBtn" formControlName="auto_approve"></label>
+
+                    <div class="switcher switchInForm">
+                      <label>
+                        <input type="checkbox" class="tglBtn" formControlName="auto_approve">
+                        <span></span>
+                      </label>
+                    </div></label>
                 </div>
               </div>
               <div class="sr-form-cell-small">

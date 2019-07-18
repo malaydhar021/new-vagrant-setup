@@ -121,7 +121,12 @@
                   </div>
                 </div>
                 <div class="inFormCell">
-                  <label> <input type="checkbox" class="tglBtn" formControlName="hasBrand" (ngModelChange)="addBrand()"> Add Brand</label>
+                  <label> <div class="switcher switchInForm">
+                    <label>
+                      <input type="checkbox" class="tglBtn" formControlName="hasBrand" (ngModelChange)="addBrand()">
+                      <span></span>
+                    </label>
+                  </div> Add Brand</label>
                   <div class="sr-form-field" *ngIf="showBrands">
                       <select class="sr-form-ctrl" formControlName="stickyReviewBrand"  [ngClass]="{ error: isSubmitted && getFormControls.stickyReviewBrand.errors }" [compareWith]="compareFn">
                         <option value="">Select a brand </option>

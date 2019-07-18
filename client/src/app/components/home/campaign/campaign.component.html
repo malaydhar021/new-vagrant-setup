@@ -239,12 +239,24 @@
                   </div>
                 </div>
                 <div class="sr-form-cell-small solo-Cell">
-                  <label>Loop sticky reviews <input type="checkbox" class="tglBtn" formControlName="campaignLoop"></label>
+                  <label>Loop sticky reviews <div class="switcher switchInForm">
+                      <label>
+                        <input type="checkbox" class="tglBtn" formControlName="campaignLoop">
+                        <span></span>
+                      </label>
+                    </div>
+                  </label>
                 </div>
               </div>
               <div class="sr-form-row">
                 <div class="sr-form-cell-small">
-                  <label>Add Branding <input type="checkbox" class="tglBtn" formControlName="isBrandingSelected"></label>
+                  <label>Add Branding <div class="switcher switchInForm">
+                      <label>
+                        <input type="checkbox" class="tglBtn" formControlName="isBrandingSelected">
+                        <span></span>
+                      </label>
+                    </div>
+                  </label>
                   <div class="sr-form-field">
                     <select class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignBrand.errors}"
@@ -260,7 +272,12 @@
                   </div>
                 </div>
                 <div class="sr-form-cell-small">
-                  <label>Add Exit Pop-up <input type="checkbox" class="tglBtn" formControlName="isExitPopupSelected"></label>
+                  <label>Add Exit Pop-up <div class="switcher switchInForm">
+                    <label>
+                      <input type="checkbox" class="tglBtn" formControlName="isExitPopupSelected">
+                      <span></span>
+                    </label>
+                  </div></label>
                   <div class="sr-form-field">
                     <select class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignExitPopup.errors}"
