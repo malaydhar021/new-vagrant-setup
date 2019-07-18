@@ -62,7 +62,6 @@ class ReviewLinkParamRequest extends FormRequest
      */
     public function rules()
     {
-        \Log::info($this->route('id'));
         return [
             'name' => "required|string",
             // 'url_slug' => "required|unique:review_links,id," . $this->route('id'),

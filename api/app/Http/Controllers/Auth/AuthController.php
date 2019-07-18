@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Traits\Subscription;
 use App\User;
+use App\Traits\CustomDomain;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,17 @@ use Carbon\Carbon;
 
 class AuthController extends Controller
 {
-    use Subscription;
+    use Subscription,
+    CustomDomain {
+        CustomDomain::__construct as CustomDomainConstructor;
+    }
+    
+    /**
+     * Constructor method
+     */
+    public function __construct() {
+        $this->CustomDomainConstructor();
+    }
 
     /**
      * Checks if an email is registered or not
@@ -117,6 +128,7 @@ class AuthController extends Controller
 
             if ($user) {
                 Auth::loginUsingId($user->id);
+                User::find($user->id)->update(["access_token" => $this->getToken()]);
             } else {
                 return response()->json([
                     'status' => false,
@@ -144,6 +156,8 @@ class AuthController extends Controller
                         'message' => "Your account does not have any active subscription plan. Please contact to support for more details."
                     ], 401);
                 }
+                // generate access token for custom domain and update user table
+                User::find(Auth::user()->id)->update(["access_token" => $this->getToken()]);
             }
         }
 

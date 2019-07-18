@@ -49,6 +49,7 @@ class User extends Authenticatable
         'affiliate_id',
         'is_third_party',
         'is_active',
+        'access_token'
     ];
 
     /**
@@ -67,6 +68,7 @@ class User extends Authenticatable
         'trial_ends_at',
         'pricing_plan',
         'api_token',
+        'access_token'
     ];
 
     /**

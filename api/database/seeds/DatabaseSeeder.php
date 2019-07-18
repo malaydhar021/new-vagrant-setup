@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(ReviewLinkTableSeeder::class);
         // $this->call(ExitPopupTableSeeder::class);
         // $this->call(StickyReviewsTableSeeder::class);
+        // $this->call(CustomDomainSeeder::class);
     }
 }

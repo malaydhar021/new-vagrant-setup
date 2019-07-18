@@ -157,4 +157,14 @@ class ReviewLink extends Model
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
+    
+    /**
+     * Get the custom domain associated with the review link
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customDomain()
+    {
+        return $this->belongsTo(CustomDomain::class);
+    }
 }

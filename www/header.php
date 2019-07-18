@@ -1,3 +1,16 @@
+<?php
+/* get the env url and set urls */
+ $getEnvUrl = $_SERVER['SERVER_NAME'];
+
+if (strpos($getEnvUrl, 'local') !== false) {
+    $linkUrl = 'local.usestickyreviews.com';
+} elseif (strpos($getEnvUrl, 'beta') !== false ){
+    $linkUrl = 'beta.usestickyreviews.com';
+} else {
+    $linkUrl = 'usestickyreviews.com';
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,19 +34,6 @@
 
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
-<?php
-/* get the env url and set urls */
- $getEnvUrl = $_SERVER['SERVER_NAME'];
-
-if (strpos($getEnvUrl, 'local') !== false) {
-    $linkUrl = 'local.usestickyreviews.com';
-} elseif (strpos($getEnvUrl, 'beta') !== false ){
-    $linkUrl = 'beta.usestickyreviews.com';
-} else {
-    $linkUrl = 'usestickyreviews.com';
-}
-
-?>
 <header class="headerArea homeHeader">
     <div class="container">
         <div class="logo">

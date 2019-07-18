@@ -29,6 +29,7 @@ class Campaign extends Model
         'exit_pop_up_id',
         'branding',
         'branding_id',
+        'custom_domain_id',
         'is_active'
     ];
 
@@ -190,5 +191,15 @@ class Campaign extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+    
+    /**
+     * Get the custom domain associated with the campaign
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customDomain()
+    {
+        return $this->belongsTo(CustomDomain::class);
     }
 }

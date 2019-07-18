@@ -9,9 +9,9 @@
             <h3>Oops! Something went wrong</h3>
             <p>This page is missing or you assembled the link incorrectly.</p>
 
-            <a [routerlink]="['/home/dashboard']" class="btn-oval">Let's go home</a>
+            <a href="/" class="btn-oval">Let's go home</a>
         </div>
     </div>
 </div>
 <!-- footer -->
-<?php include("footer.php")?>
+<?php include("footer.php"); ?>

@@ -14,6 +14,9 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class Handler extends ExceptionHandler
 {
@@ -154,6 +157,39 @@ class Handler extends ExceptionHandler
                     'status' => false,
                     'message' => "The ${model}'s details you are looking for is not found. Please try again later.",
                 ], 200);
+            }
+            
+            /** Guzzle Http Client Exception */
+            if ($exception instanceof ClientException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $exception->getMessage(),
+                    'errors' => [
+                        'error_message' => $exception->getMessage(),
+                        'error_trace' => config('app.debug') ? $exception->getTrace() : null,
+                    ]
+                ], 500);
+            }
+            
+            /** Guzzle Http Connect Exception */
+            if ($exception instanceof ConnectException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Cname verification failed for custom domain",
+                    'errors' => ['cnameError' => "Cname has not been added to this domain"]
+                ], 400);
+            }
+            
+            /** Symfoni process failed Exception */
+            if ($exception instanceof ProcessFailedException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Process has been failed",
+                    'errors' => [
+                        'error_message' => $exception->getMessage(),
+                        'error_trace' => config('app.debug') ? $exception->getTrace() : null,
+                    ]
+                ], 500);
             }
 
             /** API Generic Exception Response */

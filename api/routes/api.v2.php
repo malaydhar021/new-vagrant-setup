@@ -117,6 +117,16 @@ Route::middleware(['auth:api', 'subscription'])->group(function () {
     Route::prefix('subscribed-emails')->name('subscribed-emails.')->group(function () {
         Route::get('/', 'SubscribedEmailController@index')->name('index');
     });
+    
+    Route::prefix('custom-domains')->name('custom-domains.')->group(function () {
+        Route::get('/', 'CustomDomainController@index')->name('index');
+        Route::post('/', 'CustomDomainController@store')->name('store');
+        Route::post('/validate', 'CustomDomainController@validateDomain')->name('validate');
+        Route::get('/{id}', 'CustomDomainController@show')->name('show');
+        Route::put('/{id}', 'CustomDomainController@update')->name('update');
+        Route::patch('/{id}', 'CustomDomainController@update')->name('update');
+        Route::delete('/{id}', 'CustomDomainController@destroy')->name('delete');
+    });
 });
 
 Route::prefix('user-reviews')->name('user-reviews.')->group(function () {

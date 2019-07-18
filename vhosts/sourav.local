@@ -1,0 +1,29 @@
+server {
+			listen   80;
+			root /var/www/html/stickyreviews/app/;
+			index index.php index.html index.htm;
+			server_name sourav.local;
+
+			# serve static files directly
+			location ~* \.(jpg|jpeg|gif|css|png|js|ico|html)$ {
+				access_log off;
+				expires max;
+			}
+			# catch all
+			error_page 404 /var/www/html/stickyreviews/www/404.php;
+
+			location ~ /\.ht {
+				deny all;
+			}
+
+			location ~* (.+)\.(?:\d+)\.(html)$ {
+				try_files $uri $1.$2;
+			}
+
+			rewrite ^/(.*)/$ /$1 permanent;
+
+			location / {
+				try_files   $uri /index.html;
+			}
+
+		}
