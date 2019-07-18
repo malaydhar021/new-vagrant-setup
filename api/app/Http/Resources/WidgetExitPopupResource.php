@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\CampaignStickyReview;
 use App\Helpers\Hashids;
 use App\StickyReview;
 
@@ -26,12 +27,16 @@ class WidgetExitPopupResource extends JsonResource
             }
 
             if ($exitPopupDetails->load('stickyReviews') && isset($exitPopupDetails->stickyReviews)) {
-                $exitPopupSRQuery = StickyReview::join(
-                    'exit_pop_up_sticky_review',
-                    'exit_pop_up_sticky_review.sticky_review_id',
-                    '=',
-                    'sticky_reviews.id'
-                )->with('brands')->where('exit_pop_up_sticky_review.exit_pop_up_id', $exitPopupDetails->id);
+//                $exitPopupSRQuery = StickyReview::join(
+//                    'exit_pop_up_sticky_review',
+//                    'exit_pop_up_sticky_review.sticky_review_id',
+//                    '=',
+//                    'sticky_reviews.id'
+//                )->with('brands')->where('exit_pop_up_sticky_review.exit_pop_up_id', $exitPopupDetails->id);
+
+                $getStickyReviewsIds =  ExitPopUpStickyReview::where('exit_pop_up_id', $exitPopupDetails->id)->pluck('sticky_review_id');
+
+                $exitPopupSRQuery = StickyReview::whereIn('id', $getStickyReviewsIds)->with('brands');
 
                 if ($exitPopupSRQuery->count()) {
                     $exitPopupStickyReviews = $exitPopupSRQuery->paginate(5);

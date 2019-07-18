@@ -35,7 +35,7 @@ class WidgetResource extends JsonResource
             $exitPopup = null;
         }
 
-        $getStickyReviewsIds =  CampaignStickyReview::where('campaign_id', $this->id)->with('stickyReviews')->pluck('sticky_review_id');
+        $getStickyReviewsIds =  CampaignStickyReview::where('campaign_id', $this->id)->pluck('sticky_review_id');
 
         $srQuery = StickyReview::whereIn('id', $getStickyReviewsIds)->with('brands');
 
