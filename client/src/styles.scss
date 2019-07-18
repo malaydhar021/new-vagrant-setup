@@ -7861,12 +7861,15 @@ img {
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
+      background-color: #fff;
     }
 
     h3 {
       color: #000000;
       font-weight: 600;
       font-family: 'SegoeUI';
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     p {
@@ -8241,7 +8244,7 @@ img {
 
       &.step_5 {
         h2 {
-          margin: auto auto 30px auto;
+          margin: 0 auto 30px auto;
         }
 
         .addpicture {
