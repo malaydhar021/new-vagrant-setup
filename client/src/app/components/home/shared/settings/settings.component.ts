@@ -2,10 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NgxSmartModalService } from 'ngx-smart-modal';
-import * as ValidationEngine from '../../../../helpers/form.helper';
 import { LoaderService } from '../../../../services/loader.service';
 import { UserService } from '../../../../services/user.service';
-import { Log } from '../../../../helpers/app.helper';
 import { UserAuthInfo } from '../../../../models/user.model';
 import { ErrorsService } from '../../../../services/errors.service';
 import { Title } from '@angular/platform-browser';
@@ -19,7 +17,7 @@ import { Title } from '@angular/platform-browser';
  * @license Proprietary
  */
 @Component({
-  selector: 'settings',
+  selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
@@ -50,7 +48,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private loaderService: LoaderService,
     private userService: UserService,
     private errorService: ErrorsService
-  ) { 
+  ) {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
@@ -66,7 +64,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public ngOnInit() {
-    this.title.setTitle("Stickyreviews :: Settings");
+    this.title.setTitle('Stickyreviews :: Settings');
     this.userZapierTokenForm = this.formBuilder.group({
       tokenName: ['', Validators.required],
     });

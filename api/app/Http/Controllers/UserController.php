@@ -108,12 +108,10 @@ class UserController extends Controller
         if($request->tokenName != ''){
 
             $token = $this->generateRandomString(61);
-            $passKey = $this->generateRandomString(8);
             $storeToken = new UserZapierTokens();
             $storeToken->created_by = $user->id;
             $storeToken->token_name = $request->tokenName;
             $storeToken->token = $token;
-            $storeToken->passkey = $passKey;
             if($storeToken->save()){
                 return response()->json([
                     'status' => true,

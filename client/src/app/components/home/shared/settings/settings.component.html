@@ -33,31 +33,6 @@
         </div>
     </div>
 
-    <h3> User review passkey </h3><h5> Use the passkey for accept or reject a sticky review </h5>
-
-    <div class="dataTableArea">
-        <div class="table">
-            <ul class="thead">
-                <li>Passkey </li>
-                <li>Action </li>
-            </ul>
-            <div class="tbody">
-                <ul>
-                    <li class="row" *ngFor="let tokenData of token">
-                        <div class="rowContainer">
-                            <div class="tcol">
-                                <p>{{tokenData.passkey}}</p>
-                            </div>
-                            <div class="tcol">
-                                <a class="copyBtn" (click)="copyText(tokenData.passkey)"> <img src="../../../../assets/images/icon_copy_snippet.png" alt="copy token"> </a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <div class="edit-info-user">
         <div class="formChangepass">
             <span><message [successMessage]='successMessage' [showMessage]="showError"></message></span>
