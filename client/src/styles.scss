@@ -3141,14 +3141,20 @@ a {
     display: inline-block;
     width: 100%;
     padding: 25px 32px;
-    text-align: center;
+    // text-align: center;
+    font-size: 0;
 
     li {
-      float: left;
+      // float: left;
+      // width: 27.7%;
+      // margin: 0 2.8% 50px;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
-      width: 27.7%;
-      margin: 0 2.8% 50px;
+      width: 33.333%;
+      margin: 0 0 50px;
+      padding: 0 25px;
+      display: inline-block;
+      vertical-align: top;
 
       .popupThubm {
         font-size: 0;
@@ -3324,12 +3330,13 @@ a {
       width: 185px;
       position: absolute;
       bottom: 91px;
-      left: -43px;
+      // left: -43px;
+      right: -43px;
       word-break: break-word;
 
       &::after {
         content: "";
-        width: 176px;
+        width: 3000px;
         height: 1px;
         background: #000;
         position: absolute;
@@ -3384,7 +3391,6 @@ a {
           background-image: url(#{$imgUrl}/icon_mmail_lb.png);
           background-repeat: no-repeat;
           background-position: left 13px center;
-          ;
 
           &::-webkit-input-placeholder {
             color: #D9D9D9;
@@ -3410,7 +3416,7 @@ a {
           width: 104px;
           height: 50px;
           float: left;
-          font-size: 14px;
+          font-size: 13px;
           border: none;
           border-radius: 0 5px 5px 0;
           cursor: pointer;
@@ -6406,7 +6412,7 @@ body.sign-upPage {
           height: 20px;
           margin: 15px auto 0;
           font-size: 10px;
-          padding: 0 30px;
+          padding: 0 5px;
           @include border-radius(3px);
         }
 
@@ -6712,7 +6718,8 @@ body.sign-upPage {
           font-size: 10px;
           width: 85px;
           bottom: 40px;
-          left: -19px;
+          // left: -19px;
+          right: -23px;
           word-break: break-word;
 
           &:after {
@@ -6759,9 +6766,9 @@ body.sign-upPage {
             height: 22px;
             margin: 0;
             font-size: 10px;
-            padding: 0 10px;
+            padding: 0 3px;
             width: 64px;
-            font-size: 9px;
+            font-size: 6px;
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
           }
