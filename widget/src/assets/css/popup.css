@@ -217,6 +217,7 @@ img {
     margin-bottom: 3px;
     font-family: 'AvenirLTStd-Black';
     font-weight: normal;
+    margin-top: 0;
 }
 
 .popupTxt .bodyPopup p {
@@ -240,6 +241,7 @@ img {
 .popupTxt .popupFt span {
     margin-left: 9px;
     /* font-size: 0; */
+    white-space: nowrap;
 }
 
 .popupTxt .popupFt span:first-child {
@@ -963,6 +965,10 @@ img {
     font-weight: 700;
     display: inline-block;
     margin-bottom: -3px;
+    max-width: 67px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .popupTxt .popupFt span img {

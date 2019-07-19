@@ -51,6 +51,7 @@ export default {
       try {
 
         let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.myApiId}`+`?page=${this.curPageNo}`)
+        // let response = await this.axios.get(`https://api.beta.usestickyreviews.com/v2/widget/emv_root5d1f4a37aa8801562331703?page=${this.curPageNo}`)
 
         if (response.data.status) {
           this.checkDomainName(response.data.data)
@@ -68,7 +69,7 @@ export default {
       try {
 
         let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`)
-
+        // let response = await this.axios.get(`https://api.beta.usestickyreviews.com/v2/widget/emv_root5d1f4a37aa8801562331703/exit-popup?page=${this.curPageNo}`)
         if (response.data.status) {
           this.pageLeft(response.data.data)
         } else {
