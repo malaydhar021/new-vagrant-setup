@@ -129,7 +129,7 @@ img {
 .popupTxt {
     display: table;
     position: relative;
-    width: 340px;
+    width: 350px;
     -webkit-transition: all ease 0.4s;
     transition: all ease 0.4s;
 }
@@ -231,7 +231,8 @@ img {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    margin-top: 10px;
     font-weight: 600;
 }
 
@@ -372,27 +373,17 @@ img {
     border-radius: 50%;
     position: relative;
     z-index: 1;
-    overflow: hidden;
+    /* overflow: hidden; */
+    overflow: visible;
 }
 
 .popupParent .popup_template_1 .figPopup figure img {
     max-width: 55%;
+    position: relative;
+    z-index: 2;
 }
 
-.popupParent .popup_template_1 .figPopup:after {
-    position: absolute;
-    content: '';
-    width: 66px;
-    height: 66px;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background-color: #dad5f6;
-}
-
-.popupParent .popup_template_1 .figPopup:after {
+.popupParent .popup_template_1 .figPopup figure:after {
     position: absolute;
     content: '';
     width: 80px;
@@ -403,6 +394,25 @@ img {
     transform: translate(-50%, -50%);
     background: #dedcf5;
     border-radius: 50%;
+}
+
+.popupParent .popup_template_1 .figPopup:after {
+    content: none;
+}
+
+.popupParent .popup_template_1 .figPopup figure:before {
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(#614ed9, #35268e);
+    border-radius: 50%;
+    position: absolute;
+    content: '';
+    z-index: 1;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .popupParent .popup_template_1 .closePopup {
@@ -948,7 +958,7 @@ img {
     font-weight: 700;
     display: inline-block;
     margin-bottom: -3px;
-    max-width: 67px;
+    max-width: 32%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
