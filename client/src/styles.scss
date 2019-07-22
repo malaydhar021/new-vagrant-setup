@@ -9167,13 +9167,15 @@ img {
     }
 
     &:after {
-      width: 336px;
+      // width: 336px;
+      width: 306px;
       top: 1px;
       z-index: -1;
     }
 
     &:before {
-      width: 330px;
+      // width: 330px;
+      width: 290px;
       top: 3px;
       z-index: -2;
       -webkit-box-shadow: 0 10px 30px rgba(87, 105, 177, 0.16);
@@ -9787,6 +9789,7 @@ ngx-smart-modal {
     background-size: cover;
     position: relative;
     z-index: 1;
+    overflow: hidden;
 
     iframe,
     video {
