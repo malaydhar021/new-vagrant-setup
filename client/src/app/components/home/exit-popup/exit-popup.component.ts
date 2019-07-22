@@ -10,6 +10,7 @@ import { ExitPopupService } from '../../../services/exit-popup.service';
 import * as htmlToImage from 'html-to-image';
 import * as moment from 'moment';
 import { Log } from 'src/app/helpers/app.helper';
+import { $ } from 'protractor';
 
 /**
  * Component to deal with all sort of functionalities related to exit popup create, update, delete and listing.
@@ -81,6 +82,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   searchKey: string = '';
   isModalOpened: boolean = false; // set to true if the modal is opened
   reviewBrandName: string = '';
+  openModalName: string ='';
   /**
    * 
    * @param ngxSmartModalService 
@@ -780,6 +782,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       this.showStickyReviews = false;
     }
     const modalName = 'exitPopup' + this.showMe;
+    this.openModalName = 'exitPopup' + this.showMe;
     this.ngxSmartModalService.getModal(modalName).onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.modalActive = modalName;
     });
@@ -861,5 +864,20 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  public forColor(headerBackgroundColor: any) {
+    let thisName = this.openModalName;
+    let exitPopup = document.querySelectorAll('.exitPopup');
+    let modalButton = document.querySelectorAll('.nsm-dialog-btn-close');
+
+    setTimeout(() => {
+      for(var i=0; i< exitPopup.length; i++) {
+        if(exitPopup[i].getAttribute('identifier') === thisName) {
+          let inElement = exitPopup[i].children[0].children[0].children[0].children[1];
+          inElement.style.backgroundColor = headerBackgroundColor;
+        }
+      }
+    }, 100);
   }
 }

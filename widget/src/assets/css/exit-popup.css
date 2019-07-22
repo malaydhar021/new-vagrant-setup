@@ -2559,3 +2559,10 @@ i.star.inactive:before {
     width: calc(100% - 70px);
     margin-top: 0
 }
+
+.vjs-icon-volume-mute:before, .video-js .vjs-mute-control.vjs-vol-0 .vjs-icon-placeholder:before,
+.vjs-icon-pause:before, .video-js .vjs-play-control.vjs-playing .vjs-icon-placeholder:before,
+.vjs-custom-skin>.video-js .vjs-control-bar .vjs-time-control {
+    font-size: 13px;
+    line-height: 3.3em;
+}

@@ -1735,6 +1735,20 @@ a {
       }
     }
 
+    &.settingsMain {
+      .inDataHdr {
+        padding: 10px 32px;
+      }
+      .dataTableArea {
+        .table {
+          .tbody{
+            height: inherit;
+            max-height: calc(100vh - 300px);
+          }
+        }
+      }
+    }
+
     @media (max-width: 991px) {
       border: none;
       // min-height: calc(100vh - 71px);
@@ -8168,6 +8182,8 @@ img {
     align-items: stretch;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    max-height: calc(100vh - 370px);
+    overflow: auto;
 
     form {
       height: 100%;

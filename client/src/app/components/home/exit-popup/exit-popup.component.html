@@ -42,7 +42,7 @@
   </div>
 </div>
 <!--[ngStyle]="{ 'color-overlay' : '#ff1616' }"-->
-<ngx-smart-modal #exitPopup1 identifier="exitPopup1" class="exitPopup theme1 prevwPage" [ngClass]="modalActive == 'exitPopup1' ? 'active': null" [style.background-color]="this.bodyBackgroundColor">
+<ngx-smart-modal #exitPopup1 identifier="exitPopup1" class="exitPopup theme1 prevwPage" [ngClass]="modalActive == 'exitPopup1' ? 'active': null" [style.background-color]="this.bodyBackgroundColor" (onOpen)="forColor(this.headerBackgroundColor)">
   <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
     <img src="../../../../assets/images/icon_mic_white.png" alt="mic_white">
     <h2 [style.color]="this.headerTextColor">{{this.exitPopupHeaderText}} </h2>
@@ -592,7 +592,7 @@
 </ngx-smart-modal>
 
 
-<ngx-smart-modal #exitPopup2 identifier="exitPopup2" class="exitPopup theme2 prevwPage" [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup2' ? 'active': null">
+<ngx-smart-modal #exitPopup2 identifier="exitPopup2" class="exitPopup theme2 prevwPage" [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup2' ? 'active': null" (onOpen)="forColor(this.headerBackgroundColor)">
   <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
     <img src="../../../../assets/images/icon_mic_white.png" alt="">
     <h2 [style.color]="this.headerTextColor">{{this.exitPopupHeaderText}} </h2>
