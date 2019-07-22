@@ -1,6 +1,6 @@
 <!-- Rounded sticky review -->
 <!-- Add pop_small class to popup parent elements OR popupParent's parent element when parent space is less than 320px -->
-<div class="popupParent" [ngClass]="reviewData.type === '2' ? 'audioParent_1':''" *ngIf="reviewData.type !== '3'">
+<div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_1':''" *ngIf="reviewData.type !== 3">
     <div class="popupTxt popup_template_1" style="margin-bottom: 30px;">
         <div class="figPopup">
             <figure>
@@ -31,7 +31,7 @@
 </div>
 
 
-<div style="display: block;" class="popAdd vidPreV_parent" *ngIf="reviewData.type === '3'">
+<div style="display: block;" class="popAdd vidPreV_parent" *ngIf="reviewData.type === 3">
     <div class="popupParent vidParent_1">
         <div class="vidPop">
             <div class="animateVid">
