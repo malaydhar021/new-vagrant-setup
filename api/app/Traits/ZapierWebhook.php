@@ -27,7 +27,7 @@ trait ZapierWebhook
                 $linkUrl = 'usestickyreviews.com';
             }
 
-            $getStickyReviewInfo = StickyReview::where('id', $id)->with('negativeReviews')->first();
+            $getStickyReviewInfo = StickyReview::where('id', $id)->with('negativeReviews', 'reviewLink')->first();
             if($getStickyReviewInfo != null && $getStickyReviewInfo->review_link_id != null ){
                 $fetchWebhookInfo = UserZapierWebhooks::where('review_link_id', $getStickyReviewInfo->review_link_id)->get();
                 if($fetchWebhookInfo != null && count($fetchWebhookInfo) != 0 ){
@@ -54,6 +54,12 @@ trait ZapierWebhook
                     if($getStickyReviewInfo->negativeReviews != null ){
                         $sendZapData['negative_reviews_email'] = $getStickyReviewInfo->negativeReviews['email'];
                         $sendZapData['negative_reviews_phone'] = $getStickyReviewInfo->negativeReviews['phone'];
+                    }
+
+                    if($getStickyReviewInfo->reviewLink != null) {
+                        $sendZapData['review_link_name'] = $getStickyReviewInfo->reviewLink['name'];
+                        $sendZapData['review_link'] = 'https://app.'.$linkUrl.'/user-review/'.$getStickyReviewInfo->reviewLink['url_slug'];
+                        $sendZapData['review_link_description'] = $getStickyReviewInfo->reviewLink['description'];
                     }
                     /* find all the url related to the sticky review and send data there */
                     foreach($fetchWebhookInfo as $key => $value) {
@@ -116,6 +122,11 @@ trait ZapierWebhook
                             $sendZapData['negative_reviews_email'] = $getStickyReviewInfo->negativeReviews['email'];
                             $sendZapData['negative_reviews_phone'] = $getStickyReviewInfo->negativeReviews['phone'];
                         }
+                        if($getStickyReviewInfo->reviewLink != null) {
+                            $sendZapData['review_link_name'] = $getStickyReviewInfo->reviewLink['name'];
+                            $sendZapData['review_link'] = 'https://app.'.$linkUrl.'/user-review/'.$getStickyReviewInfo->reviewLink['url_slug'];
+                            $sendZapData['review_link_description'] = $getStickyReviewInfo->reviewLink['description'];
+                        }
                         /* find all the url related to the sticky review and send data there */
                         foreach($fetchAllReviewLinkInfo as $key => $value) {
                             $targetURL = $value->hook_url;
@@ -167,13 +178,16 @@ trait ZapierWebhook
      */
     public function checkAndSendExitpopupDataToZapier($id){
         try{
-            $geSubscribedEmailsInfo = SubscribedEmail::where('id', $id)->first();
+            $geSubscribedEmailsInfo = SubscribedEmail::where('id', $id)->with('exitPopup')->first();
             if($geSubscribedEmailsInfo != null && $geSubscribedEmailsInfo->exit_pop_up_id != null ){
                 $fetchWebhookInfo = UserZapierWebhooks::where('exit_popup_id', $geSubscribedEmailsInfo->exit_pop_up_id)->get();
                 if($fetchWebhookInfo != null && count($fetchWebhookInfo) != 0){
                     $sendZapData = [];
                     $sendZapData['id'] = $geSubscribedEmailsInfo->id;
                     $sendZapData['exit_popup_subscribe_email'] = $geSubscribedEmailsInfo->email;
+                    if($geSubscribedEmailsInfo->exitPopup != null ) {
+                        $sendZapData['exit_popup_name'] = $geSubscribedEmailsInfo->exitPopup['name'];
+                    }
                     /* find all the url related to the exit popup and send data there */
                     foreach($fetchWebhookInfo as $key => $value) {
                         $targetURL = $value->hook_url;
@@ -214,6 +228,9 @@ trait ZapierWebhook
                         $sendZapData = [];
                         $sendZapData['id'] = $geSubscribedEmailsInfo->id;
                         $sendZapData['exit_popup_subscribe_email'] = $geSubscribedEmailsInfo->email;
+                        if($geSubscribedEmailsInfo->exitPopup != null ) {
+                            $sendZapData['exit_popup_name'] = $geSubscribedEmailsInfo->exitPopup['name'];
+                        }
                         /* find all the url related to the exit popup and send data there */
                         foreach($fetchAllExitpopupInfo as $key => $value) {
                             $targetURL = $value->hook_url;
