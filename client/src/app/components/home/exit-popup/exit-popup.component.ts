@@ -566,10 +566,10 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       this.exitPopupService.deleteExitPopup(id).subscribe(
         (response: any) => {
           this.loaderService.disableLoader();
-          if (response.status) {            
+          if (response.status) {
             setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
             this.getUserExitPopups();
-          } else {            
+          } else {
             setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
             this.getUserExitPopups();
           }
@@ -689,7 +689,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       (response: any) => {
         this.loaderService.disableLoader();
         if (response.status) {
-          this.ngxSmartModalService.getModal('modal1').close();          
+          this.ngxSmartModalService.getModal('modal1').close();
           setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
           this.getUserExitPopups();
         } else {
@@ -875,7 +875,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       for(var i=0; i< exitPopup.length; i++) {
         if(exitPopup[i].getAttribute('identifier') === thisName) {
           let inElement = exitPopup[i].children[0].children[0].children[0].children[1];
-          inElement.style.backgroundColor = headerBackgroundColor;
+          (inElement as HTMLElement).style.backgroundColor = headerBackgroundColor;
         }
       }
     }, 100);
