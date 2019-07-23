@@ -131,6 +131,7 @@ img {
     position: relative;
     width: 350px;
     -webkit-transition: all ease 0.4s;
+    -o-transition: all ease 0.4s;
     transition: all ease 0.4s;
 }
 
@@ -141,7 +142,8 @@ img {
     padding-bottom: 3px;
     max-width: 234px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
     padding-right: 12px;
 }
 
@@ -210,7 +212,8 @@ img {
     padding-right: 25px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
     margin-bottom: 3px;
     font-family: 'AvenirLTStd-Black';
     font-weight: normal;
@@ -322,13 +325,15 @@ img {
 .popupTxt .closePopup:after {
     background-color: #8698af;
     -webkit-transform: translate(-50%) rotate(45deg);
-    transform: translate(-50%) rotate(45deg);
+    -ms-transform: translate(-50%) rotate(45deg);
+        transform: translate(-50%) rotate(45deg);
 }
 
 .popupTxt .closePopup:before {
     background-color: #8698af;
     -webkit-transform: translate(-50%) rotate(-45deg);
-    transform: translate(-50%) rotate(-45deg);
+    -ms-transform: translate(-50%) rotate(-45deg);
+        transform: translate(-50%) rotate(-45deg);
 }
 
 .popupTxt .closePopup:hover {
@@ -369,6 +374,8 @@ img {
 .popupParent .popup_template_1 .figPopup figure {
     width: 50px;
     height: 50px;
+    background-image: -webkit-radial-gradient(#614ed9, #35268e);
+    background-image: -o-radial-gradient(#614ed9, #35268e);
     background-image: radial-gradient(#614ed9, #35268e);
     border-radius: 50%;
     position: relative;
@@ -391,7 +398,8 @@ img {
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
     background: #dedcf5;
     border-radius: 50%;
 }
@@ -403,6 +411,8 @@ img {
 .popupParent .popup_template_1 .figPopup figure:before {
     width: 100%;
     height: 100%;
+    background-image: -webkit-radial-gradient(#614ed9, #35268e);
+    background-image: -o-radial-gradient(#614ed9, #35268e);
     background-image: radial-gradient(#614ed9, #35268e);
     border-radius: 50%;
     position: absolute;
@@ -412,7 +422,8 @@ img {
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
 }
 
 .popupParent .popup_template_1 .closePopup {
@@ -593,7 +604,8 @@ img {
     border-radius: 10px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
     background: #fff;
 }
 
@@ -625,6 +637,8 @@ img {
     -moz-border-radius: 25px 30px 0 25px;
     width: 320px;
     background-image: -webkit-gradient(linear, left top, right top, from(#e30c5d), to(#ef3078));
+    background-image: -webkit-linear-gradient(left, #e30c5d, #ef3078);
+    background-image: -o-linear-gradient(left, #e30c5d, #ef3078);
     background-image: linear-gradient(to right, #e30c5d, #ef3078);
     -webkit-box-shadow: 0 10px 30px rgba(87, 105, 177, 0.16);
     box-shadow: 0 10px 30px rgba(87, 105, 177, 0.16);
@@ -729,6 +743,8 @@ img {
     -webkit-border-radius: 20px 20px 53px 53px;
     -moz-border-radius: 20px 20px 53px 53px;
     background: -webkit-gradient(linear, left top, right top, from(#f8fbff), to(#fff));
+    background: -webkit-linear-gradient(left, #f8fbff, #fff);
+    background: -o-linear-gradient(left, #f8fbff, #fff);
     background: linear-gradient(to right, #f8fbff, #fff);
     position: relative;
 }
@@ -822,6 +838,8 @@ img {
     -webkit-border-radius: 10px 10px 30px 30px;
     -moz-border-radius: 10px 10px 30px 30px;
     background: -webkit-gradient(linear, left top, right top, from(#e30c5d), to(#ef3078));
+    background: -webkit-linear-gradient(left, #e30c5d, #ef3078);
+    background: -o-linear-gradient(left, #e30c5d, #ef3078);
     background: linear-gradient(to right, #e30c5d, #ef3078);
     -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.16);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.16);
@@ -854,6 +872,7 @@ img {
     font-size: 0;
     position: absolute;
     -webkit-transition: none;
+    -o-transition: none;
     transition: none;
 }
 
@@ -960,7 +979,8 @@ img {
     margin-bottom: -3px;
     max-width: 32%;
     overflow: hidden;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
     white-space: nowrap;
 }
 
@@ -1209,9 +1229,11 @@ i.star.inactive:before {
 @media (max-width: 991px) {
     .popupParent {
         -webkit-transform: scale(0.7);
-        transform: scale(0.7);
+        -ms-transform: scale(0.7);
+            transform: scale(0.7);
         -webkit-transform-origin: 0 100%;
-        transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+            transform-origin: 0 100%;
     }
 }
 
@@ -1235,14 +1257,16 @@ i.star.inactive:before {
 
     .popupParent {
         -webkit-transform: scale(0.6);
-        transform: scale(0.6);
+        -ms-transform: scale(0.6);
+            transform: scale(0.6);
     }
 }
 
 @media (max-width: 480px) {
     .popupParent {
         -webkit-transform: scale(0.4);
-        transform: scale(0.4);
+        -ms-transform: scale(0.4);
+            transform: scale(0.4);
     }
 }
 
@@ -1250,6 +1274,7 @@ i.star.inactive:before {
 .fade-enter-active,
 .fade-leave-active {
     -webkit-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
     transition: opacity 0.5s;
     opacity: 1;
 }
@@ -1274,7 +1299,8 @@ i.star.inactive:before {
     right: 0;
     height: 2px;
     -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
     z-index: 0;
     content: '';
     background-color: #B0A6E6;
@@ -1288,7 +1314,8 @@ i.star.inactive:before {
     height: 2px;
     top: 50%;
     -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
 }
 
 .audioRv section.audio-section {
