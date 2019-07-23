@@ -27,11 +27,14 @@ export class SquareComponent implements OnInit {
     }
 
     /**
-     * Function to format the date and time
+     * Method to format the time/date and show to the sticky reviews
      * @param created_at
      */
-    getReviewTimeFormated(created_at) {
-        return moment.utc(created_at).local().startOf('day').fromNow();
+    public getReviewTimeFormated(reviewAt) {
+        const reviewTime = moment.utc(reviewAt).local().format('YYYY-MM-DD HH:mm:ss');
+        const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
+        const timeDiffrence = moment(currentTime).diff(moment(reviewTime));
+        return moment.duration(timeDiffrence).humanize();
     }
 
 }

@@ -525,13 +525,24 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
             this.reviewImageUrl = response.data.image_url;
             this.reviewName = response.data.name;
             this.reviewDescription = response.data.review;
-            this.reviewAt = moment.utc(response.data.reviewed_at).local().startOf('day').fromNow();
+            this.reviewAt = this.formatReviewAtTimeDate(response.data.reviewed_at);
             this.reviewType = response.data.type;
             this.reviewRating = response.data.rating;
           }
         }
       );
     }
+  }
+
+  /**
+   * Method to format the time/date and show to the sticky reviews
+   * @param reviewAt
+   */
+  public formatReviewAtTimeDate(reviewAt) {
+    const reviewTime = moment.utc(reviewAt).local().format('YYYY-MM-DD HH:mm:ss');
+    const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    const timeDiffrence = moment(currentTime).diff(moment(reviewTime));
+    return moment.duration(timeDiffrence).humanize();
   }
 
   /**
@@ -662,7 +673,10 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.addStickeyReview();
   }
 
-
+  /**
+   * Method to set sticky review style
+   * @param exitPopup
+   */
   public setStickyReviewStyle(exitPopup) {
     // show the 1st selected review in the exitpopup preview
     if (exitPopup.sticky_reviews && exitPopup.sticky_reviews[0].has_brand === 1) {
@@ -674,7 +688,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.reviewImageUrl = exitPopup.sticky_reviews[0].image_url;
     this.reviewName = exitPopup.sticky_reviews[0].name;
     this.reviewDescription = exitPopup.sticky_reviews[0].review;
-    this.reviewAt = moment.utc(exitPopup.sticky_reviews[0].reviewed_at).local().startOf('day').fromNow();
+    this.reviewAt = this.formatReviewAtTimeDate(exitPopup.sticky_reviews[0].reviewed_at);
     this.reviewType = exitPopup.sticky_reviews[0].type;
     this.reviewRating = exitPopup.sticky_reviews[0].rating;
   }
