@@ -164,7 +164,7 @@ class Handler extends ExceptionHandler
             if ($exception instanceof ClientException) {
                 return response()->json([
                     'status' => false,
-                    'message' => "Custom domain couldn't be created. This can be an issue with DNS mapping with CNAME domain. Please try after sometime",
+                    'message' => "Custom domain couldn't be created. This can be an issue with DNS mapping with CNAME domain. Please make sure that you have configured properly",
                     'errors' => [
                         'error_message' => $exception->getMessage(),
                         'error_trace' => config('app.debug') ? $exception->getTrace() : null,

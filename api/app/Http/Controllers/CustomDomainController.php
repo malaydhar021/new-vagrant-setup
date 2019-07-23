@@ -170,8 +170,11 @@ class CustomDomainController extends Controller
         
         // first check cname integration is successful or not
         $response = $this->validateCname($request->domain);
-        $response = json_decode($response->getContent());
-        if($response->status) {
+        $responseContent = json_decode($response->getContent());
+        // if cname verfication failed then return response and do nothing
+        if(!$responseContent->status) return $response;
+        
+        if($responseContent->status) {
             // now let's create vhost for custom domain so that it can serve data from newly added custom domain
             $response = $this->create($request->domain);
             $responseContent = json_decode($response->getContent());
@@ -243,8 +246,8 @@ class CustomDomainController extends Controller
     public function validateCname(string $domainName) 
     {
         $response = $this->verify($domainName, Auth::user()->access_token);
-        $response = json_decode($response->getContent());
-        if($response->status) {
+        $responseContent = json_decode($response->getContent());
+        if($responseContent->status) {
             return response()->json([
                 'status' => true,
                 'message' => "{$domainName} has been successfully verified",
@@ -253,12 +256,6 @@ class CustomDomainController extends Controller
                 ]
             ]);
         }
-        return response()->json([
-            'status' => false,
-            'message' => "Verification failed for domain {$domainName}",
-            'errors' => [
-                'access_token' => "Invalid access token ! Please login again and try again"
-            ]
-        ], 400);
+        return $response;
     }
 }

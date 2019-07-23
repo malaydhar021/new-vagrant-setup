@@ -65,7 +65,17 @@ trait CustomDomain {
         ];        
         $client = new Client();
         $res = $client->post("http://{$customDomain}", ['form_params'=> $body]);
-        $response  = json_decode($res->getBody());
+        $response  = json_decode($res->getBody()->getContents());
+        if(empty($response)) {
+            return response()->json([
+                'status' => false,
+                'message' => "Custom domain couldn't be verified. This might be an issue with DNS configuration. Please make sure DNS has been properly mapped as per the instructions",
+                'errors' => ['dns' => "DNS checking failed. Please configure your DNS properly"],
+                'data' => [
+                    'domain' => $customDomain
+                ]
+            ], 400);
+        }
         if($response->status){
             return response()->json([
                 'status' => true,
