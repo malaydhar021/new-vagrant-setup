@@ -112,6 +112,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           this.userZapierTokenForm.reset();
           this.token = response.data.data;
           this.getUserZapierToken();
+          this.ngxSmartModalService.getModal('modal1').close();
         } else {
           this.token = response.data.data;
           this.getUserZapierToken();
@@ -156,11 +157,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.loaderService.enableLoader();
     this.userService.deleteToken(tokenID).subscribe(
       (response: any) => {
-        console.log(response.data.data);
         this.token = response.data.data;
         this.loaderService.disableLoader();
       }
     );
     this.getUserZapierToken();
+  }
+
+  public onAddToken() {
+    this.userZapierTokenForm = this.formBuilder.group({
+      tokenName: ['', Validators.required],
+    });
+    this.ngxSmartModalService.getModal('modal1').open();
   }
 }

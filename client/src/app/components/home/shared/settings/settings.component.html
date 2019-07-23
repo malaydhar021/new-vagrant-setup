@@ -1,12 +1,20 @@
-<div class="mainBox settingsMain">
+<div class="mainBox brandingMain">
     <header class="mainBoxHeader">
-        <h2> Settings</h2>
+        <div class="mainBoxHeaderLeft">
+            <button type="button" class="addReview" (click)="onAddToken()">
+                <img src="../../../../assets/images/addIcon.png" alt="">
+                Create token
+            </button>
+        </div>
+
+        <div class="mainBoxHeaderRight">
+
+        </div>
     </header>
+
     <div class="dataTableArea">
         <div class="inDataHdr">
-            <h3> Zapier user token </h3>
         </div>
-        <message [successMessage]="successMessage" [showMessage]="showError"></message>
         <div class="table">
             <ul class="thead">
                 <li>Token name </li>
@@ -34,29 +42,40 @@
         </div>
     </div>
 
-    <div class="edit-info-user">
-        <div class="formChangepass">
-            <span><message [successMessage]='successMessage' [showMessage]="showError"></message></span>
-            <h2>Generate zapier api token </h2>
-            <form [formGroup]="userZapierTokenForm" (ngSubmit)="onCreateToken()">
-                <div class="sr-form-row">
-                    <div class="sr-form-cell-small">
-                        <label>Token Name</label>
-                        <div class="sr-form-field">
-                            <input type="text" formControlName="tokenName" class="sr-form-ctrl" [ngClass]="{'error' : !userZapierTokenForm.get('tokenName').valid && userZapierTokenForm.get('tokenName').touched}">
-                            <span class="error-msg" *ngIf="!userZapierTokenForm.get('tokenName').valid && userZapierTokenForm.get('tokenName').errors.required" class="error-msg">Token name is required !</span>
+    <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
+        <div class="sr-modal-container">
+            <div class="sr-modal-header">
+                <h2>
+                    Create zapier token
+                </h2>
+            </div>
+            <div class="sr-modal-body">
+                <message [successMessage]='successMessage' [showMessage]="showError"></message>
+                <form [formGroup]="userZapierTokenForm" (ngSubmit)="onCreateToken()">
+                    <div class="sr-form">
+                        <div class="sr-form-row">
+                            <div class="sr-form-cell">
+                                <label>Token Name</label>
+                                <div class="sr-form-field">
+                                    <input type="text" formControlName="tokenName" class="sr-form-ctrl" [ngClass]="{'error' : !userZapierTokenForm.get('tokenName').valid && userZapierTokenForm.get('tokenName').touched}">
+                                    <span class="error-msg" *ngIf="!userZapierTokenForm.get('tokenName').valid && userZapierTokenForm.get('tokenName').errors.required" class="error-msg">Token name is required !</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sr-form-row">
+                            <div class="sr-form-cell">
+                                <button class="button-submit" type="submit" [disabled]="!userZapierTokenForm.valid">
+                                    <img src="../../../../assets/images/addIcon.png" alt="">
+                                    Generate
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="sr-form-row">
-                    <button class="button-submit" type="submit" [disabled]="!userZapierTokenForm.valid">
-                        <img src="../../../../assets/images/addIcon.png" alt="">
-                        Generate
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+    </ngx-smart-modal>
 
 
 </div>
