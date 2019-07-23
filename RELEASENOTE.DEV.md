@@ -2,6 +2,15 @@
 
 ## Custom Domain
 
+### V1.1.2
+
+1. Removed soft delete for custom domains
+2. Added guzzle request exception
+
+### V1.1.1
+
+1. Fixed issues with production build
+
 ### V1.1.0
 
 1. Implemented frontend form to create custom domain for user end
