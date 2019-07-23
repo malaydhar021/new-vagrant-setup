@@ -29,7 +29,7 @@ class CustomDoaminRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'domain' => "required|unique:custom_domains,domain,{$this->route('id')},id,deleted_at,NULL"
+            'domain' => "required|unique:custom_domains,domain,{$this->route('id')}"
         ];
     }
     
