@@ -977,7 +977,7 @@ img {
     font-weight: 700;
     display: inline-block;
     margin-bottom: -3px;
-    max-width: 32%;
+    max-width: 27%;
     overflow: hidden;
     -o-text-overflow: ellipsis;
        text-overflow: ellipsis;
@@ -1364,4 +1364,12 @@ i.star.inactive:before {
 .audioRv section.audio-section .audio-section__progress-container {
     width: calc(100% - 70px);
     margin-top: 0
+}
+
+.popupTxt .popupFt span.timePop {
+    font-size: 10px;
+}
+
+.prevwPage .exitPg .closePopup {
+    pointer-events: none;
 }

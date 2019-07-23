@@ -268,7 +268,9 @@ input[type=button],
 input.btn,
 input.button,
 button,
-a {
+a,
+audio,
+video {
   outline: none !important;
 }
 
@@ -8516,6 +8518,18 @@ img {
       }
     }
 
+    .showStyleP {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+    }
+
     // @media (max-width: 575px) {
     //   display: block;
     // }
@@ -8921,7 +8935,7 @@ img {
     border-bottom-left-radius: 0;
 
     .bodyPopup {
-      padding-left: 18px;
+      padding-left: 15px;
       padding-top: 5px;
       @include border-radius(10px);
 
@@ -9103,8 +9117,11 @@ img {
         left: -20px;
         -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+        background-color: #fff;
 
-        img {}
+        img {
+          max-width: 75%;
+        }
       }
 
       &:after {}

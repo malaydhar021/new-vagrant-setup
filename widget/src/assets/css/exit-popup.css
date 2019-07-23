@@ -2220,7 +2220,7 @@ img {
     font-weight: 700;
     display: inline-block;
     margin-bottom: -3px;
-    max-width: 30%;
+    max-width: 27%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2573,11 +2573,27 @@ i.star.inactive:before {
 
 .vjs-icon-volume-mute:before, .video-js .vjs-mute-control.vjs-vol-0 .vjs-icon-placeholder:before,
 .vjs-icon-pause:before, .video-js .vjs-play-control.vjs-playing .vjs-icon-placeholder:before,
-.vjs-custom-skin>.video-js .vjs-control-bar .vjs-time-control {
+.vjs-custom-skin>.video-js .vjs-control-bar .vjs-time-control,
+.video-js .vjs-mute-control .vjs-icon-placeholder:before, .vjs-icon-volume-high:before,
+.video-js .vjs-fullscreen-control .vjs-icon-placeholder:before, .vjs-icon-fullscreen-enter:before {
     font-size: 13px;
     line-height: 3.3em;
 }
 
 .popupParent .popup_template_5 .bodyPopup {
     padding-right: 8px;
+}
+
+.popupTxt .popupFt span.timePop,
+.vjs-custom-skin>.video-js .vjs-control-bar .vjs-time-control .vjs-control-text, 
+.vjs-custom-skin>.video-js .vjs-control-bar .vjs-time-control .vjs-current-time-display {
+    font-size: 10px;
+}
+.video-js .vjs-fullscreen-control .vjs-icon-placeholder {
+    height: 100%;
+    display: block;
+}
+
+.prevwPage .exitPg .closePopup {
+    pointer-events: none;
 }
