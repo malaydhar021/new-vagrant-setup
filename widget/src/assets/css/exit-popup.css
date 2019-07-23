@@ -133,6 +133,7 @@ img {
     width: 350px;
     -webkit-transition: all ease 0.4s;
     transition: all ease 0.4s;
+    font-size: 0;
 }
 
 .popupTxt .bodyPopup {
@@ -243,8 +244,8 @@ img {
 }
 
 .popupTxt .bodyPopup p {
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 12px;
+    line-height: 15px;
     font-family: 'AvenirLTStd-Book';
 }
 
@@ -259,6 +260,7 @@ img {
     /* margin-top: 20px; */
     margin-top: 10px;
     font-weight: 600;
+    max-width: 100%;
 }
 
 .popupTxt .popupFt span {
@@ -2211,10 +2213,11 @@ img {
 .popupTxt .popupFt span.pwBy {
     margin-left: 0;
     margin-right: 5px;
+    font-size: 10px;
 }
 
 .popupTxt .popupFt a {
-    margin-right: 5px;
+    margin-right: 3px;
     color: #E30C5D;
     font-family: 'AvenirLTStd-Book';
     font-weight: 700;
@@ -2224,6 +2227,7 @@ img {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 10px;
 }
 
 .popupTxt .popupFt span img {

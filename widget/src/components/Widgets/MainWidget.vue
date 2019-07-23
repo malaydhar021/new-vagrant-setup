@@ -130,7 +130,8 @@ export default {
       // Call this method to get initial widget data
       try {
         let vm = this;
-        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`?page=${this.curPageNo}`)
+        // let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`?page=${this.curPageNo}`)
+        let response = await this.axios.get(`https://api.beta.usestickyreviews.com/v2/widget/emv_root5d1f4a37aa8801562331703?page=${this.curPageNo}`)
 
         if (response.data.status && !vm.stickyData.length) {
           vm.stickyData = response.data.data.sticky_reviews.data;
@@ -151,7 +152,8 @@ export default {
       // Call this method to get initial widget data
       try {
         let vm = this;
-        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`)
+        // let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`)
+        let response = await this.axios.get(`https://api.beta.usestickyreviews.com/v2/widget/emv_root5d1f4a37aa8801562331703/exit-popup?page=${this.curPageNo}`)
 
         if (response.data.status && !vm.stickyData.length) {
           vm.stickyData = response.data.data.sticky_reviews.data;

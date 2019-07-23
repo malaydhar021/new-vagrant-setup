@@ -1845,6 +1845,7 @@ a {
             transition: all 0.5s ease 0s;
 
             .tcol {
+              word-wrap: break-word;
               word-break: break-word;
               padding: 22px 34px;
               color: color(sr-txt-color3);
@@ -8626,6 +8627,7 @@ img {
   width: 340px;
   -webkit-transition: all ease 0.4s;
   transition: all ease 0.4s;
+  font-size: 0;
 
   .bodyPopup {
     display: table-cell;
@@ -8667,6 +8669,7 @@ img {
     -ms-flex-align: center;
     align-items: center;
     @include mt(20px);
+    max-width: 100%;
 
     span {
       @include ml(9px);
@@ -8798,7 +8801,7 @@ img {
 
 
     .bodyPopup {
-      padding-left: 25px;
+      padding-left: 15px;
 
       h6 {
         color: #304B8A;

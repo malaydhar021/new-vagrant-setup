@@ -61,8 +61,8 @@ export default {
     async getWidgetData() {
       // Call this method to get initial widget data
       try {
-        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.myApiId}`+`?page=${this.curPageNo}`)
-
+        // let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.myApiId}`+`?page=${this.curPageNo}`)
+        let response = await this.axios.get(`https://api.beta.usestickyreviews.com/v2/widget/emv_root5d1f4a37aa8801562331703?page=${this.curPageNo}`)
         if (response.data.status) {
           this.checkDomainName(response.data.data);
         } else {
@@ -76,7 +76,8 @@ export default {
     async getPopUpData() {
       // Call this method to get initial popup data
       try {
-        let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`)
+        // let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`)
+        let response = await this.axios.get(`https://api.beta.usestickyreviews.com/v2/widget/emv_root5d1f4a37aa8801562331703/exit-popup?page=${this.curPageNo}`)
 
         if (response.data.status) {
           this.pageLeft(response.data.data);
@@ -96,35 +97,35 @@ export default {
       let vm = this;
       vm.appData = dataresponse;
       if (dataresponse.is_active) {
-        if (window.location.host === dataresponse.domain_name) {
+        // if (window.location.host === dataresponse.domain_name) {
         // checking if any review is there or not. if there are then generate review popups
-        if (
-          dataresponse.sticky_reviews &&
-          dataresponse.sticky_reviews.data.length
-        ) {
-          // Waiting time before start...
-          if (dataresponse.delay_before_start) {
-            setTimeout(function() {
+          if (
+            dataresponse.sticky_reviews &&
+            dataresponse.sticky_reviews.data.length
+          ) {
+            // Waiting time before start...
+            if (dataresponse.delay_before_start) {
+              setTimeout(function() {
+                vm.showWidget = true;
+                vm.stickyReviews = dataresponse.sticky_reviews;
+              }, dataresponse.delay_before_start);
+            } else {
               vm.showWidget = true;
               vm.stickyReviews = dataresponse.sticky_reviews;
-            }, dataresponse.delay_before_start);
-          } else {
-            vm.showWidget = true;
-            vm.stickyReviews = dataresponse.sticky_reviews;
+            }
           }
-        }
-        // Check exit popup ID & configrations are attached or not
-        if (dataresponse.has_exit_pop_up) {
-          vm.getPopUpData();
-        }
-        } else {
-          console.error('[Sticky Reviews] Campaign URL did not match with current URL')
-        }
-      } else {
-        console.error(
-          "[Sticky Reviews] This campaign is marked as inactive, Please reactivate it!"
-        );
-      }
+          // Check exit popup ID & configrations are attached or not
+          if (dataresponse.has_exit_pop_up) {
+            vm.getPopUpData();
+          }
+          } else {
+            console.error('[Sticky Reviews] Campaign URL did not match with current URL')
+          }
+      // } else {
+      //   console.error(
+      //     "[Sticky Reviews] This campaign is marked as inactive, Please reactivate it!"
+      //   );
+      // }
     },
 
     /**
