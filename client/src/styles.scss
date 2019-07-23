@@ -798,19 +798,27 @@ a {
         }
 
         &:nth-child(3) a {
-          background-image: url(#{$imgUrl}/icon_campaign.png);
+          background-image: url(#{$imgUrl}/icon_custom_domain.png);
         }
 
         &:nth-child(4) a {
-          background-image: url(#{$imgUrl}/icon_stickyreviews.png);
+          background-image: url(#{$imgUrl}/icon_campaign.png);
         }
 
         &:nth-child(5) a {
-          background-image: url(#{$imgUrl}/icon_reviewlink.png);
+          background-image: url(#{$imgUrl}/icon_stickyreviews.png);
         }
 
         &:nth-child(6) a {
+          background-image: url(#{$imgUrl}/icon_reviewlink.png);
+        }
+
+        &:nth-child(7) a {
           background-image: url(#{$imgUrl}/icon_exitpopup.png);
+        }
+
+        &:nth-child(8) a {
+          background-image: url(#{$imgUrl}/icon_subscribed_email.png);
         }
       }
 
@@ -4557,6 +4565,18 @@ a {
 
     @media (max-width:480px) {
       right: 12px;
+    }
+  }
+
+  &.modalDomain {
+    .sr-form-cell {
+      p {
+        font-size: 15px;
+        line-height: 24px;
+      }
+      p + p {
+        margin-top: 15px;
+      }
     }
   }
 }
@@ -10358,4 +10378,16 @@ Cookie notification css
 .cookieCompliance .closeCookie:hover {
   color: #333;
   background-color: #fff;
+}
+.dontShow {
+  margin-top: 15px;
+}
+.switchText {
+  label {
+    margin-bottom: 0 !important;
+    margin-left: 0;
+    display: inline-block !important;
+    vertical-align: middle;
+    margin-right: 8px;
+    }
 }
