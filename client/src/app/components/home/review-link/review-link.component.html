@@ -74,8 +74,8 @@
                 </div>
                 <div class="tcol">
                   <a class="edit" (click)="onEditReviewLink(link)"><img src="../../../../assets/images/icon_edit.png" alt="Edit Review"></a>
-                  <a class="previewRLink" :[routerLink]="['/user-review', link.url_slug]" target="_blank"><img src="../../../../assets/images/eye_open.png" alt="Preview review link"> </a>
-                  <a class="previewRLink" (copy)="onClickCopyLink()" [context]="prepareContext(link.url_slug)" copyToClipboard><img src="../../../../assets/images/icon_copy_snippet.png" alt="Copy review link"> </a>
+                  <a class="previewRLink" [href]="prepareContext(link)" target="_blank"><img src="../../../../assets/images/eye_open.png" alt="Preview review link"> </a>
+                  <a class="previewRLink" (copy)="onClickCopyLink()" [context]="prepareContext(link)" copyToClipboard><img src="../../../../assets/images/icon_copy_snippet.png" alt="Copy review link"> </a>
                   <a class="delete" (click)="onDeleteReviewLink(link.id)"><img src="../../../../assets/images/icon_delete_green.png" alt="Delete Review"></a>
                 </div>
               </div>
@@ -198,6 +198,17 @@
                     && getFormControls.campaign_id.errors.required)">
                     Please select a campaign
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="sr-form-row">
+              <div class="sr-form-cell">
+                <label>Select Custom Domain</label>
+                <div class="sr-form-field">
+                  <select class="sr-form-ctrl" formControlName="custom_domain_id" [compareWith]="compareValue">
+                    <option value="null">--- Select a custom domain ---</option>
+                    <option [ngValue]="domain" *ngFor="let domain of customDomains">{{ domain.name }} ({{ domain.domain }})</option>
+                  </select>
                 </div>
               </div>
             </div>

@@ -175,8 +175,8 @@ class Handler extends ExceptionHandler
             if ($exception instanceof ConnectException) {
                 return response()->json([
                     'status' => false,
-                    'message' => "Cname verification failed for custom domain",
-                    'errors' => ['cnameError' => "Cname has not been added to this domain"]
+                    'message' => "Please make sure your input matches all the following conditions",
+                    'errors' => ['cnameError' => "CNAME check failed ! CNAME has not been added to this domain"]
                 ], 400);
             }
             

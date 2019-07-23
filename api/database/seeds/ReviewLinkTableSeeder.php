@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\ReviewLink;
+use App\CustomDomain;
 
 class ReviewLinkTableSeeder extends Seeder
 {
@@ -13,19 +14,20 @@ class ReviewLinkTableSeeder extends Seeder
     public function run()
     {
         // fetch all review link and update page background, modal background and text color is there is no value
-        foreach (ReviewLink::all() as $key => $reviewLink) {
+        foreach (ReviewLink::withTrashed()->get() as $reviewLink) {
             if (is_null($reviewLink->page_background)) {
-                $reviewLink->update(['page_background' => '#4E24DF']);
+                $reviewLink->page_background = '#4E24DF';
             }
             if (is_null($reviewLink->modal_background)) {
-                $reviewLink->update(['modal_background' => '#FFFFFF']);
+                $reviewLink->modal_background = '#FFFFFF';
             }
             if (is_null($reviewLink->text_color)) {
-                $reviewLink->update(['text_color' => '#000000']);
+                $reviewLink->text_color = '#000000';
             } 
             if (is_null($reviewLink->copyright_text)) {
-                $reviewLink->update(['copyright_text' => '&copy; 2019 All rights reserved.']);
+                $reviewLink->text_color = '&copy; 2019 All rights reserved.';
             }
+            $reviewLink->update();
         }
     }
 }

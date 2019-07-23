@@ -21,7 +21,7 @@ trait CustomDomain {
      * Name of the shell script which will create the vhosts for custom domain
      * @var type String
      */
-    private $customDomainVhostScript = 'virtualhost';
+    private $customDomainVhostScript = '/bin/virtualhost';
     
     /**
      * Base path of custom domain vhosts. The directory where `$customDomainDirectoryName` exists
@@ -94,7 +94,8 @@ trait CustomDomain {
     public function create(string $customDomain) 
     {
         // command to use to create the vhost for custom domain
-        $command = "sudo {$this->customDomainVhostScript} create {$customDomain} {$this->customDomainBaseDirectoryPath}";
+        // ex command : sudo /var/www/html/stickyreviews/bin/virtualhost create somedomain.com /var/www/html/stickyreviews
+        $command = "sudo {$this->customDomainBaseDirectoryPath}{$this->customDomainVhostScript} create {$customDomain} {$this->customDomainBaseDirectoryPath}";
         $process = new Process($command);
         $process->run();
         if (!$process->isSuccessful()) {
@@ -124,7 +125,8 @@ trait CustomDomain {
     public function delete(string $customDomain) 
     {
         // command to use to delete the vhost for custom domain
-        $command = "sudo {$this->customDomainVhostScript} delete {$customDomain} {$this->customDomainBaseDirectoryPath}";
+        // Ex command : sudo /var/www/html/stickyreviews/bin/virtualhost delete somedomain.com /var/www/html/stickyreviews
+        $command = "sudo {$this->customDomainBaseDirectoryPath}{$this->customDomainVhostScript} delete {$customDomain} {$this->customDomainBaseDirectoryPath}";
         $process = new Process($command);
         $process->run();
         if (!$process->isSuccessful()) {

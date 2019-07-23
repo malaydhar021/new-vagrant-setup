@@ -19,4 +19,5 @@ export interface CampaignInterface {
   is_active: boolean;
   loop: boolean;
   id: string;
+  custom_domain: any;
 }

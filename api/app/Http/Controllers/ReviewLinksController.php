@@ -6,6 +6,7 @@ use App\Http\Requests\ReviewLinkRequest;
 use App\Http\Requests\ReviewLinkParamRequest;
 use App\Http\Resources\ReviewLinkResource;
 use App\ReviewLink;
+use App\Helpers\Hashids;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,7 @@ class ReviewLinksController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->queryBuilder = ReviewLink::where('created_by', Auth::user()->id)
-                ->with('campaign', 'stickyReviews', 'user');
+                ->with('campaign', 'stickyReviews', 'user', 'customDomain');
 
             return $next($request);
         });
@@ -109,10 +110,11 @@ class ReviewLinksController extends Controller
         $reviewLink->text_color = $request->input('text_color');
         $reviewLink->copyright_text = $request->input('copyright_text');
         $reviewLink->campaign_id = $request->input('campaign_id');
+        $reviewLink->custom_domain_id = (!is_null($request->input('custom_domain_id'))) ? Hashids::decode($request->input('custom_domain_id')) : null;
         $reviewLink->created_by = Auth::user()->id;
         $reviewLink->save();
 
-        $reviewLink->load('campaign', 'user');
+        $reviewLink->load('campaign', 'user', 'customDomain');
 
         return response()->json([
             'status' => true,
@@ -161,12 +163,13 @@ class ReviewLinksController extends Controller
         $reviewLink->text_color = $request->input('text_color');
         $reviewLink->copyright_text = $request->input('copyright_text');
         $reviewLink->campaign_id = $request->input('campaign_id');
+        $reviewLink->custom_domain_id = (!is_null($request->input('custom_domain_id'))) ? Hashids::decode($request->input('custom_domain_id')) : null;
         if ($request->has('logo')) {
             $reviewLink->logo = $request->file('logo');
         }
         $reviewLink->update();
 
-        $reviewLink->load('campaign', 'user');
+        $reviewLink->load('campaign', 'user', 'customDomain');
 
         return response()->json([
             'status' => true,
@@ -221,7 +224,7 @@ class ReviewLinksController extends Controller
 
         $reviewLink->update();
 
-        $reviewLink->load('campaign', 'user');
+        $reviewLink->load('campaign', 'user', 'customDomain');
 
         return response()->json([
             'status' => true,

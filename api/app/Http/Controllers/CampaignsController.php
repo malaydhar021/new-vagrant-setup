@@ -26,10 +26,9 @@ class CampaignsController extends Controller
      */
     public function __construct()
     {
-
         $this->middleware(function ($request, $next) {
             $this->queryBuilder = Campaign::where('created_by', Auth::user()->id)
-                ->with('campaignStyle', 'exitPopUp', 'brandingDetails', 'stickyReviews', 'user');
+                ->with('campaignStyle', 'exitPopUp', 'brandingDetails', 'stickyReviews', 'user', 'customDomain');
 
             return $next($request);
         });
@@ -110,11 +109,12 @@ class CampaignsController extends Controller
         $campaign->exit_pop_up_id = Hashids::decode($request->input('exit_pop_up_id'));
         $campaign->branding = $request->input('branding');
         $campaign->branding_id = Hashids::decode($request->input('branding_id'));
+        $campaign->custom_domain_id = (!is_null($request->input('custom_domain_id'))) ? Hashids::decode($request->input('custom_domain_id')) : null;
         $campaign->created_by = Auth::user()->id;
         $campaign->is_active = true;
         $campaign->save();
 
-        $campaign->load('campaignStyle', 'brandingDetails', 'exitPopUp', 'user');
+        $campaign->load('campaignStyle', 'brandingDetails', 'exitPopUp', 'user', 'customDomain');
 
         return response()->json([
             'status' => true,
@@ -171,6 +171,8 @@ class CampaignsController extends Controller
                                 $request->input('branding') : $campaign->branding,
             'branding_id' => $request->has('branding_id') ?
                                 Hashids::decode($request->input('branding_id')) : $campaign->branding_id,
+            'custom_domain_id' => (!is_null($request->input('custom_domain_id'))) ? 
+                                Hashids::decode($request->input('custom_domain_id')) : null,
             'exit_pop_up' => $request->has('exit_pop_up') ?
                                 $request->input('exit_pop_up') : $campaign->exit_pop_up,
             'exit_pop_up_id' => $request->has('exit_pop_up_id') ?

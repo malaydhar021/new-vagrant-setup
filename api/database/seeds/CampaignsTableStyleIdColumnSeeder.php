@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Campaign;
+use App\CustomDomain;
 
 class CampaignsTableStyleIdColumnSeeder extends Seeder
 {

@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Helpers\Hashids;
 use Carbon\Carbon;
 
-class CustomDomainResource extends JsonResource
+class CustomDomainResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -21,6 +20,7 @@ class CustomDomainResource extends JsonResource
                 'id' => Hashids::encode($this->id),
                 'name' => $this->name,
                 'domain' => $this->domain,
+                'created_by' => (new UserResource($this->user))->briefOnly()
             ];
         } else {
             return [

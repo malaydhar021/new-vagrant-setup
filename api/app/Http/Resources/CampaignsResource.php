@@ -38,6 +38,7 @@ class CampaignsResource extends Resource
                 'sticky_reviews' => (StickyReviewResource::collection($this->whenLoaded('stickyReviews')))->briefOnly(),
                 'is_active' => $this->is_active,
                 'created_by' => (new UserResource($this->whenLoaded('user')))->briefOnly(),
+                'custom_domain' => (new CustomDomainResource($this->whenLoaded('customDomain')))->briefOnly(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
                 'has_branding' => $this->branding,

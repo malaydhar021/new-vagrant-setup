@@ -25,4 +25,5 @@ export class ReviewLinkModel {
     text_color?: string;
     copyright_text?: string;
     _method?: string;
+    custom_domain?: any;
   }

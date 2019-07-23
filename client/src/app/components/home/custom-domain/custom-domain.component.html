@@ -1,0 +1,151 @@
+<div class="mainBox brandingMain">
+  <header class="mainBoxHeader">
+    <div class="mainBoxHeaderLeft">
+      <button type="button" class="addReview" (click)="onAddCustomDomain()">
+        <img src="../../../../assets/images/addIcon.png" alt=""> 
+        Add Custom Domain
+      </button>
+    </div>
+    <div class="mainBoxHeaderRight">
+      <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
+    </div>
+  </header>
+  <div class="dataTableArea">
+    <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
+    <div class="table">
+      <ul class="thead">
+        <li>CUSTOM DOMAIN NAME & DOMAIN</li>
+        <li>CREATED DATE</li>
+        <li>ACTION(S)</li>
+      </ul>
+      <div class="tbody">
+        <ng-scrollbar [compact]="true" *ngIf="customDomains.length > 0; else noRecords">
+          <ul>
+            <li class="row" *ngFor="let domain of customDomains | paginate: config">
+              <div class="rowContainer">
+                <div class="tcol">
+                  <h2>{{ domain.name }}</h2>
+                  <p>{{ domain.domain }}</p>
+                </div>
+                <div class="tcol">
+                  <p>{{domain.created_at | date : 'medium'}}</p>
+                </div>
+                <div class="tcol">
+                  <a (click)="onEditCustomDomain(domain)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
+                  <a (click)="onDeleteCustomDomain(domain.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </ng-scrollbar>
+
+        <ng-template #noRecords>
+            <ul>
+              <li class="row">
+                <p class="no-records">Sorry no custom domains found</p>
+              </li>
+            </ul>
+        </ng-template>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <pagination-controls *ngIf="customDomains.length > 0" [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
+  </div>
+</div>
+
+<ngx-smart-modal #customDomainInfo identifier="customDomainInfo" class="sr-modal modalDomain">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+        Read this carefully before you proceed
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+        <div class="sr-form">
+            <div class="sr-form-row">
+              <div class="sr-form-cell">
+                <p>
+                  To add / edit a custom domain you must point your domain to <strong>{{ cnameDomainName }}</strong> domain into your DNS configuration.
+                  This action needs to be performed first before you try to add / update a custom domain.
+                </p>
+                <p>
+                  Your custom domain should have ssl certificate configured i.e your custom domain must open with https secure http protocol. It is recommended 
+                  that you should update your DNS nameservers to cloudflare as they provide free ssl by default if you have an account in cloudflare but this is not
+                  required at all until your domain works with https.
+                </p>
+                <div class="dontShow">
+                  <input type="checkbox" (change)="showCustomDomainInstruction(true)">
+                  Don't show this message again
+                </div>
+              </div>
+            </div>
+            <div class="sr-form-row">
+                <div class="sr-form-cell">
+                    <button class="button-submit" type="button" (click)="onClickGotIt()">
+                        Got it
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</ngx-smart-modal>
+
+<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+        {{ isEditing ? 'Edit' : 'Add' }} Custom Domain
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+      <message *ngIf="isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="sr-form">
+          <div class="sr-form-row">
+            <div class="sr-form-cell">
+              <label>Name</label>
+              <div class="sr-form-field">
+                <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.name.errors}" formControlName="name">
+                <div class="error-msg" *ngIf="(
+                  isSubmitted 
+                  && getFormControls.name.errors !== null 
+                  && getFormControls.name.errors.required)">
+                  Name is required
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sr-form-row">
+            <div class="sr-form-cell">
+              <label>Domain</label>
+              <div class="sr-form-field">
+                <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.domain.errors}" formControlName="domain">
+                <div class="error-msg" *ngIf="(
+                  isSubmitted 
+                  && getFormControls.domain.errors !== null 
+                  && getFormControls.domain.errors.required)">
+                  Domain is required
+                </div>
+                <div class="error-msg" *ngIf="(
+                  isSubmitted
+                  && getFormControls.domain.errors !== null
+                  && getFormControls.domain.errors.pattern)">
+                  Please provide a valid domain
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sr-form-row">
+              <div class="sr-form-cell">
+                  <button class="button-submit" type="">
+                      <img src="../../../../assets/images/addIcon.png" alt=""> Save Custom Domain
+                  </button>
+              </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ngx-smart-modal>

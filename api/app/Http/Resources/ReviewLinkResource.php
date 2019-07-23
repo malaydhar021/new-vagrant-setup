@@ -40,6 +40,7 @@ class ReviewLinkResource extends Resource
                 'copyright_text' => $this->copyright_text,
                 'campaign' => (new CampaignsResource($this->whenLoaded('campaign')))->briefOnly(),
                 'sticky_reviews' => (StickyReviewResource::collection($this->whenLoaded('stickyReview')))->briefOnly(),
+                'custom_domain' => (new CustomDomainResource($this->whenLoaded('customDomain')))->briefOnly(),
                 'created_by' => (new UserResource($this->whenLoaded('user')))->briefOnly(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),

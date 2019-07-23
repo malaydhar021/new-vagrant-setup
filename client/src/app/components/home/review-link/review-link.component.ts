@@ -8,13 +8,14 @@ import { LoaderService } from '../../../services/loader.service';
 import { Title } from '@angular/platform-browser';
 import * as ValidationEngine from '../../../helpers/form.helper';
 import { Subscription } from 'rxjs';
-import { ErrorsService } from 'src/app/services/errors.service';
-import { AppBaseUrl } from 'src/app/helpers/api.helper';
+import { ErrorsService } from '../../../services/errors.service';
+import { AppBaseUrl } from '../../../helpers/api.helper';
+import { CustomDomainService } from '../../../services/custom-domain.service';
 
 /**
  * ReviewLinkComponent is responsible for showing, adding, updating and deleting review links
  * @class ReviewLinkComponent
- * @version 1.0.0
+ * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -27,6 +28,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   // defining class properties
   reviewLinks: Array<ReviewLinkModel> = [] // An array of all review links
   campaigns: any = []; // all campaigns array
+  customDomains: any = []; // all campaigns array
   selectedCampaign: any = this.campaigns[0]; // default selected campaign array
   form: FormGroup; // FormGroup to initialize step 1 of add/edit form of a review link
   form2: FormGroup; // FormGroup to initialize step 2 of add/edit form of a review link
@@ -82,10 +84,12 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     private ngxSmartModalService: NgxSmartModalService,
     private reviewLinkService : ReviewLinkService,
     private loaderService: LoaderService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private customDomainService: CustomDomainService
   ) {
     // first fetch all campaigns for add or edit page
     this.getCampaigns();
+    this.getCustomDomains();
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
@@ -138,6 +142,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       url_slug: [null, Validators.required],
       logo: [null], // review link logo
       campaign_id: ['', Validators.required],
+      custom_domain_id: [null],
       auto_approve: [false],
       min_rating: [null, Validators.required],
       negative_info_review_msg_1: ['', Validators.required],
@@ -171,6 +176,20 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.reviewLinkService.campaigns.subscribe(
       (response: any) => {
         this.campaigns = response.data;
+      }
+    );
+  }
+
+  /**
+   * Method to get all custom domains from database without pagination
+   * @method getCustomDomains
+   * @since Version 2.0.0
+   * @returns Void
+   */
+  public getCustomDomains() {
+    this.customDomainService.getAllCustomDomains(true).subscribe(
+      (response: any) => {
+        this.customDomains = response.data;
       }
     );
   }
@@ -534,7 +553,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       name: reviewLink.name,
       description: reviewLink.description,
       url_slug: reviewLink.url_slug,
-      campaign_id: (reviewLink.campaign !== null) ? reviewLink.campaign : null,
+      campaign_id: (reviewLink.campaign !== null) ? reviewLink.campaign : '',
+      custom_domain_id: (reviewLink.custom_domain !== null) ? reviewLink.custom_domain : null,
       auto_approve: reviewLink.auto_approve,
       min_rating: reviewLink.min_rating,
       negative_info_review_msg_1: reviewLink.negative_info_review_message_1,
@@ -693,7 +713,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public onSubmitStep1(){
+  public onSubmitStep1() {
     Log.notice(this.form, "log the request");
     this.isSubmittedStep1 = true;
     this.runtimeValidations();
@@ -708,7 +728,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     formData.append('name', this.getFormControls.name.value); // append review type
     formData.append('description', this.getFormControls.description.value); // append review type
     formData.append('url_slug', this.getFormControls.url_slug.value); // append review type
-    formData.append('campaign_id', this.getFormControls.campaign_id.value !== null ? this.getFormControls.campaign_id.value.id : null); // append review type
+    formData.append('campaign_id', this.getFormControls.campaign_id.value !== null ? this.getFormControls.campaign_id.value.id : null); // append campaign id
+    formData.append('custom_domain_id', this.getFormControls.custom_domain_id.value !== null ? this.getFormControls.custom_domain_id.value.id : null); // append custom domain id
     formData.append('auto_approve', this.getFormControls.auto_approve.value ? '1' : '0'); // append rating
     formData.append('min_rating', this.getFormControls.min_rating.value); // append date to show
     formData.append('negative_info_review_message_1', this.getFormControls.negative_info_review_msg_1.value); // append date to show
@@ -747,6 +768,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     formData.append('description', this.getFormControls.description.value); // append description
     formData.append('url_slug', this.getFormControls.url_slug.value); // append url slug
     formData.append('campaign_id', this.getFormControls.campaign_id.value !== null ? this.getFormControls.campaign_id.value.id : null); // append campaign id
+    formData.append('custom_domain_id', this.getFormControls.custom_domain_id.value !== null ? this.getFormControls.custom_domain_id.value.id : null); // append custom domain id
     formData.append('auto_approve', this.getFormControls.auto_approve.value ? '1' : '0'); // append auto approve
     formData.append('min_rating', this.getFormControls.min_rating.value); // append min rating to form data
     formData.append('negative_info_review_message_1', this.getFormControls.negative_info_review_msg_1.value); // append negative review message 1
@@ -863,8 +885,11 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public prepareContext(slug: string) {
-    return AppBaseUrl + '/user-review/' + slug;
+  public prepareContext(link: any) {
+    if(link.custom_domain !== null) {
+      return 'https://' + link.custom_domain.domain + '/user-review/' + link.url_slug;
+    }
+    return AppBaseUrl + '/user-review/' + link.url_slug;
   }
   
   /**

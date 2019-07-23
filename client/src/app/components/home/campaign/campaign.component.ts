@@ -13,12 +13,13 @@ import { CampaignInterface } from '../../../interfaces/campaign.interface';
 import { MinimumCheckedCheckboxes } from '../../../helpers/form.helper';
 import { WidgetUrl } from '../../../helpers/api.helper';
 import { ErrorsService } from 'src/app/services/errors.service';
+import { CustomDomainService } from 'src/app/services/custom-domain.service';
 
 /**
  * Component to handle all sort of functionalities related to campaign. It's mostly handles
  * CRUD operations for campaign
  * @class CampaignComponent
- * @version 2.0.0
+ * @version 2.1.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -49,6 +50,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedStyle: any = this.styles[0]; // default selected style, Rounded
   stickyReviews: any = []; // holds all sticky reviews as an array of objects
   brands: any = []; // holds all brands as an array or objects
+  customDomains: any = []; // holds all brands as an array or objects
   selectedBrands: any = this.brands[0]; // default selected brand, the first one
   exitPopups: any = []; // holds all exit popups as an array or objects
   selectedExitPopup: any = this.exitPopups[0]; // default selected exit popup, the first one
@@ -58,6 +60,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
   isModalOpened: boolean = false; // set to true if the modal is opened
+  campaignScriptForCustomDomain: string = 'lib/widget.min.js'; // constant path for campaign script
 
   /**
    * Constructor method to fetch all required information from api provider
@@ -78,11 +81,13 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     private formBuilder: FormBuilder,
     private campaignService: CampaignService,
     private loaderService: LoaderService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private customDomainService: CustomDomainService
   ) {
     this.getAllStyles(); // fetch all campaign styles
     this.getStickyReviews(); // fetch all sticky reviews
     this.getBrands(); // fetch all brands
+    this.getCustomDomains(); // fetch all custom domains
     this.getExitPopups(); // fetch all brands
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
@@ -131,6 +136,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       isExitPopupSelected: [false], // add exit popup
       campaignExitPopup: [{ value: this.exitPopups[0], disabled: true }], // // campaign brand drop down, disabled by default
       campaignLoop: [true], // checkbox to set true or false
+      customDomain: [null], // drop down for custom domains
     });
 
     // initialize the form builder for update sticky reviews for a certain campaign from campaign listing page
@@ -453,6 +459,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       campaignExitPopup: (campaign.exit_pop_up !== null) ? campaign.exit_pop_up : null,
       isBrandingSelected: (campaign.branding !== null) ? true : false,
       campaignBrand: (campaign.branding !== null) ? campaign.branding : null,
+      customDomain: (campaign.custom_domain !== null) ? campaign.custom_domain : null,
       campaignLoop: campaign.loop,
       campaignVisualStyle: campaign.style,
       campaignReviews: this.checkedReviews(campaign.sticky_reviews)
@@ -578,6 +585,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       exit_pop_up_id: (this.form.value.campaignExitPopup !== undefined) ? this.form.value.campaignExitPopup.id : null,
       branding: this.form.value.isBrandingSelected,
       branding_id: (this.form.value.campaignBrand !== undefined) ? this.form.value.campaignBrand.id : null,
+      custom_domain_id: (this.form.value.customDomain !== null) ? this.form.value.customDomain.id : null,
       loop: this.form.value.campaignLoop,
       style_id: this.form.value.campaignVisualStyle.id,
       is_active: 1
@@ -800,6 +808,20 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
+   * Method to fetch all custom domains without paginated data with making a api call
+   * @method getCustomDomains
+   * @since Version 2.1.0
+   * @returns Void
+   */
+  public getCustomDomains() {
+    this.customDomainService.getAllCustomDomains(true).subscribe(
+      (response: any) => {
+        this.customDomains = response.data;
+      }
+    );
+  }
+
+  /**
    * Method to fetch all exit popups with making a api call
    * @method getBrands
    * @since Version 1.1.0
@@ -836,6 +858,10 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns String
    */
   public prepareContext(campaign: CampaignInterface) {
+    if(campaign.custom_domain !== null) {
+      // Example src: https://somecustomdomain.com/lib/widget.min.js
+      return '<script src="https://' + campaign.custom_domain.domain + '/' +  this.campaignScriptForCustomDomain  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async></script>';  
+    }
     return '<script src="' + WidgetUrl  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async></script>';
   }
 

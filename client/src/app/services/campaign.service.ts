@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { BrandingApiEndpoints, CampaignApiEndpoints, ExitPopupApiEndpoints, StickyReviewsApiEndpoints } from '../helpers/api.helper';
 import { CampaignModel } from '../models/campaign.model';
-import { CampaignApiEndpoints, StickyReviewsApiEndpoints, BrandingApiEndpoints, ExitPopupApiEndpoints } from '../helpers/api.helper';
 
 /**
  * Service for all campaigns related operations like add, edit, update and delete campaigns
@@ -142,5 +142,4 @@ export class CampaignService {
   public updateActiveStatus(id: string, data: any) {
     return this.httpClient.patch(CampaignApiEndpoints.campaigns.concat('/' + id + '/status'), data);
   }
-
 }

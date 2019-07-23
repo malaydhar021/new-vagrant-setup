@@ -36,9 +36,11 @@ import { ExitPopupService }                 from '../services/exit-popup.service
 import { WidgetStylesModule }               from './widget-styles.module';
 import { CopyToClipboardDirective }         from '../directives/copy-to-clipboard.directive';
 import { ClickOutsideDirective }            from '../directives/click-outside.directive';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { SharedModule } from './shared/shared.module';
-import {SettingsComponent}                   from '../components/home/shared/settings/settings.component';
+import { NgxPaginationModule }              from 'ngx-pagination';
+import { SharedModule }                     from './shared/shared.module';
+import { SettingsComponent }                from '../components/home/shared/settings/settings.component';
+import { CustomDomainComponent }            from '../components/home/custom-domain/custom-domain.component';
+import { CustomDomainService }              from '../services/custom-domain.service';
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
  * @class HomeModule
@@ -64,6 +66,7 @@ import {SettingsComponent}                   from '../components/home/shared/set
     CopyToClipboardDirective,
     ClickOutsideDirective,
     SettingsComponent,
+    CustomDomainComponent
   ],
   imports: [
     CommonModule,
@@ -90,6 +93,7 @@ import {SettingsComponent}                   from '../components/home/shared/set
     MenuService,
     ExitPopupService,
     MediaService,
+    CustomDomainService
   ]
 })
 export class HomeModule { }

@@ -196,6 +196,17 @@
                 </div>
               </div>
               <div class="sr-form-row">
+                <div class="sr-form-cell">
+                  <label>Select Custom Domain</label>
+                  <div class="sr-form-field">
+                    <select class="sr-form-ctrl" formControlName="customDomain" [compareWith]="compareValue">
+                      <option value="null">--- Select a custom domain ---</option>
+                      <option [ngValue]="domain" *ngFor="let domain of customDomains">{{ domain.name }} ({{ domain.domain }})</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="sr-form-row">
                 <div class="sr-form-cell-small">
                   <label>Delay Before Start <span>(in seconds)</span></label>
                   <div class="sr-form-field">

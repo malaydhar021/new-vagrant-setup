@@ -12,7 +12,8 @@ import { ProfileComponent }                 from '../../components/home/shared/p
 import { DashboardComponent }               from '../../components/home/dashboard/dashboard.component';
 import { CancelMembershipComponent }        from '../../components/home/cancel-membership/cancel-membership.component';
 import { SubscriptionGuard }                from '../../services/guards/subscription.guard.service';
-import { SettingsComponent }                 from '../../components/home/shared/settings/settings.component';
+import { SettingsComponent }                from '../../components/home/shared/settings/settings.component';
+import { CustomDomainComponent }            from '../../components/home/custom-domain/custom-domain.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, children: [
@@ -30,6 +31,7 @@ const routes: Routes = [
     {path: 'exit-popup',      canActivate: [SubscriptionGuard], component: ExitPopupComponent},
     {path: 'review-link',     canActivate: [SubscriptionGuard], component: ReviewLinkComponent},
     {path: 'settings', canActivate: [SubscriptionGuard], component: SettingsComponent},
+    {path: 'custom-domains', canActivate: [SubscriptionGuard], component: CustomDomainComponent},
   ]}
 ];
 

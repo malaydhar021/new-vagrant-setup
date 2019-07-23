@@ -13,12 +13,12 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(LoginSeed::class);
         // $this->call(CampaignStylesTableSeeder::class);
+        // $this->call(CustomDomainSeeder::class);
         // $this->call(CampaignsTableStyleIdColumnSeeder::class);
         // $this->call(CampaignStylesTableSeederTypeColumnSeeder::class);
         // $this->call(ExitPopupStyleTableSeeder::class);
         // $this->call(ReviewLinkTableSeeder::class);
         // $this->call(ExitPopupTableSeeder::class);
         // $this->call(StickyReviewsTableSeeder::class);
-        // $this->call(CustomDomainSeeder::class);
     }
 }

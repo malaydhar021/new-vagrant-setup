@@ -14,6 +14,10 @@
     use Illuminate\Database\Capsule\Manager as Capsule;
     
     class CnameVerfication {
+        /**
+         * Constant to set path of dotenv with trailing slash
+         */
+        CONST API_DOTENV_PATH = __DIR__.'/api/';
         
         /**
          * Construct method to validate request method and access token to verify CNAME integration.
@@ -47,7 +51,7 @@
                 echo $this->jsonResponse("Verification failed for domain {$_POST['domain']}", 400, ['access_token' => 'Access token is required ! Please login again']); die();
             }
             // location of .env file in api dir
-            $dot = new \Dotenv\Dotenv(__DIR__.'/api/');
+            $dot = new \Dotenv\Dotenv(self::API_DOTENV_PATH);
             $dot->load(); // Load the configuration (Not override, for override use overload() method
             // Create an instance of Capsule
             $capsule = new Capsule;

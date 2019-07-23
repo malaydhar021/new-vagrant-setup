@@ -19,6 +19,15 @@ export const apiBaseUrl: string = environment.API_BASE_URL;
 export const WidgetUrl: string = environment.WIDGET_BASE_URL;
 
 /**
+ * cnameDomainName constant holds the cname configuration domain name based on the environment
+ * @constant cnameDomainName
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export const cnameDomainName: string = environment.CNAME_CONFIG_DOMAIN;
+
+/**
  * AppBaseUrl constant holds the app base url based on the environment
  * @constant AppBaseUrl
  * @version 1.0.0
@@ -582,4 +591,23 @@ export class UserReviewApiEndpoints {
     return apiBaseUrl.concat('/review-action');
   }
 
+}
+
+/**
+ * CustomDomainApiEndpoints helper class is holding all static methods for custom domain api endpoints based on the environment
+ * @class CustomDomainApiEndpoints
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @version 1.0.1
+ * @license Proprietary
+ */
+export class CustomDomainApiEndpoints {
+  /**
+   * Method to generate api endpoint to get all brandings
+   * @method customDomains
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get customDomains(): string {
+    return apiBaseUrl.concat('/custom-domains');
+  }
 }

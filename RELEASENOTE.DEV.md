@@ -2,6 +2,13 @@
 
 ## Custom Domain
 
+### V1.1.0
+
+1. Implemented frontend form to create custom domain for user end
+2. Implemented add/edit/delete feature for custom domain fro user interface
+3. Implemented custom domain instruction to add/edit a custom domain
+4. Implemented custom domain setup doc for developers
+
 ### V1.0.0
 
 1. Implemented shell script to create virtual host for custom domain

@@ -8,7 +8,7 @@ import { BrandingModel } from '../models/branding.model';
  * @class BrandingService
  * @author Tier5 LLC `<work@tier5.us>`
  * @version 1.0.0
- * @license Proprietery
+ * @license Proprietary
  */
 @Injectable()
 export class BrandingService {
@@ -71,9 +71,9 @@ export class BrandingService {
 
   /**
    * Method to search a brand from the brand list
-   * @param tearm
+   * @param term
    */
-  public searchBrands(tearm) {
-    return this.httpClient.get(BrandingApiEndpoints.brands.concat('?searchParams=' + tearm));
+  public searchBrands(term) {
+    return this.httpClient.get(BrandingApiEndpoints.brands.concat('?searchParams=' + term));
   }
 }

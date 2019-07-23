@@ -51,12 +51,11 @@ class CustomDomainController extends Controller
      */
     public function index(Request $request) 
     {
-        if ($request->has('searchParams')) {
+        if ($request->has('searchParams') && $request->searchParams != "") {
             $searchParams = $request->get('searchParams');
             $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%')->orWhere('domain','LIKE','%' . $searchParams . '%');
         }
         $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
-
         if ($request->has('paginate') &&
             ($request->input('paginate') == false || $request->input('paginate') == 'false')) {
             $customDomains = (CustomDomainResource::collection($this->queryBuilder->get()))->briefOnly();
@@ -124,7 +123,7 @@ class CustomDomainController extends Controller
         }
         return response()->json([
             'status' => false,
-            'message' => 'Custom domain has not been created successfully',
+            'message' => 'Failed to create custom domain',
             'data' => null
         ], 500);
     }
