@@ -13,7 +13,7 @@
             <p *ngIf="reviewData.type === 1">{{reviewData.description}} </p>
             <!-- Audio Type review -->
             <div class="audioRv" *ngIf="reviewData.type === 2">
-                <audio src="https://{{reviewData.url_link}}/storage/audios/{{reviewData.description }}" controls></audio>
+                <audio src="https://{{reviewData.url_link}}/storage/audios/{{reviewData.description }}" controls controlslist="nodownload"></audio>
             </div>
             <!-- video type review -->
             <footer class="popupFt">

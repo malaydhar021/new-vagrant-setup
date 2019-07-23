@@ -114,16 +114,22 @@ class UserController extends Controller
             $storeToken->token = $token;
             if($storeToken->save()){
                 return response()->json([
-                    'status' => true,
-                    'message' => "Zapier token created succesfully.",
-                    'data' => $storeToken,
-                ],200);
+                    'data' => [
+                        'status' => true,
+                        'message' => "Zapier token created succesfully.",
+                        'data' => $storeToken,
+                        'http_code' => 200,
+                        ],
+                    ]);
             } else {
                 return response()->json([
-                    'status' => true,
-                    'message' => "Zapier token not created !",
-                    'data' => $storeToken,
-                ],200);
+                    'data' => [
+                        'status' => true,
+                        'message' => "Zapier token not created !",
+                        'data' => $storeToken,
+                        'http_code' => 200,
+                    ],
+                ]);
             }
         } else {
             // sorry u can't create zapier token

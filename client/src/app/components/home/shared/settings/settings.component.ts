@@ -103,23 +103,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * Method to create a zapier token
    */
   public onCreateToken() {
-    // values from the form element
     const tokenName = this.userZapierTokenForm.value;
     this.loaderService.enableLoader();
     this.userService.createToken(tokenName).subscribe(
       (response: any) => {
+        console.log(response.data);
         if (response.data.status) {
           this.userZapierTokenForm.reset();
-          this.token = response.data.data;
-          this.getUserZapierToken();
           this.ngxSmartModalService.getModal('modal1').close();
-        } else {
-          this.token = response.data.data;
           this.getUserZapierToken();
+        } else {
+          this.getUserZapierToken();
+          this.errorService.setMessage({type: 'success', message: response.data.message});
         }
-        // set success message to show to user
-        this.errorService.setMessage({type: 'success', message: response.data.message});
-        // hide the loader
         this.loaderService.disableLoader();
       }
     );
@@ -157,13 +153,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.loaderService.enableLoader();
     this.userService.deleteToken(tokenID).subscribe(
       (response: any) => {
-        this.token = response.data.data;
         this.loaderService.disableLoader();
+        this.getUserZapierToken();
       }
     );
-    this.getUserZapierToken();
   }
 
+  /**
+   * Method to open add token modal
+   */
   public onAddToken() {
     this.userZapierTokenForm = this.formBuilder.group({
       tokenName: ['', Validators.required],
