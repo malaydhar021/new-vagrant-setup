@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
 import { MessageModule } from './message.module';
 import { SharedModule } from './shared/shared.module';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
@@ -23,7 +24,8 @@ import { SignupRoutingModule } from './routes/signup.route.module';
     FormsModule,
     MessageModule,
     SharedModule,
-    SignupRoutingModule
+    SignupRoutingModule,
+    NgxMaskModule
   ],
   providers: []
 })

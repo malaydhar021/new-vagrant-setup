@@ -90,7 +90,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.title.setTitle('Stickyreviews :: Sign Up');
     // get all years
     this.yearsToDisplay();
-    // initialize the form builder for signup form step 1 
+    // initialize the form builder for signup form step 1
     this.signupFormStep1 = this.formBuilder.group({
       name : [null, [Validators.required]], // full name
       email : [null, [Validators.required, Validators.email]],
@@ -197,7 +197,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     // set the flag as true as the form is submitted
     this.isSubmittedStep1 = true;
     // check if the form values pass the validation or not
-    if(this.signupFormStep1.invalid) { 
+    if(this.signupFormStep1.invalid) {
       return false;
     }
     // lets show the loader to user to perform some api calls
