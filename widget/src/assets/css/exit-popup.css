@@ -963,6 +963,7 @@ img {
     position: absolute;
     bottom: 91px;
     left: -43px;
+    word-wrap: break-word;
     word-break: break-word;
     font-weight: 700;
 }
@@ -1300,6 +1301,7 @@ img {
     color: #fff;
     font-weight: 600 !important;
     padding: 12px 0 20px;
+    word-wrap: break-all;
     word-break: break-all;
 }
 

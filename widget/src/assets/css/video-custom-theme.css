@@ -348,9 +348,9 @@
   padding-bottom: 0 !important;
 }
 
-.exitPopup.theme1 .popupPresent .rightSecContainer p,
-.exitPopup.theme2 .popupPresent .rightSecContainer p,
-.exitPopup.theme4 .popupPresent .rightSecContainer p,
+.exitPopup.theme1 .popupPresent .rightSecContainer>p,
+.exitPopup.theme2 .popupPresent .rightSecContainer>p,
+.exitPopup.theme4 .popupPresent .rightSecContainer>p,
 .exitPopup.theme3 .popupPresent p {
   padding-bottom: 15px !important;
 }
@@ -377,3 +377,16 @@
 }
 
 /* 22-07-2019 */
+
+/* 767 and below resolution devices should have controls bar always showing
+else user cant play/pause video */
+@media (max-width: 767px) {
+  .video-player .video-js .vjs-control-bar {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+}
+
+/* 767 and below resolution devices should have controls bar always showing
+else user cant play/pause video */

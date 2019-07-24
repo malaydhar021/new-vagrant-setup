@@ -3219,6 +3219,7 @@ a {
           a {
             display: inline-block;
             vertical-align: middle;
+            cursor: pointer;
 
             @media (max-width: 480px) {
               margin: 0 7px;
@@ -3427,6 +3428,7 @@ a {
       bottom: 91px;
       // left: -43px;
       right: -43px;
+      word-wrap: break-word;
       word-break: break-word;
 
       &::after {
@@ -3760,6 +3762,7 @@ a {
       color: #fff;
       font-weight: 600;
       padding: 12px 0 20px;
+      word-wrap: break-all;
       word-break: break-all;
     }
 
@@ -6863,6 +6866,7 @@ body.sign-upPage {
           bottom: 40px;
           // left: -19px;
           right: -23px;
+          word-wrap: break-word;
           word-break: break-word;
 
           &:after {
@@ -6950,6 +6954,7 @@ body.sign-upPage {
 
 // Changes to preview popup 08/05/2019
 .rightSecContainer {
+  word-wrap: break-all;
   word-break: break-all;
 }
 
@@ -8073,10 +8078,12 @@ img {
       font-weight: 600;
       font-family: 'SegoeUI';
       letter-spacing: normal;
+      word-wrap: break-all;
       word-break: break-all;
 
       a,
       span {
+        word-wrap: break-all;
         word-break: break-all;
       }
 
@@ -8364,6 +8371,7 @@ img {
         h2 {
           margin: 80px auto 0;
           max-width: 216px;
+          word-wrap: break-word;
           word-break: break-word;
         }
       }
@@ -8690,7 +8698,10 @@ img {
     -ms-flex-align: center;
     align-items: center;
     @include mt(20px);
+    margin-top: 5px;
+    font-weight: 600;
     max-width: 100%;
+    padding-right: 12px;
 
     span {
       @include ml(9px);
@@ -9179,6 +9190,7 @@ img {
   @media (max-width: 480px) {
     -webkit-transform: scale(0.70);
     transform: scale(0.70);
+    @include mt(0);
   }
 }
 
