@@ -24,7 +24,7 @@ class SubscribedEmailController extends Controller
                 $q->select('id')->from('exit_pop_ups')->where('created_by', $userId);
         })->with('exitPopup');
 
-        if ($request->has('searchParams')) {
+        if ($request->has('searchParams') && $request->searchParams != "") {
             $queryBuilder = $queryBuilder->where('email', 'LIKE', '%' . $request->get('searchParams') . '%');
         }
 
@@ -42,8 +42,32 @@ class SubscribedEmailController extends Controller
         } else {
             return response()->json([
                 'status' => true,
-                'message' => 'Sorry no subscribed emails have found.',
+                'message' => 'Sorry no subscribed emails have been found.',
+                'data' => $subscribedEmails
             ]);
         }
+    }
+    
+    /**
+     * Method to delete a custom domain from database and delete the vhsot from the directory
+     * @since 1.0.0
+     * @param type $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        $email = SubscribedEmail::where('id', $id)->firstOrFail();
+        $email->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Email has been deleted successfully.',
+        ]);
     }
 }

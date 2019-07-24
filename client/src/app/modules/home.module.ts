@@ -41,6 +41,8 @@ import { SharedModule }                     from './shared/shared.module';
 import { SettingsComponent }                from '../components/home/shared/settings/settings.component';
 import { CustomDomainComponent }            from '../components/home/custom-domain/custom-domain.component';
 import { CustomDomainService }              from '../services/custom-domain.service';
+import { SubscribedEmailsComponent }        from '../components/home/subscribed-emails/subscribed-emails.component';
+import { SubscribedEmailService }           from '../services/subscribed-email.service';
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
  * @class HomeModule
@@ -66,7 +68,8 @@ import { CustomDomainService }              from '../services/custom-domain.serv
     CopyToClipboardDirective,
     ClickOutsideDirective,
     SettingsComponent,
-    CustomDomainComponent
+    CustomDomainComponent,
+    SubscribedEmailsComponent
   ],
   imports: [
     CommonModule,
@@ -93,7 +96,8 @@ import { CustomDomainService }              from '../services/custom-domain.serv
     MenuService,
     ExitPopupService,
     MediaService,
-    CustomDomainService
+    CustomDomainService,
+    SubscribedEmailService
   ]
 })
 export class HomeModule { }

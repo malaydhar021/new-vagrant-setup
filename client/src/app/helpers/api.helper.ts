@@ -611,3 +611,22 @@ export class CustomDomainApiEndpoints {
     return apiBaseUrl.concat('/custom-domains');
   }
 }
+
+/**
+ * SubscribedEmailApiEndpoints helper class is holding all static methods for subscribed-emails api endpoints based on the environment
+ * @class SubscribedEmailApiEndpoints
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @version 1.0.1
+ * @license Proprietary
+ */
+export class SubscribedEmailApiEndpoints {
+  /**
+   * Method to generate api endpoint to get all emails from various exit popups
+   * @method subscribedEmails
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get subscribedEmails(): string {
+    return apiBaseUrl.concat('/subscribed-emails');
+  }
+}

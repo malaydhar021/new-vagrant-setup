@@ -142,7 +142,7 @@ class BrandsController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Brand has deleted successfully.',
+            'message' => 'Brand has been deleted successfully.',
         ]);
     }
 }

@@ -1,0 +1,54 @@
+<div class="mainBox brandingMain">
+  <header class="mainBoxHeader">
+    <div class="mainBoxHeaderRight">
+      <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
+    </div>
+  </header>
+  <div class="dataTableArea">
+    <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
+    <div class="table table-col-4">
+      <ul class="thead">
+        <li>EMAIL</li>
+        <li>EXIT POPUP</li>
+        <li>CREATED AT</li>
+        <li>ACTION(S)</li>
+      </ul>
+      <div class="tbody">
+        <ng-scrollbar [compact]="true" *ngIf="emails.length > 0; else noRecords">
+          <ul>
+            <li class="row" *ngFor="let email of emails | paginate: config">
+              <div class="rowContainer">
+                <div class="tcol">
+                  <p>{{ email.email }}</p>
+                </div>
+                <div class="tcol">
+                  <p>{{email.exit_popup.name}}</p>
+                </div>
+                <div class="tcol">
+                  <p>{{email.created_at | date : 'medium'}}</p>
+                </div>
+                <div class="tcol">
+                  <a (click)="onDeleteSubscribedEmail(email.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </ng-scrollbar>
+
+        <ng-template #noRecords>
+            <ul>
+              <li class="row">
+                <div class="rowContainer">
+                  <div class="tcol">
+                    <p>Sorry no emails found</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+        </ng-template>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <pagination-controls *ngIf="emails.length > 0" [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
+  </div>
+</div>

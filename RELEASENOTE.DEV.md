@@ -1,5 +1,11 @@
 # Development Release Notes
 
+## Subscribed Email
+
+### V1.0.0
+
+1. Implemented list of all subscribed emails in user portal with delete option
+
 ## Custom Domain
 
 ### V1.1.2

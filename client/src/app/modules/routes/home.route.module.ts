@@ -14,6 +14,7 @@ import { CancelMembershipComponent }        from '../../components/home/cancel-m
 import { SubscriptionGuard }                from '../../services/guards/subscription.guard.service';
 import { SettingsComponent }                from '../../components/home/shared/settings/settings.component';
 import { CustomDomainComponent }            from '../../components/home/custom-domain/custom-domain.component';
+import { SubscribedEmailsComponent }        from '../../components/home/subscribed-emails/subscribed-emails.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, children: [
@@ -32,6 +33,7 @@ const routes: Routes = [
     {path: 'review-link',     canActivate: [SubscriptionGuard], component: ReviewLinkComponent},
     {path: 'settings', canActivate: [SubscriptionGuard], component: SettingsComponent},
     {path: 'custom-domains', canActivate: [SubscriptionGuard], component: CustomDomainComponent},
+    {path: 'subscribed-emails', canActivate: [SubscriptionGuard], component: SubscribedEmailsComponent},
   ]}
 ];
 
