@@ -124,7 +124,7 @@ export default {
         console.error(
           "[Sticky Reviews] This campaign is marked as inactive, Please reactivate it!"
         );
-      // }
+      }
     },
 
     /**
