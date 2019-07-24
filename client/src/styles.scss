@@ -762,6 +762,7 @@ a {
           -webkit-transition: all 0.5s ease 0s;
           transition: all 0.5s ease 0s;
           background: transparent url(#{$imgUrl}/icon_dashboard.png) no-repeat 35px center;
+          background-size: 18px;
 
           &::before {
             content: "";
