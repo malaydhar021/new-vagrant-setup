@@ -5355,16 +5355,16 @@ body.sign-upPage {
         box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05)
       }
 
-      &.card {
-        padding-left: 68px;
-        background: #F3F2FF url(#{$imgUrl}/cards.png) no-repeat left 10px top 12px;
-        background-size: 40px auto;
-      }
-
       @media (max-width: 480px) {
         height: 42px;
         @include border-radius(3px);
       }
+    }
+
+    .card {
+      padding-left: 68px;
+      background: #F3F2FF url(#{$imgUrl}/cards.png) no-repeat left 10px top 12px !important;
+      background-size: 40px auto !important;
     }
 
     .redBtn {
