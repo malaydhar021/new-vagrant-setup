@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { ErrorsService } from '../../../services/errors.service';
 import { AppBaseUrl } from '../../../helpers/api.helper';
 import { CustomDomainService } from '../../../services/custom-domain.service';
+import * as moment from 'moment';
 
 /**
  * ReviewLinkComponent is responsible for showing, adding, updating and deleting review links
@@ -54,7 +55,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   isValidSlug: boolean = false; // true if url slug is unique, false if not
-  hasUrlSlugChanged: boolean = null // true if url slug got changed. default value is null
+  hasUrlSlugChanged: boolean = null; // true if url slug got changed. default value is null
   pageBackground: string = '#B8CBEB'; // Backdrop color of modal or page background. Default is #B8CBEB
   modalBackground: string = '#FFFFFF'; // Backdrop color of modal or page background
   textColor: string = '#268BFF'; // Backdrop color of modal or page background
@@ -273,8 +274,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onClickPreviousStep() {
-    // show step 1 form to user    
-    this.destroyMessage();    
+    // show step 1 form to user
+    this.destroyMessage();
     this.currentStep = 1;
   }
 
@@ -302,7 +303,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.ngxSmartModalService.getModal('modal1').onOpen.subscribe((modal: NgxSmartModalComponent) => {
       this.isModalOpened = true;
       this.errorService.clearMessage();
-      this.errorService.setMessage(null);      
+      this.errorService.setMessage(null);
     });
   }
 
@@ -334,7 +335,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public resetForm() {
-    this.form.reset(); // reset the form    
+    this.form.reset(); // reset the form
+    this.form2.reset(); // reset the form2
     this.imagePreviewUrl = 'assets/images/user.png'; // set default image to preview image area
     this.image = null;
     this.currentStep = 1;
@@ -507,7 +509,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
           this.reviewLinks = response.data.data;
           // hide the loader
           this.loaderService.disableLoader();
-        } else {          
+        } else {
           this.errorService.setMessage({type: 'error', message: response.message});
           // hide the loader
           this.loaderService.disableLoader();
@@ -532,6 +534,9 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     // setting false if someone after deleting decide to add a review link
     this.isDeleting = false;
     // now open the modal with empty form to add a sticky review link
+    this.pageBackground = '#B8CBEB'; // Backdrop color of modal or page background. Default is #B8CBEB
+    this.modalBackground = '#FFFFFF'; // Backdrop color of modal or page background
+    this.textColor = '#268BFF'; // Backdrop color of modal or page background
     this.ngxSmartModalService.getModal('modal1').open();
   }
 
@@ -816,7 +821,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.isDeleting = false; // set it to false
     this.isSubmittedStep1Reviews = false; // set it to false
     this.reviewLinkId = null; // set campaign id to null
-    this.currentStep = 1; // reset the current step to first step    
+    this.currentStep = 1; // reset the current step to first step
     if (fetchLists) {
       this.getAllReviewLinks(); // fetch campaigns
     } else if(hideLoader) {
@@ -876,7 +881,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public destroyMessage() {
-    this.errorService.clearMessage();    
+    this.errorService.clearMessage();
     this.errorService.setMessage(null);
   }
 
@@ -904,5 +909,9 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       message: 'Review link has been copied to clipboard'
     };
     this.errorService.setMessage(message);
+  }
+
+  getLocalTime(reviewAt) {
+    return moment.utc(reviewAt).local().format('MMMM DD, LT');
   }
 }

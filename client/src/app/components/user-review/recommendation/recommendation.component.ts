@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy }     from '@angular/core';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import { Title }                            from '@angular/platform-browser';
 import { Subscription }                     from 'rxjs';
 import { UserReviewService }                from '../../../services/user-review.service';
@@ -20,6 +20,7 @@ import { ErrorsService }                    from '../../../services/errors.servi
   styleUrls: ['./recommendation.component.scss']
 })
 export class RecommendationComponent implements OnInit, OnDestroy {
+  @Input() recomondedTextColor?: any = ''; // default style is set to Rounded
   // defining class properties
   subscription: Subscription;
   errorSubscription: Subscription; // to get the current value of showError property

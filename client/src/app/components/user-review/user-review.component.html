@@ -4,8 +4,8 @@
     <header class="reviewLHdr">
       <div *ngIf="urlInfo.logo !== null" class="figureHeader" [style.background-image]="'url('+  urlInfo.logo  +')'"></div>
       <div class="headerTxtRvw">
-        <h3 *ngIf="urlInfo.name !== null">{{ urlInfo.name }}</h3>
-        <p *ngIf="urlInfo.description !== null && !stepBuilder.contact">{{ urlInfo.description }}</p>
+        <h3 *ngIf="urlInfo.name !== null" [style.color]="urlInfo.text_color">{{ urlInfo.name }}</h3>
+        <p *ngIf="urlInfo.description !== null && !stepBuilder.contact" [style.color]="urlInfo.text_color">{{ urlInfo.description }}</p>
         <p *ngIf="stepBuilder.contact && review.negative_review_message_1 !== null && review.negative_review_message_1 !== ''">{{ review.negative_review_message_1 }}</p>
       </div>
     </header>
@@ -14,7 +14,7 @@
       <!-- Show api error/success messages -->
       <message [successMessage]="successMessage" [showMessage]="showError"></message>
       <!-- screen for recommendation from user -->
-      <app-recommendation *ngIf="stepBuilder.recommendation" class="in_step recommendation_step"></app-recommendation>
+      <app-recommendation *ngIf="stepBuilder.recommendation" class="in_step recommendation_step" [recomondedTextColor]="urlInfo.text_color"></app-recommendation>
       <!-- screen to get review from user -->
       <app-review *ngIf="stepBuilder.review" [slug]="slug" class="in_step review_step"></app-review>
       <!-- screen to get the permission from user whether review will be shown or not -->
