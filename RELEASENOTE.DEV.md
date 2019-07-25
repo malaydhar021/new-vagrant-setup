@@ -8,6 +8,12 @@
 
 ## Custom Domain
 
+### V1.1.3
+
+1. Added DNS configuration message to main custom domain form as well
+2. Moved custom domain to settings section
+3. Added Ex to custom domain level
+
 ### V1.1.2
 
 1. Removed soft delete for custom domains

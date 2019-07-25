@@ -97,11 +97,12 @@
       <h2>
         {{ isEditing ? 'Edit' : 'Add' }} Custom Domain
       </h2>
+      <em>Warning: Please make sure that you have added CNAME to <strong>{{ cnameDomainName }}</strong> domain in your custom domain DNS settings </em>
     </div>
     <div class="sr-modal-body">
       <message *ngIf="isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="sr-form">
+        <div class="sr-form">          
           <div class="sr-form-row">
             <div class="sr-form-cell">
               <label>Name</label>
