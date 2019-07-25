@@ -861,6 +861,7 @@ a {
     }
 
     @media (max-width: 991px) {
+      max-height: inherit;
       position: fixed;
       top: 0;
       bottom: 0;
