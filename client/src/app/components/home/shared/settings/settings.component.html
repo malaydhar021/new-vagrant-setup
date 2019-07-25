@@ -13,7 +13,9 @@
     </header>
 
     <div class="dataTableArea">
+
         <div class="inDataHdr">
+            <message [successMessage]='successMessage' [showMessage]="showError" *ngIf="showTheMessage">   </message>
         </div>
         <div class="table">
             <ul class="thead">
@@ -50,7 +52,7 @@
                 </h2>
             </div>
             <div class="sr-modal-body">
-                <message [successMessage]='successMessage' [showMessage]="showError"></message>
+                <message [successMessage]='successMessage' [showMessage]="showError" *ngIf="isModalOpened">  </message>
                 <form [formGroup]="userZapierTokenForm" (ngSubmit)="onCreateToken()">
                     <div class="sr-form">
                         <div class="sr-form-row">

@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   isModalOpened: boolean = false; // set to true if the modal is opened
-
+  showTheMessage: boolean = false;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -64,6 +64,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public ngOnInit() {
+    this.showTheMessage = true;
     this.title.setTitle('Stickyreviews :: Settings');
     this.userZapierTokenForm = this.formBuilder.group({
       tokenName: ['', Validators.required],
@@ -126,6 +127,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @param val
    */
   public copyText(val: string) {
+    this.showTheMessage = true;
+    this.isModalOpened = false;
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -163,9 +166,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * Method to open add token modal
    */
   public onAddToken() {
+    this.showTheMessage = false;
+    this.isModalOpened = true;
+    this.userZapierTokenForm.reset();
     this.userZapierTokenForm = this.formBuilder.group({
       tokenName: ['', Validators.required],
     });
+    this.errorService.clearMessage();
     this.ngxSmartModalService.getModal('modal1').open();
   }
 }

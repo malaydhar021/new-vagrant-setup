@@ -78,7 +78,7 @@ export class ErrorsService {
    * @returns Observable<boolean>
    */
   public setMessage(data: any) {
-    const status = (data !== '' || data !== null) ? true : false; 
+    const status = (data !== '' || data !== null) ? true : false;
     this.messageSubject.next(data);
     this.updateShowMessageStatus(status);
   }
