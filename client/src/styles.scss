@@ -4578,7 +4578,8 @@ a {
         font-size: 15px;
         line-height: 24px;
       }
-      p + p {
+
+      p+p {
         margin-top: 15px;
       }
     }
@@ -7715,6 +7716,7 @@ body.sign-upPage {
     }
 
     p {
+      text-align: center;
       @include mb(20px);
     }
   }
@@ -8476,6 +8478,23 @@ img {
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
+          }
+
+          .error-msg {
+            position: absolute;
+            top: 100%;
+            right: 10px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            max-width: calc(100% - 30px);
+            padding: 5px 15px 7px 30px;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 100%;
+            color: #fff;
+            background: #ff5d5d;
+            border-radius: 0 0 7px 40px;
+            text-align: right;
           }
 
         }
@@ -10392,9 +10411,11 @@ Cookie notification css
   color: #333;
   background-color: #fff;
 }
+
 .dontShow {
   margin-top: 15px;
 }
+
 .switchText {
   label {
     margin-bottom: 0 !important;
@@ -10402,5 +10423,5 @@ Cookie notification css
     display: inline-block !important;
     vertical-align: middle;
     margin-right: 8px;
-    }
+  }
 }
