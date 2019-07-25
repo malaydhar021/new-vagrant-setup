@@ -627,11 +627,21 @@ a {
     z-index: 20;
     top: 0;
     -webkit-box-shadow: 14px 0 60px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 14px 0 60px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 14px 0 60px rgba(0, 0, 0, 0.1);
     box-shadow: 14px 0 60px rgba(0, 0, 0, 0.1);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
 
     .leftPanContainer {
       position: relative;
       background: #fff;
+      flex: 1 1 auto;
 
       &::before {
         content: "";
@@ -757,6 +767,9 @@ a {
   }
 
   .menu {
+    max-height: calc(100vh - 188px);
+    overflow: auto;
+    
     ul {
       li {
         a {
@@ -869,11 +882,16 @@ a {
   }
 
   .footer {
-    position: absolute;
-    bottom: 27px;
+    // position: absolute;
+    // bottom: 27px;
     padding: 0 36px;
     font-size: 12px;
     color: #bcbcbc;
+    margin-top: auto;
+    margin-bottom: 27px;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
 
     @media (max-width: 1600px) {
       position: relative;
@@ -3609,7 +3627,7 @@ a {
       -webkit-transform: rotate(45deg);
       -moz-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
-      transform: rotate(45deg);      
+      transform: rotate(45deg);
     }
   }
 }
