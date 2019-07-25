@@ -28,7 +28,7 @@
                   <p>{{ brand.url }}</p>
                 </div>
                 <div class="tcol">
-                  <p>{{brand.created_at | date : 'medium'}}</p>
+                  <p>{{ brand.created_at | localDateTime }}</p>
                 </div>
                 <div class="tcol">
                   <a (click)="onEditBrand(brand)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>

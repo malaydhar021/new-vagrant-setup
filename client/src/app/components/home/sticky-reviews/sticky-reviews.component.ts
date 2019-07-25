@@ -632,10 +632,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       currentDateTime.getMinutes(),
       currentDateTime.getSeconds()
     );
-    console.log('CUrrent Time when submit -> ');
-    console.log(currentSrDateTime);
-    console.log('srDateTime -> ');
-    console.log(this.form.value.srDateTime);
+
     // showing the loader
     this.loaderService.enableLoader();
     // creating an instance of `FormData` class
@@ -858,12 +855,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       return optionOne.id === optionTwo.id;
     }
   }
-
-  getLocalTime(reviewAt) {
-    return moment.utc(reviewAt).local().format('MMMM DD, LT');
-  }
-
-
 
 
 }

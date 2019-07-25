@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
 import { ErrorsService } from '../../../services/errors.service';
 import { AppBaseUrl } from '../../../helpers/api.helper';
 import { CustomDomainService } from '../../../services/custom-domain.service';
-import * as moment from 'moment';
 
 /**
  * ReviewLinkComponent is responsible for showing, adding, updating and deleting review links
@@ -911,7 +910,4 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.errorService.setMessage(message);
   }
 
-  getLocalTime(reviewAt) {
-    return moment.utc(reviewAt).local().format('MMMM DD, LT');
-  }
 }

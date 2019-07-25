@@ -65,7 +65,7 @@
                   <img src="../../../../assets/images/tick_type_2.png" alt="">
                 </div>
                 <div class="tcol">
-                  <p>{{ campaign.created_at | date: 'medium'}}</p>
+                  <p>{{ campaign.created_at | localDateTime }}</p>
                 </div>
                 <div class="tcol">
                   <a (click)="onEditCampaign(campaign)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>

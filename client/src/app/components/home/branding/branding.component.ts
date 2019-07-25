@@ -406,4 +406,5 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     );
   }
+
 }

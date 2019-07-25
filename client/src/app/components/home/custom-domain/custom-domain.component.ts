@@ -458,4 +458,5 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
     // now open the model to show the form into the model to user
     this.ngxSmartModalService.getModal('modal1').open();
   }
+
 }

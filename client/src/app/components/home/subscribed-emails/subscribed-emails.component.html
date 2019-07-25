@@ -25,7 +25,7 @@
                   <p>{{email.exit_popup.name}}</p>
                 </div>
                 <div class="tcol">
-                  <p>{{email.created_at | date : 'medium'}}</p>
+                  <p>{{email.created_at | localDateTime }}</p>
                 </div>
                 <div class="tcol">
                   <a (click)="onDeleteSubscribedEmail(email.id)" class="delete"><img src="../../../../assets/images/icon_delete_green.png" alt=""></a>

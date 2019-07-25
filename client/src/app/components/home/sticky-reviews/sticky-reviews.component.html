@@ -41,7 +41,7 @@
                   </div>
                 </div>
                 <div class="tcol">
-                  <p>{{ getLocalTime(review.created_at) }}</p>
+                  <p>{{ review.created_at | localDateTime }}</p>
                 </div>
                 <div class="tcol">
                   <a (click)="onEditStickyReview(review)" class="edit"><img

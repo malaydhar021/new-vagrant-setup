@@ -70,7 +70,7 @@
                   <p>{{ link.url_slug }}</p>
                 </div>
                 <div class="tcol">
-                  <p>{{ getLocalTime(link.created_at) }}</p>
+                  <p>{{ link.created_at | localDateTime }}</p>
                 </div>
                 <div class="tcol">
                   <a class="edit" (click)="onEditReviewLink(link)"><img src="../../../../assets/images/icon_edit.png" alt="Edit Review"></a>

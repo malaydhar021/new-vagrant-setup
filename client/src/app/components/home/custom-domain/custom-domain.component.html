@@ -28,7 +28,7 @@
                   <p>{{ domain.domain }}</p>
                 </div>
                 <div class="tcol">
-                  <p>{{domain.created_at | date : 'medium'}}</p>
+                  <p>{{ domain.created_at | localDateTime }}</p>
                 </div>
                 <div class="tcol">
                   <a (click)="onEditCustomDomain(domain)" class="edit"><img src="../../../../assets/images/icon_edit.png" alt=""></a>
