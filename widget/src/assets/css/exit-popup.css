@@ -720,6 +720,7 @@ img {
     -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
     overflow: hidden;
+    background-color: #fff;
 }
 
 .popupParent .popup_template_5 .closePopup {
@@ -863,6 +864,7 @@ img {
 
 .vidParent_4 .popupTxt .figPopup {
     border-top-left-radius: 0;
+    overflow: hidden;
 }
 
 .vidParent_5 {
@@ -2607,4 +2609,7 @@ i.star.inactive:before {
 
 .prevwPage .exitPg .closePopup {
     pointer-events: none;
+}
+.showStyleP .vidParent_4{
+    width: 325px;
 }
