@@ -171,6 +171,10 @@
 
 ## Campaign
 
+### V2.1.0
+
+1. Fixed issue with campaign edit and campaign review box when there is no review
+
 ### V2.0.2
 
 1. Fixed issue with campaign sticky reviews in add / edit campaign modal which was causing issue in production build

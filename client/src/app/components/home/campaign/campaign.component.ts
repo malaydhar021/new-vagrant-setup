@@ -508,6 +508,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.rowIndex = index;
     this.campaignId = campaign.id; // assign campaignId to campaignId property
     // show reviews popup with selected reviews
+    Log.info(campaign.sticky_reviews);
     this.reviewForm.patchValue({
       campaignReviews: this.checkedReviews(campaign.sticky_reviews)
     });
@@ -763,6 +764,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public checkedReviews(selectedReviews: any = null) {
     let arr = [];
+    if(this.stickyReviews.length == 0) return [];
     return this.stickyReviews.reduce((acc, cur, index) => { // loop through all sticky reviews
       if(selectedReviews === null || selectedReviews.length == 0) {
         arr[index] = false; // set all elements are to false

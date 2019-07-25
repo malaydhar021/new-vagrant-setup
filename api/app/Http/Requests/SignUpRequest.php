@@ -49,8 +49,7 @@ class SignUpRequest extends FormRequest
         return [
             'name' => "required|string",
             'email' => "required|string|email|unique:users",
-            'password' => "required|string|min:8"
-                . "|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/",
+            'password' => "required|string|min:8",
             'card_number'  => "required|integer|digits_between:14,16",
             'cvc_number' => "required|integer|digits_between:3,5",
             'expiry_month' => "required|integer|min:1|max:12",
