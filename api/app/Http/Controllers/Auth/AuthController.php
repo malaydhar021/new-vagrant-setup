@@ -128,7 +128,7 @@ class AuthController extends Controller
 
             if ($user) {
                 Auth::loginUsingId($user->id);
-                User::find($user->id)->update(["access_token" => $this->getToken()]);
+                $user->update(["access_token" => $this->getToken()]);
             } else {
                 return response()->json([
                     'status' => false,
@@ -157,7 +157,7 @@ class AuthController extends Controller
                     ], 401);
                 }
                 // generate access token for custom domain and update user table
-                User::find(Auth::user()->id)->update(["access_token" => $this->getToken()]);
+                Auth::user()->update(["access_token" => $this->getToken()]);
             }
         }
 

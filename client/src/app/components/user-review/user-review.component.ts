@@ -116,7 +116,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
     // this.loaderService.enableLoader();
     this.userReviewService.getUserReviewLinkInfo(slug).subscribe(
       (response: any) => {
-        // Log.info(response, "Log the api response");
+        Log.info(response, "Review Link data");
         this.urlInfo = response.data;
         const data: UserReviewModel = {
           review_link_id: response.data.id,
@@ -124,6 +124,8 @@ export class UserReviewComponent implements OnInit, OnDestroy {
           negative_review_message_1: response.data.negative_info_review_message_1,
           negative_review_message_2: response.data.negative_info_review_message_2,
           positive_review_message: response.data.positive_review_message,
+          pricing_plan_id: response.data.subscription.data.pricing_plan,
+          allow_video_review: response.data.allow_video_review
         }
         this.userReviewService.updateReview(data);
         // Log.debug(this.urlInfo, "log the url info");

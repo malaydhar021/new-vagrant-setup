@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\CustomDomain;
 use App\CustomDomain as CustomDomainModel;
+use App\Campaign;
+use App\ReviewLink;
 use App\Http\Requests\CustomDoaminRequest;
 use App\Http\Resources\CustomDomainResource;
 use Log;
@@ -212,6 +214,9 @@ class CustomDomainController extends Controller
         $response = $this->delete($customDomain->domain);
         $response = json_decode($response->getContent());
         if($response->status) {
+            // remove attached custom domains from campaign and review link tables which is going to be deleted
+            Campaign::where('custom_domain_id', $id)->update(['custom_domain_id' => null]);
+            ReviewLink::where('custom_domain_id', $id)->update(['custom_domain_id' => null]);
             $customDomain->delete($id);
             return response()->json([
                 'status' => true,

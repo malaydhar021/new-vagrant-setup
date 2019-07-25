@@ -29,7 +29,8 @@ class UserReviewsController extends Controller
     public function show($slug)
     {
         $reviewLink = ReviewLink::where('url_slug', $slug)->firstOrFail();
-
+        $reviewLink->load('campaign', 'user', 'customDomain');
+        
         return response()->json([
             'status' => true,
             'message' => "Review link details has fetched successfully.",

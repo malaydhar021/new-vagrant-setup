@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ReviewLink extends Model
 {
     use FileStorage, SoftDeletes;
-
     /**
      * The attributes that should be mutated to dates.
      *

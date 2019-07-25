@@ -22,4 +22,6 @@ export class UserReviewModel {
   negative_review_message_1?: string;
   negative_review_message_2?: string;
   positive_review_message?: string;
+  pricing_plan_id?: string;
+  allow_video_review?: boolean;
 }

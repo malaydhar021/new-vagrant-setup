@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\ReviewLink;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -17,8 +18,22 @@ class UserReviewParamRequest extends FormRequest
      */
     public function authorize()
     {
-        if (ReviewLink::whereUrlSlug($this->route('slug'))->first()) return true;
+        if (ReviewLink::whereUrlSlug($this->route('slug'))->first()) {
+            if($this->input('review_type') == 3) {
+                $user = ReviewLink::find($this->input('review_link_id'))->user;
+                $pricingPlan = $user->pricing_plan;
+                $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['video-reviews'];
 
+                if (($saturationPoint !== -1) && ($user->video_sticky_reviews_count >= $saturationPoint)) {
+                    throw new PrivilegeViolationException(
+                        "You can not create a new video sticky review, please delete one existing video sticky review or upgrade " .
+                            "your current subscription plan."
+                    );
+                }
+            }
+            return true;
+        }
+        
         return false;
     }
 

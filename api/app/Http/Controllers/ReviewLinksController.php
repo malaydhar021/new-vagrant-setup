@@ -132,7 +132,7 @@ class ReviewLinksController extends Controller
     public function show($id)
     {
         $reviewLink = $this->queryBuilder->where('id', $id)->firstOrFail();
-
+        $reviewLink->load('campaign', 'user', 'customDomain');
         return response()->json([
             'status' => true,
             'message' => "Review link details has been fetched successfully.",

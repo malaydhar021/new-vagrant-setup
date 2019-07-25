@@ -34,22 +34,22 @@ class StickyReviewRequest extends FormRequest
      */
     public function authorize()
     {
-        \Log::info("Some Text from Request  ! ");
         if (Auth::check()) {
             $user = Auth::user();
 
             if($this->method() == "POST") {
-                $pricingPlan = $user->pricing_plan;
-                $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['sticky-reviews'];
+                if($this->input('type') == 3) {
+                    $pricingPlan = $user->pricing_plan;
+                    $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['video-reviews'];
 
-                if (($saturationPoint !== -1) && ($user->sticky_reviews_count >= $saturationPoint)) {
-                    throw new PrivilegeViolationException(
-                        "You can not create a new sticky review, please delete one existing sticky review or upgrade " .
-                            "your current subscription plan."
-                    );
+                    if (($saturationPoint !== -1) && ($user->video_sticky_reviews_count >= $saturationPoint)) {
+                        throw new PrivilegeViolationException(
+                            "You can not create a new video sticky review, please delete one existing video sticky review or upgrade " .
+                                "your current subscription plan."
+                        );
+                    }
                 }
             }
-
             return true;
         }
 

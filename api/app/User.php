@@ -315,6 +315,26 @@ class User extends Authenticatable
     {
         return $this->reviewLinks->count();
     }
+    
+    /**
+     * Custom domains owns by the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function customDomains()
+    {
+        return $this->hasMany(CustomDomain::class, 'created_by', 'id');
+    }
+
+    /**
+     * Get the count of custom domains owns by the user
+     *
+     * @return integer
+     */
+    public function getCustomDomainsCountAttribute()
+    {
+        return $this->customDomains->count();
+    }
 
     /**
      * Sticky reviews owns by the user and created by the user
@@ -351,6 +371,44 @@ class User extends Authenticatable
     public function getStickyReviewsCountAttribute()
     {
         return $this->stickyReviewsCreatedByOwner->count() + $this->stickyReviewsFromReviewLinks->count();
+    }
+    
+    
+    /**
+     * Sticky reviews owns by the user and created by the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function videoStickyReviewsCreatedByOwner()
+    {
+        return $this->hasMany(StickyReview::class, 'created_by', 'id')->where('type', 'video');
+    }
+
+    /**
+     * Sticky reviews owns by the user and came from review links
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function videoStickyReviewsFromReviewLinks()
+    {
+        return $this->hasManyThrough(
+            StickyReview::class,
+            ReviewLink::class,
+            'created_by',           // Foreign key on review_links table...
+            'review_link_id',       // Foreign key on sticky_reviews table...
+            'id',                   // Local key on users table...
+            'id'                    // Local key on review_links table...
+        )->where('type', 'video');
+    }
+    
+    /**
+     * Get the count of sticky reviews owns by the user
+     *
+     * @return integer
+     */
+    public function getVideoStickyReviewsCountAttribute()
+    {
+        return $this->videoStickyReviewsCreatedByOwner->count() + $this->videoStickyReviewsFromReviewLinks->count();
     }
 
     /**

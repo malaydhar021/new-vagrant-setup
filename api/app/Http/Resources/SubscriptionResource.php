@@ -16,6 +16,14 @@ class SubscriptionResource extends Resource
     public function toArray($request)
     {
         if ($this->subscription) {
+            if ($this->isBrief) {
+                return [
+                    'status' => $this->subscription_status,
+                    'data' => [
+                        'pricing_plan' => config("pricing.plans.{$this->pricing_plan}.id"),
+                    ]
+                ];
+            }
             return [
                 'status' => $this->subscription_status,
                 'data' => [
@@ -31,6 +39,14 @@ class SubscriptionResource extends Resource
                 ]
             ];
         } else {
+            if ($this->isBrief) {
+                return [
+                    'status' => $this->subscription_status,
+                    'data' => [
+                        'pricing_plan' => config("pricing.plans.{$this->pricing_plan}.id"),
+                    ]
+                ];
+            }
             return [
                 'status' => $this->subscription_status,
                 'data' => [

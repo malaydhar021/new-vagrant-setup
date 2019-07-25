@@ -65,7 +65,14 @@
 
 1. Implemented global message to show error or success messages through out the application
 
+
 ## Subscription
+
+### V2.2.0
+
+1. Implemented custom domain and video review for different plan privilege
+2. Removed brands and sticky reviews from plan limitations
+3. Disabled video review for starter plan only
 
 ### V2.1.1
 

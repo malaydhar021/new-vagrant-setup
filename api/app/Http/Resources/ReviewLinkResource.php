@@ -15,6 +15,13 @@ class ReviewLinkResource extends Resource
      */
     public function toArray($request)
     {
+        $allowVideoReview = true;
+        $pricingPlan = $this->user->pricing_plan;
+        $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['video-reviews'];
+
+        if (($saturationPoint !== -1) && ($this->user->video_sticky_reviews_count >= $saturationPoint)) {
+            $allowVideoReview = false;
+        }
         if ($this->isBrief) {
             return [
                 'id' => Hashids::encode($this->id),
@@ -28,6 +35,7 @@ class ReviewLinkResource extends Resource
                 'name' => $this->name,
                 'url_slug' => $this->url_slug,
                 'logo' => $this->logo_url,
+                'allow_video_review' => $allowVideoReview,
                 'description' => $this->description,
                 'auto_approve' => $this->auto_approve,
                 'min_rating' => $this->min_rating,
@@ -41,6 +49,7 @@ class ReviewLinkResource extends Resource
                 'campaign' => (new CampaignsResource($this->whenLoaded('campaign')))->briefOnly(),
                 'sticky_reviews' => (StickyReviewResource::collection($this->whenLoaded('stickyReview')))->briefOnly(),
                 'custom_domain' => (new CustomDomainResource($this->whenLoaded('customDomain')))->briefOnly(),
+                'subscription' => (new SubscriptionResource($this->whenLoaded('user')))->briefOnly(),
                 'created_by' => (new UserResource($this->whenLoaded('user')))->briefOnly(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),

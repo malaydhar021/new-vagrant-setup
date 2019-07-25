@@ -12,6 +12,7 @@ import { Log } from '../../../helpers/app.helper';
 import { ErrorsService } from 'src/app/services/errors.service';
 import { BrandingService } from '../../../services/branding.service';
 import * as moment from 'moment';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 /**
  * StickyReviewsComponent class will handle all required action to meet the functionalities of
  * sticky review feature. It includes CRUD operation
@@ -111,6 +112,9 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   brands: [] = [];  // holds all the brands
   isModalOpened: boolean = false; // set to true if the modal is opened
   max = null;
+  userSubscription: Subscription; // to hold the user current subscription
+  pricingPlan: string; // user's plan details
+
   /**
    *
    * @param ngxSmartModalService
@@ -131,10 +135,17 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     private mediaService: MediaService,
     private errorService: ErrorsService,
     private brandingService: BrandingService,
+    private subscriptionService: SubscriptionService,
   ) {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+      }
+    );
+    // get the current plan of logged in user
+    this.userSubscription = this.subscriptionService.isSubscribed$.subscribe(
+      (response: any) => {
+        this.pricingPlan = response.subscription.data.pricing_plan.id;
       }
     );
   }
@@ -238,6 +249,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public ngAfterViewInit() {
+    // if the user is starter plan then remove video review 
+    if(this.pricingPlan === 'starter-monthly') {
+      this.reviewTypes.splice(-1,1);
+    }
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
       this.resetForm();

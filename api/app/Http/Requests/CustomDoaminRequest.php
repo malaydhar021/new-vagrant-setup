@@ -15,8 +15,22 @@ class CustomDoaminRequest extends FormRequest
     public function authorize()
     {
         if (Auth::check()) {
+            $user = Auth::user();
+
+            if($this->method() == "POST") {
+                $pricingPlan = $user->pricing_plan;
+                $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['custom-domains'];
+
+                if (($saturationPoint !== -1) && ($user->custom_domains_count >= $saturationPoint)) {
+                    throw new PrivilegeViolationException(
+                        "You can not create a new custom domain, please delete one existing custom domain or upgrade " .
+                            "your current subscription plan."
+                    );
+                }
+            }
             return true;
         }
+
         return false;
     }
 

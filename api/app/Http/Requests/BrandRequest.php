@@ -17,6 +17,11 @@ class BrandRequest extends FormRequest
     public function authorize()
     {
         if (Auth::check()) {
+            /**
+             * Below block of code is for plan limitation for brands.
+             * Please uncomment the below block of code if you want number privilege while a brand is getting created 
+             */
+            /*
             $user = Auth::user();
             if ($this->method() == "POST") {
                 $pricingPlan = $user->pricing_plan;
@@ -30,6 +35,7 @@ class BrandRequest extends FormRequest
                     );
                 }
             }
+            */
 
             return true;
         }

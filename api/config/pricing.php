@@ -23,16 +23,16 @@ return [
             'id' => "starter-monthly",          // Stripe plan ID
             'name' => "Starter Monthly",        // Stripe plan name
             'alias' => "Starter",               // Defined by you to show in frontend
-            'amount' => 15.00,
+            'amount' => 10.00,
             'trial' => 14,                      // Trial periods in days
             'type' => 'recurring',              // Billing type 'recurring'
             'interval' => 30,                   // No of days if type is recurring
             'privileges' => [
-                'brands' => 2,
                 'campaigns' => 2,
-                'sticky-reviews' => 5,
                 'review-links' => 2,
                 'exit-popups' => 2,              // No exit pop-ups
+                'custom-domains' => 2,              // No of custom domains
+                'video-reviews' => 0,              // No of video review
             ],
         ],
 
@@ -45,28 +45,28 @@ return [
             'type' => 'recurring',
             'interval' => 30,
             'privileges' => [
-                'brands' => 3,
                 'campaigns' => 3,
-                'sticky-reviews' => 10,
                 'review-links' => 3,
                 'exit-popups' => 3,
+                'custom-domains' => 3,              // No of custom domains
+                'video-reviews' => 5,              // No of video review
             ],
         ],
 
         'highest' => [
             'id' => "enterprise-monthly",
-            'name' => "Agency Monthly",
-            'alias' => "Agency",
-            'amount' => 47.00,
+            'name' => "Enterprise Monthly",
+            'alias' => "Enterprise",
+            'amount' => 50.00,
             'trial' => null,
             'type' => 'recurring',
             'interval' => 30,
             'privileges' => [
-                'brands' => -1,                 // Unlimited
                 'campaigns' => -1,
-                'sticky-reviews' => -1,
                 'review-links' => -1,
                 'exit-popups' => -1,
+                'custom-domains' => -1,              // No of custom domains
+                'video-reviews' => -1              // No of video reviews
             ],
         ],
     ],
