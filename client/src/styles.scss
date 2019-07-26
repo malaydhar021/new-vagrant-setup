@@ -7033,15 +7033,7 @@ body.sign-upPage {
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
       overflow: hidden;
-      transform: translateY(-50%);
-      -moz-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      -webkit-transform: translateY(-50%);
-      left:0;
-      right: 0;
-      margin-left: auto !important;
-      margin-right: auto !important;
-
+      
       .leftSec {
         width: 50px;
         height: 190px;
@@ -10801,5 +10793,28 @@ Cookie notification css
     display: inline-block !important;
     vertical-align: middle;
     margin-right: 8px;
+  }
+}
+
+@supports (-ms-ime-align: auto) and (color: unset) {
+  .nsm-dialog {
+    .sr-modal-body {
+      .canvasCapture{
+        .previewpopup {
+          &.theme1 {
+            .previewComp {
+              transform: translateY(-50%);
+              -moz-transform: translateY(-50%);
+              -ms-transform: translateY(-50%);
+              -webkit-transform: translateY(-50%);
+              left:0;
+              right: 0;
+              margin-left: auto !important;
+              margin-right: auto !important;
+            }
+          }
+        }
+      }
+    }
   }
 }
