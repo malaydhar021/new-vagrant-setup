@@ -10805,6 +10805,24 @@ Cookie notification css
     margin-right: 8px;
   }
 }
+.inDataHdr {
+  padding: 0 35px;
+  
+  .linkTxt {
+    font-size: 14px;
+    font-style: italic;
+    
+    img {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 4px;
+      -webkit-filter: invert(1);
+      -moz-filter: invert(1);
+      -ms-filter: invert(1);
+      filter: invert(1);
+    }
+  }
+}
 
 @supports (-ms-ime-align: auto) and (color: unset) {
   .nsm-dialog {
