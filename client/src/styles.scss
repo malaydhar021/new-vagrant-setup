@@ -824,27 +824,27 @@ a {
           background-image: url(#{$imgUrl}/icon_branding.png);
         }
 
-        // &:nth-child(3) a {
-        //   background-image: url(#{$imgUrl}/icon_custom_domain.png);
-        // }
-
         &:nth-child(3) a {
-          background-image: url(#{$imgUrl}/icon_campaign.png);
+          background-image: url(#{$imgUrl}/icon_custom_domain.png);
         }
 
         &:nth-child(4) a {
-          background-image: url(#{$imgUrl}/icon_stickyreviews.png);
+          background-image: url(#{$imgUrl}/icon_campaign.png);
         }
 
         &:nth-child(5) a {
-          background-image: url(#{$imgUrl}/icon_reviewlink.png);
+          background-image: url(#{$imgUrl}/icon_stickyreviews.png);
         }
 
         &:nth-child(6) a {
-          background-image: url(#{$imgUrl}/icon_exitpopup.png);
+          background-image: url(#{$imgUrl}/icon_reviewlink.png);
         }
 
         &:nth-child(7) a {
+          background-image: url(#{$imgUrl}/icon_exitpopup.png);
+        }
+
+        &:nth-child(8) a {
           background-image: url(#{$imgUrl}/icon_subscribed_email.png);
         }
       }
@@ -7033,6 +7033,30 @@ body.sign-upPage {
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
       overflow: hidden;
+      
+      @media all and (-ms-high-contrast:none){
+        transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        left:0;
+        right: 0;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      
+      /*----MS Edge Browser CSS Start----*/
+      @supports (-ms-accelerator:true) {
+        transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        left:0;
+        right: 0;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      /*----MS Edge Browser CSS End----*/
 
       .leftSec {
         width: 50px;
@@ -8476,6 +8500,7 @@ img {
         }
 
         .choiceState {
+          overflow: hidden;
           @include mt(25px);
           @include mb(53px);
 
