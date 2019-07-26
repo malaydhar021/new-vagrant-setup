@@ -890,10 +890,12 @@ a {
     font-size: 12px;
     color: #bcbcbc;
     margin-top: auto;
-    margin-bottom: 27px;
+    // margin-bottom: 27px;
+    padding-bottom: 27px;
     -webkit-box-flex: 0;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
+    background-color: #fff;
 
     @media (max-width: 1600px) {
       position: relative;
