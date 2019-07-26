@@ -27,7 +27,12 @@ return [
             'trial' => 14,                      // Trial periods in days
             'type' => 'recurring',              // Billing type 'recurring'
             'interval' => 30,                   // No of days if type is recurring
+            'logo' => 'icon_price_plan_starter.png', // logo for plan
+            'status' => 'active',
             'privileges' => [
+                'brands' => -1,                 // unlimited brands
+                'sticky-reviews' => -1,
+                'elegant-designs' => '*',
                 'campaigns' => 2,
                 'review-links' => 2,
                 'exit-popups' => 2,              // No exit pop-ups
@@ -44,7 +49,12 @@ return [
             'trial' => null,                    // No trial
             'type' => 'recurring',
             'interval' => 30,
+            'logo' => 'icon_price_plan_premium.png', // logo for plan
+            'status' => 'active',
             'privileges' => [
+                'brands' => -1,                 // unlimited brands
+                'sticky-reviews' => -1,
+                'elegant-designs' => '*',
                 'campaigns' => 3,
                 'review-links' => 3,
                 'exit-popups' => 3,
@@ -61,12 +71,17 @@ return [
             'trial' => null,
             'type' => 'recurring',
             'interval' => 30,
+            'logo' => 'icon_price_plan_agency.png', // logo for plan
+            'status' => 'active',
             'privileges' => [
+                'brands' => -1,                 // unlimited brands
+                'sticky-reviews' => -1,
+                'elegant-designs' => '*',
                 'campaigns' => -1,
                 'review-links' => -1,
                 'exit-popups' => -1,
                 'custom-domains' => -1,              // No of custom domains
-                'video-reviews' => -1              // No of video reviews
+                'video-reviews' => -1,              // No of video reviews
             ],
         ],
     ],

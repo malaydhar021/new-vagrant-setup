@@ -5,12 +5,14 @@ import { FormGroup, FormBuilder, Validators }     from '@angular/forms';
 import { SubscriptionService }                    from '../../../services/subscription.service';
 import { LoaderService }                          from '../../../services/loader.service';
 import { ErrorsService }                          from '../../../services/errors.service';
-import { Log } from 'src/app/helpers/app.helper';
+import { Log }                                    from '../../../helpers/app.helper';
+import { PricingPlanService }                     from '../../../services/pricing-plan.service';
+import { Title } from '@angular/platform-browser';
 
 /**
  * PlansComponent is responsible for handling user subscriptions 
  * @class PlansComponent
- * @version 1.0.0
+ * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -32,6 +34,8 @@ export class PlansComponent implements OnInit, OnDestroy {
   showError: boolean = false; // flag to show error message
   errorMessage: string = null; // flag for error message
   hasCard: boolean = false; // flag to set true if the user is having card details store into db
+  pricingPlans: any; // holds all plans with pricing and individual feature restrictions
+  currency: string = "$"; // default currency is US dollar  
 
 /**
  * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -46,10 +50,12 @@ export class PlansComponent implements OnInit, OnDestroy {
  */
   constructor(
     private subscriptionService: SubscriptionService,
+    private title: Title,
     private loaderService: LoaderService,
     private ngxSmartModalService: NgxSmartModalService,
     private formBuilder: FormBuilder,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private pricingPlanService: PricingPlanService
   ) {
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
       this.userPlanDetails = userPlan;
@@ -66,6 +72,8 @@ export class PlansComponent implements OnInit, OnDestroy {
         this.showError = status;
       }
     );
+    // get all plans with price  
+    this.getPricingPlans();
   }
 
   /**
@@ -74,6 +82,7 @@ export class PlansComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public ngOnInit() {
+    this.title.setTitle("Stickyreviews :: Plans");
     this.getCurrentSubscription();
     this.createYearArray();
     this.createCardForm();
@@ -106,6 +115,22 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Method to fetch all plans and respective prices and assign those into pricingPlans also get the currency as well
+   * @method getPricingPlans
+   * @since Version 2.0.0
+   * @returns Void
+   */
+  public getPricingPlans() {
+    this.pricingPlanService.getAllPricingPlans().subscribe(
+      (response: any) => {
+        Log.info(response);
+        this.pricingPlans = response.data;
+        this.currency = response.currency_symbol;
+      }
+    );
+  }
+
+  /**
    * 
    * @param plan 
    */
@@ -119,7 +144,7 @@ export class PlansComponent implements OnInit, OnDestroy {
 
     plan == 'Starter' ? text = "DOWNGRADE" : null;
     plan == 'Premium' ? currentPlan == 'Starter' ? text = 'UPGRADE' : text = 'DOWNGRADE' : null;
-    plan == 'Agency' ? text = "UPGRADE" : null
+    plan == 'Enterprise' ? text = "UPGRADE" : null
     return text;
   }
 

@@ -35,7 +35,8 @@ class UserReviewRequest extends FormRequest
     {
         if (ReviewLink::whereUrlSlug($this->route('slug'))->first()) {
             if($this->input('review_type') == 3) {
-                $user = ReviewLink::find($this->input('review_link_id'))->user;
+                $reviewLinkId = Hashids::decode($this->request->get('review_link_id'));
+                $user = ReviewLink::find($reviewLinkId)->user;
                 $pricingPlan = $user->pricing_plan;
                 $saturationPoint = config('pricing.plans.' . $pricingPlan . '.privileges')['video-reviews'];
 

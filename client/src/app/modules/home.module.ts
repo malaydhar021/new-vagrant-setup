@@ -43,7 +43,8 @@ import { CustomDomainComponent }            from '../components/home/custom-doma
 import { CustomDomainService }              from '../services/custom-domain.service';
 import { SubscribedEmailsComponent }        from '../components/home/subscribed-emails/subscribed-emails.component';
 import { SubscribedEmailService }           from '../services/subscribed-email.service';
-import { DateTimePipe } from '../pipe/app.pipe';
+import { DateTimePipe }                     from '../pipe/app.pipe';
+import { PricingPlanService }               from '../services/pricing-plan.service';
 
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
@@ -100,7 +101,8 @@ import { DateTimePipe } from '../pipe/app.pipe';
     ExitPopupService,
     MediaService,
     CustomDomainService,
-    SubscribedEmailService
+    SubscribedEmailService,
+    PricingPlanService
   ]
 })
 export class HomeModule { }

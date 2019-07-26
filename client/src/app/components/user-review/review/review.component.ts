@@ -363,6 +363,8 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if(this.selectedReviewType == 3 && this.reviewAsFile !== null) { // video
       formData.append('review_video', this.reviewAsFile, this.reviewAsFile.name);
     }
+    // append review link system id if it exists in review object
+    if(this.review.review_link_id !== undefined) formData.append('review_link_id', this.review.review_link_id);
     // lets make an api call to validate the user data so far
     this.userReviewService.validateUserReview(this.slug, formData).subscribe(
       (response : any) => {

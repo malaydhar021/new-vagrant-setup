@@ -12,8 +12,8 @@ import { CampaignStylesInterface } from '../../../interfaces/campaign-styles.int
 import { CampaignInterface } from '../../../interfaces/campaign.interface';
 import { MinimumCheckedCheckboxes } from '../../../helpers/form.helper';
 import { WidgetUrl } from '../../../helpers/api.helper';
-import { ErrorsService } from 'src/app/services/errors.service';
-import { CustomDomainService } from 'src/app/services/custom-domain.service';
+import { ErrorsService } from '../../../services/errors.service';
+import { CustomDomainService } from '../../../services/custom-domain.service';
 
 /**
  * Component to handle all sort of functionalities related to campaign. It's mostly handles

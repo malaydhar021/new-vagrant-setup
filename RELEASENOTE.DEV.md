@@ -8,7 +8,7 @@
 
 ## Custom Domain
 
-### V1.1.3
+### V1.2.1
 
 1. Added DNS configuration message to main custom domain form as well
 2. Moved custom domain to settings section
@@ -73,6 +73,12 @@
 
 
 ## Subscription
+
+### V2.2.1
+
+1. Implemented api for fetching all plans data with pricing all respective features
+2. Displayed those plan details in frontend with little adjustments
+3. Fixed a small issue with user review
 
 ### V2.2.0
 

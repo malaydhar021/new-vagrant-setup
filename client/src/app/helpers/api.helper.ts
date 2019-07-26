@@ -630,3 +630,22 @@ export class SubscribedEmailApiEndpoints {
     return apiBaseUrl.concat('/subscribed-emails');
   }
 }
+
+/**
+ * PricingPlansApiEndpoints helper class is holding all static methods for pricing and plans api endpoints based on the environment
+ * @class PricingPlansApiEndpoints
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @version 1.0.1
+ * @license Proprietary
+ */
+export class PricingPlansApiEndpoints {
+  /**
+   * Method to generate api endpoint to get all pricing plans
+   * @method pricingPlans
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get pricingPlans(): string {
+    return apiBaseUrl.concat('/pricing-plans');
+  }
+}

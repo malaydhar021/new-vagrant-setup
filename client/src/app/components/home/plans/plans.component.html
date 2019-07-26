@@ -7,24 +7,26 @@
       </h1>
       <div class="plans clearfix">
         <div class="plan clearfix">
-          <div class="planCell">
+
+          <div class="planCell" *ngFor="let plan of pricingPlans">
             <div class="planHead">
-              <div class="planImg"><img src="../../../../assets/images/icon_price_plan_starter.png" alt=""></div>
-              <h2>STARTER</h2>
+              <div class="planImg"><img src="../../../../assets/images/{{ plan.logo }}" alt=""></div>
+              <h2>{{ plan.alias | uppercase }}</h2>
             </div>
             <ul class="features">
-              <li><strong>2 Domains</strong></li>
-              <li>Unlimited Sticky Reviews</li>
-              <li>Unlimited Visitors</li>
-              <li>Multiple Elegant Designs</li>
-              <li>Custom Branding</li>
-              <li><strong>No Review Links</strong></li>
+              <li *ngFor="let feature of plan.features">
+                <strong *ngIf="feature.highlight; else noHighlights" [innerHTML]="feature.text"></strong>
+                <ng-template #noHighlights>
+                  {{ feature.text }}
+                </ng-template>
+              </li>
             </ul>
-            <p class="price">$15</p>
-            <button type="button" class="planBtn" [ngClass]="{'current': buttonText('Starter')== 'CURRENT' }"
-              (click)="addUpdatePlan('lowest')">{{buttonText('Starter')}}</button>
+            <p class="price">{{ currency }}{{ plan.amount }}</p>
+            <button type="button" class="planBtn" [ngClass]="{'current': buttonText(plan.alias)== 'CURRENT' }"
+              (click)="addUpdatePlan(plan.plan_id)">{{buttonText(plan.alias)}}</button>
           </div>
-          <div class="planCell">
+
+          <!-- <div class="planCell">
             <div class="planHead">
               <div class="planImg"><img src="../../../../assets/images/icon_price_plan_premium.png" alt=""></div>
               <h2>PREMIUM</h2>
@@ -58,7 +60,7 @@
             <p class="price">$47</p>
             <button type="button" class="planBtn" [ngClass]="{'current': buttonText('Agency') == 'CURRENT' }"
               (click)="addUpdatePlan('highest')">{{buttonText('Agency')}}</button>
-          </div>
+          </div> -->
         </div>
         <div>
           <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
