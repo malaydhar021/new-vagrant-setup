@@ -8582,7 +8582,7 @@ img {
         h2 {
           margin: 80px auto 0;
           max-width: 216px;
-          word-wrap: break-word;
+          word-break: normal;
           word-break: break-word;
         }
       }
@@ -8780,6 +8780,14 @@ img {
             text-align: right;
             text-align: right;
             margin-top: 8px;
+          }
+        }
+      }
+
+      &.permission_step {
+        .step_3 {
+          h2 {
+            word-break: normal;
           }
         }
       }
