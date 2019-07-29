@@ -10814,12 +10814,17 @@ Cookie notification css
     
     img {
       display: inline-block;
-      vertical-align: middle;
-      margin-left: 4px;
+      vertical-align: 0;
+      margin-right: 4px;
       -webkit-filter: invert(1);
       -moz-filter: invert(1);
       -ms-filter: invert(1);
       filter: invert(1);
+      -webkit-transform: skew(-15deg);
+      -moz-transform: skew(-15deg);
+      -ms-transform: skew(-15deg);
+      transform: skew(-15deg);
+      width: 12px;
     }
   }
 }
