@@ -44,7 +44,7 @@ export class ErrorsService {
    */
   public updateMessage(message: string) {
     this.errorSubject.next(message);
-    this.updateShowMessageStatus(true);
+    this.updateShowMessageStatus(message === '' ? false : true);
   }
 
   /**
@@ -56,7 +56,7 @@ export class ErrorsService {
    */
   public updateValidationMessage(validationMessages: any) {
     this.validationErrorsSubject.next(validationMessages);
-    this.updateShowMessageStatus(true);
+    this.updateShowMessageStatus(validationMessages === '' ? false : true);
   }
 
   /**

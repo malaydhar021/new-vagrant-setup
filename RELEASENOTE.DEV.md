@@ -127,6 +127,10 @@
 
 ## Review Link
 
+### V2.1.0
+
+1. Fixed issue with printing error message from step 1 to step 2
+
 ### V2.0.2
 
 1. Fixed issue review link when there is no campaign attached with a review link

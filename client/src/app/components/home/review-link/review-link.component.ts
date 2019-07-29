@@ -93,6 +93,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+        Log.info(this.showError);
       }
     );
   }
@@ -614,7 +615,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       (response: any) => {
         Log.info(response, "Response Validate Params");
         if(response.status) {
-          this.destroyMessage();
+          this.errorService.updateShowMessageStatus(false);
           // show the next step form
           this.currentStep = 2;
           this.loaderService.disableLoader();
