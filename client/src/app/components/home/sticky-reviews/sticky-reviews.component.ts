@@ -298,8 +298,11 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.form.reset();
     // set default image to preview image area
     this.imagePreviewUrl = 'assets/images/user.png';
+    this.choseFileCtrl = 'Browse from your computer';
+    this.fileName = 'or drag & drop your image here';
     // set review type dropdown default value to `textual`
     this.getFormControls.srType.setValue(1);
+    this.getFormControls.srType.enable({onlySelf: true});
     this.mediaService.updateAudioSrc(null);
     this.mediaService.updateVideoSrc(null);
     this.isModalOpened = false; // set to false as modal has been closed
@@ -468,19 +471,20 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onEditStickyReview(review: StickyReviewModel) {
+    
     // set review id which is currently being edited
     this.reviewId = review.id;
     // set `isEditing` to true once the edit icon has been clicked
     this.isEditing = true;
-    console.log(review.created_at);
-    console.log(moment.utc(review.created_at).local().format('YYYY-MM-DD h:m:s A'));
+    Log.info(review.created_at);
+    Log.info(moment.utc(review.created_at).local().format('YYYY-MM-DD h:m:s A'));
       const patchDateTime = new Date(moment.utc(review.created_at).local().format('YYYY-MM-DD h:m:s A'));
     // const patchDateTime = new Date(moment.utc(review.created_at).local().format('MMMM DD, LT'));
     // prepare data object with the selected sticky review row
     const data = {
       srName: review.name,
       srTags: review.tags,
-      sr: (review.type == 1) ? review.review : '',
+      sr: review.review,
       srRating: review.rating,
       srType: review.type,
       srImageUrl: review.image_url,
@@ -501,13 +505,13 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         this.mediaService.updateVideoSrc(null);
         // update audio player scr to play the audio
         this.mediaService.updateAudioSrc(review.review);
-      }, 1000);
+      }, 100);
     } else if (review.type == 3) {
       setTimeout(() => {
         this.mediaService.updateAudioSrc(null);
         // update video player scr to play the video
         this.mediaService.updateVideoSrc(review.review);
-      }, 1000);
+      }, 100);
     }
     // set image preview for existing image
     this.imagePreviewUrl = review.image_url;
@@ -529,7 +533,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
         dateTimeNow.getSeconds()
     );
 
-
+    this.getFormControls.srType.disable({ onlySelf: true });
     // now open the model to show the form into the model to user
     this.ngxSmartModalService.getModal('modal1').open();
   }
@@ -655,7 +659,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // add request payload to formData object
     formData.append('name', this.form.value.srName); // append name
     formData.append('tags', this.form.value.srTags); // append tags
-    formData.append('type', this.form.value.srType); // append review type
+    formData.append('type', this.getFormControls.srType.value); // append review type
     formData.append('rating', this.form.value.srRating); // append rating
     // formData.append('reviewd_at', this.form.value.srDateTime === null ? currentSrDateTime : this.form.value.srDateTime); // append date to show
     formData.append('reviewd_at', this.form.value.srDateTime); // append date to show

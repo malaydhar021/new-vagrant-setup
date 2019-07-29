@@ -226,6 +226,11 @@
 
 ## Sticky Review
 
+### V2.1.5
+
+1. Fixed issue with audio and video review during edit
+2. Disabled changing of review type during edit
+
 ### V2.1.4
 
 1. Fixed issue with edit a video review where video was not showing into edit modal screen
