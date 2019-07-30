@@ -195,8 +195,8 @@ export default {
             this.$emit('startIteration', true)
         },
         getReviewTimeFormated(reviewAt) {
-            const reviewTime = moment.utc(reviewAt).local().format('YYYY-MM-DD HH:mm:ss');
-            const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
+            const reviewTime    = moment.utc(reviewAt).local().format('YYYY-MM-DD HH:mm:ss');
+            const currentTime   = moment().format('YYYY-MM-DD HH:mm:ss');
             const timeDiffrence = moment(currentTime).diff(moment(reviewTime));
             return moment.duration(timeDiffrence).humanize();
         }
