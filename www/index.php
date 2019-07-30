@@ -1,5 +1,27 @@
 <!-- header -->
-<?php include("header.php"); ?>
+<?php include("header.php");
+
+// Create a CURL call to fetch the pricing information
+if (strpos($getEnvUrl, 'local') !== false) {
+    $url = 'https://api.local.usestickyreviews.com/v2/pricing-plans/';
+} elseif (strpos($getEnvUrl, 'beta') !== false ) {
+    $url = 'https://api.beta.usestickyreviews.com/v2/pricing-plans/';
+} else {
+    $url = 'https://api.usestickyreviews.com/v2/pricing-plans/';
+}
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+$allPlansData = curl_exec($ch);
+$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+$planData = json_decode($allPlansData,true);
+
+?>
 <section class="bannerArea spacingheader">
         <div class="bannerMid">
             <div class="container">
@@ -186,60 +208,23 @@
                 </h2>
                 <a href="https://app.<?php echo $linkUrl; ?>/sign-up" target="_blank" class="freeTrialBtn">Start 14 days FREE trial</a>
                 <div class="plan">
+                    <?php foreach($planData['data'] as $data) { ?>
                     <div class="planCell">
                         <div class="planHead">
                             <div class="planImg">
                                 <img alt="" src="images/icon_price_plan_starter.png">
                             </div>
-                            <h2>STARTER</h2>
+                            <h2><?php echo $data['name']; ?> </h2>
                         </div>
                         <ul class="features">
-                            <li><strong>2 Domains</strong></li>
-                            <li>Unlimited Sticky Reviews</li>
-                            <li>Unlimited Visitors</li>
-                            <li>Multiple Elegant Designs</li>
-                            <li>Custom Branding</li>
-                            <li><strong>No Review Links</strong></li>
+                            <?php foreach($data['features'] as $feature) { ?>
+                            <li><?php echo $feature['text']; ?></li>
+                            <?php } ?>
                         </ul>
-                        <p class="price">$15</p>
-                        <!-- <button class="planBtn" type="button">PURCHASE</button> -->
+                        <p class="price">$<?php echo $data['amount']?></p>
                     </div>
-                    <div class="planCell">
-                        <div class="planHead">
-                            <div class="planImg">
-                                <img alt="" src="images/icon_price_plan_premium.png">
-                            </div>
-                            <h2>PREMIUM</h2>
-                        </div>
-                        <ul class="features">
-                            <li><strong>10 Domains</strong></li>
-                            <li>Unlimited Sticky Reviews</li>
-                            <li>Unlimited Visitors</li>
-                            <li>Multiple Elegant Designs</li>
-                            <li>Custom Branding</li>
-                            <li><strong>5 Review Links</strong></li>
-                        </ul>
-                        <p class="price">$25</p>
-                        <!-- <button class="planBtn" type="button">PURCHASE</button> -->
-                    </div>
-                    <div class="planCell">
-                        <div class="planHead">
-                            <div class="planImg">
-                                <img class="acencyImg" alt="" src="images/icon_price_plan_agency.png">
-                            </div>
-                            <h2>AGENCY</h2>
-                        </div>
-                        <ul class="features">
-                            <li><strong>Unlimited Domains</strong></li>
-                            <li>Unlimited Sticky Reviews</li>
-                            <li>Unlimited Visitors</li>
-                            <li>Multiple Elegant Designs</li>
-                            <li>Custom Branding</li>
-                            <li><strong>Unlimited Review Links</strong></li>
-                        </ul>
-                        <p class="price">$47</p>
-                        <!-- <button class="planBtn" type="button">PURCHASE</button> -->
-                    </div>
+
+                   <?php  } ?>
                 </div>
             </div>
         </div>
