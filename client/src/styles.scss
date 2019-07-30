@@ -4679,6 +4679,36 @@ a {
             }
           }
 
+          &.rowCanvas {
+            .sr-form-cell-small {
+              &:last-child {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+
+                .canvasCapture {
+                  margin-left: 0;
+                  margin-right: 0;
+
+                  .previewComp {
+                  }
+                }
+              }
+
+              @media (max-width: 767px) {
+                width: 100%;
+                float: none;
+                padding: 0 !important;
+              }
+            }
+          }
+
           @media (max-width: 767px) {
             padding: 0 15px;
           }
@@ -6678,10 +6708,14 @@ body.sign-upPage {
     }
 
     @media (max-width: 767px) {
-      -webkit-transform: translate(-50%, -50%) scale(0.8);
-      -moz-transform: translate(-50%, -50%) scale(0.8);
-      -ms-transform: translate(-50%, -50%) scale(0.8);
-      transform: translate(-50%, -50%) scale(0.8);
+      // -webkit-transform: translate(-50%, -50%) scale(0.8);
+      // -moz-transform: translate(-50%, -50%) scale(0.8);
+      // -ms-transform: translate(-50%, -50%) scale(0.8);
+      // transform: translate(-50%, -50%) scale(0.8);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
     }
   }
 
@@ -7131,7 +7165,13 @@ body.sign-upPage {
 }
 
 .canvasCapture {
+  min-width: 272.5px;
+  width: 272.5px;
+  height: 278px;
   overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+
   .previewpopup {
     margin-top: 0;
     margin-bottom: 0;
