@@ -37,7 +37,7 @@ class WidgetResource extends JsonResource
 
         $getStickyReviewsIds =  CampaignStickyReview::where('campaign_id', $this->id)->pluck('sticky_review_id');
 
-        $srQuery = StickyReview::whereIn('id', $getStickyReviewsIds)->with('brands');
+        $srQuery = StickyReview::whereIn('id', $getStickyReviewsIds)->with('brands')->orderBy('created_at', 'DESC');
 
         if ($srQuery->count()) {
             $stickyReviews = $srQuery->paginate(5);

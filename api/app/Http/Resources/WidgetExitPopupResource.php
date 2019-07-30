@@ -36,7 +36,7 @@ class WidgetExitPopupResource extends JsonResource
 
                 $getStickyReviewsIds =  ExitPopUpStickyReview::where('exit_pop_up_id', $exitPopupDetails->id)->pluck('sticky_review_id');
 
-                $exitPopupSRQuery = StickyReview::whereIn('id', $getStickyReviewsIds)->with('brands');
+                $exitPopupSRQuery = StickyReview::whereIn('id', $getStickyReviewsIds)->with('brands')->orderBy('created_at', 'DESC');
 
                 if ($exitPopupSRQuery->count()) {
                     $exitPopupStickyReviews = $exitPopupSRQuery->paginate(5);
