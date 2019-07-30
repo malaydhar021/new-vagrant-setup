@@ -3283,9 +3283,23 @@ a {
           float: right;
 
           a {
-            display: inline-block;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
             vertical-align: middle;
             cursor: pointer;
+            width: 20px;
+            height: 20px;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+
+            img {
+              max-width: 10px;
+            }
 
             @media (max-width: 480px) {
               margin: 0 7px;
@@ -3293,7 +3307,7 @@ a {
           }
 
           a:last-child {
-            margin-left: 30px;
+            margin-left: 25px;
 
             @media (max-width: 480px) {
               margin: 0 7px;
