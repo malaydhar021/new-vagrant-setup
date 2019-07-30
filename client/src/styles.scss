@@ -1353,6 +1353,10 @@ a {
           transform: translateX(-50%);
           z-index: 9;
         }
+
+        @media (max-width: 575px) {
+          bottom: 30px;
+        }
       }
 
       .mainBoxHeaderRight {
@@ -3358,6 +3362,7 @@ a {
         width: 100%;
         @include mr(0);
         @include ml(0);
+        padding: 0 0 0 15px;
       }
     }
 
@@ -4719,6 +4724,10 @@ a {
                 width: 100%;
                 float: none;
                 padding: 0 !important;
+              }
+
+              @media (max-width: 575px) {
+                overflow: hidden;
               }
             }
           }
@@ -6168,6 +6177,12 @@ body.sign-upPage {
     -moz-transform: none;
     -ms-transform: none;
     transform: none;
+
+    .switchInForm {
+      @media (max-width: 575px) {
+        @include mr(5px);
+      }
+    }
   }
 }
 
