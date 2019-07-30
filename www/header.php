@@ -41,8 +41,8 @@ if (strpos($getEnvUrl, 'local') !== false) {
         </div>
         <div class="navArea">
             <ul class="nav">
-                <li><a href="https://www.<?php echo $linkUrl; ?>/#howItWorks">How It Works</a></li>
-                <li><a href="https://www.<?php echo $linkUrl; ?>/#pricing">Pricing</a></li>
+                <li><a href="https://<?php echo $linkUrl; ?>/#howItWorks">How It Works</a></li>
+                <li><a href="https://<?php echo $linkUrl; ?>/#pricing">Pricing</a></li>
                 <li><a href="https://app.<?php echo $linkUrl; ?>/sign-up" target="_blank"> 14 Day Free Trial</a></li>
             </ul>
             <div class="loginBtn">
