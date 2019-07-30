@@ -38,8 +38,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
   successMessage: string = null; // to show success messages
   validationErrors: any = null; // for showing validation messages
-  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
-  isSubmittedReviews: boolean = false; // flag to set true if the add / edit form is submitted  
+  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
+  isSubmittedReviews: boolean = false; // flag to set true if the add / edit form is submitted
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   isSelectingReview: boolean = false; // to show the sticky review box to select reviews
@@ -169,7 +169,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public ngAfterViewInit() {
     this.onChangeVisualStyle(); // display the widget style onchange of style
-    this.onToggleBrand(); // enable / disable brands 
+    this.onToggleBrand(); // enable / disable brands
     this.onToggleExitPopup(); // enable / disable exit popup
     this.modalCallbacks(); // modal callbacks i.e onClose, onDismiss, onEscape
   }
@@ -181,7 +181,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns Void
    */
   public modalCallbacks() {
-    
+
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
       this.resetForm();
@@ -294,7 +294,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /**
    * @method closeCopySnippetBox
-   * @since Version 
+   * @since Version
    */
   public closeCopySnippetBox() {
     this.showCopySnippetBox = false;
@@ -406,6 +406,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
           // if there is no data object then assign empty array i.e no records found
           this.campaigns = response.data.data;
           this.config.totalItems = response.data.total;
+          this.config.currentPage = 1;
           // hide the loader
           this.loaderService.disableLoader();
         } else {
@@ -481,7 +482,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public compareValue(option, current) {
     if((option !== null && option !== undefined) && ( current !== null && current !== undefined)) {
-        return option.id === current.id;  
+        return option.id === current.id;
     }
   }
 
@@ -688,10 +689,10 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns Void
    */
   public postResponseActivities(
-    message: string, 
-    closeModal: boolean = true, 
-    fetchCampaigns: boolean = true, 
-    hideLoader: boolean = true, 
+    message: string,
+    closeModal: boolean = true,
+    fetchCampaigns: boolean = true,
+    hideLoader: boolean = true,
     error: boolean = false
   ) {
     if (closeModal) this.ngxSmartModalService.getModal('modal1').close(); // close the modal
@@ -749,8 +750,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @example
    * ```
    * var stickyReviews = [
-   * {id: '123', name: 'some name', review: 'blah blah'}, 
-   * {id: '321', name: 'another name', review: 'another review'}, 
+   * {id: '123', name: 'some name', review: 'blah blah'},
+   * {id: '321', name: 'another name', review: 'another review'},
    * {id: '231', name: 'again another review', review: 'review name'}
    * ];
    * var selectedReviews = [{id: '321', name: 'another name', review: 'another review'}];
@@ -862,7 +863,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   public prepareContext(campaign: CampaignInterface) {
     if(campaign.custom_domain !== null) {
       // Example src: https://somecustomdomain.com/lib/widget.min.js
-      return '<script src="https://' + campaign.custom_domain.domain + '/' +  this.campaignScriptForCustomDomain  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async></script>';  
+      return '<script src="https://' + campaign.custom_domain.domain + '/' +  this.campaignScriptForCustomDomain  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async></script>';
     }
     return '<script src="' + WidgetUrl  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async></script>';
   }

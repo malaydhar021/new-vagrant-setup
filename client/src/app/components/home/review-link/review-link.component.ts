@@ -139,7 +139,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   public formStep1() {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      description: ['', Validators.required], 
+      description: ['', Validators.required],
       url_slug: [null, Validators.required],
       logo: [null], // review link logo
       campaign_id: ['', Validators.required],
@@ -507,6 +507,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
         if(response.status) {
           this.config.totalItems = response.data.total;
           this.reviewLinks = response.data.data;
+          this.config.currentPage = 1;
           // hide the loader
           this.loaderService.disableLoader();
         } else {
@@ -896,7 +897,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     }
     return AppBaseUrl + '/user-review/' + link.url_slug;
   }
-  
+
   /**
    * Method to show a message once user has clicked to copy review link
    * @method onClickCopyLink

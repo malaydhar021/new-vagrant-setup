@@ -84,13 +84,13 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   reviewBrandName: string = '';
   openModalName: string ='';
   /**
-   * 
-   * @param ngxSmartModalService 
-   * @param title 
-   * @param formBuilder 
-   * @param errorService 
-   * @param loaderService 
-   * @param exitPopupService 
+   *
+   * @param ngxSmartModalService
+   * @param title
+   * @param formBuilder
+   * @param errorService
+   * @param loaderService
+   * @param exitPopupService
    */
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
@@ -261,6 +261,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
         if (response.status) {
           this.exitPopups = response.data.data;
           this.config.totalItems = response.data.total;
+          this.config.currentPage = 1;
           this.loaderService.disableLoader();
         }
       }

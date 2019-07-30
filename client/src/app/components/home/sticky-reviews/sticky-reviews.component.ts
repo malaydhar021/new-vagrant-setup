@@ -249,7 +249,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public ngAfterViewInit() {
-    // if the user is starter plan then remove video review 
+    // if the user is starter plan then remove video review
     if(this.pricingPlan === 'starter-monthly') {
       this.reviewTypes.splice(-1,1);
     }
@@ -324,6 +324,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           // update the reviews array with latest api response data
           this.config.totalItems = response.data.total;
           this.reviews = response.data.data;
+          this.config.currentPage = 1;
           Log.debug(this.reviews.length, "Checking the length of the reviews property");
           // hide the loader
           this.loaderService.disableLoader();
@@ -471,7 +472,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onEditStickyReview(review: StickyReviewModel) {
-    
+
     // set review id which is currently being edited
     this.reviewId = review.id;
     // set `isEditing` to true once the edit icon has been clicked

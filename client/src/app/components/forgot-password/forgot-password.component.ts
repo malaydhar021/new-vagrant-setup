@@ -71,6 +71,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
    */
   public ngOnInit() {
     // check if the user is logged in or not. if logged in then redirect to home
+    this.isSubmitted = false;
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Forgot Password');

@@ -30,7 +30,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   successMessage: string = null; // to show success messages
   validationErrors: any = null; // for showing validation messages
   subscription: Subscription; // to get the current value updated from error interceptor
-  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
+  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   brandId: number = null; // property to hold the brand id
@@ -181,6 +181,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           // update the brands array with latest api response data
           this.brands = response.data.data;
           this.config.totalItems = response.data.total;
+          this.config.currentPage = 1;
           Log.info("before closing the loader");
           // hide the loader
           this.loaderService.disableLoader();
