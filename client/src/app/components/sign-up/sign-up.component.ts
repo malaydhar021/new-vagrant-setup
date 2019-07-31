@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   loader: boolean = false; // to show / hide the loader by setting true / false
   errorMessage: string = null; // to display server side errors into component template
   isSubmittedStep1: boolean = false; // flag to set to true if the signup form step 1 has been submitted
-  isSubmittedStep2: boolean = false; // flag to set to true if the signpu form step 2 has been submitted
+  isSubmittedStep2: boolean = false; // flag to set to true if the signup form step 2 has been submitted
   validationErrors : any = null; // to display server side validation errors into component template
   successMessage: string = null;
   errorSubscription: Subscription; // to get the current value of showError property
@@ -261,8 +261,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
       (response: any) => {
         Log.info(response, 'Log the response for signup');
         this.loaderService.disableLoader();
-        this.errorService.updateMessage("You have successfully signed up. Please login to continue");
-        this.router.navigate(['/login']);
+        if(response.status) {
+          // this.errorService.updateMessage("You have successfully signed up. Please login to continue");
+          setTimeout(() => {this.errorService.setMessage({type: 'success', 'message' : 'You have successfully signed up. Please login to continue'})}, 100);
+          this.router.navigate(['/login']);
+        } else {
+          setTimeout(() => {this.errorService.setMessage({type: 'error', 'message' : response.message})}, 100);
+        }
       }
     );
   }

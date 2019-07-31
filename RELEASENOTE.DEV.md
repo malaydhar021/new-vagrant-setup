@@ -289,6 +289,10 @@
 
 ## Signup
 
+### V2.0.0
+
+1. Fixed issue with success message during signup
+
 ### V1.0.0
 
 1. Implemented signup feature with two step process

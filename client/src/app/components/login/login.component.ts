@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+        Log.info(this.showError, "Showerror in loging component");
       }
     );
   }
