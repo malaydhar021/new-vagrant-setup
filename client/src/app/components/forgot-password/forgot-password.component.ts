@@ -120,6 +120,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     const data = { email: this.form.value.email };
     this.authService.forgotPassword(data).subscribe(
       (response: any) => {
+        this.isSubmitted = false; // set it to false as form has been successfully submitted
         if(response.status) {
           this.form.reset();
           Log.info(response, 'response for forgot password');
