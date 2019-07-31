@@ -2831,6 +2831,11 @@ a {
                 font-size: 14px;
                 @include mb(10px);
               }
+
+              @media (max-width: 575px) {
+                font-size: 13px;
+                @include mb(5px);
+              }
             }
 
             p {
@@ -4708,6 +4713,18 @@ a {
 
           &.rowCanvas {
             .sr-form-cell-small {
+              &:first-child {
+                label {
+                  .tooltip {
+                    @media (max-width: 420px) {
+                      &:before {
+                        left: auto;
+                        right: 0;
+                      }   
+                    }
+                  }
+                }
+              }
               &:last-child {
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -4724,6 +4741,22 @@ a {
                   margin-right: 0;
 
                   .previewComp {
+                  }
+                }
+              }
+
+              .inlineRow {
+                .colorPicker {
+                  .color-picker {
+                    @media (max-width: 767px) {
+                      @include mt(25px);
+                      right: 15px !important;
+                      left: auto !important;
+
+                      .arrow {
+                        display: none;
+                      }
+                    }
                   }
                 }
               }
@@ -6185,6 +6218,39 @@ body.sign-upPage {
     -moz-transform: none;
     -ms-transform: none;
     transform: none;
+
+    .sr-form-row {
+      .sr-form-cell-small + .sr-form-cell-small {
+        .colorPicker {
+          .color-picker {
+            @media (max-width: 767px) {
+              @include mt(25px);
+              right: 15px !important;
+              left: auto !important;
+
+              .arrow {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+      .sr-form-cell-small {
+        .colorPicker {
+          .color-picker {
+            @media (max-width: 575px) {
+              @include mt(25px);
+              right: 15px !important;
+              left: auto !important;
+
+              .arrow {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
 
     .switchInForm {
       @media (max-width: 575px) {
