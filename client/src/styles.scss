@@ -3085,6 +3085,14 @@ a {
       font-size: 14px;
       display: block;
       padding-top: 10px;
+
+      @media (max-width: 480px) {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      font-size: 24px;
     }
   }
 
@@ -7862,6 +7870,15 @@ body.sign-upPage {
     color: #858788;
     font-size: 14px;
   }
+
+  @media (max-width: 480px) {
+    padding-top: 25px;
+    margin-bottom: 25px;
+
+    p {
+      font-size: 13px;
+    }
+  }
 }
 
 .cancelReg {
@@ -7871,6 +7888,10 @@ body.sign-upPage {
 
     .link-inline {
       cursor: pointer;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 13px;
     }
   }
 
@@ -7919,6 +7940,10 @@ body.sign-upPage {
     color: #404040;
     font-weight: normal;
     @include mb(17px);
+
+    @media (max-width: 480px) {
+        font-size: 24px;
+    }
   }
 
   p {
@@ -7976,6 +8001,10 @@ body.sign-upPage {
       height: 50px;
       font-size: 12px;
     }
+
+    @media (max-width: 480px) {
+      @include mt(20px);
+    }
   }
 
   .cancellationConfirmation {
@@ -7988,6 +8017,10 @@ body.sign-upPage {
       @include mb(20px);
     }
   }
+
+  @media (max-width: 480px) {
+    padding: 50px 0;
+  }
 }
 
 .d-table {
@@ -7997,6 +8030,15 @@ body.sign-upPage {
   .d-cell {
     display: table-cell;
     vertical-align: middle;
+  }
+
+  .plansArea {
+    .plans {
+      @media (max-width: 480px) {
+        margin-left: 12px;
+        margin-right: 12px;
+      }
+    }
   }
 }
 
