@@ -26,7 +26,7 @@
                 <li>Action </li>
             </ul>
             <div class="tbody">
-                <ul>
+                <ul *ngIf="token.length > 0; else noRecords">
                     <li class="row" *ngFor="let tokenData of token">
                         <div class="rowContainer">
                             <div class="tcol">
@@ -42,6 +42,19 @@
                         </div>
                     </li>
                 </ul>
+
+              <ng-template #noRecords>
+                <ul>
+                  <li class="row">
+                    <div class="rowContainer">
+                      <div class="tcol formatNoTokenText">
+                        <h3>You haven't created any zapier token yet. </h3>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </ng-template>
+
             </div>
         </div>
     </div>

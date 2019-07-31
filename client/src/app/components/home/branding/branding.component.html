@@ -2,7 +2,7 @@
   <header class="mainBoxHeader">
     <div class="mainBoxHeaderLeft">
       <button type="button" class="addReview" (click)="onAddBrand()">
-        <img src="../../../../assets/images/addIcon.png" alt=""> 
+        <img src="../../../../assets/images/addIcon.png" alt="">
         Add Branding
       </button>
     </div>
@@ -74,8 +74,8 @@
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.brandName.errors}" formControlName="brandName">
                 <div class="error-msg" *ngIf="(
-                  isSubmitted 
-                  && getFormControls.brandName.errors !== null 
+                  isSubmitted
+                  && getFormControls.brandName.errors !== null
                   && getFormControls.brandName.errors.required)">
                   Brand Name is required
                 </div>
@@ -89,8 +89,8 @@
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.brandUrl.errors}" formControlName="brandUrl">
                 <div class="error-msg" *ngIf="(
-                  isSubmitted 
-                  && getFormControls.brandUrl.errors !== null 
+                  isSubmitted
+                  && getFormControls.brandUrl.errors !== null
                   && getFormControls.brandUrl.errors.required)">
                   Brand URL is required
                 </div>

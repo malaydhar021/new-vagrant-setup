@@ -108,14 +108,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.loaderService.enableLoader();
     this.userService.createToken(tokenName).subscribe(
       (response: any) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status) {
           this.userZapierTokenForm.reset();
           this.ngxSmartModalService.getModal('modal1').close();
           this.getUserZapierToken();
         } else {
           this.getUserZapierToken();
-          this.errorService.setMessage({type: 'success', message: response.data.message});
+          this.errorService.setMessage({type: 'error', message: response.data.message});
         }
         this.loaderService.disableLoader();
       }

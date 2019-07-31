@@ -100,7 +100,7 @@ class UserController extends Controller
                 'data' => [
                     'http_code' => 200,
                     'status' => false,
-                    'message' => "Please delete the existing token to create a new token .",
+                    'message' => "Please delete the existing token to create a new token.",
                 ],
             ]);
         }

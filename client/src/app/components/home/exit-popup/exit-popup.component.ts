@@ -387,9 +387,11 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   }
 
   public getCampaignsList() {
+    this.loaderService.enableLoader();
     this.exitPopupService.getCampaignsList().subscribe(
       (response: any) => {
         if (response.status) {
+          this.loaderService.disableLoader();
           this.campaigns = response.data;
         }
       }
@@ -409,9 +411,11 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   }
 
   public getStickyReviews() {
+    this.loaderService.enableLoader();
     this.exitPopupService.getStickyReviews().subscribe(
       (response: any) => {
         if (response.status) {
+          this.loaderService.disableLoader();
           this.stickyReviews = response.data;
         }
       }
