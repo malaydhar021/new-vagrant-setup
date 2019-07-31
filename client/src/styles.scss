@@ -1786,6 +1786,30 @@ a {
       }
     }
 
+    &.subscribedMain {
+      .dataTableArea {
+        .table.table-col-4 {
+          .tbody {
+            li {
+              &.row {
+                .rowContainer {
+                  .tcol:last-child {
+                    width: auto;
+                    flex: 0 0 auto;
+                    margin-left: auto;
+
+                    .delete {
+                      @include mt(0);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     @media (max-width: 991px) {
       border: none;
       // min-height: calc(100vh - 71px);
@@ -8359,6 +8383,10 @@ img {
     // display: block;
     padding: 100px 0 50px;
   }
+
+  @media (max-width: 480px) {
+    padding-top: 70px;
+  }
 }
 
 .reviewlinkForm {
@@ -8432,6 +8460,11 @@ img {
       height: 1px;
       width: 60px;
       background-color: #ccc;
+    }
+
+    @media (max-width: 480px) {
+      padding-top: 45px;
+      padding-bottom: 15px;
     }
   }
 
