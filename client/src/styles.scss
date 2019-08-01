@@ -4722,6 +4722,15 @@ a {
               }
             }
 
+            .popupParent {
+              &.pop_small {
+                @media (max-width: 480px) {
+                  @include mt(15px);
+                  @include ml(10px);
+                }
+              }
+            }
+
             @media (max-width: 575px) {
               display: block;
               width: 100%;
@@ -9060,6 +9069,18 @@ img {
       -webkit-box-pack: center;
       -ms-flex-pack: center;
       justify-content: center;
+      
+      .popAdd {
+        @media (max-width: 420px) {
+          overflow-x: hidden;
+        }
+      }
+    }
+
+    .showStyleP + .btnStyles {
+      @media (max-width: 420px) {
+        margin-bottom: 30px;
+      }
     }
 
     // @media (max-width: 575px) {
