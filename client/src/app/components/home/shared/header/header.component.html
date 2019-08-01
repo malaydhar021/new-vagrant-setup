@@ -13,11 +13,11 @@
             You haven't subscribe
         </h2>
         <div class="planName" *ngIf="userPlanDetails && (userPlanDetails.status === 'ACTIVE' || userPlanDetails.status === 'NA')">
-          {{currentPlanName}} 
+          {{currentPlanName}}
         </div>
         <a [routerLink]="['/home/plans']" class="upgrade">{{ (userPlanDetails && userPlanDetails.status !== 'ACTIVE' && userPlanDetails.status !== 'NA') ? 'Add' : 'Update' }} Now</a>
       </div>
-      <div class="bottomSec">
+      <div class="bottomSec" *ngIf="showUpdateCard === 1">
         <ul>
           <li><a [routerLink]="['/home/update-payment-info']" routerLinkActive="active">{{ (userPlanDetails && userPlanDetails.status !== 'ACTIVE' && userPlanDetails.status !== 'NA') ? 'Add' : 'Update' }} Payment Info</a></li>
         </ul>

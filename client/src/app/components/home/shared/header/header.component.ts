@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy }         from '@angular/core';
-import { Router }                               from '@angular/router';
-import { CookieService }                        from 'ngx-cookie-service';
-import { Subscription }                         from 'rxjs';
-import { AuthService }                          from '../../../../services/auth.service';
-import { ErrorsService }                        from '../../../../services/errors.service';
-import { MenuService }                          from '../../../../services/menu.service';
-import { Log }                                  from '../../../../helpers/app.helper';
-import { SubscriptionService }                  from '../../../../services/subscription.service';
-import { UserService }                          from '../../../../services/user.service';
-import { LoaderService }                        from '../../../../services/loader.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../../../services/auth.service';
+import { ErrorsService } from '../../../../services/errors.service';
+import { MenuService } from '../../../../services/menu.service';
+import { Log } from '../../../../helpers/app.helper';
+import { SubscriptionService } from '../../../../services/subscription.service';
+import { UserService } from '../../../../services/user.service';
+import { LoaderService } from '../../../../services/loader.service';
 
 /**
  * This component is responsible for handling all sort of operations in application header
@@ -30,14 +30,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   tglProfile = false;
   tglSide = false;
   isActive = false;
-  subscription: Subscription;  
-  menuSubscription: Subscription; 
+  subscription: Subscription;
+  menuSubscription: Subscription;
   error: string = null;
   userPlanSubscription: Subscription;
-  userPlanDetails:any;
-  currentPlanName:string = '';
+  userPlanDetails: any;
+  currentPlanName: string = '';
   userImageUrlSubscription: Subscription;
-  userImageUrl: string 
+  userImageUrl: string;
+  showUpdateCard: any = 1;  // Show update card button the users
 
   /**
    * Constructor method to load services first so that those can be used as required
@@ -73,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       Log.info(this.userPlanDetails, "Lets check user in header");
       // userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias && (this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase())
       if(userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias){
-        this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase()
+        this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase();
       }
     })
     // subscription to user profile image url and update it once the url got updated from profile section
@@ -113,10 +114,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   public ngOnInit() {
     this.userService.getAuthUserInfo().subscribe(
-      (response:any) => {
+      (response: any) => {
         if (response.data.image){
-          this.userService.setUserImage(response.data.image)
+          this.userService.setUserImage(response.data.image);
         }
+        this.showUpdateCard = response.data.pay_info;
       }
     )
   }
@@ -165,7 +167,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function to logout the user from the application by removing localStorage and sessionStorage 
+   * Function to logout the user from the application by removing localStorage and sessionStorage
    * data and redirect user to login page
    * @method onLogout
    * @since Version 1.0.0
