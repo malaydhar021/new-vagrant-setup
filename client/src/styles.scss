@@ -1150,6 +1150,10 @@ a {
               -webkit-transition: all 0.5s ease 0s;
               transition: all 0.5s ease 0s;
               cursor: pointer;
+
+              &:hover {
+                color: #e30b5d;
+              }
             }
 
             &:not(:last-child) {
@@ -1802,6 +1806,35 @@ a {
 
                     .delete {
                       @include mt(0);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.tokenMain {
+      .dataTableArea {
+        .inDataHdr {
+          @media (max-width: 1365px) {
+            padding: 5px 15px;
+          }
+          @media (max-width: 991px) {
+            padding: 5px 0;
+          }
+        }
+        .table {
+          li {
+            &.row {
+              .tcol {
+                &:last-child {
+                  > a {
+                    &.copyBtn,
+                    &.delete {
+                      margin-top: 0;
                     }
                   }
                 }
@@ -5617,6 +5650,10 @@ body.sign-upPage {
       @media (max-width: 480px) {
         height: 42px;
         @include border-radius(3px);
+
+        &.card {
+          background-position: 10px 8px !important;
+        }
       }
     }
 
@@ -5765,6 +5802,10 @@ body.sign-upPage {
         margin-top: 0;
         margin-bottom: 26px;
       }
+    }
+
+    @media (max-width: 575px) {
+      margin-top: 40px;
     }
   }
 
