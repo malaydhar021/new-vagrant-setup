@@ -8,16 +8,15 @@
      * @license Proprietary
      */
 
-    require __DIR__.'/api/vendor/autoload.php';
-    require __DIR__."/vendor/autoload.php";
+    require __DIR__.'/../api/vendor/autoload.php';
     
     use Illuminate\Database\Capsule\Manager as Capsule;
     
-    class CnameVerfication {
+    class Bootstrap {
         /**
          * Constant to set path of dotenv with trailing slash
          */
-        CONST API_DOTENV_PATH = __DIR__.'/api/';
+        CONST API_DOTENV_PATH = __DIR__.'/../api/';
         
         /**
          * Construct method to validate request method and access token to verify CNAME integration.
@@ -70,12 +69,8 @@
             // Setup the Eloquent ORM.
             $capsule->bootEloquent();
             
-            $this->debug($_POST['access_token']);
-            
             $user = $capsule->table('users')->where('access_token', $_POST['access_token'])->get();
 
-            $this->debug($user, true);
-            
             if($user->count() == 1) {
                 echo $this->jsonResponse("Custom domain has been verified successfully"); die();
             } else {
@@ -107,5 +102,5 @@
         }
     }
 
-    new CnameVerfication;
+    new Bootstrap;
 ?>

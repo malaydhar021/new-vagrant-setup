@@ -14,9 +14,6 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class Handler extends ExceptionHandler
@@ -160,44 +157,12 @@ class Handler extends ExceptionHandler
                 ], 200);
             }
             
-            /** Guzzle Http Client Exception */
-            if ($exception instanceof ClientException) {
+            /** Custom Domain Exception */
+            if ($exception instanceof CustomDomainException) {
                 return response()->json([
                     'status' => false,
-                    'message' => "Custom domain couldn't be created. This can be an issue with DNS mapping with CNAME domain. Please make sure that you have configured properly",
-                    'errors' => [
-                        'error_message' => $exception->getMessage(),
-                        'error_trace' => config('app.debug') ? $exception->getTrace() : null,
-                    ]
-                ], 500);
-            }
-            
-            /** Guzzle Http Connect Exception */
-            if ($exception instanceof ConnectException) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Please make sure your input matches all the following conditions",
-                    'errors' => ['cnameError' => "CNAME check failed ! CNAME has not been added to this domain"]
-                ], 400);
-            }
-            
-            /** Symfoni process failed Exception */
-            if ($exception instanceof ProcessFailedException) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Process has been failed",
-                    'errors' => [
-                        'error_message' => $exception->getMessage(),
-                        'error_trace' => config('app.debug') ? $exception->getTrace() : null,
-                    ]
-                ], 500);
-            }
-            
-            /** Symfoni process failed Exception */
-            if ($exception instanceof RequestException) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Custom domain couldn't be created. This can be an issue with DNS mapping with CNAME domain. Please try after sometime",
+                    'message' => "Custom domain couldn't be created. This might be an issue with DNS configuration. " .
+                        "Please make sure DNS has been properly pointed to " . config('app.cname_domain'),
                     'errors' => [
                         'error_message' => $exception->getMessage(),
                         'error_trace' => config('app.debug') ? $exception->getTrace() : null,

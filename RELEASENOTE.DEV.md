@@ -8,6 +8,11 @@
 
 ## Custom Domain
 
+### V2.0.0
+
+1. Modified and improved custom domain create, update and delete api
+2. Fixed issue with domain validation regex in frontend
+
 ### V1.2.1
 
 1. Added DNS configuration message to main custom domain form as well

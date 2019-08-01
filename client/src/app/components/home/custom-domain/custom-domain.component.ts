@@ -92,7 +92,8 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
     // initialize the form builder for add / edit a custom domain form
     this.form = this.formBuilder.group({
       name: [null, Validators.required], // custom domain name
-      domain: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z0-9]{2,})+$')]] // custom domain url
+      // domain: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z0-9]{2,})+$')]] // custom domain url
+      domain: [null, [Validators.required, Validators.pattern('^([a-zA-Z0-9][a-zA-Z0-9-_]*\.)*[a-zA-Z0-9]*[a-zA-Z0-9-_]*[[a-zA-Z0-9]+$')]] // custom domain url
     });
     // pagination controls
     this.config = {

@@ -79,6 +79,19 @@ return [
     */
 
     'redirect_url' => env( 'REDIRECT_URL', 'https://app.usestickyreviews.com'),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | CNAME Domain
+    |--------------------------------------------------------------------------
+    |
+    | This domain will be used for custom domain feature. When someone is trying
+    | to create one custom domain from this application, first the custom domain
+    | needs to be pointed to this cname domain in DNS configuration.
+    |
+    */
+
+    'cname_domain' => env( 'CNAME_DOMAIN', 'cname.usestickyreviews.com'),
 
     /*
     |--------------------------------------------------------------------------
