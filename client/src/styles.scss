@@ -9072,7 +9072,9 @@ img {
       
       .popAdd {
         @media (max-width: 420px) {
-          overflow-x: hidden;
+          // overflow-x: hidden;
+          transform-origin: 50% 50%;
+          transform: scale(0.8);
         }
       }
     }
