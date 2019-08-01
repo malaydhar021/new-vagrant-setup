@@ -9073,8 +9073,12 @@ img {
       .popAdd {
         @media (max-width: 420px) {
           // overflow-x: hidden;
-          transform-origin: 50% 50%;
-          transform: scale(0.8);
+          -webkit-transform-origin: 50% 50%;
+          -ms-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+                -webkit-transform: scale(0.8);
+                    -ms-transform: scale(0.8);
+                        transform: scale(0.8);
         }
       }
     }
@@ -9096,6 +9100,25 @@ img {
 
     @media (max-width: 575px) {
       padding: 0 15px;
+    }
+  }
+
+  &.reviewLinkCtrl {
+    @media (max-width: 575px){
+      position: static;
+      margin: 0 15px;
+      max-width: calc(100% - 30px);
+      -webkit-transform: none;
+      -ms-transform: none;
+      transform: none;
+      
+      .bodyCreview {
+        max-height: inherit;
+
+        .showStyleP {
+          margin: 0 auto;
+        }
+      }
     }
   }
 
