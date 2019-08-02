@@ -8935,11 +8935,11 @@ img {
 
               &:last-child {
                 color: #333;
+                overflow: hidden;
+                text-overflow: ellipsis;
 
                 @media (max-width: 480px) {
                   display: inline-block;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
                 }
               }
 
