@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   subscription: Subscription; // used for load error message set from different places and assign to error property asynchronously
   showCookie: boolean = false;
   errorSubscription: Subscription; // to get the current value of showError property
-  showError: boolean = false; // flag to show error message 
+  showError: boolean = false; // flag to show error message
   successMessage: string = null; // flag to hold the success message
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
 
@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
     // if user is already logged in then redirect the user to home
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     this.renderer.addClass(document.body, 'loginPage');
+    console.log('Login component inside the if condition ');
     if (!this.cookieService.get('_readSite')) {
         this.showCookie = true;
     }
@@ -80,7 +81,7 @@ export class LoginComponent implements OnInit {
       rememberMe: [false]
     });
 
-    if (!this.cookieService.get('readSite')) {
+    if (!this.cookieService.get('_readSite')) {
       this.showCookie = true;
     }
 

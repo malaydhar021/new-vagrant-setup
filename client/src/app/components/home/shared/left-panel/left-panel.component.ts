@@ -50,7 +50,7 @@ export class LeftPanelComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    if (!this.cookieService.get('readSite')) {
+    if (!this.cookieService.get('_readSite')) {
       this.showCookie = true;
     }
   }
@@ -63,7 +63,7 @@ export class LeftPanelComponent implements OnInit, OnDestroy {
    * Function to  set cookie and close the cookie notification
    */
   public closeCookie() {
-    this.cookieService.set('readSite', '1');
+    this.cookieService.set('_readSite', '1', 450, '/', 'usestickyreviews.com');
     this.showCookie = false;
   }
 
