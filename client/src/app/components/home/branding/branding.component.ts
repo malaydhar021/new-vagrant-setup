@@ -345,6 +345,10 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   public onDeleteBrand(brandId: number) {
     // setting to true as user wants to delete a brand
     this.isDeleting = true;
+    
+    // now open the modal with empty form to add a brand
+    this.ngxSmartModalService.getModal('modal2').open();
+
     // lets get the confirmation from user. if user cancel it then it's not doing anything
     if(!confirm("Are you sure want to delete it?")) {
       return;

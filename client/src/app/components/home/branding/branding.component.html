@@ -109,3 +109,30 @@
     </div>
   </div>
 </ngx-smart-modal>
+
+<ngx-smart-modal #modal2 identifier="modal2" class="sr-modal modalNotif">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+        Hey, wait!
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="sr-form">
+            <div class="sr-form-row">
+              <div class="sr-form-cell btnStyles">
+                  <label>Are you sure you want to delete it?</label>
+                  <button class="stAccpt" type="">
+                    Yes
+                  </button>
+                  <button class="stReject" type="">
+                    No
+                  </button>
+              </div>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ngx-smart-modal>

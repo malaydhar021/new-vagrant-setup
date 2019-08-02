@@ -4882,6 +4882,65 @@ a {
       }
     }
   }
+
+  &.modalNotif {
+    .nsm-dialog {
+      max-width: 420px;
+
+      .nsm-dialog-btn-close {
+        display: none;
+      }
+
+      .sr-modal-header {
+        padding-left: 15px;
+        text-align: center;
+
+        h2 {
+          @include mb(15px);
+          &:after {
+            left: 50%;
+            @include ml(-25px);
+          }
+        }
+      }
+
+      .sr-modal-body {
+        .sr-form-row {
+          padding: 0 15px;
+    
+          .sr-form-cell {
+            label {
+              text-align: center;
+            }
+            &.btnStyles {
+              text-align: center;
+              button {
+                margin-top: 0;
+                border-bottom-left-radius: 30px;
+                min-width: 100px;
+
+                &.stReject {
+                  -webkit-transform: scale(0.8);
+                  -moz-transform: scale(0.8);
+                  -ms-transform: scale(0.8);
+                  transform: scale(0.8);
+                }
+              }
+
+              &:after {
+                clear: both;
+              }
+              &:after,
+              &:before {
+                content: '';
+                display: table;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -8920,6 +8979,8 @@ img {
             @include border-radius(14px);
             padding-left: 90px;
             padding-right: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             span {
               font-size: 16px;
@@ -11139,6 +11200,26 @@ Cookie notification css
       -ms-transform: skew(-15deg);
       transform: skew(-15deg);
       width: 12px;
+    }
+  }
+}
+
+.btnStyles {
+  button{
+    color: #fff;
+    border-radius: 30px 30px 30px 0;
+    font-size: 12px;
+    text-align: center;
+    padding: 12px 15px;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 18px;
+  
+    &.stAccpt {
+      background-color: #47e3bd;
     }
   }
 }
