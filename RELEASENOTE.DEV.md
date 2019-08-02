@@ -165,6 +165,11 @@
 
 ## User Review
 
+### V2.0.0
+
+1. Fixed issue with custom domain accessing issue with all review links
+2. Fixed issue with slug mismatch during opening of a review link
+
 ### V1.1.1
 
 1. Fixed issue with recommendation value 

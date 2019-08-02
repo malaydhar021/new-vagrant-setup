@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, BehaviorSubject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -25,6 +25,7 @@ export class RequestInterceptor implements HttpInterceptor {
   loader = false;
   defaultErrorMessage = 'Something went wrong. Please try again after successfully login.';
 
+  // constructor method to load all required service
   constructor(private authService: AuthService, private router: Router, private errorService: ErrorsService, private loaderService: LoaderService) { }
 
   /**
@@ -94,12 +95,13 @@ export class RequestInterceptor implements HttpInterceptor {
         return of(errorMessage400);
 
       case 404: // Not Found
+        this.errorService.update404Status(true);
         // update the error messaged based on message object in http response
-        const errorMessage404 = this.updateErrorMessage(error);
+        // const errorMessage404 = this.updateErrorMessage(error);
         // redirect user to login page
         // this.router.navigate(['/login']);
         // return observable as string
-        return of(errorMessage404);
+        // return of(errorMessage404);
 
       case 405: // Method not allowed
         // update the error messaged based on message object in http response

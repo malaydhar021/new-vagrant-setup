@@ -157,6 +157,14 @@ class Handler extends ExceptionHandler
                 ], 200);
             }
             
+            /** User Review Exceptions Response */
+            if ($exception instanceof UserReviewException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "The link that you are looking for is not found",
+                ], 404);
+            }
+            
             /** Custom Domain Exception */
             if ($exception instanceof CustomDomainException) {
                 return response()->json([

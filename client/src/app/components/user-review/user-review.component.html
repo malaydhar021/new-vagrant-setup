@@ -1,4 +1,4 @@
-<div class="reviewLinkBody" [style.background-color]="urlInfo.page_background">
+<div class="reviewLinkBody" [style.background-color]="urlInfo.page_background" *ngIf="!show404">
   <div class="reviewlinkForm" [style.background-color]="urlInfo.modal_background">
     <!-- Header -->
     <header class="reviewLHdr">
@@ -32,3 +32,4 @@
     <p [innerHTML]="urlInfo.copyright_text"></p>
   </footer>
 </div>
+<app-not-found *ngIf="show404" [letsGoHome]="false"></app-not-found>

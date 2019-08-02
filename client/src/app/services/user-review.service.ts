@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import {StickyReviewsApiEndpoints, UserReviewApiEndpoints} from '../helpers/api.helper';
+import { UserReviewApiEndpoints} from '../helpers/api.helper';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserReviewLinkInfo } from '../interfaces/user-review.interface';
 import { UserReviewModel } from '../models/user-review.model';
@@ -13,7 +13,7 @@ import { ErrorsService } from './errors.service';
  * validations handling. It also enable / disable steps with stepBuilder object which is 
  * very easy to work with.
  * @class UserReviewService
- * @version 1.0.0
+ * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -220,10 +220,22 @@ export class UserReviewService {
     );
   }
 
+  /**
+   * Method to check passkey during accept or reject a review
+   * @since Version 2.0.0
+   * @param data FormData instance
+   * @returns Observable
+   */
   public checkPasskey(data: FormData) {
     return this.httpClient.post(UserReviewApiEndpoints.checkPasskey, data);
   }
 
+  /**
+   * Update a sticky review status either accepted or rejected
+   * @since Version 2.0.0
+   * @param data FormData instance
+   * @returns Observable
+   */
   public reviewAction(data: FormData) {
     return this.httpClient.post(UserReviewApiEndpoints.reviewAction, data);
   }

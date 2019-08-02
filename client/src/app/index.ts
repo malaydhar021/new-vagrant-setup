@@ -14,7 +14,6 @@ import { ErrorsService } from './services/errors.service';
 import { LoginComponent } from './components/login/login.component';
 import { LoaderModule } from './components/shared/loader/loader.module';
 import { LoaderService } from './services/loader.service';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RequestInterceptor } from './services/interceptors/request.interceptor.service';
 import { ReviewLinkService } from './services/review-link.service';
 import { SignupService } from './services/signup.service';
@@ -25,6 +24,7 @@ import { MessageModule } from './modules/message.module';
 import { SubscriptionGuard } from './services/guards/subscription.guard.service';
 import { MediaModule } from './modules/media.module';
 import { MediaService } from './services/media.service';
+import { NotFoundModule } from './modules/shared/not-found.module';
 
 /**
  * AppComponent is the first component which loads when the application is getting bootstrapped.
@@ -53,8 +53,7 @@ export class AppComponent {}
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    NotFoundComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +67,7 @@ export class AppComponent {}
     LoaderModule,
     ColorPickerModule,
     MediaModule,
+    NotFoundModule
   ],
   providers: [
     Title,

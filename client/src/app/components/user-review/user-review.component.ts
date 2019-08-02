@@ -8,6 +8,7 @@ import { LoaderService }                from '../../services/loader.service';
 import { UserReviewLinkInfo }           from '../../interfaces/user-review.interface';
 import { UserReviewModel }              from '../../models/user-review.model';
 import { ErrorsService }                from '../../services/errors.service';
+import { AppBaseUrl }                   from '../../helpers/api.helper';
 
 /**
  * Component to load the first screen of user review link with proper info
@@ -41,8 +42,10 @@ export class UserReviewComponent implements OnInit, OnDestroy {
     copyright_text: null
   };
   errorSubscription: Subscription; // to get the current value of showError property
+  notFoundSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   successMessage: string = null; // holds the success message and displays the message to user
+  show404: boolean = false; // set to true to show 404 page
 
   /**
    * Constructor method of UserReviewComponent
@@ -78,6 +81,13 @@ export class UserReviewComponent implements OnInit, OnDestroy {
         this.showError = status;
       }
     );
+
+    // 
+    this.notFoundSubscription = this.errorService.show404$.subscribe(
+      (status: boolean) => {
+        this.show404 = status;
+      }
+    );
   }
 
   /**
@@ -87,11 +97,45 @@ export class UserReviewComponent implements OnInit, OnDestroy {
    */
   public ngOnInit() {
     this.loaderService.enableLoader();
+    this.route.data.subscribe(
+      (response: any) => {
+        // if there url slug is wrong then stop executing rest of the code
+        if(typeof response.reviewLink === 'undefined') {
+          this.loaderService.disableLoader();
+          return;
+        }
+        // checking custom domain validation
+        if(response.reviewLink.data.custom_domain !== null && response.reviewLink.data.custom_domain.name !== window.location.host) {
+          this.errorService.update404Status(true);
+          this.loaderService.disableLoader();
+          return;
+        }
+        // checking without custom domain validation
+        if(response.reviewLink.data.custom_domain === null && 'https://' + window.location.host !== AppBaseUrl) {
+          this.errorService.update404Status(true);
+          this.loaderService.disableLoader();
+          return;
+        }
+
+        this.urlInfo = response.reviewLink.data;
+        const data: UserReviewModel = {
+          review_link_id: response.reviewLink.data.id,
+          review_link_slug: response.reviewLink.data.url_slug,
+          negative_review_message_1: response.reviewLink.data.negative_info_review_message_1,
+          negative_review_message_2: response.reviewLink.data.negative_info_review_message_2,
+          positive_review_message: response.reviewLink.data.positive_review_message,
+          pricing_plan_id: response.reviewLink.data.subscription.data.pricing_plan,
+          allow_video_review: response.reviewLink.data.allow_video_review
+        }
+        this.userReviewService.updateReview(data);
+        this.loaderService.disableLoader();
+      }
+    )
     // get the route params
-    this.route.params.subscribe(params => {
-      this.slug = params.slug;
-      this.getURLInfo(params.slug);
-    });
+    // this.route.params.subscribe(params => {
+    //   this.slug = params.slug;
+    //   this.getURLInfo(params.slug);
+    // });
   }
 
   /**
@@ -103,6 +147,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.reviewSubscription.unsubscribe();
     this.errorSubscription.unsubscribe();
+    this.notFoundSubscription.unsubscribe();
   }
 
   /**
@@ -112,7 +157,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public getURLInfo(slug: string) {
+  public getURLInfo(slug: string = null) {
     // this.loaderService.enableLoader();
     this.userReviewService.getUserReviewLinkInfo(slug).subscribe(
       (response: any) => {

@@ -9,7 +9,7 @@
             <h3>Oops! Something went wrong</h3>
             <p>This page is missing or you assembled the link incorrectly.</p>
 
-            <a [routerLink]="['/home/dashboard']" class="btn-oval">Let's go home</a>
+            <a *ngIf="letsGoHome" [routerLink]="['/home/dashboard']" class="btn-oval">Let's go home</a>
         </div>
     </div>
 </div>

@@ -35,6 +35,10 @@ export class ErrorsService {
   private messageSubject: BehaviorSubject<any> = new BehaviorSubject<string>(null);
   message$: Observable<any> = this.messageSubject.asObservable();
 
+  // declaring varient of Subject for error message
+  private pageNotFoundSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  show404$: Observable<boolean> = this.pageNotFoundSubject.asObservable();
+
   /**
    * Method to update the error message from http request asynchronously
    * @method updateMessage
@@ -81,6 +85,17 @@ export class ErrorsService {
     const status = (data !== '' || data !== null) ? true : false;
     this.messageSubject.next(data);
     this.updateShowMessageStatus(status);
+  }
+
+   /**
+   * Method to update the error message from http request asynchronously
+   * @method update404Status
+   * @since version 2.0.0
+   * @param message (string) Error message
+   * @returns Observable<String>
+   */
+  public update404Status(status: boolean) {
+    this.pageNotFoundSubject.next(status);
   }
 
   /**

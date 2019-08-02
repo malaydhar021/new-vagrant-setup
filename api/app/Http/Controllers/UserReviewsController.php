@@ -13,6 +13,7 @@ use App\UserZapierTokens;
 use Carbon\Carbon;
 
 use Exception;
+use App\Exceptions\UserReviewException;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -28,8 +29,12 @@ class UserReviewsController extends Controller
      */
     public function show($slug)
     {
-        $reviewLink = ReviewLink::where('url_slug', $slug)->firstOrFail();
-        $reviewLink->load('campaign', 'user', 'customDomain');
+        try {
+            $reviewLink = ReviewLink::where('url_slug', $slug)->firstOrFail();
+            $reviewLink->load('campaign', 'user', 'customDomain');
+        } catch (Exception $exc) {
+            throw new UserReviewException($exc->getMessage());
+        }
         
         return response()->json([
             'status' => true,

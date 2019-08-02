@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UserReviewComponent } from 'src/app/components/user-review/user-review.component';
+import { UserReviewComponent } from '../../components/user-review/user-review.component';
+import { UserReviewResolver } from '../../services/resolvers/user-review.resolver.service';
+
 // defining all possible routes for user review
 const routes: Routes = [
-  {path: '', component: UserReviewComponent}
+  { path: '', resolve: { reviewLink: UserReviewResolver }, component: UserReviewComponent }
 ];
 
 /**

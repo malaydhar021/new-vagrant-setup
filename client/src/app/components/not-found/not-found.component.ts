@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Log } from 'src/app/helpers/app.helper';
 import { Title } from '@angular/platform-browser';
 
@@ -15,9 +15,10 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./not-found.component.scss']
 })
 export class NotFoundComponent implements OnInit {
+  @Input() letsGoHome?: boolean = true;
   constructor(private title: Title) { }
 
   public ngOnInit() { 
-    this.title.setTitle("Stickyreviews:: Page Not Found");
+    this.title.setTitle("Stickyreviews :: Page Not Found");
   }
 }

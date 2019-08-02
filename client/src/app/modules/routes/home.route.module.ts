@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER }                         from '@angular/core';
+import { NgModule }                         from '@angular/core';
 import { Routes, RouterModule }             from '@angular/router';
 import { HomeComponent }                    from '../../components/home/home.component';
 import { BrandingComponent }                from '../../components/home/branding/branding.component';
@@ -26,14 +26,14 @@ const routes: Routes = [
     {path: 'cancel-membership',   component: CancelMembershipComponent, canActivate: [SubscriptionGuard]},
     {path: 'dashboard',           component: DashboardComponent, canActivate: [SubscriptionGuard]},
 
-    {path: 'sticky-reviews',  canActivate: [SubscriptionGuard], component: StickyReviewsComponent},
-    {path: 'branding',        canActivate: [SubscriptionGuard], component: BrandingComponent},
-    {path: 'campaign',        canActivate: [SubscriptionGuard], component: CampaignComponent},
-    {path: 'exit-popup',      canActivate: [SubscriptionGuard], component: ExitPopupComponent},
-    {path: 'review-link',     canActivate: [SubscriptionGuard], component: ReviewLinkComponent},
-    {path: 'settings', canActivate: [SubscriptionGuard], component: SettingsComponent},
-    {path: 'custom-domains', canActivate: [SubscriptionGuard], component: CustomDomainComponent},
-    {path: 'subscribed-emails', canActivate: [SubscriptionGuard], component: SubscribedEmailsComponent},
+    {path: 'sticky-reviews',      canActivate: [SubscriptionGuard], component: StickyReviewsComponent},
+    {path: 'branding',            canActivate: [SubscriptionGuard], component: BrandingComponent},
+    {path: 'campaign',            canActivate: [SubscriptionGuard], component: CampaignComponent},
+    {path: 'exit-popup',          canActivate: [SubscriptionGuard], component: ExitPopupComponent},
+    {path: 'review-link',         canActivate: [SubscriptionGuard], component: ReviewLinkComponent},
+    {path: 'settings',            canActivate: [SubscriptionGuard], component: SettingsComponent},
+    {path: 'custom-domains',      canActivate: [SubscriptionGuard], component: CustomDomainComponent},
+    {path: 'subscribed-emails',   canActivate: [SubscriptionGuard], component: SubscribedEmailsComponent},
   ]}
 ];
 

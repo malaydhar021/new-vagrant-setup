@@ -10,7 +10,7 @@ import { DigitsOnlyDirective }              from '../../directives/digits-only.d
  */
 @NgModule({
   declarations: [
-    DigitsOnlyDirective
+    DigitsOnlyDirective,
   ],
   imports: [],
   exports: [

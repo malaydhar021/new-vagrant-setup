@@ -14,6 +14,8 @@ import { BarRatingModule } from 'ngx-bar-rating';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MessageModule } from './message.module';
 import { SharedModule } from './shared/shared.module';
+import { UserReviewResolver } from '../services/resolvers/user-review.resolver.service';
+import { NotFoundModule } from './shared/not-found.module';
 
 /**
  * Module to deal with all sort of operations for user review
@@ -40,10 +42,12 @@ import { SharedModule } from './shared/shared.module';
     UserReviewRoutingModule,
     MediaModule,
     MessageModule,
-    SharedModule
+    SharedModule,
+    NotFoundModule
   ],
   providers: [
-    UserReviewService
+    UserReviewService,
+    UserReviewResolver
   ]
 })
 export class UserReviewModule {}
