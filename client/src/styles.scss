@@ -10284,6 +10284,8 @@ ngx-smart-modal {
     position: relative;
     z-index: 1;
     overflow: hidden;
+    background-image: none;
+    background-color: #536470;
 
     iframe,
     video {
