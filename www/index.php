@@ -35,6 +35,32 @@ $planData = json_decode($allPlansData,true);
                 <a href="https://app.<?php echo $linkUrl; ?>/sign-up" target="_blank" class="freeTrialBtn">Start 14 days FREE trial</a>
             </div>
         </div>
+
+        <div class="socketInfo">
+            <div class="container">
+                <div class="inSocket">
+                    <div class="d-flex p-Socket">
+                        <div class="socket-e">
+                            <span>Total Users</span>
+                            <h3>64,314</h3>
+                        </div>
+                        <div class="socket-e">
+                            <span>Total Number of Sticky Reviews</span>
+                            <h3>8,56,561</h3>
+                        </div>
+                        <div class="socket-e">
+                            <span>Total Number of Reviews from Review Link</span>
+                            <h3>3,659</h3>
+                        </div>
+                        <div class="socket-e">
+                            <span>Fourth Socket Parameter</span>
+                            <h3>13,659</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="featureArea">
             <div class="container">
                 <h2>Unleash the <strong>POWER</strong> of <span>Sticky Reviews!</span></h2>

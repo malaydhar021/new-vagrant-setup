@@ -1275,6 +1275,47 @@ h5 {
     display: table;
 }
 
+/* Socket blocks index page */
+.socketInfo {
+    padding-top: 50px;
+}
+.d-flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.p-Socket {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+.socket-e {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+    max-width: 25%;
+    padding: 0 45px;
+    position: relative;
+} 
+.socket-e + .socket-e::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    height: 58px;
+    width: 1px;
+    background-color: #ccc;
+    top: 50%;
+    margin-top: -29px;
+    opacity: 0.7;
+}
+.socket-e span {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.socket-e h3 {
+    font-size: 28px;
+} 
+
 
 
 /* =========|===|=====================================|===|========== */
