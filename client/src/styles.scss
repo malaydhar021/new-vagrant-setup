@@ -6130,6 +6130,22 @@ body.sign-upPage {
         height: 60px;
       }
     }
+
+    .choseFileArea {
+      width: 100%;
+      max-width: calc(100% - 260px);
+
+      .fileImg + p {
+        max-width: 80%;  
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 575px) {
+        max-width: calc(100% - 150px);
+      }
+    }
   }
 }
 
@@ -8885,6 +8901,38 @@ img {
                   .video-js {
                     width: 100%;
                     @include mt(8px);
+                  }
+                }
+              }
+            }
+          }
+
+          &.reviewVideo {
+            .rvwVidOpt {
+              label {
+                @media (max-width: 575px) {
+                  max-width: calc(50% - 15px);
+                }
+
+                &.revUp {
+                  @include mr(15px);
+                }
+              }
+            }
+
+            .reviewVidSh {
+              .vidUpV {
+                .inputSec_in {
+                  .choseFileArea {
+                    .fileImg + p {
+                      max-width: calc(100% - 50px);
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+
+                      @media (max-width: 575px) {
+                        max-width: calc(100% - 90px);
+                      }
+                    }
                   }
                 }
               }
