@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, OnDestroy, } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
@@ -9,7 +9,8 @@ import { SignupService } from '../../services/signup.service';
 import { Log } from '../../helpers/app.helper';
 import * as ValidationEngine from '../../helpers/form.helper';
 import { LoaderService } from 'src/app/services/loader.service';
-
+import { CookieService } from 'ngx-cookie-service';
+import { JONS_AFFILIATE_ID } from '../../helpers/api.helper';
 /**
  * SignUpComponent class handles all operations related to user signup. It also handles the two step
  * signup form requests and handles the response including validation errors.
@@ -61,7 +62,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private errorService: ErrorsService,
     private signupService: SignupService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private route: ActivatedRoute,
+    private cookieService: CookieService,
   ) {
     // if user is already logged in then redirect the user to home
     if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
@@ -75,7 +78,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * ngOnInit method initialize angular reactive form object for sign up form step 1 and step 2. 
+   * ngOnInit method initialize angular reactive form object for sign up form step 1 and step 2.
    * Also it set the title of the page. It has some guard checking at the very top if the user is
    * logged in then redirect user to home page. Also it handles some sort of custom validations
    * specially for signup form step 2.
@@ -110,6 +113,20 @@ export class SignUpComponent implements OnInit, OnDestroy {
         ValidationEngine.InRange('cvc', 3, 5) // in house validation method to check if the CVC number within 3 and 5 digits
       ]
     });
+
+    // get affiliate_id from the url and store into cookie named aid.
+    this.route.queryParams.subscribe(params => {
+      if (params.aid) {
+        // store this id to the cookie
+        if (!this.cookieService.get('aid')) {
+          // set the cookie with new affiliate id
+          this.cookieService.set('aid', params.aid);
+        } else {
+          // set the cookie with new affiliate id
+          this.cookieService.set('aid', params.aid);
+        }
+      }
+    });
   }
 
   /**
@@ -135,7 +152,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public yearsToDisplay() {
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
-    this.currentYear = currentYear
+    this.currentYear = currentYear;
     for (let i = 0; i < 20; i++) {
       this.years.push(currentYear + i);
     }
@@ -185,7 +202,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   /**
    * onSubmitStep1 method handles user input from sign up form step 1 and make an api call to check the email provided
-   * by the user and if it passes the validation then it let the user go to step 2. It also handles primary client side 
+   * by the user and if it passes the validation then it let the user go to step 2. It also handles primary client side
    * validations to reduce http api calls.
    * @method onSubmitStep1
    * @since Version 1.0.0
@@ -236,11 +253,20 @@ export class SignUpComponent implements OnInit, OnDestroy {
     // set the flag as true as the form is submitted
     this.isSubmittedStep2 = true;
     // check if the form values pass the validation or not
-    if(this.signupFormStep2.invalid) { 
+    if(this.signupFormStep2.invalid) {
       return false;
     }
     Log.info("Show this when client validation is passed in signup form 2");
     // if the form is valid then show the loader
+    // const jonsAffiliteID = JONS_AFFILIATE_ID;
+    var affiliteId = '';
+    if (!this.cookieService.get('aid')) {
+      // set the cookie with new affiliate id
+      affiliteId = JONS_AFFILIATE_ID;
+    } else {
+      affiliteId = this.cookieService.get('aid');
+    }
+    console.log(affiliteId);
     this.loaderService.enableLoader();
     // prepare the data to make api call to signup the user
     const data = {
@@ -251,7 +277,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       cvc_number: this.signupFormStep2.value.cvc,
       expiry_month: this.signupFormStep2.value.expMonth,
       expiry_year: this.signupFormStep2.value.expYear,
-      affiliate_id: null
+      affiliate_id: affiliteId
     };
     /**
      * let's make the api call to signup the user and handle the response

@@ -9,7 +9,17 @@ if (strpos($getEnvUrl, 'local') !== false) {
 } else {
     $linkUrl = 'usestickyreviews.com';
 }
-
+/* get affiliate id from the url and store into the cookie */
+if($_GET['aid']){
+    // store it to the cookie
+    if(!isset($_COOKIE['aid'])) {
+        echo "Cookie named '" . aid . "' is not set!";
+        // set the cookie
+        setcookie(aid, $_GET['aid'], time() + (86400 * 30), "/",".usestickyreviews.com");
+    } else {
+        setcookie(aid, $_GET['aid'], time() + (86400 * 30), "/",".usestickyreviews.com");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

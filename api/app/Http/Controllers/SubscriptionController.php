@@ -40,7 +40,7 @@ class SubscriptionController extends Controller
                 'status' => true,
                 'message' => "Your account does not have any active subscription plan. Please contact to support for more details.",
                 'subscription' => new SubscriptionResource(Auth::user()),
-            ], 401);    
+            ], 401);
         }
         return response()->json([
             'status' => true,
@@ -222,23 +222,28 @@ class SubscriptionController extends Controller
             case 1:
                 // some case 1 add body of the request for add a sale
                 $body = [
-                    'product_name'      =>  'Sticky Reviews',
-                    'ammount'  	 	    =>  $getPlanInfo['amount'],
+                    'product_name'      => 'Sticky Reviews',
+                    'product_id'        =>  6,
+                    'ammount'  	 	      =>  $getPlanInfo['amount'],
                     'payment_type' 	    =>  $paymentType,
                     'trial_period' 	    =>  $trialPeriod,
                     'date_registered' 	=>  $currentDate->toDateString(),
                     'affiliateId' 	    =>  $user->affiliate_id,
-                    'email' 	        =>  $user->email
+                    'email' 	          =>  $user->email,
+                    'isPaid'            => true,
+                    'plan'              => $getPlanInfo['name'],
                 ];
             break;
 
             case 2:
                 //some case 2 add body of the request for update a sale
                 $body = [
-                    'product_name'      =>  'Sticky Reviews',
-                    'ammount'  	 	    =>  $getPlanInfo['amount'],
+                    'product_name'      => 'Sticky Reviews',
+                    'ammount'  	 	      =>  $getPlanInfo['amount'],
                     'payment_type' 	    =>  $paymentType,
-                    'saleId' 	        =>  $user->sale_id
+                    'saleId' 	          =>  $user->sale_id,
+                    'isPaid'            => true,
+                    'plan'              => $getPlanInfo['name'],
                 ];
              break;
             default:
@@ -288,7 +293,7 @@ class SubscriptionController extends Controller
 
         $body = [
             'saleId' 	        =>  $saleId,
-            'is_active'         =>  $isActive,
+            'is_active'       =>  $isActive,
         ];
 
         \Log::info("BODY of the Request : ".print_r($body,true));
@@ -304,7 +309,7 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * 
+     *
      */
     public function validatePlanPrivileges(Request $request) {
         $user = Auth::user();

@@ -36,6 +36,7 @@ export const cnameDomainName: string = environment.CNAME_CONFIG_DOMAIN;
  */
 export const AppBaseUrl: string = environment.APP_BASE_URL;
 
+export const JONS_AFFILIATE_ID: string = environment.JONS_AFFILIATE_ID;
 /**
  * AuthApiEndPoints helper is holding all auth related api endpoints based on the environment
  * @class AuthApiEndPoints
@@ -174,7 +175,7 @@ export class BrandingApiEndpoints {
    * @method addBrand
    * @since Version 1.0.0
    * @deprecated In version 1.0.1
-   * @returns String 
+   * @returns String
    */
   public static get addBrand(): string {
     return apiBaseUrl.concat('/post-add-branding');
@@ -186,7 +187,7 @@ export class BrandingApiEndpoints {
    * @method updateBrand
    * @since Version 1.0.0
    * @deprecated In version 1.0.1
-   * @returns String 
+   * @returns String
    */
   public static get updateBrand() : string {
     return apiBaseUrl.concat('/update-branding');
@@ -198,7 +199,7 @@ export class BrandingApiEndpoints {
    * @method deleteBrand
    * @since Version 1.0.0
    * @deprecated In version 1.0.1
-   * @returns String 
+   * @returns String
    */
   public static get deleteBrand() : string {
     return apiBaseUrl.concat('/delete-branding');
@@ -378,7 +379,7 @@ export class ReviewLinkApiEndpoints {
    * @method addReviewLinks
    * @since Version 1.0.0
    * @deprecated In version 1.1.0
-   * @returns String 
+   * @returns String
    */
   public static get addReviewLinks(): string {
     return apiBaseUrl.concat('/create-review-link');
@@ -390,7 +391,7 @@ export class ReviewLinkApiEndpoints {
    * @method updateReviewLinks
    * @since Version 1.0.0
    * @deprecated In version 1.1.0
-   * @returns String 
+   * @returns String
    */
   public static get updateReviewLinks() : string {
     return apiBaseUrl.concat('/update-review-link');
@@ -402,7 +403,7 @@ export class ReviewLinkApiEndpoints {
    * @method deleteReviewLinks
    * @since Version 1.0.0
    * @deprecated In version 1.1.0
-   * @returns String 
+   * @returns String
    */
   public static get deleteReviewLinks() : string {
     return apiBaseUrl.concat('/delete-review-link');
@@ -414,7 +415,7 @@ export class ReviewLinkApiEndpoints {
    * @method checkDuplicateUrlSlug
    * @since Version 1.0.0
    * @deprecated In version 1.1.0
-   * @returns String 
+   * @returns String
    */
   public static get checkDuplicateUrlSlug() : string {
     return apiBaseUrl.concat('/check-duplicate-review-link');
@@ -434,7 +435,7 @@ export class UserApiEndpoints {
    * getAuthUserInfo to generate api endpoint to get authenticated user information
    * @method getAuthUserInfo
    * @since Version 1.0.0
-   * @returns String 
+   * @returns String
    */
   public static get getAuthUserInfo() : string {
     return apiBaseUrl.concat('/user');
@@ -496,7 +497,7 @@ export class SubscriptionApiEndpoints {
    * subscription to generate api endpoint to implement CRUD on a user subscription
    * @method subscription
    * @since Version 1.0.0
-   * @returns String 
+   * @returns String
    */
   public static get subscription() : string {
     return apiBaseUrl.concat('/user/subscription');
@@ -506,7 +507,7 @@ export class SubscriptionApiEndpoints {
    * cards to generate api endpoint to implement CRUD on a user card
    * @method cards
    * @since Version 1.0.0
-   * @returns String 
+   * @returns String
    */
   public static get cards() : string {
     return apiBaseUrl.concat('/user/card');

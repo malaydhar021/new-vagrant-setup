@@ -118,7 +118,7 @@ Route::middleware(['auth:api', 'subscription'])->group(function () {
         Route::get('/', 'SubscribedEmailController@index')->name('index');
         Route::delete('/{id}', 'SubscribedEmailController@destroy')->name('delete');
     });
-    
+
     Route::prefix('custom-domains')->name('custom-domains.')->group(function () {
         Route::get('/', 'CustomDomainController@index')->name('index');
         Route::post('/', 'CustomDomainController@store')->name('store');

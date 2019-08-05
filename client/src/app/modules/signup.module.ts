@@ -29,4 +29,4 @@ import { SignupRoutingModule } from './routes/signup.route.module';
   ],
   providers: []
 })
-export class SignupModule {}
+export class SignupModule { }

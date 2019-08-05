@@ -249,7 +249,7 @@ class ThirdPartyWebhooksController extends Controller
         $res = $client->post('https://api-affiliate.tier5.us/hooks/sales', [  'json'=> $body ]);
         if($res->getStatusCode() == 200){
             $response  = json_decode($res->getBody());
-            \Log::info('response from the update sales ...  ' .print_r($response,true));
+             \Log::info('response from the update sales ...  ' .print_r($response,true));
         }else{
             // something went wrong
             \Log::info("Something went wrong !");

@@ -6,5 +6,6 @@ export const environment = {
     API_BASE_URL: 'https://api.usestickyreviews.com/v2',
     WIDGET_BASE_URL: 'https://lib.usestickyreviews.com/widget.min.js',
     UPLOAD_BASE_URL: 'https://api.usestickyreviews.com/uploads',
-    CNAME_CONFIG_DOMAIN: 'cname.usestickyreviews.com'
+    CNAME_CONFIG_DOMAIN: 'cname.usestickyreviews.com',
+    JONS_AFFILIATE_ID: '1234567890'
 };
