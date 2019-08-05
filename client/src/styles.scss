@@ -8919,19 +8919,19 @@ img {
                 }
               }
             }
+          }
 
-            .reviewVidSh {
-              .vidUpV {
-                .inputSec_in {
-                  .choseFileArea {
-                    .fileImg + p {
-                      max-width: calc(100% - 50px);
-                      overflow: hidden;
-                      text-overflow: ellipsis;
+          .reviewVidSh {
+            .vidUpV {
+              .inputSec_in {
+                .choseFileArea {
+                  .fileImg + p {
+                    max-width: calc(100% - 50px);
+                    overflow: hidden;
+                    text-overflow: ellipsis;
 
-                      @media (max-width: 575px) {
-                        max-width: calc(100% - 90px);
-                      }
+                    @media (max-width: 575px) {
+                      max-width: calc(100% - 90px);
                     }
                   }
                 }
