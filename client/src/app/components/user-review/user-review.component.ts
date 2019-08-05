@@ -105,13 +105,14 @@ export class UserReviewComponent implements OnInit, OnDestroy {
           return;
         }
         // checking custom domain validation
-        if(response.reviewLink.data.custom_domain !== null && response.reviewLink.data.custom_domain.name !== window.location.host) {
+        if(response.reviewLink.data.custom_domain !== null && response.reviewLink.data.custom_domain.domain !== window.location.host) {
           this.errorService.update404Status(true);
           this.loaderService.disableLoader();
           return;
         }
         // checking without custom domain validation
         if(response.reviewLink.data.custom_domain === null && 'https://' + window.location.host !== AppBaseUrl) {
+          Log.info("it's coming here");
           this.errorService.update404Status(true);
           this.loaderService.disableLoader();
           return;

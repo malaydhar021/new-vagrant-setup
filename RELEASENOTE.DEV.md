@@ -165,6 +165,10 @@
 
 ## User Review
 
+### V2.0.1
+
+1. Fixed issue with custom domain checking while a review link is opened
+
 ### V2.0.0
 
 1. Fixed issue with custom domain accessing issue with all review links
