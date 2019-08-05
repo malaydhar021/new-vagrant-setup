@@ -132,6 +132,10 @@
 
 ## Review Link
 
+### V2.1.1
+
+1. Fixed issue with custom domain value during update a review link and if some deselect the custom domain from dropdown
+
 ### V2.1.0
 
 1. Fixed issue with printing error message from step 1 to step 2

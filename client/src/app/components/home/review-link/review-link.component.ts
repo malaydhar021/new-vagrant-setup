@@ -760,7 +760,6 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onSubmitStep2(){
-    Log.notice(this.form2, "Form 2 data on submit");
     this.isSubmittedStep1 = true;
     if(this.form.invalid || this.form2.invalid) {
       return;
@@ -774,7 +773,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     formData.append('description', this.getFormControls.description.value); // append description
     formData.append('url_slug', this.getFormControls.url_slug.value); // append url slug
     formData.append('campaign_id', this.getFormControls.campaign_id.value !== null ? this.getFormControls.campaign_id.value.id : null); // append campaign id
-    formData.append('custom_domain_id', this.getFormControls.custom_domain_id.value !== null ? this.getFormControls.custom_domain_id.value.id : null); // append custom domain id
+    formData.append('custom_domain_id', this.getFormControls.custom_domain_id.value !== null && this.getFormControls.custom_domain_id.value !== "null" ? this.getFormControls.custom_domain_id.value.id : null); // append custom domain id
     formData.append('auto_approve', this.getFormControls.auto_approve.value ? '1' : '0'); // append auto approve
     formData.append('min_rating', this.getFormControls.min_rating.value); // append min rating to form data
     formData.append('negative_info_review_message_1', this.getFormControls.negative_info_review_msg_1.value); // append negative review message 1
