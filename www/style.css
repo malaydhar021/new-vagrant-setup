@@ -2364,4 +2364,7 @@ h5 {
         border: none !important;
         width: 100%;
     }
+    .socket-e + .socket-e {
+        margin-top: 8px;
+    }
 }
