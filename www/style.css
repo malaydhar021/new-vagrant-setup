@@ -1295,6 +1295,7 @@ h5 {
     max-width: 25%;
     padding: 0 45px;
     position: relative;
+    box-sizing: border-box;
 } 
 .socket-e + .socket-e::before {
     content: '';
@@ -1505,6 +1506,22 @@ h5 {
     .bodyDesign {
         background-size: 40%;
     }
+
+
+    .p-Socket {
+        max-width: 100%;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    }
+    .socketInfo {
+        padding-top: 80px;
+    }
+    .socket-e {
+        padding: 0 15px;
+    }
 }
 
 @media screen and (max-width: 1060px) {
@@ -1607,6 +1624,24 @@ h5 {
 
     .newFeatures {
         margin-bottom: 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .socket-e {
+        max-width: inherit;
+        width: 50%;
+        border: 1px solid #ccc;
+    }
+    .socket-e:before {
+        content: none;
+    }
+    .p-Socket .socket-e:nth-child(1),
+    .p-Socket .socket-e:nth-child(2) {
+        border-bottom: none;
+    }
+    .p-Socket .socket-e:nth-child(even) {
+        border-left: none;
     }
 }
 
@@ -2215,6 +2250,14 @@ h5 {
         margin-bottom: 20px;
         font-size: 22px;
     }
+
+
+    .socket-e span {
+        font-size: 13px;
+    }
+    .socket-e h3 {
+        font-size: 20px;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -2315,5 +2358,10 @@ h5 {
 
     .newRelease h2 .subHeading2 {
         font-size: 13px;
+    }
+    .socket-e {
+        padding: 0;
+        border: none !important;
+        width: 100%;
     }
 }
