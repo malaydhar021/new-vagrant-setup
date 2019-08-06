@@ -11249,6 +11249,10 @@ Cookie notification css
       transform: skew(-15deg);
       width: 12px;
     }
+
+    @media (max-width:991px) {
+      padding-left: 2px;
+    }
   }
 }
 
