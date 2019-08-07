@@ -32,7 +32,7 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
   successMessage: string = null; // to show success messages
   validationErrors: any = null; // for showing validation messages
   subscription: Subscription; // to get the current value updated from error interceptor
-  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
+  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
   isEditing: boolean = false; // flag to set true if user is performing some edit operation
   isDeleting: boolean = false; // flag to set true if user is performing some delete operation
   brandId: number = null; // property to hold the brand id
@@ -44,7 +44,7 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
   isModalOpened: boolean = false; // set to true if the modal is opened
   cnameDomainName: string = null; // property which will hold the cname domain name based on environment
   dontShowMessage: boolean = false; // Instruction to add/edit a custom domain will be shown if it's set to false
-
+  customDomainIdToDelete: string = null;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -345,38 +345,14 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Method to delete a custom domain. It also handles the response from api and act accordingly
-   * @method onDeleteCustomDomain
-   * @since Version 1.0.0
-   * @param customDomainId (String) Custom domain id
-   * @returns Void
+   * Method to open delete modal from delete a custom domain
+   * @param customDomainId
    */
   public onDeleteCustomDomain(customDomainId: string) {
-    // setting to true as user wants to delete a custom domain
     this.isDeleting = true;
+    this.customDomainIdToDelete = customDomainId;
     // lets get the confirmation from user. if user cancel it then it's not doing anything
-    if (!confirm("Are you sure want to delete it?")) {
-      return;
-    }
-    // show loader
-    this.loaderService.enableLoader();
-    // make a api call to delete the brand
-    this.customDomainService.deleteCustomDomain(customDomainId).subscribe(
-      (response: any) => {
-        Log.info(response, 'Response Delete');
-        if (response.status) {
-          // show the success message to user in custom domain listing page
-          this.errorService.setMessage({ type: 'success', message: response.message });
-          // making an api call to get all custom domains along with the newly added branding
-          this.getCustomDomains();
-        } else {
-          // show the error message to user in case there is any error from api response
-          this.errorService.setMessage({ type: 'error', message: response.message });
-          // hide the loader
-          this.loaderService.disableLoader();
-        }
-      }
-    );
+    this.ngxSmartModalService.getModal('deleteModal').open();
   }
 
   /**
@@ -458,6 +434,31 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ngxSmartModalService.getModal('customDomainInfo').close();
     // now open the model to show the form into the model to user
     this.ngxSmartModalService.getModal('modal1').open();
+  }
+
+  /**
+   * Method to delete a custom domain
+   * @param customDomainId
+   */
+  public delete(customDomainId) {
+    this.loaderService.enableLoader();
+    // make a api call to delete the brand
+    this.customDomainService.deleteCustomDomain(customDomainId).subscribe(
+      (response: any) => {
+        Log.info(response, 'Response Delete');
+        this.ngxSmartModalService.getModal('deleteModal').close();
+        this.loaderService.disableLoader();
+        if (response.status) {
+          // show the success message to user in custom domain listing page
+          this.errorService.setMessage({ type: 'success', message: response.message });
+          // making an api call to get all custom domains along with the newly added branding
+          this.getCustomDomains();
+        } else {
+          // show the error message to user in case there is any error from api response
+          this.errorService.setMessage({ type: 'error', message: response.message });
+        }
+      }
+    );
   }
 
 }

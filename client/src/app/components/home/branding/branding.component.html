@@ -110,7 +110,8 @@
   </div>
 </ngx-smart-modal>
 
-<ngx-smart-modal #modal2 identifier="modal2" class="sr-modal modalNotif">
+<!-- HTML for delete modal -->
+<ngx-smart-modal #deleteModal identifier="deleteModal" class="sr-modal modalNotif" [dismissable]="false" [escapable]="false">
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
@@ -118,15 +119,15 @@
       </h2>
     </div>
     <div class="sr-modal-body">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form">
         <div class="sr-form">
             <div class="sr-form-row">
               <div class="sr-form-cell btnStyles">
                   <label>Are you sure you want to delete it?</label>
-                  <button class="stAccpt" type="">
+                  <button class="stAccpt" type="button" (click)="delete(brandIdToDelete)">
                     Yes
                   </button>
-                  <button class="stReject" type="">
+                  <button class="stReject" type="button" (click)="deleteModal.close()">
                     No
                   </button>
               </div>

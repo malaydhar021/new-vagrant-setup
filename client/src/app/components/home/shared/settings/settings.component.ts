@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   showError: boolean = false; // flag to show error message
   isModalOpened: boolean = false; // set to true if the modal is opened
   showTheMessage: boolean = false;
+  tokenIdToDelete: string = null;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -145,21 +146,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Method for deleting the token
+   * Method to open delete modal
    * @param tokenID
    */
   public onDeleteToken(tokenID: string) {
-    // ask user for confirmation
-    if (!confirm('Are you sure want to delete?')) {
-      return;
-    }
-    this.loaderService.enableLoader();
-    this.userService.deleteToken(tokenID).subscribe(
-      (response: any) => {
-        this.loaderService.disableLoader();
-        this.getUserZapierToken();
-      }
-    );
+    this.tokenIdToDelete = tokenID;
+    this.ngxSmartModalService.getModal('deleteModal').open();
   }
 
   /**
@@ -175,4 +167,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.errorService.clearMessage();
     this.ngxSmartModalService.getModal('modal1').open();
   }
+
+  /**
+   * Method to delete a zapier token
+   * @param tokenID
+   */
+  public delete(tokenID) {
+    this.loaderService.enableLoader();
+    this.userService.deleteToken(tokenID).subscribe(
+      (response: any) => {
+        this.ngxSmartModalService.getModal('deleteModal').close();
+        this.loaderService.disableLoader();
+        this.getUserZapierToken();
+      }
+    );
+  }
+
 }

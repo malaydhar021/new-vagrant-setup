@@ -2,7 +2,7 @@
   <header class="mainBoxHeader">
     <div class="mainBoxHeaderLeft">
       <button type="button" class="addReview" (click)="onAddCustomDomain()">
-        <img src="../../../../assets/images/addIcon.png" alt=""> 
+        <img src="../../../../assets/images/addIcon.png" alt="">
         Add Custom Domain
       </button>
     </div>
@@ -69,7 +69,7 @@
                   This action needs to be performed first before you try to add / update a custom domain. Usually DNS configuration takes maximum 15 minutes to map with CNAME domain.
                 </p>
                 <p>
-                  Your custom domain should have ssl certificate configured i.e your custom domain must open with https secure http protocol. It is recommended 
+                  Your custom domain should have ssl certificate configured i.e your custom domain must open with https secure http protocol. It is recommended
                   that you should update your DNS nameservers to cloudflare as they provide free ssl by default if you have an account in cloudflare but this is not
                   required at all until your domain works with https.
                 </p>
@@ -102,15 +102,15 @@
     </div>
     <div class="sr-modal-body">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="sr-form">          
+        <div class="sr-form">
           <div class="sr-form-row">
             <div class="sr-form-cell">
               <label>Name</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.name.errors}" formControlName="name">
                 <div class="error-msg" *ngIf="(
-                  isSubmitted 
-                  && getFormControls.name.errors !== null 
+                  isSubmitted
+                  && getFormControls.name.errors !== null
                   && getFormControls.name.errors.required)">
                   Name is required
                 </div>
@@ -124,8 +124,8 @@
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.domain.errors}" formControlName="domain">
                 <div class="error-msg" *ngIf="(
-                  isSubmitted 
-                  && getFormControls.domain.errors !== null 
+                  isSubmitted
+                  && getFormControls.domain.errors !== null
                   && getFormControls.domain.errors.required)">
                   Domain is required
                 </div>
@@ -144,6 +144,35 @@
                       <img src="../../../../assets/images/addIcon.png" alt=""> Save Custom Domain
                   </button>
               </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ngx-smart-modal>
+
+
+<!-- HTML for delete modal -->
+<ngx-smart-modal #deleteModal identifier="deleteModal" class="sr-modal modalNotif" [dismissable]="false" [escapable]="false">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+        Hey, wait!
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+      <form>
+        <div class="sr-form">
+          <div class="sr-form-row">
+            <div class="sr-form-cell btnStyles">
+              <label>Are you sure you want to delete it?</label>
+              <button class="stAccpt" type="button" (click)="delete(customDomainIdToDelete)">
+                Yes
+              </button>
+              <button class="stReject" type="button" (click)="deleteModal.close()">
+                No
+              </button>
+            </div>
           </div>
         </div>
       </form>

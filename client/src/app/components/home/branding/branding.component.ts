@@ -39,6 +39,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   showError: boolean = false; // flag to show error message
   searchKey: string = '';
   isModalOpened: boolean = false; // set to true if the modal is opened
+  brandIdToDelete: number = null;
 
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -336,42 +337,15 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Method to delete a brand. It also handles the response from api and act accordingly
-   * @method onDeleteBrand
-   * @since Version 1.0.0
-   * @param brandId (Number) Brand id
-   * @returns Void
+   * Method to open delete modal when clicking on the delete button from the list
+   * @param brandId
    */
   public onDeleteBrand(brandId: number) {
     // setting to true as user wants to delete a brand
     this.isDeleting = true;
-    
-    // now open the modal with empty form to add a brand
-    this.ngxSmartModalService.getModal('modal2').open();
-
-    // lets get the confirmation from user. if user cancel it then it's not doing anything
-    if(!confirm("Are you sure want to delete it?")) {
-      return;
-    }
-    // show loader
-    this.loaderService.enableLoader();
-    // make a api call to delete the brand
-    this.brandingService.deleteBranding(brandId).subscribe(
-      (response: any) => {
-        Log.info(response, 'delete api response');
-        if(response.status) {
-          // show the success message to user in brand listing page
-          this.errorService.setMessage({type: 'success', message: response.message});
-          // making an api call to get all brandings along with the newly added branding
-          this.getBrandings();
-        } else {
-          // show the error message to user in case there is any error from api response
-          this.errorService.setMessage({type: 'error', message: response.message});
-          // hide the loader
-          this.loaderService.disableLoader();
-        }
-      }
-    );
+    this.brandIdToDelete = brandId;
+    // Open the delete modal with empty form to add a brand
+    this.ngxSmartModalService.getModal('deleteModal').open();
   }
 
   /**
@@ -411,5 +385,33 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     );
   }
+
+  /**
+   * Method to delete a brand after click on the yes from the modal
+   * @param brandId
+   */
+  public delete(brandId: number) {
+    this.loaderService.enableLoader();
+    // make a api call to delete the brand
+    this.brandingService.deleteBranding(brandId).subscribe(
+      (response: any) => {
+        Log.info(response, 'delete api response');
+        if(response.status) {
+          this.ngxSmartModalService.getModal('deleteModal').close();
+          // show the success message to user in brand listing page
+          this.errorService.setMessage({type: 'success', message: response.message});
+          // making an api call to get all brandings along with the newly added branding
+          this.getBrandings();
+        } else {
+          this.ngxSmartModalService.getModal('deleteModal').close();
+          // show the error message to user in case there is any error from api response
+          this.errorService.setMessage({type: 'error', message: response.message});
+          // hide the loader
+          this.loaderService.disableLoader();
+        }
+      }
+    );
+  }
+
 
 }

@@ -82,7 +82,9 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   searchKey: string = '';
   isModalOpened: boolean = false; // set to true if the modal is opened
   reviewBrandName: string = '';
-  openModalName: string ='';
+  openModalName: string = '';
+  exitpopupIdToDelete: string = '';
+
   /**
    *
    * @param ngxSmartModalService
@@ -573,25 +575,13 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function for delete a exit popup
+   * Method to open delete modal
    * @param id
    */
   public deleteExitPopup(id) {
-    if (confirm('Are you sure you want to delete this item?')) {
-      this.loaderService.enableLoader();
-      this.exitPopupService.deleteExitPopup(id).subscribe(
-        (response: any) => {
-          this.loaderService.disableLoader();
-          if (response.status) {
-            setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
-            this.getUserExitPopups();
-          } else {
-            setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
-            this.getUserExitPopups();
-          }
-        }
-      );
-    }
+    this.exitpopupIdToDelete = id;
+    // open delete confirm modal to delete the campaign
+    this.ngxSmartModalService.getModal('deleteModal').open();
   }
 
   /**
@@ -899,4 +889,26 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       }
     }, 100);
   }
+
+  /**
+   * Method to delete a exit popup
+   * @param id
+   */
+  public delete(id) {
+      this.loaderService.enableLoader();
+      this.exitPopupService.deleteExitPopup(id).subscribe(
+        (response: any) => {
+          this.loaderService.disableLoader();
+          this.ngxSmartModalService.getModal('deleteModal').close();
+          if (response.status) {
+            setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
+            this.getUserExitPopups();
+          } else {
+            setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
+            this.getUserExitPopups();
+          }
+        }
+      );
+  }
+
 }

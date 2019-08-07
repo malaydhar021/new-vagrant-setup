@@ -6,7 +6,7 @@ import { BrandingService } from '../../../services/branding.service';
 import { LoaderService } from '../../../services/loader.service';
 import { Log } from '../../../helpers/app.helper';
 import { SubscribedEmailService } from 'src/app/services/subscribed-email.service';
-
+import { NgxSmartModalService, NgxSmartModalComponent } from 'ngx-smart-modal';
 /**
  * Component to show all emails which has been subscribed emails from various exit popups. Also option to delete an email from the list.
  * @class SubscribedEmailsComponent
@@ -33,7 +33,7 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   searchKey: string = '';
-
+  subscribedEmailIdToDelete: string = null;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -53,6 +53,7 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
     private brandingService: BrandingService,
     private loaderService: LoaderService,
     private subscribedEmailService: SubscribedEmailService,
+    private ngxSmartModalService: NgxSmartModalService,
   ) {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
@@ -117,38 +118,15 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Method to delete a subscribed email. It also handles the response from api and act accordingly
-   * @method onDeleteSubscribedEmail
-   * @since Version 1.0.0
-   * @param emailId (Number) Brand id
-   * @returns Void
+   * Method to show delete modal
+   * @param emailId
    */
   public onDeleteSubscribedEmail(emailId: string) {
     // setting to true as user wants to delete a brand
     this.isDeleting = true;
+    this.subscribedEmailIdToDelete = emailId;
     // lets get the confirmation from user. if user cancel it then it's not doing anything
-    if(!confirm("Are you sure want to delete it?")) {
-      return;
-    }
-    // show loader
-    this.loaderService.enableLoader();
-    // make a api call to delete the brand
-    this.subscribedEmailService.deleteSubscribedEmail(emailId).subscribe(
-      (response: any) => {
-        Log.info(response, 'delete api response');
-        if(response.status) {
-          // show the success message to user in brand listing page
-          this.errorService.setMessage({type: 'success', message: response.message});
-          // making an api call to get all subscribed emails
-          this.getSubscribedEmails();
-        } else {
-          // show the error message to user in case there is any error from api response
-          this.errorService.setMessage({type: 'error', message: response.message});
-          // hide the loader
-          this.loaderService.disableLoader();
-        }
-      }
-    );
+    this.ngxSmartModalService.getModal('deleteModal').open();
   }
 
   /**
@@ -186,6 +164,33 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
             this.loaderService.disableLoader();
           }
         }
+    );
+  }
+
+  /**
+   * Method to delete subscribe emails
+   * @param emailId
+   */
+  public delete(emailId) {
+    // show loader
+    this.loaderService.enableLoader();
+    // make a api call to delete the brand
+    this.subscribedEmailService.deleteSubscribedEmail(emailId).subscribe(
+      (response: any) => {
+        Log.info(response, 'delete api response');
+        this.ngxSmartModalService.getModal('deleteModal').close();
+        if(response.status) {
+          // show the success message to user in brand listing page
+          this.errorService.setMessage({type: 'success', message: response.message});
+          // making an api call to get all subscribed emails
+          this.getSubscribedEmails();
+        } else {
+          // show the error message to user in case there is any error from api response
+          this.errorService.setMessage({type: 'error', message: response.message});
+          // hide the loader
+          this.loaderService.disableLoader();
+        }
+      }
     );
   }
 

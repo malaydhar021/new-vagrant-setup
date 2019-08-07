@@ -114,7 +114,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   max = null;
   userSubscription: Subscription; // to hold the user current subscription
   pricingPlan: string; // user's plan details
-
+  stickyReviewIdToDelete: string = null;
   /**
    *
    * @param ngxSmartModalService
@@ -209,25 +209,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       itemsPerPage: 15,
       currentPage: 1,
     };
-    // const dateTimeNow = new Date();
-    //
-    // // console.log('on nginit');
-    // // console.log(dateTimeNow.getFullYear(),
-    // //     dateTimeNow.getMonth(),
-    // //     dateTimeNow.getDate(),
-    // //     dateTimeNow.getHours(),
-    // //     dateTimeNow.getMinutes(),
-    // //     dateTimeNow.getSeconds());
-    // //
-    // //
-    // // this.max = new Date(
-    // //     dateTimeNow.getFullYear(),
-    // //     dateTimeNow.getMonth(),
-    // //     dateTimeNow.getDate(),
-    // //     dateTimeNow.getHours(),
-    // //     dateTimeNow.getMinutes(),
-    // //     dateTimeNow.getSeconds()
-    // // );
   }
 
   /**
@@ -763,38 +744,15 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Method to delete a sticky review. It also handles the response from api and act accordingly
-   * @method onDeleteStickyReview
-   * @since Version 1.0.0
-   * @param reviewId (Number) Sticky review id
-   * @returns Void
+   * Method to open delete confirm modal
+   * @param reviewId
    */
   public onDeleteStickyReview(reviewId: string) {
     // setting to true as user wants to delete a brand
     this.isDeleting = true;
-    // lets get the confirmation from user. if user cancel it then it's not doing anything
-    if(!confirm("Are you sure want to delete it?")) {
-      return;
-    }
-    // show loader
-    this.loaderService.enableLoader();
-    // make a api call to delete the brand
-    this.stickyReviewService.deleteStickyReview(reviewId).subscribe(
-      (response: any) => {
-        Log.info(response, 'delete api response');
-        if(response.status) {
-          // show the success message to user in review listing page
-          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})},100);
-          // making an api call to get all reviews along with the newly added sticky review
-          this.getStickyReviews();
-        } else {
-          // show the error message to user in case there is any error from api response
-          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})},100);
-          // hide the loader
-          this.loaderService.disableLoader();
-        }
-      }
-    );
+    this.stickyReviewIdToDelete = reviewId;
+    // open delete confirm modal to delete the campaign
+    this.ngxSmartModalService.getModal('deleteModal').open();
   }
 
   /**
@@ -876,5 +834,30 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Function to delete a sticky review
+   * @param reviewId
+   */
+  public delete(reviewId) {
+    // show loader
+    this.loaderService.enableLoader();
+    // make a api call to delete the brand
+    this.stickyReviewService.deleteStickyReview(reviewId).subscribe(
+      (response: any) => {
+        this.loaderService.disableLoader();
+        this.ngxSmartModalService.getModal('deleteModal').close();
+        Log.info(response, 'delete api response');
+        if(response.status) {
+          // show the success message to user in review listing page
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})},100);
+          // making an api call to get all reviews along with the newly added sticky review
+          this.getStickyReviews();
+        } else {
+          // show the error message to user in case there is any error from api response
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})},100);
+        }
+      }
+    );
+  }
 
 }

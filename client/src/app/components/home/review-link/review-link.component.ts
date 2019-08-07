@@ -65,7 +65,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
   isModalOpened: boolean = false; // set to true if the modal is opened
-
+  reviewLinkIdToDelete: string = null;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -584,24 +584,15 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Method to delete a review link making an api call
-   * @method onDeleteReviewLink
-   * @since Version 1.0.0
-   * @returns Void
+   * Method to show the confirm box delete modal
+   * @param id
    */
   public onDeleteReviewLink(id: string) {
     // set the flag to true
     this.isDeleting = true;
-    // set the id
-    this.reviewLinkId = id;
+    this.reviewLinkIdToDelete = id;
     // get the confirmation from user before we delete
-    if (!confirm("Are you sure want to delete?")) {
-      return;
-    }
-    // let's show the loader
-    this.loaderService.enableLoader();
-    // delete the selected review link
-    this.deleteReviewLink();
+    this.ngxSmartModalService.getModal('deleteModal').open();
   }
 
   /**
@@ -698,10 +689,12 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @param id Review Link Id
    * @returns Void
    */
-  public deleteReviewLink() {
-    this.reviewLinkService.deleteReviewLink(this.reviewLinkId).subscribe(
+  public deleteReviewLink(reviewLinkId) {
+    this.loaderService.enableLoader();
+    this.reviewLinkService.deleteReviewLink(reviewLinkId).subscribe(
       (response: any) => {
         Log.info(response, "Response Store");
+        this.ngxSmartModalService.getModal('deleteModal').close();
         if(response.status) {
           // perform post response activities
           this.postResponseActivities(response.message);

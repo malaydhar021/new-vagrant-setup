@@ -326,3 +326,32 @@
   </div>
 </ngx-smart-modal>
 <!-- Modal ends -->
+
+
+<!-- HTML for delete modal -->
+<ngx-smart-modal #deleteModal identifier="deleteModal" class="sr-modal modalNotif" [dismissable]="false" [escapable]="false">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+        Hey, wait!
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+      <form [formGroup]="form">
+        <div class="sr-form">
+          <div class="sr-form-row">
+            <div class="sr-form-cell btnStyles">
+              <label>Are you sure you want to delete it?</label>
+              <button class="stAccpt" type="button" (click)="delete(stickyReviewIdToDelete)">
+                Yes
+              </button>
+              <button class="stReject" type="button" (click)="deleteModal.close()">
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ngx-smart-modal>

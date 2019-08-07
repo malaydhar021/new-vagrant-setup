@@ -62,7 +62,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   searchKey: string = ''; // search keyword
   isModalOpened: boolean = false; // set to true if the modal is opened
   campaignScriptForCustomDomain: string = 'lib/widget.min.js'; // constant path for campaign script
-
+  campaignIdToDelete: string = null;
   /**
    * Constructor method to fetch all required information from api provider
    * @constructor constructor
@@ -524,32 +524,14 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Method to delete a campaign. It also handles the response from api and act accordingly
-   * @method onDeleteCampaign
-   * @since Version 1.0.0
-   * @param reviewId (Number) Sticky review id
-   * @returns Void
+   * Method to open delete confirm modal
+   * @param campaignId
    */
   public onDeleteCampaign(campaignId: string) {
-    // setting to true as user wants to delete a brand
     this.isDeleting = true;
-    // lets get the confirmation from user. if user cancel it then it's not doing anything
-    if (!confirm("Are you sure want to delete?")) {
-      return;
-    }
-    // show loader
-    this.loaderService.enableLoader();
-    // make a api call to delete the brand
-    this.campaignService.deleteCampaign(campaignId).subscribe(
-      (response: any) => {
-        Log.info(response, 'delete api response');
-        if (response.status) {
-          this.postResponseActivities(response.message, false);
-        } else {
-          this.postResponseActivities(response.message, false, false, true, true);
-        }
-      }
-    );
+    // open delete confirm modal to delete the campaign
+    this.ngxSmartModalService.getModal('deleteModal').open();
+    this.campaignIdToDelete = campaignId;
   }
 
   /**
@@ -958,7 +940,6 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     let elScroll = <HTMLElement>document.querySelector('.tbody');
     let wH = elScroll.offsetHeight;
     let copyBtn = document.querySelectorAll('.copyBtn');
-    
     for(var i=0;i<copyBtn.length;i++) {
         var viewportOffset = copyBtn[i].getBoundingClientRect();
 
@@ -969,6 +950,27 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
           copyBtn[i].classList.remove("open-up");
         }
     }
+  }
+
+  /**
+   * Method to delete a campaign
+   * @param campaignId
+   */
+  public delete(campaignId: string) {
+    this.loaderService.enableLoader();
+    // make a api call to delete the brand
+    this.campaignService.deleteCampaign(campaignId).subscribe(
+      (response: any) => {
+        Log.info(response, 'delete api response');
+        if (response.status) {
+          this.ngxSmartModalService.getModal('deleteModal').close();
+          this.postResponseActivities(response.message, false);
+        } else {
+          this.ngxSmartModalService.getModal('deleteModal').close();
+          this.postResponseActivities(response.message, false, false, true, true);
+        }
+      }
+    );
   }
 
 }
