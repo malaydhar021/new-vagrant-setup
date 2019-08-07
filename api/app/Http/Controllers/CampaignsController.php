@@ -58,7 +58,8 @@ class CampaignsController extends Controller
     {
         if ($request->has('searchParams')) {
             $this->queryBuilder = $this->queryBuilder
-                    ->where('campaign_name', 'LIKE', '%' . $request->get('searchParams') . '%');
+                    ->where('campaign_name', 'LIKE', '%' . $request->get('searchParams') . '%')
+                    ->orWhere('unique_script_id', 'LIKE', '%' . $request->get('searchParams') . '%');
         }
 
         $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
@@ -171,7 +172,7 @@ class CampaignsController extends Controller
                                 $request->input('branding') : $campaign->branding,
             'branding_id' => $request->has('branding_id') ?
                                 Hashids::decode($request->input('branding_id')) : $campaign->branding_id,
-            'custom_domain_id' => (!is_null($request->input('custom_domain_id'))) ? 
+            'custom_domain_id' => (!is_null($request->input('custom_domain_id'))) ?
                                 Hashids::decode($request->input('custom_domain_id')) : null,
             'exit_pop_up' => $request->has('exit_pop_up') ?
                                 $request->input('exit_pop_up') : $campaign->exit_pop_up,
@@ -237,7 +238,7 @@ class CampaignsController extends Controller
             'sticky_reviews' => "required|array",
             'sticky_reviews.*'  => "required|string|distinct",
         ]);
-        
+
         $stickyReviews = $request->input('sticky_reviews');
         $deocdedStickyReviews = [];
         array_walk($stickyReviews, function (&$value) use (&$deocdedStickyReviews) {
