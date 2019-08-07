@@ -80,7 +80,7 @@ $(document).ready(function () {
     
     /* for websocket integration */
     
-    var socket = io('http://localhost:3000', {
+    var socket = io(websocket.url, {
         transports: ["websocket"]
     });
     socket.on("update_user_count", function(count) {

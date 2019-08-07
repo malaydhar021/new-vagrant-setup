@@ -2,6 +2,10 @@
 
 ## Websocket
 
+### V1.0.1
+
+1. Implemented web client side socket connection url dynamic based .env configuration
+
 ### V1.0.0
 
 1. Implemented web socket server in node and configured socket connection

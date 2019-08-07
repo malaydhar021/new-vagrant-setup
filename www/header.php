@@ -1,4 +1,8 @@
 <?php
+require __DIR__.'/../api/vendor/autoload.php';
+// location of .env file in api dir
+$dot = new \Dotenv\Dotenv(__DIR__.'/../api/');
+$dot->load(); // Load the configuration (Not override, for override use overload() method
 /* get the env url and set urls */
  $getEnvUrl = $_SERVER['SERVER_NAME'];
 

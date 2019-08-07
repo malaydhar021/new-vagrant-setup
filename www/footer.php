@@ -25,6 +25,14 @@
     <iframe src="https://app.local.usestickyreviews.com/" class="iframe-div" style="display: none" id="opIFrame"></iframe>
 </footer>
 
+<script type="text/javascript">
+/* <![CDATA[ */
+var websocket = {url: '<?php echo getenv('WEBSOCKET_URL');  ?>'};
+/* ]]> */
+</script>
+
+
+
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 <script type="text/javascript" src="index.js"></script>
