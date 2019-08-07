@@ -77,6 +77,32 @@ $(document).ready(function () {
             $('.cookieCompliance').addClass('showCookie');
         }, 200);
     }
+    
+    /* for websocket integration */
+    
+    var socket = io('http://localhost:3000', {
+        transports: ["websocket"]
+    });
+    socket.on("update_user_count", function(count) {
+        $(".total-user-count").text(count);
+    });
+    
+    socket.on("update_sticky_reviews_count", function(count) {
+        $(".total-sticky-reviews-count").text(count);
+    });
+    
+    socket.on("update_reviews_from_review_link_count", function(count) {
+        $(".total-reviews-from-review-link-count").text(count);
+    });
+    
+    socket.on("update_subscribed_email_count", function(count) {
+        $(".total-subscribed-email-count").text(count);
+    });
+
+    socket.emit("get_total_users");
+    socket.emit("get_total_sticky_reviews");
+    socket.emit("get_total_reviews_from_review_link");
+    socket.emit("get_total_subscribed_emails");
 });
 
 function closeCookie() {

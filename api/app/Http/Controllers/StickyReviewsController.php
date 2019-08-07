@@ -113,7 +113,6 @@ class StickyReviewsController extends Controller
                     $stickyReview->description = $request->input('description');
                 }
         }
-        \Log::info($request->all());
 
         if ($request->has('reviewd_at') && !is_null($request->input('reviewd_at')) && $request->input('reviewd_at') !== 'null' && strlen(trim($request->input('reviewd_at')))) {
             // $datetime = Carbon::now('UTC');

@@ -1,5 +1,13 @@
 # Development Release Notes
 
+## Websocket
+
+### V1.0.0
+
+1. Implemented web socket server in node and configured socket connection
+2. Implemented apis for emit some event from anywhere and anytime
+3. Implemented client listener to update data
+
 ## Subscribed Email
 
 ### V1.0.0

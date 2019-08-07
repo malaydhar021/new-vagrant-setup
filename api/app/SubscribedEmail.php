@@ -28,6 +28,5 @@ class SubscribedEmail extends Model
     public function setIdAttribute ($value) {
         $this->attributes['id'] = $value;
         $this->checkAndSendExitpopupDataToZapier($value);
-        \Log::info('I am inserting you ! '.$value);
     }
 }

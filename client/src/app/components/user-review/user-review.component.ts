@@ -119,6 +119,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
         }
 
         this.urlInfo = response.reviewLink.data;
+        this.slug = response.reviewLink.data.url_slug;
         const data: UserReviewModel = {
           review_link_id: response.reviewLink.data.id,
           review_link_slug: response.reviewLink.data.url_slug,
@@ -154,6 +155,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
   /**
    * Method to fetch all information regarding the user review link based on slug.
    * URL stands for `User Review Link`
+   * ### *DEPRECATED* ###
    * @method getURLInfo
    * @since Version 1.0.0
    * @returns Void

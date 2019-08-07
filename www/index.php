@@ -41,19 +41,19 @@ $planData = json_decode($allPlansData,true);
                     <div class="d-flex p-Socket">
                         <div class="socket-e">
                             <span>Total Users</span>
-                            <h3>64,314</h3>
+                            <h3 class="total-user-count">0</h3>
                         </div>
                         <div class="socket-e">
-                            <span>Total Number of Sticky Reviews</span>
-                            <h3>8,56,561</h3>
+                            <span>Total Sticky Reviews</span>
+                            <h3 class="total-sticky-reviews-count">0</h3>
                         </div>
                         <div class="socket-e">
-                            <span>Total Number of Reviews from Review Link</span>
-                            <h3>3,659</h3>
+                            <span>Total Reviews from Review Links</span>
+                            <h3 class="total-reviews-from-review-link-count">0</h3>
                         </div>
                         <div class="socket-e">
-                            <span>Fourth Socket Parameter</span>
-                            <h3>13,659</h3>
+                            <span>Total Emails Collected From Exit Popups</span>
+                            <h3 class="total-subscribed-email-count">0</h3>
                         </div>
                     </div>
                 </div>

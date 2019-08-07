@@ -26,7 +26,8 @@
 </footer>
 
 
-<script type = "text/javascript" src="index.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+<script type="text/javascript" src="index.js"></script>
 
 
 </body>

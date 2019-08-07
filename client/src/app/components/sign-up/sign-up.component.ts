@@ -288,7 +288,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
         Log.info(response, 'Log the response for signup');
         this.loaderService.disableLoader();
         if(response.status) {
-          // this.errorService.updateMessage("You have successfully signed up. Please login to continue");
           setTimeout(() => {this.errorService.setMessage({type: 'success', 'message' : 'You have successfully signed up. Please login to continue'})}, 100);
           this.router.navigate(['/login']);
         } else {

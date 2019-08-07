@@ -92,6 +92,19 @@ return [
     */
 
     'cname_domain' => env( 'CNAME_DOMAIN', 'cname.usestickyreviews.com'),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Websocket URL
+    |--------------------------------------------------------------------------
+    |
+    | Websocket url will be used to update some statistical data into landing page.
+    | Using this url client will emit and event and listen to an event to update
+    | data into landing page without refreshing page.
+    |
+    */
+
+    'websocket_url' => env( 'WEBSOCKET_URL', 'https://ws.usestickyreviews.com'),
 
     /*
     |--------------------------------------------------------------------------
