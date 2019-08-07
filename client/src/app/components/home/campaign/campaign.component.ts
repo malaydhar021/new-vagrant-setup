@@ -955,19 +955,17 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public togglePopPosition() {
-    let wH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    let elScroll = <HTMLElement>document.querySelector('.tbody');
+    let wH = elScroll.offsetHeight;
     let copyBtn = document.querySelectorAll('.copyBtn');
-    console.log(wH);
     
     for(var i=0;i<copyBtn.length;i++) {
         var viewportOffset = copyBtn[i].getBoundingClientRect();
 
-        if(viewportOffset.top >= (wH-250) && viewportOffset.top >= 300) {
-          console.log('in');
+        if(viewportOffset.top >= (wH-100)) {
           copyBtn[i].classList.add("open-up");
         }
         else {
-          console.log('out');
           copyBtn[i].classList.remove("open-up");
         }
     }
