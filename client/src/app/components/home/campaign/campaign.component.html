@@ -19,7 +19,7 @@
         <li>ACTION(S)</li>
       </ul>
       <div class="tbody">
-        <ng-scrollbar [compact]="true" *ngIf="campaigns.length > 0; else noRecords">
+        <ng-scrollbar [disableOnBreakpoints]="false" [compact]="true" *ngIf="campaigns.length > 0; else noRecords">
           <ul>
             <li class="row" *ngFor="let campaign of campaigns | paginate: config; let i = index">
               <div class="rowContainer" [ngClass]="{ratePop: isSelectingReview && rowIndex === i}">

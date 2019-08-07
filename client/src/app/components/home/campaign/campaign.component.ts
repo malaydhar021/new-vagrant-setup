@@ -28,6 +28,7 @@ import { CustomDomainService } from '../../../services/custom-domain.service';
   templateUrl: './campaign.component.html',
   styleUrls: ['./campaign.component.scss']
 })
+
 export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   // defining class properties
   form: FormGroup; // for add or edit review form in modal
@@ -74,6 +75,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param loaderService LoaderService instance
    * @returns Void
    */
+
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
     private title: Title,
@@ -148,6 +150,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       itemsPerPage: 15,
       currentPage: 1,
     };
+
+    window.addEventListener('scroll', () => this.togglePopPosition());
   }
 
   /**
@@ -172,6 +176,10 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onToggleBrand(); // enable / disable brands
     this.onToggleExitPopup(); // enable / disable exit popup
     this.modalCallbacks(); // modal callbacks i.e onClose, onDismiss, onEscape
+
+    setTimeout(() => {
+      this.togglePopPosition();
+    }, 2000);
   }
 
   /**
@@ -944,6 +952,23 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     );
+  }
+
+  public togglePopPosition() {
+    let wH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    let copyBtn = document.querySelectorAll('.copyBtn');
+    console.log(wH);
+    
+    for(var i=0;i<copyBtn.length;i++) {
+        var viewportOffset = copyBtn[i].getBoundingClientRect();
+
+        if(viewportOffset.top >= (wH-250)) {
+          copyBtn[i].classList.add("open-up");
+        }
+        else {
+          copyBtn[i].classList.remove("open-up");
+        }
+    }
   }
 
 }
