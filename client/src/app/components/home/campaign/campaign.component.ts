@@ -962,10 +962,12 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     for(var i=0;i<copyBtn.length;i++) {
         var viewportOffset = copyBtn[i].getBoundingClientRect();
 
-        if(viewportOffset.top >= (wH-250)) {
+        if(viewportOffset.top >= (wH-250) && viewportOffset.top >= 300) {
+          console.log('in');
           copyBtn[i].classList.add("open-up");
         }
         else {
+          console.log('out');
           copyBtn[i].classList.remove("open-up");
         }
     }
