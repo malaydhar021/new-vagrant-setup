@@ -1194,8 +1194,12 @@ h5 {
 .ftLinks a {
     position: relative;
     margin-left: 15px;
+    color: #E30C5D;
+    text-decoration: none;
 }
-
+.ftLinks a:hover {
+    color: #3A3A3A;
+}
 .ftLinks a:before {
     content: '|';
     right: 100%;

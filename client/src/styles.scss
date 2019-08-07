@@ -11292,9 +11292,22 @@ Cookie notification css
     font-weight: 600;
     font-style: normal;
     line-height: 18px;
+    -webkit-transition: all ease 0.4s;
+    -o-transition: all ease 0.4s;
+    transition: all ease 0.4s;
   
     &.stAccpt {
       background-color: #47e3bd;
+
+      &:hover {
+        background-color: darken(#47e3bd, 20%);
+      }
+    }
+  
+    &.stReject {
+      &:hover {
+        background-color: #d14e4e;
+      }
     }
   }
 }
