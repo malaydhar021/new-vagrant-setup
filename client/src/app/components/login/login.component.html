@@ -12,11 +12,11 @@
     <div class="formArea">
       <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
         <div class="formRow"
           [ngClass]="{active : emailFieldFocused, error : isSubmitted && loginFormControls.email.errors}">
           <input type="text" class="formCtrl" id="email" formControlName="email" (focus)="onFocus('email', $event)"
-            (blur)="onFocusOut('email', $event)" autocomplete="off">
+            (blur)="onFocusOut('email', $event)" autocomplete="nope" readonly onfocus="if (this.hasAttribute('readonly')) {this.removeAttribute('readonly'); this.blur();    this.focus();  }">
           <label>Email</label>
           <div class="error" *ngIf="(
             isSubmitted
@@ -34,7 +34,7 @@
         <div class="formRow"
           [ngClass]="{active : passwordFieldFocused, error : isSubmitted && loginFormControls.password.errors}">
           <input type="password" class="formCtrl" id="password" formControlName="password"
-            (focus)="onFocus('password', $event)" (blur)="onFocusOut('password', $event)">
+            (focus)="onFocus('password', $event)" (blur)="onFocusOut('password', $event)" autocomplete="nope"  readonly onfocus="if (this.hasAttribute('readonly')) {this.removeAttribute('readonly'); this.blur();    this.focus();  }">
           <label>Password</label>
           <div class="error" *ngIf="(
             isSubmitted
