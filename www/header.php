@@ -13,7 +13,6 @@ if (strpos($getEnvUrl, 'local') !== false) {
 if($_GET['aid']){
     // store it to the cookie
     if(!isset($_COOKIE['aid'])) {
-        echo "Cookie named '" . aid . "' is not set!";
         // set the cookie
         setcookie(aid, $_GET['aid'], time() + (86400 * 30), "/",".usestickyreviews.com");
     } else {
