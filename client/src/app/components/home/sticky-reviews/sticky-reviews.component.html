@@ -24,9 +24,8 @@
             <li class="row" *ngFor="let review of reviews | paginate: config">
               <div class="rowContainer">
                 <div class="tcol">
-                  <div class="userImg" [style.background-image]="'url('+ review.image_url +')'">
-                    <!-- <img src="{{ review.image_url }}" alt="" class="sticky-review-image"> -->
-                  </div>
+                  <div class="userImg" [style.background-image]="'url('+ review.image_url +')'" *ngIf="review.image_url !== null"> </div>
+                  <div class="userImg"  *ngIf="review.image_url === null" [style.background-image]="'url(../../../../assets/images/logo_iconography.png)'"> </div>
                   <div class="userReview">
                     <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null && review.tags !== '' && review.tags !== 'null'">{{ review.tags }}</span>
                     </h2>
