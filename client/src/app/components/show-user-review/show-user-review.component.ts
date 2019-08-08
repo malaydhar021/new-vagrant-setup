@@ -7,6 +7,7 @@ import { LoaderService }                from '../../services/loader.service';
 import { ErrorsService }                from '../../services/errors.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl, Form } from '@angular/forms';
 import { ReviewDataInterface } from '../../interfaces/review-data.interface';
+import { NgxSmartModalComponent, NgxSmartModalService } from 'ngx-smart-modal';
 
 /**
  * Component to load the first screen of show user review with proper info
@@ -34,6 +35,8 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
     message: string = '';
     showMessage: boolean = false;
     reviewData: [] = [];
+    setModalText: string = '';
+    typeOfUserAction: string = '';
     // do something
     constructor(
         private title: Title,
@@ -41,6 +44,7 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
         private loaderService: LoaderService,
         private errorService: ErrorsService,
         private route: ActivatedRoute,
+        public ngxSmartModalService: NgxSmartModalService,
     ) {
         this.title.setTitle('Stickyreviews :: Show User Review');
     }
@@ -84,28 +88,51 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
             });
     }
 
+  /**
+   * Open confirm modal for taking user input
+   * @param type
+   */
+  public openConfirmModal(type) {
+      if (type === 1) {
+        this.setModalText = 'Are you sure you want to accept this review ?';
+      } else {
+        this.setModalText = 'Are you sure you want to reject this review ?';
+      }
+      this.typeOfUserAction = type;
+      this.ngxSmartModalService.getModal('confirmModal').open();
+    }
+
+  /**
+   * Method to capture the user action for accept/reject a sticky review
+   * @param typeOfUserAction
+   */
+  public userAction(typeOfUserAction) {
+    this.ngxSmartModalService.getModal('confirmModal').close();
+      if (typeOfUserAction === 1) {
+        this.acceptReview();
+      } else {
+        this.rejectReview();
+      }
+    }
+
     /**
      * Function to accept a review
      */
     public acceptReview() {
-        if (confirm('Are you sure you want to accept this review ?')) {
         const formData = new FormData();
         formData.append('reviewAction', '1');
         formData.append('stickyId', this.id);
         this.reviewAction(formData);
-        }
     }
 
     /**
      * Function to reject a review
      */
     public rejectReview() {
-        if (confirm('Are you sure you want to reject this review ?')) {
             const formData = new FormData();
             formData.append('reviewAction', '0');
             formData.append('stickyId', this.id);
             this.reviewAction(formData);
-        }
     }
 
     /**
@@ -113,6 +140,7 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
      * @param formData
      */
     public reviewAction(formData) {
+      this.loaderService.enableLoader();
         this.userReviewService.reviewAction(formData).subscribe(
             (response: any) => {
                 if (response.status) {

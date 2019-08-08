@@ -13,7 +13,7 @@ import { SquareComponent } from '../components/show-user-review/sticky-review-st
 import { SquareElevatedComponent } from '../components/show-user-review/sticky-review-styles/square-elevated/square-elevated.component';
 import { TearDropComponent } from '../components/show-user-review/sticky-review-styles/tear-drop/tear-drop.component';
 import { TearDropElevatedComponent } from '../components/show-user-review/sticky-review-styles/tear-drop-elevated/tear-drop-elevated.component';
-
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 /**
  * Module to deal with all sort of operations for user review
  * @module UserReviewModule
@@ -39,6 +39,7 @@ import { TearDropElevatedComponent } from '../components/show-user-review/sticky
         MediaModule,
         MessageModule,
         SharedModule,
+        NgxSmartModalModule.forRoot(),
     ],
     providers: [
         UserReviewService

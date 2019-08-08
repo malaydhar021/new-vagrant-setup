@@ -82,7 +82,7 @@ export class UserReviewComponent implements OnInit, OnDestroy {
       }
     );
 
-    // 
+    //
     this.notFoundSubscription = this.errorService.show404$.subscribe(
       (status: boolean) => {
         this.show404 = status;
