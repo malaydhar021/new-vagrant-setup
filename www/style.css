@@ -1215,6 +1215,7 @@ h5 {
     background-color: #fff;
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    max-width: 1514px;
 }
 
 .ppTacPage h1 {
@@ -1283,10 +1284,19 @@ h5 {
 .socketInfo {
     padding-top: 50px;
 }
+.inSocket {
+    text-align: center;
+}
 .d-flex {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+}
+.d-inline-flex {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    text-align: left;
 }
 .p-Socket {
     max-width: 1080px;
@@ -1296,8 +1306,8 @@ h5 {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
-    max-width: 25%;
-    padding: 0 45px;
+    max-width: inherit;
+    padding: 0 35px;
     position: relative;
     box-sizing: border-box;
 } 
@@ -1637,7 +1647,8 @@ h5 {
         width: 50%;
         border: 1px solid #ccc;
     }
-    .socket-e:before {
+    .socket-e:before,
+    .socket-e + .socket-e:before {
         content: none;
     }
     .p-Socket .socket-e:nth-child(1),

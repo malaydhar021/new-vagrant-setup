@@ -770,7 +770,7 @@ a {
   .menu {
     max-height: calc(100vh - 188px);
     overflow: auto;
-    
+
     ul {
       li {
         a {
@@ -1824,19 +1824,56 @@ a {
           @media (max-width: 1365px) {
             padding: 5px 15px;
           }
+
           @media (max-width: 991px) {
             padding: 5px 0;
           }
         }
+
         .table {
           li {
             &.row {
               .tcol {
                 &:last-child {
-                  > a {
+                  >a {
+
                     &.copyBtn,
                     &.delete {
                       margin-top: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.domainCustomMain {
+      .dataTableArea {
+        .table {
+          .tbody {
+            li {
+              &.row {
+                .error-msg {
+                  .log-stat_msg {
+                    p {
+                      &.no-records {
+                        padding: 0;
+                        font-size: 14px;
+                        font-weight: normal;
+                        text-transform: none;
+                        color: #fff;
+                      }
+                    }
+
+                    &.log_Failed {
+                      p {
+                        &.no-records {
+                          color: #333;
+                        }
+                      }
                     }
                   }
                 }
@@ -2263,7 +2300,7 @@ a {
           }
         }
 
-        > a {
+        >a {
           width: 100%;
           height: 100%;
         }
@@ -4811,11 +4848,12 @@ a {
                       &:before {
                         left: auto;
                         right: 0;
-                      }   
+                      }
                     }
                   }
                 }
               }
+
               &:last-child {
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -4831,8 +4869,7 @@ a {
                   margin-left: 0;
                   margin-right: 0;
 
-                  .previewComp {
-                  }
+                  .previewComp {}
                 }
               }
 
@@ -4920,6 +4957,7 @@ a {
 
         h2 {
           @include mb(15px);
+
           &:after {
             left: 50%;
             @include ml(-25px);
@@ -4930,13 +4968,15 @@ a {
       .sr-modal-body {
         .sr-form-row {
           padding: 0 15px;
-    
+
           .sr-form-cell {
             label {
               text-align: center;
             }
+
             &.btnStyles {
               text-align: center;
+
               button {
                 margin-top: 0;
                 border-bottom-left-radius: 30px;
@@ -4953,6 +4993,7 @@ a {
               &:after {
                 clear: both;
               }
+
               &:after,
               &:before {
                 content: '';
@@ -5022,6 +5063,8 @@ body.loginPage {
     box-shadow: 15px 0 50px rgba(0, 0, 0, 0.16);
     position: relative;
     top: 41px;
+    -webkit-box-shadow: 35px 35px 50px rgba(0, 0, 0, 0.16);
+    box-shadow: 35px 35px 50px rgba(0, 0, 0, 0.16);
 
 
     @media (max-width: 1199px) {
@@ -5183,7 +5226,8 @@ body.loginPage {
       input {
         display: none;
       }
-      input + span {
+
+      input+span {
         display: block;
         position: relative;
         padding-left: 25px;
@@ -5204,7 +5248,8 @@ body.loginPage {
           top: 3px;
         }
       }
-      input:checked + span {
+
+      input:checked+span {
         &:before {
           background-color: #E30C5D;
         }
@@ -5242,6 +5287,8 @@ body.loginPage {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 50px;
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 
     @media (max-width: 480px) {
       margin-top: 20px;
@@ -5292,8 +5339,10 @@ body.loginPage {
 /* -------------------------- Sign Up Page CSS --------------------------- */
 
 body.sign-upPage {
+  // background: url(#{$imgUrl}/graphic_exit_popup.png) no-repeat right 10% bottom/500px,
+  // url(#{$imgUrl}/pop_graphic.png) no-repeat top right/451px;
   background: url(#{$imgUrl}/graphic_exit_popup.png) no-repeat right 10% bottom/500px,
-  url(#{$imgUrl}/pop_graphic.png) no-repeat top right/451px;
+  url(#{$imgUrl}/pop_graphic.png) no-repeat top right/auto;
   background-color: #0CE3BE;
 
   .signupContainer {
@@ -5416,6 +5465,10 @@ body.sign-upPage {
               .formStep {
                 padding-right: 3%;
                 overflow: hidden;
+                
+                .formRow {
+                  padding-left:5px;
+                }
 
                 @media (max-width: 767px) {
                   padding-right: 15px;
@@ -5808,10 +5861,12 @@ body.sign-upPage {
       box-shadow: 0 0 0 #7E7B9B;
       -webkit-transition: all 0.5s ease-out 0s;
       transition: all 0.5s ease-out 0s;
+      -webkit-box-shadow: 0 0 5px #7E7B9B;
+      box-shadow: 0 0 5px rgb(126, 123, 155);
 
       &:hover {
-        -webkit-box-shadow: 0 0 15px #7E7B9B;
-        box-shadow: 0 0 15px rgb(126, 123, 155);
+        -webkit-box-shadow: 0 0 5px #7E7B9B;
+        box-shadow: 0 0 5px rgb(126, 123, 155);
       }
 
       &.trial {
@@ -6096,6 +6151,7 @@ body.sign-upPage {
       .sr-form-ctrl.inputFile {
         height: auto;
         text-align: center;
+        cursor: pointer;
 
         input {
           position: absolute;
@@ -6148,7 +6204,9 @@ body.sign-upPage {
       height: auto;
 
       .sr-form-ctrl.inputFile {
+        cursor: pointer;
         .figureUpld {
+          min-height: 30px;
           height: auto;
         }
       }
@@ -6162,6 +6220,7 @@ body.sign-upPage {
   .sr-form-field .sr-form-ctrl.inputFile {
     height: 120px;
     position: relative;
+    cursor: pointer;
 
     .figureUpld {
       top: 10px;
@@ -6194,8 +6253,8 @@ body.sign-upPage {
       width: 100%;
       max-width: calc(100% - 260px);
 
-      .fileImg + p {
-        max-width: 80%;  
+      .fileImg+p {
+        max-width: 80%;
         overflow: hidden;
         text-overflow: ellipsis;
         margin: 0 auto;
@@ -6212,6 +6271,7 @@ body.sign-upPage {
   width: 100%;
   height: 100%;
   opacity: 0;
+  cursor: pointer;
 }
 
 .choseFileArea {
@@ -6377,10 +6437,14 @@ body.sign-upPage {
     font-size: 11px;
     left: 0;
     width: 1000%;
-    max-width: 160px;
+    max-width: 170px;
     margin-top: 9px;
     -webkit-transition: all ease 0.4s;
     transition: all ease 0.4s;
+
+    @media (max-width: 480px) {
+      max-width: 130px;
+    }
   }
 
   &:hover:after {
@@ -6430,7 +6494,7 @@ body.sign-upPage {
     transform: none;
 
     .sr-form-row {
-      .sr-form-cell-small + .sr-form-cell-small {
+      .sr-form-cell-small+.sr-form-cell-small {
         .colorPicker {
           .color-picker {
             @media (max-width: 767px) {
@@ -6445,6 +6509,7 @@ body.sign-upPage {
           }
         }
       }
+
       .sr-form-cell-small {
         .colorPicker {
           .color-picker {
@@ -6490,6 +6555,7 @@ body.sign-upPage {
               height: 140px;
               position: relative;
               text-align: center;
+              cursor: pointer;
 
               input {
                 position: absolute;
@@ -6573,6 +6639,7 @@ body.sign-upPage {
                           -ms-transform: none;
                           transform: none;
                           // background-image: url('./assets/images/default_logo_image_sr.png');
+                          cursor: pointer;
                         }
 
                         .choseFileArea {
@@ -7382,7 +7449,7 @@ body.sign-upPage {
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
       overflow: hidden;
-      
+
       .leftSec {
         width: 50px;
         height: 190px;
@@ -8218,7 +8285,7 @@ body.sign-upPage {
     @include mb(17px);
 
     @media (max-width: 480px) {
-        font-size: 24px;
+      font-size: 24px;
     }
   }
 
@@ -8984,7 +9051,7 @@ img {
             .vidUpV {
               .inputSec_in {
                 .choseFileArea {
-                  .fileImg + p {
+                  .fileImg+p {
                     max-width: calc(100% - 50px);
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -9243,21 +9310,21 @@ img {
       -webkit-box-pack: center;
       -ms-flex-pack: center;
       justify-content: center;
-      
+
       .popAdd {
         @media (max-width: 420px) {
           // overflow-x: hidden;
           -webkit-transform-origin: 50% 50%;
           -ms-transform-origin: 50% 50%;
-              transform-origin: 50% 50%;
-                -webkit-transform: scale(0.8);
-                    -ms-transform: scale(0.8);
-                        transform: scale(0.8);
+          transform-origin: 50% 50%;
+          -webkit-transform: scale(0.8);
+          -ms-transform: scale(0.8);
+          transform: scale(0.8);
         }
       }
     }
 
-    .showStyleP + .btnStyles {
+    .showStyleP+.btnStyles {
       @media (max-width: 575px) {
         margin-bottom: 30px;
       }
@@ -9278,14 +9345,14 @@ img {
   }
 
   &.reviewLinkCtrl {
-    @media (max-width: 575px){
+    @media (max-width: 575px) {
       position: static;
       margin: 0 15px;
       max-width: calc(100% - 30px);
       -webkit-transform: none;
       -ms-transform: none;
       transform: none;
-      
+
       .bodyCreview {
         max-height: inherit;
 
@@ -11287,13 +11354,14 @@ Cookie notification css
     margin-right: 8px;
   }
 }
+
 .inDataHdr {
   padding: 0 35px;
-  
+
   .linkTxt {
     font-size: 14px;
     font-style: italic;
-    
+
     img {
       display: inline-block;
       vertical-align: 0;
@@ -11316,7 +11384,7 @@ Cookie notification css
 }
 
 .btnStyles {
-  button{
+  button {
     color: #fff;
     border-radius: 30px 30px 30px 0;
     font-size: 12px;
@@ -11331,7 +11399,7 @@ Cookie notification css
     -webkit-transition: all ease 0.4s;
     -o-transition: all ease 0.4s;
     transition: all ease 0.4s;
-  
+
     &.stAccpt {
       background-color: #47e3bd;
 
@@ -11339,7 +11407,7 @@ Cookie notification css
         background-color: darken(#47e3bd, 20%);
       }
     }
-  
+
     &.stReject {
       &:hover {
         background-color: #d14e4e;
@@ -11351,8 +11419,9 @@ Cookie notification css
 @supports (-ms-ime-align: auto) and (color: unset) {
   .nsm-dialog {
     .sr-modal-body {
-      .canvasCapture{
+      .canvasCapture {
         .previewpopup {
+
           &.theme1,
           &.theme2,
           &.theme3,
@@ -11367,7 +11436,7 @@ Cookie notification css
             -webkit-box-direction: normal;
             -ms-flex-direction: column;
             flex-direction: column;
-            
+
             .previewComp {
               transform: none;
               -moz-transform: none;
@@ -11375,7 +11444,7 @@ Cookie notification css
               -webkit-transform: none;
               top: auto;
               bottom: auto;
-              left:0;
+              left: 0;
               right: 0;
               margin-left: auto !important;
               margin-right: auto !important;
@@ -11384,7 +11453,7 @@ Cookie notification css
             }
           }
 
-          &.theme5 {            
+          &.theme5 {
             .previewComp {
               overflow: visible;
             }

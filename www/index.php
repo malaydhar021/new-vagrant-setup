@@ -38,7 +38,7 @@ $planData = json_decode($allPlansData,true);
         <div class="socketInfo">
             <div class="container">
                 <div class="inSocket">
-                    <div class="d-flex p-Socket">
+                    <div class="d-inline-flex p-Socket">
                         <div class="socket-e">
                             <span>Total Users</span>
                             <h3 class="total-user-count">0</h3>
