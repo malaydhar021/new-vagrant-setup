@@ -9,6 +9,7 @@ use App\UserZapierTokens;
 use App\UserZapierWebhooks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use App\Helpers\Hashids;
 
 class ZapierWebhooksController extends Controller
 {
@@ -152,7 +153,7 @@ class ZapierWebhooksController extends Controller
                             $getReviewLinkData[$stickyKey]['sticky_reviews_description'] = $reviewDescription;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_tags'] = $stickyData->tags;
                             $getReviewLinkData[$stickyKey]['sticky_reviews_rating'] = $stickyData->rating;
-                            $getReviewLinkData[$stickyKey]['view_sticky_review'] = 'https://app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.base64_encode($stickyData->id);
+                            $getReviewLinkData[$stickyKey]['view_sticky_review'] = 'https://app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.Hashids::encode($stickyData->id);
                             if($stickyData->negativeReviews != null ){
                                 $getReviewLinkData[$stickyKey]['negative_reviews_email'] = $stickyData->negativeReviews['email'];
                                 $getReviewLinkData[$stickyKey]['negative_reviews_phone'] = $stickyData->negativeReviews['phone'];

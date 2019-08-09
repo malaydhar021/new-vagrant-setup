@@ -11,13 +11,12 @@ use App\StickyReview as UserReview;
 use App\StickyReview;
 use App\UserZapierTokens;
 use Carbon\Carbon;
-
 use Exception;
 use App\Exceptions\UserReviewException;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\Hashids;
 
 class UserReviewsController extends Controller
 {
@@ -35,7 +34,7 @@ class UserReviewsController extends Controller
         } catch (Exception $exc) {
             throw new UserReviewException($exc->getMessage());
         }
-        
+
         return response()->json([
             'status' => true,
             'message' => "Review link details has fetched successfully.",
@@ -175,7 +174,7 @@ class UserReviewsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function checkPasskey(Request $request){
-        $stickyId = base64_decode($request->stickyId);
+        $stickyId = Hashids::decode($request->stickyId);
         $reviewToken = $request->reviewToken;
         $getEnvUrl = $_SERVER['SERVER_NAME'];
         if (strpos($getEnvUrl, 'local') !== false) {
@@ -204,7 +203,7 @@ class UserReviewsController extends Controller
     }
 
     public function reviewAction(Request $request) {
-        $stickyId = base64_decode($request->stickyId);
+        $stickyId = Hashids::decode($request->stickyId);
         $updateStickyReview = StickyReview::where('id', $stickyId)->first();
         if($updateStickyReview != null ){
             $updateStickyReview->is_accept = $request->reviewAction;

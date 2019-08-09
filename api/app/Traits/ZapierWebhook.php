@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Helpers\Hashids;
 use App\StickyReview;
 use App\ReviewLink;
 use App\ExitPopUp;
@@ -50,7 +51,7 @@ trait ZapierWebhook
                     $sendZapData['sticky_reviews_description'] = $reviewDescription;
                     $sendZapData['sticky_reviews_tags'] = $getStickyReviewInfo->tags;
                     $sendZapData['sticky_reviews_rating'] = $getStickyReviewInfo->rating;
-                    $sendZapData['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.base64_encode($getStickyReviewInfo->id);
+                    $sendZapData['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.Hashids::encode($getStickyReviewInfo->id);
                     if($getStickyReviewInfo->negativeReviews != null ){
                         $sendZapData['negative_reviews_email'] = $getStickyReviewInfo->negativeReviews['email'];
                         $sendZapData['negative_reviews_phone'] = $getStickyReviewInfo->negativeReviews['phone'];
@@ -117,7 +118,7 @@ trait ZapierWebhook
                         $sendZapData['sticky_reviews_description'] = $reviewDescription;
                         $sendZapData['sticky_reviews_tags'] = $getStickyReviewInfo->tags;
                         $sendZapData['sticky_reviews_rating'] = $getStickyReviewInfo->rating;
-                        $sendZapData['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.base64_encode($getStickyReviewInfo->id);
+                        $sendZapData['view_sticky_review'] = 'app.'.$linkUrl.'/show-user-review/'.$getReviewToken.'/'.Hashids::encode($getStickyReviewInfo->id);
                         if($getStickyReviewInfo->negativeReviews != null ){
                             $sendZapData['negative_reviews_email'] = $getStickyReviewInfo->negativeReviews['email'];
                             $sendZapData['negative_reviews_phone'] = $getStickyReviewInfo->negativeReviews['phone'];
