@@ -64,7 +64,7 @@ if($_GET['aid']){
                 <!--                        </a>-->
                 <span id="loginBtn"> <a href="https://app.<?php echo $linkUrl; ?>" target="_blank"> <img src="images/icon_menu_login.png" alt="login"></a></span>
 
-                <span id="dashboard"> <a href="https://app.<?php echo $linkUrl; ?>/home/dashboard" target="_blank"> <img src="images/icon_dashboard_2.png" alt="dashboard"> </a></span>
+                <span id="dashboard"> <a href="https://app.<?php echo $linkUrl; ?>/home/dashboard"> <img src="images/icon_dashboard_2.png" alt="dashboard"> </a></span>
             </div>
         </div>
         <div class="responsiveNav">
