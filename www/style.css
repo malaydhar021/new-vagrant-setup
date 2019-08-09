@@ -66,6 +66,25 @@ body {
 
 .bannerArea {
     background: url("images/graphic_top_right.png") no-repeat right top;
+    position: relative;
+    overflow: hidden;
+}
+
+.bannerArea:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#49e3be+0,49e3be+64&0.1+0,0+52,0+52,0+62,0+66 */
+    background: -moz-radial-gradient(center, ellipse cover,  rgba(73,227,190,0.1) 0%, rgba(73,227,190,0) 52%, rgba(73,227,190,0) 62%, rgba(73,227,190,0) 64%, rgba(73,227,190,0) 66%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover,  rgba(73,227,190,0.1) 0%,rgba(73,227,190,0) 52%,rgba(73,227,190,0) 62%,rgba(73,227,190,0) 64%,rgba(73,227,190,0) 66%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center,  rgba(73,227,190,0.1) 0%,rgba(73,227,190,0) 52%,rgba(73,227,190,0) 62%,rgba(73,227,190,0) 64%,rgba(73,227,190,0) 66%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a49e3be', endColorstr='#0049e3be',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    width: 2170px;
+    height: 2170px;
 }
 
 .headerArea {
@@ -80,6 +99,7 @@ body {
     right: 0;
     top: 0;
     margin-bottom: 0;
+    z-index: 1;
 }
 
 .headerArea .container {
