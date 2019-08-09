@@ -121,6 +121,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.showUpdateCard = response.data.pay_info;
       }
     )
+
+    this.stopDrop();
   }
 
   /**
@@ -191,5 +193,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  public stopDrop(){
+    var containerIn = document.querySelectorAll(".settingDrop");
+    for(var i=0;i<containerIn.length;i++){
+        containerIn[i].addEventListener("click", function(e){
+            e.stopPropagation();
+        });
+    }
   }
 }
