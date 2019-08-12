@@ -62,7 +62,7 @@ if($_GET['aid']){
                 <!--                        <a href=""> OLD IMAGE -->
                 <!--                            <img src="images/icon_menu_login.png" alt="">-->
                 <!--                        </a>-->
-                <span id="loginBtn"> <a href="https://app.<?php echo $linkUrl; ?>" target="_blank"> <img src="images/icon_menu_login.png" alt="login"></a></span>
+                <span id="loginBtn"> <a href="https://app.<?php echo $linkUrl; ?>"> <img src="images/icon_menu_login.png" alt="login"></a></span>
 
                 <span id="dashboard"> <a href="https://app.<?php echo $linkUrl; ?>/home/dashboard"> <img src="images/icon_dashboard_2.png" alt="dashboard"> </a></span>
             </div>

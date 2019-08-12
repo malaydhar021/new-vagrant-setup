@@ -73,7 +73,7 @@ body {
 .bannerArea:before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 30%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
@@ -148,17 +148,35 @@ body {
     width: 52px;
     margin: 20px 0 0 50px;
 }
+.navArea .loginBtn #loginBtn {
+    display: block;
+}
+.navArea .loginBtn #loginBtn a {
+    font-size: 0;
+}
 
 .navArea .loginBtn a {
-    display: block;
+    /* display: block; */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     width: 52px;
     height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50px;
     background: #fff;
     text-align: center;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding-top: 12px;
+    /* padding-top: 12px; */
     -webkit-box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     -webkit-transition: all 0.5s ease 0s;
@@ -1302,7 +1320,7 @@ h5 {
 
 /* Socket blocks index page */
 .socketInfo {
-    padding-top: 50px;
+    padding-top: 20px;
 }
 .inSocket {
     text-align: center;
