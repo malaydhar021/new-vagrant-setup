@@ -151,7 +151,7 @@
                   <div class="sr-form-field">
                     <input type="text" class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignDomainName.errors}"
-                      formControlName="campaignDomainName">
+                      formControlName="campaignDomainName" placeholder="http://www.example.com">
                     <div class="error-msg" *ngIf="(
                       isSubmitted
                       && getFormControls.campaignDomainName.errors !== null

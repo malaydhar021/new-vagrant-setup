@@ -27,7 +27,12 @@
                   <div class="userImg" [style.background-image]="'url('+ review.image_url +')'" *ngIf="review.image_url !== null"> </div>
                   <div class="userImg"  *ngIf="review.image_url === null" [style.background-image]="'url(../../../../assets/images/logo_iconography.png)'"> </div>
                   <div class="userReview">
-                    <h2>{{ review.name }} <span class="greenTag" *ngIf="review.tags !== null && review.tags !== '' && review.tags !== 'null'">{{ review.tags }}</span>
+                    <h2>{{ review.name }}
+                      <span *ngIf="review.tags.length > 0 && review.tags[0] !== ''">
+                        <span *ngFor="let tag of review.tags; let i = index">
+                        <span class="greenTag" *ngIf="i < 5 && tag!==''"> {{ tag }}</span>
+                        </span>
+                      </span>
                     </h2>
                     <p>
                       {{ review.description }}

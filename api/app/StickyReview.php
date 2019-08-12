@@ -275,6 +275,18 @@ class StickyReview extends Model
     public function setIdAttribute ($value) {
         $this->attributes['id'] = $value;
         $this->checkAndSendStickyReviewDataToZapier($value);
-        \Log::info('I am inserting you ! '.$value);
+        // \Log::info('I am inserting you ! '.$value);
     }
+
+  /**
+   * Function to return tags as an array
+   * @param $value
+   * @return array
+   */
+  public function getTagsAttribute($value)
+  {
+    $str_arr = explode (",", $value);
+    return $str_arr;
+  }
+
 }

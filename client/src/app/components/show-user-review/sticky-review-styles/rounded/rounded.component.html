@@ -4,8 +4,8 @@
     <div class="popupTxt popup_template_1" style="margin-bottom: 30px;">
         <div class="figPopup">
             <figure>
-                <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === ''">
-                <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== ''">
+                <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === null">
+                <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== null">
             </figure>
         </div>
         <div class="bodyPopup">
