@@ -4768,6 +4768,13 @@ a {
                 }
               }
 
+              textarea {
+                &.sr-form-ctrl {
+                  min-height: 74px;
+                  resize: none;
+                }
+              }
+
               select.sr-form-ctrl {
                 -webkit-appearance: none;
                 -moz-appearance: none;

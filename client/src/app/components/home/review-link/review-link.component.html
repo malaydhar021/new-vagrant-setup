@@ -21,7 +21,7 @@
         <li>ACTION(S)</li>
       </ul>
       <div class="tbody">
-        <ng-scrollbar [compact]="true" *ngIf="reviewLinks.length > 0; else noRecords">
+        <ng-scrollbar [disableOnBreakpoints]="false" [compact]="true" *ngIf="reviewLinks.length > 0; else noRecords">
           <ul>
             <li class="row" *ngFor="let link of reviewLinks | paginate: config; let i = index"
               [ngClass]="{showMore: showMore && rowIndex === i}">
@@ -258,8 +258,8 @@
               <div class="sr-form-cell-small">
                 <label>Enter Description</label>
                 <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl" formControlName="description"
-                    [ngClass]="{'error' : isSubmittedStep1 && getFormControls.description.errors}">
+                  <textarea type="text" class="sr-form-ctrl" formControlName="description"
+                    [ngClass]="{'error' : isSubmittedStep1 && getFormControls.description.errors}"></textarea>
                   <div class="error-msg" *ngIf="(
                     isSubmittedStep1
                     && getFormControls.description.errors !== null
@@ -271,8 +271,8 @@
               <div class="sr-form-cell-small">
                 <label>Positive Review Message</label>
                 <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl" formControlName="positive_review_msg"
-                    [ngClass]="{'error' : isSubmittedStep1 && getFormControls.positive_review_msg.errors}">
+                  <textarea type="text" class="sr-form-ctrl" formControlName="positive_review_msg"
+                    [ngClass]="{'error' : isSubmittedStep1 && getFormControls.positive_review_msg.errors}"></textarea>
                   <div class="error-msg" *ngIf="(
                       isSubmittedStep1
                       && getFormControls.positive_review_msg.errors !== null
@@ -286,8 +286,8 @@
               <div class="sr-form-cell-small">
                 <label>Negative Info #1</label>
                 <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_1"
-                    [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_1.errors}">
+                  <textarea type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_1"
+                    [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_1.errors}"></textarea>
                   <div class="error-msg" *ngIf="(
                     isSubmittedStep1
                     && getFormControls.negative_info_review_msg_1.errors !== null
@@ -299,8 +299,8 @@
               <div class="sr-form-cell-small">
                 <label>Negative Info #2</label>
                 <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_2"
-                    [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_2.errors}">
+                  <textarea type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_2"
+                    [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_2.errors}"></textarea>
                   <div class="error-msg" *ngIf="(
                       isSubmittedStep1
                       && getFormControls.negative_info_review_msg_2.errors !== null

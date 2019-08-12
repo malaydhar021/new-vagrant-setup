@@ -19,7 +19,7 @@
         <li>ACTION(S)</li>
       </ul>
       <div class="tbody">
-        <ng-scrollbar [compact]="true" *ngIf="reviews.length > 0; else noRecords">
+        <ng-scrollbar [disableOnBreakpoints]="false" [compact]="true" *ngIf="reviews.length > 0; else noRecords">
           <ul>
             <li class="row" *ngFor="let review of reviews | paginate: config">
               <div class="rowContainer">
