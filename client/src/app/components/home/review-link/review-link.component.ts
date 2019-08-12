@@ -337,7 +337,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   public resetForm() {
     this.form.reset(); // reset the form
     this.form2.reset(); // reset the form2
-    this.imagePreviewUrl = 'assets/images/user.png'; // set default image to preview image area
+    this.imagePreviewUrl = 'assets/images/default_logo_image_sr.png'; // set default image to preview image area
     this.image = null;
     this.currentStep = 1;
     this.isModalOpened = false; // set it to false as the modal has been closed
