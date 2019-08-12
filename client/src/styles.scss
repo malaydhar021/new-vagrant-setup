@@ -5629,6 +5629,10 @@ body.sign-upPage {
               .formStep {
                 padding-left: 10%;
                 padding-right: 0;
+                
+                .formRow {
+                  padding-left:5px;
+                }
 
                 @media (max-width: 767px) {
                   padding-right: 15px;
@@ -6004,8 +6008,8 @@ body.sign-upPage {
       box-shadow: 0 0 0 #7E7B9B;
       -webkit-transition: all 0.5s ease-out 0s;
       transition: all 0.5s ease-out 0s;
-      -webkit-box-shadow: 0 0 5px #7E7B9B;
-      box-shadow: 0 0 5px rgb(126, 123, 155);
+      -webkit-box-shadow: 0 0 6px #7E7B9B;
+      box-shadow: 0 0 6px rgb(126, 123, 155);
 
       &:hover {
         -webkit-box-shadow: 0 0 5px #7E7B9B;
