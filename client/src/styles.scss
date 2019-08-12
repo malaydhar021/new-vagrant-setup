@@ -3204,6 +3204,8 @@ a {
           opacity: 0;
           -webkit-transition: all 0.5s ease 0s;
           transition: all 0.5s ease 0s;
+          -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
 
           img {
             display: inline-block;
@@ -5709,6 +5711,8 @@ body.sign-upPage {
         a {
           color: #0CE3BE;
           text-decoration: underline;
+          text-underline-position: under;
+          display: inline-block;
         }
 
         @media (max-width: 767px) {
