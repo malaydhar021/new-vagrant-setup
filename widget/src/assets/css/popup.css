@@ -1412,9 +1412,9 @@ i.star.inactive:before {
     font-size: 10px;
 }
 
-.prevwPage .exitPg .closePopup {
+/* .prevwPage .exitPg .closePopup {
     pointer-events: none;
-}
+} */
 .showStyleP .vidParent_4{
     width: 325px;
 }
