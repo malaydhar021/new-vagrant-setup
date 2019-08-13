@@ -182,19 +182,33 @@ class ThirdPartyWebhooksController extends Controller
 
             $user = User::where('email', $request->input('email'))->first();
 
-            if($user->stripe_id != null) {
-              $reason = 'Suspended';
-              $description = 'Suspended using the third party webhook';
-              $user->cancelSubscription($reason, $description);
-              $user->card_brand = null;
-              $user->card_last_four = null;
-              $user->card_exp_month = null;
-              $user->card_exp_year = null;
+            if($request->input('suspend') == 0 ){
+              if($user->stripe_id != null) {
+                $reason = 'Suspended';
+                $description = 'Suspended using the third party webhook';
+                $user->cancelSubscription($reason, $description);
+                $user->card_brand = null;
+                $user->card_last_four = null;
+                $user->card_exp_month = null;
+                $user->card_exp_year = null;
+              }
+              $user->subscription_status = 'TERMINATED';
+              $user->is_active = $request->input('suspend') ? "0" : "1";
+              $user->update();
+            } else {
+              if($user->stripe_id != null){
+                return response()->json([
+                  'data' => [
+                    'http_code' => 200,
+                    'status' => true,
+                    'message' => "Sorry this user cannot be Unsuspend.",
+                  ]
+                ]);
+              }
+              $user->subscription_status = 'ACTIVE';
+              $user->is_active = $request->input('suspend') ? "0" : "1";
+              $user->update();
             }
-            $user->subscription_status = 'TERMINATED';
-            $user->pricing_plan = null;
-            $user->is_active = $request->input('suspend') ? "0" : "1";
-            $user->update();
 
             $status = $user->is_active ? "deactived" : "actived";
             return response()->json([
