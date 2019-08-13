@@ -5714,6 +5714,7 @@ body.sign-upPage {
           text-decoration: underline;
           text-underline-position: under;
           display: inline-block;
+          @include mb(2px);
         }
 
         @media (max-width: 767px) {
@@ -11581,6 +11582,14 @@ Cookie notification css
       }
     }
   }
+}
+
+
+.inDiv {
+  @include mt(15px);
+}
+.inDiv + .inDiv {
+  @include mt(25px);
 }
 
 @supports (-ms-ime-align: auto) and (color: unset) {

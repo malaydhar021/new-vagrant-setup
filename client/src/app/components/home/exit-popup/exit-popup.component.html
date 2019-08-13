@@ -2871,7 +2871,7 @@
             <div class="sr-form-cell-small exitPopup_paddings">
               <!-- <label>Add Email Field <input type="checkbox" class="tglBtn" formControlName="hasEmailField" (ngModelChange)='addEmailField()'></label>-->
               <!-- Popup Action -->
-              <label>Exit popup action </label>
+              <label>Exit popup actions </label>
               <label> <div class="switcher switchInForm">
                 <label>
                   <input type="radio" class="tglBtn" formControlName="exitPopupAction" value="1" (change)="addExitpopupAction()">
@@ -2898,6 +2898,22 @@
                 <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupHeaderText.errors !== null && getFormControls.exitPopupHeaderText.errors.required)"> Header text is required.</div>
                 <div class="error-msg"  *ngIf="(getFormControls.exitPopupHeaderText.errors !== null && getFormControls.exitPopupHeaderText.errors?.maxlength)"> Only 25 characters allowed. </div>
               </div>
+              
+              <div class="inDiv">
+                <div class="inlineRow clearfix">
+                  <label>Header Text Color</label>
+                  <div class="colorPicker">
+                    <input [(colorPicker)]="color1" [style.background]="color1" class="colorChosen" readonly formControlName="headerTextColor" (colorPickerChange)="getHeaderTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+                  </div>
+                </div>
+  
+                <div class="inlineRow clearfix">
+                  <label>Header Background Color</label>
+                  <div class="colorPicker">
+                    <input [(colorPicker)]="color2" [style.background]="color2" class="colorChosen" readonly formControlName="headerBackgroundColor" (colorPickerChange)="getHeaderBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="sr-form-cell-small" *ngIf="showEmailField">
@@ -2914,6 +2930,22 @@
                   Button text is required.
                 </div>
                 <div class="error-msg"  *ngIf="(getFormControls.exitPopupButtonText.errors !== null && getFormControls.exitPopupButtonText.errors?.maxlength)"> Only 15 characters allowed. </div>
+              </div>
+              
+              <div class="inDiv" *ngIf="showEmailField">
+                <div class="inlineRow clearfix">
+                  <label>Button Text Color</label>
+                  <div class="colorPicker">
+                    <input [(colorPicker)]="color3" [style.background]="color3" class="colorChosen" readonly formControlName="buttonTextColor" (colorPickerChange)="getButtonTextColor($event)"[cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+                  </div>
+                </div>
+  
+                <div class="inlineRow clearfix">
+                  <label>Button Background Color</label>
+                  <div class="colorPicker">
+                    <input [(colorPicker)]="color4" [style.background]="color4" class="colorChosen" readonly formControlName="buttonBackgroundColor" (colorPickerChange)="getButtonBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- CTA Button HTML-->
@@ -2934,72 +2966,40 @@
                 <div class="error-msg"  *ngIf="(getFormControls.exitPopupCtaButtonText.errors !== null && getFormControls.exitPopupCtaButtonText.errors?.maxlength)"> Only 40 characters allowed. </div>
               </div>
 
-
-              <label>CTA Button URL</label>
-              <div class="sr-form-field">
-                <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl" [ngClass]="{error: getFormControls.exitPopupButtonUrl.errors || getFormControls.exitPopupButtonUrl.errors?.pattern}" >
-                <div class="error-msg" *ngIf="(
-                  isSubmitted
-                  || getFormControls.exitPopupButtonUrl.errors !== null
-                  && getFormControls.exitPopupButtonUrl.errors.required)">
-                  CTA button URL is required.
-                </div>
-                <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupButtonUrl.errors?.pattern)">
-                  Please use a valid URL.
-                </div>
-              </div>
-            </div>
-
-            <div class="sr-form-cell-small"  *ngIf="showCtaField">
-              <div class="inlineRow clearfix">
-                <label>CTA Button Text Color</label>
-                <div class="colorPicker">
-
-                  <input [(colorPicker)]="color7" [style.background]="color7" class="colorChosen" readonly formControlName="ctaButtonTextColor" (colorPickerChange)="getCtaButtonTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+              <div class="inDiv">
+                <label>CTA Button URL</label>
+                <div class="sr-form-field">
+                  <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl" [ngClass]="{error: getFormControls.exitPopupButtonUrl.errors || getFormControls.exitPopupButtonUrl.errors?.pattern}" >
+                  <div class="error-msg" *ngIf="(
+                    isSubmitted
+                    || getFormControls.exitPopupButtonUrl.errors !== null
+                    && getFormControls.exitPopupButtonUrl.errors.required)">
+                    CTA button URL is required.
+                  </div>
+                  <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupButtonUrl.errors?.pattern)">
+                    Please use a valid URL.
+                  </div>
                 </div>
               </div>
 
-              <div class="inlineRow clearfix">
-                <label>CTA Button Background Color</label>
-                <div class="colorPicker">
-                  <input [(colorPicker)]="color8" [style.background]="color8" class="colorChosen" readonly formControlName="ctaButtonBackgroundColor" (colorPickerChange)="getCtaButtonBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+              <div class="inDiv"  *ngIf="showCtaField">
+                <div class="inlineRow clearfix">
+                  <label>CTA Button Text Color</label>
+                  <div class="colorPicker">
+  
+                    <input [(colorPicker)]="color7" [style.background]="color7" class="colorChosen" readonly formControlName="ctaButtonTextColor" (colorPickerChange)="getCtaButtonTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+                  </div>
+                </div>
+  
+                <div class="inlineRow clearfix">
+                  <label>CTA Button Background Color</label>
+                  <div class="colorPicker">
+                    <input [(colorPicker)]="color8" [style.background]="color8" class="colorChosen" readonly formControlName="ctaButtonBackgroundColor" (colorPickerChange)="getCtaButtonBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
+                  </div>
                 </div>
               </div>
             </div>
             <!-- CTA Button HTML -->
-          </div>
-
-          <div class="sr-form-row">
-            <div class="sr-form-cell-small">
-              <div class="inlineRow clearfix">
-                <label>Header Text Color</label>
-                <div class="colorPicker">
-                  <input [(colorPicker)]="color1" [style.background]="color1" class="colorChosen" readonly formControlName="headerTextColor" (colorPickerChange)="getHeaderTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
-                </div>
-              </div>
-
-              <div class="inlineRow clearfix">
-                <label>Header Background Color</label>
-                <div class="colorPicker">
-                  <input [(colorPicker)]="color2" [style.background]="color2" class="colorChosen" readonly formControlName="headerBackgroundColor" (colorPickerChange)="getHeaderBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
-                </div>
-              </div>
-            </div>
-            <div class="sr-form-cell-small" *ngIf="showEmailField">
-              <div class="inlineRow clearfix">
-                <label>Button Text Color</label>
-                <div class="colorPicker">
-                  <input [(colorPicker)]="color3" [style.background]="color3" class="colorChosen" readonly formControlName="buttonTextColor" (colorPickerChange)="getButtonTextColor($event)"[cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
-                </div>
-              </div>
-
-              <div class="inlineRow clearfix">
-                <label>Button Background Color</label>
-                <div class="colorPicker">
-                  <input [(colorPicker)]="color4" [style.background]="color4" class="colorChosen" readonly formControlName="buttonBackgroundColor" (colorPickerChange)="getButtonBackgroundColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div class="sr-form-row rowCanvas">
