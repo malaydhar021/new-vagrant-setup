@@ -2898,7 +2898,7 @@
                 <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupHeaderText.errors !== null && getFormControls.exitPopupHeaderText.errors.required)"> Header text is required.</div>
                 <div class="error-msg"  *ngIf="(getFormControls.exitPopupHeaderText.errors !== null && getFormControls.exitPopupHeaderText.errors?.maxlength)"> Only 25 characters allowed. </div>
               </div>
-              
+
               <div class="inDiv">
                 <div class="inlineRow clearfix">
                   <label>Header Text Color</label>
@@ -2906,7 +2906,7 @@
                     <input [(colorPicker)]="color1" [style.background]="color1" class="colorChosen" readonly formControlName="headerTextColor" (colorPickerChange)="getHeaderTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                   </div>
                 </div>
-  
+
                 <div class="inlineRow clearfix">
                   <label>Header Background Color</label>
                   <div class="colorPicker">
@@ -2931,7 +2931,7 @@
                 </div>
                 <div class="error-msg"  *ngIf="(getFormControls.exitPopupButtonText.errors !== null && getFormControls.exitPopupButtonText.errors?.maxlength)"> Only 15 characters allowed. </div>
               </div>
-              
+
               <div class="inDiv" *ngIf="showEmailField">
                 <div class="inlineRow clearfix">
                   <label>Button Text Color</label>
@@ -2939,7 +2939,7 @@
                     <input [(colorPicker)]="color3" [style.background]="color3" class="colorChosen" readonly formControlName="buttonTextColor" (colorPickerChange)="getButtonTextColor($event)"[cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                   </div>
                 </div>
-  
+
                 <div class="inlineRow clearfix">
                   <label>Button Background Color</label>
                   <div class="colorPicker">
@@ -2969,14 +2969,15 @@
               <div class="inDiv">
                 <label>CTA Button URL</label>
                 <div class="sr-form-field">
-                  <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl" [ngClass]="{error: getFormControls.exitPopupButtonUrl.errors || getFormControls.exitPopupButtonUrl.errors?.pattern}" >
+                  <input type="text" class="sr-form-ctrl" formControlName="exitPopupButtonUrl" [ngClass]="{error: isSubmitted && getFormControls.exitPopupButtonUrl.errors}" placeholder="http://www.example.com">
+
                   <div class="error-msg" *ngIf="(
                     isSubmitted
-                    || getFormControls.exitPopupButtonUrl.errors !== null
+                    && getFormControls.exitPopupButtonUrl.errors !== null
                     && getFormControls.exitPopupButtonUrl.errors.required)">
                     CTA button URL is required.
                   </div>
-                  <div class="error-msg" *ngIf="(isSubmitted || getFormControls.exitPopupButtonUrl.errors?.pattern)">
+                  <div class="error-msg" *ngIf="(isSubmitted && getFormControls.exitPopupButtonUrl.errors?.pattern)">
                     Please use a valid URL.
                   </div>
                 </div>
@@ -2986,11 +2987,11 @@
                 <div class="inlineRow clearfix">
                   <label>CTA Button Text Color</label>
                   <div class="colorPicker">
-  
+
                     <input [(colorPicker)]="color7" [style.background]="color7" class="colorChosen" readonly formControlName="ctaButtonTextColor" (colorPickerChange)="getCtaButtonTextColor($event)" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', '#2027e9']" [cpOutputFormat]="'hex'"/>
                   </div>
                 </div>
-  
+
                 <div class="inlineRow clearfix">
                   <label>CTA Button Background Color</label>
                   <div class="colorPicker">
