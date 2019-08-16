@@ -20,7 +20,7 @@ class AuthController extends Controller
     CustomDomain {
         CustomDomain::__construct as CustomDomainConstructor;
     }
-    
+
     /**
      * Constructor method
      */
@@ -50,8 +50,8 @@ class AuthController extends Controller
             ]);
         }
     }
-    
-    
+
+
     /**
      * Validates email registration status and passwords strength
      *
@@ -156,6 +156,12 @@ class AuthController extends Controller
                         'message' => "Your account does not have any active subscription plan. Please contact to support for more details."
                     ], 401);
                 }
+              if (Auth::user()->deleted_at != null){
+                return response()->json([
+                  'status' => false,
+                  'message' => "Your account is deleted.Please contact to support for more details."
+                ], 401);
+              }
                 // generate access token for custom domain and update user table
                 Auth::user()->update(["access_token" => $this->getToken()]);
             }

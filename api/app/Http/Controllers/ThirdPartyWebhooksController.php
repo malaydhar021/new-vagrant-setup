@@ -115,6 +115,19 @@ class ThirdPartyWebhooksController extends Controller
 
 
             $user = User::where('email', $request->input('email'))->firstOrFail();
+            // update user subscription to inactive
+                if($user->stripe_id != null) {
+                  $reason = 'Deleted';
+                  $description = 'Deleted using the third party webhook';
+                  $user->cancelSubscription($reason, $description);
+                  $user->card_brand = null;
+                  $user->card_last_four = null;
+                  $user->card_exp_month = null;
+                  $user->card_exp_year = null;
+                }
+                $user->subscription_status = 'TERMINATED';
+                $user->is_active = 0;
+                $user->update();
 
             if($user->affiliate_id != null &&  $user->sale_id != null){
                 $this->callAffiliateApiForDeactive($user->sale_id, false);
