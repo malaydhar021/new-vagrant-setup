@@ -1,7 +1,7 @@
 <div class="mainBox brandingMain tokenMain">
     <header class="mainBoxHeader">
         <div class="mainBoxHeaderLeft">
-            <button type="button" class="addReview" (click)="onAddToken()" [disabled]="buttonStatus">
+            <button type="button" class="addReview" (click)="onAddToken()">
                 <img src="../../../../assets/images/addIcon.png" alt="">
                 Create token
             </button>
@@ -117,6 +117,32 @@
               </button>
               <button class="stReject" type="button" (click)="deleteModal.close()">
                 No
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ngx-smart-modal>
+
+
+<!-- HTML for Info modal -->
+<ngx-smart-modal #InfoModal identifier="InfoModal" class="sr-modal modalNotif">
+  <div class="sr-modal-container">
+    <div class="sr-modal-header">
+      <h2>
+        Hey, wait!
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+      <form>
+        <div class="sr-form">
+          <div class="sr-form-row">
+            <div class="sr-form-cell btnStyles">
+              <label> <i>Please delete the existing token to create a new token.</i> </label>
+              <button class="stAccpt" type="button" (click)="InfoModal.close()">
+                OK
               </button>
             </div>
           </div>
