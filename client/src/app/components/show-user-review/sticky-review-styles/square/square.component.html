@@ -3,11 +3,11 @@
 <div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_2':''" *ngIf="reviewData.type !== 3">
     <div class="popupTxt popup_template_2" style="margin-bottom: 30px;">
         <div class="figPopup">
-            <figure *ngIf="reviewData.image === ''" style="background-image: url(../../../../assets/images/face_icon.png);">
+            <figure *ngIf="reviewData.image === ''" [style.background-image]="background-image: url(../../../../assets/images/face_icon.png);">
                 <!-- <img src="" alt="reviewImage">
                 <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage"> -->
             </figure>
-            <figure *ngIf="reviewData.image !== ''" style="background-image: url(https://{{reviewData.url_link}}/storage/images/{{reviewData.image}});">
+            <figure *ngIf="reviewData.image !== ''" [style.background-image]="background-image: url(https://{{reviewData.url_link}}/storage/images/{{reviewData.image}});">
             </figure>
         </div>
         <div class="bodyPopup">
@@ -67,11 +67,11 @@
         </div>
         <div class="popupTxt popup_template_2" style="margin-bottom: 30px;">
             <div class="figPopup">
-                <figure *ngIf="reviewData.image === ''" style="background-image: url(../../../../assets/images/face_icon.png);">
+                <figure *ngIf="reviewData.image === ''" [style.background-image]="background-image: url(../../../../assets/images/face_icon.png);">
                     <!-- <img src="" alt="reviewImage">
                     <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage"> -->
                 </figure>
-                <figure *ngIf="reviewData.image !== ''" style="background-image: url(https://{{reviewData.url_link}}/storage/images/{{reviewData.image}});">
+                <figure *ngIf="reviewData.image !== ''" [style.background-image]="background-image: url(https://{{reviewData.url_link}}/storage/images/{{reviewData.image}});">
                 </figure>
             </div>
             <div class="bodyPopup">
