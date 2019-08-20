@@ -5525,12 +5525,20 @@ body.loginPage {
 
     @media (max-width: 1199px) {
       @include ml(15px);
+      margin-top: -220px;
+      transform: none;
+      
+      a {
+        display: inline-block;
+      }
     }
 
     @media (max-width: 767px) {
       -webkit-transform: none;
       transform: none;
       top: auto;
+      @include ml(15px);
+      margin-top: 0px;
     }
   }
 }
