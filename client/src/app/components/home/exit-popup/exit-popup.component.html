@@ -12,7 +12,7 @@
     <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="popupListContainer">
       <!-- no content template -->
-      <div class="no-content">
+      <!-- <div class="no-content">
           <figure>
             <img src="../../../../assets/images/clipboards.png" alt=""/>
           </figure>
@@ -26,7 +26,7 @@
                 {{ isEditing ? 'Edit' : 'Add' }} Sticky Review(s)
             </button>
             </div>
-      </div>
+      </div> -->
       <!-- no content template -->
 
       <ng-scrollbar [compact]="true"  *ngIf="exitPopups.length > 0; else noRecords">
