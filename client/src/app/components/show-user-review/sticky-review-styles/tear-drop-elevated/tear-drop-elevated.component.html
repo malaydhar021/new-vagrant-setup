@@ -4,9 +4,11 @@
     <div class="popupTxt popup_template_5" style="margin-bottom: 30px;">
         <div class="figPopup">
 <!--            <figure style="background-image:url(../../../../../../assets/images/dp.jpeg);"></figure>-->
-            <figure>
-                <img src="../../../../../../assets/images/logo_iconography.png" alt="face_icon" *ngIf="reviewData.image === null">
-                <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== null">
+            <figure  *ngIf="reviewData.image === ''" style="background-image: url(../../../../assets/images/face_icon.png);">
+                <!-- <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === ''">
+                <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== ''"> -->
+            </figure>
+            <figure *ngIf="reviewData.image !== ''" style="background-image: url(https://{{reviewData.url_link}}/storage/images/{{reviewData.image}});">
             </figure>
         </div>
         <div class="bodyPopup">
