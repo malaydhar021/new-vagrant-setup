@@ -1943,30 +1943,17 @@ h5 {
     }
 
     .bannerMid {
-        background-position: left 5px top, right top;
+        /* background-position: left 5px top, right top;
         background-size: 150px auto, 180px auto;
         z-index: 1;
-        position: relative;
+        position: relative; */
+        background-image: none;
     }
     .bodyDesign {
         background-size: 240px;
     }
     .socketInfo {
         padding-top: 50px;
-    }
-    .bannerMid .container {
-        position: relative;
-    }
-    .bannerMid .container:after {
-        position: absolute;
-        content: '';
-        z-index: -1;
-        width: calc(100% + 30px);
-        height: calc(100% + 30px);
-        left: -15px;
-        top: -15px;
-        background: rgba(255,255,255,0.9);
-        pointer-events: none;
     }
 }
 
@@ -2475,10 +2462,7 @@ h5 {
         margin-top: 8px;
     }
 
-    /* .bannerMid {
-        background-position: left 5px top, right 50% bottom 55px;
+    .bodyDesign {
+        background-size: 160px;
     }
-    .bannerMid .freeTrialBtn {
-        margin: 170px 0 0;
-    } */
 }
