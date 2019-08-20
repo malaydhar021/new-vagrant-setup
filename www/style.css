@@ -909,7 +909,10 @@ css for go to top button
     transition: transform ease-in-out 0.4s;
     transition: transform ease-in-out 0.4s, -webkit-transform ease-in-out 0.4s;
     -webkit-transform: translateY(200%);
+    -moz-transform: translateY(200%);
+    -ms-transform: translateY(200%);
     transform: translateY(200%);
+    z-index: 1;
 }
 
 .showCookie {
@@ -1526,6 +1529,13 @@ h5 {
 
     .spacingheader {
         padding-top: 128px !important;
+    }
+    .cookieCompliance .container {
+        width: auto;
+    }
+
+    #myBtn {
+        bottom: 70px;
     }
 }
 
