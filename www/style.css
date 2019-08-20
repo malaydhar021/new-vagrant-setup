@@ -1439,13 +1439,13 @@ h5 {
         line-height: 34px;
     }
 
-    .bannerMid p {
+    /* .bannerMid p {
         margin-top: 30px;
-    }
+    } */
 
-    .bannerMid .freeTrialBtn {
+    /* .bannerMid .freeTrialBtn {
         margin: 60px 0 0;
-    }
+    } */
 
     .featureArea2 .sliderContainer .slide .slideLeft {
         margin-left: 20px;
@@ -1457,6 +1457,9 @@ h5 {
 
     .reviewLooks {
         padding-bottom: 50px;
+    }
+    .bodyDesign {
+        background-size: 520px;
     }
 }
 
