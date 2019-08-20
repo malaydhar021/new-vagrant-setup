@@ -152,12 +152,10 @@ class SubscriptionController extends Controller
             $user->changeSubscriptionPlan($request->input('pricing_plan_type'));
             // call the API depending on the affiliate_id and if the sale id is null/recording the sale in affiliate platform
             if($user->affiliate_id != null && $user->sale_id == null ){
-                // $this->callAffiliateApiForAdd($user, $request->input('pricing_plan_type'));
                 $this->CallAffiliateAction(1, $user, $request->input('pricing_plan_type'));
             }
             // call the API for update the sails in affiliate platform
             if($user->affiliate_id != null && $user->sale_id != null ){
-                // $this->callAffiliateApiForUpdate($user, $request->input('pricing_plan_type'));
                 $this->CallAffiliateAction(2, $user, $request->input('pricing_plan_type'));
             }
         }
@@ -183,7 +181,6 @@ class SubscriptionController extends Controller
         $user->cancelSubscription($request->input('reason'), $request->input('description'));
         // call Affiliate Api for Deactivate the user
         if($user->affiliate_id != null && $user->sale_id != null){
-            // $this->CallAffiliateAction(3, $user, null);
             $this->callAffiliateApiForDeactive($user->sale_id, 0);
         }
         return response()->json([
@@ -201,7 +198,6 @@ class SubscriptionController extends Controller
      * @param $pricingPlanType
      */
     public function CallAffiliateAction($actionType, $user, $pricingPlanType) {
-
         $getPlanInfo = config('pricing.plans.'.$pricingPlanType); // get all data from the plans config
         if ($getPlanInfo != null) {
             if ($getPlanInfo['type'] == 'recurring') {
@@ -248,31 +244,30 @@ class SubscriptionController extends Controller
              break;
             default:
         }
-
-        \Log::info("data of Body ". print_r($body,true));
-
+        // \Log::info("data of Body ". print_r($body,true));
         $client = new \GuzzleHttp\Client();
-        $res = $client->post('https://api-affiliate.tier5.us/hooks/sales', [  'form_params'=> $body ]);
-        if($res->getStatusCode() == 200 && $actionType == 1 ){
-            $response  = json_decode($res->getBody());
-            $updateUserSaleId = User::find($user->id);
-            if($updateUserSaleId){
-                $updateUserSaleId->sale_id = $response->payload->saleId;
-                $updateUserSaleId->save();
-            }else{
-                \Log::info("not found the user !");
+        $url = getenv('AFFILIATE_URL');
+        $res = $client->post($url.'/hooks/sales', [  'form_params'=> $body ]);
+        if($res->getStatusCode() == 200 && $actionType == 1 ) {
+          $response = json_decode($res->getBody());
+          $updateUserSaleId = User::find($user->id);
+          if ($response->httpCode != 500) {
+            if ($updateUserSaleId) {
+              $updateUserSaleId->sale_id = $response->payload->saleId;
+              $updateUserSaleId->save();
+            } else {
+              \Log::info("not found the user !");
             }
-        }else{
-            // something went wrong
-            \Log::info("Something went wrong !");
-        }
-
-        if($res->getStatusCode() == 200 && $actionType == 2 ){
+          } else {
+            // error return
+            \Log::info("Message from the affiliate ->  " . $response->message);
+          }
+        } elseif($res->getStatusCode() == 200 && $actionType == 2 ) {
             $response  = json_decode($res->getBody());
             \Log::info('response from the update sales ...  ' .print_r($response,true));
-        }else{
+        } else {
             // something went wrong
-            \Log::info("Something went wrong !");
+          \Log::info("response from the update sales -> Invalid action or status code ... ");
         }
     }
 
@@ -284,7 +279,7 @@ class SubscriptionController extends Controller
     public function callAffiliateApiForDeactive($saleId, $isActive) {
         \Log::info("saleId".$saleId. "isActive ".$isActive);
         $client = new \GuzzleHttp\Client();
-
+        $url = getenv('AFFILIATE_URL');
         if($isActive == 0){
             $isActive = false;
         }else{
@@ -296,9 +291,9 @@ class SubscriptionController extends Controller
             'is_active'       =>  $isActive,
         ];
 
-        \Log::info("BODY of the Request : ".print_r($body,true));
+        // \Log::info("BODY of the Request : ".print_r($body,true));
 
-        $res = $client->post('https://api-affiliate.tier5.us/hooks/sales', [  'json'=> $body ]);
+        $res = $client->post($url.'/hooks/sales', [  'json'=> $body ]);
         if($res->getStatusCode() == 200){
             $response  = json_decode($res->getBody());
             \Log::info('response from the update sales ...  ' .print_r($response,true));

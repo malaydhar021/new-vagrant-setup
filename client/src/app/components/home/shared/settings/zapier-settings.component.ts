@@ -33,6 +33,7 @@ export class ZapierSettingsComponent implements OnInit, OnDestroy {
   isModalOpened: boolean = false; // set to true if the modal is opened
   showTheMessage: boolean = false;
   tokenIdToDelete: string = null;
+  buttonStatus: boolean = false;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -97,7 +98,12 @@ export class ZapierSettingsComponent implements OnInit, OnDestroy {
     this.userService.showToken().subscribe(
       (response: any) => {
         this.token = response.data.data;
-        this.loaderService.disableLoader();        
+        this.loaderService.disableLoader();
+        if (response.data.data.length != 0 ) {
+          this.buttonStatus = true;
+        } else {
+          this.buttonStatus = false;
+        }
       }
     );
   }
@@ -111,15 +117,15 @@ export class ZapierSettingsComponent implements OnInit, OnDestroy {
     this.userService.createToken(tokenName).subscribe(
       (response: any) => {
         this.loaderService.disableLoader();
-        if (response.data.status) {          
-          this.ngxSmartModalService.getModal('modal1').close();          
-          this.userZapierTokenForm.reset();          
+        if (response.data.status) {
+          this.ngxSmartModalService.getModal('modal1').close();
+          this.userZapierTokenForm.reset();
           this.getUserZapierToken();
         } else {
           this.getUserZapierToken();
           this.errorService.setMessage({type: 'error', message: response.data.message});
         }
-        
+
       }
     );
   }
