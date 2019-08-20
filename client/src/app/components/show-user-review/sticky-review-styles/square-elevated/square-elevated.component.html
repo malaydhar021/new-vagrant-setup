@@ -18,7 +18,7 @@
                 <audio src="https://{{reviewData.url_link}}/storage/audios/{{reviewData.description }}" controls controlslist="nodownload"></audio>
             </div>
             <footer class="popupFt">
-                <span class="timePop">{{getReviewTimeFormated(reviewData.created_at)}}</span>
+                <span class="timePop">{{getReviewTimeFormated(reviewData.created_at)}} ago</span>
                 <span class="pwBy"><img src="../../../../../../assets/images/icon_poweredby.png" alt="">by</span>
                 <span *ngIf="reviewData.has_brand === 1"> {{reviewData.brands.name  |  slice:0:10 }}</span>
                 <span *ngIf="reviewData.review_link.campaign.branding === 1"> {{reviewData.review_link.campaign.branding_details.brand_name  |  slice:0:10 }}</span>
