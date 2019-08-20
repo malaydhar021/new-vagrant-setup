@@ -1927,6 +1927,7 @@ h5 {
         background-position: left 5px top, right top;
         background-size: 150px auto, 180px auto;
         z-index: 1;
+        position: relative;
     }
     .bodyDesign {
         background-size: 240px;
