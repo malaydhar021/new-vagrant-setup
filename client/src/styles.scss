@@ -5201,6 +5201,7 @@ body.loginPage {
     height: 880px;
     float: left;
     background: #F3FAFF url(#{$imgUrl}/graphic_login_screen_left.png) no-repeat;
+    background-position: right center;
     margin-top: 41px;
 
     @media (max-width: 767px) {
@@ -5862,7 +5863,8 @@ body.sign-upPage {
       }
 
       @media (max-width: 1600px) {
-        width: 45%;
+        // width: 45%;
+        width: 350px;
       }
 
       @media (max-width: 767px) {
@@ -5896,8 +5898,9 @@ body.sign-upPage {
     }
   }
 
-  @media (max-width: 1365px) {
-    background-size: 30%;
+  @media (max-width: 1600px) {
+    background-size: 300px;
+    background-position: right bottom, top right;
   }
 }
 
