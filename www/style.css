@@ -85,6 +85,7 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a49e3be', endColorstr='#0049e3be',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     width: 2170px;
     height: 2170px;
+    pointer-events: none;
 }
 
 .headerArea {
@@ -1582,7 +1583,8 @@ h5 {
     }
 
     .bannerMid {
-        background: url(images/graphic_home_top_left.png) no-repeat left 15px top / 250px auto;
+        background: url(images/graphic_home_top_left.png) no-repeat left 5px top / 250px auto, url(images/graphic_banner_top_right.png) no-repeat right top / 250px auto;
+        backface-visibility: hidden;
     }
 
     .featureArea2 .sliderContainer {
@@ -1775,13 +1777,13 @@ h5 {
 }
 
 @media screen and (max-width: 840px) {
-    .bannerArea {
+    /* .bannerArea {
         background: url(images/bg_teaser_sticky_reviews_look.png) no-repeat top 120px left 18%;
-    }
+    } */
 
-    .bannerMid {
+    /* .bannerMid {
         background-image: none;
-    }
+    } */
 
     .navArea .nav li a {
         padding: 9px 15px;
@@ -1953,6 +1955,7 @@ h5 {
 @media screen and (max-width: 680px) {
     .headerArea {
         position: relative;
+        background-color: #fff;
     }
 
     .responsiveNav {
@@ -1964,7 +1967,7 @@ h5 {
         box-sizing: border-box;
         background: #3A2A98;
         border-radius: 15px 15px 15px 0;
-        margin: 20px 0 0 0;
+        margin: 12px 0 0 0;
         padding: 10px 12px;
         -webkit-transition: all 0.5s ease 0s;
         transition: all 0.5s ease 0s;
