@@ -1557,7 +1557,8 @@ h5 {
     }
 
     .bodyDesign {
-        background-size: 40%;
+        /* background-size: 40%; */
+        background-size: 420px;
     }
 
 
@@ -1697,6 +1698,10 @@ h5 {
     }
     .p-Socket .socket-e:nth-child(even) {
         border-left: none;
+    }
+
+    .bodyDesign {
+        background-size: 320px;
     }
 }
 
@@ -1916,6 +1921,17 @@ h5 {
     .newFeatures li h3 {
         font-size: 15px;
         margin-bottom: 10px;
+    }
+
+    .bannerMid {
+        background-position: left 5px top, right top;
+        background-size: 150px auto, 180px auto;
+    }
+    .bodyDesign {
+        background-size: 240px;
+    }
+    .socketInfo {
+        padding-top: 50px;
     }
 }
 
@@ -2422,5 +2438,12 @@ h5 {
     }
     .socket-e + .socket-e {
         margin-top: 8px;
+    }
+
+    .bannerMid {
+        background-position: left 5px top, right 50% bottom 55px;
+    }
+    .bannerMid .freeTrialBtn {
+        margin: 170px 0 0;
     }
 }
