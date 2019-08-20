@@ -187,6 +187,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
           if (this.cookieService.get('_loginUser')) {
             this.cookieService.delete('_loginUser', '/', 'usestickyreviews.com');
           }
+          // delete _cdi cookie when user logout
+          if (this.cookieService.get('_cdi')) {
+            this.cookieService.delete('_cdi');
+          }
           this.router.navigate(['/login']);
         } else {
           Log.info(response, "Logout Response")

@@ -84,6 +84,15 @@ class SubscriptionController extends Controller
     {
 
         $user = Auth::user();
+
+        if($user->is_active == 1){
+          return response()->json([
+            'status' => false,
+            'message' => "Your account is not active, Please contact your sales person or Tier5 partner.",
+            'errors' => []
+          ],400);
+        }
+
         $currentPlan = array_search($user->pricing_plan, $this->allowedPlanNames);
         $newPlan = array_search($request->input('pricing_plan_type'), $this->allowedPlanNames);
         $wannaDowngrade = $currentPlan > $newPlan;
