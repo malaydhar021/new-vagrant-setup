@@ -143,9 +143,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       }
     );
     // get the current plan of logged in user
-    this.userSubscription = this.subscriptionService.isSubscribed$.subscribe(
+    this.userSubscription = this.subscriptionService.getUserSubscription$().subscribe(
       (response: any) => {
-        this.pricingPlan = response.subscription.data.pricing_plan.id;
+        Log.info(response, "in sticky reviews component");
+        this.pricingPlan = response.data.pricing_plan.id;
       }
     );
   }

@@ -59,6 +59,10 @@ Route::middleware(['auth:api', 'subscription'])->group(function () {
     Route::bind('id', function ($value, $route) {
         return \App\Helpers\Hashids::decode($value);
     });
+    
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/', 'DashboardController@index')->name('index');
+    });
 
     Route::prefix('brands')->name('brands.')->group(function () {
         Route::get('/', 'BrandsController@index')->name('index');

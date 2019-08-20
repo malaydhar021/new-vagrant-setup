@@ -219,16 +219,18 @@ trait Subscription
      */
     public function cancelSubscription($reason, $description = null, $isTerminated = false)
     {
-        \Log::info($this->subscription('main'));
         $cancelledSubscription = new CancelledSubscription([
             'user_id' => $this->id,
-            'subscription_id' => $this->subscription('main')->id,
+            'subscription_id' => (!is_null($this->subscription('main'))) ? $this->subscription('main')->id : null,
             'reason' => $reason,
             'description' => $description,
         ]);
         $cancelledSubscription->save();
 
-        $this->subscription('main')->cancelNow();
+        \Log::info("Subscription status : " . $this->subscription_status);
+        if((!is_null($this->subscription('main')))) {
+            $this->subscription('main')->cancelNow();
+        }
 
         $subscriptionStatus = $isTerminated ? 'TERMINATED' : 'CANCELLED';
         $this->update([

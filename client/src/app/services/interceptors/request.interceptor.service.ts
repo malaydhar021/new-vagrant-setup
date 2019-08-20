@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { ErrorsService } from '../errors.service';
 import { Log } from '../../helpers/app.helper';
-import { LoaderService } from '../loader.service';
 
 /**
  * RequestInterceptor is going to add Access-Control-Allow-Origin and Authorization to the headers to each and every request.
@@ -26,7 +25,7 @@ export class RequestInterceptor implements HttpInterceptor {
   defaultErrorMessage = 'Something went wrong. Please try again after successfully login.';
 
   // constructor method to load all required service
-  constructor(private authService: AuthService, private router: Router, private errorService: ErrorsService, private loaderService: LoaderService) { }
+  constructor(private authService: AuthService, private router: Router, private errorService: ErrorsService) { }
 
   /**
    * This is the implementation of intercept interface and added headers to each request when some api has been called 
@@ -49,8 +48,8 @@ export class RequestInterceptor implements HttpInterceptor {
         headers: authRequest.headers.set('Authorization', 'Bearer ' + token)
       });
     }
-    
-    return next.handle(authRequest).pipe(delay(1000), catchError((error, caught) => {
+    // pipe(delay(500), catchError((error, caught)
+    return next.handle(authRequest).pipe(catchError((error, caught) => {
       // intercept the http response error
       this.handleHttpError(error);
       return of(error);

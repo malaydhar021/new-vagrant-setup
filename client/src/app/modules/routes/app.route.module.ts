@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from '../../components/login/login.component';
 import { NotFoundComponent } from '../../components/not-found/not-found.component';
 import { AuthGuard } from '../../services/guards/auth.guard.service';
+import { AppGuard } from '../../services/guards/app.guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'sign-up', loadChildren: '../signup.module#SignupModule' },
-  { path: 'forgot-password', loadChildren: '../forgot-password.module#ForgotPasswordModule' },
+  { path: 'login', canLoad: [AppGuard], loadChildren: '../login.module#LoginModule' },
+  { path: 'sign-up', canLoad: [AppGuard], loadChildren: '../signup.module#SignupModule' },
+  { path: 'forgot-password', canLoad: [AppGuard], loadChildren: '../forgot-password.module#ForgotPasswordModule' },
   { path: 'user-review/:slug', loadChildren: '../user-review.module#UserReviewModule' },
   { path: 'show-user-review/:token/:id', loadChildren: '../show-user-review.module#ShowUserReviewModule' },
   { path: 'home', canLoad: [AuthGuard], loadChildren: '../home.module#HomeModule' },

@@ -53,7 +53,12 @@
 2. Implemented apis for CNAME verification, create, update and delete a custom domain
 3. Modified nginx web server configuration for custom domain
 
-## Optimization
+## Enhancement
+
+### V2.0.0
+
+1. Lazy loaded all features so that all things does not load up when app is getting loaded
+2. Fixed issues with cancel subscription and many other areas
 
 ### V1.0.0
 

@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { SubscriptionApiEndpoints } from '../helpers/api.helper';
-import { Log } from '../helpers/app.helper';
 
 /**
  * Service to manage all sort of operation for user subscriptions
  * @class SubscriptionService
- * @version 1.0.0
+ * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -140,5 +139,20 @@ export class SubscriptionService {
    */
   public updateCardDetails(data: any) {
     return this.httpClient.put(SubscriptionApiEndpoints.cards, data);
+  }
+
+  /**
+   * Method to get the subscription status from localstorage
+   * @method getUserSubscriptionStatus
+   * @since Version 2.0.0
+   * @returns String | Boolean
+   */
+  public getUserSubscriptionStatus() {
+    let data = localStorage.getItem('_sr') ? JSON.parse(localStorage.getItem('_sr')) : null;
+    if (data !== null && data.status !== '' && data.status !== null && typeof data.status !== 'undefined') {
+      return data.status;
+    } else {
+      return false;
+    }
   }
 }

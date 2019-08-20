@@ -11,7 +11,6 @@ import { AppRoutingModule } from './modules/routes/app.route.module';
 import { AuthGuard } from './services/guards/auth.guard.service';
 import { AuthService } from './services/auth.service';
 import { ErrorsService } from './services/errors.service';
-import { LoginComponent } from './components/login/login.component';
 import { LoaderModule } from './components/shared/loader/loader.module';
 import { LoaderService } from './services/loader.service';
 import { RequestInterceptor } from './services/interceptors/request.interceptor.service';
@@ -25,6 +24,7 @@ import { SubscriptionGuard } from './services/guards/subscription.guard.service'
 import { MediaModule } from './modules/media.module';
 import { MediaService } from './services/media.service';
 import { NotFoundModule } from './modules/shared/not-found.module';
+import { AppGuard } from './services/guards/app.guard.service';
 
 /**
  * AppComponent is the first component which loads when the application is getting bootstrapped.
@@ -52,8 +52,7 @@ export class AppComponent {}
  */
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +81,7 @@ export class AppComponent {}
     SubscriptionService,
     SubscriptionGuard,
     MediaService,
+    AppGuard,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

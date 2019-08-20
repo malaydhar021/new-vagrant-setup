@@ -13,16 +13,16 @@
         </div>
     </div>
 
-
     <div class="container">
         <p class="billed">*Billed monthly, <a href="#">no set up fee.</a></p>
-        <p class="copyright">© 2018 All rights reserved. <span class="ftLinks">
+        <p class="copyright">© 2018 All rights reserved. 
+            <span class="ftLinks">
                 <a href="terms-and-conditions" target="_blank"> Terms and Conditions </a> 
                 <a href="privacy-policy" target="_blank">Privacy Policy </a> 
                 <a href="support" target="_blank">Contact Support</a>
-            </span> </p>
+            </span> 
+        </p>
     </div>
-    <iframe src="https://app.local.usestickyreviews.com/" class="iframe-div" style="display: none" id="opIFrame"></iframe>
 </footer>
 
 <script type="text/javascript">
@@ -31,12 +31,8 @@ var websocket = {url: '<?php echo getenv('WEBSOCKET_URL');  ?>'};
 /* ]]> */
 </script>
 
-
-
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+<script type="text/javascript" src="<?php echo getenv('WEBSOCKET_URL'); ?>/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="index.js"></script>
-
 
 </body>
 

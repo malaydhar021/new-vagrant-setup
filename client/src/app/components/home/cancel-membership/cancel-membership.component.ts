@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy }                  from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-
 import { SubscriptionService }                from '../../../services/subscription.service';
 import { LoaderService }                      from '../../../services/loader.service';
 import { UserService }                        from '../../../services/user.service';
@@ -149,12 +147,14 @@ export class CancelMembershipComponent implements OnInit, OnDestroy {
       (response : any)=> {
         // this.showCancellationForm = false;
         // this.getUserSubscription();
+        this.loaderService.disableLoader();
         if(response.status) {
           this.authService.removeStorageData();
-          this.errorService.updateMessage(response.message);
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
+          // this.errorService.updateMessage(response.message);
           this.router.navigate(['/login']);
         } else {
-          this.errorService.setMessage(null);
+          setTimeout(() => {this.errorService.setMessage({type: 'error', message: response.message})}, 100);
         }
       }
     )

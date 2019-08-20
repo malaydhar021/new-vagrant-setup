@@ -2,11 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { ErrorsService } from '../../../services/errors.service';
-import { BrandingService } from '../../../services/branding.service';
 import { LoaderService } from '../../../services/loader.service';
 import { Log } from '../../../helpers/app.helper';
 import { SubscribedEmailService } from 'src/app/services/subscribed-email.service';
-import { NgxSmartModalService, NgxSmartModalComponent } from 'ngx-smart-modal';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 /**
  * Component to show all emails which has been subscribed emails from various exit popups. Also option to delete an email from the list.
  * @class SubscribedEmailsComponent
@@ -50,7 +49,6 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
   constructor(
     private title: Title,
     private errorService: ErrorsService,
-    private brandingService: BrandingService,
     private loaderService: LoaderService,
     private subscribedEmailService: SubscribedEmailService,
     private ngxSmartModalService: NgxSmartModalService,

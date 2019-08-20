@@ -33,13 +33,13 @@
     <div class="sr-modal-header">
       <h2>
         {{card ? 'Update' : 'Add'}} Credit Card Info
-      </h2>
+      </h2>      
     </div>
     <div class="sr-modal-body">
-      <message *ngIf="isModalOpened" [successMessage]="successMessage" [showMessage]="showError"></message>
       <form [formGroup]="cardForm" (ngSubmit)="add()">
         <div class="cardForm updateCardModal">
           <h2>Credit Card Information</h2>
+          <message *ngIf="isModalOpened" [successMessage]="successMessage" [showMessage]="showError"></message>
           <div class="formRow">
             <div class="formCol6" [ngClass]="{'error' : !cardForm.get('card_number').valid && cardForm.get('card_number').touched}">
               <label>Credit Card Number</label>

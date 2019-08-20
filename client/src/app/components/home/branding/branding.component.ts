@@ -8,6 +8,7 @@ import { ErrorsService } from '../../../services/errors.service';
 import { LoaderService } from '../../../services/loader.service';
 import { BrandingModel } from '../../../models/branding.model';
 import { Log } from '../../../helpers/app.helper';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * BrandingComponent is responsible for showing, adding, updating and deleting brands
@@ -61,6 +62,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     private errorService: ErrorsService,
     private brandingService: BrandingService,
     private loaderService: LoaderService,
+    private route: ActivatedRoute
   ) {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
@@ -162,8 +164,9 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns Void
    */
   public resetForm() {
-    this.form.reset();
     this.isModalOpened = false;
+    this.isSubmitted = false;
+    this.form.reset();
     this.errorService.clearMessage();
   }
 
@@ -264,9 +267,9 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           // show the success message to user in brand listing page
           setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
           // change the flag for form submit
-          this.isSubmitted = false;
+          // this.isSubmitted = false;
           // reset the form
-          this.resetForm();
+          // this.resetForm();
           // making an api call to get all brandings along with the newly added branding
           this.getBrandings();
         } else {

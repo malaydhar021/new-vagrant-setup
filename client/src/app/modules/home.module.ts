@@ -7,44 +7,22 @@ import { NgScrollbarModule }                              from 'ngx-scrollbar';
 import { BarRatingModule }                                from 'ngx-bar-rating';
 import { NgxSmartModalModule }                            from 'ngx-smart-modal';
 /** custom imports */
-import { HomeRoutingModule }                from './routes/home.route.module'; // dashobaord routing module
+import { HomeRoutingModule }                              from './routes/home.route.module'; // dashboard routing module
 // importing components
-import { HomeComponent }                    from '../components/home/home.component';
-import { DashboardComponent }               from '../components/home/dashboard/dashboard.component';
-import { BrandingComponent }                from '../components/home/branding/branding.component';
-import { LeftPanelComponent }               from '../components/home/shared/left-panel/left-panel.component';
-import { StickyReviewsComponent }           from '../components/home/sticky-reviews/sticky-reviews.component';
-import { CampaignComponent }                from '../components/home/campaign/campaign.component';
-import { ReviewLinkComponent }              from '../components/home/review-link/review-link.component';
-import { ExitPopupComponent }               from '../components/home/exit-popup/exit-popup.component';
-import { HeaderComponent }                  from '../components/home/shared/header/header.component';
-import { PlansComponent }                   from '../components/home/plans/plans.component';
-import { UpdatePaymentInfoComponent }       from '../components/home/update-payment-info/update-payment-info.component';
-import {ProfileComponent}                   from '../components/home/shared/profile/profile.component';
-import {CancelMembershipComponent}          from '../components/home/cancel-membership/cancel-membership.component';
+import { HomeComponent }                                  from '../components/home/home.component';
+import { LeftPanelComponent }                             from '../components/home/shared/left-panel/left-panel.component';
+import { HeaderComponent }                                from '../components/home/shared/header/header.component';
+import { PlansComponent }                                 from '../components/home/plans/plans.component';
 //importing module
-import { MessageModule}                     from './message.module';
+import { MessageModule}                                   from './message.module';
 // importing services
-import { ColorPickerModule }                from 'ngx-color-picker';
-import { BrandingService }                  from '../services/branding.service'; // services for branding
-import { CampaignService }                  from '../services/campaign.service';
-import { StickyReviewService }              from '../services/sticky-review.service';
-import { MenuService }                      from '../services/menu.service';
-import { MediaModule }                      from './media.module';
-import { MediaService }                     from '../services/media.service';
-import { ExitPopupService }                 from '../services/exit-popup.service';
-import { WidgetStylesModule }               from './widget-styles.module';
-import { CopyToClipboardDirective }         from '../directives/copy-to-clipboard.directive';
-import { ClickOutsideDirective }            from '../directives/click-outside.directive';
-import { NgxPaginationModule }              from 'ngx-pagination';
-import { SharedModule }                     from './shared/shared.module';
-import { SettingsComponent }                from '../components/home/shared/settings/settings.component';
-import { CustomDomainComponent }            from '../components/home/custom-domain/custom-domain.component';
-import { CustomDomainService }              from '../services/custom-domain.service';
-import { SubscribedEmailsComponent }        from '../components/home/subscribed-emails/subscribed-emails.component';
-import { SubscribedEmailService }           from '../services/subscribed-email.service';
-import { DateTimePipe }                     from '../pipe/app.pipe';
-import { PricingPlanService }               from '../services/pricing-plan.service';
+import { ColorPickerModule }                              from 'ngx-color-picker';
+import { MenuService }                                    from '../services/menu.service';
+import { MediaModule }                                    from './media.module';
+import { MediaService }                                   from '../services/media.service';
+import { NgxPaginationModule }                            from 'ngx-pagination';
+import { SharedModule }                                   from './shared/shared.module';
+import { PricingPlanService }                             from '../services/pricing-plan.service';
 
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
@@ -56,24 +34,9 @@ import { PricingPlanService }               from '../services/pricing-plan.servi
 @NgModule({
   declarations: [
     HomeComponent,
-    DashboardComponent,
-    BrandingComponent,
     LeftPanelComponent,
-    StickyReviewsComponent,
-    CampaignComponent,
-    ReviewLinkComponent,
-    ExitPopupComponent,
     HeaderComponent,
     PlansComponent,
-    UpdatePaymentInfoComponent,
-    ProfileComponent,
-    CancelMembershipComponent,
-    CopyToClipboardDirective,
-    ClickOutsideDirective,
-    SettingsComponent,
-    CustomDomainComponent,
-    SubscribedEmailsComponent,
-    DateTimePipe
   ],
   imports: [
     CommonModule,
@@ -89,19 +52,12 @@ import { PricingPlanService }               from '../services/pricing-plan.servi
     MessageModule,
     ColorPickerModule,
     MediaModule,
-    WidgetStylesModule,
     NgxPaginationModule,
     SharedModule
   ],
   providers: [
-    BrandingService,
-    CampaignService,
-    StickyReviewService,
     MenuService,
-    ExitPopupService,
     MediaService,
-    CustomDomainService,
-    SubscribedEmailService,
     PricingPlanService
   ]
 })

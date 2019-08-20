@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
+use App\Http\Resources\SubscriptionResource;
 use App\Traits\Subscription;
 use App\User;
 use App\Traits\CustomDomain;
@@ -180,6 +181,7 @@ class AuthController extends Controller
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
+            'subscription' => (new SubscriptionResource(Auth::user()))->briefOnly()
         ]);
     }
 

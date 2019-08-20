@@ -7,6 +7,7 @@ import { UserService } from '../../../../services/user.service';
 import { UserAuthInfo } from '../../../../models/user.model';
 import { ErrorsService } from '../../../../services/errors.service';
 import { Title } from '@angular/platform-browser';
+import { Log } from 'src/app/helpers/app.helper';
 
 
 /**
@@ -17,11 +18,11 @@ import { Title } from '@angular/platform-browser';
  * @license Proprietary
  */
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  selector: 'app-zapier-settings',
+  templateUrl: './zapier-settings.component.html',
+  styleUrls: ['./zapier-settings.component.scss']
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class ZapierSettingsComponent implements OnInit, OnDestroy {
   // defining class properties
   userZapierTokenForm: FormGroup; // Form group for user password update form
   successMessage: string = ''; // Message coming form server after successful api call
@@ -66,7 +67,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   public ngOnInit() {
     this.showTheMessage = true;
-    this.title.setTitle('Stickyreviews :: Settings');
+    this.title.setTitle('Stickyreviews :: Zapier Settings');
     this.userZapierTokenForm = this.formBuilder.group({
       tokenName: ['', Validators.required],
     });
@@ -109,16 +110,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.loaderService.enableLoader();
     this.userService.createToken(tokenName).subscribe(
       (response: any) => {
-        // console.log(response.data);
+        this.loaderService.disableLoader();
         if (response.data.status) {
-          this.userZapierTokenForm.reset();
+          Log.info("it's coming here");
           this.ngxSmartModalService.getModal('modal1').close();
+          Log.info("it's coming here1");
+          this.userZapierTokenForm.reset();
+          Log.info("it's coming here2");
           this.getUserZapierToken();
         } else {
           this.getUserZapierToken();
           this.errorService.setMessage({type: 'error', message: response.data.message});
         }
-        this.loaderService.disableLoader();
+        
       }
     );
   }

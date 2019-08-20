@@ -650,3 +650,22 @@ export class PricingPlansApiEndpoints {
     return apiBaseUrl.concat('/pricing-plans');
   }
 }
+
+/**
+ * DashboardApiEndpoints helper class is holding all static methods for dashboard data api endpoints based on the environment
+ * @class DashboardApiEndpoints
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @version 1.0.1
+ * @license Proprietary
+ */
+export class DashboardApiEndpoints {
+  /**
+   * Method to generate api endpoint to get all pricing plans
+   * @method pricingPlans
+   * @since Version 1.0.0
+   * @returns String
+   */
+  public static get analytics(): string {
+    return apiBaseUrl.concat('/dashboard');
+  }
+}

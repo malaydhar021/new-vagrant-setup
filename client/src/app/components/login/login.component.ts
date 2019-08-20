@@ -37,6 +37,18 @@ export class LoginComponent implements OnInit {
   successMessage: string = null; // flag to hold the success message
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
 
+  /**
+   * 
+   * @param formBuilder FormBuilder instance
+   * @param router Router Instance
+   * @param title 
+   * @param route 
+   * @param authService 
+   * @param renderer 
+   * @param cookieService 
+   * @param errorService 
+   * @param loaderService 
+   */
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -48,17 +60,14 @@ export class LoginComponent implements OnInit {
     private errorService: ErrorsService,
     private loaderService: LoaderService
   ) {
-    // if user is already logged in then redirect the user to home
-    if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
     this.renderer.addClass(document.body, 'loginPage');
-    console.log('Login component inside the if condition ');
+    // console.log('Login component inside the if condition ');
     if (!this.cookieService.get('_readSite')) {
         this.showCookie = true;
     }
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
-        Log.info(this.showError, "Showerror in loging component");
       }
     );
   }
@@ -71,7 +80,7 @@ export class LoginComponent implements OnInit {
    */
   public ngOnInit() {
     // check if the user is logged in or not. if logged in then redirect to home
-    if (this.authService.isAuthenticated) { this.router.navigate(['/home']); }
+    if (this.authService.isAuthenticated) { this.router.navigate(['/home/dashboard']); }
     // set the page title
     this.title.setTitle('Stickyreviews :: Login');
     // initialize formBuilder with client side validation
@@ -84,7 +93,6 @@ export class LoginComponent implements OnInit {
     if (!this.cookieService.get('_readSite')) {
       this.showCookie = true;
     }
-
   }
 
   /**
@@ -130,7 +138,7 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem('_sr');
           }
           // creating object to store in localStorage / sessionStorage
-          const data = { token: response.access_token };
+          const data = { token: response.access_token, status: response.subscription.status };
           // set the cookie for remember me
           this.cookieService.set('_rm', 'off');
           // if remember me is checked
