@@ -28,7 +28,6 @@ import { CustomDomainService } from '../../../services/custom-domain.service';
   templateUrl: './campaign.component.html',
   styleUrls: ['./campaign.component.scss']
 })
-
 export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   // defining class properties
   form: FormGroup; // for add or edit review form in modal
@@ -58,11 +57,14 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   showCopySnippetBox: boolean = false; // flag to set true to show copy snippet box
   config: any;  // paginate config
   errorSubscription: Subscription; // to get the current value of showError property
+  noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
   isModalOpened: boolean = false; // set to true if the modal is opened
   campaignScriptForCustomDomain: string = 'lib/widget.min.js'; // constant path for campaign script
   campaignIdToDelete: string = null;
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template  
+
   /**
    * Constructor method to fetch all required information from api provider
    * @constructor constructor
@@ -94,6 +96,13 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+      }
+    );
+    // subscription for no records found template
+    this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
+      (status: boolean) => {
+        this.showNoRecordsFoundTemplate = status;
+        Log.info(this.showNoRecordsFoundTemplate, "check the show template status in campaign component");
       }
     );
   }
@@ -412,6 +421,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
         if (response.status) {
           // update the campaign array with latest api response data
           // if there is no data object then assign empty array i.e no records found
+          this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           this.campaigns = response.data.data;
           this.config.totalItems = response.data.total;
           this.config.currentPage = 1;
@@ -938,6 +948,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public togglePopPosition() {
     let elScroll = <HTMLElement>document.querySelector('.tbody');
+    if(elScroll === null) return;
     let wH = elScroll.offsetHeight;
     let copyBtn = document.querySelectorAll('.copyBtn');
     for(var i=0;i<copyBtn.length;i++) {

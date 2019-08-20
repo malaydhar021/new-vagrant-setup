@@ -33,7 +33,7 @@ import { SharedModule }                                   from './shared/shared.
   declarations: [
     HomeComponent,
     LeftPanelComponent,
-    HeaderComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,

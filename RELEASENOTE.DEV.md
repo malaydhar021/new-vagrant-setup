@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.0
+
+1. Implemented no records found for each feature
+
 ### V2.0.0
 
 1. Lazy loaded all features so that all things does not load up when app is getting loaded

@@ -10,7 +10,6 @@ import { ExitPopupService } from '../../../services/exit-popup.service';
 import * as htmlToImage from 'html-to-image';
 import * as moment from 'moment';
 import { Log } from 'src/app/helpers/app.helper';
-import { $ } from 'protractor';
 
 /**
  * Component to deal with all sort of functionalities related to exit popup create, update, delete and listing.
