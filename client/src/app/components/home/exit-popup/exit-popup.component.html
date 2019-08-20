@@ -11,6 +11,24 @@
   <div class="dataTableArea">
     <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="popupListContainer">
+      <!-- no content template -->
+      <div class="no-content">
+          <figure>
+            <img src="../../../../assets/images/clipboards.png" alt=""/>
+          </figure>
+          <div class="no-content-body">
+            <h3>No Exit-popups found!</h3>
+            <p>No links have been listed here yet.</p>
+          </div>
+        
+          <div class="ftNone">
+            <button class="button-submit">
+                {{ isEditing ? 'Edit' : 'Add' }} Sticky Review(s)
+            </button>
+            </div>
+      </div>
+      <!-- no content template -->
+
       <ng-scrollbar [compact]="true"  *ngIf="exitPopups.length > 0; else noRecords">
         <ul class="popupList">
           <li *ngFor="let exitPopup of exitPopups | paginate: config; let i = index">

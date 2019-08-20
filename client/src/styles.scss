@@ -925,6 +925,44 @@ a {
 }
 
 .rightPanel {
+  .no-content {
+    padding: 30px 15px;
+    max-height: 100%;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+
+    figure {
+      font-size: 0;
+    }
+    .no-content-body {
+      margin: 30px 0;
+      text-align: center;
+
+      h3 {
+        font-weight: normal;
+        color: #333;
+      }
+      p {
+        @include mt(10px);
+        @include mb(0);
+      }
+    }
+    .button-submit {
+      border-radius: 30px;
+    }
+  }
+
   .rightPanHeader {
     margin-top: 23px;
     margin-bottom: 15px;
