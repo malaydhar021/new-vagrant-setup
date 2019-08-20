@@ -12,7 +12,6 @@ import { HomeRoutingModule }                              from './routes/home.ro
 import { HomeComponent }                                  from '../components/home/home.component';
 import { LeftPanelComponent }                             from '../components/home/shared/left-panel/left-panel.component';
 import { HeaderComponent }                                from '../components/home/shared/header/header.component';
-import { PlansComponent }                                 from '../components/home/plans/plans.component';
 //importing module
 import { MessageModule}                                   from './message.module';
 // importing services
@@ -22,7 +21,6 @@ import { MediaModule }                                    from './media.module';
 import { MediaService }                                   from '../services/media.service';
 import { NgxPaginationModule }                            from 'ngx-pagination';
 import { SharedModule }                                   from './shared/shared.module';
-import { PricingPlanService }                             from '../services/pricing-plan.service';
 
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
@@ -36,7 +34,6 @@ import { PricingPlanService }                             from '../services/pric
     HomeComponent,
     LeftPanelComponent,
     HeaderComponent,
-    PlansComponent,
   ],
   imports: [
     CommonModule,
@@ -57,8 +54,7 @@ import { PricingPlanService }                             from '../services/pric
   ],
   providers: [
     MenuService,
-    MediaService,
-    PricingPlanService
+    MediaService
   ]
 })
 export class HomeModule { }
