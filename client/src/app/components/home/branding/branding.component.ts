@@ -41,7 +41,8 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   searchKey: string = '';
   isModalOpened: boolean = false; // set to true if the modal is opened
   brandIdToDelete: number = null;
-
+  noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -69,6 +70,15 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.showError = status;
       }
     );
+
+    // subscription for no records found template
+    this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
+      (status: boolean) => {
+        this.showNoRecordsFoundTemplate = status;
+        Log.info(this.showNoRecordsFoundTemplate, "check the show template status in Brand component");
+      }
+    );
+
   }
 
   /**
@@ -153,6 +163,8 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.updateShowNoRecordsFoundTemplate(false);
+    this.noRecordsFoundSubscription.unsubscribe();
     this.errorService.clearMessage();
   }
 
@@ -186,6 +198,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           this.brands = response.data.data;
           this.config.totalItems = response.data.total;
           this.config.currentPage = 1;
+          this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           Log.info("before closing the loader");
           // hide the loader
           this.loaderService.disableLoader();

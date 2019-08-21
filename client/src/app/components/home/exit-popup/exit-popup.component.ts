@@ -83,6 +83,8 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   reviewBrandName: string = '';
   openModalName: string = '';
   exitpopupIdToDelete: string = '';
+  noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
 
   /**
    *
@@ -104,6 +106,13 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+      }
+    );
+    // subscription for no records found template
+    this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
+      (status: boolean) => {
+        this.showNoRecordsFoundTemplate = status;
+        Log.info(this.showNoRecordsFoundTemplate, 'check the show template status in exit popup component');
       }
     );
   }
@@ -156,6 +165,8 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
     this.errorService.clearMessage();
+    this.errorService.updateShowNoRecordsFoundTemplate(false);
+    this.noRecordsFoundSubscription.unsubscribe();
   }
 
   /**
@@ -263,6 +274,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
           this.exitPopups = response.data.data;
           this.config.totalItems = response.data.total;
           this.config.currentPage = 1;
+          this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           this.loaderService.disableLoader();
         }
       }

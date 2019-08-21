@@ -45,6 +45,8 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
   cnameDomainName: string = null; // property which will hold the cname domain name based on environment
   dontShowMessage: boolean = false; // Instruction to add/edit a custom domain will be shown if it's set to false
   customDomainIdToDelete: string = null;
+  noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -71,6 +73,14 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+      }
+    );
+
+    // subscription for no records found template
+    this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
+      (status: boolean) => {
+        this.showNoRecordsFoundTemplate = status;
+        Log.info(this.showNoRecordsFoundTemplate, "check the show template status in custom domain component");
       }
     );
   }
@@ -159,6 +169,8 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
     this.errorService.clearMessage();
+    this.errorService.updateShowNoRecordsFoundTemplate(false);
+    this.noRecordsFoundSubscription.unsubscribe();
   }
 
   /**
@@ -190,6 +202,7 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
           // update the customDomains array with latest api response data
           this.customDomains = response.data.data;
           this.config.totalItems = response.data.total;
+          this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           Log.info("before closing the loader");
           // hide the loader
           this.loaderService.disableLoader();

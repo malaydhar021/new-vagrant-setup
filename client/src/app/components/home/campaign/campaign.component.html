@@ -115,7 +115,7 @@
               </div>
             </li>
           </ul>
-        </ng-scrollbar>        
+        </ng-scrollbar>
       </div>
     </div>
     <!-- Pagination -->
@@ -129,13 +129,13 @@
         <img src="../../../../assets/images/clipboards.png" alt="" />
       </figure>
       <div class="no-content-body">
-        <h3>No Campaigns Yet</h3>
+        <h3>No campaigns yet</h3>
         <p>No campaigns have been listed here yet.</p>
       </div>
 
       <div class="ftNone">
         <button class="button-submit" (click)="onAddCampaign()">
-          Add the First Campaign
+          Add your first campaign
         </button>
       </div>
     </div>
@@ -175,7 +175,7 @@
                   <div class="sr-form-field">
                     <input type="text" class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignDomainName.errors}"
-                      formControlName="campaignDomainName" placeholder="http://www.example.com">
+                      formControlName="campaignDomainName" placeholder="example.com">
                     <div class="error-msg" *ngIf="(
                       isSubmitted
                       && getFormControls.campaignDomainName.errors !== null
@@ -254,7 +254,7 @@
                   </div>
                 </div>
                 <div class="sr-form-cell-small">
-                  <label>Stay Timing<span>(ex: 1000 for 1 second)</span></label>
+                  <label>Stay Timing<span>(in seconds)</span></label>
                   <div class="sr-form-field">
                     <input type="text" digitsOnly class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignStayTime.errors}"
@@ -264,6 +264,12 @@
                       && getFormControls.campaignStayTime.errors !== null
                       && getFormControls.campaignStayTime.errors.required)">
                       Stay timing is required
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted
+                      && getFormControls.campaignStayTime.errors !== null
+                      && getFormControls.campaignStayTime.errors.min)">
+                      please add minimum of 1 second
                     </div>
                   </div>
                 </div>
@@ -280,6 +286,12 @@
                       && getFormControls.campaignDelayBetweenTwoReview.errors !== null
                       && getFormControls.campaignDelayBetweenTwoReview.errors.required)">
                       Interval Between Reviews is required
+                    </div>
+                    <div class="error-msg" *ngIf="(
+                      isSubmitted
+                      && getFormControls.campaignDelayBetweenTwoReview.errors !== null
+                      && getFormControls.campaignDelayBetweenTwoReview.errors.min)">
+                      please add minimum of 1 second
                     </div>
                   </div>
                 </div>

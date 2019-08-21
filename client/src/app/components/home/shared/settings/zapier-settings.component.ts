@@ -33,6 +33,8 @@ export class ZapierSettingsComponent implements OnInit, OnDestroy {
   isModalOpened: boolean = false; // set to true if the modal is opened
   showTheMessage: boolean = false;
   tokenIdToDelete: string = null;
+  noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -54,6 +56,13 @@ export class ZapierSettingsComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+      }
+    );
+    // subscription for no records found template
+    this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
+      (status: boolean) => {
+        this.showNoRecordsFoundTemplate = status;
+        Log.info(this.showNoRecordsFoundTemplate, "check the show template status in Zapier settings component");
       }
     );
   }
@@ -84,6 +93,8 @@ export class ZapierSettingsComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
     this.errorService.clearMessage();
+    this.errorService.updateShowNoRecordsFoundTemplate(false);
+    this.noRecordsFoundSubscription.unsubscribe();
   }
 
   /**
@@ -97,6 +108,7 @@ export class ZapierSettingsComponent implements OnInit, OnDestroy {
     this.userService.showToken().subscribe(
       (response: any) => {
         this.token = response.data.data;
+        this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
         this.loaderService.disableLoader();
       }
     );

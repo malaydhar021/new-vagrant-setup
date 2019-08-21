@@ -33,6 +33,8 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
   showError: boolean = false; // flag to show error message
   searchKey: string = '';
   subscribedEmailIdToDelete: string = null;
+  noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -56,6 +58,12 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
+      }
+    );
+    this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
+      (status: boolean) => {
+        this.showNoRecordsFoundTemplate = status;
+        Log.info(this.showNoRecordsFoundTemplate, "check the show template status in subscribe emails component");
       }
     );
   }
@@ -91,6 +99,8 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
     this.errorService.clearMessage();
+    this.errorService.updateShowNoRecordsFoundTemplate(false);
+    this.noRecordsFoundSubscription.unsubscribe();
   }
 
   /**
@@ -108,6 +118,7 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
           // update the emails array with latest api response data
           this.emails = response.data.data;
           this.config.totalItems = response.data.total;
+          this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           // hide the loader
           this.loaderService.disableLoader();
         }

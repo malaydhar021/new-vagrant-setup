@@ -115,6 +115,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   userSubscription: Subscription; // to hold the user current subscription
   pricingPlan: string; // user's plan details
   stickyReviewIdToDelete: string = null;
+  noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
   /**
    *
    * @param ngxSmartModalService
@@ -147,6 +149,13 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       (response: any) => {
         Log.info(response, "in sticky reviews component");
         this.pricingPlan = response.data.pricing_plan.id;
+      }
+    );
+    // subscription for no records found template
+    this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
+      (status: boolean) => {
+        this.showNoRecordsFoundTemplate = status;
+        Log.info(this.showNoRecordsFoundTemplate, "check the show template status in sticky reviews component");
       }
     );
   }
@@ -221,6 +230,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy(): void {
     this.errorSubscription.unsubscribe();
+    this.errorService.updateShowNoRecordsFoundTemplate(false);
+    this.noRecordsFoundSubscription.unsubscribe();
     this.errorService.clearMessage();
   }
 
@@ -307,6 +318,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           this.config.totalItems = response.data.total;
           this.reviews = response.data.data;
           this.config.currentPage = 1;
+          this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           Log.debug(this.reviews.length, "Checking the length of the reviews property");
           // hide the loader
           this.loaderService.disableLoader();

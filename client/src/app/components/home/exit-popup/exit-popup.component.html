@@ -4,32 +4,14 @@
       <button type="button" class="addReview" (click)="openAddExitPopupModal()">
         <img src="../../../../assets/images/addIcon.png" alt="addIcon"> Add an Exit pop-up</button>
     </div>
-    <div class="mainBoxHeaderRight">
+    <div class="mainBoxHeaderRight" *ngIf="!showNoRecordsFoundTemplate">
       <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
     </div>
   </header>
-  <div class="dataTableArea">
+  <div class="dataTableArea" *ngIf="!showNoRecordsFoundTemplate">
     <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="popupListContainer">
-      <!-- no content template -->
-      <!-- <div class="no-content">
-          <figure>
-            <img src="../../../../assets/images/clipboards.png" alt=""/>
-          </figure>
-          <div class="no-content-body">
-            <h3>No Exit-popups found!</h3>
-            <p>No links have been listed here yet.</p>
-          </div>
-        
-          <div class="ftNone">
-            <button class="button-submit">
-                {{ isEditing ? 'Edit' : 'Add' }} Sticky Review(s)
-            </button>
-            </div>
-      </div> -->
-      <!-- no content template -->
-
-      <ng-scrollbar [compact]="true"  *ngIf="exitPopups.length > 0; else noRecords">
+      <ng-scrollbar [compact]="true">
         <ul class="popupList">
           <li *ngFor="let exitPopup of exitPopups | paginate: config; let i = index">
             <div class="popupThubm" (click)="openExitpopUpPreview(exitPopup)">
@@ -47,23 +29,32 @@
           </li>
         </ul>
       </ng-scrollbar>
-      <ng-template #noRecords>
-        <ul>
-          <li class="row">
-            <div class="error-msg">
-              <div class="log-stat_msg log_Failed">
-                <p class="no-records">Sorry no exit popup found !</p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </ng-template>
     </div>
     <!-- Pagination -->
     <pagination-controls *ngIf="exitPopups.length > 0" [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"> </pagination-controls>
   </div>
+
+  <!-- no content template -->
+  <div *ngIf="showNoRecordsFoundTemplate">
+    <div class="no-content">
+      <figure>
+        <img src="../../../../assets/images/clipboards.png" alt="" />
+      </figure>
+      <div class="no-content-body">
+        <h3>No exit popup yet</h3>
+        <p>No exit popup been listed here yet.</p>
+      </div>
+
+      <div class="ftNone">
+        <button class="button-submit" (click)="openAddExitPopupModal()">
+          Add your first exit popup
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- no content template -->
 </div>
-<!--[ngStyle]="{ 'color-overlay' : '#ff1616' }"-->
+
 <ngx-smart-modal #exitPopup1 identifier="exitPopup1" class="exitPopup theme1 prevwPage" [ngClass]="modalActive == 'exitPopup1' ? 'active': null" [style.background-color]="this.bodyBackgroundColor" (onOpen)="forColor(this.headerBackgroundColor)">
   <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
     <img src="../../../../assets/images/icon_mic_white.png" alt="mic_white">

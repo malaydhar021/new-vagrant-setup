@@ -12,7 +12,7 @@
         </div>
     </header>
 
-    <div class="dataTableArea">
+    <div class="dataTableArea" *ngIf="!showNoRecordsFoundTemplate">
 
       <div class="inDataHdr">
         <a class="linkTxt" href="https://zapier.com/developer/public-invite/23604/fbd34a72ef958e052a0aa95c8b37576f/." target="_blank">
@@ -26,7 +26,7 @@
                 <li>Action </li>
             </ul>
             <div class="tbody">
-                <ul *ngIf="token.length > 0; else noRecords">
+                <ul *ngIf="token.length > 0">
                     <li class="row" *ngFor="let tokenData of token">
                         <div class="rowContainer">
                             <div class="tcol">
@@ -42,22 +42,29 @@
                         </div>
                     </li>
                 </ul>
-
-              <ng-template #noRecords>
-                <ul>
-                  <li class="row">
-                    <div class="rowContainer">
-                      <div class="tcol formatNoTokenText">
-                        <h3>You haven't created any zapier token yet. </h3>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </ng-template>
-
             </div>
         </div>
     </div>
+
+  <!-- no content template -->
+  <div *ngIf="showNoRecordsFoundTemplate">
+    <div class="no-content">
+      <figure>
+        <img src="../../../../assets/images/clipboards.png" alt="" />
+      </figure>
+      <div class="no-content-body">
+        <h3>No token created yet</h3>
+        <p>No token listed here yet.</p>
+      </div>
+
+      <div class="ftNone">
+        <button class="button-submit" (click)="onAddToken()">
+          Add your first token
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- no content template -->
 
     <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
         <div class="sr-modal-container">

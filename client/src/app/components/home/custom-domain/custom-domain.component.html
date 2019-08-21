@@ -6,11 +6,11 @@
         Add Custom Domain
       </button>
     </div>
-    <div class="mainBoxHeaderRight">
+    <div class="mainBoxHeaderRight" *ngIf="!showNoRecordsFoundTemplate">
       <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
     </div>
   </header>
-  <div class="dataTableArea">
+  <div class="dataTableArea" *ngIf="!showNoRecordsFoundTemplate">
     <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="table">
       <ul class="thead">
@@ -19,7 +19,7 @@
         <li>ACTION(S)</li>
       </ul>
       <div class="tbody">
-        <ng-scrollbar [compact]="true" *ngIf="customDomains.length > 0; else noRecords">
+        <ng-scrollbar [compact]="true">
           <ul>
             <li class="row" *ngFor="let domain of customDomains | paginate: config">
               <div class="rowContainer">
@@ -38,23 +38,32 @@
             </li>
           </ul>
         </ng-scrollbar>
-
-        <ng-template #noRecords>
-            <ul>
-              <li class="row">
-                <div class="error-msg">
-                  <div class="log-stat_msg log_Failed">
-                    <p class="no-records">Sorry no custom domains found</p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-        </ng-template>
       </div>
     </div>
     <!-- Pagination -->
     <pagination-controls *ngIf="customDomains.length > 0" [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
+
+  <!-- no content template -->
+  <div *ngIf="showNoRecordsFoundTemplate">
+    <div class="no-content">
+      <figure>
+        <img src="../../../../assets/images/clipboards.png" alt="" />
+      </figure>
+      <div class="no-content-body">
+        <h3>No custom domain yet</h3>
+        <p>No custom domain been listed here yet.</p>
+      </div>
+
+      <div class="ftNone">
+        <button class="button-submit" (click)="onAddCustomDomain()">
+          Add your first custom domain
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- no content template -->
+
 </div>
 
 <ngx-smart-modal #customDomainInfo identifier="customDomainInfo" class="sr-modal modalDomain">

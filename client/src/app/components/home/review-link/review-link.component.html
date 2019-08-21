@@ -6,11 +6,11 @@
         Add Review Link
       </button>
     </div>
-    <div class="mainBoxHeaderRight">
+    <div class="mainBoxHeaderRight" *ngIf="!showNoRecordsFoundTemplate">
       <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
     </div>
   </header>
-  <div class="dataTableArea">
+  <div class="dataTableArea" *ngIf="!showNoRecordsFoundTemplate">
     <message *ngIf="!isModalOpened" [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="table table-col-5 reviewLinkTab">
       <ul class="thead">
@@ -21,7 +21,7 @@
         <li>ACTION(S)</li>
       </ul>
       <div class="tbody">
-        <ng-scrollbar [disableOnBreakpoints]="false" [compact]="true" *ngIf="reviewLinks.length > 0; else noRecords">
+        <ng-scrollbar [disableOnBreakpoints]="false" [compact]="true">
           <ul>
             <li class="row" *ngFor="let link of reviewLinks | paginate: config; let i = index"
               [ngClass]="{showMore: showMore && rowIndex === i}">
@@ -99,23 +99,34 @@
             </li>
           </ul>
         </ng-scrollbar>
-        <ng-template #noRecords>
-          <ul>
-            <li class="row">
-              <div class="error-msg">
-                <div class="log-stat_msg log_Failed">
-                  <p class="no-records">Sorry no review links found !</p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </ng-template>
       </div>
     </div>
     <!-- Pagination -->
     <pagination-controls *ngIf="reviewLinks.length > 0" [autoHide]="true" [responsive]="true"
       (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
+
+  <!-- no content template -->
+  <div *ngIf="showNoRecordsFoundTemplate">
+    <div class="no-content">
+      <figure>
+        <img src="../../../../assets/images/clipboards.png" alt="" />
+      </figure>
+      <div class="no-content-body">
+        <h3>No review link yet</h3>
+        <p>No review link been listed here yet.</p>
+      </div>
+
+      <div class="ftNone">
+        <button class="button-submit" (click)="onAddReviewLink()">
+          Add your first review link
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- no content template -->
+
+
 </div>
 <!-- add/edit modal-->
 <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalReview" [escapable]="false">

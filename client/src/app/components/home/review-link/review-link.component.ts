@@ -26,7 +26,7 @@ import { CustomDomainService } from '../../../services/custom-domain.service';
 })
 export class ReviewLinkComponent implements OnInit, OnDestroy {
   // defining class properties
-  reviewLinks: Array<ReviewLinkModel> = [] // An array of all review links
+  reviewLinks: Array<ReviewLinkModel> = []; // An array of all review links
   campaigns: any = []; // all campaigns array
   customDomains: any = []; // all campaigns array
   selectedCampaign: any = this.campaigns[0]; // default selected campaign array
@@ -66,6 +66,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   searchKey: string = ''; // search keyword
   isModalOpened: boolean = false; // set to true if the modal is opened
   reviewLinkIdToDelete: string = null;
+  noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -94,6 +96,13 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       (status: boolean) => {
         this.showError = status;
         Log.info(this.showError);
+      }
+    );
+    // subscription for no records found template
+    this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
+      (status: boolean) => {
+        this.showNoRecordsFoundTemplate = status;
+        Log.info(this.showNoRecordsFoundTemplate, "check the show template status in review link component");
       }
     );
   }
@@ -127,6 +136,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.updateShowNoRecordsFoundTemplate(false);
+    this.noRecordsFoundSubscription.unsubscribe();
     this.errorService.clearMessage();
   }
 
@@ -508,6 +519,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
           this.config.totalItems = response.data.total;
           this.reviewLinks = response.data.data;
           this.config.currentPage = 1;
+          this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           // hide the loader
           this.loaderService.disableLoader();
         } else {

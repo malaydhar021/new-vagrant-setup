@@ -1,10 +1,10 @@
 <div class="mainBox subscribedMain">
   <header class="mainBoxHeader">
-    <div class="mainBoxHeaderRight">
+    <div class="mainBoxHeaderRight" *ngIf="!showNoRecordsFoundTemplate">
       <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
     </div>
   </header>
-  <div class="dataTableArea">
+  <div class="dataTableArea" *ngIf="!showNoRecordsFoundTemplate">
     <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
     <div class="table table-col-4">
       <ul class="thead">
@@ -14,7 +14,7 @@
         <li>ACTION(S)</li>
       </ul>
       <div class="tbody">
-        <ng-scrollbar [compact]="true" *ngIf="emails.length > 0; else noRecords">
+        <ng-scrollbar [compact]="true">
           <ul>
             <li class="row" *ngFor="let email of emails | paginate: config">
               <div class="rowContainer">
@@ -34,23 +34,26 @@
             </li>
           </ul>
         </ng-scrollbar>
-
-        <ng-template #noRecords>
-            <ul>
-              <li class="row">
-                <div class="error-msg">
-                  <div class="log-stat_msg log_Failed">
-                    <p class="no-records">Sorry no emails found</p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-        </ng-template>
       </div>
     </div>
     <!-- Pagination -->
     <pagination-controls *ngIf="emails.length > 0" [autoHide]="true" [responsive]="true" (pageChange)="pageChanged($event)"></pagination-controls>
   </div>
+
+  <!-- no content template -->
+  <div *ngIf="showNoRecordsFoundTemplate">
+    <div class="no-content">
+      <figure>
+        <img src="../../../../assets/images/clipboards.png" alt="" />
+      </figure>
+      <div class="no-content-body">
+        <h3>No emails yet</h3>
+        <p>No emails been listed here yet.</p>
+      </div>
+    </div>
+  </div>
+  <!-- no content template -->
+
 </div>
 
 

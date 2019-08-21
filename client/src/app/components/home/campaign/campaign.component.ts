@@ -63,7 +63,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   isModalOpened: boolean = false; // set to true if the modal is opened
   campaignScriptForCustomDomain: string = 'lib/widget.min.js'; // constant path for campaign script
   campaignIdToDelete: string = null;
-  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template  
+  showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
 
   /**
    * Constructor method to fetch all required information from api provider
@@ -140,8 +140,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       campaignVisualStyle: [null, Validators.required], // visual style. default is Rounded
       campaignReviews: new FormArray([]), // array form field for sticky reviews
       campaignDelayBeforeStart: [null, Validators.required], // delay before time
-      campaignStayTime: [null, Validators.required], // delay before time
-      campaignDelayBetweenTwoReview: [null, Validators.required], // delay between next appearance
+      campaignStayTime: [null, [Validators.required, Validators.min(1)]], // delay before time
+      campaignDelayBetweenTwoReview: [null, [Validators.required, Validators.min(1)]], // delay between next appearance
       isBrandingSelected: [false], // add branding
       campaignBrand: [{ value: this.brands[0], disabled: true }], // campaign brand drop down, disabled by default
       isExitPopupSelected: [false], // add exit popup
@@ -171,6 +171,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    this.errorService.updateShowNoRecordsFoundTemplate(false);
+    this.noRecordsFoundSubscription.unsubscribe();
     this.errorService.clearMessage();
   }
 
