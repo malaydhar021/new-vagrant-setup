@@ -7127,6 +7127,9 @@ body.sign-upPage {
 }
 
 .cdk-overlay-pane {
+  @media (min-width: 576px) and (max-width: 640px) {
+    right: 20px;
+  }
   @media (max-width: 480px) {
     max-width: 238px;
   }
@@ -11657,6 +11660,14 @@ Cookie notification css
         background-color: #d14e4e;
       }
     }
+  }
+}
+
+// adding scroll for landscape mobie screens
+@media (max-width: 991px) and (orientation: landscape){
+  .dialog-open,
+  .cdk-overlay-connected-position-bounding-box {
+    overflow-y: auto;
   }
 }
 
