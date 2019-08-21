@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.1
+
+1. Disabled backdrop for each and every modal to lost data accidentally during add/edit an item
+
 ### V2.1.0
 
 1. Implemented no records found for each feature

@@ -66,7 +66,7 @@
   </div>
   <!-- no content template -->
 
-    <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal">
+    <ngx-smart-modal #modal1 identifier="modal1" class="sr-modal" [escapable]="false" [dismissable]="false">
         <div class="sr-modal-container">
             <div class="sr-modal-header">
                 <h2>
@@ -135,7 +135,7 @@
 
 
 <!-- HTML for Info modal -->
-<ngx-smart-modal #InfoModal identifier="InfoModal" class="sr-modal modalNotif">
+<ngx-smart-modal #InfoModal identifier="InfoModal" class="sr-modal modalNotif" [escapable]="false" [dismissable]="false">
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>

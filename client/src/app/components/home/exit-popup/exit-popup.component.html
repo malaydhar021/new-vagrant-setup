@@ -55,7 +55,8 @@
   <!-- no content template -->
 </div>
 
-<ngx-smart-modal #exitPopup1 identifier="exitPopup1" class="exitPopup theme1 prevwPage" [ngClass]="modalActive == 'exitPopup1' ? 'active': null" [style.background-color]="this.bodyBackgroundColor" (onOpen)="forColor(this.headerBackgroundColor)">
+<!--[ngStyle]="{ 'color-overlay' : '#ff1616' }"-->
+<ngx-smart-modal #exitPopup1 identifier="exitPopup1" class="exitPopup theme1 prevwPage" [ngClass]="modalActive == 'exitPopup1' ? 'active': null" [style.background-color]="this.bodyBackgroundColor" (onOpen)="forColor(this.headerBackgroundColor)" [escapable]="false" [dismissable]="false">
   <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
     <img src="../../../../assets/images/icon_mic_white.png" alt="mic_white">
     <h2 [style.color]="this.headerTextColor">{{this.exitPopupHeaderText}} </h2>
@@ -605,7 +606,7 @@
 </ngx-smart-modal>
 
 
-<ngx-smart-modal #exitPopup2 identifier="exitPopup2" class="exitPopup theme2 prevwPage" [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup2' ? 'active': null" (onOpen)="forColor(this.headerBackgroundColor)">
+<ngx-smart-modal #exitPopup2 identifier="exitPopup2" class="exitPopup theme2 prevwPage" [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup2' ? 'active': null" (onOpen)="forColor(this.headerBackgroundColor)" [escapable]="false" [dismissable]="false">
   <div class="leftSec" [style.background-color]="this.headerBackgroundColor">
     <img src="../../../../assets/images/icon_mic_white.png" alt="">
     <h2 [style.color]="this.headerTextColor">{{this.exitPopupHeaderText}} </h2>
@@ -1154,7 +1155,7 @@
 </ngx-smart-modal>
 
 
-<ngx-smart-modal #exitPopup3 identifier="exitPopup3" class="exitPopup theme3 prevwPage"  [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup3' ? 'active': null">
+<ngx-smart-modal #exitPopup3 identifier="exitPopup3" class="exitPopup theme3 prevwPage"  [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup3' ? 'active': null" [escapable]="false" [dismissable]="false">
   <div class="topSec" [style.background-color]="this.headerBackgroundColor">
     <img src="../../../../assets/images/icon_mic_white.png" alt="">
     <h2 [style.color]="this.headerTextColor">{{this.exitPopupHeaderText}} </h2>
@@ -1703,7 +1704,7 @@
 </ngx-smart-modal>
 
 
-<ngx-smart-modal #exitPopup4 identifier="exitPopup4" class="exitPopup theme4 prevwPage" [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup4' ? 'active': null">
+<ngx-smart-modal #exitPopup4 identifier="exitPopup4" class="exitPopup theme4 prevwPage" [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup4' ? 'active': null" [escapable]="false" [dismissable]="false">
   <div class="topSec"  [style.background-color]="this.headerBackgroundColor">
     <p><img src="../../../../assets/images/icon_mic_colored_1.png" alt=""></p>
   </div>
@@ -2253,7 +2254,7 @@
 
 
 
-<ngx-smart-modal #exitPopup5 identifier="exitPopup5" class="exitPopup theme5 prevwPage" [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup5' ? 'active': null">
+<ngx-smart-modal #exitPopup5 identifier="exitPopup5" class="exitPopup theme5 prevwPage" [style.background-color]="this.bodyBackgroundColor" [ngClass]="modalActive == 'exitPopup5' ? 'active': null" [escapable]="false" [dismissable]="false">
   <div class="topSec"  [style.background-color]="this.headerBackgroundColor">
     <h2 [style.color]="this.headerTextColor">{{this.exitPopupHeaderText}} </h2>
     <p [style.color]="this.paragraphTextColor">
@@ -2798,7 +2799,7 @@
   <!-- <button (click)="myModal.close()">Close</button> -->
 </ngx-smart-modal>
 
-<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalCreateExit" [escapable]="false">
+<ngx-smart-modal #modal1 identifier="modal1" class="sr-modal modalCreateExit" [escapable]="false" [dismissable]="false">
   <div class="sr-modal-container">
     <div class="sr-modal-header">
       <h2>
