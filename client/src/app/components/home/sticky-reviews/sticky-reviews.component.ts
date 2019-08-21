@@ -103,7 +103,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     }
   ];
   selectedReivewType: number = 1; // default selected value to show which review field will be shown
-  imagePreviewUrl: string = 'assets/images/user.png'; // default image preview url
+  imagePreviewUrl: string = 'assets/images/default_logo_image_sr.png'; // default image preview url
   config: any;  // config for pagination
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
@@ -279,7 +279,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // reset the form
     this.form.reset();
     // set default image to preview image area
-    this.imagePreviewUrl = 'assets/images/user.png';
+    this.imagePreviewUrl = 'assets/images/default_logo_image_sr.png';
     this.choseFileCtrl = 'Browse from your computer';
     this.fileName = 'or drag & drop your image here';
     // set review type dropdown default value to `textual`
