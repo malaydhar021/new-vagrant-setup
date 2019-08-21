@@ -11667,7 +11667,7 @@ Cookie notification css
 @media (max-width: 991px) and (orientation: landscape){
   .dialog-open,
   .cdk-overlay-connected-position-bounding-box {
-    overflow: auto;
+    overflow: auto !important;
   }
 }
 
