@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { NgxMaskModule } from 'ngx-mask';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MessageModule } from './message.module';
@@ -32,6 +33,7 @@ import { PlansComponent } from '../components/home/plans/plans.component';
     NgxPaginationModule,
     SharedModule,
     NgxSmartModalModule.forRoot(),
+    NgxMaskModule.forRoot()
   ],
   providers: [
     SubscriptionService,

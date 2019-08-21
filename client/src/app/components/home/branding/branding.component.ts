@@ -193,6 +193,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.brandingService.getAllBrandings().subscribe(
       (response: any) => {
         Log.success(response);
+        this.loaderService.disableLoader();
         if (response.status) {
           // update the brands array with latest api response data
           this.brands = response.data.data;
@@ -201,7 +202,6 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
           this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           Log.info("before closing the loader");
           // hide the loader
-          this.loaderService.disableLoader();
         }
       }
     );
@@ -374,11 +374,11 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.brandingService.getPaginatedBrands(pgNum, this.searchKey).subscribe(
         (response: any) => {
           Log.success(response);
+          this.loaderService.disableLoader();
           if (response.status) {
             // update the brands array with latest api response data
             this.brands = response.data.data;
             // hide the loader
-            this.loaderService.disableLoader();
           }
         }
     );
@@ -393,10 +393,10 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loaderService.enableLoader();
     this.brandingService.searchBrands($term.target.value).subscribe(
         (response: any ) => {
+          this.loaderService.disableLoader();
           if (response.status) {
             this.brands = response.data.data;
             this.config.totalItems = response.data.total;
-            this.loaderService.disableLoader();
           }
         }
     );

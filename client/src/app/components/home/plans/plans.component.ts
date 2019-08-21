@@ -58,6 +58,7 @@ export class PlansComponent implements OnInit, OnDestroy {
     private pricingPlanService: PricingPlanService
   ) {
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
+      Log.info(userPlan, "checking user plan in plans component");
       this.userPlanDetails = userPlan;
     });
     this.subscriptionService.getCardDetails().subscribe(
@@ -212,11 +213,13 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
+   * Method to update a user subscription plan
+   * @method update
+   * @returns Void
    */
   public update() {
     this.loaderService.enableLoader()
-
+    Log.info("under update() method");
     this.subscriptionService.updateSubscription({ pricing_plan_type: this.pricingPlanType }).subscribe(
       (response: any) => {
         this.loaderService.disableLoader();

@@ -21,6 +21,9 @@ import { MediaModule }                                    from './media.module';
 import { MediaService }                                   from '../services/media.service';
 import { NgxPaginationModule }                            from 'ngx-pagination';
 import { SharedModule }                                   from './shared/shared.module';
+import { SubscriptionService }                            from '../services/subscription.service';
+import { SubscriptionGuard }                              from '../services/guards/subscription.guard.service';
+import { PlansModule } from './plans.module';
 
 /**
  * HomeModule is loading all components and services along with few angular modules once the user is logged in.
@@ -50,11 +53,14 @@ import { SharedModule }                                   from './shared/shared.
     ColorPickerModule,
     MediaModule,
     NgxPaginationModule,
-    SharedModule
+    SharedModule,
+    PlansModule
   ],
   providers: [
     MenuService,
-    MediaService
+    MediaService,
+    SubscriptionService,
+    SubscriptionGuard
   ]
 })
 export class HomeModule { }

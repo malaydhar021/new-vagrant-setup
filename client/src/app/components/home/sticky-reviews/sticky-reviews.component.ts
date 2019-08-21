@@ -312,7 +312,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // making an api call to get all sticky reviews and update `reviews` array which is a class property
     this.stickyReviewService.getAllStickyReviews().subscribe(
       (response: any) => {
-        Log.success(response);
+        // hide the loader
+        this.loaderService.disableLoader();
         if (response.status) {
           // update the reviews array with latest api response data
           this.config.totalItems = response.data.total;
@@ -320,8 +321,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           this.config.currentPage = 1;
           this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
           Log.debug(this.reviews.length, "Checking the length of the reviews property");
-          // hide the loader
-          this.loaderService.disableLoader();
         }
       }
     );

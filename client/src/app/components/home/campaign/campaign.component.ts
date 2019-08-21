@@ -420,6 +420,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.campaignService.getAllCampaigns().subscribe(
       (response: any) => {
         Log.success(response);
+        // hide the loader
+        this.loaderService.disableLoader();
         if (response.status) {
           // update the campaign array with latest api response data
           // if there is no data object then assign empty array i.e no records found
@@ -427,8 +429,6 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
           this.campaigns = response.data.data;
           this.config.totalItems = response.data.total;
           this.config.currentPage = 1;
-          // hide the loader
-          this.loaderService.disableLoader();
         } else {
           this.errorService.setMessage({type: 'error', message: response.message});
           // hide the loader

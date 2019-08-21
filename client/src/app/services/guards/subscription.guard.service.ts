@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route } from '@angular/router';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import { Observable } from 'rxjs';
 import { SubscriptionService } from '../subscription.service';
 import { Log } from 'src/app/helpers/app.helper';
@@ -13,7 +13,7 @@ import { Log } from 'src/app/helpers/app.helper';
  * @license Proprietary
  */
 @Injectable()
-export class SubscriptionGuard implements CanLoad {
+export class SubscriptionGuard implements CanActivate {
   /**
    * Constructor method to load services at the very fast when this class got initialized
    * @constructor constructor
@@ -31,9 +31,9 @@ export class SubscriptionGuard implements CanLoad {
    * @param route Route instance
    * @returns Boolean
    */
-  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let status = this.subscriptionService.getUserSubscriptionStatus();
-    Log.info(status);
+    Log.info(status, "checking status in subscription guard");
     if(status && (status === 'ACTIVE' || status === 'NA')) {
       return true;
     } else {

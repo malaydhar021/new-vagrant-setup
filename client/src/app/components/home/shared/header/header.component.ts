@@ -70,9 +70,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
     // User subscription service for get the user plan info
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
+      Log.info(userPlan, "Checking user plan in header component");
       this.userPlanDetails = userPlan;
-      Log.info(this.userPlanDetails, "Lets check user in header");
-      // userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias && (this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase())
       if(userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias){
         this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase();
       }
@@ -121,8 +120,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.showUpdateCard = response.data.pay_info;
       }
     )
-
-    this.stopDrop();
+    // this.stopDrop();
   }
 
   /**
@@ -182,7 +180,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if(response.status) {
           this.authService.removeStorageData();
           this.loaderService.disableLoader();
-          this.errorService.updateMessage(response.message);
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
           // delete cookie from main domain,
           if (this.cookieService.get('_loginUser')) {
             this.cookieService.delete('_loginUser', '/', 'usestickyreviews.com');

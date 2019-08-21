@@ -1,7 +1,7 @@
 import { NgModule }                         from '@angular/core';
 import { RouterModule }                     from '@angular/router';
 import { NotFoundComponent }                from 'src/app/components/not-found/not-found.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule }                     from '@angular/common';
 
 /**
  * Module that exports NotfoundComponent so that other module can use this component

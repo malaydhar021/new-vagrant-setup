@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Exceptions\PrivilegeViolationException;
+use App\Exceptions\SubscriptionStatusException;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,12 +19,12 @@ class SubscriptionMiddleware
     {
         if (Auth::check()) {
             if (Auth::user()->subscription_status == 'CANCELLED') {
-                throw new PrivilegeViolationException(
+                throw new SubscriptionStatusException(
                     "Your action is forbidden due to cancellation of your subscription plan. Please resubscribe again" .
                         " to continue."
                 );
             } elseif (Auth::user()->subscription_status == 'TERMINATED') {
-                throw new PrivilegeViolationException(
+                throw new SubscriptionStatusException(
                     "Your action is forbidden due to termination of your subscription plan. Please resubscribe again " .
                         "to continue."
                 );

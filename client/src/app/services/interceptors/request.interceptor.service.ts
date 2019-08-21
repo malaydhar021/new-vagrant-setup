@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of, BehaviorSubject } from 'rxjs';
-import { catchError, delay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { ErrorsService } from '../errors.service';
 import { Log } from '../../helpers/app.helper';
+import { LoaderService } from '../loader.service';
 
 /**
  * RequestInterceptor is going to add Access-Control-Allow-Origin and Authorization to the headers to each and every request.
@@ -25,7 +26,7 @@ export class RequestInterceptor implements HttpInterceptor {
   defaultErrorMessage = 'Something went wrong. Please try again after successfully login.';
 
   // constructor method to load all required service
-  constructor(private authService: AuthService, private router: Router, private errorService: ErrorsService) { }
+  constructor(private authService: AuthService, private router: Router, private errorService: ErrorsService, private loaderService: LoaderService) { }
 
   /**
    * This is the implementation of intercept interface and added headers to each request when some api has been called 
@@ -73,6 +74,8 @@ export class RequestInterceptor implements HttpInterceptor {
         const errorMessage401 = this.updateErrorMessage(error);
         // logging out the user
         this.authService.removeStorageData();
+        // hide the loader
+        this.loaderService.disableLoader();
         // redirect user to loging page
         this.router.navigate(['/login']);
         return of(errorMessage401);
@@ -163,10 +166,12 @@ export class RequestInterceptor implements HttpInterceptor {
   private updateErrorMessage(error: HttpErrorResponse) {
     let errMsg = '';
     if (error instanceof HttpErrorResponse && error.error.hasOwnProperty('message')) {
-      this.errorService.updateMessage(error.error.message);
+      // this.errorService.updateMessage(error.error.message);
+      setTimeout(() => {this.errorService.setMessage({type: 'error', message: error.error.message})}, 100);
       errMsg = error.error.message;
     } else {
-      this.errorService.updateMessage(this.defaultErrorMessage);
+      // this.errorService.updateMessage(this.defaultErrorMessage);
+      setTimeout(() => {this.errorService.setMessage({type: 'error', message: this.defaultErrorMessage})}, 100);
       errMsg = this.defaultErrorMessage;
     }
     return errMsg;

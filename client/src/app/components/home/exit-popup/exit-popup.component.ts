@@ -103,6 +103,8 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     private loaderService: LoaderService,
     private exitPopupService: ExitPopupService
   ) {
+    // get all visual styles
+    this.getVisualStyles();
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
         this.showError = status;
@@ -148,7 +150,6 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       exitPopupCtaButtonText: ['Take me there'],
       exitPopupAction: ['1', Validators.required],
     });
-    this.getVisualStyles();
     this.getUserExitPopups();
     // pagination controls
     this.config = {
@@ -270,12 +271,12 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.loaderService.enableLoader();
     this.exitPopupService.getUserExitPopups().subscribe(
       (response: any) => {
+        this.loaderService.disableLoader();
         if (response.status) {
           this.exitPopups = response.data.data;
           this.config.totalItems = response.data.total;
           this.config.currentPage = 1;
           this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
-          this.loaderService.disableLoader();
         }
       }
     );

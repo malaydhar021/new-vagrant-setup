@@ -197,15 +197,14 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
     // making an api call to get all custom domains and update `customDomains` class property
     this.customDomainService.getAllCustomDomains().subscribe(
       (response: any) => {
-        Log.success(response);
+        // hide the loader
+        this.loaderService.disableLoader();
         if (response.status) {
           // update the customDomains array with latest api response data
           this.customDomains = response.data.data;
           this.config.totalItems = response.data.total;
           this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
-          Log.info("before closing the loader");
-          // hide the loader
-          this.loaderService.disableLoader();
+          Log.info("before closing the loader");          
         }
       }
     );

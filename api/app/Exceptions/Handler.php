@@ -133,6 +133,14 @@ class Handler extends ExceptionHandler
                     'message' => $exception->getMessage(),
                 ], 403);
             }
+            
+            /** Subscription status violation Exception Response */
+            if ($exception instanceof SubscriptionStatusException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $exception->getMessage(),
+                ], 401);
+            }
 
             /** File Storing Exception Exception Response */
             if ($exception instanceof FileStoringException) {

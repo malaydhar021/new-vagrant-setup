@@ -514,18 +514,15 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     // Service to to get all the Review Links
     this.reviewLinkService.getAllReviewLinks().subscribe(
       (response: any) => {
-        Log.info(response, "List: response");
+        // hide the loader
+        this.loaderService.disableLoader();
         if(response.status) {
           this.config.totalItems = response.data.total;
           this.reviewLinks = response.data.data;
           this.config.currentPage = 1;
           this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
-          // hide the loader
-          this.loaderService.disableLoader();
         } else {
           this.errorService.setMessage({type: 'error', message: response.message});
-          // hide the loader
-          this.loaderService.disableLoader();
         }
       }
     );

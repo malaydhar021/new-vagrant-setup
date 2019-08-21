@@ -113,14 +113,13 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
     // making an api call to first paginated records
     this.subscribedEmailService.getAllSubscribedEmails().subscribe(
       (response: any) => {
-        Log.success(response);
+        // hide the loader
+        this.loaderService.disableLoader();
         if (response.status) {
           // update the emails array with latest api response data
           this.emails = response.data.data;
           this.config.totalItems = response.data.total;
           this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
-          // hide the loader
-          this.loaderService.disableLoader();
         }
       }
     );

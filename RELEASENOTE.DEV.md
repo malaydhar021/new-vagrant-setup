@@ -55,6 +55,11 @@
 
 ## Enhancement
 
+### V2.1.2
+
+1. Fixed issue with header membership plan name update when some user update their plan
+2. Fixed issue with subscription guard
+
 ### V2.1.1
 
 1. Disabled backdrop for each and every modal to lost data accidentally during add/edit an item

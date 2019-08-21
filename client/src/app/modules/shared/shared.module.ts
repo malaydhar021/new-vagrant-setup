@@ -23,7 +23,7 @@ import { ClickOutsideDirective }            from '../../directives/click-outside
     DigitsOnlyDirective,
     DateTimePipe,
     CopyToClipboardDirective,
-    ClickOutsideDirective,
+    ClickOutsideDirective
   ],
   providers: []
 })
