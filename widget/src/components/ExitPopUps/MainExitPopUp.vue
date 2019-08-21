@@ -54,8 +54,8 @@ import HomeComingPopup from './HomeComingPopUp.vue'
 import MomentumPopup from './MomentumPopUp.vue'
 import FusingPopup from './FusingPopUp.vue'
 import EvolverPopup from './EvolverPopUp.vue'
-import { constants } from 'fs';
-import { setTimeout } from 'timers';
+import { constants } from 'fs'
+import { setTimeout } from 'timers'
 
 export default {
   props: {

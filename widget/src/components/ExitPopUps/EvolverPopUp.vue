@@ -51,7 +51,7 @@ import '../../assets/css/exit-popup.css'
 import MainWidget from '../Widgets/MainWidget.vue'
 
 import Vue from 'vue'
-import { constants } from 'fs';
+import { constants } from 'fs'
 
 export default {
     props: {
