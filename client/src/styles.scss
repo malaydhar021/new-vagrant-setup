@@ -3475,6 +3475,10 @@ a {
             font-size: 14px;
             padding-bottom: 18px;
           }
+
+          @media (max-width: 1199px) and (min-width: 641px) {
+            min-height: 415px;
+          }
         }
 
         .price {
@@ -5775,6 +5779,9 @@ body.sign-upPage {
         }
       }
 
+      @media (min-width: 1920px) {
+        width: 38%;
+      }
       @media (max-width: 1600px) {
         height: inherit;
         padding: 0 50px;
@@ -5870,6 +5877,12 @@ body.sign-upPage {
             }
           }
 
+          @media (min-width: 1920px) {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+          }
+
           @media (max-width: 1199px) {
             padding: 40px 0;
           }
@@ -5877,6 +5890,10 @@ body.sign-upPage {
           @media (max-width: 480px) {
             padding: 25px 0;
           }
+        }
+
+        @media (min-width: 1920px) {
+          min-height: 80%;
         }
 
         @media (max-width: 1600px) {
@@ -5895,6 +5912,10 @@ body.sign-upPage {
           padding: 40px 15px 0 15px;
           border-radius: 0 0 10px 10px;
         }
+      }
+
+      @media (min-width: 1920px) {
+        width: 31%;
       }
 
       @media (max-width: 1600px) {
@@ -5944,6 +5965,10 @@ body.sign-upPage {
     @media (max-width: 767px) {
       display: block;
     }
+  }
+
+  @media (min-width: 1920px) {
+    background-size: 34%, 24%;
   }
 
   @media (max-width: 1600px) {
