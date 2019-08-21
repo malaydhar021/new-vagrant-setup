@@ -88,7 +88,7 @@
           </span>
         </div>
         <div class="vidContain">
-          <video-player class="vjs-default-skin"
+          <video-player class="vjs-default-skin playerEdit"
               ref="videoPlayer"
               :options="videoPlayerOptions"
               :playsinline="true"
