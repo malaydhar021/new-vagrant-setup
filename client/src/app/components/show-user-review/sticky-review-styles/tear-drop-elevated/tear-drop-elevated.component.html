@@ -4,10 +4,11 @@
     <div class="popupTxt popup_template_5" style="margin-bottom: 30px;">
         <div class="figPopup">
 <!--            <figure style="background-image:url(../../../../../../assets/images/dp.jpeg);"></figure>-->
-            <figure>
-                <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === ''">
-                <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== ''">
+            <figure [style.background-image]="../../../../assets/images/face_icon.png" *ngIf="reviewData.image === ''">
+                <!-- <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === ''">
+                <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== ''"> -->
             </figure>
+            <figure [style.background-image]="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" *ngIf="reviewData.image !== ''"></figure>
         </div>
         <div class="bodyPopup">
             <h6>{{reviewData.name}} </h6>
@@ -66,10 +67,11 @@
         </div>
         <div class="popupTxt popup_template_5">
             <div class="figPopup">
-                <figure>
-                    <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === ''">
-                    <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== ''">
+                <figure [style.background-image]="../../../../assets/images/face_icon.png" *ngIf="reviewData.image === ''">
+                    <!-- <img src="../../../../assets/images/face_icon.png" alt="reviewImage" *ngIf="reviewData.image === ''">
+                    <img src="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" alt="reviewImage" *ngIf="reviewData.image !== ''"> -->
                 </figure>
+                <figure [style.background-image]="https://{{reviewData.url_link}}/storage/images/{{reviewData.image}}" *ngIf="reviewData.image !== ''"></figure>
             </div>
             <div class="bodyPopup">
                 <h6>{{reviewData.name}} </h6>
