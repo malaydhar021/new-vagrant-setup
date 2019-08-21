@@ -96,7 +96,7 @@
                     </span>
                 </div>
                 <div class="vidContain">
-                    <video-player class="vjs-custom-skin"
+                    <video-player class="vjs-default-skin"
                         ref="videoPlayer"
                         :options="videoPlayerOptions"
                         :playsinline="true"
