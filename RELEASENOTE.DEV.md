@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.3
+
+1. Put messages into top section in plans page
+
 ### V2.1.2
 
 1. Fixed issue with header membership plan name update when some user update their plan
