@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.5
+
+1. Fixed issue with menu drawer for responsive
+
 ### V2.1.4
 
 1. Modified loader in exit popup page

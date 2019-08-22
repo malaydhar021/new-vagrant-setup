@@ -8,7 +8,7 @@ import { Log } from 'src/app/helpers/app.helper';
 /**
  * Component to show left panel menus and their actions
  * @class LeftPanelComponent
- * @version 1.0.0
+ * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -39,6 +39,7 @@ export class LeftPanelComponent implements OnInit, OnDestroy {
 
     this.subscription = this.menuService.activeMenu$.subscribe(
       status => {
+        Log.info(status, "checking status in left panel component");
         this.isActive = status;
       }
     );
@@ -68,9 +69,14 @@ export class LeftPanelComponent implements OnInit, OnDestroy {
     this.showCookie = false;
   }
 
+  /**
+   * Method to open / close a menu drawer for responsive
+   * @method closeDrawer
+   * @since Version 2.0.0
+   * @returns Void
+   */
   public closeDrawer() {
-    Log.info("checking things");
-    this.menuService.updateStatus(!this.isActive);
+    this.menuService.updateStatus(false);
   }
 
 }

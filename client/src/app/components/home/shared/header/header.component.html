@@ -15,11 +15,11 @@
         <div class="planName" *ngIf="userPlanDetails && (userPlanDetails.status === 'ACTIVE' || userPlanDetails.status === 'NA')">
           {{currentPlanName}}
         </div>
-        <a [routerLink]="['/home/plans']" class="upgrade">{{ (userPlanDetails && userPlanDetails.status !== 'ACTIVE' && userPlanDetails.status !== 'NA') ? 'Add' : 'Update' }} Now</a>
+        <span (click)="closeDrawer()"><a [routerLink]="['/home/plans']" class="upgrade">{{ (userPlanDetails && userPlanDetails.status !== 'ACTIVE' && userPlanDetails.status !== 'NA') ? 'Add' : 'Update' }} Now</a></span>
       </div>
       <div class="bottomSec" *ngIf="showUpdateCard === 1">
         <ul>
-          <li><a [routerLink]="['/home/update-payment-info']" routerLinkActive="active">{{ (userPlanDetails && userPlanDetails.status !== 'ACTIVE' && userPlanDetails.status !== 'NA') ? 'Add' : 'Update' }} Payment Info</a></li>
+          <li (click)="closeDrawer()"><a [routerLink]="['/home/update-payment-info']" routerLinkActive="active">{{ (userPlanDetails && userPlanDetails.status !== 'ACTIVE' && userPlanDetails.status !== 'NA') ? 'Add' : 'Update' }} Payment Info</a></li>
         </ul>
       </div>
     </div>
@@ -29,15 +29,15 @@
       <a class="hdrProfile" (click)="tglProfileMenu()" (clickOutside)="closeProfileBox($event)" [style.background-image]="'url('+ userImageUrl +')'"></a>
       <div class="settingDrop">
         <ul>
-          <li><a [routerLink]="['/home/profile']" routerLinkActive="active">Edit Profile</a></li>
-          <li><a [routerLink]="['/home/custom-domains']" routerLinkActive="active">Custom Domains</a></li>
-          <li><a [routerLink]="['/home/zapier-settings']" routerLinkActive="active">Zapier Settings</a></li>
-          <li><a (click)="onLogout()">Logout</a></li>
+          <li (click)="closeDrawer()"><a [routerLink]="['/home/profile']" routerLinkActive="active">Edit Profile</a></li>
+          <li (click)="closeDrawer()"><a [routerLink]="['/home/custom-domains']" routerLinkActive="active">Custom Domains</a></li>
+          <li (click)="closeDrawer()"><a [routerLink]="['/home/zapier-settings']" routerLinkActive="active">Zapier Settings</a></li>
+          <li (click)="closeDrawer()"><a (click)="onLogout()">Logout</a></li>
         </ul>
       </div>
   </div>
 
-  <a href="javascript:void(0)" (click)="tglSideMenu()" [ngClass]="tglSide ? 'active' : ''" class="toggleSideMenu">
+  <a (click)="tglSideMenu()" [ngClass]="tglSide ? 'active' : ''" class="toggleSideMenu">
     <span></span>
     <span></span>
     <span></span>

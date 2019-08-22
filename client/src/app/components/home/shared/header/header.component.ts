@@ -15,7 +15,7 @@ import { AppBaseUrl } from 'src/app/helpers/api.helper';
  * This component is responsible for handling all sort of operations in application header
  * after user is logged in including logout functionality.
  * @class HeaderComponent
- * @version 1.0.0
+ * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
  * @license Proprietary
  */
@@ -67,6 +67,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuSubscription = this.menuService.activeMenu$.subscribe(
       status => {
         this.isActive = status;
+        this.tglSide = status;
       }
     );
     // User subscription service for get the user plan info
@@ -163,7 +164,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public tglSideMenu() {
     // this.isActive = !this.isActive;
     this.menuService.updateStatus(!this.isActive);
-    this.tglSide = !this.tglSide;
+    this.tglSide = this.isActive;
   }
 
   /**
@@ -205,5 +206,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
             e.stopPropagation();
         });
     }
+  }
+
+  /**
+   * Method to open / close a menu drawer for responsive
+   * @method closeDrawer
+   * @since Version 2.0.0
+   * @returns Void
+   */
+  public closeDrawer() {
+    this.menuService.updateStatus(false);
   }
 }
