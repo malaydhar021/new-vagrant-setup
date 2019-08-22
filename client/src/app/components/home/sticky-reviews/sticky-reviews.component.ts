@@ -627,6 +627,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     Log.info(this.form, "Checking form data");
     // make `isSubmitted` to true
     this.isSubmitted = true;
+    this.searchKey = '';
     // adding validation for image for checking file type and file size
     this.runtimeValidations();
     // check if `form` is valid or not

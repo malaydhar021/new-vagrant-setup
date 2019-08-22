@@ -763,6 +763,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    */
   public onSubmitStep2(){
     this.isSubmittedStep1 = true;
+    this.searchKey = '';
     if(this.form.invalid || this.form2.invalid) {
       return;
     }

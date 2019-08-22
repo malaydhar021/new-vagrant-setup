@@ -252,6 +252,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
       name: this.form.value.brandName,
       url: this.form.value.brandUrl
     };
+    this.searchKey = '';
     if(this.isEditing) {
       // edit brand
       data['branding_id'] = this.brandId;

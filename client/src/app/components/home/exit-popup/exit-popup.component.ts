@@ -152,7 +152,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       exitPopupCtaButtonText: ['Take me there'],
       exitPopupAction: ['1', Validators.required],
     });
-    
+
     // pagination controls
     this.config = {
       itemsPerPage: 15,
@@ -291,6 +291,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   public async onSubmit() {
     Log.info(' try to save/update exit popups ... ');
     this.isSubmitted = true;
+    this.searchKey = '';
     // check if the form does not pass the client side validation
     if (this.form.invalid) {
       Log.info('Get a validation error ');

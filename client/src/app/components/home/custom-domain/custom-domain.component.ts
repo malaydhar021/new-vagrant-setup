@@ -204,7 +204,7 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
           this.customDomains = response.data.data;
           this.config.totalItems = response.data.total;
           this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
-          Log.info("before closing the loader");          
+          Log.info("before closing the loader");
         }
       }
     );
@@ -244,6 +244,7 @@ export class CustomDomainComponent implements OnInit, OnDestroy, AfterViewInit {
   public onSubmit() {
     // set the flag to true if the form has been submitted
     this.isSubmitted = true;
+    this.searchKey = '';
     // check if the form does not pass the client side validation
     if (this.form.invalid) {
       return;

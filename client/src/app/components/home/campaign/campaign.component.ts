@@ -579,6 +579,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     // show the loader to user
     this.loaderService.enableLoader();
     // preparing data for sending request to api
+    this.searchKey = '';
     const data = {
       campaign_name: this.form.value.campaignName,
       domain_name: this.form.value.campaignDomainName,
