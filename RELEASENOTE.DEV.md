@@ -170,6 +170,10 @@
 
 ## Review Link
 
+### V2.2.0
+
+1. Detached sticky reviews and review link relation if review link is deleted
+
 ### V2.1.1
 
 1. Fixed issue with custom domain value during update a review link and if some deselect the custom domain from dropdown

@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Observers\UserObserver;
 use App\Observers\StickyReviewObserver;
 use App\Observers\SubscribedEmailObserver;
+use App\Observers\ReviewLinkObserver;
 use App\User;
 use App\StickyReview;
+use App\ReviewLink;
 use App\SubscribedEmail;
 
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         StickyReview::observe(StickyReviewObserver::class);
         SubscribedEmail::observe(SubscribedEmailObserver::class);
+        ReviewLink::observe(ReviewLinkObserver::class);
     }
 
     /**

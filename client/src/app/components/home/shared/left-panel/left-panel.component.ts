@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { MenuService } from '../../../../services/menu.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ErrorsService } from '../../../../services/errors.service';
+import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * Component to show left panel menus and their actions
@@ -65,6 +66,11 @@ export class LeftPanelComponent implements OnInit, OnDestroy {
   public closeCookie() {
     this.cookieService.set('_readSite', '1', 450, '/', 'usestickyreviews.com');
     this.showCookie = false;
+  }
+
+  public closeDrawer() {
+    Log.info("checking things");
+    this.menuService.updateStatus(!this.isActive);
   }
 
 }
