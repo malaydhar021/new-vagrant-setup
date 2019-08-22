@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.4
+
+1. Modified loader in exit popup page
+
 ### V2.1.3
 
 1. Put messages into top section in plans page

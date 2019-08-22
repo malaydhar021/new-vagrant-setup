@@ -270,7 +270,6 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   }
 
   public getUserExitPopups() {
-    this.loaderService.enableLoader();
     this.exitPopupService.getUserExitPopups().subscribe(
       (response: any) => {
         this.loaderService.disableLoader();
@@ -391,10 +390,8 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   }
 
   public getVisualStyles() {
-    this.loaderService.enableLoader();
     this.exitPopupService.getVisualStyles().subscribe(
       (response: any) => {
-        this.loaderService.disableLoader();
         if (response.status) {
           this.styleId = response.data[0];
           this.form.get('exitPopupVisualStyles').setValue(this.styleId);
