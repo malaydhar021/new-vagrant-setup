@@ -126,6 +126,8 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
    */
   public ngOnInit() {
     this.title.setTitle('Stickyreviews :: Exit pop-up(s)');
+    this.loaderService.enableLoader();
+    this.getUserExitPopups();
     this.isSubmitted = false;
     this.form = this.formBuilder.group({
       exitPopUpName: [null, Validators.required], // exitPopUpName name
@@ -150,7 +152,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       exitPopupCtaButtonText: ['Take me there'],
       exitPopupAction: ['1', Validators.required],
     });
-    this.getUserExitPopups();
+    
     // pagination controls
     this.config = {
       itemsPerPage: 15,
@@ -389,8 +391,10 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   }
 
   public getVisualStyles() {
+    this.loaderService.enableLoader();
     this.exitPopupService.getVisualStyles().subscribe(
       (response: any) => {
+        this.loaderService.disableLoader();
         if (response.status) {
           this.styleId = response.data[0];
           this.form.get('exitPopupVisualStyles').setValue(this.styleId);

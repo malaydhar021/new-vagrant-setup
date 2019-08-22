@@ -58,7 +58,6 @@ export class PlansComponent implements OnInit, OnDestroy {
     private pricingPlanService: PricingPlanService
   ) {
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
-      Log.info(userPlan, "checking user plan in plans component");
       this.userPlanDetails = userPlan;
     });
     this.subscriptionService.getCardDetails().subscribe(
