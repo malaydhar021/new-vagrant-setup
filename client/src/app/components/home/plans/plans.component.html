@@ -6,8 +6,8 @@
         <span>Select the membership plan you want to go for</span>
       </h1>
       <div class="plans clearfix">
+        <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
         <div class="plan clearfix">
-
           <div class="planCell" *ngFor="let plan of pricingPlans">
             <div class="planHead">
               <div class="planImg"><img src="../../../../assets/images/{{ plan.logo }}" alt=""></div>
@@ -61,9 +61,6 @@
             <button type="button" class="planBtn" [ngClass]="{'current': buttonText('Agency') == 'CURRENT' }"
               (click)="addUpdatePlan('highest')">{{buttonText('Agency')}}</button>
           </div> -->
-        </div>
-        <div>
-          <message [successMessage]="successMessage" [errorMessage]="errorMessage" [showMessage]="showError"></message>
         </div>
         <div class="planNote text-center">
           <p>

@@ -9,6 +9,7 @@ import { Log } from '../../../../helpers/app.helper';
 import { SubscriptionService } from '../../../../services/subscription.service';
 import { UserService } from '../../../../services/user.service';
 import { LoaderService } from '../../../../services/loader.service';
+import { AppBaseUrl } from 'src/app/helpers/api.helper';
 
 /**
  * This component is responsible for handling all sort of operations in application header
@@ -70,7 +71,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
     // User subscription service for get the user plan info
     this.userPlanSubscription = this.subscriptionService.getUserSubscription$().subscribe(userPlan => {
-      Log.info(userPlan, "Checking user plan in header component");
       this.userPlanDetails = userPlan;
       if(userPlan.data && userPlan.data.pricing_plan && userPlan.data.pricing_plan.alias){
         this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase();
@@ -180,7 +180,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if(response.status) {
           this.authService.removeStorageData();
           this.loaderService.disableLoader();
-          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
           // delete cookie from main domain,
           if (this.cookieService.get('_loginUser')) {
             this.cookieService.delete('_loginUser', '/', 'usestickyreviews.com');
@@ -189,6 +188,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           if (this.cookieService.get('_cdi')) {
             this.cookieService.delete('_cdi');
           }
+          // show the logout success message to user
+          setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 200);
           this.router.navigate(['/login']);
         } else {
           Log.info(response, "Logout Response")
