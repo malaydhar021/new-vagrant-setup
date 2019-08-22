@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\ExitPopUp;
+use App\ExitPopUpStickyReview;
 
 class ExitPopupTableSeeder extends Seeder
 {
@@ -48,5 +49,8 @@ class ExitPopupTableSeeder extends Seeder
                 $exitPopUp->update(['btn_size' => 'S']);
             }
         }
+        // Get all the exit pop up id and update has_sticky_reviews flag from exit_pop_up_sticky_review table
+        $exitPopUpIdArr = ExitPopUpStickyReview::groupBy('exit_pop_up_id')->pluck('exit_pop_up_id');
+        ExitPopUp::whereIn('id', $exitPopUpIdArr)->update([ 'has_sticky_reviews' => 1 ]);
     }
 }

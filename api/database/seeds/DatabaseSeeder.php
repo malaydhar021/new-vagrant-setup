@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(ExitPopupTableSeeder::class);
         // $this->call(StickyReviewsTableSeeder::class);
         // $this->call(UpdateUserAffiliateId::class);
+        // $this->>call(UserTableSeeder::class);
     }
 }
