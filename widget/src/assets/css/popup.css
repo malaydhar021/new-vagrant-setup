@@ -109,7 +109,7 @@ img {
     left: 0;
     bottom: 0;
     display: block;
-    margin: 0 0 20px 15px;
+    margin: 0 0 35px 15px;
 }
 
 .linkTo {
@@ -289,6 +289,14 @@ img {
     vertical-align: middle;
     text-align: center;
     position: relative;
+}
+
+.vidParent_1 .figPopup, 
+.vidParent_2 .figPopup, 
+.vidParent_3 .figPopup, 
+.vidParent_2 .figPopup, 
+.vidParent_5 .figPopup {
+    z-index: 1;
 }
 
 .popupTxt .figPopup figure {

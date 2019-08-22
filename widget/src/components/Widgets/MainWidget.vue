@@ -1,8 +1,9 @@
 <template>
   <div>
     <transition name="fade">
-      <app-rounded
-        v-if="selectedComponent === 100"
+      <app-common-widget
+        :selectedTemplate="selectedComponent"
+        :audioVideoTemplate="selectedAudioVideoTemplate"
         :data="appData"
         :counter="counter"
         v-bind:key="counter"
@@ -10,67 +11,11 @@
         :brandingData="brandingData"
         :timeOut="timeOut"
         :ongoingInterval="currentInterVal"
-        @iterationStopped="selectedComponent = ''"
+        @iterationStopped="timeOut = true"
         @iterationPaused="stopIteration()"
         @startIteration="reStartIteration()"
         v-cloak
-      ></app-rounded>
-      <app-squared
-        v-if="selectedComponent === 101"
-        :data="appData"
-        :counter="counter"
-        v-bind:key="counter"
-        :isBranded="isBranded"
-        :brandingData="brandingData"
-        :timeOut="timeOut"
-        :ongoingInterval="currentInterVal"
-        @iterationStopped="selectedComponent = ''"
-        @iterationPaused="stopIteration()"
-        @startIteration="reStartIteration()"
-        v-cloak
-      ></app-squared>
-      <app-square-elevated
-        v-if="selectedComponent === 102"
-        :data="appData"
-        :counter="counter"
-        v-bind:key="counter"
-        :isBranded="isBranded"
-        :brandingData="brandingData"
-        :timeOut="timeOut"
-        :ongoingInterval="currentInterVal"
-        @iterationStopped="selectedComponent = ''"
-        @iterationPaused="stopIteration()"
-        @startIteration="reStartIteration()"
-        v-cloak
-      ></app-square-elevated>
-      <app-tear-drop
-        v-if="selectedComponent === 103"
-        :data="appData"
-        :counter="counter"
-        v-bind:key="counter"
-        :isBranded="isBranded"
-        :brandingData="brandingData"
-        :timeOut="timeOut"
-        :ongoingInterval="currentInterVal"
-        @iterationStopped="selectedComponent = ''"
-        @iterationPaused="stopIteration()"
-        @startIteration="reStartIteration()"
-        v-cloak
-      ></app-tear-drop>
-      <app-tear-drop-elevated
-        v-if="selectedComponent === 104"
-        :data="appData"
-        :counter="counter"
-        v-bind:key="counter"
-        :isBranded="isBranded"
-        :brandingData="brandingData"
-        :timeOut="timeOut"
-        :ongoingInterval="currentInterVal"
-        @iterationStopped="selectedComponent = ''"
-        @iterationPaused="stopIteration()"
-        @startIteration="reStartIteration()"
-        v-cloak
-      ></app-tear-drop-elevated>
+      ></app-common-widget>
     </transition>
   </div>
 </template>
@@ -79,32 +24,29 @@
 import Vue from "vue"
 
 /* import widgets */
-import Rounded from "./Rounded.vue"
-import Squared from "./Squared.vue"
-import SquareElevated from "./SquareElevated.vue"
-import TearDrop from "./TearDrop.vue"
-import TearDropElevated from "./TearDropElevated.vue"
+import CommonWidget from "./CommonWidget.vue"
 
 export default {
   props: {
     data: {},
     reviews: {},
     fromExitPopup: Boolean,
-    script_id: ""
+    script_id: ''
   },
-  name: "mainwidget",
+  name: 'mainwidget',
 
   data: function() {
     return {
-      selectedComponent: "",
-      delayInBetweenSr: "",
-      delayBeforeShowSr: "",
-      srStayTime: "",
+      selectedComponent: '',
+      selectedAudioVideoTemplate: '',
+      delayInBetweenSr: '',
+      delayBeforeShowSr: '',
+      srStayTime: '',
       curPageNo: 1,
-      lastPageNo: "",
+      lastPageNo: '',
       counter: 0,
-      currentInterVal: "",
-      stopTimeout: "",
+      currentInterVal: '',
+      stopTimeout: '',
       timeOut: false,
       appData: {},
       stickyData: Array,
@@ -114,11 +56,7 @@ export default {
   },
 
   components: {
-    appRounded: Rounded,
-    appSquared: Squared,
-    appSquareElevated: SquareElevated,
-    appTearDrop: TearDrop,
-    appTearDropElevated: TearDropElevated
+    appCommonWidget: CommonWidget
   },
 
   computed: {
@@ -140,6 +78,7 @@ export default {
             url = `${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`
           break
         }
+        
         let response = await vm.axios.get(url)
 
         if (response.data.status && !vm.stickyData.length) {
@@ -207,7 +146,33 @@ export default {
     createPopUps() {
       let vm                  = this
       let dataresponse        = vm.data
-      vm.selectedComponent    = dataresponse.style ? dataresponse.style : 100
+
+      switch (dataresponse.style) {
+        case 100:
+          vm.selectedComponent = 'popup_template_1'
+          vm.selectedAudioVideoTemplate = 1
+          break
+        case 101:
+          vm.selectedComponent = 'popup_template_2'
+          vm.selectedAudioVideoTemplate = 2
+          break
+        case 102:
+          vm.selectedComponent = 'popup_template_3'
+          vm.selectedAudioVideoTemplate = 3
+          break
+        case 103:
+          vm.selectedComponent = 'popup_template_4'
+          vm.selectedAudioVideoTemplate = 4
+          break
+        case 104:
+          vm.selectedComponent = 'popup_template_5'
+          vm.selectedAudioVideoTemplate = 5
+          break
+        default:
+          vm.selectedComponent = 'popup_template_1'
+          vm.selectedAudioVideoTemplate = 1
+          break
+      }
 
       // check branding is there or not
       if (dataresponse.is_brand_on) {
