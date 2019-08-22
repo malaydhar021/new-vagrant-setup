@@ -25,7 +25,7 @@ class ReviewLinksController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
+      $this->middleware(function ($request, $next) {
             $this->queryBuilder = ReviewLink::where('created_by', Auth::user()->id)
                 ->with('campaign', 'stickyReviews', 'user', 'customDomain');
 
@@ -65,7 +65,7 @@ class ReviewLinksController extends Controller
     {
         $searchParams = \Request::get('searchParams');
         if($searchParams!=""){
-            $reviewLinks = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%')->orWhere('url_slug','LIKE','%' . $searchParams . '%')->orderBy('created_at', 'desc')->paginate();
+            $reviewLinks = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%')->orderBy('created_at', 'desc')->paginate();
             $noOfReviewLinks = $this->queryBuilder->count();
         }else{
             $reviewLinks = $this->queryBuilder->orderBy('created_at', 'desc')->paginate();
