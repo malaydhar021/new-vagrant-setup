@@ -68,7 +68,7 @@
                 <h6>{{reviewData.name}} </h6>
 
                 <footer class="popupFt">
-                    {{getReviewTimeFormated(reviewData.created_at)}}
+                    {{getReviewTimeFormated(reviewData.created_at)}} ago
                     <span><img src="../../../../assets/images/icon_poweredby.png" alt=""></span>
                     by
                     <span *ngIf="reviewData.has_brand === 1"> {{reviewData.brands.name  |  slice:0:10 }}</span>
