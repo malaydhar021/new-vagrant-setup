@@ -8909,6 +8909,7 @@ img {
   -ms-flex-direction: column;
   flex-direction: column;
   @include border-radius(10px);
+  max-height: calc(100vh - 150px);
 
   .reviewLHdr {
     text-align: center;
@@ -8980,7 +8981,8 @@ img {
     align-items: stretch;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    max-height: calc(100vh - 370px);
+    // max-height: calc(100vh - 370px);
+    max-height: calc(100% - 370px);
     overflow: auto;
 
     form {
