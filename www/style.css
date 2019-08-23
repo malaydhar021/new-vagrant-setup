@@ -877,7 +877,7 @@ css for go to top button
 #myBtn {
     display: none;
     position: fixed;
-    bottom: 20px;
+    bottom: 65px;
     right: 30px;
     z-index: 99;
     font-size: 18px;
@@ -1464,6 +1464,10 @@ h5 {
     .bodyDesign {
         background-size: 520px;
     }
+
+    .footer {
+        padding: 45px 0 75px;
+    }
 }
 
 @media screen and (max-width: 1340px) {
@@ -1721,6 +1725,10 @@ h5 {
 
     .bodyDesign {
         background-size: 320px;
+    }
+
+    .footer {
+        padding: 75px 0;
     }
 }
 
@@ -2289,6 +2297,26 @@ h5 {
     .featureArea h2 {
         margin-bottom: 30px;
     }
+
+    #myBtn {
+        bottom: 120px;
+    }
+    .footer {
+        padding: 25px 0 105px;
+    }
+    .cookieCompliance {
+        padding-left: 0;
+        padding-right: 0;
+        text-align: left;
+    }
+    .cookieCompliance p {
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .cookieCompliance .closeCookie {
+        margin-left: 15px;
+        font-size: 13px;
+    }
 }
 
 @media screen and (max-width: 530px) {
@@ -2464,5 +2492,10 @@ h5 {
 
     .bodyDesign {
         background-size: 160px;
+    }
+    #myBtn {
+        bottom: 140px;
+        font-size: 13px;
+        right: 5px;
     }
 }

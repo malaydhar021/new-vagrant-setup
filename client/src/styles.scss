@@ -2455,6 +2455,10 @@ a {
             padding-right: 0;
           }
         }
+
+        @media (orientation: landscape) {
+          height: 75px;
+        }
       }
     }
 
