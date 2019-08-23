@@ -9981,6 +9981,10 @@ img {
         //   -ms-transform: translate(-50%, -50%);
         //   transform: translate(-50%, -50%);
         // }
+
+        &.defBg {
+          background-size: contain;
+        }
       }
 
       &:after {
