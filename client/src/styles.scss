@@ -9853,7 +9853,7 @@ img {
       height: 100%;
 
       &.defBg {
-        background-size: contain
+        background-size: auto;
       }
     }
   }
@@ -9983,7 +9983,7 @@ img {
         // }
 
         &.defBg {
-          background-size: contain;
+          background-size: auto;
         }
       }
 
