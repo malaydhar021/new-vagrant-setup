@@ -1397,7 +1397,6 @@ a {
           // -moz-transform: translateX(-50%);
           // -ms-transform: translateX(-50%);
           // transform: translateX(-50%);
-          right: 30px;
           z-index: 9;
         }
 
@@ -1448,6 +1447,9 @@ a {
     }
 
     &.campaignMain {
+      .mainBoxHeaderleft {
+        right: 30px;
+      }
       .dataTableArea {
         overflow: hidden;
 
@@ -1599,6 +1601,10 @@ a {
     }
 
     &.brandingMain {
+      .mainBoxHeaderleft {
+        right: 30px;
+      }
+
       .dataTableArea {
         .log-stat_msg {
           @include mb(12px);
@@ -1634,6 +1640,9 @@ a {
     }
 
     &.stickyMain {
+      .mainBoxHeaderleft {
+        right: 30px;
+      }
       .dataTableArea {
         .table {
           &.table-col-4 {
@@ -1702,6 +1711,9 @@ a {
     }
 
     &.reviewLinkMain {
+      .mainBoxHeaderleft {
+        right: 30px;
+      }
       .dataTableArea {
         .table.table-col-5 {
           ul {
@@ -2045,6 +2057,9 @@ a {
     }
 
     &.exitMain {
+      .mainBoxHeaderleft {
+        right: 30px;
+      }
       .dataTableArea {
         li {
           &.row {
