@@ -2036,6 +2036,10 @@ a {
           }
         }
       }
+
+      @media (max-width: 991px) {
+        padding-top: 15px;
+      }
     }
 
     &.domainCustomMain {
@@ -6305,7 +6309,8 @@ body.sign-upPage {
     }
 
     @media (max-width: 575px) {
-      margin-top: 40px;
+      margin-top: 0;
+      font-size: 24px;
     }
   }
 
@@ -6364,6 +6369,10 @@ body.sign-upPage {
     @media (max-width: 575px) {
       width: 100%;
     }
+  }
+
+  @media (max-width: 575px) {
+    @include mb(30px);
   }
 }
 
