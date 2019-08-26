@@ -6,6 +6,7 @@ use App\ReviewLink;
 use App\Helpers\Hashids;
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Exceptions\PrivilegeViolationException;
 
 /**
  * This request class is created to validate only some certain parameters
@@ -35,7 +36,7 @@ class UserReviewParamRequest extends FormRequest
             }
             return true;
         }
-        
+
         return false;
     }
 
