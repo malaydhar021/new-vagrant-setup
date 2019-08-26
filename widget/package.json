@@ -16,6 +16,7 @@
     "@liripeng/vue-audio-player": "^1.0.3",
     "axios": "^0.19.0",
     "moment-timezone": "^0.5.25",
+    "tier5-video-player": "^1.0.8",
     "vue": "^2.6.6",
     "vue-moment": "^4.0.0",
     "vue-video-player": "^5.0.2"
