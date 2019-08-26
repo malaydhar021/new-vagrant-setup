@@ -1324,7 +1324,7 @@ h5 {
 
 /* Socket blocks index page */
 .socketInfo {
-    padding-top: 20px;
+    padding-top: 50px;
 }
 .inSocket {
     text-align: center;
@@ -1467,6 +1467,10 @@ h5 {
 
     .footer {
         padding: 45px 0 75px;
+    }
+    .socketInfo .container {
+        margin-top: 0;
+        margin-bottom: 0;
     }
 }
 
