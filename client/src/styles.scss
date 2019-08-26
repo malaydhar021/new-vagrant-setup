@@ -9755,6 +9755,21 @@ img {
       color: #955151 !important;
     }
   }
+  .sr-form-ctrl::-webkit-input-placeholder {
+    color: #BBB9D1 !important;
+  }
+  .sr-form-ctrl::-moz-placeholder {
+    color: #BBB9D1 !important;
+  }
+  .sr-form-ctrl:-ms-input-placeholder {
+    color: #BBB9D1 !important;
+  }
+  .sr-form-ctrl::-ms-input-placeholder {
+    color: #BBB9D1 !important;
+  }
+  .sr-form-ctrl::placeholder {
+    color: #BBB9D1 !important;
+  }
 
   .error-msg {
     position: absolute;
