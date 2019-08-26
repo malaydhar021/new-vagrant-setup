@@ -10088,6 +10088,7 @@ img {
 
         &.defBg {
           background-size: cover;
+          background-color: #35268e;
         }
       }
 
@@ -10245,6 +10246,7 @@ img {
       width: 98px;
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
+      overflow: hidden;
 
       figure {
         img {}
@@ -10352,7 +10354,7 @@ img {
         left: -20px;
         -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-        background-color: #fff;
+        background-color: #ef3078;
 
         img {
           max-width: 75%;
