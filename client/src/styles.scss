@@ -6464,6 +6464,12 @@ body.sign-upPage {
 .owl-dt-popup-container .owl-dt-timer {
   background-color: color(sr-blue);
   border-bottom: 0;
+
+  @media (max-width: 767px) and (orientation: landscape) {
+    height: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 .owl-dt-control-period-button .owl-dt-control-button-arrow {
@@ -7251,6 +7257,10 @@ body.sign-upPage {
   }
   @media (max-width: 480px) {
     max-width: 238px;
+  }
+  @media (max-width: 991px) and (orientation: landscape) {
+    transform: none !important;
+    top: -10px;
   }
 }
 
