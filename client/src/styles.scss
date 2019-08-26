@@ -944,6 +944,10 @@ a {
 
     figure {
       font-size: 0;
+
+      @media (max-width: 767px) {
+        max-width: 100px;
+      }
     }
     .no-content-body {
       margin: 30px 0;
@@ -952,10 +956,22 @@ a {
       h3 {
         font-weight: normal;
         color: #333;
+
+        @media (max-width: 767px) {
+          font-size: 16px;
+        }
       }
       p {
         @include mt(10px);
         @include mb(0);
+
+        @media (max-width: 767px) {
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        margin: 15px 0;
       }
     }
     .button-submit {
@@ -2053,6 +2069,17 @@ a {
                   }
                 }
               }
+            }
+          }
+        }
+      }
+      .no-content {
+        @media (max-width: 767px) {
+          padding: 0 0 100px;
+
+          .ftNone {
+            button {
+              display: none;
             }
           }
         }
@@ -9960,8 +9987,9 @@ img {
     }
 
     .figPopup {
-      background-image: -o-radial-gradient(#dedcf5 40px, #ffffff 0px);
-      background-image: radial-gradient(#dedcf5 40px, #ffffff 0px);
+      background-image: -o-radial-gradient(#dedcf5 40px, rgba(255,255,255,0) 0px);
+      background-image: radial-gradient(#dedcf5 40px, rgba(255,255,255,0) 0px);
+      border-radius: 50%;
 
       figure {
         width: 50px;
