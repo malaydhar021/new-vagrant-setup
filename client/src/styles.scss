@@ -6479,6 +6479,16 @@ body.sign-upPage {
   color: #b3a9e8;
   border-bottom: 2px solid #5E51A7;
   border-radius: 0;
+
+  @media (max-width: 767px) and (orientation: landscape) {
+    font-size: 13px;
+  }
+}
+
+.owl-dt-timer-box {
+  @media (max-width: 767px) and (orientation: landscape) {
+    height: 80px;
+  }
 }
 
 .owl-dt-timer-divider:after,

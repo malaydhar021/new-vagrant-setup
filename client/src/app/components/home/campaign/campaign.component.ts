@@ -160,7 +160,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       currentPage: 1,
     };
 
-    window.addEventListener('scroll', () => this.togglePopPosition());
+    // This function is commented out as the angular-scrollbar is having problems detecting the window scroll
+    // window.addEventListener('scroll', () => this.togglePopPosition());
   }
 
   /**
@@ -188,9 +189,10 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onToggleExitPopup(); // enable / disable exit popup
     this.modalCallbacks(); // modal callbacks i.e onClose, onDismiss, onEscape
 
-    setTimeout(() => {
-      this.togglePopPosition();
-    }, 2000);
+    // This function is commented out as the angular-scrollbar is having problems detecting the window scroll
+    // setTimeout(() => {
+    //   this.togglePopPosition();
+    // }, 2000);
   }
 
   /**
@@ -949,22 +951,23 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  public togglePopPosition() {
-    let elScroll = <HTMLElement>document.querySelector('.tbody');
-    if(elScroll === null) return;
-    let wH = elScroll.offsetHeight;
-    let copyBtn = document.querySelectorAll('.copyBtn');
-    for(var i=0;i<copyBtn.length;i++) {
-        var viewportOffset = copyBtn[i].getBoundingClientRect();
+  // This function is commented out as the angular-scrollbar is having problems detecting the window scroll
+  // public togglePopPosition() {
+  //   let elScroll = <HTMLElement>document.querySelector('.tbody');
+  //   if(elScroll === null) return;
+  //   let wH = elScroll.offsetHeight;
+  //   let copyBtn = document.querySelectorAll('.copyBtn');
+  //   for(var i=0;i<copyBtn.length;i++) {
+  //       var viewportOffset = copyBtn[i].getBoundingClientRect();
 
-        if(viewportOffset.top >= (wH-100)) {
-          copyBtn[i].classList.add("open-up");
-        }
-        else {
-          copyBtn[i].classList.remove("open-up");
-        }
-    }
-  }
+  //       if(viewportOffset.top >= (wH-100)) {
+  //         copyBtn[i].classList.add("open-up");
+  //       }
+  //       else {
+  //         copyBtn[i].classList.remove("open-up");
+  //       }
+  //   }
+  // }
 
   /**
    * Method to delete a campaign
