@@ -4731,7 +4731,7 @@ a {
       -moz-transform: none;
       -ms-transform: none;
       transform: none;
-      top: 70px;
+      top: 30px;
     }
   }
 
@@ -4782,7 +4782,7 @@ a {
           @include mt(20px);
         }
 
-        @media (max-width: 480px) and (orientation: landscape) {
+        @media (max-width: 767px) and (orientation: landscape) {
           font-size: 22px;
           margin: 22px 0;
         }
@@ -5202,6 +5202,10 @@ a {
             padding: 0;
           }
         }
+      }
+
+      @media (max-width: 767px) and (orientation: landscape) {
+        max-height: calc(100vh - 220px);
       }
     }
   }
