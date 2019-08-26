@@ -9676,6 +9676,16 @@ img {
           transform: scale(0.8);
         }
       }
+
+      .popupParent {
+        @media (max-width: 480px) {
+          transform: scale(0.7);
+          -o-transform: scale(0.7);
+          -ms-transform: scale(0.7);
+          -moz-transform: scale(0.7);
+          -webkit-transform: scale(0.7);
+        }
+      }
     }
 
     .showStyleP+.btnStyles {
