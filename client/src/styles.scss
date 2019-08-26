@@ -9412,7 +9412,16 @@ img {
             }
           }
 
+          &.reviewAudio {
+            .video-js {
+              width: 100%;
+            }
+          }
+
           &.reviewVideo {
+            .video-js {
+              width: 100%;
+            }
             .rvwVidOpt {
               label {
                 @media (max-width: 575px) {
