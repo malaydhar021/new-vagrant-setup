@@ -3541,6 +3541,10 @@ a {
             font-size: 16px;
 
           }
+
+          @media (max-width: 640px) {
+            @include mt(0);
+          }
         }
 
         ul {
@@ -4718,7 +4722,8 @@ a {
       -ms-transform: none;
       transform: none;
       top: auto;
-      margin: 70px auto;
+      // margin: 70px auto;
+      margin: 15px auto;
     }
 
     @media (max-height: 480px) and (orientation: landscape) {
@@ -4775,6 +4780,11 @@ a {
           font-size: 22px;
           @include mt(20px);
           @include mt(20px);
+        }
+
+        @media (max-width: 480px) and (orientation: landscape) {
+          font-size: 22px;
+          margin: 22px 0;
         }
       }
 
@@ -5953,6 +5963,14 @@ body.sign-upPage {
                 max-width: 45px;
               }
             }
+
+            @media (max-width: 1600px) {
+              padding-left: 15px;
+
+              &:first-child {
+                padding-left: 0;
+              }
+            }
           }
 
           @media (min-width: 1920px) {
@@ -6372,7 +6390,7 @@ body.sign-upPage {
   }
 
   @media (max-width: 575px) {
-    @include mb(30px);
+    @include mb(50px);
   }
 }
 
