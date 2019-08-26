@@ -2023,6 +2023,9 @@ a {
     }
 
     &.domainCustomMain {
+      .mainBoxHeaderLeft {
+        right: 30px;
+      }
       .dataTableArea {
         .table {
           .tbody {
@@ -11578,14 +11581,13 @@ Cookie notification css
   z-index: 9999;
 
   @media (max-width: 767px) {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 8px 0;
 
     .container {
       display: block;
 
       .closeCookie {
-        margin: 15px 0 0 0;
+        margin: 0 0 0 5px;
       }
     }
   }
