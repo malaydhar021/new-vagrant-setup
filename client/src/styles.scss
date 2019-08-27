@@ -2390,10 +2390,18 @@ a {
                         @media (max-width: 575px) {
                           font-size: 13px;
                         }
+
+                        @media (max-width: 991px) and (orientation: landscape) {
+                            font-size: 13px;
+                        }
                       }
 
                       .greenTag {
                         float: right;
+                      }
+
+                      @media (max-width: 991px) and (orientation: landscape) {
+                        @include mt(8px);
                       }
                     }
 
@@ -2425,6 +2433,11 @@ a {
                   @media (max-width: 420px) {
                     right: 5px;
                     max-width: 280px;
+                  }
+
+                  @media (max-width: 991px) and (orientation: landscape) {
+                    top: 45px;
+                    padding: 17px;
                   }
                 }
 
@@ -8772,6 +8785,10 @@ body.sign-upPage {
       text-align: center;
       @include mb(20px);
     }
+  }
+
+  @media (max-width: 991px) and (orientation: landscape) {
+    padding: 0 0 50px;
   }
 
   @media (max-width: 480px) {
