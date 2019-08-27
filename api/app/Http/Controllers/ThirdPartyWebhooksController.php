@@ -273,7 +273,7 @@ class ThirdPartyWebhooksController extends Controller
             'saleId' 	        =>  $saleId,
             'is_active'         =>  $isActive,
         ];
-        $url = getenv('AFFILIATE_URL');
+        $url =  config('app.AFFILIATE_URL');
         $res = $client->post($url.'/hooks/sales', [  'json'=> $body ]);
         if($res->getStatusCode() == 200){
             $response  = json_decode($res->getBody());

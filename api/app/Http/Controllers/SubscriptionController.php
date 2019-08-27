@@ -82,9 +82,7 @@ class SubscriptionController extends Controller
      */
     public function update(SubscriptionRequest $request)
     {
-
         $user = Auth::user();
-
         if($user->is_active == 1){
           return response()->json([
             'status' => false,
@@ -255,7 +253,8 @@ class SubscriptionController extends Controller
         }
         // \Log::info("data of Body ". print_r($body,true));
         $client = new \GuzzleHttp\Client();
-        $url = getenv('AFFILIATE_URL');
+        $url =  config('app.AFFILIATE_URL');
+        // \Log::info('Affiliate url --> '.$url);
         $res = $client->post($url.'/hooks/sales', [  'form_params'=> $body ]);
         if($res->getStatusCode() == 200 && $actionType == 1 ) {
           $response = json_decode($res->getBody());
@@ -288,7 +287,7 @@ class SubscriptionController extends Controller
     public function callAffiliateApiForDeactive($saleId, $isActive) {
         \Log::info("saleId".$saleId. "isActive ".$isActive);
         $client = new \GuzzleHttp\Client();
-        $url = getenv('AFFILIATE_URL');
+        $url =  config('app.AFFILIATE_URL');
         if($isActive == 0){
             $isActive = false;
         }else{
@@ -299,8 +298,6 @@ class SubscriptionController extends Controller
             'saleId' 	        =>  $saleId,
             'is_active'       =>  $isActive,
         ];
-
-        // \Log::info("BODY of the Request : ".print_r($body,true));
 
         $res = $client->post($url.'/hooks/sales', [  'json'=> $body ]);
         if($res->getStatusCode() == 200){

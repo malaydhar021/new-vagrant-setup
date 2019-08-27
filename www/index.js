@@ -86,15 +86,15 @@ $(document).ready(function () {
     socket.on("update_user_count", function(count) {
         $(".total-user-count").text(count);
     });
-    
+
     socket.on("update_sticky_reviews_count", function(count) {
         $(".total-sticky-reviews-count").text(count);
     });
-    
+
     socket.on("update_reviews_from_review_link_count", function(count) {
         $(".total-reviews-from-review-link-count").text(count);
     });
-    
+
     socket.on("update_subscribed_email_count", function(count) {
         $(".total-subscribed-email-count").text(count);
     });
@@ -116,4 +116,12 @@ if($.cookie('_loginUser')) {
 } else {
     $('#loginBtn').show();
     $('#dashboard').hide();
+}
+
+if($.cookie('_loginUserImage')) {
+    if($.cookie('_loginUserImage') != 'null'){
+        $("#profileImage").css("background-image", 'url(' + $.cookie('_loginUserImage') + ')');
+    }else{
+        $("#profileImage").css("background-image", 'images/user.png');
+    }
 }

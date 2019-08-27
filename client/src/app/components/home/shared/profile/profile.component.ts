@@ -9,6 +9,7 @@ import { UserAuthInfo } from '../../../../models/user.model';
 import { ErrorsService } from '../../../../services/errors.service';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
+import { CookieService } from 'ngx-cookie-service';
 
 /**
  * ProfileComponent is responsible for updating user's profile along with profile password
@@ -23,7 +24,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
-  // define class properties  
+  // define class properties
   userPasswordUpdateForm: FormGroup // Form group for user password update form
   successMessage: string = ''; // Message coming form server after successful api call
   userInfo: UserAuthInfo;
@@ -42,14 +43,14 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   isModalOpened: boolean = false; // set to true if the modal is opened
-  
+
   /**
   * Constructor to inject required service. It also subscribe to a observable which emits the current
-  * value of defined variable. 
+  * value of defined variable.
   * @constructor constructor
   * @since Version 1.0.0
   * @param ngxSmartModalService
-  * @param formBuilder 
+  * @param formBuilder
   * @param userService
   * @returns Void
   */
@@ -59,7 +60,8 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
     private userService: UserService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private cookieService: CookieService,
   ) {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
@@ -69,7 +71,7 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * ngOnInit method initialize angular reactive form object for add / edit form of a brand. 
+   * ngOnInit method initialize angular reactive form object for add / edit form of a brand.
    * Also it set the title of the page. Also it defines client side validations.
    * @method ngOnInit
    * @since Version 1.0.0
@@ -78,9 +80,9 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     // set the title
     this.title.setTitle("Stickyreviews :: Edit Profile");
-    // initialize the update user password form 
+    // initialize the update user password form
     this.createUserPasswordUpdateForm();
-    // get user info 
+    // get user info
     this.getUserInfo();
     // Initiate the user profile update form
     this.userProfileUpdateForm = this.formBuilder.group({
@@ -178,16 +180,16 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns Void
    */
   public onUpdatePassword() {
-    // values from the form element 
+    // values from the form element
     let values = this.userPasswordUpdateForm.value;
     // Start loader
     this.loaderService.enableLoader();
-    // Api call for changing password 
+    // Api call for changing password
     this.userService.changePassword(values).subscribe(
       (response: any) => {
-        // disable the loader 
+        // disable the loader
         this.loaderService.disableLoader();
-        // reset the update user password form 
+        // reset the update user password form
         this.createUserPasswordUpdateForm(true);
         // set the server side success message
         this.errorService.setMessage({ type: 'success', message: response.message });
@@ -253,7 +255,9 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
           this.ngxSmartModalService.getModal('modal2').close();
           this.userInfo = response.data.user;
           if (this.userInfo.image) {
-            this.userService.setUserImage(this.userInfo.image)
+            this.userService.setUserImage(this.userInfo.image);
+            // update the profile image in the cookie
+            this.cookieService.set('_loginUserImage', this.userInfo.image, 450, '/', 'usestickyreviews.com');
           }
           // 100 ms time delay to show the message to user once the modal has been closed
           setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);

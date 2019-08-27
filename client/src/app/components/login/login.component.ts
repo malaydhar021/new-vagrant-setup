@@ -38,16 +38,16 @@ export class LoginComponent implements OnInit {
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
 
   /**
-   * 
+   *
    * @param formBuilder FormBuilder instance
    * @param router Router Instance
-   * @param title 
-   * @param route 
-   * @param authService 
-   * @param renderer 
-   * @param cookieService 
-   * @param errorService 
-   * @param loaderService 
+   * @param title
+   * @param route
+   * @param authService
+   * @param renderer
+   * @param cookieService
+   * @param errorService
+   * @param loaderService
    */
   constructor(
     private formBuilder: FormBuilder,
@@ -150,6 +150,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('_sr', JSON.stringify(data));
           // setting a cookie in main domain when user login
           this.cookieService.set('_loginUser', '1', 450, '/', 'usestickyreviews.com');
+          this.cookieService.set('_loginUserImage', response.userProfileImage, 450, '/', 'usestickyreviews.com');
           // this.loaderService.disableLoader();
           // redirect to home
           this.router.navigate(['/home']);

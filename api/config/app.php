@@ -79,7 +79,7 @@ return [
     */
 
     'redirect_url' => env( 'REDIRECT_URL', 'https://app.usestickyreviews.com'),
-    
+
     /*
     |--------------------------------------------------------------------------
     | CNAME Domain
@@ -92,7 +92,7 @@ return [
     */
 
     'cname_domain' => env( 'CNAME_DOMAIN', 'cname.usestickyreviews.com'),
-    
+
     /*
     |--------------------------------------------------------------------------
     | Websocket URL
@@ -105,6 +105,19 @@ return [
     */
 
     'websocket_url' => env( 'WEBSOCKET_URL', 'https://ws.usestickyreviews.com'),
+
+  /*
+    |--------------------------------------------------------------------------
+    | AFFILIATE URL
+    |--------------------------------------------------------------------------
+    |
+    | AFFILIATE url will be used to update users information in the tier5 AFFILIATE platform.
+    | Using this url we call the API to update sale information in the AFFILIATE platform.
+    |
+    |
+    */
+
+  'AFFILIATE_URL' => env( 'AFFILIATE_URL', 'https://api-affiliate.tier5.us'),
 
     /*
     |--------------------------------------------------------------------------

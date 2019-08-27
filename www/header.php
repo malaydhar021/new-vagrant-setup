@@ -59,12 +59,8 @@ if($_GET['aid']){
                 <li><a href="https://app.<?php echo $linkUrl; ?>/sign-up" target="_blank"> 14 Day Free Trial</a></li>
             </ul>
             <div class="loginBtn">
-                <!--                        <a href=""> OLD IMAGE -->
-                <!--                            <img src="images/icon_menu_login.png" alt="">-->
-                <!--                        </a>-->
-                <span id="loginBtn"> <a href="https://app.<?php echo $linkUrl; ?>"> <img src="images/icon_menu_login.png" alt="login"></a></span>
-
-                <span id="dashboard"> <a href="https://app.<?php echo $linkUrl; ?>/home/dashboard"> <img src="images/icon_dashboard_2.png" alt="dashboard"> </a></span>
+                <span id="loginBtn"> <a href="https://app.<?php echo $linkUrl; ?>" style="background-image: url(images/icon_menu_login.png);"></a></span>
+                <span id="dashboard"> <a id="profileImage" href="https://app.<?php echo $linkUrl; ?>/home/dashboard" style="background-image: url(images/user.png);"></a></span>
             </div>
         </div>
         <div class="responsiveNav">

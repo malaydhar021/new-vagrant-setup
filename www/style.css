@@ -183,6 +183,14 @@ body {
     -webkit-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s;
     border: 2px solid #fff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+#loginBtn a {
+    background-size: auto;
+    background-position: center center;
 }
 
 .navArea .loginBtn a:hover {

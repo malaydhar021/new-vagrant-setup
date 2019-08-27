@@ -15,7 +15,7 @@ class UpdateUserAffiliateId extends Seeder
     {
 
       $client = new \GuzzleHttp\Client();
-      $url = getenv('AFFILIATE_URL');
+      $url =  config('app.AFFILIATE_URL');
 
       $body = [
         'productId'      => '6',
