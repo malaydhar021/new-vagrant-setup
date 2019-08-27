@@ -6887,7 +6887,7 @@ body.sign-upPage {
       .sr-form-cell-small+.sr-form-cell-small {
         .colorPicker {
           .color-picker {
-            @media (max-width: 767px) {
+            @media (max-width: 1199px) {
               @include mt(25px);
               right: 15px !important;
               left: auto !important;
