@@ -1879,6 +1879,12 @@ a {
 
                         @media (max-width: 991px) {
                           padding-right: 15px;
+
+                          a {
+                            &:last-child {
+                              @include mr(12px);
+                            }
+                          }
                         }
 
                         @media (max-width: 767px) {
@@ -6654,6 +6660,10 @@ body.sign-upPage {
         overflow: hidden;
         text-overflow: ellipsis;
         margin: 0 auto;
+
+        @media (max-width: 480px) {
+          line-height: 13px;
+        }
       }
 
       @media (max-width: 575px) {
