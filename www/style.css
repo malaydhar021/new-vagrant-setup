@@ -1613,6 +1613,12 @@ h5 {
     .bannerMid p {
         margin-top: 20px;
     }
+    .featureArea2 .sliderContainer .slide.active .slideLeft .blueRing {
+        bottom: 200px;
+    }
+    .featureArea2 .sliderContainer .slide.active .slideLeft .redRing {
+        bottom: 10%;
+    }
 }
 
 @media screen and (max-width: 1060px) {
@@ -1743,6 +1749,13 @@ h5 {
 
     .footer {
         padding: 75px 0;
+    }
+    .featureArea2 .sliderContainer .slide.active .slideLeft .blueRing{
+        bottom: 170px;
+    }
+    .featureArea2 .sliderContainer .slide .slideLeft .blueRing {
+        left: 38px;
+        bottom: 10px;
     }
 }
 
