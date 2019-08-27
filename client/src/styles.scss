@@ -1508,6 +1508,12 @@ a {
                         -webkit-box-ordinal-group: 5;
                         -ms-flex-order: 4;
                         order: 4;
+
+                        a {
+                          &.delete {
+                            @include mr(12px);
+                          }
+                        }
                       }
 
                       &:nth-child(2) {
