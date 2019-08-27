@@ -127,7 +127,7 @@ export default {
       _that.volanim()
       // Check if fullscreen supported. If it's not just don't show the fullscreen icon.
       if (_that.videoEvent.requestFullscreen && !_that.videoEvent.mozRequestFullScreen && !_that.videoEvent.webkitRequestFullScreen) {
-        // document.getElementById('fullScreenId').style.display = "none";
+        document.getElementById('fullScreenId').style.display = 'none'
       }
     }
   },
@@ -209,20 +209,20 @@ export default {
       // tminutes and tseconds are the total mins and seconds.
       let seconds = 0
       let minutes = Math.floor(time / 60)
-      let tminutes = Math.round(this.duration / 60)
-      let tseconds = Math.round((this.duration) - (tminutes * 60))
+      let tminutes = Math.floor(this.duration / 60)
+      let tseconds = Math.floor((this.duration) - (tminutes * 60))
 
       // If time exists (well, video time)
       if (time) {
         // seconds are equal to the time minus the minutes
-        seconds = Math.round(time) - (60 * minutes)
+        seconds = Math.floor(time) - (60 * minutes)
 
         // So if seconds go above 59
         if (seconds > 59) {
           // Increase minutes, reset seconds
-          seconds = Math.round(time) - (60 * minutes)
+          seconds = Math.floor(time) - (60 * minutes)
           if (seconds == 60) {
-            minutes = Math.round(time / 60)
+            minutes = Math.floor(time / 60)
             seconds = 0
           }
         }
@@ -388,15 +388,24 @@ export default {
       this.mclicking = false
       this.vclicking = false
       this.draggingProgress = false
-
       if (this.playing === true) {
-        // this.videoEvent.play();
+        document.getElementById('t5PlayPauseButton').classList.remove('t5play')
+        document.getElementById('t5PlayPauseButton').classList.add('t5pause')
+        this.videoEvent.play()
       }
       this.bufferLength()
     },
     bodyMouseMove (e) {
       // For the progress bar controls
       if (this.mclicking === true) {
+        // Progress bar is being clicked
+        this.mclicking = true
+        // If video is playing then pause while we change time of the video
+
+        // Update current time
+        this.currentTime = (this.x / this.progWidth) * this.duration
+        this.videoEvent.currentTime = this.currentTime
+
         // Dragging is happening
         this.draggingProgress = true
         // The thing we're going to apply to the CSS (changes based on conditional statements);
@@ -404,8 +413,8 @@ export default {
         // Width of the progress button (a little button at the end of the progress bar)
         let buttonWidth = parseInt(window.getComputedStyle(document.getElementById('t5ProgressBarButtonId')).width)
 
-        // Updated x posititon the user is at
-        this.x = e.pageX - document.getElementById('t5ProgressId').offsetLeft
+        // The x position of the mouse in the progress bar
+        this.x = event.pageX - this.getOffsetLeft(document.getElementById('t5ProgressId'))
 
         // If video is playing
         if (this.playing === true) {
@@ -426,7 +435,7 @@ export default {
         } else { // Otherwise progMove is equal to the mouse x coordinate
           this.progMove = this.x
           this.currentTime = (this.x / this.progWidth) * this.duration
-          this.videoEvent.currentTime = this.currentTime
+          // this.videoEvent.currentTime = this.currentTime
         }
 
         // Change CSS based on previous conditional statement
@@ -437,8 +446,7 @@ export default {
       // For the volume controls
       if (this.vclicking === true) {
         // The position of the mouse on the volume slider
-        this.y = document.getElementById('volumeBarHolderId').style.height - (e.pageY - document.getElementById('volumeBarHolderId').offsetTop)
-
+        this.y = this.getOffsetTop(document.getElementById('t5PlayerId')) - event.pageY
         // The position the user is moving to on the slider.
         let volMove = 0
 
@@ -452,7 +460,6 @@ export default {
         if (!document.getElementById('t5volumeIconId').classList.contains('t5volume-icon-hover')) {
           document.getElementById('t5volumeIconId').classList.add('t5volume-icon-hover')
         }
-
         if (this.y < 0 || this.y === 0) { // If y is less than 0 or equal to 0 then volMove is 0.
           this.volume = 0
           volMove = 0
@@ -472,21 +479,17 @@ export default {
         } else { // Otherwise volMove is just y
           this.volume = document.getElementById('volumeBarId').style.height / document.getElementById('volumeBarHolderId').style.height
           volMove = this.y
+          this.volume = parseInt(document.getElementById('volumeBarId').style.height) / parseInt(window.getComputedStyle(document.getElementById('volumeBarHolderId')).height)
         }
-
-        // Adjust the CSS based on the previous conditional statmeent
-        document.getElementById('volumeBarId').style.height = volMove + 'px'
-        document.getElementById('volumeBarButtonId').style.top = (volMove + document.getElementById('volumeBarButtonId').style.height) + 'px'
-
-        // Run the animation function
-        this.volanim()
-
-        // Change the volume and store volume
-        // Store volume is the volume the user last had in place
-        // in case they want to mute the video, unmuting will then
-        // return the user to their previous volume.
+        // Update CSS to reflect what's happened
+        document.getElementById('volumeBarId').style.height = this.y + 'px'
+        document.getElementById('volumeBarButtonId').style.top = (this.y - (document.getElementById('volumeBarButtonId').style.height / 2)) + 'px'
+        // Update some variables
         this.videoEvent.volume = this.volume
-        this.storevol = this.volume
+        this.storevol = parseInt(document.getElementById('volumeBarId').style.height) / parseInt(window.getComputedStyle(document.getElementById('volumeBarHolderId')).height)
+
+        // Run a little animation for the volume icon.
+        this.volanim()
       }
 
       // If the user hovers over the volume controls, then fade in or out the volume
