@@ -46,12 +46,12 @@
           <h6>{{data.name}}</h6>
           <div class="audioRv">
             <AudioPlayer :audio-list="audioSource"
-                        :show-play-button="true"
-                        :show-prev-button="false"
-                        :show-next-button="false"
+                         :show-play-button="true"
+                         :show-prev-button="false"
+                         :show-next-button="false"
                          :progressInterval="1"
-                        @play="onPlayerPlay($event)"
-                        @pause="onPlayerPause($event)">
+                         @play="onPlayerPlay($event)"
+                         @pause="onPlayerPause($event)">
             </AudioPlayer>
           </div>
 
@@ -96,12 +96,7 @@
           </span>
         </div>
         <div class="vidContain">
-          <video-player class="vjs-default-skin playerEdit"
-              ref="videoPlayer"
-              :options="videoPlayerOptions"
-              :playsinline="false"
-              @play="onPlayerPlay($event)"
-              @pause="onPlayerPause($event)"></video-player>
+          <tier5-video-player :width="300" :height="150" :video="videoSource" @playProcess="onPlayerPlay" @pauseProcess="onPlayerPause" @endProcess="onPlayerEnded"></tier5-video-player>
         </div>
       </div>
       <div class="popupTxt" :class="selectedTemplate">
@@ -136,18 +131,15 @@
 
 <script>
 import '../../assets/css/popup.css'
-
 // require styles
-import 'video.js/dist/video-js.css'
 import '../../assets/css/video-custom-theme.css'
 import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
 
 import Vue from 'vue'
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
-import { videoPlayer } from 'vue-video-player'
+import tier5VideoPlayer from './player'
 import { AudioPlayer } from '@liripeng/vue-audio-player'
-
 Vue.use(VueMoment, {
   moment
 })
@@ -177,13 +169,15 @@ export default {
     return {
       componentName: 'Im common widget component',
       videoPlayerOptions: {},
-      audioSource: []
+      audioSource: [],
+      videoSource: ''
     }
   },
   components: {
-    videoPlayer: videoPlayer,
-    AudioPlayer: AudioPlayer
+      tier5VideoPlayer: tier5VideoPlayer,
+      AudioPlayer: AudioPlayer
   },
+
   computed: {
   },
   methods: {
@@ -213,6 +207,7 @@ export default {
     let vm = this
     this.audioSource = []
     this.audioSource.push(this.data.review)
+    this.videoSource = vm.data.review
     this.videoPlayerOptions = {
       // videojs options
       muted: true,
