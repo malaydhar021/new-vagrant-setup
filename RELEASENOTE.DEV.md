@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.6
+
+1. Fixed issue with loader in user review for 403 http status code response
+
 ### V2.1.5
 
 1. Fixed issue with menu drawer for responsive

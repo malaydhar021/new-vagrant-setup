@@ -83,13 +83,16 @@ export class RequestInterceptor implements HttpInterceptor {
       case 403: // Forbidden
         // update the error messaged based on message object in http response
         const errorMessage403 = this.updateErrorMessage(error);
+        // hide the loader
+        this.loaderService.disableLoader();
         // return observable as string
         return of(errorMessage403);
 
       case 400: // Bad Request
         // update the error messaged based on message object in http response
         const errorMessage400 = this.updateErrorMessage(error);
-        Log.notice(error);
+        // hide the loader
+        this.loaderService.disableLoader();
         // update error messages for only for 400 http request. 
         // This will mostly handle the server side form validation messages.
         this.updateErrorMessage400(error);
@@ -126,7 +129,8 @@ export class RequestInterceptor implements HttpInterceptor {
       case 500: // Internal Server Error
         // update the error messaged based on message object in http response
         const errorMessage500 = this.updateErrorMessage(error);
-        Log.debug(error.error.message, "500 internal server error");
+        // hide the loader
+        this.loaderService.disableLoader();
         // return observable as string
         return of(errorMessage500);
 
