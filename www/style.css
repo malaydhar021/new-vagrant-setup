@@ -2335,6 +2335,9 @@ h5 {
     .bannerArea:before {
         content: none;
     }
+    .bannerArea.spacingheader {
+        padding-top: 0 !important;
+    }
 }
 
 @media screen and (max-width: 530px) {
