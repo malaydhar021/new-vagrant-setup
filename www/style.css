@@ -333,8 +333,8 @@ body {
     display: inline-block;
     width: 100%;
     opacity: 0;
-    -webkit-transform: rotate3d(1, 0, 0, 90deg) scale(0.2) translateY(-200%);
-    transform: rotate3d(1, 0, 0, 90deg) scale(0.2) translateY(-200%);
+    /* -webkit-transform: rotate3d(1, 0, 0, 90deg) scale(0.2) translateY(-200%);
+    transform: rotate3d(1, 0, 0, 90deg) scale(0.2) translateY(-200%); */
     -webkit-transition: all 1.5s ease 0s;
     transition: all 1.5s ease 0s;
     pointer-events: none;
@@ -343,8 +343,8 @@ body {
 
 .featureArea2 .sliderContainer .slide.active {
     opacity: 1;
-    -webkit-transform: rotate3d(0, 0, 0, 0deg) scale(1) translateY(0);
-    transform: rotate3d(0, 0, 0, 0deg) scale(1) translateY(0);
+    /* -webkit-transform: rotate3d(0, 0, 0, 0deg) scale(1) translateY(0);
+    transform: rotate3d(0, 0, 0, 0deg) scale(1) translateY(0); */
     pointer-events: inherit;
 }
 
@@ -388,8 +388,8 @@ body {
     position: absolute;
     bottom: 65px;
     left: 140px;
-    -webkit-transition: all 10s ease 1s;
-    transition: all 10s ease 1s;
+    -webkit-transition: all 4s ease 1s;
+    transition: all 4s ease 1s;
 }
 
 .featureArea2 .sliderContainer .slide .slideLeft .redRing {
@@ -403,18 +403,20 @@ body {
     position: absolute;
     bottom: 50%;
     right: -10px;
-    -webkit-transition: all 10s ease 1s;
-    transition: all 10s ease 1s;
+    -webkit-transition: all 4s ease 1s;
+    transition: all 4s ease 1s;
     -webkit-transition-timing-function: linear;
     transition-timing-function: linear;
 }
 
 .featureArea2 .sliderContainer .slide.active .slideLeft .blueRing {
     bottom: 280px;
+    opacity: 0;
 }
 
 .featureArea2 .sliderContainer .slide.active .slideLeft .redRing {
-    bottom: 5%;
+    bottom: 20%;
+    opacity: 0;
 }
 
 .featureArea2 .sliderContainer .slide .slideRight {
