@@ -34,7 +34,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
   successMessage: string = null; // to show success messages
   validationErrors: any = null; // for showing validation messages
-  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
+  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
   allowedMaxReviewTitle: number = 25; // max chars for text review
   allowedMaxAudioFileSize:number = 20; // max file size for review type audio
   allowedMaxVideoFileSize:number = 30; // max file size for review type video
@@ -86,7 +86,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
   // default selected value to show which review field will be shown
   selectedReviewType: number = 1; // 1. Textual 2. Audio 3. Video
-  //default selected value to show which action will be selected 
+  //default selected value to show which action will be selected
   selectedReviewTypeAction: number = 1; // 1. Upload 2. Record
   // review file name
   reviewFileName: string = 'or drag & drop your image here';
@@ -115,7 +115,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     private loaderService: LoaderService,
     private mediaService: MediaService,
     private errorService: ErrorsService,
-  ) { 
+  ) {
     this.title.setTitle('Stickyreviews :: Review');
     // subscribe to review to get the latest update data from review
     this.subscription = this.userReviewService.review$.subscribe(
@@ -225,7 +225,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /**
    * Method to change the text in audio / video file upload box. Also assign uploaded file to
-   * `reviewAsFile` filetype property for future use. There is a bug with angular file upload 
+   * `reviewAsFile` filetype property for future use. There is a bug with angular file upload
    * with reactive form approach which is handled by a hidden field here.
    * @method onChangeReviewFile
    * @since Version 1.0.0
@@ -258,7 +258,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
       // create an instance of FileReader
       let reader = new FileReader();
       // read file as data url
-      reader.readAsDataURL(this.reviewAsFile); 
+      reader.readAsDataURL(this.reviewAsFile);
       // called once when readAsDataURL is completed
       reader.onload = (e) => {
         if(this.selectedReviewType == 2) {
@@ -267,8 +267,8 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
         } else if(this.selectedReviewType == 3) {
           this.mediaService.updateAudioSrc(null);
           this.mediaService.updateVideoSrc(reader.result.toString());
-        }   
-        
+        }
+
         // runtime validation for review files / text review based on review type
         this.runtimeValidations();
         // check whether `review` formControl has got any error or not
@@ -292,7 +292,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
   public runtimeValidations() {
     // Textual review validations for add / edit sticky review
     if(this.selectedReviewType == 1) {
-      // set validation for textual review type when it's created / updated 
+      // set validation for textual review type when it's created / updated
       this.getFormControls.review.setValidators([Validators.required, Validators.maxLength(this.allowedMaxTextReviewChars)]);
       this.getFormControls.review.updateValueAndValidity();
     }
@@ -315,10 +315,10 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     // Video review validations for adding a review
     if(this.selectedReviewType == 3) {
       // if file has been uploaded
-      if(this.reviewAsFile !== null) { 
+      if(this.reviewAsFile !== null) {
         // file mime type and file size validation.
         this.form.setValidators([
-          ValidationEngine.FileType('review', this.reviewAsFile, this.allowedVideoFileTypes), 
+          ValidationEngine.FileType('review', this.reviewAsFile, this.allowedVideoFileTypes),
           ValidationEngine.FileSize('review', this.reviewAsFile, this.allowedMaxVideoFileSize, this.unit)
         ]);
         this.form.updateValueAndValidity();
@@ -343,7 +343,11 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     // call the validations for text | audio | video based on type
     this.runtimeValidations();
     // don't do anything if the form does not pass client side validations
-    if(this.form.invalid) return;
+    if(this.form.invalid){
+      let element = document.getElementsByClassName('bodyCreview');
+      element[0].scrollTo(1, 1);
+      return;
+    }
 
     // showing the loader.
     this.loaderService.enableLoader();
@@ -354,7 +358,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
     formData.append('review_title', this.form.value.name); // append review title
     formData.append('review_type', this.form.value.reviewType); // append review type
     formData.append('rating', this.form.value.rating); // append rating
-    
+
     // append review to formData based on review type
     if(this.selectedReviewType == 1) { // textual
       formData.append('review_text', this.form.value.review);

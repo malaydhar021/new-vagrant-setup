@@ -726,6 +726,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.isSubmittedStep1 = true;
     this.runtimeValidations();
     if(this.form.invalid) {
+      let element = document.getElementsByClassName('sr-modal-body');
+      element[0].scrollTo(1, 1);
       return;
     }
     // show the loader
@@ -765,6 +767,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.isSubmittedStep1 = true;
     this.searchKey = '';
     if(this.form.invalid || this.form2.invalid) {
+      let element = document.getElementsByClassName('sr-modal-body');
+      element[0].scrollTo(1, 1);
       return;
     }
     // show the loader

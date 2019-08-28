@@ -632,6 +632,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.runtimeValidations();
     // check if `form` is valid or not
     if(this.form.invalid) {
+      let element = document.getElementsByClassName('sr-modal-body');
+      element[0].scrollTo(1, 1);
       console.log('form invalid ');
       return;
     }

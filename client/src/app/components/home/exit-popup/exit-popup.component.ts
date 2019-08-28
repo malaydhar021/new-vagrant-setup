@@ -294,6 +294,8 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
     this.searchKey = '';
     // check if the form does not pass the client side validation
     if (this.form.invalid) {
+      let element = document.getElementsByClassName('sr-modal-body');
+      element[0].scrollTo(1, 1);
       Log.info('Get a validation error ');
       return;
     }

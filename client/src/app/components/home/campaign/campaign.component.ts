@@ -576,6 +576,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isSubmitted = true;
     // check if the form is valid or not. if invalid then do nothing
     if (this.form.invalid) {
+      let element = document.getElementsByClassName('sr-modal-body');
+      element[0].scrollTo(1, 1);
       return;
     }
     // show the loader to user
