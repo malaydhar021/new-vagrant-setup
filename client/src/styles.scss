@@ -7036,6 +7036,13 @@ body.sign-upPage {
 
 
       .reviewStep {
+        .sr-form-cell-small {
+          @media (max-width: 575px) {
+              .switchInForm {
+                @include mr(3px);
+              }
+          }
+        }
         .sr-form-cell-small:after {
           clear: both;
         }
