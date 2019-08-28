@@ -23,6 +23,8 @@
     position: relative;
     margin: 0px auto;
     font-size: 0;
+    width: 100% !important;
+    height: 100%;
 }
 
 .t5video:hover .t5player {
