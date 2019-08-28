@@ -45,7 +45,7 @@ if($_GET['aid']){
 
 <body class="bodyDesign">
 
-<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<!-- <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button> -->
 
 <header class="headerArea homeHeader">
     <div class="container">
