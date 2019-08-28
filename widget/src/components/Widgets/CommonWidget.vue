@@ -96,7 +96,8 @@
           </span>
         </div>
         <div class="vidContain">
-          <tier5-video-player :width="300" :height="150" :video="videoSource" @playProcess="onPlayerPlay" @pauseProcess="onPlayerPause" @endProcess="onPlayerEnded"></tier5-video-player>
+          <tier5-video-player :width="300" :height="150" :video="videoSource" @playProcess="onPlayerPlay" @pauseProcess="onPlayerPause"
+                              @endProcess="onPlayerEnded" @loadEndProcess="loadEndProcess" @loadStartProcess="loadStartProcess"></tier5-video-player>
         </div>
       </div>
       <div class="popupTxt" :class="selectedTemplate">
@@ -159,8 +160,8 @@ export default {
     },
     ongoingInterval: {},
     selectedTemplate: {
-        type: String,
-        default: ''
+      type: String,
+      default: ''
     },
     audioVideoTemplate: {}
   },
@@ -174,8 +175,8 @@ export default {
     }
   },
   components: {
-      tier5VideoPlayer: tier5VideoPlayer,
-      AudioPlayer: AudioPlayer
+    tier5VideoPlayer: tier5VideoPlayer,
+    AudioPlayer: AudioPlayer
   },
 
   computed: {
@@ -184,6 +185,12 @@ export default {
     stopIteration () {
       window.clearInterval(this.ongoingInterval)
       this.$emit('iterationStopped', true)
+    },
+    loadEndProcess () {
+      this.$emit('startIteration', true)
+    },
+    loadStartProcess () {
+      this.$emit('iterationPaused', true)
     },
     // listen event
     onPlayerPlay(player) {

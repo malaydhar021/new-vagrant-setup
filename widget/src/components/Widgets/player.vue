@@ -106,6 +106,7 @@ export default {
   },
   methods: {
     loadStop () {
+      this.$emit('loadEndProcess', event)
       this.loader = false
     },
     loadedMetadata (event) {
@@ -154,6 +155,7 @@ export default {
       }
     },
     loadStart () {
+      this.$emit('loadStartProcess', event)
       this.loader = true
     },
     stopPlayer () {
@@ -282,17 +284,21 @@ export default {
       return offsetTop
     },
     progreessBarMouseDown (event) {
-      // Progress bar is being clicked
-      this.mclicking = true
-      // If video is playing then pause while we change time of the video
-      if (this.playing === true) {
-        this.videoEvent.pause()
+      if (event.pageX !== undefined) {
+        // Progress bar is being clicked
+        this.mclicking = true
+        // If video is playing then pause while we change time of the video
+        if (this.playing === true) {
+          this.videoEvent.pause()
+        }
+        // The x position of the mouse in the progress bar
+        this.x = event.pageX - this.getOffsetLeft(document.getElementById('t5ProgressId' + this.id))
+        // Update current time
+        this.currentTime = (this.x / this.progWidth) * this.duration
+        if (this.currentTime > 0 && this.currentTime <= this.duration) {
+          this.videoEvent.currentTime = this.currentTime
+        }
       }
-      // The x position of the mouse in the progress bar
-      this.x = event.pageX - this.getOffsetLeft(document.getElementById('t5ProgressId' + this.id))
-      // Update current time
-      this.currentTime = (this.x / this.progWidth) * this.duration
-      this.videoEvent.currentTime = this.currentTime
     },
     volumeBarHolder (event) {
       this.vclicking = true
