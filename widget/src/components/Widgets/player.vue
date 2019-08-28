@@ -121,6 +121,9 @@ export default {
       this.duration = event.target.duration
       this.volume = event.target.volume
       this.bufferLength()
+      if (this.isMobile()) {
+        document.getElementById('t5ProgressBarButtonId' + this.id).classList.remove('t5progress-button')
+      }
       // Set some widths
       this.progWidth = (parseInt(window.getComputedStyle(document.getElementById('t5ProgressId' + this.id)).width) * this.width) / 100
       this.timeUpdate()
@@ -283,8 +286,16 @@ export default {
       } while (elem = elem.offsetParent)
       return offsetTop
     },
+    isMobile () {
+      if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/BlackBerry/i) ||
+          navigator.userAgent.match(/iPhone|iPad|iPod/i) || navigator.userAgent.match(/Opera Mini/i) || navigator.userAgent.match(/IEMobile/i)) {
+        return true
+      } else {
+        return false
+      }
+    },
     progreessBarMouseDown (event) {
-      if (event.pageX !== undefined) {
+      if (event.pageX !== undefined && !this.isMobile()) {
         // Progress bar is being clicked
         this.mclicking = true
         // If video is playing then pause while we change time of the video
@@ -298,6 +309,8 @@ export default {
         if (this.currentTime > 0 && this.currentTime <= this.duration) {
           this.videoEvent.currentTime = this.currentTime
         }
+      } else {
+        document.getElementById('t5ProgressBarButtonId' + this.id).classList.remove('t5progress-button')
       }
     },
     volumeBarHolder (event) {
