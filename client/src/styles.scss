@@ -2312,7 +2312,9 @@ a {
                   cursor: pointer;
 
                   &.previewRLink {
+                    line-height: 26px;
                     img {
+                      pointer-events: none;
                       width: 14px;
                     }
                   }
