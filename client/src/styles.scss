@@ -763,6 +763,7 @@ a {
 
     a {
       display: inline-block;
+      max-width: 126px;
     }
 
     @media (max-width: 991px) {
@@ -2534,7 +2535,7 @@ a {
 
         @media (max-width: 991px) {
           height: calc(100vh - 230px);
-          
+
           .ng-scrollbar-visible {
             padding-right: 0;
           }
