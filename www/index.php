@@ -95,15 +95,15 @@ $planData = json_decode($allPlansData,true);
                 <div class="slide">
                     <div class="slideLeft">
                         <div class="videoArea">
-                            <div class="videoAreainner"></div>
+                            <div class="videoAreainner" style="background-image:url(images/Graphic1.png)"></div>
                         </div>
                         <span class="blueRing"></span>
                         <span class="redRing"></span>
                     </div>
                     <div class="slideRight">
                         <h2>
-                            <span>WORKS ON ANY WEBSITE!</span>
-                            Get Started In<br>Just 10 Minutes!
+                            <span>WORKS ON ANY WEBSITE! - Get Started In Just 10 Minutes!</span>
+                            Easy and Fast Set Up
                         </h2>
                         <p>
                             We've really made it so simple and easy to get started using Sticky Reviews. Once you login you can watch the quick set up video and you'll be up and running in less than 10 minutes. Get started now!
@@ -113,17 +113,16 @@ $planData = json_decode($allPlansData,true);
                 <div class="slide">
                     <div class="slideLeft">
                         <div class="videoArea">
-                            <div class="videoAreainner"></div>
+                            <div class="videoAreainner" style="background-image:url(images/Graphic2.png)"></div>
                         </div>
                         <span class="blueRing"></span>
                         <span class="redRing"></span>
                     </div>
                     <div class="slideRight">
                         <h2>
-                            <span>WORKS ON ANY WEBSITE!</span>
-                            Get Started In<br>Just 10 Minutes!
+                            <span>WORKS ON ANY WEBSITE! - Get Started In Just 10 Minutes!</span>
+                            Add Reviews
                         </h2>
-                        <h3>Add Reviews</h3>
                         <p>
                             Upload real reviews from real customers! You can do this manually or you can use our automated review links and add reviews that meet your minimum start rating automatically.
                         </p>
@@ -132,17 +131,16 @@ $planData = json_decode($allPlansData,true);
                 <div class="slide">
                     <div class="slideLeft">
                         <div class="videoArea">
-                            <div class="videoAreainner"></div>
+                            <div class="videoAreainner" style="background-image:url(images/Graphic3.png)"></div>
                         </div>
                         <span class="blueRing"></span>
                         <span class="redRing"></span>
                     </div>
                     <div class="slideRight">
                         <h2>
-                            <span>WORKS ON ANY WEBSITE!</span>
-                            Get Started In<br>Just 10 Minutes!
+                            <span>WORKS ON ANY WEBSITE! - Get Started In Just 10 Minutes!</span>
+                            Launch Campaign
                         </h2>
-                        <h3>Launch Campaign</h3>
                         <p>
                             Simply copy & paste the pixel on your website. No coding knowledge required! Display Sticky Reviews on your website and let your customers generate referrals for you!
                         </p>

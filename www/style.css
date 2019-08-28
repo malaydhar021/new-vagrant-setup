@@ -377,7 +377,9 @@ body {
     height: 220px;
     width: 326px;
     background: #fff;
-    border-radius: 15px;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 20px;
     -webkit-box-shadow: 10px 10px 30px rgba(58, 42, 152, 0.05);
     box-shadow: 10px 10px 30px rgba(58, 42, 152, 0.05);
     /* transform: rotateY(30deg);
@@ -431,21 +433,22 @@ body {
     width: 390px;
     float: left;
     margin-left: 170px;
-    margin-top: 100px;
+    margin-top: 180px;
 }
 
 .featureArea2 .sliderContainer .slide .slideRight h2 {
     color: #3A3A3A;
     font-size: 30px;
     font-weight: 700;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 }
 
 .featureArea2 .sliderContainer .slide .slideRight h2 span {
     color: #E30C5D;
     font-size: 12px;
     display: block;
-    padding-bottom: 15px;
+    padding-bottom: 5px;
+    text-transform: uppercase;
 }
 
 .featureArea2 .sliderContainer .slide .slideRight h3 {
@@ -469,6 +472,7 @@ body {
     top: 50%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
+    margin-top: 60px;
 }
 
 .sliderNav span {
@@ -2474,7 +2478,7 @@ h5 {
     }
 
     .featureArea2 {
-        padding-top: 80px;
+        padding-top: 30px;
     }
 
     /* .reviewTheme img {
@@ -2539,5 +2543,9 @@ h5 {
         bottom: 140px;
         font-size: 13px;
         right: 5px;
+    }
+
+    .sliderNav {
+        margin-top: -100px;
     }
 }
