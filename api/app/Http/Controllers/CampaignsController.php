@@ -56,10 +56,13 @@ class CampaignsController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('searchParams')) {
+      $searchKey = $request->get('searchParams');
+        if ($searchKey != '') {
             $this->queryBuilder = $this->queryBuilder
-                    ->where('campaign_name', 'LIKE', '%' . $request->get('searchParams') . '%')
-                    ->orWhere('unique_script_id', 'LIKE', '%' . $request->get('searchParams') . '%');
+                    ->where('campaign_name', 'LIKE', '%' . $searchKey . '%')
+                    ->orWhere(function ($query) use ($searchKey) {
+                      $query->where('unique_script_id', 'LIKE', '%' .$searchKey. '%');
+                    });
         }
 
         $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');

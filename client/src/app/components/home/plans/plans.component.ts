@@ -10,7 +10,7 @@ import { PricingPlanService }                     from '../../../services/pricin
 import { Title } from '@angular/platform-browser';
 
 /**
- * PlansComponent is responsible for handling user subscriptions 
+ * PlansComponent is responsible for handling user subscriptions
  * @class PlansComponent
  * @version 2.0.0
  * @author Tier5 LLC `<work@tier5.us>`
@@ -35,7 +35,7 @@ export class PlansComponent implements OnInit, OnDestroy {
   errorMessage: string = null; // flag for error message
   hasCard: boolean = false; // flag to set true if the user is having card details store into db
   pricingPlans: any; // holds all plans with pricing and individual feature restrictions
-  currency: string = "$"; // default currency is US dollar  
+  currency: string = "$"; // default currency is US dollar
 
 /**
  * Constructor to inject required service. It also subscribe to a observable which emits the current
@@ -63,7 +63,7 @@ export class PlansComponent implements OnInit, OnDestroy {
     this.subscriptionService.getCardDetails().subscribe(
       (response: any) => {
         if(response.status && response.card.number) {
-          this.hasCard = true;          
+          this.hasCard = true;
         }
       }
     );
@@ -72,7 +72,7 @@ export class PlansComponent implements OnInit, OnDestroy {
         this.showError = status;
       }
     );
-    // get all plans with price  
+    // get all plans with price
     this.getPricingPlans();
   }
 
@@ -99,8 +99,8 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @param reset 
+   *
+   * @param reset
    */
   public createCardForm(reset = false) {
     this.cardForm = this.formBuilder.group({
@@ -131,8 +131,8 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @param plan 
+   *
+   * @param plan
    */
   public buttonText(plan) {
     let currentPlan = null, text = null;
@@ -149,7 +149,7 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
+   *
    */
   public getCurrentSubscription() {
     this.loaderService.enableLoader()
@@ -161,8 +161,8 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @param plan 
+   *
+   * @param plan
    */
   public addUpdatePlan(plan) {
     this.errorService.clearMessage();
@@ -174,7 +174,7 @@ export class PlansComponent implements OnInit, OnDestroy {
         (response: any) => {
           Log.info(response, "during downgrade");
           this.loaderService.disableLoader();
-          this.ngxSmartModalService.getModal('modal1').open(); 
+          this.ngxSmartModalService.getModal('modal1').open();
         }
       );
     } else {
@@ -183,7 +183,7 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
+   *
    */
   public createYearArray() {
     var currentDate = new Date();
@@ -195,7 +195,7 @@ export class PlansComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
+   *
    */
   public add() {
     this.loaderService.enableLoader();
@@ -217,7 +217,7 @@ export class PlansComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public update() {
-    this.loaderService.enableLoader()
+    this.loaderService.enableLoader();
     Log.info("under update() method");
     this.subscriptionService.updateSubscription({ pricing_plan_type: this.pricingPlanType }).subscribe(
       (response: any) => {

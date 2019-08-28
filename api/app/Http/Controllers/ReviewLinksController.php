@@ -108,7 +108,7 @@ class ReviewLinksController extends Controller
         $reviewLink->page_background = $request->input('page_background');
         $reviewLink->modal_background = $request->input('modal_background');
         $reviewLink->text_color = $request->input('text_color');
-        $reviewLink->copyright_text = $request->input('copyright_text');
+        $reviewLink->copyright_text = (!is_null($request->input('copyright_text')) && $request->input('copyright_text') != 'null') ? Hashids::decode($request->input('copyright_text')) : null;
         $reviewLink->campaign_id = $request->input('campaign_id');
         $reviewLink->custom_domain_id = (!is_null($request->input('custom_domain_id')) && $request->input('custom_domain_id') != 'null') ? Hashids::decode($request->input('custom_domain_id')) : null;
         $reviewLink->created_by = Auth::user()->id;
@@ -161,7 +161,7 @@ class ReviewLinksController extends Controller
         $reviewLink->page_background = $request->input('page_background');
         $reviewLink->modal_background = $request->input('modal_background');
         $reviewLink->text_color = $request->input('text_color');
-        $reviewLink->copyright_text = $request->input('copyright_text');
+        $reviewLink->copyright_text = (!is_null($request->input('copyright_text')) && $request->input('copyright_text') != 'null') ? Hashids::decode($request->input('copyright_text')) : null;
         $reviewLink->campaign_id = $request->input('campaign_id');
         $reviewLink->custom_domain_id = (!is_null($request->input('custom_domain_id')) && $request->input('custom_domain_id') != 'null') ? Hashids::decode($request->input('custom_domain_id')) : null;
         if ($request->has('logo')) {
