@@ -170,6 +170,7 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userProfileUpdateForm.reset();
     this.imagePreviewUrl = 'assets/images/user.png';
     this.isModalOpened = false; // set to false as modal has been closed
+    this.imagePreviewUrl = (this.userInfo.image !== null) ? this.userInfo.image : this.imagePreviewUrl;
     return;
   }
 
@@ -208,7 +209,6 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userService.getAuthUserInfo().subscribe(
       (response: any) => {
         this.loaderService.disableLoader();
-        Log.info(response.data)
         this.userInfo = response.data;
         this.imagePreviewUrl = (response.data.image !== null) ? response.data.image : this.imagePreviewUrl;
       }
@@ -256,9 +256,11 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
           this.userInfo = response.data.user;
           if (this.userInfo.image) {
             this.userService.setUserImage(this.userInfo.image);
-            // update the profile image in the cookie
+            // this.imagePreviewUrl =  this.userInfo.image;
+              // update the profile image in the cookie
             this.cookieService.set('_loginUserImage', this.userInfo.image, 450, '/', 'usestickyreviews.com');
           }
+          this.getUserInfo();
           // 100 ms time delay to show the message to user once the modal has been closed
           setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 100);
         } else {

@@ -77,9 +77,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.currentPlanName =  userPlan.data.pricing_plan.alias.toUpperCase();
       }
     })
+
     // subscription to user profile image url and update it once the url got updated from profile section
     // else default or current profile image url will be returned
     this.userImageUrlSubscription = this.userService.userImageUrl$.subscribe(url => {
+      console.log("Image url ", url);
       this.userImageUrl = url;
     })
   }
@@ -134,6 +136,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.subscription.unsubscribe();
     this.menuSubscription.unsubscribe();
     this.userPlanSubscription.unsubscribe();
+    this.userImageUrlSubscription.unsubscribe();
   }
 
   /**
@@ -193,6 +196,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           if (this.cookieService.get('_cdi')) {
             this.cookieService.delete('_cdi');
           }
+          // set default profile image when logout
+          this.userService.setUserImage('assets/images/user.png');
           // show the logout success message to user
           setTimeout(() => {this.errorService.setMessage({type: 'success', message: response.message})}, 200);
           this.router.navigate(['/login']);
