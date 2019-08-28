@@ -8766,6 +8766,14 @@ body.sign-upPage {
         height: 90px;
         resize: none;
       }
+
+      .customSelect {
+        background-image: url('../src/assets/images/icon_down_arrow.png');
+        background-position: right 11px center;
+        background-size: 13px;
+        background-repeat: no-repeat;
+        padding-right: 30px;
+      }
     }
 
     .button-submit {
