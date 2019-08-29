@@ -795,7 +795,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
       this.showEmailField = false;
       this.showCtaField = true;
     }
-    if (exitPopup.has_campaign === true) {
+    if (exitPopup.has_campaign === true && exitPopup.campaign !== null) {
       this.campaignStickyReviewStyleId = exitPopup.campaign.style_id;
     } else {
       this.campaignStickyReviewStyleId = '1';

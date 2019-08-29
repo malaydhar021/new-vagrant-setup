@@ -62,6 +62,9 @@ class CampaignsController extends Controller
                     ->where('campaign_name', 'LIKE', '%' . $searchKey . '%')
                     ->orWhere(function ($query) use ($searchKey) {
                       $query->where('unique_script_id', 'LIKE', '%' .$searchKey. '%');
+                    })
+                    ->orWhere(function ($query) use ($searchKey) {
+                      $query->where('domain_name', 'LIKE', '%' .$searchKey. '%');
                     });
         }
 
