@@ -16,9 +16,10 @@
           <p>{{data.review}}</p>
           <footer class="popupFt">
             <span class="timePop">{{ getReviewTimeFormated(data.reviewed_at)+ ' ago' }}</span>
-            <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-            <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
-
+            <template v-if="isBranded && Object.keys(brandingData).length">
+              <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
+              <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
+            </template>
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
               <i :class="index+1 <= data.rating ? 'star': 'star inactive'">
                 &#9734;
@@ -57,9 +58,10 @@
 
           <footer class="popupFt">
             <span class="timePop">{{ getReviewTimeFormated(data.reviewed_at)+ ' ago'}}</span>
-            <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-            <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
-
+            <template v-if="isBranded && Object.keys(brandingData).length">
+              <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
+              <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
+            </template>
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
               <i :class="index+1 <= data.rating ? 'star': 'star inactive'">
                 &#9734;
@@ -113,9 +115,10 @@
           <h6>{{data.name}}</h6>
           <footer class="popupFt">
             <span class="timePop">{{ getReviewTimeFormated(data.reviewed_at)+ ' ago' }}</span>
-            <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-            <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
-
+            <template v-if="isBranded && brandingData && Object.keys(brandingData).length">
+              <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
+              <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
+            </template>
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
               <i :class="index+1 <= data.rating ? 'star': 'star inactive'">
                 &#9734;
@@ -190,6 +193,7 @@ export default {
       this.$emit('startIteration', true)
     },
     loadStartProcess () {
+      window.clearInterval(this.ongoingInterval)
       this.$emit('iterationPaused', true)
     },
     // listen event

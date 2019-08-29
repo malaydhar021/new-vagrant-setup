@@ -79,7 +79,7 @@ export default {
             url = `${this.axios.defaults.baseURL}`+`${this.script_id}`+`/exit-popup?page=${this.curPageNo}`
           break
         }
-        
+
         let response = await vm.axios.get(url)
 
         if (response.data.status && !vm.stickyData.length) {
@@ -190,7 +190,7 @@ export default {
 
       vm.appData            = vm.stickyData[vm.counter]
       vm.timeOut            = false
-      
+
       vm.stopTimeout = setTimeout(function() {
         vm.timeOut = true
         vm.counter++
