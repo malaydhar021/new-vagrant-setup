@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.9
+
+1. Removed skip from user review permission screen
+
 ### V2.1.8
 
 1. Fixed issue with search in campaign

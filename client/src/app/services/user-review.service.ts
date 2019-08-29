@@ -204,7 +204,7 @@ export class UserReviewService {
     // append phone number to form data if it exists in review object
     if(this.review.phone_number !== undefined) formData.append('phone_number', this.review.phone_number);
     // append grant review use to form data if it exists in review object
-    if(this.review.grant_review_use !== undefined) formData.append('grant_review_use', this.review.grant_review_use);
+    if(this.review.grant_review_use !== undefined) formData.append('grant_review_use', this.review.grant_review_use ? '1' : '0');
     // append grant review use to form data if it exists in review object
     if(this.review.profile_picture !== undefined) formData.append('profile_picture', this.review.profile_picture, this.review.profile_picture.name);
 
