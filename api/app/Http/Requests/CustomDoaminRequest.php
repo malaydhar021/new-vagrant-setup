@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\PrivilegeViolationException;
 
 class CustomDoaminRequest extends FormRequest
 {

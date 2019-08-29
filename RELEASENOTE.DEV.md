@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.2.0
+
+1. Fixed issue with custom domain and review link regarding plan limitation
+
 ### V2.1.9
 
 1. Removed skip from user review permission screen
