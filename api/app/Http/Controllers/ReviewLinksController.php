@@ -10,6 +10,7 @@ use App\Helpers\Hashids;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewLinksController extends Controller
 {
@@ -211,16 +212,21 @@ class ReviewLinksController extends Controller
 
     /**
      * Update auto approve status for a review link.
+     *
      * @param  Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateAutoApproveStatus(Request $request, $id) {
-        $validatedData = $request->validate([
-            'auto_approve' => 'required|boolean'
+    public function updateAutoApproveStatus(Request $request, $id)
+    {
+        $request->validate([
+            'auto_approve' => 'required|boolean',
+            'min_rating' => "required_if:auto_approve,1|integer",
         ]);
+
         $reviewLink = $this->queryBuilder->where('id', $id)->firstOrFail();
-        $reviewLink->auto_approve = $request->auto_approve;
+        $reviewLink->auto_approve = $request->input('auto_approve');
+        $reviewLink->min_rating = $request->input('min_rating');
 
         $reviewLink->update();
 

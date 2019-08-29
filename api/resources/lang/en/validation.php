@@ -162,6 +162,14 @@ return [
             'string' => "Campaign item should be an string.",
             'distinct' => "Campaign item should be distinct, no repetead item is allowed.",
         ],
+        'auto_approve' => [
+            'required' => "You need to switch on or off the auto approve switcher.",
+            'boolean' => "Auto approve needs to either on or off.",
+        ],
+        'min_rating' => [
+            'required_if' => "Min rating is required when auto approve is on.",
+            'integer' => "Min rating should be an integer.",
+        ],
     ],
 
     /*

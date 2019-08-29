@@ -18,6 +18,7 @@
         "league/flysystem-cached-adapter": "~1.0",
         "pbmedia/laravel-ffmpeg": "3.0.2",
         "propaganistas/laravel-phone": "^4.1",
+        "squizlabs/php_codesniffer": "*",
         "symfony/process": "^4.3",
         "tymon/jwt-auth": "0.5.*",
         "vinkla/hashids": "5.1.0"
