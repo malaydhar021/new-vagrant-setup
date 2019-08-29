@@ -51,7 +51,8 @@ export default {
       appData: {},
       stickyData: Array,
       isBranded: Boolean,
-      brandingData: {}
+      brandingData: {},
+      restartInterval: false
     };
   },
 
@@ -100,7 +101,8 @@ export default {
         window.clearInterval(vm.currentInterVal)
       }
 
-      let intervalTime = vm.delayInBetweenSr + vm.srStayTime // setting interval time
+      let intervalTime = (this.restartInterval) ? vm.delayInBetweenSr : vm.delayInBetweenSr + vm.srStayTime // setting interval time
+      this.restartInterval = false;
       vm.currentInterVal = setInterval(function() {
         if ( vm.counter === vm.stickyData.length - 1 ) {
           vm.getNewPageData(vm.data.loop)
@@ -198,11 +200,13 @@ export default {
     },
 
     stopIteration() {
+      this.restartInterval = false;
     	clearTimeout(this.stopTimeout)
     },
 
     reStartIteration() {
       let vm = this;
+      this.restartInterval = true;
       this.stopTimeout = setTimeout(function() {
         vm.timeOut = true
         vm.counter++

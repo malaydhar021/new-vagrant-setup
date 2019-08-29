@@ -870,9 +870,9 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   public prepareContext(campaign: CampaignInterface) {
     if(campaign.custom_domain !== null) {
       // Example src: https://somecustomdomain.com/lib/widget.min.js
-      return '<script src="https://' + campaign.custom_domain.domain + '/' +  this.campaignScriptForCustomDomain  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async></script>';
+      return '<script src="https://' + campaign.custom_domain.domain + '/' +  this.campaignScriptForCustomDomain  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async charset="UTF-8"></script>';
     }
-    return '<script src="' + WidgetUrl  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async></script>';
+    return '<script src="' + WidgetUrl  + '" data-token="' +  campaign.unique_script_id  + '" data-name="_emv" async charset="UTF-8"></script>';
   }
 
   /**
