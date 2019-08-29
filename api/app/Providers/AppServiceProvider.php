@@ -6,9 +6,11 @@ use App\Observers\UserObserver;
 use App\Observers\StickyReviewObserver;
 use App\Observers\SubscribedEmailObserver;
 use App\Observers\ReviewLinkObserver;
+use App\Observers\BrandingObserver;
 use App\User;
 use App\StickyReview;
 use App\ReviewLink;
+use App\Branding;
 use App\SubscribedEmail;
 
 use Illuminate\Support\ServiceProvider;
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         StickyReview::observe(StickyReviewObserver::class);
         SubscribedEmail::observe(SubscribedEmailObserver::class);
         ReviewLink::observe(ReviewLinkObserver::class);
+        Branding::observe(BrandingObserver::class);
     }
 
     /**

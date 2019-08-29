@@ -57,4 +57,24 @@ class Branding extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    /**
+     * Campaigns is having this brand
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
+    }
+    
+    /**
+     * Campaigns is having this brand
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function stickyReviews()
+    {
+        return $this->hasMany(StickyReview::class, 'brand_id');
+    }
 }

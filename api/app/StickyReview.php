@@ -37,6 +37,8 @@ class StickyReview extends Model
         'image',
         'rating',
         'review_link_id',
+        'has_brand',
+        'brand_id',
         'created_by',
     ];
 

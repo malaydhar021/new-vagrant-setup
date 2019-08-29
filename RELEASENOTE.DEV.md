@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.7
+
+1. Deleted brand from campaign and review link when a brand is getting deleted
+
 ### V2.1.6
 
 1. Fixed issue with loader in user review for 403 http status code response
