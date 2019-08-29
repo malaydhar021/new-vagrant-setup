@@ -58,13 +58,19 @@ class CampaignsController extends Controller
     {
       $searchKey = $request->get('searchParams');
         if ($searchKey != '') {
+//            $this->queryBuilder = $this->queryBuilder
+//            ->where('campaign_name', 'LIKE', '%' . $searchKey . '%')
+//            ->orWhere(function ($query) use ($searchKey) {
+//              $query->where('unique_script_id', 'LIKE', '%' .$searchKey. '%');
+//            })
+//            ->orWhere(function ($query) use ($searchKey) {
+//              $query->where('domain_name', 'LIKE', '%' .$searchKey. '%');
+//            });
             $this->queryBuilder = $this->queryBuilder
-                    ->where('campaign_name', 'LIKE', '%' . $searchKey . '%')
-                    ->orWhere(function ($query) use ($searchKey) {
-                      $query->where('unique_script_id', 'LIKE', '%' .$searchKey. '%');
-                    })
-                    ->orWhere(function ($query) use ($searchKey) {
-                      $query->where('domain_name', 'LIKE', '%' .$searchKey. '%');
+                    ->where(function ($query) use ($searchKey) {
+                        $query->where('campaign_name', 'LIKE', '%' . $searchKey . '%')->
+                        orWhere('unique_script_id', 'LIKE', '%' . $searchKey . '%')->
+                        orWhere('domain_name', 'LIKE', '%' . $searchKey . '%');
                     });
         }
 

@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.1.8
+
+1. Fixed issue with search in campaign
+
 ### V2.1.7
 
 1. Deleted brand from campaign and review link when a brand is getting deleted
