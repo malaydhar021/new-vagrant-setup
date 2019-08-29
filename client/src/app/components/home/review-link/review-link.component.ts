@@ -32,6 +32,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   selectedCampaign: any = this.campaigns[0]; // default selected campaign array
   form: FormGroup; // FormGroup to initialize step 1 of add/edit form of a review link
   form2: FormGroup; // FormGroup to initialize step 2 of add/edit form of a review link
+  starRatingForm: FormGroup; // FormGroup to initialize step 1 of add/edit form of a review link
   currentStep: number = 1; // default current step is 1 i.e first step of review link add/edit form
   choseFileCtrl: string = 'Browse from your computer';
   fileName: string = 'or drag & drop your image here';
@@ -68,6 +69,10 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   reviewLinkIdToDelete: string = null;
   noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
   showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
+  isSubmittedStarRating: boolean = false;
+  autoApprove: any = '';
+  showMinRatingError: boolean = false;
+  showStarRating: boolean = false;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -123,6 +128,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.formStep1();
     // initialize the form builder for add/edit action for step 2
     this.formStep2();
+    // initialize the star rating form
+     this.createStarRatingForm();
      this.config = {
        itemsPerPage: 15,
        currentPage: 1,
@@ -156,7 +163,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       campaign_id: ['', Validators.required],
       custom_domain_id: [null],
       auto_approve: [false],
-      min_rating: [null, Validators.required],
+      min_rating: [0],
       negative_info_review_msg_1: ['', Validators.required],
       negative_info_review_msg_2: ['', Validators.required],
       positive_review_msg: ['', Validators.required]
@@ -234,17 +241,71 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * Method to change the auto approve status from the listing page
    * @method onChangeAutoApproveStatus
    * @since Version 1.0.0
-   * @param id Review link system id
+   * @param id Review link system id starRating
    * @returns Void
    */
-  public onChangeAutoApproveStatus(id: string, autoApproveStatus) {
-    // set the review link id property
+  public onChangeAutoApproveStatus(id: string, autoApproveStatus, starRating) {
     this.reviewLinkId = id;
+    this.autoApprove = (autoApproveStatus.value) ? 1 : 0;
+    if (autoApproveStatus.value === true) {
+      this.showMinRatingError = false;
+      this.createStarRatingForm();
+      this.starRatingForm.patchValue({
+        min_star_rating: starRating,
+      });
+      this.ngxSmartModalService.getModal('starRatingModal').open();
+    } else {
+      const data: ReviewLinkModel = {
+        auto_approve: this.autoApprove,
+        // min_rating: 0,
+      };
+      this.updateAutoApproveStatus(data);
+    }
+  }
+
+  /**
+   * Method to create the star rating form controls for the star rating modal
+   */
+  public get getStarRatingFormControls() {
+    return this.starRatingForm.controls;
+  }
+
+  /**
+   * Method to create star rating form
+   */
+  public createStarRatingForm() {
+    this.starRatingForm = this.formBuilder.group({
+      min_star_rating: [null, Validators.required], // modal backdrop color
+    });
+  }
+
+  /**
+   * Method to save request of star rating form
+   */
+  public saveStarRating() {
+    this.isSubmittedStarRating = true;
+    if (this.getStarRatingFormControls.min_star_rating.value < 1 ) {
+      this.showMinRatingError = true;
+      return;
+    }
     const data: ReviewLinkModel = {
-      auto_approve: (autoApproveStatus.value) ? 1 : 0
+      auto_approve: this.autoApprove,
+      min_rating: this.getStarRatingFormControls.min_star_rating.value,
     };
-    this.loaderService.enableLoader();
     this.updateAutoApproveStatus(data);
+  }
+
+  /**
+   * Method to close the modal of the star rating form
+   */
+  public closeStarRatingModal() {
+    this.showMinRatingError = false;
+    this.ngxSmartModalService.getModal('starRatingModal').close();
+    const data: ReviewLinkModel = {
+      auto_approve: 0,
+    };
+    this.updateAutoApproveStatus(data);
+    this.resetForm();
   }
 
   /**
@@ -348,6 +409,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   public resetForm() {
     this.form.reset(); // reset the form
     this.form2.reset(); // reset the form2
+    this.starRatingForm.reset();
     this.imagePreviewUrl = 'assets/images/default_logo_image_sr.png'; // set default image to preview image area
     this.image = null;
     this.currentStep = 1;
@@ -543,10 +605,12 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.isEditing = false;
     // setting false if someone after deleting decide to add a review link
     this.isDeleting = false;
+    this.showStarRating = false;
     // now open the modal with empty form to add a sticky review link
     this.pageBackground = '#B8CBEB'; // Backdrop color of modal or page background. Default is #B8CBEB
     this.modalBackground = '#FFFFFF'; // Backdrop color of modal or page background
     this.textColor = '#268BFF'; // Backdrop color of modal or page background
+    this.formStep1();
     this.ngxSmartModalService.getModal('modal1').open();
   }
 
@@ -563,6 +627,11 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     // set the review link id
     this.reviewLinkId = reviewLink.id;
     // set form fields values to respective fields for step 1
+    if (reviewLink.auto_approve == 1) {
+      this.showStarRating = true;
+    } else {
+      this.showStarRating = false;
+    }
     this.form.patchValue({
       id: reviewLink.id,
       name: reviewLink.name,
@@ -682,6 +751,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
         Log.info(response, "Response Update");
         if(response.status) {
           // perform post response activities
+          this.ngxSmartModalService.getModal('starRatingModal').close();
           this.postResponseActivities(response.message);
         } else {
           // perform post response activities in case any error occurred
@@ -916,6 +986,20 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       message: 'Review link has been copied to clipboard'
     };
     this.errorService.setMessage(message);
+  }
+
+  /**
+   * Method to show/hide minimum rating on change of auto approve
+   */
+  public onChangeAutoApprove() {
+    if(this.getFormControls.auto_approve.value) {
+      this.form.controls['min_rating'].setValidators([Validators.required, Validators.min(1)]);
+      this.showStarRating = true;
+    } else  {
+      this.form.controls['min_rating'].clearValidators();
+      this.showStarRating = false;
+    }
+    this.form.controls['min_rating'].updateValueAndValidity();
   }
 
 }

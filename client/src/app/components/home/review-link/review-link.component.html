@@ -41,7 +41,7 @@
                       {{ link.description }}
                     </p>
                     <div class="reviewLinkinfo">
-                      <div class="minRating">
+                      <div class="minRating" *ngIf="link.auto_approve">
                         <p>Min. Rating: </p>
                         <div class="stars">
                           <bar-rating [(rate)]="link.min_rating" [max]="5" [theme]="'default'" [readOnly]="true">
@@ -54,11 +54,13 @@
                           <div class="switcher switchInForm">
                             <label>
                               <input type="checkbox" class="tglBtn" [(ngModel)]="link.auto_approve"
-                          #autoApproveStatus="ngModel" (change)="onChangeAutoApproveStatus(link.id, autoApproveStatus)">
+                          #autoApproveStatus="ngModel" (change)="onChangeAutoApproveStatus(link.id, autoApproveStatus, link.min_rating)">
                               <span></span>
                             </label>
                           </div>
                       </div>
+
+
                     </div>
                   </div>
                 </div>
@@ -181,19 +183,25 @@
 
                     <div class="switcher switchInForm">
                       <label>
-                        <input type="checkbox" class="tglBtn" formControlName="auto_approve">
+                        <input type="checkbox" class="tglBtn" formControlName="auto_approve" (change)="onChangeAutoApprove()">
                         <span></span>
                       </label>
                     </div></label>
                 </div>
               </div>
-              <div class="sr-form-cell-small">
+              <div class="sr-form-cell-small" *ngIf="showStarRating">
                 <label>Define Min. Rating</label>
                 <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="min_rating"></bar-rating>
                 <div class="error-msg" *ngIf="(
                   isSubmittedStep1
                   && getFormControls.min_rating.errors !== null
                   && getFormControls.min_rating.errors.required)">
+                  Min. rating is required
+                </div>
+                <div class="error-msg" *ngIf="(
+                  isSubmittedStep1
+                  && getFormControls.min_rating.errors !== null
+                  && getFormControls.min_rating.errors?.min)">
                   Min. rating is required
                 </div>
               </div>
@@ -468,6 +476,34 @@
               <button class="stReject" type="button" (click)="deleteModal.close()">
                 No
               </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ngx-smart-modal>
+
+<!-- HTML for star rating modal -->
+<ngx-smart-modal #starRatingModal identifier="starRatingModal" class="sr-modal modalNotif" [dismissable]="false" [escapable]="false">
+  <div class="sr-modal-container">
+    <button class="btn-starRating-close" type="button" [style.background-image]="'url(../../../../assets/images/icon_close_popup.png)'" (click)="closeStarRatingModal()">
+    </button>
+    <div class="sr-modal-header">
+      <h2>
+        Define Min. Rating
+      </h2>
+    </div>
+    <div class="sr-modal-body">
+      <form [formGroup]="starRatingForm" (ngSubmit)="saveStarRating()">
+        <div class="sr-form">
+          <div class="sr-form-row">
+            <div class="sr-form-cell btnStyles starRating">
+              <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="min_star_rating"></bar-rating>
+              <div class="error-msg" *ngIf="showMinRatingError">
+                Min. rating is required
+              </div>
+              <button class="stAccpt" type="submit"> Save</button>
             </div>
           </div>
         </div>

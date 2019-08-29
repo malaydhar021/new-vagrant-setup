@@ -11990,3 +11990,24 @@ Cookie notification css
     }
   }
 }
+
+/**
+ Css for star rating modal
+ */
+.starRating .br-units {
+  justify-content: center;
+}
+
+button.btn-starRating-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
