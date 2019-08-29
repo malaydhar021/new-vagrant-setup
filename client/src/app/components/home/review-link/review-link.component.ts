@@ -73,6 +73,8 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   autoApprove: any = '';
   showMinRatingError: boolean = false;
   showStarRating: boolean = false;
+  rate: number = null;
+
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
