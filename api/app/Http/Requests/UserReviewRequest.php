@@ -34,7 +34,7 @@ class UserReviewRequest extends FormRequest
     public function authorize()
     {
         if (ReviewLink::whereUrlSlug($this->route('slug'))->first()) {
-            if($this->input('review_type') == 3) {
+            if ($this->input('review_type') == 3) {
                 $reviewLinkId = Hashids::decode($this->request->get('review_link_id'));
                 $user = ReviewLink::find($reviewLinkId)->user;
                 $pricingPlan = $user->pricing_plan;
@@ -49,7 +49,7 @@ class UserReviewRequest extends FormRequest
             }
             return true;
         }
-        
+
         return false;
     }
 
@@ -74,7 +74,7 @@ class UserReviewRequest extends FormRequest
             'rating' => "required|integer|digits:1|min:1|max:5",
             'email' => "required_if:recommendation,0|email",
             'phone_number' => "sometimes|nullable", // |phone:AUTO
-            'grant_review_use' => "required_if:recommendation,1|nullable",
+            'grant_review_use' => "required_if:recommendation,1|boolean",
             'profile_picture' => "required_if:grant_review_use,1|image|mimes:gif,jpeg,png,webp",
             'review_link_id' => "required|exists:review_links,id",
         ];

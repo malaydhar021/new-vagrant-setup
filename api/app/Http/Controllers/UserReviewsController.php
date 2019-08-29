@@ -66,13 +66,15 @@ class UserReviewsController extends Controller
      */
     public function store(UserReviewRequest $request, $slug)
     {
+        $reviewLink = ReviewLink::where('url_slug', $slug)->firstOrFail();
+
         // sticky review aliased as user review
         $userReview = new UserReview();
         // sticky review name
         $userReview->review_title = $request->input('review_title');
 
         $tags = 'user-review, ';
-        // this `type` column is to determine wheather the review is a textual or audio or video review
+        // this `type` column is to determine whether the review is a textual or audio or video review
         $userReview->type = $request->input('review_type');
         switch ($request->input('review_type')) {
             case 1:
@@ -102,13 +104,28 @@ class UserReviewsController extends Controller
 
         $userReview->rating = $request->input('rating');
 
+        $shouldAutoDisplay = false;
+        if ($reviewLink->min_rating <= $userReview->rating) {
+            $shouldAutoDisplay = true;
+        }
+
         if ($request->input('recommendation')) {
             if ($request->input('grant_review_use')) {
                 $reviewType = 3; //created by user through review link and also show
-                $tags .= 'postive-review, auto-approved';
+                $tags .= 'positive-review, publishable';
+                return response()->json([$reviewLink->auto_approve]);
+                if ($reviewLink->auto_approve) {
+                    // If the review link has auto approved on then the review is sticky review & it will show on widget
+                    $shouldAutoDisplay = $shouldAutoDisplay && true;
+                    if ($shouldAutoDisplay) {
+                        $tags .= ', sticky-review';
+                    }
+                } else {
+                    $shouldAutoDisplay = $shouldAutoDisplay && false;
+                }
             } else {
                 $reviewType = 2; //created by user through review link but no permission to show in web recommend us yes
-                $tags .= 'postive-review, not-approved';
+                $tags .= 'positive-review, non-publishable';
             }
         } else {
             $reviewType = 4;     //created by user through review link with recommend us no
@@ -144,7 +161,9 @@ class UserReviewsController extends Controller
             }
 
             $userReview->load('reviewLink');
-            $userReview->campaigns()->attach([$userReview->reviewLink->campaign_id]);
+            if ($shouldAutoDisplay) {
+                $userReview->campaigns()->attach([$userReview->reviewLink->campaign_id]);
+            }
         } catch (Exception $exception) {
             DB::rollBack();
 

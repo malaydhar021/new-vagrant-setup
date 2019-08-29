@@ -62,7 +62,7 @@ export default {
 			// Call this method to get initial widget data
 			try {
 				let response = await this.axios.get(`${this.axios.defaults.baseURL}`+`${this.myApiId}`+`?page=${this.curPageNo}`)
-				
+
 				if (response.data.status) {
 					this.checkDomainName(response.data.data)
 				} else {
@@ -98,7 +98,7 @@ export default {
 			if (dataresponse.is_active) {
 				if (window.location.host === dataresponse.domain_name) {
 					// checking if any review is there or not. if there are then generate review popups
-					if ( dataresponse.sticky_reviews && dataresponse.sticky_reviews.data.length) {
+					if ( dataresponse.sticky_reviews.hasOwnProperty('data') && dataresponse.sticky_reviews.data.length) {
 						// Waiting time before start...
 						if (dataresponse.delay_before_start) {
 							setTimeout(function() {
@@ -109,7 +109,9 @@ export default {
 							vm.showWidget = true
 							vm.stickyReviews = dataresponse.sticky_reviews;
 						}
-					}
+					} else {
+            console.error("[Sticky Reviews] Empty set of sticky reviews! Please attach one review now to see the widget.")
+          }
 					// Check exit popup ID & configrations are attached or not
 					if (dataresponse.has_exit_pop_up) {
 						vm.getPopUpData()

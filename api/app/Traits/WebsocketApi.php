@@ -16,8 +16,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
 
-trait WebsocketApi {
-    
+trait WebsocketApi
+{
+
     private $wsApiBaseUrl;
 
     /**
@@ -25,12 +26,12 @@ trait WebsocketApi {
      * @since 1.0.0
      * @return Void
      */
-    public function __construct() 
-    {        
+    public function __construct()
+    {
         // set custom domain base directory path
         $this->wsApiBaseUrl = config('app.websocket_url');
     }
-    
+
     /**
      * Method to call node api endpoints to emit respective events
      * @since 1.0.0

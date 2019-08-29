@@ -151,7 +151,7 @@ return [
         'sticky_reviews.*' => [
             'required' => "At least one sticky review item is required inside the array.",
             'string' => "Sticky review item should be an string.",
-            'distinct' => "Sticky review item should be distinct, no repetead item is allowed.",
+            'distinct' => "Sticky review item should be distinct, no repeated item is allowed.",
         ],
         'campaigns' => [
             'required' => "Campaigns are required.",
@@ -160,7 +160,7 @@ return [
         'campaigns.*' => [
             'required' => "At least one campaign item is required inside the array.",
             'string' => "Campaign item should be an string.",
-            'distinct' => "Campaign item should be distinct, no repetead item is allowed.",
+            'distinct' => "Campaign item should be distinct, no repeated item is allowed.",
         ],
         'auto_approve' => [
             'required' => "You need to switch on or off the auto approve switcher.",

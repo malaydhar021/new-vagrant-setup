@@ -35,9 +35,11 @@ class WidgetResource extends JsonResource
             $exitPopup = null;
         }
 
-        $getStickyReviewsIds =  CampaignStickyReview::where('campaign_id', $this->id)->pluck('sticky_review_id');
+        $getStickyReviewIds =  CampaignStickyReview::where('campaign_id', $this->id)->pluck('sticky_review_id');
 
-        $srQuery = StickyReview::whereIn('id', $getStickyReviewsIds)->with('brands')->orderBy('created_at', 'DESC');
+        $srQuery = StickyReview::whereIn('id', $getStickyReviewIds)->where(function ($q) {
+            return $q->where('review_type', 1)->orWhere('review_type', 3);
+        })->with('brands')->orderBy('created_at', 'DESC');
 
         if ($srQuery->count()) {
             $stickyReviews = $srQuery->paginate(5);
