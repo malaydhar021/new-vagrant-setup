@@ -37,7 +37,7 @@ Route::prefix('user')->name('user.')->middleware('auth:api')->group(function () 
         Route::put('/', 'CardController@update')->name('update');
     });
 
-    Route::prefix('subscription')->name('subscription.')->group(function () {
+    Route::prefix('subscription')->name('subscription.')->middleware('activeUser')->group(function () {
         Route::get('/', 'SubscriptionController@index')->name('index');
         Route::post('/', 'SubscriptionController@store')->name('store');
         Route::post('/validate', 'SubscriptionController@validatePlanPrivileges')->name('validate');
@@ -55,7 +55,7 @@ Route::prefix('user')->name('user.')->middleware('auth:api')->group(function () 
 
 Route::get('pricing-plans', 'PricingPlansController@index')->name('pricing-plans.index');
 
-Route::middleware(['auth:api', 'subscription'])->group(function () {
+Route::middleware(['auth:api', 'subscription', 'activeUser'])->group(function () {
     Route::bind('id', function ($value, $route) {
         return \App\Helpers\Hashids::decode($value);
     });

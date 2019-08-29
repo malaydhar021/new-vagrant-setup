@@ -21,6 +21,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
         \Barryvdh\Cors\HandleCors::class,
         \App\Http\Middleware\SubscriptionMiddleware::class,
+        \App\Http\Middleware\ActiveUserMiddleware::class,
     ];
 
     /**
@@ -66,5 +67,6 @@ class Kernel extends HttpKernel
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
         'subscription' => \App\Http\Middleware\SubscriptionMiddleware::class,
+        'activeUser' => \App\Http\Middleware\ActiveUserMiddleware::class,
     ];
 }

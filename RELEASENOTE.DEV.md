@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.2.2
+
+1. Added a middleware to check whether user is active or not
+
 ### V2.2.0
 
 1. Fixed issue with custom domain and review link regarding plan limitation
