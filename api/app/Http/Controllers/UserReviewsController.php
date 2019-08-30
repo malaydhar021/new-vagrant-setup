@@ -113,7 +113,6 @@ class UserReviewsController extends Controller
             if ($request->input('grant_review_use')) {
                 $reviewType = 3; //created by user through review link and also show
                 $tags .= 'positive-review, publishable';
-                return response()->json([$reviewLink->auto_approve]);
                 if ($reviewLink->auto_approve) {
                     // If the review link has auto approved on then the review is sticky review & it will show on widget
                     $shouldAutoDisplay = $shouldAutoDisplay && true;
