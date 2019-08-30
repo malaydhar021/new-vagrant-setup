@@ -35,6 +35,7 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
   subscribedEmailIdToDelete: string = null;
   noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
   showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
+  showClearSearch: boolean = false;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -163,15 +164,39 @@ export class SubscribedEmailsComponent implements OnInit, OnDestroy {
    */
   public onSearch($term) {
     this.config.currentPage = 1;
+    if ($term.target.value == '') {
+      this.clearSearch();
+      return;
+    }
     this.loaderService.enableLoader();
     this.subscribedEmailService.searchSubscribedEmail($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.emails = response.data.data;
             this.config.totalItems = response.data.total;
+            this.showClearSearch = true;
             this.loaderService.disableLoader();
           }
         }
+    );
+  }
+
+  /**
+   * Method to clear search text and reload the list
+   */
+  public clearSearch() {
+    this.showClearSearch = false;
+    this.searchKey = '';
+    this.loaderService.enableLoader();
+    this.config.currentPage = 1;
+    this.subscribedEmailService.searchSubscribedEmail('').subscribe(
+      (response: any ) => {
+        this.loaderService.disableLoader();
+        if (response.status) {
+          this.emails = response.data.data;
+          this.config.totalItems = response.data.total;
+        }
+      }
     );
   }
 

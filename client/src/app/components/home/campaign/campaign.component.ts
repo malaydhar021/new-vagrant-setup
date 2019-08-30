@@ -64,6 +64,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   campaignScriptForCustomDomain: string = 'lib/widget.min.js'; // constant path for campaign script
   campaignIdToDelete: string = null;
   showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
+  showClearSearch: boolean = false;
 
   /**
    * Constructor method to fetch all required information from api provider
@@ -903,14 +904,38 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   onSearch($term) {
     this.config.currentPage = 1;
     this.loaderService.enableLoader();
+    if ($term.target.value == '') {
+      this.clearSearch();
+      return;
+    }
     this.campaignService.searchCampaign($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.campaigns = response.data.data;
             this.config.totalItems = response.data.total;
+            this.showClearSearch = true;
             this.loaderService.disableLoader();
           }
         }
+    );
+  }
+
+  /**
+   * Method to clear search text and reload the list
+   */
+  public clearSearch() {
+    this.showClearSearch = false;
+    this.searchKey = '';
+    this.loaderService.enableLoader();
+    this.config.currentPage = 1;
+    this.campaignService.searchCampaign('').subscribe(
+      (response: any ) => {
+        this.loaderService.disableLoader();
+        if (response.status) {
+          this.campaigns = response.data.data;
+          this.config.totalItems = response.data.total;
+        }
+      }
     );
   }
 

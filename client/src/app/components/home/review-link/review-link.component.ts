@@ -74,7 +74,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   showMinRatingError: boolean = false;
   showStarRating: boolean = false;
   rate: number = null;
-
+  showClearSearch: boolean = false;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -729,7 +729,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.reviewLinkService.updateReviewLink(this.reviewLinkId, data).subscribe(
       (response: any) => {
         Log.info(response, "Response Update");
-        if(response.status) {
+        if (response.status) {
           // perform post response activities
           this.postResponseActivities(response.message);
         } else {
@@ -751,7 +751,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     this.reviewLinkService.updateAutoApproveStatus(this.reviewLinkId, data).subscribe(
       (response: any) => {
         Log.info(response, "Response Update");
-        if(response.status) {
+        if (response.status) {
           // perform post response activities
           this.ngxSmartModalService.getModal('starRatingModal').close();
           this.postResponseActivities(response.message);
@@ -776,7 +776,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
       (response: any) => {
         Log.info(response, "Response Store");
         this.ngxSmartModalService.getModal('deleteModal').close();
-        if(response.status) {
+        if (response.status) {
           // perform post response activities
           this.postResponseActivities(response.message);
         } else {
@@ -797,7 +797,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     Log.notice(this.form, "log the request");
     this.isSubmittedStep1 = true;
     this.runtimeValidations();
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       let element = document.getElementsByClassName('sr-modal-body');
       element[0].scrollTo(1, 1);
       return;
@@ -817,11 +817,11 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     formData.append('negative_info_review_message_1', this.getFormControls.negative_info_review_msg_1.value); // append date to show
     formData.append('negative_info_review_message_2', this.getFormControls.negative_info_review_msg_2.value); // append date to show
     formData.append('positive_review_message', this.getFormControls.positive_review_msg.value); // append date to show
-    if(this.image !== null) {
+    if (this.image !== null) {
       formData.append('logo', this.image, this.image.name); // append image to formData
     }
     // if is_editing false then logo is not required else required
-    if(this.isEditing) {
+    if (this.isEditing) {
       formData.append('is_editing', '1'); // in case of edit review link
     } else {
       formData.append('is_editing', '0'); // in case of add review link
@@ -835,10 +835,10 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
    * @since Version 1.0.0
    * @returns Void
    */
-  public onSubmitStep2(){
+  public onSubmitStep2() {
     this.isSubmittedStep1 = true;
     this.searchKey = '';
-    if(this.form.invalid || this.form2.invalid) {
+    if (this.form.invalid || this.form2.invalid) {
       let element = document.getElementsByClassName('sr-modal-body');
       element[0].scrollTo(1, 1);
       return;
@@ -857,7 +857,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     formData.append('min_rating', this.getFormControls.min_rating.value); // append min rating to form data
     formData.append('negative_info_review_message_1', this.getFormControls.negative_info_review_msg_1.value); // append negative review message 1
     formData.append('negative_info_review_message_2', this.getFormControls.negative_info_review_msg_2.value); // append negative review message 2
-    formData.append('positive_review_message', this.getFormControls.positive_review_msg.value); //append positive review message
+    formData.append('positive_review_message', this.getFormControls.positive_review_msg.value); // append positive review message
     formData.append('page_background', this.pageBackground); // append page back ground
     formData.append('modal_background', this.modalBackground); // append modal background
     formData.append('text_color', this.textColor); // append text color
@@ -943,14 +943,38 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   public onSearch($term) {
     this.config.currentPage = 1;
     this.loaderService.enableLoader();
+    if ($term.target.value == '') {
+      this.clearSearch();
+      return;
+    }
     this.reviewLinkService.searchReviewLink($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.reviewLinks = response.data.data;
             this.config.totalItems = response.data.total;
+            this.showClearSearch = true;
             this.loaderService.disableLoader();
           }
         }
+    );
+  }
+
+  /**
+   * Method to clear search text and reload the list
+   */
+  public clearSearch() {
+    this.showClearSearch = false;
+    this.searchKey = '';
+    this.loaderService.enableLoader();
+    this.config.currentPage = 1;
+    this.reviewLinkService.searchReviewLink('').subscribe(
+      (response: any ) => {
+        this.loaderService.disableLoader();
+        if (response.status) {
+          this.reviewLinks = response.data.data;
+          this.config.totalItems = response.data.total;
+        }
+      }
     );
   }
 
@@ -997,7 +1021,9 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
     if(this.getFormControls.auto_approve.value) {
       this.form.controls['min_rating'].setValidators([Validators.required, Validators.min(1)]);
       this.showStarRating = true;
+      this.form.controls['min_rating'].setValue(0);
     } else  {
+      this.form.controls['min_rating'].setValue(0);
       this.form.controls['min_rating'].clearValidators();
       this.showStarRating = false;
     }

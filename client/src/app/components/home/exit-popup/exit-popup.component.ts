@@ -85,7 +85,7 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
   exitpopupIdToDelete: string = '';
   noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
   showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
-
+  showClearSearch: boolean = false;
   /**
    *
    * @param ngxSmartModalService
@@ -839,13 +839,37 @@ export class ExitPopupComponent implements OnInit, OnDestroy {
    */
   public onSearch($term) {
     this.config.currentPage = 1;
+    if ($term.target.value == '') {
+      this.clearSearch();
+      return;
+    }
     this.loaderService.enableLoader();
     this.exitPopupService.searchExitPopups($term.target.value).subscribe(
       (response: any) => {
         if (response.status) {
           this.exitPopups = response.data.data;
           this.config.totalItems = response.data.total;
+          this.showClearSearch = true;
           this.loaderService.disableLoader();
+        }
+      }
+    );
+  }
+
+  /**
+   * Method to clear search text and reload the list
+   */
+  public clearSearch() {
+    this.showClearSearch = false;
+    this.searchKey = '';
+    this.loaderService.enableLoader();
+    this.config.currentPage = 1;
+    this.exitPopupService.searchExitPopups('').subscribe(
+      (response: any ) => {
+        this.loaderService.disableLoader();
+        if (response.status) {
+          this.exitPopups = response.data.data;
+          this.config.totalItems = response.data.total;
         }
       }
     );

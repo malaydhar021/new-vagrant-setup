@@ -117,6 +117,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   stickyReviewIdToDelete: string = null;
   noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
   showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
+  showClearSearch: boolean  = false;
   /**
    *
    * @param ngxSmartModalService
@@ -795,14 +796,38 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   public onSearch($term) {
     this.config.currentPage = 1;
     this.loaderService.enableLoader();
+    if ($term.target.value == '') {
+      this.clearSearch();
+      return;
+    }
     this.stickyReviewService.searchStickyReview($term.target.value).subscribe(
         (response: any ) => {
           if (response.status) {
             this.reviews = response.data.data;
             this.config.totalItems = response.data.total;
+            this.showClearSearch = true;
             this.loaderService.disableLoader();
           }
         }
+    );
+  }
+
+  /**
+   * Method to clear search text and reload the list
+   */
+  public clearSearch() {
+    this.showClearSearch = false;
+    this.searchKey = '';
+    this.loaderService.enableLoader();
+    this.config.currentPage = 1;
+    this.stickyReviewService.searchStickyReview('').subscribe(
+      (response: any ) => {
+        this.loaderService.disableLoader();
+        if (response.status) {
+          this.reviews = response.data.data;
+          this.config.totalItems = response.data.total;
+        }
+      }
     );
   }
 

@@ -8,6 +8,7 @@
     </div>
     <div class="mainBoxHeaderRight" *ngIf="!showNoRecordsFoundTemplate">
       <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
+      <button class="clearSearch" *ngIf="showClearSearch" (click)="clearSearch()" title="Clear search"></button>
     </div>
   </header>
   <div class="dataTableArea" *ngIf="!showNoRecordsFoundTemplate">
@@ -41,6 +42,17 @@
                       {{ link.description }}
                     </p>
                     <div class="reviewLinkinfo">
+                      <div class="approve">
+                        <p>Auto Approve:</p>
+
+                        <div class="switcher switchInForm">
+                          <label>
+                            <input type="checkbox" class="tglBtn" [(ngModel)]="link.auto_approve"
+                                   #autoApproveStatus="ngModel" (change)="onChangeAutoApproveStatus(link.id, autoApproveStatus, link.min_rating)">
+                            <span></span>
+                          </label>
+                        </div>
+                      </div>
                       <div class="minRating" *ngIf="link.auto_approve">
                         <p>Min. Rating: </p>
                         <div class="stars">
@@ -48,18 +60,6 @@
                           </bar-rating>
                         </div>
                       </div>
-                      <div class="approve">
-                        <p>Auto Approve:</p>
-
-                          <div class="switcher switchInForm">
-                            <label>
-                              <input type="checkbox" class="tglBtn" [(ngModel)]="link.auto_approve"
-                          #autoApproveStatus="ngModel" (change)="onChangeAutoApproveStatus(link.id, autoApproveStatus, link.min_rating)">
-                              <span></span>
-                            </label>
-                          </div>
-                      </div>
-
 
                     </div>
                   </div>

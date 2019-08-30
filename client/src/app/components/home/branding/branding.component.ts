@@ -43,6 +43,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   brandIdToDelete: number = null;
   noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
   showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
+  showClearSearch: boolean = false;
   /**
    * Constructor to inject required service. It also subscribe to a observable which emits the current
    * value of defined variable.
@@ -392,14 +393,38 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
   public onSearch($term) {
     this.config.currentPage = 1;
     this.loaderService.enableLoader();
+    if ($term.target.value == '') {
+      this.clearSearch();
+      return;
+    }
     this.brandingService.searchBrands($term.target.value).subscribe(
         (response: any ) => {
           this.loaderService.disableLoader();
           if (response.status) {
             this.brands = response.data.data;
             this.config.totalItems = response.data.total;
+            this.showClearSearch = true;
           }
         }
+    );
+  }
+
+  /**
+   * Method to clear search text and reload the list
+   */
+  public clearSearch() {
+    this.showClearSearch = false;
+    this.searchKey = '';
+    this.config.currentPage = 1;
+    this.loaderService.enableLoader();
+    this.brandingService.searchBrands('').subscribe(
+      (response: any ) => {
+        this.loaderService.disableLoader();
+        if (response.status) {
+          this.brands = response.data.data;
+          this.config.totalItems = response.data.total;
+        }
+      }
     );
   }
 

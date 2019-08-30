@@ -1,18 +1,18 @@
 <div class="stepReview step_2 active">
   <form [formGroup]="form" class="form_eParent" (ngSubmit)="onSubmit()">
     <div class="formRow">
-      <label> Review Title(Max: {{ allowedMaxReviewTitle }} chars) </label>
+      <label> Review Title (Max: {{ allowedMaxReviewTitle }} chars) </label>
       <div class="inRowRvw sr-form-field">
         <input class="sr-form-ctrl" type="text" placeholder="Title for your review" formControlName="name" [ngClass]="{error: isSubmitted && getFormControls.name.errors}" />
         <div class="error-msg" *ngIf="(
               isSubmitted
-              && getFormControls.name.errors !== null 
+              && getFormControls.name.errors !== null
               && getFormControls.name.errors.required)">
           Review title is required
         </div>
         <div class="error-msg" *ngIf="(
               isSubmitted
-              && getFormControls.name.errors !== null 
+              && getFormControls.name.errors !== null
               && getFormControls.name.errors.maxlength)">
           Review title should be maximum {{ allowedMaxReviewTitle }} characters
         </div>
@@ -47,12 +47,12 @@
             <textarea class="sr-form-ctrl" placeholder="Title for your review" formControlName="review"
               [ngClass]="{error: getFormControls.review.errors}"></textarea>
               <div class="error-msg" *ngIf="(
-                    getFormControls.review.errors !== null 
+                    getFormControls.review.errors !== null
                     && getFormControls.review.errors.required)">
                 Review is required
               </div>
               <div class="error-msg" *ngIf="(
-                    getFormControls.review.errors !== null 
+                    getFormControls.review.errors !== null
                     && getFormControls.review.errors.maxlength)">
                 Review should be maximum {{ allowedMaxTextReviewChars }} characters
               </div>
@@ -80,17 +80,17 @@
                       <input type="file" (change)="onChangeReviewFile($event)"
                         [ngClass]="{error: getFormControls.review.errors}">
                         <div class="error-msg" *ngIf="(
-                                getFormControls.review.errors !== null 
+                                getFormControls.review.errors !== null
                                 && getFormControls.review.errors.required)">
                           Audio file is required
                         </div>
                         <div class="error-msg" *ngIf="(
-                                getFormControls.review.errors !== null 
+                                getFormControls.review.errors !== null
                                 && getFormControls.review.errors.invalidFileType)">
                           Invalid file type. File should be an audio file
                         </div>
                         <div class="error-msg" *ngIf="(
-                                getFormControls.review.errors !== null 
+                                getFormControls.review.errors !== null
                                 && getFormControls.review.errors.invalidFileSize)">
                           Invalid file size. File size should be maximum {{allowedMaxAudioFileSize}} {{unit}}
                         </div>
@@ -142,17 +142,17 @@
                     <input type="file" (change)="onChangeReviewFile($event)"
                       [ngClass]="{error: getFormControls.review.errors}">
                       <div class="error-msg" *ngIf="(
-                          getFormControls.review.errors !== null 
+                          getFormControls.review.errors !== null
                           && getFormControls.review.errors.required)">
                         Video is required
                       </div>
                       <div class="error-msg" *ngIf="(
-                          getFormControls.review.errors !== null 
+                          getFormControls.review.errors !== null
                           && getFormControls.review.errors.invalidFileType)">
                         Invalid file type. File should be an video
                       </div>
                       <div class="error-msg" *ngIf="(
-                          getFormControls.review.errors !== null 
+                          getFormControls.review.errors !== null
                           && getFormControls.review.errors.invalidFileSize)">
                         Invalid file size. File size should be maximum {{ allowedMaxVideoFileSize }} {{ unit }}
                       </div>
@@ -189,8 +189,8 @@
           <!-- <label>Rate your review</label> -->
           <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="rating"></bar-rating>
           <div class="error-msg" *ngIf="(
-                isSubmitted 
-                && getFormControls.rating.errors !== null 
+                isSubmitted
+                && getFormControls.rating.errors !== null
                 && getFormControls.rating.errors.required)">
             Review rating is required
           </div>

@@ -8,6 +8,7 @@
     </div>
     <div class="mainBoxHeaderRight" *ngIf="!showNoRecordsFoundTemplate">
       <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
+      <button class="clearSearch" *ngIf="showClearSearch" (click)="clearSearch()" title="Clear search"></button>
     </div>
   </header>
   <div class="dataTableArea" *ngIf="!showNoRecordsFoundTemplate">
