@@ -90,12 +90,12 @@ export class RequestInterceptor implements HttpInterceptor {
 
       case 400: // Bad Request
         // update the error messaged based on message object in http response
-        const errorMessage400 = this.updateErrorMessage(error);
-        // hide the loader
-        this.loaderService.disableLoader();
+        const errorMessage400 = this.setErrorMessage(error);
         // update error messages for only for 400 http request. 
         // This will mostly handle the server side form validation messages.
         this.updateErrorMessage400(error);
+        // hide the loader
+        this.loaderService.disableLoader();
         // return observable as string
         return of(errorMessage400);
 
@@ -182,6 +182,25 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   /**
+   * Function to update error message for 400 http status response
+   * @method setErrorMessage
+   * @since version 1.1.0
+   * @param error HttpErrorResponse
+   * @returns String
+   */
+  private setErrorMessage(error: HttpErrorResponse) {
+    let errMsg = '';
+    if (error instanceof HttpErrorResponse && error.error.hasOwnProperty('message')) {
+      this.errorService.updateMessage(error.error.message);
+      errMsg = error.error.message;
+    } else {
+      this.errorService.updateMessage(this.defaultErrorMessage);
+      errMsg = this.defaultErrorMessage;
+    }
+    return errMsg;
+  }
+
+  /**
    * Function to update validation error messages for 400 http error response using errorService.
    * @method updateErrorMessage400
    * @since version 1.1.0
@@ -193,8 +212,8 @@ export class RequestInterceptor implements HttpInterceptor {
       // this.errorService.updateMessage(error.error.message);
       // errMsg = error.error.message;
       Log.debug(error.error.errors, "Catch 400 validation messages");
-      this.errorService.updateValidationMessage(error.error.errors);
-      //this.errorService.updateValidationMessage(error.error.errors);
+      setTimeout(() => {this.errorService.updateValidationMessage(error.error.errors)}, 100);
+      // this.errorService.updateValidationMessage(error.error.errors);
     } else {
       const error = {error: this.defaultErrorMessage}
       this.errorService.updateValidationMessage(error);

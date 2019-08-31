@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.2.4
+
+1. Fixed issue with validation error messages for 400 http status code
+
 ### V2.2.3
 
 1. Fixed issue with forgot password

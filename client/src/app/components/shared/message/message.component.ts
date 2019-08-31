@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, OnDestroy, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ErrorsService } from '../../../services/errors.service';
 import { LoaderService } from '../../../services/loader.service';
-import { Log } from 'src/app/helpers/app.helper';
 
 /**
  * MessageComponent is responsible for showing messages when a server sends an error message

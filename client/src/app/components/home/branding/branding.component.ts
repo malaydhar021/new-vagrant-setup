@@ -63,8 +63,7 @@ export class BrandingComponent implements OnInit, OnDestroy, AfterViewInit {
     private formBuilder: FormBuilder,
     private errorService: ErrorsService,
     private brandingService: BrandingService,
-    private loaderService: LoaderService,
-    private route: ActivatedRoute
+    private loaderService: LoaderService
   ) {
     this.errorSubscription = this.errorService.showMessage$.subscribe(
       (status: boolean) => {
