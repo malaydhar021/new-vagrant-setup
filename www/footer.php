@@ -15,7 +15,7 @@
 
     <div class="container">
         <p class="billed">*Billed monthly, <a href="#">no set up fee.</a></p>
-        <p class="copyright">© 2018 All rights reserved. 
+        <p class="copyright">© 2019 All rights reserved.
             <span class="ftLinks">
                 <a href="terms-and-conditions" target="_blank"> Terms and Conditions </a> 
                 <a href="privacy-policy" target="_blank">Privacy Policy </a> 
