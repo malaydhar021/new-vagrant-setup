@@ -83,7 +83,7 @@ export class ShowUserReviewComponent implements OnInit, OnDestroy {
                 } else {
                     this.loaderService.disableLoader();
                     this.showMessage = true;
-                    this.message = 'This link is expired !';
+                    this.message = 'This link has been expired !';
                 }
             });
     }

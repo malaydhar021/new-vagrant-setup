@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
   isModalOpened: boolean = false; // set to true if the modal is opened
-
+  isSubmited: boolean = false;
   /**
   * Constructor to inject required service. It also subscribe to a observable which emits the current
   * value of defined variable.
@@ -182,6 +182,10 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   public onUpdatePassword() {
     // values from the form element
+    this.isSubmited = true;
+    if (this.userPasswordUpdateForm.invalid) {
+      return false;
+    }
     let values = this.userPasswordUpdateForm.value;
     // Start loader
     this.loaderService.enableLoader();
