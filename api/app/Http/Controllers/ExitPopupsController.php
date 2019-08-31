@@ -138,12 +138,12 @@ class ExitPopupsController extends Controller
                 });
 
                 $exitPopup->stickyReviews()->sync($deocdedStickyReviews);
-                Campaign::where('id', $exitPopup->campaign_id)->update([
-                    'exit_pop_up' => '1',
-                    'exit_pop_up_id' => $exitPopup->id
-                ]);
             }
 
+            Campaign::where('id', $exitPopup->campaign_id)->update([
+                'exit_pop_up' => '1',
+                'exit_pop_up_id' => $exitPopup->id
+            ]);
         } catch (Exception $exception) {
             DB::rollBack();
 
