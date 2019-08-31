@@ -49,7 +49,12 @@ class PasswordResetController extends Controller
         
         $passwordReset->delete();
         // revoke current token
-        $user->token()->revoke();
+        \DB::table('oauth_access_tokens')
+        ->where('id', $user->id)
+        ->update([
+            'revoked' => true
+        ]);
+        
         $user->sendPasswordResetSuccessNotification();
 
         return response()->json([
