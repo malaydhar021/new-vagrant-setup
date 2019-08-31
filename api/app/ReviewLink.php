@@ -10,6 +10,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ReviewLink extends Model
 {
     use FileStorage, SoftDeletes;
+    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'custom_domain_id'
+    ];
+    
     /**
      * The attributes that should be mutated to dates.
      *

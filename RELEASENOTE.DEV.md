@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.2.6
+
+1. Fixed issue with video review for starter plan in review link
+
 ### V2.2.5
 
 1. Fixed issue with forgot password and reset password. Revoked auth token during changed password
