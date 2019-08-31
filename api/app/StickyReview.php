@@ -288,7 +288,10 @@ class StickyReview extends Model
    */
   public function getTagsAttribute($value)
   {
-    $str_arr = explode (",", $value);
+    $tagList = explode(",", $value);
+    $str_arr = array_filter($tagList, function ($tag) {
+        return strlen(trim($tag));
+    });
     return $str_arr;
   }
 
