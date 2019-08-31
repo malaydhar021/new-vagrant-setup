@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.2.7
+
+1. Fixed issue with review link slug
+
 ### V2.2.6
 
 1. Fixed issue with video review for starter plan in review link
