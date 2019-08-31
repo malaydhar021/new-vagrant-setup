@@ -121,11 +121,10 @@ return [
     
     /*
     |--------------------------------------------------------------------------
-    | AFFILIATE URL
+    | Pasword reset url
     |--------------------------------------------------------------------------
     |
-    | AFFILIATE url will be used to update users information in the tier5 AFFILIATE platform.
-    | Using this url we call the API to update sale information in the AFFILIATE platform.
+    | Password reset url will be used to update password
     |
     |
     */

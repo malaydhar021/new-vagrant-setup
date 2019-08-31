@@ -7,5 +7,6 @@ export const environment = {
     WIDGET_BASE_URL: 'https://lib.beta.usestickyreviews.com/widget.min.js',
     UPLOAD_BASE_URL: 'https://api.beta.usestickyreviews.com/uploads', // deprecated and will be removed in next release
     CNAME_CONFIG_DOMAIN: 'cname.beta.usestickyreviews.com',
-    JONS_AFFILIATE_ID: '1451512084871700'
+    JONS_AFFILIATE_ID: '1451512084871700',
+    STARTER_PLAN_ID: 'plan_Fiwr24LcX6cp8S'
 };

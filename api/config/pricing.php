@@ -20,10 +20,10 @@ return [
     'plans' => [
 
         'lowest' => [
-            'id' => "starter-monthly",          // Stripe plan ID
+            'id' => env("STARTER_PLAN_ID"),          // Stripe plan ID
             'name' => "Starter Monthly",        // Stripe plan name
             'alias' => "Starter",               // Defined by you to show in frontend
-            'amount' => 10.00,
+            'amount' => (double) env("STARTER_PLAN_AMOUNT"),
             'trial' => 14,                      // Trial periods in days
             'type' => 'recurring',              // Billing type 'recurring'
             'interval' => 30,                   // No of days if type is recurring
@@ -36,16 +36,16 @@ return [
                 'campaigns' => 2,
                 'review-links' => 2,
                 'exit-popups' => 2,              // No exit pop-ups
-                'custom-domains' => 2,              // No of custom domains
+                'custom-domains' => 1,              // No of custom domains
                 'video-reviews' => 0,              // No of video review
             ],
         ],
 
         'modest' => [
-            'id' => "premium-monthly",
+            'id' => env("PREMIUM_PLAN_ID"),
             'name' => "Premium Monthly",
             'alias' => "Premium",
-            'amount' => 25.00,
+            'amount' => (double) env("PREMIUM_PLAN_AMOUNT"),
             'trial' => null,                    // No trial
             'type' => 'recurring',
             'interval' => 30,
@@ -64,10 +64,10 @@ return [
         ],
 
         'highest' => [
-            'id' => "enterprise-monthly",
+            'id' => env("ENTERPRISE_PLAN_ID"),
             'name' => "Enterprise Monthly",
             'alias' => "Enterprise",
-            'amount' => 50.00,
+            'amount' => (double) env("ENTERPRISE_PLAN_AMOUNT"),
             'trial' => null,
             'type' => 'recurring',
             'interval' => 30,

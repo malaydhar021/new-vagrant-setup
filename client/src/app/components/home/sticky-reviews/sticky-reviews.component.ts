@@ -13,6 +13,7 @@ import { ErrorsService } from 'src/app/services/errors.service';
 import { BrandingService } from '../../../services/branding.service';
 import * as moment from 'moment';
 import { SubscriptionService } from 'src/app/services/subscription.service';
+import { starterStripeId } from 'src/app/helpers/api.helper';
 /**
  * StickyReviewsComponent class will handle all required action to meet the functionalities of
  * sticky review feature. It includes CRUD operation
@@ -118,6 +119,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   noRecordsFoundSubscription: Subscription; // to get the current value of no records found template
   showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
   showClearSearch: boolean  = false;
+  starterStripeId: string = starterStripeId;
+
   /**
    *
    * @param ngxSmartModalService
@@ -148,8 +151,10 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // get the current plan of logged in user
     this.userSubscription = this.subscriptionService.getUserSubscription$().subscribe(
       (response: any) => {
-        Log.info(response, "in sticky reviews component");
         this.pricingPlan = response.data.pricing_plan.id;
+        if(this.pricingPlan === starterStripeId) {
+          this.reviewTypes.splice(-1,1);
+        }
       }
     );
     // subscription for no records found template
@@ -243,10 +248,6 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public ngAfterViewInit() {
-    // if the user is starter plan then remove video review
-    if(this.pricingPlan === 'starter-monthly') {
-      this.reviewTypes.splice(-1,1);
-    }
     // do stuffs when modal has been closed. In this case reset the form when modal is closed
     this.ngxSmartModalService.getModal('modal1').onClose.subscribe((modal: NgxSmartModalComponent) => {
       this.resetForm();

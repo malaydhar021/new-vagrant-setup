@@ -37,6 +37,15 @@ export const cnameDomainName: string = environment.CNAME_CONFIG_DOMAIN;
 export const AppBaseUrl: string = environment.APP_BASE_URL;
 
 export const JONS_AFFILIATE_ID: string = environment.JONS_AFFILIATE_ID;
+
+/**
+ * Stripe id for starter plan
+ * @constant starterStripeId
+ * @version 1.0.0
+ * @author Tier5 LLC `<work@tier5.us>`
+ * @license Proprietary
+ */
+export const starterStripeId: string = environment.STARTER_PLAN_ID;
 /**
  * AuthApiEndPoints helper is holding all auth related api endpoints based on the environment
  * @class AuthApiEndPoints

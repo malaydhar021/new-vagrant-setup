@@ -46,8 +46,10 @@ class PasswordResetController extends Controller
         }
 
         $user->update(['password' => $request->input('password')]);
-
+        
         $passwordReset->delete();
+        // revoke current token
+        $user->token()->revoke();
         $user->sendPasswordResetSuccessNotification();
 
         return response()->json([

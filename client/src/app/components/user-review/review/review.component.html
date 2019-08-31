@@ -34,7 +34,7 @@
           <span>Audio</span>
         </label>
         <!-- Video review radio -->
-        <label class="reviewRadio" *ngIf="review.pricing_plan_id !== 'starter-monthly' && review.allow_video_review">
+        <label class="reviewRadio" *ngIf="review.pricing_plan_id !== starterStripeId && review.allow_video_review">
           <input type="radio" name="reviewType" formControlName="reviewType" [value]="3" />
           <span>Video</span>
         </label>

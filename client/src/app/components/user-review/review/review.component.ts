@@ -10,6 +10,7 @@ import { MediaService }                                       from '../../../ser
 import * as ValidationEngine                                  from '../../../helpers/form.helper';
 import { Log }                                                from '../../../helpers/app.helper';
 import { ErrorsService }                                      from '../../../services/errors.service';
+import { starterStripeId }                                    from '../../../helpers/api.helper';
 
 /**
  * Component to handle all sort of operations regarding video / audio / textual review and rating.
@@ -96,6 +97,7 @@ export class ReviewComponent implements OnInit, OnDestroy, AfterViewInit {
   reviewFileAsBlob: Blob = null;
   errorSubscription: Subscription; // to get the current value of showError property
   showError: boolean = false; // flag to show error message
+  starterStripeId: string = starterStripeId;
 
   /**
    * Constructor method to load required services at the very first

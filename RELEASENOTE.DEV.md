@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.2.5
+
+1. Fixed issue with forgot password and reset password. Revoked auth token during changed password
+
 ### V2.2.4
 
 1. Fixed issue with validation error messages for 400 http status code

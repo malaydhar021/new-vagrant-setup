@@ -69,7 +69,8 @@ class UserController extends Controller
             $user->update(['password' => $request->input('new_password')]);
 
             $user->sendPasswordUpdatedNotification();
-
+            // revoke user token
+            $user->token()->revoke();
             return response()->json([
                 'status' => true,
                 'message' => "Your password has updated successfully.",
