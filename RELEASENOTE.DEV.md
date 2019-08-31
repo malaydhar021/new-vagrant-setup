@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.2.3
+
+1. Fixed issue with forgot password
+
 ### V2.2.2
 
 1. Added a middleware to check whether user is active or not

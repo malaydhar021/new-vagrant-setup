@@ -106,7 +106,7 @@ return [
 
     'websocket_url' => env( 'WEBSOCKET_URL', 'https://ws.usestickyreviews.com'),
 
-  /*
+    /*
     |--------------------------------------------------------------------------
     | AFFILIATE URL
     |--------------------------------------------------------------------------
@@ -117,7 +117,20 @@ return [
     |
     */
 
-  'AFFILIATE_URL' => env( 'AFFILIATE_URL', 'https://api-affiliate.tier5.us'),
+    'AFFILIATE_URL' => env('AFFILIATE_URL', 'https://api-affiliate.tier5.us'),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | AFFILIATE URL
+    |--------------------------------------------------------------------------
+    |
+    | AFFILIATE url will be used to update users information in the tier5 AFFILIATE platform.
+    | Using this url we call the API to update sale information in the AFFILIATE platform.
+    |
+    |
+    */
+
+    'password_reset_url' => env('PASSWORD_RESET_URL', 'https://app.usestickyreviews.com/forgot-password/reset/'),
 
     /*
     |--------------------------------------------------------------------------
