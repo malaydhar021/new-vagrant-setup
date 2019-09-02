@@ -66,7 +66,7 @@ export default {
 				if (response.data.status) {
 					this.checkDomainName(response.data.data)
 				} else {
-					console.log("SR script is not enabled for this domain!")
+					console.error("[Sticky Reviews] Widget script is not enabled for this domain!")
 				}
 			} catch (error) {
 				console.log(error)
@@ -81,7 +81,7 @@ export default {
 				if (response.data.status) {
 					this.pageLeft(response.data.data)
 				} else {
-					console.log("SR script is not enabled for this domain!")
+					console.error("[Sticky Reviews] Widget script is not enabled for this domain!")
 				}
 			} catch (error) {
 				console.log(error)
@@ -96,7 +96,8 @@ export default {
 			let vm = this;
 			vm.appData = dataresponse
 			if (dataresponse.is_active) {
-				if (window.location.host === dataresponse.domain_name) {
+        if (window.location.host === dataresponse.domain_name ||
+          window.location.host === 'www.' + dataresponse.domain_name) {
 					// checking if any review is there or not. if there are then generate review popups
 					if ( dataresponse.sticky_reviews.hasOwnProperty('data') && dataresponse.sticky_reviews.data.length) {
 						// Waiting time before start...
@@ -117,7 +118,7 @@ export default {
 						vm.getPopUpData()
 					}
 				} else {
-					console.error('[Sticky Reviews] Campaign URL did not match with current URL')
+				  console.error('[Sticky Reviews] Campaign URL did not match with current URL')
 				}
 			} else {
 			  console.error(
