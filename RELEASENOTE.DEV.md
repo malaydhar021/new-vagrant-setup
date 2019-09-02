@@ -55,6 +55,10 @@
 
 ## Enhancement
 
+### V2.2.8
+
+1. Implemented maintenance page to site for maintenance mode
+
 ### V2.2.7
 
 1. Fixed issue with review link slug
