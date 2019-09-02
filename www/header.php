@@ -32,7 +32,7 @@ if($_GET['aid']){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:title" content="Sticky Reviews"/>
-    <meta property="og:type" content="categories"/>
+    <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://www.usestickyreviews.com/"/>
     <meta property="og:image" content="https://www.usestickyreviews.com/images/banner.png"/>
     <meta property="og:site_name" content="Sticky Reviews"/>
@@ -62,6 +62,7 @@ if($_GET['aid']){
             <ul class="nav">
                 <li><a href="https://<?php echo $linkUrl; ?>/#howItWorks">How It Works</a></li>
                 <li><a href="https://<?php echo $linkUrl; ?>/#pricing">Pricing</a></li>
+                <li><a href="https://<?php echo $linkUrl; ?>/support">Support</a></li>
                 <li><a href="https://app.<?php echo $linkUrl; ?>/sign-up" target="_blank"> 14 Day Free Trial</a></li>
             </ul>
             <div class="loginBtn">
