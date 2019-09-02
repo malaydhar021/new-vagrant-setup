@@ -64,7 +64,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => "required|string|email",
             'password' => "required|string|min:8|" .
-                "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/"
+                "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\dX])(?=.*[!$#%]).*$/"
         ]);
 
         $exists = User::whereEmail($request->input('email'))->first();
