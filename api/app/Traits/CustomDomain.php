@@ -59,7 +59,7 @@ trait CustomDomain {
                 'access_token' => $access_token,
                 'domain' => $customDomain
             ];        
-            $client = new Client();
+            $client = new Client(['verify' => false]);
             $res = $client->post("http://{$customDomain}", ['form_params'=> $body]);
             $response  = json_decode($res->getBody()->getContents());
             
