@@ -34,7 +34,7 @@ if($_GET['aid']){
     <meta property="og:title" content="Sticky Reviews"/>
     <meta property="og:type" content="categories"/>
     <meta property="og:url" content="https://www.usestickyreviews.com/"/>
-    <meta property="og:image" content="https://www.usestickyreviews.com/images/Sticky-theme-5.png"/>
+    <meta property="og:image" content="https://www.usestickyreviews.com/images/banner.png"/>
     <meta property="og:site_name" content="Sticky Reviews"/>
     <meta property="og:description" content="Sticky Reviews makes increasing conversions simple. It's super simple to set up and takes only around 10 minutes to get started."/>
     <!-- Favicons -->

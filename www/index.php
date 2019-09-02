@@ -76,7 +76,7 @@ $planData = json_decode($allPlansData,true);
                     </li>
                     <li>
                         <img src="images/icon_increase_visitor.png" alt="">
-                        <h3>Increase Visitor Trust</h3>
+                        <h3>Increase Visitors Trust</h3>
                         <p>People trust companies they see other people buy from as well.</p>
                     </li>
                     <li>
