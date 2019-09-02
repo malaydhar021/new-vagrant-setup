@@ -8,5 +8,5 @@ export const environment = {
     UPLOAD_BASE_URL: 'https://api.usestickyreviews.com/uploads',
     CNAME_CONFIG_DOMAIN: 'cname.usestickyreviews.com',
     JONS_AFFILIATE_ID: '1451512084871700',
-    STARTER_PLAN_ID: 'plan_Fiwr24LcX6cp8S'
+    STARTER_PLAN_ID: 'plan_FC1oIeDJVa7e2N'
 };
