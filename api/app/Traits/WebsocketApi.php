@@ -41,7 +41,7 @@ trait WebsocketApi
     public function wsApiCall(string $endpoint) {
         try {
             // make api call
-            $client = new Client();
+            $client = new Client(['verify' => false]);
             $res = $client->get($this->wsApiBaseUrl . $endpoint);
             return json_decode($res->getBody()->getContents());
         } catch (ClientException $clientException) {
