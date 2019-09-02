@@ -125,10 +125,12 @@ class UserReviewsController extends Controller
             } else {
                 $reviewType = 2; //created by user through review link but no permission to show in web recommend us yes
                 $tags .= 'positive-review, non-publishable';
+                $shouldAutoDisplay = false;
             }
         } else {
             $reviewType = 4;     //created by user through review link with recommend us no
             $tags .= 'negative-review';
+            $shouldAutoDisplay = false;
         }
 
         $userReview->tags = $tags;
@@ -191,58 +193,71 @@ class UserReviewsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function checkPasskey(Request $request){
+    public function checkPasskey(Request $request)
+    {
         $stickyId = Hashids::decode($request->stickyId);
         $reviewToken = $request->reviewToken;
         $getEnvUrl = $_SERVER['SERVER_NAME'];
+
         if (strpos($getEnvUrl, 'local') !== false) {
             $linkUrl = 'api.local.usestickyreviews.com';
-        } elseif (strpos($getEnvUrl, 'beta') !== false ){
+        } elseif (strpos($getEnvUrl, 'beta') !== false) {
             $linkUrl = 'api.beta.usestickyreviews.com';
         } else {
             $linkUrl = 'api.usestickyreviews.com';
         }
-            // show the review
-             $stickyReviewData = StickyReview::where('id', $stickyId)->where('review_token', $reviewToken)->with('reviewLink.campaign', 'brands' ,'reviewLink.campaign.brandingDetails' )->first();
-             if($stickyReviewData){
-                 $stickyReviewData['url_link'] = $linkUrl;
-                 return response()->json([
-                     'status' => true,
-                     'data'  =>  $stickyReviewData,
-                     'message' => "Sticky review found !",
-                 ]);
-             }else{
-                return response()->json([
-                    'status' => false,
-                    'data'  =>  [],
-                    'message' => "Sticky review not found !",
-                ]);
-             }
+        // show the review
+        $stickyReviewData = StickyReview::where('id', $stickyId)->where('review_token', $reviewToken)
+            ->with('reviewLink.campaign', 'brands', 'reviewLink.campaign.brandingDetails')
+            ->first();
+        if ($stickyReviewData) {
+            $stickyReviewData['url_link'] = $linkUrl;
+            return response()->json([
+                'status' => true,
+                'data'  =>  $stickyReviewData,
+                'message' => "Sticky review found !",
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'data'  =>  [],
+                'message' => "Sticky review not found !",
+            ]);
+        }
     }
 
-    public function reviewAction(Request $request) {
+    public function reviewAction(Request $request)
+    {
         $stickyId = Hashids::decode($request->stickyId);
         $updateStickyReview = StickyReview::where('id', $stickyId)->first();
-        if($updateStickyReview != null ){
+        if ($updateStickyReview != null) {
             $updateStickyReview->is_accept = $request->reviewAction;
             $updateStickyReview->review_token = null;
-            if($updateStickyReview->save()){
-                if($request->reviewAction == 1){
-                    $message ='User review accepted !';
-                }else{
-                    $message ='User review rejected !';
+            if ($updateStickyReview->save()) {
+                $noOfAttachedCampaignsThroughReviewLink = $updateStickyReview->campaigns
+                    ->where('id', $updateStickyReview->reviewLink->campaign_id)->count();
+                if ($request->reviewAction == 1) {
+                    if ($noOfAttachedCampaignsThroughReviewLink == 0) {
+                        $updateStickyReview->campaigns()->attach([$updateStickyReview->reviewLink->campaign_id]);
+                    }
+                    $message = 'User review accepted !';
+                } else {
+                    if ($noOfAttachedCampaignsThroughReviewLink > 0) {
+                        $updateStickyReview->campaigns()->detach([$updateStickyReview->reviewLink->campaign_id]);
+                    }
+                    $message = 'User review rejected !';
                 }
                 return response()->json([
                     'status' => true,
                     'message' => $message,
                 ]);
-            }else{
+            } else {
                 return response()->json([
                     'status' => false,
                     'message' => 'Something went wrong while saving, Please try again !',
                 ]);
             }
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
                 'message' => 'Sorry user review not found !',

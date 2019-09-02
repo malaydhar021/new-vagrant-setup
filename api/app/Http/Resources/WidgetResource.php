@@ -37,13 +37,25 @@ class WidgetResource extends JsonResource
 
         $getStickyReviewIds =  CampaignStickyReview::where('campaign_id', $this->id)->pluck('sticky_review_id');
 
+        $srQuery = StickyReview::whereIn('id', $getStickyReviewIds)->with('brands')->orderBy('created_at', 'DESC');
+        // Please do not remove the following commented out block
+        /*
         $srQuery = StickyReview::whereIn('id', $getStickyReviewIds)->where(function ($q) {
-            return $q->where('review_type', 1)->orWhere(function ($q1) {
-                return $q1->where('review_type', 3)->where(function ($q2) {
-                    return $q2->where('is_accept', 1)->orWhere('is_accept', null);
+            return $q->where(function ($q1) {
+                return $q1->where('review_type', 1)->orWhere(function ($q2) {
+                    return $q2->where('review_type', 3)->where(function ($q3) {
+                        return $q3->where('is_accept', 1)->orWhere('is_accept', null);
+                    });
+                });
+            })->orWhere(function ($q1) {
+                return $q1->where(function ($q2) {
+                    return $q2->where('review_type', 2)->orWhere('is_accept', 1);
+                })->where(function ($q2) {
+                    return $q2->where('review_type', 4)->orWhere('is_accept', 1);
                 });
             });
         })->with('brands')->orderBy('created_at', 'DESC');
+        */
 
         if ($srQuery->count()) {
             $stickyReviews = $srQuery->paginate(5);
