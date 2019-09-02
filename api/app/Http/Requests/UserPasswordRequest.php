@@ -29,9 +29,9 @@ class UserPasswordRequest extends FormRequest
         return [
             'current_password' => "required",
             'new_password' => "required|string|min:8|"
-                . "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/|confirmed",
+                . "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\dX])(?=.*[!$#%]).*$/|confirmed",
             'new_password_confirmation' => "required|string|min:8|"
-                . "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/",
+                . "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\dX])(?=.*[!$#%]).*$/",
         ];
     }
 

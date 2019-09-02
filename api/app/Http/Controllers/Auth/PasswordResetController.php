@@ -21,7 +21,7 @@ class PasswordResetController extends Controller
         $request->validate([
             'email' => "required|string|email",
             'password' => "required|string|min:8|"
-                . "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/|confirmed",
+                . "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\dX])(?=.*[!$#%]).*$/|confirmed",
             'token' => "required|string|size:64"
         ]);
 
@@ -46,7 +46,7 @@ class PasswordResetController extends Controller
         }
 
         $user->update(['password' => $request->input('password')]);
-        
+
         $passwordReset->delete();
         // revoke current token
         \DB::table('oauth_access_tokens')
@@ -54,7 +54,7 @@ class PasswordResetController extends Controller
         ->update([
             'revoked' => true
         ]);
-        
+
         $user->sendPasswordResetSuccessNotification();
 
         return response()->json([
