@@ -1382,10 +1382,26 @@ h5 {
     display: block;
     font-size: 14px;
     margin-bottom: 5px;
+    position: relative;
 }
 .socket-e h3 {
     font-size: 28px;
 }   
+
+.socket-e span sup {
+    padding: 1px 5px;
+    border-radius: 30px;
+    position: absolute;
+    top: -4px;
+    font-size: 10px;
+    left: 100%;
+    margin-left: 5px;
+    background: #e30c5d;
+    color: #fff;
+    position: absolute;
+    font-weight: 600;
+}
+
 
 
 

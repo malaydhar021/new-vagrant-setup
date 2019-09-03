@@ -52,7 +52,7 @@ $planData = json_decode($allPlansData,true);
                             <h3 class="total-reviews-from-review-link-count">0</h3>
                         </div>
                         <div class="socket-e">
-                            <span>Total Emails Collected From Exit Popups</span>
+                            <span>Total Emails Collected From Exit Popups <sup>NEW</sup></span>
                             <h3 class="total-subscribed-email-count">0</h3>
                         </div>
                     </div>
