@@ -21,9 +21,11 @@
               <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
             </template>
 
-            <template v-else-if="data.brands && data.brands.hasOwnProperty('url') && data.brands.hasOwnProperty('name')">
-              <span class="pwBy"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-              <a :href="data.brands.url" target="_blank">{{data.brands.name}}</a>
+            <template v-else>
+              <template v-if="data.brands && data.brands.hasOwnProperty('url') && data.brands.hasOwnProperty('name')">
+                <span class="pwBy"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
+                <a :href="data.brands.url" target="_blank">{{data.brands.name}}</a>
+              </template>
             </template>
 
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
@@ -68,10 +70,14 @@
               <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
               <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
             </template>
-            <template v-else-if="data.brands && data.brands.hasOwnProperty('url') && data.brands.hasOwnProperty('name')">
-              <span class="pwBy"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-              <a :href="data.brands.url" target="_blank">{{data.brands.name}}</a>
+
+            <template v-else>
+              <template v-if="data.brands && data.brands.hasOwnProperty('url') && data.brands.hasOwnProperty('name')">
+                <span class="pwBy"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
+                <a :href="data.brands.url" target="_blank">{{data.brands.name}}</a>
+              </template>
             </template>
+
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
               <i :class="index+1 <= data.rating ? 'star': 'star inactive'">
                 &#9734;
@@ -129,10 +135,14 @@
               <span class="pwBy" v-if="isBranded"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
               <a :href="data.has_brand ? data.brands.url : brandingData.url" target="_blank" v-if="isBranded">{{data.has_brand ? data.brands.name : brandingData.name}}</a>
             </template>
-            <template v-else-if="data.brands && data.brands.hasOwnProperty('url') && data.brands.hasOwnProperty('name')">
-              <span class="pwBy"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
-              <a :href="data.brands.url" target="_blank">{{data.brands.name}}</a>
+
+            <template v-else>
+              <template v-if="data.brands && data.brands.hasOwnProperty('url') && data.brands.hasOwnProperty('name')">
+                <span class="pwBy"><img src="../../assets/images/icon_poweredby.png" alt="">by</span>
+                <a :href="data.brands.url" target="_blank">{{data.brands.name}}</a>
+              </template>
             </template>
+
             <figure class="rateStar" v-for="(item, index) in 5" :key="index">
               <i :class="index+1 <= data.rating ? 'star': 'star inactive'">
                 &#9734;
