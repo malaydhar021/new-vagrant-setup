@@ -764,6 +764,10 @@ a {
     a {
       display: inline-block;
       max-width: 126px;
+
+      @media (max-width: 420px) {
+        max-width: 112px;
+      }
     }
 
     @media (max-width: 991px) {
@@ -1123,6 +1127,10 @@ a {
           right: 0;
           @include border-radius(10px 0px 10px 10px);
         }
+
+        @media (max-width: 420px) {
+          right: -30px;
+        }
       }
 
       &.active .settingDrop {
@@ -1140,12 +1148,20 @@ a {
           left: auto;
           right: 0;
         }
+
+        @media (max-width: 420px) {
+          right: -30px;
+        }
       }
 
       @media (max-width: 991px) {
         pointer-events: all;
         @include mt(0);
         @include ml(30px);
+      }
+
+      @media (max-width: 420px) {
+        @include ml(10px);
       }
     }
 
@@ -1221,6 +1237,69 @@ a {
         }
       }
 
+      .support_logged {
+        display: block;
+        float: left;
+        padding: 10px 15px;
+        border-radius: 30px;
+        background: #E30C5D;
+        font-size: 15px;
+        color: #fff;
+        @include mr(15px);
+        @include mt(3px);
+        @include mb(3px);
+        transition: all ease 0.4s;
+
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 0;
+          max-width: 25px;
+
+          img {
+            pointer-events: none;
+          }
+        }
+
+        &:hover {
+          border-bottom-left-radius: 0;
+        }
+
+        @media (max-width: 991px) {
+          font-size: 0;
+          padding: 0;
+          margin: 0 25px 0 0;
+          width: 35px;
+          height: 35px;
+          text-align: center;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+                  align-items: center;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+                  justify-content: center;
+
+          span {
+            max-width: 100%;
+
+            img {
+              max-width: 20px;
+            }
+          }
+        }
+
+        @media (max-width: 575px) {
+          @include mr(15px);
+        }
+
+        @media (max-width: 420px) {
+          @include mr(10px);
+        }
+      }
+
       &.active {
         .settingDrop {
           right: 0;
@@ -1244,6 +1323,19 @@ a {
 
       @media (max-width: 575px) {
         @include ml(15px);
+      }
+
+      @media (max-width: 420px) {
+        @include ml(10px);
+      }
+
+      &:after {
+        clear: both;
+      }
+      &:after,
+      &:before {
+        content: '';
+        display: table;
       }
     }
 
@@ -1311,6 +1403,10 @@ a {
       @media (max-width: 991px) {
         @include ml(15px);
       }
+
+      @media (max-width: 420px) {
+        @include ml(10px);
+      }
     }
 
     @media (max-width: 991px) {
@@ -1332,6 +1428,10 @@ a {
       -ms-flex-pack: end;
       justify-content: flex-end;
       z-index: 20;
+    }
+
+    @media (max-width: 420px) {
+      padding-left: 125px;
     }
   }
 

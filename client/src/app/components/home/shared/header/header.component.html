@@ -26,6 +26,12 @@
 
   </div>
   <div class="headerRight" [ngClass]="tglProfile ? 'active' : ''">
+      <a class="support_logged" href="javascript:void(0)">
+        <span>
+          <img src="../../../../../assets/images/baseline_contact_support_white_18dp.png" alt="">
+        </span>
+        Support
+      </a>
       <a class="hdrProfile" (click)="tglProfileMenu()" (clickOutside)="closeProfileBox($event)" [style.background-image]="'url('+ userImageUrl +')'"></a>
       <div class="settingDrop">
         <ul>
