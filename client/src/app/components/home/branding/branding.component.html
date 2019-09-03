@@ -81,7 +81,7 @@
         <div class="sr-form">
           <div class="sr-form-row">
             <div class="sr-form-cell">
-              <label>Brand Name</label>
+              <label>Brand Name *</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.brandName.errors}" formControlName="brandName">
                 <div class="error-msg" *ngIf="(
@@ -96,7 +96,7 @@
 
           <div class="sr-form-row">
             <div class="sr-form-cell">
-              <label>Brand URL</label>
+              <label>Brand URL *</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.brandUrl.errors}" formControlName="brandUrl" placeholder="http://example.com">
                 <div class="error-msg" *ngIf="(

@@ -15,7 +15,7 @@
           <div class="formStep">
             <h2>Register for Sticky Reviews</h2>
             <div class="formRow" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.name.errors}">
-              <label>Full Name</label>
+              <label>Full Name *</label>
               <input type="text" class="formCtrl" formControlName="name" >
               <div class="error" *ngIf="(
                 isSubmittedStep1
@@ -25,7 +25,7 @@
               </div>
             </div>
             <div class="formRow" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.email.errors}">
-              <label>Email Address</label>
+              <label>Email Address *</label>
               <input type="text" class="formCtrl" formControlName="email">
               <div class="error" *ngIf="(
                 isSubmittedStep1
@@ -41,7 +41,7 @@
               </div>
             </div>
             <div class="formRow" [ngClass]="{error: isSubmittedStep1 && signupFormStep1FormControls.password.errors}">
-              <label>Password</label>
+              <label>Password *</label>
               <input type="password" class="formCtrl" formControlName="password">
               <div class="error" *ngIf="(
                 isSubmittedStep1
@@ -73,7 +73,7 @@
             <h2>Credit Card Information</h2>
             <div class="formRow">
               <div class="formCol6" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.card.errors}">
-                <label>Credit Card Number</label>
+                <label>Credit Card Number *</label>
                 <input type="text" class="formCtrl card"  mask="0000 0000 0000 0000" formControlName="card" minlength="14">
                 <div class="error" *ngIf="(
                   isSubmittedStep2
@@ -95,7 +95,7 @@
                 </div>
               </div>
               <div class="formCol4" [ngClass]="{error: isSubmittedStep2 && signupFormStep2FormControls.cvc.errors}">
-                <label>CVC Number</label>
+                <label>CVC Number *</label>
                 <input type="password" class="formCtrl" formControlName="cvc" mask="0000">
                 <div class="error" *ngIf="(
                   isSubmittedStep2

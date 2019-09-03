@@ -42,7 +42,7 @@
           <message *ngIf="isModalOpened" [successMessage]="successMessage" [showMessage]="showError"></message>
           <div class="formRow">
             <div class="formCol6" [ngClass]="{'error' : !cardForm.get('card_number').valid && cardForm.get('card_number').touched}">
-              <label>Credit Card Number</label>
+              <label>Credit Card Number *</label>
               <input
                 type="text"
                 class="formCtrl card"
@@ -58,7 +58,7 @@
               </span>
             </div>
             <div class="formCol4" [ngClass]="{'error' : !cardForm.get('cvc_number').valid && cardForm.get('cvc_number').touched}">
-              <label>CVC Number</label>
+              <label>CVC Number *</label>
               <input
                 type="password"
                 class="formCtrl"

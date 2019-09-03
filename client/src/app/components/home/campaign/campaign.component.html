@@ -158,7 +158,7 @@
                 [showMessage]="showError"></message>
               <div class="sr-form-row">
                 <div class="sr-form-cell-small">
-                  <label>Campaign Name</label>
+                  <label>Campaign Name *</label>
                   <div class="sr-form-field">
                     <input type="text" class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignName.errors}"
@@ -172,7 +172,7 @@
                   </div>
                 </div>
                 <div class="sr-form-cell-small">
-                  <label>Domain Name</label>
+                  <label>Domain Name *</label>
                   <div class="sr-form-field">
                     <input type="text" class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignDomainName.errors}"
@@ -241,7 +241,7 @@
               </div>
               <div class="sr-form-row">
                 <div class="sr-form-cell-small">
-                  <label>Delay Before Start <span>(in seconds)</span></label>
+                  <label>Delay Before Start <span>(in seconds)</span> *</label>
                   <div class="sr-form-field">
                     <input type="text" class="sr-form-ctrl" digitsOnly
                       [ngClass]="{error: isSubmitted && getFormControls.campaignDelayBeforeStart.errors}"
@@ -255,7 +255,7 @@
                   </div>
                 </div>
                 <div class="sr-form-cell-small">
-                  <label>Stay Timing<span>(in seconds)</span></label>
+                  <label>Stay Timing<span>(in seconds)</span> *</label>
                   <div class="sr-form-field">
                     <input type="text" digitsOnly class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignStayTime.errors}"
@@ -277,7 +277,7 @@
               </div>
               <div class="sr-form-row">
                 <div class="sr-form-cell-small">
-                  <label>Interval Between Reviews <span>(in seconds)</span></label>
+                  <label>Interval Between Reviews <span>(in seconds)</span> *</label>
                   <div class="sr-form-field">
                     <input type="text" digitsOnly class="sr-form-ctrl"
                       [ngClass]="{error: isSubmitted && getFormControls.campaignDelayBetweenTwoReview.errors}"

@@ -120,7 +120,7 @@
         <div class="sr-form">
           <div class="sr-form-row">
             <div class="sr-form-cell">
-              <label>Name</label>
+              <label>Name *</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.name.errors}" formControlName="name">
                 <div class="error-msg" *ngIf="(
@@ -135,7 +135,7 @@
 
           <div class="sr-form-row">
             <div class="sr-form-cell">
-              <label>Domain</label>
+              <label>Domain *</label>
               <div class="sr-form-field">
                 <input type="text" class="sr-form-ctrl" [ngClass]="{error: isSubmitted && getFormControls.domain.errors}" formControlName="domain">
                 <div class="error-msg" *ngIf="(

@@ -143,7 +143,7 @@
           <div class="sr-form">
             <div class="sr-form-row">
               <div class="sr-form-cell-small">
-                <label>Review Link Name</label>
+                <label>Review Link Name *</label>
                 <div class="sr-form-field">
                   <input type="text" class="sr-form-ctrl" formControlName="name" (change)="slug"
                     [ngClass]="{'error' : isSubmittedStep1 && getFormControls.name.errors}">
@@ -156,7 +156,7 @@
                 </div>
               </div>
               <div class="sr-form-cell-small" [ngClass]="{'url-slug': isValidSlug}">
-                <label>URL Slug</label>
+                <label>URL Slug *</label>
                 <div class="sr-form-field">
                   <input class="sr-form-ctrl" formControlName="url_slug" (change)="onChangeSlug()"
                     [ngClass]="{'error' : getFormControls.url_slug.errors && (isSubmittedStep1 || getFormControls.url_slug.errors.isSlugExits)}">
@@ -208,7 +208,7 @@
             </div>
             <div class="sr-form-row">
               <div class="sr-form-cell">
-                <label>Select Campaign</label>
+                <label>Select Campaign *</label>
                 <div class="sr-form-field">
                   <select class="sr-form-ctrl" formControlName="campaign_id" [compareWith]="compareValue"
                     [ngClass]="{error: isSubmittedStep1 && getFormControls.campaign_id.errors}">
@@ -237,7 +237,7 @@
             </div>
             <div class="sr-form-row">
               <div class="sr-form-cell imageUp">
-                <label>Upload an image</label>
+                <label>Upload an image *</label>
                 <div class="sr-form-field">
                   <div class="sr-form-ctrl inputFile">
                     <input type="file" (change)="onChangeFile($event)" [ngClass]="{error: isSubmittedStep1 && getFormControls.logo.errors}">
@@ -275,7 +275,7 @@
             </div>
             <div class="sr-form-row">
               <div class="sr-form-cell-small">
-                <label>Enter Description</label>
+                <label>Enter Description *</label>
                 <div class="sr-form-field">
                   <textarea type="text" class="sr-form-ctrl" formControlName="description"
                     [ngClass]="{'error' : isSubmittedStep1 && getFormControls.description.errors}"></textarea>
@@ -288,7 +288,7 @@
                 </div>
               </div>
               <div class="sr-form-cell-small">
-                <label>Positive Review Message</label>
+                <label>Positive Review Message *</label>
                 <div class="sr-form-field">
                   <textarea type="text" class="sr-form-ctrl" formControlName="positive_review_msg"
                     [ngClass]="{'error' : isSubmittedStep1 && getFormControls.positive_review_msg.errors}"></textarea>
@@ -303,7 +303,7 @@
             </div>
             <div class="sr-form-row">
               <div class="sr-form-cell-small">
-                <label>Negative Info #1</label>
+                <label>Negative Info #1 *</label>
                 <div class="sr-form-field">
                   <textarea type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_1"
                     [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_1.errors}"></textarea>
@@ -316,7 +316,7 @@
                 </div>
               </div>
               <div class="sr-form-cell-small">
-                <label>Negative Info #2</label>
+                <label>Negative Info #2 *</label>
                 <div class="sr-form-field">
                   <textarea type="text" class="sr-form-ctrl" formControlName="negative_info_review_msg_2"
                     [ngClass]="{'error' : isSubmittedStep1 && getFormControls.negative_info_review_msg_2.errors}"></textarea>

@@ -103,7 +103,7 @@
           <div class="sr-form-content">
             <div class="sr-form-row">
               <div class="sr-form-cell-small">
-                <label>Sticky Review Name</label>
+                <label>Sticky Review Name *</label>
                 <div class="sr-form-field">
                   <input type="text" class="sr-form-ctrl"
                     [ngClass]="{error: isSubmitted && getFormControls.srName.errors}" formControlName="srName">
@@ -132,7 +132,7 @@
             <div class="sr-form-row">
               <div class="sr-form-cell-small rating_modals">
                 <div class="inFormCell">
-                  <label>Rate your review</label>
+                  <label>Rate your review *</label>
                   <bar-rating [(rate)]="rate" [max]="5" [theme]="'default'" formControlName="srRating"></bar-rating>
                   <div class="error-msg" *ngIf="(
                       isSubmitted
@@ -193,7 +193,7 @@
               <div class="option_review">
                 <!-- Textual review  -->
                 <div class="sr-form-cell reviewopt opt_Text active" *ngIf="selectedReivewType == 1">
-                  <label>Description</label>
+                  <label>Description *</label>
                   <div class="sr-form-field">
                     <textarea class="sr-form-ctrl description_textarea"
                       [ngClass]="{error: isSubmitted && getFormControls.sr.errors}" formControlName="sr"></textarea>
@@ -297,7 +297,7 @@
             <!-- Image file upload section -->
             <div class="sr-form-row">
               <div class="sr-form-cell">
-                <label>Upload an image</label>
+                <label>Upload an image *</label>
                 <div class="sr-form-field">
                   <div class="sr-form-ctrl inputFile">
                     <input type="file" (change)="onChangeFile($event)" formControlName="srImage"

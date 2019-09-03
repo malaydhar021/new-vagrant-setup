@@ -79,7 +79,7 @@
                     <div class="sr-form">
                         <div class="sr-form-row">
                             <div class="sr-form-cell">
-                                <label>Token Name</label>
+                                <label>Token Name *</label>
                                 <div class="sr-form-field">
                                     <input type="text" formControlName="tokenName" class="sr-form-ctrl" [ngClass]="{'error' : !userZapierTokenForm.get('tokenName').valid && userZapierTokenForm.get('tokenName').touched}">
                                     <span class="error-msg" *ngIf="!userZapierTokenForm.get('tokenName').valid && userZapierTokenForm.get('tokenName').errors.required" class="error-msg">Token name is required !</span>
