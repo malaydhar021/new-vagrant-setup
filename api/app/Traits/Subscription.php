@@ -236,8 +236,9 @@ trait Subscription
         $this->update([
             'subscription_status' => $subscriptionStatus,
             'pricing_plan' => null,
-            'is_active' => 1,
+            'is_active' => '1',
         ]);
+        $this->delete();
     }
 
     /**

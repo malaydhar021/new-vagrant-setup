@@ -16,6 +16,7 @@ Route::prefix('web')->middleware('web')->name('web.')->group(function () {
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::post('/create', 'ThirdPartyWebhooksController@store')->name('store');
+        Route::post('/update', 'ThirdPartyWebhooksController@update')->name('update');
         Route::post('/delete', 'ThirdPartyWebhooksController@destroy')->name('destroy');
         Route::post('/status', 'ThirdPartyWebhooksController@alterStatus')->name('status.alter');
     });

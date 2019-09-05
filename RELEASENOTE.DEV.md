@@ -169,6 +169,10 @@
 
 ## Subscription
 
+### V2.2.2
+
+1. Implemented update a plan api from a certain user from affiliate platform
+
 ### V2.2.1
 
 1. Implemented api for fetching all plans data with pricing all respective features

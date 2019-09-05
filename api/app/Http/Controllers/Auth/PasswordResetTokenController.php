@@ -21,7 +21,7 @@ class PasswordResetTokenController extends Controller
         $request->validate([
             'email' => 'required|string|email',
         ]);
-        $user = User::whereEmail($request->input('email'))->first();
+        $user = User::whereEmail($request->input('email'))->whereNull('deleted_at')->first();
 
         if (!$user) {
             return response()->json([

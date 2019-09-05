@@ -64,6 +64,8 @@ class StripeWebhookController extends CashierController
                 'subscription_status' => "TERMINATED",
                 'trial_ends_at' => null,
             ]);
+            
+            $user->delete();
         }
     }
 

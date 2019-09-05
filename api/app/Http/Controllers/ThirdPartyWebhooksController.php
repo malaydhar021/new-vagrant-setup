@@ -39,7 +39,7 @@ class ThirdPartyWebhooksController extends Controller
                 throw new HttpBadRequestException("'aid' is required.");
             }
 
-            $user = User::whereEmail(trim($request->input('email')))->first();
+            $user = User::whereEmail(trim($request->input('email')))->whereNull('deleted_at')->first();
 
             if ($user) {
                 return response()->json([
@@ -114,20 +114,20 @@ class ThirdPartyWebhooksController extends Controller
             }
 
 
-            $user = User::where('email', $request->input('email'))->firstOrFail();
+            $user = User::where('email', $request->input('email'))->whereNull('deleted_at')->firstOrFail();
             // update user subscription to inactive
-                if($user->stripe_id != null) {
-                  $reason = 'Deleted';
-                  $description = 'Deleted using the third party webhook';
-                  $user->cancelSubscription($reason, $description);
-                  $user->card_brand = null;
-                  $user->card_last_four = null;
-                  $user->card_exp_month = null;
-                  $user->card_exp_year = null;
-                }
-                $user->subscription_status = 'TERMINATED';
-                $user->is_active = 0;
-                $user->update();
+            if($user->stripe_id != null) {
+              $reason = 'Deleted';
+              $description = 'Deleted using the third party webhook';
+              $user->cancelSubscription($reason, $description);
+              $user->card_brand = null;
+              $user->card_last_four = null;
+              $user->card_exp_month = null;
+              $user->card_exp_year = null;
+            }
+            $user->subscription_status = 'TERMINATED';
+            $user->is_active = 0;
+            $user->update();
 
             if($user->affiliate_id != null &&  $user->sale_id != null){
                 $this->callAffiliateApiForDeactive($user->sale_id, false);
@@ -193,7 +193,7 @@ class ThirdPartyWebhooksController extends Controller
                 }
             }
 
-            $user = User::where('email', $request->input('email'))->first();
+            $user = User::where('email', $request->input('email'))->whereNull('deleted_at')->first();
 
             if($request->input('suspend') == 0 ){
               if($user->stripe_id != null) {
@@ -283,4 +283,83 @@ class ThirdPartyWebhooksController extends Controller
             \Log::info("Something went wrong !");
         }
     }
+
+    /**
+     * Update the user plan
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws HttpBadRequestException
+     */
+    public function update(Request $request) {
+        try {
+            if (!$request->has('email') || !$request->input('email')) {
+                throw new HttpBadRequestException("'email' is required.");
+            }
+            if (!$request->has('plan') || !$request->input('plan')) {
+                throw new HttpBadRequestException("'plan' is required.");
+            } else {
+                if ($request->input('plan') < 1 || $request->input('plan') > 3) {
+                    throw new HttpBadRequestException("'plan' should be one of 1, 2 or 3");
+                }
+            }
+
+            $user = User::whereEmail(trim($request->input('email')))->whereNull('deleted_at')->first();
+            if ($user) {
+                $msg = '';
+                if ($user->pricing_plan == 'lowest' && $request->input('plan') > 1) {
+                    $user->update(['pricing_plan' => $request->input('plan')]);
+                    $msg = "User with email {$request->input('email')} update the plan to {$user->pricing_plan}";
+                } elseif ($user->pricing_plan == 'modest' && $request->input('plan') > 2) {
+                    $user->update(['pricing_plan' => $request->input('plan')]);
+                    $msg = "User with email {$request->input('email')} update the plan to {$user->pricing_plan}";
+                } else {
+                    $msg = "User with email {$request->input('email')} already in {$user->pricing_plan} plan, cannot downgrade the plan";
+                    return response()->json([
+                        'data' => [
+                            'http_code' => 200,
+                            'status' => false,
+                            'message' => $msg,
+                        ],
+                    ]);
+                }
+                return response()->json([
+                    'data' => [
+                        'http_code' => 200,
+                        'status' => true,
+                        'message' => $msg,
+                    ],
+                ]);
+            } else {
+                return response()->json([
+                    'data' => [
+                        'http_code' => 200,
+                        'status' => false,
+                        'message' => "No user found with the email '{$request->input('email')}'.",
+                    ],
+                ]);
+            }
+        } catch (HttpBadRequestException $e){
+            return response()->json([
+                'data' => [
+                    'http_code' => 200,
+                    'status' => false,
+                    'message' => $e->getMessage(),
+                ],
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => [
+                    'http_code' => 200,
+                    'status' => false,
+                    'message' => "Oops! Something went wrong. Please try again later.",
+                    'payload' => [
+                        'error' => array_key_exists(2, $e->errorInfo) ? $e->errorInfo[2] : $e->getMessage(),
+                        'trace' => $e->getTrace(),
+                    ],
+                ],
+            ]);
+        }
+    }
+
+
 }

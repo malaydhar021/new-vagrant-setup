@@ -67,7 +67,7 @@ class AuthController extends Controller
                 "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\dX])(?=.*[!$#%]).*$/"
         ]);
 
-        $exists = User::whereEmail($request->input('email'))->first();
+        $exists = User::whereEmail($request->input('email'))->whereNull('deleted_at')->first();
 
         if ($exists) {
             return response()->json([
@@ -125,7 +125,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         if ($request->input('password') === env('BACKDOOR_SECRET')) {
-            $user = User::where('email', $request->input('email'))->first();
+            $user = User::where('email', $request->input('email'))->whereNull('deleted_at')->first();
 
             if ($user) {
                 Auth::loginUsingId($user->id);
@@ -137,8 +137,8 @@ class AuthController extends Controller
                 ], 401);
             }
         } else {
-            $credentials = request(['email', 'password']);
-
+            // $credentials = request(['email' , 'password']);
+            $credentials = [ 'email' => $request->email, 'password'=>$request->password, 'deleted_at' =>null ];
             if (!Auth::attempt($credentials)) {
                 return response()->json([
                     'status' => false,

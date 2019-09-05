@@ -36,7 +36,7 @@ class PasswordResetController extends Controller
             ], 404);
         }
 
-        $user = User::where('email', $passwordReset->email)->first();
+        $user = User::where('email', $passwordReset->email)->whereNull('deleted_at')->first();
 
         if (!$user) {
             return response()->json([
