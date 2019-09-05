@@ -110,6 +110,7 @@ img {
     bottom: 0;
     display: block;
     margin: 0 0 35px 15px;
+    z-index: 1040;
 }
 
 .linkTo {
