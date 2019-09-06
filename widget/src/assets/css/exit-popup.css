@@ -2217,7 +2217,7 @@ img {
     height: 40px;
 }
 
-.overlay {
+.exitPopup .overlay {
     position: fixed;
     top: 0;
     bottom: 0;
