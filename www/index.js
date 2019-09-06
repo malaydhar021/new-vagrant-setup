@@ -71,9 +71,11 @@ var cookiePage = $.cookie('_readSite');
 
 $(document).ready(function () {
     if (cookiePage) {
+        $('body').removeClass('showCookie-body');
         $('.cookieCompliance').removeClass('showCookie');
     } else {
         setTimeout(() => {
+            $('body').addClass('showCookie-body');
             $('.cookieCompliance').addClass('showCookie');
         }, 200);
     }

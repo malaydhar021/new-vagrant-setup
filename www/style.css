@@ -880,6 +880,9 @@ body {
     color: #858788;
     margin-top: 50px;
 }
+.showCookie-body .footer > .container {
+    margin-bottom: 35px;
+}
 
 .responsiveNav {
     display: none;
@@ -1496,11 +1499,19 @@ h5 {
     }
 
     .footer {
-        padding: 45px 0 75px;
+        padding: 45px 0;
     }
     .socketInfo .container {
         margin-top: 0;
         margin-bottom: 0;
+    }
+
+
+    .showCookie-body .footer > .container {
+        margin-bottom: 15px;
+    }
+    .showCookie-body .footer {
+        padding-bottom: 65px;
     }
 }
 
@@ -1768,7 +1779,7 @@ h5 {
     }
 
     .footer {
-        padding: 75px 0;
+        padding: 75px 0 35px;
     }
     .featureArea2 .sliderContainer .slide.active .slideLeft .blueRing{
         bottom: 170px;
@@ -1776,6 +1787,11 @@ h5 {
     .featureArea2 .sliderContainer .slide .slideLeft .blueRing {
         left: 38px;
         bottom: 10px;
+    }
+    .socket-e span sup {
+        position: static;
+        display: inline-block;
+        vertical-align: middle;
     }
 }
 
@@ -2349,7 +2365,7 @@ h5 {
         bottom: 120px;
     }
     .footer {
-        padding: 25px 0 105px;
+        padding: 25px 0 35px;
     }
     .cookieCompliance {
         padding-left: 0;
@@ -2441,6 +2457,11 @@ h5 {
     }
     .socket-e h3 {
         font-size: 20px;
+    }
+
+
+    .showCookie-body .footer {
+        padding-bottom: 35px;
     }
 }
 
@@ -2563,5 +2584,9 @@ h5 {
 
     .sliderNav {
         margin-top: -100px;
+    }
+
+    .showCookie-body .footer {
+        padding-bottom: 90px;
     }
 }
