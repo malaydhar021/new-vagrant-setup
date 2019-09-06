@@ -109,6 +109,7 @@ $(document).ready(function () {
 
 function closeCookie() {
     $('.cookieCompliance').removeClass('showCookie');
+    $('body').removeClass('showCookie-body');
     document.cookie = '_readSite' +"=" + 1 + ";expires=" + 450 + ";domain=.usestickyreviews.com;path=/";
 };
 
