@@ -75,11 +75,13 @@
                   <p>{{ campaign.created_at | localDateTime }}</p>
                 </div>
                 <div class="tcol">
-                  <a (click)="onEditCampaign(campaign)" class="edit"><img src="../../../../assets/images/icon_edit.png"
+                  <a (click)="onClickStickyReviews(i, campaign)" class="assignTask" title="Campaign Sticky Reviews"><img
+                    src="../../../../assets/images/icon_assign_task.png" class="assignTaskImg" alt=""></a>
+                  <a (click)="onEditCampaign(campaign)" class="edit" title="Edit"><img src="../../../../assets/images/icon_edit.png"
                       alt=""></a>
-                  <a (click)="onClickStickyReviews(i, campaign)" class="assignTask"><img
-                      src="../../../../assets/images/icon_assign_task.png" class="assignTaskImg" alt=""></a>
-                  <a (click)="onDeleteCampaign(campaign.id)" class="delete"><img
+                  <a (click)="onCloneCampaign(campaign)" class="clone" title="Clone"><img src="../../../../assets/images/icon_copy_snippet.png"
+                    alt="Clone"></a>
+                  <a (click)="onDeleteCampaign(campaign.id)" class="delete" title="Delete"><img
                       src="../../../../assets/images/icon_delete_red.png" alt=""></a>
 
                   <div class="taskBox">

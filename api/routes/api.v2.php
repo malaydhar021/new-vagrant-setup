@@ -59,7 +59,7 @@ Route::middleware(['auth:api', 'subscription', 'activeUser'])->group(function ()
     Route::bind('id', function ($value, $route) {
         return \App\Helpers\Hashids::decode($value);
     });
-    
+
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', 'DashboardController@index')->name('index');
     });
@@ -84,6 +84,7 @@ Route::middleware(['auth:api', 'subscription', 'activeUser'])->group(function ()
         Route::patch('/{id}/status', 'CampaignsController@toggleStatus')->name('status.toggle');
         Route::patch('/{id}/sticky-reviews', 'CampaignsController@syncStickyReviews')->name('sticky-reviews.sync');
         Route::get('/sticky-review-style/{id}', 'CampaignsController@stickyReviewStyle')->name('sticky-review.style');
+        Route::post('/clone', 'CampaignsController@clone')->name('clone');
     });
 
     Route::prefix('exit-popups')->name('exit-popups.')->group(function () {

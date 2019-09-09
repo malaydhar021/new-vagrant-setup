@@ -1601,6 +1601,17 @@ a {
                       display: none
                     }
 
+                    &:last-child {
+                      width: 16%;
+
+                      a {
+                        @media (max-width: 480px) {
+                          width: 25px;
+                          height: 25px;
+                        }
+                      }
+                    }
+
                     @media (max-width: 991px) {
                       &:last-child {
                         width: auto;

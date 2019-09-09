@@ -104,25 +104,25 @@
                   </div>
                 </div>
               </div>
-              <div class="sr-form-row">
-                <div class="sr-form-cell">
-                  <label>Change Email</label>
-                  <div class="sr-form-field">
-                    <input
-                      type="email"
-                      class="sr-form-ctrl"
-                      formControlName="email"
-                      [ngClass]="{'error' : !userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').touched}"
-                    >
-                    <span class="error-msg" *ngIf="!userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').errors.required">
-                      Required!
-                    </span>
-                    <span class="error-msg" *ngIf="!userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').errors.email">
-                      Must be an email!
-                    </span>
-                  </div>
-                </div>
-              </div>
+<!--              <div class="sr-form-row">-->
+<!--                <div class="sr-form-cell">-->
+<!--                  <label>Change Email</label>-->
+<!--                  <div class="sr-form-field">-->
+<!--                    <input-->
+<!--                      type="email"-->
+<!--                      class="sr-form-ctrl"-->
+<!--                      formControlName="email"-->
+<!--                      [ngClass]="{'error' : !userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').touched}"-->
+<!--                    >-->
+<!--                    <span class="error-msg" *ngIf="!userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').errors.required">-->
+<!--                      Required!-->
+<!--                    </span>-->
+<!--                    <span class="error-msg" *ngIf="!userProfileUpdateForm.get('email').valid && userProfileUpdateForm.get('email').errors.email">-->
+<!--                      Must be an email!-->
+<!--                    </span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
               <div class="sr-form-row">
                 <div class="sr-form-cell">
                   <label>Upload an image</label>

@@ -65,6 +65,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
   campaignIdToDelete: string = null;
   showNoRecordsFoundTemplate: boolean = false; // flag to show no records found template
   showClearSearch: boolean = false;
+  isCloned: boolean = false;
 
   /**
    * Constructor method to fetch all required information from api provider
@@ -456,6 +457,8 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isEditing = false;
     // setting false if someone after deleting decide to add a campaign
     this.isDeleting = false;
+    // setting false if someone after clone decide to add a campaign
+    this.isCloned = false;
     // now open the modal with empty form to add a sticky campaign
     this.ngxSmartModalService.getModal('modal1').open();
   }
@@ -604,6 +607,9 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       // method that will validate and on success it will update the campaign
       // also this will update campaign with selected reviews
       this.updateCampaign(data, this.selectedStickyReviews(this.form));
+    } else if (this.isCloned) {
+      // create a clone campaign form a privous campaing
+      this.cloneCampaign(data, this.selectedStickyReviews(this.form));
     } else {
       // method that will validate and on success it will store the campaign
       // also this will update campaign with selected reviews
@@ -711,6 +717,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isSubmittedReviews = false; // set it to false
     this.campaignId = null; // set campaign id to null
     this.isSelectingReview = false; // set review popup in listing page to false to disable
+    this.isCloned = false; // set the flag to false
     if (fetchCampaigns) {
       this.getCampaigns(); // fetch campaigns
     } else if(hideLoader) {
@@ -1016,5 +1023,59 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
+
+   public onCloneCampaign(campaign: CampaignInterface) {
+     Log.debug(campaign, "Current Campaign");
+     // set review id which is currently being edited
+     this.campaignId = campaign.id;
+     // set `isEditing` to true once the edit icon has been clicked
+     // this.isEditing = true;
+     this.isCloned = true;
+     // prepare data object with the selected sticky review row
+     const data = {
+       campaignName: campaign.campaign_name,
+       campaignDomainName: campaign.domain_name,
+       campaignDelayBetweenTwoReview: campaign.delay / 1000,
+       campaignDelayBeforeStart: campaign.delay_before_start / 1000,
+       campaignStayTime: campaign.stay_timing / 1000,
+       isExitPopupSelected: (campaign.exit_pop_up !== null) ? true : false,
+       campaignExitPopup: (campaign.exit_pop_up !== null) ? campaign.exit_pop_up : null,
+       isBrandingSelected: (campaign.branding !== null) ? true : false,
+       campaignBrand: (campaign.branding !== null) ? campaign.branding : null,
+       customDomain: (campaign.custom_domain !== null) ? campaign.custom_domain : null,
+       campaignLoop: campaign.loop,
+       campaignVisualStyle: campaign.style,
+       campaignReviews: this.checkedReviews(campaign.sticky_reviews)
+     };
+     // set values into the form of currently selected row
+     this.form.patchValue(data);
+     // now open the model to show the form into the model to user
+     this.ngxSmartModalService.getModal('modal1').open();
+   }
+
+  /**
+   * Method to clone a campaign
+   * @param data
+   * @param reviews
+   */
+   public cloneCampaign(data: CampaignModel, reviews: string[] = []) {
+    // we have to clone a campaign
+     this.campaignService.cloneCampaign(data).subscribe(
+       (response: any) => {
+         // console log the response
+         Log.debug(response, "Response in Clone Campaign");
+         if (response.status) {
+           if (reviews.length > 0) {
+             this.campaignId = response.data.id;
+             // update campaign with selected sticky reviews
+             this.syncStickyReviews(reviews, response.message);
+           } else {
+             // perform post response activities like closing modal, show message etc
+             this.postResponseActivities(response.message);
+           }
+         }
+       }
+     );
+   }
 
 }

@@ -53,6 +53,14 @@ export class CampaignService {
   }
 
   /**
+   * Method to make an api call to clone a campaign
+   * @param data
+   */
+  public cloneCampaign(data: CampaignModel) {
+    return this.httpClient.post(CampaignApiEndpoints.campaigns.concat('/clone'), data);
+  }
+
+  /**
    * Method to make an api call to delete a campaign
    * @method deleteCampaign
    * @since Version 1.0.0

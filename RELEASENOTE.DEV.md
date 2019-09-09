@@ -303,6 +303,10 @@
 
 ## Campaign
 
+### V2.2.0
+
+1. Implemented clone a campaign feature in campaign section.
+
 ### V2.1.0
 
 1. Fixed issue with campaign edit and campaign review box when there is no review

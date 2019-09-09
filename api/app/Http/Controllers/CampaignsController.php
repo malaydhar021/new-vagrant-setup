@@ -286,4 +286,37 @@ class CampaignsController extends Controller
             'data' => $campaignInfo,
         ]);
     }
+
+    /**
+     * Function to clone a particuller campaign
+     * @param CampaignRequest $request
+     */
+    public function clone(CampaignRequest $request){
+        $campaign = new Campaign();
+        $campaign->unique_script_id = uniqid('emv_' . get_current_user()) . time();
+        $campaign->campaign_name = $request->input('campaign_name');
+        $campaign->domain_name = $request->input('domain_name');
+        $campaign->style_id = Hashids::decode($request->input('style_id'));
+        $campaign->styles = null; // @deprecated on v2, should be null because this style used to determine old styles.
+        $campaign->delay = $request->has('delay') ? $request->input('delay') : 3000;
+        $campaign->delay_before_start = $request->has('delay_before_start') ? $request->input('delay_before_start') : null;
+        $campaign->stay_timing = $request->has('stay_timing') ? $request->input('stay_timing') : 1000;
+        $campaign->loop = ($request->input('loop')) ? '1' : '0';
+        $campaign->exit_pop_up = $request->input('exit_pop_up');
+        $campaign->exit_pop_up_id = Hashids::decode($request->input('exit_pop_up_id'));
+        $campaign->branding = $request->input('branding');
+        $campaign->branding_id = Hashids::decode($request->input('branding_id'));
+        $campaign->custom_domain_id = (!is_null($request->input('custom_domain_id'))) ? Hashids::decode($request->input('custom_domain_id')) : null;
+        $campaign->created_by = Auth::user()->id;
+        $campaign->is_active = true;
+        $campaign->save();
+
+        $campaign->load('campaignStyle', 'brandingDetails', 'exitPopUp', 'user', 'customDomain');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Campaign has created successfully.',
+            'data' => new CampaignsResource($campaign),
+        ]);
+    }
 }
