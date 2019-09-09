@@ -277,7 +277,7 @@
     margin-bottom: 0 !important;
   }
   
-  .popupTxt .bodyPopup .audioRv {
+  .popupParent .popupTxt .bodyPopup .audioRv {
     border-radius: 30px;
     border: 1px solid #8C7FD6;
     background-color: #D6D3FC;

@@ -127,7 +127,7 @@ img {
     border-radius: 5px;
 }
 
-.popupTxt {
+.popupParent .popupTxt {
     display: table;
     position: relative;
     width: 350px;
@@ -136,7 +136,7 @@ img {
     font-size: 0;
 }
 
-.popupTxt .bodyPopup {
+.popupParent .popupTxt .bodyPopup {
     display: table-cell;
     vertical-align: middle;
     padding-top: 3px;
@@ -304,7 +304,7 @@ img {
     margin: 0;
 }
 
-.popupTxt .figPopup {
+.popupParent .popupTxt .figPopup {
     width: 80px;
     height: 80px;
     /* margin-right: 25px; */
@@ -2229,7 +2229,7 @@ img {
     transition: background-color 500ms;
     background-color: transparent;
     /* z-index: 999; */
-    z-index: 100000;
+    z-index: 1000000 !important;
 }
 
 .overlay.nsm-overlay-open {
@@ -2332,18 +2332,18 @@ img {
 }
 
 /* rate stars */
-.rateStar {
+.popupFt .rateStar {
     unicode-bidi: bidi-override;
 }
 
-.rateStar .star:before {
+.popupFt .rateStar .star:before {
     content: "\2605";
     position: absolute;
     font-size: 12px;
     color: #4A3D95;
 }
 
-i.star {
+.popupFt i.star {
     font-size: 12px;
     width: 8px;
     font-style: normal;
@@ -2351,7 +2351,7 @@ i.star {
     line-height: 100%;
 }
 
-i.star.inactive:before {
+.popupFt i.star.inactive:before {
     color: #BAB7CE;
 }
 
