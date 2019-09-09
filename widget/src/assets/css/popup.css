@@ -1433,3 +1433,8 @@ i.star.inactive:before {
 .vidParent_2 .popupTxt .figPopup figure > img {
     max-width: 100%;
 }
+
+.vidPop .t5player .t5stime, 
+.vidPop .t5ttime {
+    color: #fff !important;
+}
