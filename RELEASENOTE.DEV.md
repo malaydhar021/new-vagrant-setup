@@ -169,6 +169,10 @@
 
 ## Subscription
 
+### V2.2.3
+
+1. Fixed issue with customer source updated and expiring webhook
+
 ### V2.2.2
 
 1. Implemented update a plan api from a certain user from affiliate platform
@@ -300,6 +304,7 @@
 ### V0.0.1
 
 1. Implemented media module for audio and video player and recorder
+
 
 ## Campaign
 

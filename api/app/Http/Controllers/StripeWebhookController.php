@@ -80,13 +80,13 @@ class StripeWebhookController extends CashierController
         Log::debug(__METHOD__, $payload);
 
         $this->writeJournal($payload, [
-            'data.object.owner.email',
+            'data.object.customer',
             'data.object.currency',
             'data.object.type',
             'data.object.status',
         ]);
 
-        $user = User::where('stripe_id', $payload['data']['object']['owner']['email'])->first();
+        $user = User::where('stripe_id', $payload['data']['object']['customer'])->first();
 
         if ($user) $user->sendCardExpiringNotification();
     }
@@ -102,13 +102,13 @@ class StripeWebhookController extends CashierController
         Log::debug(__METHOD__, $payload);
 
         $this->writeJournal($payload, [
-            'data.object.owner.email',
+            'data.object.customer',
             'data.object.currency',
             'data.object.type',
             'data.object.status',
         ]);
 
-        $user = User::where('stripe_id', $payload['data']['object']['owner']['email'])->first();
+        $user = User::where('stripe_id', $payload['data']['object']['customer'])->first();
 
         if ($user) $user->sendCardExpiringNotification();
     }
