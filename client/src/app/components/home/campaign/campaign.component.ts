@@ -138,7 +138,7 @@ export class CampaignComponent implements OnInit, OnDestroy, AfterViewInit {
     // initialize the form builder for add / edit a edit form
     this.form = this.formBuilder.group({
       campaignName: [null, Validators.required], // campaign name
-      campaignDomainName: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z0-9]{2,})+$')]], // domain name
+      campaignDomainName: [null, [Validators.required, Validators.pattern('^([a-zA-Z0-9][a-zA-Z0-9-_]*\.)*[a-zA-Z0-9]*[a-zA-Z0-9-_]*[[a-zA-Z0-9]+$')]], // domain name
       campaignVisualStyle: [null, Validators.required], // visual style. default is Rounded
       campaignReviews: new FormArray([]), // array form field for sticky reviews
       campaignDelayBeforeStart: [null, Validators.required], // delay before time

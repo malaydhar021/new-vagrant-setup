@@ -303,6 +303,10 @@
 
 ## Campaign
 
+### V2.2.1
+
+1. Fixed issue with campaign domain in campaign add/edit section
+
 ### V2.2.0
 
 1. Implemented clone a campaign feature in campaign section.
