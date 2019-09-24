@@ -51,9 +51,10 @@ class StickyReviewsController extends Controller
             $searchParams = $request->get('searchParams');
 //            $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%');
             $this->queryBuilder = $this->queryBuilder->where(function ($query) use ($searchParams) {
-                $query->where('name', 'LIKE', '%' . $searchParams . '%');
-                foreach(explode(",", $searchParams) as $tag) {
-                    $query->orWhere('tags', 'LIKE', '%' . trim($tag) . '%');
+//                $query->where('name', 'LIKE', '%' . $searchParams . '%');
+                foreach(explode(",", $searchParams) as $keyword) {
+                    $query->orWhere('name', 'LIKE', '%' . trim($keyword) . '%');
+                    $query->orWhere('tags', 'LIKE', '%' . trim($keyword) . '%');
                 }
                 /**
                  * PLEASE DON'T DELETE THESE BELOW LINES

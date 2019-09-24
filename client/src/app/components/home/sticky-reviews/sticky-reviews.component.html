@@ -6,7 +6,7 @@
       </button>
     </div>
     <div class="mainBoxHeaderRight" *ngIf="!showNoRecordsFoundTemplate">
-      <input type="text" placeholder="Search ..." (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
+      <input type="text" placeholder="Search... Ex: name, tag1, tag2" (keyup.enter)="onSearch($event)" [(ngModel)]="searchKey">
       <button class="clearSearch" *ngIf="showClearSearch" (click)="clearSearch()" title="Clear search"></button>
     </div>
   </header>

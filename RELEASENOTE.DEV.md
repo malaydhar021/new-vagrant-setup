@@ -359,6 +359,10 @@
 
 ## Sticky Reviews
 
+### V2.1.7
+
+1. Implemented search with tag and name with comma separated
+
 ### V2.1.6
 
 1. Implemented search with tag feature for sticky reviews
