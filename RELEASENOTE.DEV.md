@@ -357,7 +357,11 @@
 1. Implemented services for campaign
 
 
-## Sticky Review
+## Sticky Reviews
+
+### V2.1.6
+
+1. Implemented search with tag feature for sticky reviews
 
 ### V2.1.5
 

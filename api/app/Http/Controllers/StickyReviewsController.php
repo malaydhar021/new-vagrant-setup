@@ -47,12 +47,23 @@ class StickyReviewsController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('searchParams')) {
+        if ($request->has('searchParams') && $request->get('searchParams') !== '') {
             $searchParams = $request->get('searchParams');
-            $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%');
+//            $this->queryBuilder = $this->queryBuilder->where('name','LIKE','%' . $searchParams . '%');
+            $this->queryBuilder = $this->queryBuilder->where(function ($query) use ($searchParams) {
+                $query->where('name', 'LIKE', '%' . $searchParams . '%');
+                foreach(explode(",", $searchParams) as $tag) {
+                    $query->orWhere('tags', 'LIKE', '%' . trim($tag) . '%');
+                }
+                /**
+                 * PLEASE DON'T DELETE THESE BELOW LINES
+                 */
+//                orWhereRaw("FIND_IN_SET('".$searchParams."', REPLACE(`tags`,' ',''))");
+//                orWhereRaw('CONCAT(",", REPLACE(`tags`," ",""), ",") REGEXP ",('. implode('| ', explode(",", $searchParams)).'),"');
+            });
         }
         $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
-
+        \Log::info($this->queryBuilder->toSql());
         if ($request->has('paginate') &&
             ($request->input('paginate') == false || $request->input('paginate') == 'false')) {
             $stickyReviews = (StickyReviewResource::collection($this->queryBuilder->get()))->briefOnly();
