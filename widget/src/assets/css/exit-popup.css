@@ -948,20 +948,20 @@ img {
         width: 600px;
         position: absolute;
         left: 50%;
-        -webkit-transform: translate(-50%, -50%) scale(0.7);
-        -moz-transform: translate(-50%, -50%) scale(0.7);
-        -ms-transform: translate(-50%, -50%) scale(0.7);
-        transform: translate(-50%, -50%) scale(0.7);
+        -webkit-transform: translate(-50%, -50%) scale(0.9);
+        -moz-transform: translate(-50%, -50%) scale(0.9);
+        -ms-transform: translate(-50%, -50%) scale(0.9);
+        transform: translate(-50%, -50%) scale(0.9);
         top: 50%;
     }
 }
 
 @media (max-width: 575px) {
     .exitPopup.theme1 .nsm-content {
-        -webkit-transform: translate(-50%, -50%) scale(0.5);
-        -moz-transform: translate(-50%, -50%) scale(0.5);
-        -ms-transform: translate(-50%, -50%) scale(0.5);
-        transform: translate(-50%, -50%) scale(0.5);
+        -webkit-transform: translate(-50%, -50%) scale(0.7);
+        -moz-transform: translate(-50%, -50%) scale(0.7);
+        -ms-transform: translate(-50%, -50%) scale(0.7);
+        transform: translate(-50%, -50%) scale(0.7);
     }
 }
 
@@ -1142,27 +1142,31 @@ img {
         width: 700px;
         position: absolute;
         left: 50%;
-        -webkit-transform: translate(-50%, -50%) scale(0.7);
-        -moz-transform: translate(-50%, -50%) scale(0.7);
-        -ms-transform: translate(-50%, -50%) scale(0.7);
-        transform: translate(-50%, -50%) scale(0.7);
+        -webkit-transform: translate(-50%, -50%) scale(0.9);
+        -moz-transform: translate(-50%, -50%) scale(0.9);
+        -ms-transform: translate(-50%, -50%) scale(0.9);
+        transform: translate(-50%, -50%) scale(0.9);
         top: 50%;
     }
 }
 
 @media (max-width: 575px) {
     .exitPopup.theme2 .nsm-content {
-        -webkit-transform: translate(-50%, -50%) scale(0.5);
-        -ms-transform: translate(-50%, -50%) scale(0.5);
-            transform: translate(-50%, -50%) scale(0.5);
+        -webkit-transform: translate(-50%, -50%) scale(0.7);
+        -ms-transform: translate(-50%, -50%) scale(0.7);
+            transform: translate(-50%, -50%) scale(0.7);
     }
 }
 
 @media (max-width: 480px) {
-    .exitPopup.theme2 .nsm-content {
-        -webkit-transform: translate(-50%, -50%) scale(0.4);
-        -ms-transform: translate(-50%, -50%) scale(0.4);
-            transform: translate(-50%, -50%) scale(0.4);
+    .exitPopup.theme1 .nsm-content,
+    .exitPopup.theme2 .nsm-content,
+    .exitPopup.theme3 .nsm-content,
+    .exitPopup.theme4 .nsm-content,
+    .exitPopup.theme5 .nsm-content {
+        -webkit-transform: translate(-50%, -50%) scale(0.5);
+        -ms-transform: translate(-50%, -50%) scale(0.5);
+            transform: translate(-50%, -50%) scale(0.5);
     }
 }
 
@@ -1319,18 +1323,18 @@ img {
         width: 420px;
         position: absolute;
         left: 50%;
-        -webkit-transform: translate(-50%, -50%) scale(0.7);
-        -ms-transform: translate(-50%, -50%) scale(0.7);
-            transform: translate(-50%, -50%) scale(0.7);
+        -webkit-transform: translate(-50%, -50%) scale(0.9);
+        -ms-transform: translate(-50%, -50%) scale(0.9);
+            transform: translate(-50%, -50%) scale(0.9);
         top: 50%;
     }
 }
 
 @media (max-width: 575px) {
     .exitPopup.theme3 .nsm-content {
-        -webkit-transform: translate(-50%, -50%) scale(0.5);
-        -ms-transform: translate(-50%, -50%) scale(0.5);
-            transform: translate(-50%, -50%) scale(0.5);
+        -webkit-transform: translate(-50%, -50%) scale(0.7);
+        -ms-transform: translate(-50%, -50%) scale(0.7);
+            transform: translate(-50%, -50%) scale(0.7);
     }
 }
 
@@ -1464,18 +1468,18 @@ img {
         width: 450px;
         position: absolute;
         left: 50%;
-        -webkit-transform: translate(-50%, -50%) scale(0.7);
-        -ms-transform: translate(-50%, -50%) scale(0.7);
-            transform: translate(-50%, -50%) scale(0.7);
+        -webkit-transform: translate(-50%, -50%) scale(0.9);
+        -ms-transform: translate(-50%, -50%) scale(0.9);
+            transform: translate(-50%, -50%) scale(0.9);
         top: 50%;
     }
 }
 
 @media (max-width: 575px) {
     .exitPopup.theme4 .nsm-content {
-        -webkit-transform: translate(-50%, -50%) scale(0.5);
-        -ms-transform: translate(-50%, -50%) scale(0.5);
-            transform: translate(-50%, -50%) scale(0.5);
+        -webkit-transform: translate(-50%, -50%) scale(0.7);
+        -ms-transform: translate(-50%, -50%) scale(0.7);
+            transform: translate(-50%, -50%) scale(0.7);
     }
 }
 
@@ -1636,20 +1640,20 @@ img {
         width: 400px;
         position: absolute;
         left: 50%;
-        -webkit-transform: translate(-50%, -50%) scale(0.7);
-        -moz-transform: translate(-50%, -50%) scale(0.7);
-        -ms-transform: translate(-50%, -50%) scale(0.7);
-        transform: translate(-50%, -50%) scale(0.7);
+        -webkit-transform: translate(-50%, -50%) scale(0.9);
+        -moz-transform: translate(-50%, -50%) scale(0.9);
+        -ms-transform: translate(-50%, -50%) scale(0.9);
+        transform: translate(-50%, -50%) scale(0.9);
         top: 50%;
     }
 }
 
 @media (max-width: 575px) {
     .exitPopup.theme5 .nsm-content {
-        -webkit-transform: translate(-50%, -50%) scale(0.5);
-        -moz-transform: translate(-50%, -50%) scale(0.5);
-        -ms-transform: translate(-50%, -50%) scale(0.5);
-        transform: translate(-50%, -50%) scale(0.5);
+        -webkit-transform: translate(-50%, -50%) scale(0.7);
+        -moz-transform: translate(-50%, -50%) scale(0.7);
+        -ms-transform: translate(-50%, -50%) scale(0.7);
+        transform: translate(-50%, -50%) scale(0.7);
     }
 }
 
