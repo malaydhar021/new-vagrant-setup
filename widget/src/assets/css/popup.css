@@ -1277,14 +1277,14 @@ i.star.inactive:before {
 
 /* RESPONSIVE */
 @media (max-width: 991px) {
-    .popupParent {
+    /* .popupParent {
         -webkit-transform: scale(0.7);
         -ms-transform: scale(0.7);
             transform: scale(0.7);
         -webkit-transform-origin: 0 100%;
         -ms-transform-origin: 0 100%;
             transform-origin: 0 100%;
-    }
+    } */
 }
 
 @media (max-width: 767px) {
@@ -1305,18 +1305,21 @@ i.star.inactive:before {
         width: 350px;
     }
 
-    .popupParent {
+    /* .popupParent {
         -webkit-transform: scale(0.6);
         -ms-transform: scale(0.6);
             transform: scale(0.6);
-    }
+    } */
 }
 
-@media (max-width: 480px) {
+@media (max-width: 379px) {
     .popupParent {
-        -webkit-transform: scale(0.4);
-        -ms-transform: scale(0.4);
-            transform: scale(0.4);
+    -webkit-transform-origin: 0 100%;
+    -ms-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+        transform: scale(0.7);
     }
 }
 
