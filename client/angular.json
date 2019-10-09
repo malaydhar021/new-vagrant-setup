@@ -56,6 +56,30 @@
                 }
               ]
             },
+            "beta": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.beta.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
             "staging": {
               "fileReplacements": [
                 {
@@ -132,6 +156,9 @@
           "configurations": {
             "production": {
               "browserTarget": "stickyreviews:build:production"
+            },
+            "beta": {
+              "browserTarget": "stickyreviews:build:beta"
             },
             "staging": {
               "browserTarget": "stickyreviews:build:staging"

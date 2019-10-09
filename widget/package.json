@@ -10,6 +10,7 @@
     "test:unit": "vue-cli-service test:unit",
     "build:dev": "npm run build --mode development",
     "build:stage": "npm run build --mode staging",
+    "build:beta": "npm run build --mode beta",
     "build:prod": "npm run build --mode production"
   },
   "dependencies": {
