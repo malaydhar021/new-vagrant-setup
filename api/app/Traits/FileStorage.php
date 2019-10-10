@@ -1,20 +1,15 @@
 <?php
 
 namespace App\Traits;
-
 use App\Exceptions\FileStoringException;
-
 use Exception;
-
 use FFMpeg;
 use FFMpeg\Format\Audio\Mp3;
 use FFMpeg\Format\Video\X264;
-
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-
 use Intervention\Image\Facades\Image;
 
 trait FileStorage
@@ -40,7 +35,8 @@ trait FileStorage
 
         $fileName = sha1(microtime()) . $extension;
 
-        if (Storage::put(config('filepaths')[$type] . $fileName, $fileStream)) return $fileName;
+        // if (Storage::put(config('filepaths')[$type] . $fileName, $fileStream)) return $fileName;
+        if (Storage::disk('s3')->put(config('filepaths')[$type] . $fileName, $fileStream)) return $fileName;
 
         return null;
     }
@@ -141,7 +137,11 @@ trait FileStorage
      */
     private function getFileURI($fileName, $type)
     {
-        return $fileName ? Storage::url(config('filepaths')[$type] . $fileName) : null;
+        // return $fileName ? Storage::url(config('filepaths')[$type] . $fileName) : null;  // local storage
+        if($type == 'video') {
+            return  $fileName ? 'https://d2phdla1w33thp.cloudfront.net/'.$fileName : null;
+        }
+        return $fileName ? Storage::disk('s3')->url(config('filepaths')[$type] . $fileName) : null;  // s3 bucket
     }
 
     /**
@@ -186,7 +186,7 @@ trait FileStorage
      */
     private function deleteFile($fileName, $type)
     {
-        return Storage::delete(config('filepaths')[$type] . $fileName);
+        return Storage::disk('s3')->delete(config('filepaths')[$type] . $fileName);
     }
 
     /**

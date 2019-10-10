@@ -57,11 +57,11 @@ return [
         ],
         's3' => [
             'driver' => 's3',
-            'key' => config('constants.amazons3.AWS_ACCESS_KEY_ID'),
-            'secret' => config('constants.amazons3.AWS_SECRET_ACCESS_KEY'),
-            'region' => config('constants.amazons3.AWS_DEFAULT_REGION'),
-            'bucket' => config('constants.amazons3.AWS_BUCKET'),
-            'url' => env('AWS_URL'),
+            'key' => env('AWS_ACCESS_KEY_ID', 'AKIAZYBKF4SP4TJ356TW'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY', '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'),
+            'region' => env('AWS_DEFAULT_REGION','us-east-1'),
+            'bucket' => config('AWS_BUCKET', 'usestickyreviews.com'),
+            'url' => env('AWS_URL', 'https://s3.amazonaws.com/usestickyreviews.com/'),
         ],
 
         'audio' => [
