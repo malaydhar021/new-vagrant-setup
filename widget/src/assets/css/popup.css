@@ -68,7 +68,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI Web (West European)';
-    color: #848484;
+    /*color: #848484;*/
 }
 
 img {
@@ -389,6 +389,18 @@ img {
     color: #c0c3c9;
 }
 
+.popupParent .popup_template_1 .figPopup {
+    background-image: radial-gradient(#dedcf5 40px,rgba(255,255,255,0) 0);
+    border-radius: 50%;
+    background-size: 80px 80px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.popupParent .popup_template_1 .figPopup figure.defBg {
+    background-size: cover;
+    background-color: #35268e;
+}
+
 .popupParent .popup_template_1 .figPopup figure {
     width: 50px;
     height: 50px;
@@ -409,17 +421,18 @@ img {
 }
 
 .popupParent .popup_template_1 .figPopup figure:after {
-    position: absolute;
-    content: '';
-    width: 80px;
-    height: 80px;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-    background: #dedcf5;
-    border-radius: 50%;
+/*    position: absolute;*/
+/*    content: '';*/
+/*    width: 80px;*/
+/*    height: 80px;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    -webkit-transform: translate(-50%, -50%);*/
+/*    -ms-transform: translate(-50%, -50%);*/
+/*        transform: translate(-50%, -50%);*/
+/*    background: #dedcf5;*/
+/*    border-radius: 50%;*/
+    content: none;
 }
 
 .popupParent .popup_template_1 .figPopup:after {
@@ -427,21 +440,22 @@ img {
 }
 
 .popupParent .popup_template_1 .figPopup figure:before {
-    width: 100%;
-    height: 100%;
-    background-image: -webkit-radial-gradient(#614ed9, #35268e);
-    background-image: -o-radial-gradient(#614ed9, #35268e);
-    background-image: radial-gradient(#614ed9, #35268e);
-    border-radius: 50%;
-    position: absolute;
-    content: '';
-    z-index: 1;
-    overflow: hidden;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background-image: -webkit-radial-gradient(#614ed9, #35268e);*/
+/*    background-image: -o-radial-gradient(#614ed9, #35268e);*/
+/*    background-image: radial-gradient(#614ed9, #35268e);*/
+/*    border-radius: 50%;*/
+/*    position: absolute;*/
+/*    content: '';*/
+/*    z-index: 1;*/
+/*    overflow: hidden;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    -webkit-transform: translate(-50%, -50%);*/
+/*    -ms-transform: translate(-50%, -50%);*/
+/*        transform: translate(-50%, -50%);*/
+    content: none;
 }
 
 .popupParent .popup_template_1 .closePopup {

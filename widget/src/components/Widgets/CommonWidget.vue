@@ -4,8 +4,7 @@
     <div class="popupParent" v-if="data.type === 1 && !timeOut">
       <div class="popupTxt" :class="selectedTemplate">
         <div class="figPopup">
-          <figure v-if="data.image_url">
-            <img :src="data.image_url" alt="">
+          <figure v-if="data.image_url" :style="{backgroundImage : `url(${data.image_url})`}">
           </figure>
           <figure v-else>
             <img src="../../assets/images/face_icon.png" alt="">
@@ -13,7 +12,7 @@
         </div>
         <div class="bodyPopup">
           <h6>{{data.name}}</h6>
-          <p>{{data.review}}</p>
+          <p>{{data.review}} </p>
           <footer class="popupFt">
             <span class="timePop">{{ getReviewTimeFormated(data.reviewed_at)+ ' ago' }}</span>
             <template v-if="isBranded && Object.keys(brandingData).length">
@@ -44,8 +43,7 @@
     <div class="popupParent" :class="'audioParent_'+audioVideoTemplate" v-if="data.type === 2 && !timeOut">
       <div class="popupTxt" :class="selectedTemplate">
         <div class="figPopup">
-          <figure v-if="data.image_url">
-            <img :src="data.image_url" alt="">
+          <figure v-if="data.image_url" :style="{backgroundImage : `url(${data.image_url})`}">
           </figure>
           <figure v-else>
             <img src="../../assets/images/face_icon.png" alt="">

@@ -96,13 +96,13 @@ export default {
     },
 
     showPopUps() {
-      let vm = this;
+      let vm = this
+        console.log(vm.currentInterVal)
       if (vm.currentInterVal) {
         window.clearInterval(vm.currentInterVal)
       }
-
       let intervalTime = (this.restartInterval) ? vm.delayInBetweenSr : vm.delayInBetweenSr + vm.srStayTime // setting interval time
-      this.restartInterval = false;
+      // this.restartInterval = false
       vm.currentInterVal = setInterval(function() {
         if ( vm.counter === vm.stickyData.length - 1 ) {
           vm.getNewPageData(vm.data.loop)
@@ -200,13 +200,13 @@ export default {
     },
 
     stopIteration() {
-      this.restartInterval = false;
+      this.restartInterval = false
     	clearTimeout(this.stopTimeout)
     },
 
     reStartIteration() {
-      let vm = this;
-      this.restartInterval = true;
+      let vm = this
+      this.restartInterval = true
       this.stopTimeout = setTimeout(function() {
         vm.timeOut = true
         vm.counter++
