@@ -97,12 +97,11 @@ export default {
 
     showPopUps() {
       let vm = this
-        console.log(vm.currentInterVal)
       if (vm.currentInterVal) {
         window.clearInterval(vm.currentInterVal)
+        this.restartInterval = false
       }
       let intervalTime = (this.restartInterval) ? vm.delayInBetweenSr : vm.delayInBetweenSr + vm.srStayTime // setting interval time
-      // this.restartInterval = false
       vm.currentInterVal = setInterval(function() {
         if ( vm.counter === vm.stickyData.length - 1 ) {
           vm.getNewPageData(vm.data.loop)
