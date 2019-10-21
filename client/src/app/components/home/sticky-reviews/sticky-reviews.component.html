@@ -300,8 +300,7 @@
                 <label>Upload an image *</label>
                 <div class="sr-form-field">
                   <div class="sr-form-ctrl inputFile">
-                    <input type="file" (change)="onChangeFile($event)" formControlName="srImage"
-                      [ngClass]="{error: getFormControls.srImage.errors}">
+                    <input type="file" (change)="onChangeFile($event)" [ngClass]="{error: getFormControls.srImage.errors}">
                       <div class="error-msg" *ngIf="(
                           isSubmitted
                           && getFormControls.srImage.errors !== null

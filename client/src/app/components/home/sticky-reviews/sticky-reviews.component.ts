@@ -50,7 +50,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   allowedMaxImageFileSize:number = 2; // max file size for sticky review image
   allowedMaxAudioFileSize:number = 20; // max file size for review type audio
   allowedMaxVideoFileSize:number = 30; // max file size for review type video
-  unit: string = "MB"; // legal values are GB|MB|KB
+  unit: string = 'MB'; // legal values are GB|MB|KB
   allowedMaxTextReviewChars: number = 60; // max chars for text review
   // allowed file types for sticky review image
   allowedImageFileTypes: string[] = [
@@ -108,7 +108,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
   config: any;  // config for pagination
   showError: boolean = false; // flag to show error message
   searchKey: string = ''; // search keyword
-  reviewSource: string = "";
+  reviewSource: string = '';
   showBrands: boolean = false; // flag to show/hide brands
   brands: [] = [];  // holds all the brands
   isModalOpened: boolean = false; // set to true if the modal is opened
@@ -153,7 +153,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       (response: any) => {
         this.pricingPlan = response.data.pricing_plan.id;
         if(this.pricingPlan === starterStripeId) {
-          this.reviewTypes.splice(-1,1);
+          this.reviewTypes.splice(-1, 1);
         }
       }
     );
@@ -161,7 +161,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.noRecordsFoundSubscription = this.errorService.showNoRecordsFoundTemplate$.subscribe(
       (status: boolean) => {
         this.showNoRecordsFoundTemplate = status;
-        Log.info(this.showNoRecordsFoundTemplate, "check the show template status in sticky reviews component");
+        Log.info(this.showNoRecordsFoundTemplate, 'check the show template status in sticky reviews component');
       }
     );
   }
@@ -197,22 +197,22 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     // In this case onchange of review type `selectedReivewType` property value has been
     // changed to current selected value of review type select box
     this.getFormControls.srType.valueChanges.subscribe(
-      (value : number) => {
-        Log.info(value, "check the review type");
+      (value: number) => {
+        Log.info(value, 'check the review type');
         this.reviewChoseFileCtrl = 'Browse from your computer';
         this.reviewFileName = 'or drag & drop your image here';
         // assign current value of review type a class property
         this.selectedReivewType = value;
         // this.getFormControls.sr.setValue(null);
-        Log.notice(this.isEditing, "Check the edit status in review type onchange");
-        if(!this.isEditing) {
+        Log.notice(this.isEditing, 'Check the edit status in review type onchange');
+        if (!this.isEditing) {
           this.reviewAsFile = null;
           this.mediaService.updateAudioSrc(null);
           this.mediaService.updateVideoSrc(null);
           this.getFormControls.sr.setValue(null);
         }
-        if(this.isEditing) {
-          if(value == 2) {
+        if (this.isEditing) {
+          if (value == 2) {
             this.mediaService.updateAudioSrc(null);
           } else if (value == 3) {
             this.mediaService.updateVideoSrc(null);
@@ -322,7 +322,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
           this.reviews = response.data.data;
           this.config.currentPage = 1;
           this.errorService.updateShowNoRecordsFoundTemplate(response.data.data.length > 0 ? false : true);
-          Log.debug(this.reviews.length, "Checking the length of the reviews property");
+          Log.debug(this.reviews.length, 'Checking the length of the reviews property');
         }
       }
     );
@@ -339,14 +339,14 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public validateImage() {
-    if(!this.isEditing) {
-      Log.notice("check in if it coming here");
+    if (!this.isEditing) {
+      Log.notice('check in if it coming here');
       this.getFormControls.srImage.setValidators(Validators.required);
       this.getFormControls.srImage.updateValueAndValidity();
 
     }
     // setting validation if file is uploaded and it's not an image
-    if(this.image !== null) {
+    if (this.image !== null) {
       this.form.setValidators(ValidationEngine.FileType('srImage', this.image, this.allowedImageFileTypes));
       this.form.updateValueAndValidity();
       this.form.setValidators(ValidationEngine.FileSize('srImage', this.image, 1, 'MB'));
@@ -366,7 +366,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     /**
      * Image file validations for add / edit sticky review form
      */
-    if(!this.isEditing) {
+    if (!this.isEditing) {
       this.getFormControls.srImage.setValidators(Validators.required);
       this.getFormControls.srImage.updateValueAndValidity();
     } else {
@@ -374,13 +374,14 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       this.getFormControls.srImage.updateValueAndValidity();
     }
     // if file has been selected
-    if(this.image !== null) {
+    if (this.image !== null) {
       // file mime type validation
       this.form.setValidators(ValidationEngine.FileType('srImage', this.image, this.allowedImageFileTypes));
       this.form.updateValueAndValidity();
       // file size validation. Max 1 MB image is allowed to upload
       this.form.setValidators(ValidationEngine.FileSize('srImage', this.image, this.allowedMaxImageFileSize, this.unit));
       this.form.updateValueAndValidity();
+      this.getFormControls.srImage.setValue(this.image !== null ? this.image.name : '');
     }
     /**
      * Textual review validations for add / edit sticky review
@@ -496,7 +497,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       )
     };
     // let update media player src based on review type
-    if(review.type == 2) {
+    if (review.type == 2) {
       setTimeout(() => {
         this.mediaService.updateVideoSrc(null);
         // update audio player scr to play the audio
@@ -552,8 +553,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       this.choseFileCtrl = 'Change file';
       // set the image file data to `image` property
       this.image = event.target.files[0];
+      // this.getFormControls.srImage.setValue(this.image !== null ? this.fileName : '');
       let reader = new FileReader();
-
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       // called once readAsDataURL is completed
       reader.onload = (e) => {
@@ -626,7 +627,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
    * @returns Void
    */
   public onSubmit() {
-    Log.info(this.form, "Checking form data");
+    Log.info(this.form, 'Checking form data');
     // make `isSubmitted` to true
     this.isSubmitted = true;
     this.searchKey = '';
@@ -662,15 +663,15 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     formData.append('rating', this.form.value.srRating); // append rating
     // formData.append('reviewd_at', this.form.value.srDateTime === null ? currentSrDateTime : this.form.value.srDateTime); // append date to show
     formData.append('reviewd_at', this.form.value.srDateTime); // append date to show
-    if(this.image !== null) {
+    if (this.image !== null) {
       formData.append('image', this.image, this.image.name); // append image to formData
     }
     // append review to formData based on review type
-    if(this.selectedReivewType == 1) { // textual
+    if (this.selectedReivewType == 1) { // textual
       formData.append('review_text', this.form.value.sr);
-    } else if(this.selectedReivewType == 2 && this.reviewAsFile !== null) { // audio
+    } else if (this.selectedReivewType == 2 && this.reviewAsFile !== null) { // audio
       formData.append('review_audio', this.reviewAsFile, this.reviewAsFile.name);
-    } else if(this.selectedReivewType == 3 && this.reviewAsFile !== null) { // video
+    } else if (this.selectedReivewType == 3 && this.reviewAsFile !== null) { // video
       formData.append('review_video', this.reviewAsFile, this.reviewAsFile.name);
     }
     if (this.form.value.hasBrand === true || this.form.value.hasBrand === 1) {
@@ -709,7 +710,7 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
       (response: any) => {
         // log the response
         Log.notice(response, "Response for add a sticky review");
-        if(response.status) {
+        if (response.status) {
           // once getting the response and status is true close the modal
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user
@@ -740,8 +741,8 @@ export class StickyReviewsComponent implements OnInit, OnDestroy {
     this.stickyReviewService.addStickyReview(data).subscribe(
       (response: any) => {
         // log the response
-        Log.notice(response, "Response for add a sticky review");
-        if(response.status) {
+        Log.notice(response, 'Response for add a sticky review');
+        if (response.status) {
           // once getting the response and status is true close the modal
           this.ngxSmartModalService.getModal('modal1').close();
           // show the success message to user
