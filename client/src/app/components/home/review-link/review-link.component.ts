@@ -37,7 +37,7 @@ export class ReviewLinkComponent implements OnInit, OnDestroy {
   choseFileCtrl: string = 'Browse from your computer';
   fileName: string = 'or drag & drop your image here';
   image: File = null; // Image file for sticky review image
-  allowedMaxImageFileSize:number = 1; // max file size for sticky review image
+  allowedMaxImageFileSize: number = 8; // max file size for sticky review image
   allowedImageFileTypes: string[] = [
     'image/jpeg',
     'image/png',

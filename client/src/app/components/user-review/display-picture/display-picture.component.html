@@ -5,20 +5,20 @@
     </h2>
 
     <div class="addpicture">
-      <input type="file" (change)="onChangeFile($event)" formControlName="dp" [ngClass]="{error: getFormControls.dp.errors}"/>
+      <input type="file" (change)="onChangeFile($event)" [ngClass]="{error: getFormControls.dp.errors}"/>
       <div class="error-msg" *ngIf="(
             isSubmitted
-            && getFormControls.dp.errors !== null 
+            && getFormControls.dp.errors !== null
             && getFormControls.dp.errors.required)">
         Image is required
       </div>
       <div class="error-msg" *ngIf="(
-            getFormControls.dp.errors !== null 
+            getFormControls.dp.errors !== null
             && getFormControls.dp.errors.invalidFileType)">
         Invalid file type. File should be an image
       </div>
       <div class="error-msg" *ngIf="(
-            getFormControls.dp.errors !== null 
+            getFormControls.dp.errors !== null
             && getFormControls.dp.errors.invalidFileSize)">
         Invalid image size. Image size should be maximum {{ allowedMaxImageFileSize }} {{ unit }}
       </div>

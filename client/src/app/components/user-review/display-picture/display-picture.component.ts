@@ -31,8 +31,8 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
   errorMessage: string = null; // to show error messages mainly from when some exception has been caught
   successMessage: string = null; // to show success messages
   validationErrors: any = null; // for showing validation messages
-  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted  
-  allowedMaxImageFileSize:number = 1; // max file size for sticky review image
+  isSubmitted: boolean = false; // flag to set true if the add / edit form is submitted
+  allowedMaxImageFileSize:number = 8; // max file size for sticky review image
   unit: string = "MB"; // legal values are GB|MB|KB
   // allowed file types for sticky review image
   allowedImageFileTypes: string[] = [
@@ -60,7 +60,7 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private userReviewService: UserReviewService,
     private errorService: ErrorsService,
-  ) { 
+  ) {
     this.title.setTitle('Stickyreviews :: Display Picture');
     // subscribe to review to get the latest update data from review
     this.subscription = this.userReviewService.review$.subscribe(
@@ -84,7 +84,7 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     // initialize the form builder for user display picture
     this.form = this.formBuilder.group({
-      dp : [null, Validators.required], // display picture 
+      dp : [null, Validators.required], // display picture
     });
   }
 
@@ -118,6 +118,7 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
         ValidationEngine.FileType('dp', this.image, this.allowedImageFileTypes)
       ]);
       this.form.updateValueAndValidity();
+      this.getFormControls.dp.setValue(this.image !== null ? this.image.name : '');
     }
   }
 
@@ -147,16 +148,16 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
       // lets make a FileReader object to read the file as data url
       let reader = new FileReader();
       // read file as data url
-      reader.readAsDataURL(event.target.files[0]); 
+      reader.readAsDataURL(event.target.files[0]);
       // called once readAsDataURL is completed
-      reader.onload = (e) => { 
+      reader.onload = (e) => {
         this.imagePreviewUrl = reader.result.toString();
       }
     }
   }
 
   /**
-   * Method to handle store review api response if review data passes the 
+   * Method to handle store review api response if review data passes the
    * validation.
    * @method onSubmit
    * @since Version 1.0.0
