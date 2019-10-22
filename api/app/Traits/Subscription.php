@@ -195,14 +195,9 @@ trait Subscription
     {
         $newPlanId = config("pricing.plans.${newPlanType}.id");
 
-        if ($this->onTrial()) {
-            $this->subscription('main')
+        $this->subscription('main')
                 ->skipTrial()
                 ->swap($newPlanId);
-        } else {
-            $this->subscription('main')
-                ->swap($newPlanId);
-        }
 
         $this->update([
             'subscription_status' => 'ACTIVE',
@@ -227,7 +222,6 @@ trait Subscription
         ]);
         $cancelledSubscription->save();
 
-        \Log::info("Subscription status : " . $this->subscription_status);
         if((!is_null($this->subscription('main')))) {
             $this->subscription('main')->cancelNow();
         }
