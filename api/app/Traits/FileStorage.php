@@ -1,6 +1,17 @@
 <?php
 
+/**
+ * Trait to handle all sort operations releted to file
+ * @package FileStorage
+ * @version 2.0.0
+ * @author Tier5 LLC <work@tier5.us>
+ * @license Proprietary
+ */
+
 namespace App\Traits;
+
+use Aws\S3\MultipartUploader;
+use Aws\Exception\MultipartUploadException;
 use App\Exceptions\FileStoringException;
 use Exception;
 use FFMpeg;
@@ -35,10 +46,43 @@ trait FileStorage
 
         $fileName = sha1(microtime()) . $extension;
 
-        // if (Storage::put(config('filepaths')[$type] . $fileName, $fileStream)) return $fileName;
+        if ($type === 'audio' && Storage::disk('local')->put(config('filepaths')[$type] . $fileName, $fileStream)) return $fileName;
+        if ($type === 'video' && Storage::disk('local')->put(config('filepaths')[$type] . $fileName, $fileStream)) return $fileName;
         if (Storage::disk('s3')->put(config('filepaths')[$type] . $fileName, $fileStream)) return $fileName;
 
         return null;
+    }
+    
+    
+    /**
+     * Method to upload file to AWS s3 cloud
+     * @since 2.0.0
+     * @param type $file \Illumiate\Http\File
+     * @param type $fileType File type (audio | video)
+     * @return string File name which has been uploaded
+     */
+    private function uploadFile($fileName, string $fileType) {
+        try {
+            $disk = Storage::disk('s3');
+            $uploader = new MultipartUploader($disk->getDriver()->getAdapter()->getClient(), config("filesystems.disks.$fileType.root") . '/' . $fileName, [
+                'bucket'          => config('filesystems.disks.s3.bucket'),
+                'key'             => config('filepaths')[$fileType] . $fileName,
+                'concurrency'     => 25,
+            ]);
+            $result = $uploader->upload();
+            
+            return $fileName;
+        } catch (MultipartUploadException $exception) {
+            Log::error("S3 Multipart Uploading Error: ", $exception->getTrace());
+
+            throw new FileStoringException($exception->getMessage());
+        } catch (Exception $exception) {
+            Log::error("S3 Other Uploading Error: ", $exception->getTrace());
+
+            throw new FileStoringException(
+                "An error occurred during uploading the file, either check the file is valid or please try again later."
+            );
+        }
     }
 
     /**
@@ -79,15 +123,19 @@ trait FileStorage
                 ->toDisk('audio')
                 ->inFormat(new Mp3)
                 ->save($convertedFileName);
-
-            $this->deleteAudioFile($originalFileName);
-
+            // upload file to s3
+            $this->uploadFile($convertedFileName, "audio");
+            // delete local files
+            $this->deleteLocalFile($originalFileName, 'audio');
+            $this->deleteLocalFile($convertedFileName, 'audio');
+            
             return $convertedFileName;
         } catch (Exception $exception) {
             Log::error("Audio Conversion Error: ", $exception->getTrace());
 
             $this->deleteAudioFile($originalFileName);
-
+            $this->deleteLocalFile($originalFileName, 'audio');
+            
             throw new FileStoringException(
                 "An error occurred during uploading the audio, either check the file is valid or please try again later."
             );
@@ -113,14 +161,18 @@ trait FileStorage
                 ->toDisk('video')
                 ->inFormat(new X264('libmp3lame', 'libx264'))
                 ->save($convertedFileName);
-
-            $this->deleteVideoFile($originalFileName);
-
+            // upload video file to s3
+            $this->uploadFile($convertedFileName, "video");
+            // delete local files
+            $this->deleteLocalFile($originalFileName, 'video');
+            $this->deleteLocalFile($convertedFileName, 'video');
+            
             return $convertedFileName;
         } catch (Exception $exception) {
             Log::error("Video Conversion Error: ", $exception->getTrace());
 
-            $this->deleteAudioFile($originalFileName);
+            $this->deleteVideoFile($originalFileName);
+            $this->deleteLocalFile($originalFileName, 'video');
 
             throw new FileStoringException(
                 "An error occurred during uploading the video, either check the file is valid or please try again later."
@@ -185,8 +237,20 @@ trait FileStorage
      * @return boolean
      */
     private function deleteFile($fileName, $type)
-    {
+    {        
         return Storage::disk('s3')->delete(config('filepaths')[$type] . $fileName);
+    }
+    
+    /**
+     * Deletes a stored file
+     *
+     * @param string $fileName
+     * @param string $type
+     * @return boolean
+     */
+    private function deleteLocalFile($fileName, $type)
+    {        
+        return Storage::disk('local')->delete(config('filepaths')[$type] . $fileName);
     }
 
     /**
