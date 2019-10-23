@@ -52,8 +52,8 @@ trait FileStorage
 
         return null;
     }
-    
-    
+
+
     /**
      * Method to upload file to AWS s3 cloud
      * @since 2.0.0
@@ -70,7 +70,7 @@ trait FileStorage
                 'concurrency'     => 25,
             ]);
             $result = $uploader->upload();
-            
+
             return $fileName;
         } catch (MultipartUploadException $exception) {
             Log::error("S3 Multipart Uploading Error: ", $exception->getTrace());
@@ -128,14 +128,14 @@ trait FileStorage
             // delete local files
             $this->deleteLocalFile($originalFileName, 'audio');
             $this->deleteLocalFile($convertedFileName, 'audio');
-            
+
             return $convertedFileName;
         } catch (Exception $exception) {
             Log::error("Audio Conversion Error: ", $exception->getTrace());
 
             $this->deleteAudioFile($originalFileName);
             $this->deleteLocalFile($originalFileName, 'audio');
-            
+
             throw new FileStoringException(
                 "An error occurred during uploading the audio, either check the file is valid or please try again later."
             );
@@ -166,7 +166,7 @@ trait FileStorage
             // delete local files
             $this->deleteLocalFile($originalFileName, 'video');
             $this->deleteLocalFile($convertedFileName, 'video');
-            
+
             return $convertedFileName;
         } catch (Exception $exception) {
             Log::error("Video Conversion Error: ", $exception->getTrace());
@@ -191,7 +191,7 @@ trait FileStorage
     {
         // return $fileName ? Storage::url(config('filepaths')[$type] . $fileName) : null;  // local storage
         if($type == 'video') {
-            return  $fileName ? 'https://d2phdla1w33thp.cloudfront.net/'.$fileName : null;
+            return  $fileName ? config('services.cloudfront_cdn_url.video_cdn_url').$fileName : null;
         }
         return $fileName ? Storage::disk('s3')->url(config('filepaths')[$type] . $fileName) : null;  // s3 bucket
     }
@@ -237,10 +237,10 @@ trait FileStorage
      * @return boolean
      */
     private function deleteFile($fileName, $type)
-    {        
+    {
         return Storage::disk('s3')->delete(config('filepaths')[$type] . $fileName);
     }
-    
+
     /**
      * Deletes a stored file
      *
@@ -249,7 +249,7 @@ trait FileStorage
      * @return boolean
      */
     private function deleteLocalFile($fileName, $type)
-    {        
+    {
         return Storage::disk('local')->delete(config('filepaths')[$type] . $fileName);
     }
 

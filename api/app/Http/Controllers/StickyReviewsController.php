@@ -64,7 +64,7 @@ class StickyReviewsController extends Controller
             });
         }
         $this->queryBuilder = $this->queryBuilder->orderBy('created_at', 'desc');
-        \Log::info($this->queryBuilder->toSql());
+
         if ($request->has('paginate') &&
             ($request->input('paginate') == false || $request->input('paginate') == 'false')) {
             $stickyReviews = (StickyReviewResource::collection($this->queryBuilder->get()))->briefOnly();
@@ -215,7 +215,7 @@ class StickyReviewsController extends Controller
         if ($request->has('image')) {
             $stickyReview->image = $request->file('image');
         }
- 
+
         if ($request->has('reviewd_at') && strlen(trim($request->input('reviewd_at')))) {
             $datetime = Carbon::createFromFormat('D M d Y H:i:s e+', $request->input('reviewd_at'))->setTimezone('UTC');
             $createdAt = $datetime->format('Y-m-d H:i:s');

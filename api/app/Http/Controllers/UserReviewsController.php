@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserReviewParamRequest;
 use App\Http\Requests\UserReviewRequest;
 use App\Http\Resources\ReviewLinkResource;
+use App\Http\Resources\StickyReviewResource;
 use App\NegativeReview;
 use App\ReviewLink;
 use App\StickyReview as UserReview;
@@ -195,23 +196,30 @@ class UserReviewsController extends Controller
      */
     public function checkPasskey(Request $request)
     {
-        $stickyId = Hashids::decode($request->stickyId);
+        // $stickyId = Hashids::decode($request->stickyId); original comment it in after development
+        $stickyId = $request->stickyId;
         $reviewToken = $request->reviewToken;
-        $getEnvUrl = $_SERVER['SERVER_NAME'];
-
-        if (strpos($getEnvUrl, 'local') !== false) {
-            $linkUrl = 'api.local.usestickyreviews.com';
-        } elseif (strpos($getEnvUrl, 'beta') !== false) {
-            $linkUrl = 'api.beta.usestickyreviews.com';
-        } else {
-            $linkUrl = 'api.usestickyreviews.com';
-        }
+//        $getEnvUrl = $_SERVER['SERVER_NAME'];
+//
+//        if (strpos($getEnvUrl, 'local') !== false) {
+//            $linkUrl = 'api.local.usestickyreviews.com';
+//        } elseif (strpos($getEnvUrl, 'beta') !== false) {
+//            $linkUrl = 'api.beta.usestickyreviews.com';
+//        } else {
+//            $linkUrl = 'api.usestickyreviews.com';
+//        }
+        // review url for the audio and video files
+        $linkUrl = config('filesystem.s3.url');
+        // review url for the video files
+        $vid_url = config('services.cloudfront_cdn_url.video_cdn_url');
         // show the review
-        $stickyReviewData = StickyReview::where('id', $stickyId)->where('review_token', $reviewToken)
+         $stickyReviewData = StickyReview::where('id', $stickyId)->where('review_token', $reviewToken)
             ->with('reviewLink.campaign', 'brands', 'reviewLink.campaign.brandingDetails')
             ->first();
+
         if ($stickyReviewData) {
             $stickyReviewData['url_link'] = $linkUrl;
+            $stickyReviewData['vid_link'] = $vid_url;
             return response()->json([
                 'status' => true,
                 'data'  =>  $stickyReviewData,

@@ -39,4 +39,8 @@ return [
         ],
     ],
 
+    'cloudfront_cdn_url' => [
+        'video_cdn_url' => env('CLOUDFRONT_CDN_LINK','https://d2phdla1w33thp.cloudfront.net/'),
+    ],
+    // 'cloudfront_cdn_url' => env('CLOUDFRONT_CDN_LINK','https://d2phdla1w33thp.cloudfront.net/'),
 ];

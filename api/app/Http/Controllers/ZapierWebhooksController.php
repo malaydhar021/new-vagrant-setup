@@ -127,6 +127,10 @@ class ZapierWebhooksController extends Controller
             } else {
                 $linkUrl = 'usestickyreviews.com';
             }
+            // review url for the audio and image files
+            $s3LinkUrl = config('filesystem.s3.url');
+            // review url for the video files
+            $vid_url = config('services.cloudfront_cdn_url.video_cdn_url');
 
             if($getAllReviewLinkData != null){
                 foreach($getAllReviewLinkData as $linkKey => $linkData){
@@ -141,10 +145,12 @@ class ZapierWebhooksController extends Controller
                             $getReviewLinkData[$stickyKey]['sticky_reviews_name'] = $stickyData->name;
                             if($stickyData->type == 3){
                                 $type = 'Video';
-                                $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$stickyData->description;
+                                // $reviewDescription = $linkUrl.'/storage/videos/'.$stickyData->description;
+                                $reviewDescription = $vid_url.'videos/'.$stickyData->description;
                             }elseif ($stickyData->type == 2){
                                 $type = 'Audio';
-                                $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$stickyData->description;
+                                // $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$stickyData->description;
+                                $reviewDescription = $s3LinkUrl.'audios/'.$stickyData->description;
                             }else{
                                 $type = 'Textual';
                                 $reviewDescription = $stickyData->description;

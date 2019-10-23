@@ -28,6 +28,11 @@ trait ZapierWebhook
                 $linkUrl = 'usestickyreviews.com';
             }
 
+            // review url for the audio and image files
+            $s3LinkUrl = config('filesystem.s3.url');
+            // review url for the video files
+            $vid_url = config('services.cloudfront_cdn_url.video_cdn_url');
+
             $getStickyReviewInfo = StickyReview::where('id', $id)->with('negativeReviews', 'reviewLink')->first();
             if($getStickyReviewInfo != null && $getStickyReviewInfo->review_link_id != null ){
                 $fetchWebhookInfo = UserZapierWebhooks::where('review_link_id', $getStickyReviewInfo->review_link_id)->get();
@@ -39,10 +44,11 @@ trait ZapierWebhook
                     $sendZapData['sticky_reviews_name'] = $getStickyReviewInfo->name;
                     if($getStickyReviewInfo->type == 3){
                         $type = 'Video';
-                        $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$getStickyReviewInfo->description;
+                        // $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$getStickyReviewInfo->description;
+                        $reviewDescription = $vid_url.'videos/'.$getStickyReviewInfo->description;
                     }elseif ($getStickyReviewInfo->type == 2){
                         $type = 'Audio';
-                        $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$getStickyReviewInfo->description;
+                        $reviewDescription = $s3LinkUrl.'audios/'.$getStickyReviewInfo->description;
                     }else{
                         $type = 'Textual';
                         $reviewDescription = $getStickyReviewInfo->description;
@@ -106,10 +112,12 @@ trait ZapierWebhook
                         $sendZapData['sticky_reviews_name'] = $getStickyReviewInfo->name;
                         if($getStickyReviewInfo->type == 3){
                             $type = 'Video';
-                            $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$getStickyReviewInfo->description;
+                            // $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$getStickyReviewInfo->description;
+                            $reviewDescription = $vid_url.'videos/'.$getStickyReviewInfo->description;
                         }elseif ($getStickyReviewInfo->type == 2){
                             $type = 'Audio';
-                            $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$getStickyReviewInfo->description;
+                            // $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$getStickyReviewInfo->description;
+                            $reviewDescription = $s3LinkUrl.'audios/'.$getStickyReviewInfo->description;
                         }else{
                             $type = 'Textual';
                             $reviewDescription = $getStickyReviewInfo->description;
