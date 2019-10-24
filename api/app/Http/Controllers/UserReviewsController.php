@@ -208,7 +208,7 @@ class UserReviewsController extends Controller
 //            $linkUrl = 'api.usestickyreviews.com';
 //        }
         // review url for the audio and video files
-        $linkUrl = config('filesystem.s3.url');
+        $linkUrl = config('filesystems.disks.s3.url');
         // review url for the video files
         $vid_url = config('services.cloudfront_cdn_url.video_cdn_url');
         // show the review

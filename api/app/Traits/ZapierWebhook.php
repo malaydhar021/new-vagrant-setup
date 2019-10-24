@@ -29,7 +29,7 @@ trait ZapierWebhook
             }
 
             // review url for the audio and image files
-            $s3LinkUrl = config('filesystem.s3.url');
+            $s3LinkUrl = config('filesystems.disks.s3.url');
             // review url for the video files
             $vid_url = config('services.cloudfront_cdn_url.video_cdn_url');
 
