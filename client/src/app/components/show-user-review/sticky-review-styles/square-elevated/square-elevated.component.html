@@ -3,7 +3,8 @@
 <div class="popupParent" [ngClass]="reviewData.type === 2 ? 'audioParent_4':''" *ngIf="reviewData.type !== 3">
     <div class="popupTxt popup_template_4" style="margin-bottom: 30px;">
         <div class="figPopup">
-          <figure [style.background-image]="'url(https://'+ reviewData.url_link +'/storage/images/'+ reviewData.image +')'" *ngIf="reviewData.image"></figure>
+<!--          <figure [style.background-image]="'url(https://'+ reviewData.url_link +'/storage/images/'+ reviewData.image +')'" *ngIf="reviewData.image"></figure>-->
+          <figure [style.background-image]="'url('+ reviewData.url_link +'images/'+ reviewData.image +')'" *ngIf="reviewData.image"></figure>
           <figure [style.background-image]="'url(../../../../assets/images/face_icon_small.png)'" *ngIf="!reviewData.image" class="defBg"></figure>
         </div>
         <div class="bodyPopup">
@@ -11,7 +12,8 @@
             <p *ngIf="reviewData.type === 1">{{reviewData.description}} </p>
             <!-- Audio Type review -->
             <div class="audioRv" *ngIf="reviewData.type === 2">
-                <audio src="https://{{reviewData.url_link}}/storage/audios/{{reviewData.description }}" controls controlslist="nodownload"></audio>
+<!--                <audio src="https://{{reviewData.url_link}}/storage/audios/{{reviewData.description }}" controls controlslist="nodownload"></audio>-->
+              <audio src="{{reviewData.url_link}}audios/{{reviewData.description }}" controls controlslist="nodownload"></audio>
             </div>
             <footer class="popupFt">
                 <span class="timePop">{{getReviewTimeFormated(reviewData.created_at)}} ago</span>
@@ -55,13 +57,15 @@
             <div class="vidContain">
                 <!-- video player will go here -->
                 <video controlslist="nodownload" disablepictureinpicture width="320" height="240" controls>
-                    <source src="https://{{reviewData.url_link}}/storage/videos/{{reviewData.description}}" type="video/mp4">
+<!--                    <source src="https://{{reviewData.url_link}}/storage/videos/{{reviewData.description}}" type="video/mp4">-->
+                  <source src="{{reviewData.vid_link}}videos/{{reviewData.description}}" type="video/mp4">
                 </video>
             </div>
         </div>
         <div class="popupTxt popup_template_4">
             <div class="figPopup">
-              <figure [style.background-image]="'url(https://'+ reviewData.url_link +'/storage/images/'+ reviewData.image +')'" *ngIf="reviewData.image"></figure>
+<!--              <figure [style.background-image]="'url(https://'+ reviewData.url_link +'/storage/images/'+ reviewData.image +')'" *ngIf="reviewData.image"></figure>-->
+              <figure [style.background-image]="'url('+ reviewData.url_link +'images/'+ reviewData.image +')'" *ngIf="reviewData.image"></figure>
               <figure [style.background-image]="'url(../../../../assets/images/face_icon_small.png)'" *ngIf="!reviewData.image" class="defBg"></figure>
             </div>
             <div class="bodyPopup">
