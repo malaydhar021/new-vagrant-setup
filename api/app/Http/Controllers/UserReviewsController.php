@@ -196,8 +196,7 @@ class UserReviewsController extends Controller
      */
     public function checkPasskey(Request $request)
     {
-        // $stickyId = Hashids::decode($request->stickyId); original comment it in after development
-        $stickyId = $request->stickyId;
+        $stickyId = Hashids::decode($request->stickyId);
         $reviewToken = $request->reviewToken;
 //        $getEnvUrl = $_SERVER['SERVER_NAME'];
 //
