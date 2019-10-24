@@ -44,8 +44,7 @@ trait ZapierWebhook
                     $sendZapData['sticky_reviews_name'] = $getStickyReviewInfo->name;
                     if($getStickyReviewInfo->type == 3){
                         $type = 'Video';
-                        // $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$getStickyReviewInfo->description;
-                        $reviewDescription = $vid_url.'videos/'.$getStickyReviewInfo->description;
+                        $reviewDescription = $vid_url.$getStickyReviewInfo->description;
                     }elseif ($getStickyReviewInfo->type == 2){
                         $type = 'Audio';
                         $reviewDescription = $s3LinkUrl.'audios/'.$getStickyReviewInfo->description;
@@ -112,11 +111,9 @@ trait ZapierWebhook
                         $sendZapData['sticky_reviews_name'] = $getStickyReviewInfo->name;
                         if($getStickyReviewInfo->type == 3){
                             $type = 'Video';
-                            // $reviewDescription = 'https://api.'.$linkUrl.'/storage/videos/'.$getStickyReviewInfo->description;
-                            $reviewDescription = $vid_url.'videos/'.$getStickyReviewInfo->description;
+                            $reviewDescription = $vid_url.$getStickyReviewInfo->description;
                         }elseif ($getStickyReviewInfo->type == 2){
                             $type = 'Audio';
-                            // $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$getStickyReviewInfo->description;
                             $reviewDescription = $s3LinkUrl.'audios/'.$getStickyReviewInfo->description;
                         }else{
                             $type = 'Textual';

@@ -145,11 +145,9 @@ class ZapierWebhooksController extends Controller
                             $getReviewLinkData[$stickyKey]['sticky_reviews_name'] = $stickyData->name;
                             if($stickyData->type == 3){
                                 $type = 'Video';
-                                // $reviewDescription = $linkUrl.'/storage/videos/'.$stickyData->description;
-                                $reviewDescription = $vid_url.'videos/'.$stickyData->description;
+                                $reviewDescription = $vid_url.$stickyData->description;
                             }elseif ($stickyData->type == 2){
                                 $type = 'Audio';
-                                // $reviewDescription = 'https://api.'.$linkUrl.'/storage/audios/'.$stickyData->description;
                                 $reviewDescription = $s3LinkUrl.'audios/'.$stickyData->description;
                             }else{
                                 $type = 'Textual';

@@ -198,15 +198,6 @@ class UserReviewsController extends Controller
     {
         $stickyId = Hashids::decode($request->stickyId);
         $reviewToken = $request->reviewToken;
-//        $getEnvUrl = $_SERVER['SERVER_NAME'];
-//
-//        if (strpos($getEnvUrl, 'local') !== false) {
-//            $linkUrl = 'api.local.usestickyreviews.com';
-//        } elseif (strpos($getEnvUrl, 'beta') !== false) {
-//            $linkUrl = 'api.beta.usestickyreviews.com';
-//        } else {
-//            $linkUrl = 'api.usestickyreviews.com';
-//        }
         // review url for the audio and video files
         $linkUrl = config('filesystems.disks.s3.url');
         // review url for the video files
